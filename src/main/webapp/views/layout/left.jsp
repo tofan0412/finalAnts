@@ -23,32 +23,32 @@
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
 								<a href="#" class="nav-link"> 
-									<i class="nav-icon far fa-alert"></i>
+									<i class="nav-icon fas fa-bullhorn"></i>
 										<p>새로운 소식</p>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a href="#" class="nav-link">
-									<i class="fas fa-bookmarks-outline nav-icon"></i>
+									<i class="nav-icon fas fa-bookmark"></i>
 										<p>북마크</p>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a href="#" class="nav-link">
-									<i class="fas fa-alert-circle-outline nav-icon"></i>
+									<i class="nav-icon far fa-lightbulb"></i>
 										<p>내가작성한 이슈</p>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a href="#" class="nav-link">
-									<i class="far calendar-outline nav-icon"></i>
+									<i class="nav-icon far fa-calendar-alt"></i>
 										<p>전체캘린더</p>
 								</a>
 							</li>
 	
 							<!-- PL or PM일경우!!조건걸어서  -->
 							<!-- 						<li class="nav-item"><a href="#" class="nav-link"> <i -->
-							<!-- 								class="far fa-circle nav-icon"></i> -->
+							<!-- 								class="nav-icon far fa-copy"></i> -->
 							<!-- 								<p>PM-PL이슈게시판</p> -->
 							<!-- 						</a></li> -->
 	
@@ -57,27 +57,27 @@
 				<br>
 
 				<li class="nav-item has-treeview menu-close">
-					<a href="#"	class="nav-link active"><i class="nav-icon fas fa-tachometer-alt"></i>
+					<a href="#"	class="nav-link active"><i class="nav-icon fas fa-user-lock"></i>
 						<p>개인공간</p>
 					</a>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
-						<a href="#" class="nav-link"><i	class="far fa-circle nav-icon"></i>
-							<p>개인공간</p>
+						<a href="#" class="nav-link"><i	class="nav-icon far fa-folder-open"></i>
+							<p>파일함</p>
 						</a></li>
 					</ul></li>
 
 				<br>
 				<li class="nav-item has-treeview menu-close">
 					<a href="#"	class="nav-link active">
-					<i class="nav-icon fas fa-tachometer-alt"></i>
-						<p>	진행중인 프로젝트 <i class="right fas fa-angle-left"></i></p></a>
+					 <i class="nav-icon fas fa-poll-h"></i>
+						<p>	진행중인 프로젝트</p></a>
 				<!-- 프로젝트 목록 불러오기 -->
 					<ul class="nav nav-treeview">
 						<li class="nav-item"><a href="#" class="nav-link">
-						<i	class="far fa-circle nav-icon"></i><p>프로젝트명</p></a></li>
+						<i	class="nav-icon fas fa-layer-group"></i><p>프로젝트명</p></a></li>
 						<li class="nav-item"><a href="#" class="nav-link">
-						<i	class="far fa-circle nav-icon"></i><p>프로젝트명</p></a></li>
+						<i	class="nav-icon fas fa-layer-group"></i><p>프로젝트명</p></a></li>
 					</ul>
 				</li>
 			</ul>
