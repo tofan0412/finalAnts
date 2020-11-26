@@ -42,7 +42,12 @@
     <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="1"
 	    p:viewClass="org.springframework.web.servlet.view.JstlView"
 	    p:prefix="/WEB-INF/test/" p:suffix=".jsp"/>
-	    
+	
+	<!-- 정적자원 매핑처리 -->
+    <!-- localhost/resoureces.style.css -->
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
+    <mvc:resources mapping="/dist/**" location="/resources/dist/"/>   
 	
 
 </beans>
