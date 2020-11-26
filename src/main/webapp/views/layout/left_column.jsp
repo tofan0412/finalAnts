@@ -24,19 +24,19 @@
 				</a>
 					<ul class="nav nav-treeview">
 						<li class="nav-item"><a href="#" class="nav-link"> <i
-								class="far fa-circle nav-icon"></i>
+								class="far far fa-bell nav-icon"></i>
 								<p>새로운 소식</p>
 						</a></li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
-								class="far fa-circle nav-icon"></i>
+								class="fas fa-tags nav-icon"></i>
 								<p>북마크</p>
 						</a></li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
-								class="far fa-circle nav-icon"></i>
+								class="fas fa-exclamation nav-icon"></i>
 								<p>내가작성한 이슈</p>
 						</a></li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
-								class="far fa-circle nav-icon"></i>
+								class="far fa-calendar-alt nav-icon"></i>
 								<p>전체캘린더</p>
 						</a></li>
 						
