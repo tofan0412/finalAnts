@@ -7,10 +7,8 @@
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-    <context:component-scan base-package="egovframework">
+    <context:component-scan base-package="egovframework" annotation-config="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan>
 
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
@@ -21,32 +19,64 @@
         </property>
     </bean>
     
+   	<!-- 파일 업로드 처리를 위한 multipartResolver 설정 -->
+<!-- 	<bean id="multipartResolver" -->
+<!-- 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
+<!-- 	</bean> -->
+    
+    <!-- 지역(언어)에 따른 서로 다른 페이지 뷰를 보여줄 때 사용한다.  -->
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
     <!-- 쿠키를 이용한 Locale 이용시 <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/> -->
+    
+    <!--  Locale 변경 감지 interceptor -->
     <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
         <property name="paramName" value="language" />
     </bean>
+    
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="1"></property>
+	</bean>
 
-    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-        <property name="defaultErrorView" value="cmmn/egovError"/>
-        <property name="exceptionMappings">
-            <props>
-                <prop key="org.springframework.dao.DataAccessException">cmmn/dataAccessFailure</prop>
-                <prop key="org.springframework.transaction.TransactionException">cmmn/transactionFailure</prop>
-                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">cmmn/egovError</prop>
-                <prop key="org.springframework.security.AccessDeniedException">cmmn/egovError</prop>
-            </props>
-        </property>
-    </bean>
+<!--     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
+<!--         <property name="defaultErrorView" value="cmmn/egovError"/> -->
+<!--         <property name="exceptionMappings"> -->
+<!--             <props> -->
+<!--                 <prop key="org.springframework.dao.DataAccessException">cmmn/dataAccessFailure</prop> -->
+<!--                 <prop key="org.springframework.transaction.TransactionException">cmmn/transactionFailure</prop> -->
+<!--                 <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">cmmn/egovError</prop> -->
+<!--                 <prop key="org.springframework.security.AccessDeniedException">cmmn/egovError</prop> -->
+<!--             </props> -->
+<!--         </property> -->
+<!--     </bean> -->
+
+
+
+<!-- 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"> -->
+<!-- 		<property name="definitions"> -->
+<!-- 			<list> -->
+<!-- 				<value>classpath:kr/or/ddit/config/tiles/tilesDefinition.xml</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+	<!-- TilesViewResolver -->
+<!-- 	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"> -->
+<!-- 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"></property> -->
+<!-- 		<property name="order" value="0"></property> -->
+<!-- 	</bean>  -->
+
 
     <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="1"
 	    p:viewClass="org.springframework.web.servlet.view.JstlView"
-	    p:prefix="/WEB-INF/test/" p:suffix=".jsp"/>
+	    p:prefix="/views/" p:suffix=".jsp"/>
 	    
-	<!-- 정적자원 매핑처리 -->
-	 <!-- localhost/resoureces.style.css -->
-	 <mvc:resources mapping="/resources/**" location="/resources/" />
-	 <mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
-	 <mvc:resources mapping="/dist/**" location="/resources/dist/"/>
+	
+	<!-- @Controller, @RequestMapping, @HandlerMapping, @HandlerAdapter, validation, 
+	formatting conversion service 등 Spring MVC 패턴에 필요한 Annotation, Element를 처리한다. -->
+	<mvc:annotation-driven />
+
+	<!-- 자신이 처리하지 못하는 servlet을 server에 있는 default servlet에 위임한다! -->
+	<mvc:default-servlet-handler />
+	    
 
 </beans>
