@@ -66,6 +66,17 @@
 							<p>파일함</p>
 						</a></li>
 					</ul></li>
+					<br>
+				<li class="nav-item has-treeview menu-open">
+					<a href="#"	class="nav-link active"><i class="nav-icon fa fa-check"></i>
+						<p>협업공간</p>
+					</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item">
+						<a href="#" class="nav-link"><i	class="nav-icon fa fa-plus-square"></i>
+							<p>프로젝트  생성하기</p>
+						</a></li>
+					</ul></li>
 
 				<br>
 				<li class="nav-item has-treeview menu-close">
