@@ -19,7 +19,6 @@
 			classpath:ants/com/config/spring/context-common.xml
 			classpath:ants/com/config/spring/context-datasource.xml
 			classpath:ants/com/config/spring/context-mapper.xml
-			classpath:ants/com/config/spring/context-properties.xml
 			classpath:ants/com/config/spring/context-transaction.xml
 		</param-value>
 	</context-param>
