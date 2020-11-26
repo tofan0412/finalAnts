@@ -68,7 +68,7 @@
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver"
 		p:order="1"
 		p:viewClass="org.springframework.web.servlet.view.JstlView"
-		p:prefix="/WEB-INF/test/" p:suffix=".jsp" />
+		p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
 
 	<!-- 정적자원 매핑처리 -->
 	<!-- localhost/resoureces.style.css -->
