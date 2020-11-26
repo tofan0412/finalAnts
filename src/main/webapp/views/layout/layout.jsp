@@ -4,7 +4,7 @@
 <html>
 <head>
 </head>
-
+<title>협업관리프로젝트</title>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
 
@@ -25,8 +25,13 @@
 			</div>
 		</div>
 
+		<!-- Content Wrapper. Contains page content -->
+		<%-- 		<%@include file="content.jsp"%> --%>
+
+
 		<!-- Control Sidebar -->
 		<%@include file="rigth_column.jsp"%>
+
 
 		<!-- Main Footer -->
 		<%@include file="main_footer.jsp"%>
