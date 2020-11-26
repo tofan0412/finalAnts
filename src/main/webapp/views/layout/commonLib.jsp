@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <!-- Font Awesome Icons -->
-<link rel="stylesheet"
-	href="/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="/dist/css/adminlte.min.css">
 <!-- Google Font: Source Sans Pro -->

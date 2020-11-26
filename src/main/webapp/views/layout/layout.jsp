@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,32 +10,20 @@
 	<div class="wrapper">
 
 		<!-- main_header -->
-		<%@include file="main_header.jsp"%>
-
+		<tiles:insertAttribute name="header" />
 		<!-- left Sidebar Container -->
-		<%@include file="left_column.jsp"%>
+		<tiles:insertAttribute name="left" />
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
-
-			<!-- Main content -->
-			<div class="content">
-				<div class="container-fluid">
-					<div class="row"></div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Content Wrapper. Contains page content -->
-		<%-- 		<%@include file="content.jsp"%> --%>
-
+		<!-- Main content -->
+		<tiles:insertAttribute name="content" />
 
 		<!-- Control Sidebar -->
-		<%@include file="rigth_column.jsp"%>
+		<tiles:insertAttribute name="right" />
 
 
 		<!-- Main Footer -->
-		<%@include file="main_footer.jsp"%>
+		<tiles:insertAttribute name="footer" />
 	</div>
 
 	<!-- jQuery, style -->
