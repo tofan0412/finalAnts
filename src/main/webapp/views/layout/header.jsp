@@ -119,15 +119,15 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i>프로필
+            <i class="fas fa-user-edit mr-2"></i>프로필
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i>알림설정
+            <i class="fas fa-bell mr-2"></i>알림설정
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i>로그아웃
+            <i class="fas fa-toggle-off mr-2"></i>로그아웃
           </a>
           </div>
       </li>
