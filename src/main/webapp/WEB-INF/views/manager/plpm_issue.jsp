@@ -7,11 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>로그인</h3>
-	이메일 : 123@naver.com <br>
-	비밀번호 : **** <br>
-	<input type="checkbox" name="email" id="remember">이메일기억하기
-	<input type="button" value="로그인" >
-	<input type="button" value="비밀번호 찾기" >
+	<h2>pm-pl 이슈게시판</h2>
+	이름 : <br>
+	파일선택: <br>
+	기간 : <br>
+	pl 요청 : <br>
+	<input type="button" value="등록">
 </body>
 </html>

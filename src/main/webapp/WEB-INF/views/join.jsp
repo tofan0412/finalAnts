@@ -7,11 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>로그인</h3>
-	이메일 : 123@naver.com <br>
-	비밀번호 : **** <br>
-	<input type="checkbox" name="email" id="remember">이메일기억하기
-	<input type="button" value="로그인" >
-	<input type="button" value="비밀번호 찾기" >
+	<h2>회원가입</h2> 
+	이메일 : 123@naver.com<br>
+	이름 : 홍길동<br>
+	HP : 010-1234-5678 <br>
+	<input type="button" value="등록">
 </body>
 </html>
