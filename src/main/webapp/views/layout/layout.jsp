@@ -15,21 +15,8 @@
 		<tiles:insertAttribute name="left" />
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
-			<!-- Main content -->
-			<div class="content">
-				<div class="container-fluid">
-					<div class="row">
-					<tiles:insertAttribute name="content" />
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Content Wrapper. Contains page content -->
-
-		<%-- 		<%@include file="content.jsp"%> --%>
-
+		<!-- Main content -->
+		<tiles:insertAttribute name="content" />
 
 		<!-- Control Sidebar -->
 		<tiles:insertAttribute name="right" />
