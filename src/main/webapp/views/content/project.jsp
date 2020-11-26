@@ -4,29 +4,34 @@
 <html>
 <head>
 
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
-    <style>
-      ng {
-        font-family: "Nanum Gothic", sans-serif;
-        font-size: 23px;
-      }
-      ng.a {
-        font-weight: 400;
-      }
-      ng.b {
-        font-weight: 700;
-      }
-      ng.c {
-        font-weight: 800;
-      }
-      ng.d {
-        font-weight: bold;
-      }
-    </style>
+<link href="http://fonts.googleapis.com/earlyaccess/nanumpenscript.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/jejumyeongjo.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/kopubbatang.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/jejuhallasan.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
+<style>
+.np{font-family: 'Nanum Pen Script', cursive;}
+.jg{font-family: 'Jeju Gothic', sans-serif;}
+.jm{font-family: 'Jeju Myeongjo', serif;}
+.kb{font-family: 'KoPub Batang', serif;}
+.nb{font-family: 'Nanum Brush Script', cursive;}
+.ns{font-family: 'Noto Sans KR', sans-serif;}
+.hn{font-family: 'Hanna', sans-serif;}
+.ng{font-family: 'Nanum Gothic', sans-serif;}
+.nm{font-family: 'Nanum Myeongjo', serif;}
+.jh{font-family: 'Jeju Hallasan', cursive;}
+.ngc{font-family: 'Nanum Gothic Coding', monospace;}
+</style>
 
 </head>
 <title>협업관리프로젝트</title>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini accent-teal ngc">
 	<div class="wrapper">
 
 		<!-- main_header -->
@@ -45,49 +50,82 @@
 		      <div class="container-fluid">
 		        <div class="row mb-2">
 		          <div class="col-sm-6">
-		            <h1>협업관리툴 개발</h1>
+		            <h1 class="jg">협업관리툴 개발</h1>
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right">
-		              <li class="breadcrumb-item"><a href="#">Home</a></li>
+		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
 		              <li class="breadcrumb-item active">협업관리툴 개발</li>
 		            </ol>
 		          </div>
 		        </div>
-		        <div class="row mb-2 ng">
+		        <div class="row mb-2">
 		        	<p style = "color : lightslategray;">프로젝트 설명을 입력하세요.</p>
 		        </div>
 		      </div><!-- /.container-fluid -->
 		    </section>
 		
 		    <!-- Main content -->
-		    <section class="content">
-		      <div class="error-page">
-		        <h2 class="headline text-warning"> 404</h2>
-		
-		        <div class="error-content">
-		          <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
-		
-		          <p>
-		            We could not find the page you were looking for.
-		            Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
-		          </p>
-		
-		          <form class="search-form">
-		            <div class="input-group">
-		              <input type="text" name="search" class="form-control" placeholder="Search">
-		
-		              <div class="input-group-append">
-		                <button type="submit" name="submit" class="btn btn-warning"><i class="fas fa-search"></i>
-		                </button>
-		              </div>
-		            </div>
-		            <!-- /.input-group -->
-		          </form>
-		        </div>
-		        <!-- /.error-content -->
-		      </div>
-		      <!-- /.error-page -->
+		    <section class="content" style="margin-top: 13px;">
+		      <div class="col-12 col-sm-9">
+	            <div class="card card-teal card-outline card-tabs">
+	              <div class="card-header p-0 pt-1 border-bottom-0">
+	                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+	                  <li class="nav-item">
+	                    <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-work" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">일감</a>
+	                  </li>
+	                  <li class="nav-item">
+	                    <a class="nav-link" id="custom-tabs-three-gantt-tab" data-toggle="pill" href="#custom-tabs-three-gantt" role="tab" aria-controls="custom-tabs-three-gantt" aria-selected="false">간트</a>
+	                  </li>
+	                  <li class="nav-item">
+	                    <a class="nav-link" id="custom-tabs-three-messages-issue" data-toggle="pill" href="#custom-tabs-three-issue" role="tab" aria-controls="custom-tabs-three-issue" aria-selected="false">이슈</a>
+	                  </li>
+	                  <li class="nav-item">
+	                    <a class="nav-link" id="custom-tabs-three-settings-suggest" data-toggle="pill" href="#custom-tabs-three-suggest" role="tab" aria-controls="custom-tabs-three-suggest" aria-selected="false">건의사항</a>
+	                  </li>
+	                  <li class="nav-item">
+	                    <a class="nav-link" id="custom-tabs-three-calendar-tab" data-toggle="pill" href="#custom-tabs-three-calendar" role="tab" aria-controls="custom-tabs-three-calendar" aria-selected="false">캘린더</a>
+	                  </li>
+	                  <li class="nav-item">
+	                    <a class="nav-link" id="custom-tabs-three-mywork-tab" data-toggle="pill" href="#custom-tabs-three-mywork" role="tab" aria-controls="custom-tabs-three-mywork" aria-selected="false">내 일감</a>
+	                  </li>
+	                  <li class="nav-item">
+	                    <a class="nav-link" id="custom-tabs-three-files-tab" data-toggle="pill" href="#custom-tabs-three-files" role="tab" aria-controls="custom-tabs-three-files" aria-selected="false">파일함</a>
+	                  </li>
+	                </ul>
+	              </div>
+	              <!-- 내용 -->
+	              <div class="card-body">
+	                <div class="tab-content" id="custom-tabs-three-tabContent">
+	                  <div class="tab-pane fade active show" id="custom-tabs-three-work" role="tabpanel" aria-labelledby="custom-tabs-three-work-tab">
+	                  	일감내용입니다.
+	                  </div>
+	                  <div class="tab-pane fade" id="custom-tabs-three-gantt" role="tabpanel" aria-labelledby="custom-tabs-three-gantt-tab">
+	                  	간트차트입니다.
+	                  </div>
+	                  <div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab">
+	                  	이슈내용입니다.
+	                  </div>
+	                  <div class="tab-pane fade" id="custom-tabs-three-suggest" role="tabpanel" aria-labelledby="custom-tabs-three-suggest-tab">
+	                  	건의사항입니다.
+	                  </div>
+	                  <div class="tab-pane fade" id="custom-tabs-three-calendar" role="tabpanel" aria-labelledby="custom-tabs-three-calendar-tab">
+	                  	캘린더입니다
+	                  </div>
+	                  <div class="tab-pane fade" id="custom-tabs-three-mywork" role="tabpanel" aria-labelledby="custom-tabs-three-mywork-tab">
+	                  	내일감 입니다.
+	                  </div>
+	                  <div class="tab-pane fade" id="custom-tabs-three-files" role="tabpanel" aria-labelledby="custom-tabs-three-files-tab">
+	                  	파일함 입니다.
+	                  </div>
+	                </div>
+	              </div>
+	              <!-- /.card -->
+	            </div>
+          	</div>
+		      
+		      
+		      
 		    </section>
 		    <!-- /.content -->
 		  </div>
