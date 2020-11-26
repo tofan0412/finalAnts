@@ -1,5 +1,8 @@
 package ants.com.common.repository;
 
-public class CommonDao {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class CommonDao implements CommonDaoI {
 
 }

@@ -10,4 +10,6 @@ public class MemberController {
 	public String loginView() {
 		return "login";
 	}
+	
+	
 }

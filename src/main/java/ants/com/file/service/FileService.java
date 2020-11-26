@@ -1,5 +1,8 @@
 package ants.com.file.service;
 
-public class FileService {
+import org.springframework.stereotype.Service;
+
+@Service
+public class FileService implements FileServiceI{
 
 }

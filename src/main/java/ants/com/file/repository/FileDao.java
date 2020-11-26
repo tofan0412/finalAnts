@@ -1,5 +1,8 @@
 package ants.com.file.repository;
 
-public class FileDao {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class FileDao implements FileDaoI{
 
 }

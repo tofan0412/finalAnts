@@ -1,5 +1,8 @@
 package ants.com.board.vote.web;
 
-public class VoteController {
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class VoteController{
 
 }

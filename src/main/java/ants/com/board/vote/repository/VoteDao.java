@@ -1,5 +1,8 @@
 package ants.com.board.vote.repository;
 
-public class VoteDao {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class VoteDao implements VoteDaoI{
 
 }

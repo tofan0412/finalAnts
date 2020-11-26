@@ -1,5 +1,8 @@
 package ants.com.board.memBoard.repository;
 
-public class memBoardDao {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class memBoardDao implements memBoardDaoI{
 
 }

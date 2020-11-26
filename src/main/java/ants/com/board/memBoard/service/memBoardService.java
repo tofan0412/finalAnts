@@ -1,5 +1,5 @@
 package ants.com.board.memBoard.service;
 
-public class memBoardService {
+public class memBoardService implements memBoardServiceI {
 
 }

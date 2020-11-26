@@ -1,5 +1,8 @@
 package ants.com.admin.repository;
 
-public class AdminDao {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class AdminDao implements AdminDaoI{
 
 }

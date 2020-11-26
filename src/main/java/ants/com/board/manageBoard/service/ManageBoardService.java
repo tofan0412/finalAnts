@@ -1,5 +1,8 @@
 package ants.com.board.manageBoard.service;
 
-public class ManageBoardService {
+import org.springframework.stereotype.Service;
+
+@Service
+public class ManageBoardService implements ManageBoardServiceI{
 
 }

@@ -1,5 +1,8 @@
 package ants.com.chatting.service;
 
-public class ChatService {
+import org.springframework.stereotype.Service;
+
+@Service
+public class ChatService implements ChatServiceI {
 
 }

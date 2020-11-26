@@ -1,5 +1,8 @@
 package ants.com.board.vote.service;
 
-public class VoteService {
+import org.springframework.stereotype.Service;
+
+@Service
+public class VoteService implements VoteServiceI{
 
 }
