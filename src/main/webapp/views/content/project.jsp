@@ -30,11 +30,11 @@
 	<div class="wrapper">
 
 		<!-- main_header -->
-		<%@include file="../layout/main_header.jsp"%>
+		<%@include file="../layout/header.jsp"%>
 		
 
 		<!-- left Sidebar Container -->
-		<%@include file="../layout/left_column.jsp"%>
+		<%@include file="../layout/left.jsp"%>
 
 		<!-- Content Wrapper. Contains page content -->
 		  <div class="content-wrapper">
@@ -98,11 +98,11 @@
 
 
 		<!-- Control Sidebar -->
-		<%@include file="../layout/rigth_column.jsp"%>
+		<%@include file="../layout/rigth.jsp"%>
 
 
 		<!-- Main Footer -->
-		<%@include file="../layout/main_footer.jsp"%>
+		<%@include file="../layout/footer.jsp"%>
 	</div>
 
 	<!-- jQuery, style -->
