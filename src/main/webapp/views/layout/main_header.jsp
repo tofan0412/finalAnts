@@ -1,53 +1,39 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+      <h1 class="m-1 text-dark">프로젝트명 불러오기</h1>
+      </li>
+    </ul>
 
-	<title>협업관리프로젝트</title>
-
-	<!-- content-header(프로젝트명) -->
-	<h1 class="m-0 text-dark">프로젝트명 불러오기</h1>
-
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-	<!-- SEARCH FORM -->
-	<form class="form-inline ml-3">
-		<div class="input-group input-group-sm">
-			<input class="form-control form-control-navbar" type="search"
-				placeholder="Search" aria-label="Search">
-			<div class="input-group-append">
-				<button class="btn btn-navbar" type="submit">
-					<i class="fas fa-search"></i>
-				</button>
-			</div>
-		</div>
-	</form>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<!-- 이슈작성버튼 -->
-	<button type="button" class="btn btn-info">이슈작성</button>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<!-- Right navbar links -->
+    <!-- Right navbar links -->
+    <button type="button" class="btn btn-info">이슈작성</button>
+   <!-- Right navbar links -->
 	<ul class="navbar-nav navbar-right">
+	<!-- SEARCH FORM -->
+    <form class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
 		<button class="btn">
 			<i class="fas fa-user-circle" style="font-size: 35px;"></i>
 		</button>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<!-- Notifications Dropdown Menu -->
 		<li class="nav-item"><a class="nav-link"
 			data-widget="control-sidebar" data-slide="true" href="#"
 			role="button"><i class="far fa-comments" style="font-size: 35px;"></i></a></li>
 	</ul>
-</nav>
-<!-- .. left바 클릭시 없어져야함 -->
-<%@include file="head_menu.jsp"%>
+  </nav>
+  <!-- /.navbar -->

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<aside class="main-sidebar sidebar-teal-primary elevation-4">
+<aside class="main-sidebar sidebar-light-teal elevation-4">
 	<!-- Brand Logo -->
 	<a href="../../index3.html" class="brand-link">
       <img src="../../dist/img/antslogo.png" class="brand-image " 
