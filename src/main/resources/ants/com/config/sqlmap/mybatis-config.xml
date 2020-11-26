@@ -8,7 +8,7 @@
   	<typeAlias type="ants.com.member.model.MemberVo" alias="MemberVo"/>
   </typeAliases>
 
-  <mappers>
-    <mapper resource="ants/com/config/sqlmap/mappers/member.xml"/>
-  </mappers>
+<!--   <mappers> -->
+<!--     <mapper resource="ants/com/config/sqlmap/mappers/member.xml"/> -->
+<!--   </mappers> -->
 </configuration>
