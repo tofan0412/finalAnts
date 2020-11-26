@@ -61,4 +61,15 @@
 	<!-- /For Pagination Tag -->
 
     <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
+    
+    <!-- 정적자원 매핑처리 -->
+	 <!-- localhost/resoureces.style.css -->
+	 <mvc:resources mapping="/resources/**" location="/resources/" />
+	 <mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
+	 <mvc:resources mapping="/dist/**" location="/resources/dist/"/>
+    
+    
+    
+    
+    
 </beans>
