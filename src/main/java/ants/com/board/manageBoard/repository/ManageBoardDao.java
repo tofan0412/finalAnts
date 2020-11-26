@@ -2,7 +2,7 @@ package ants.com.board.manageBoard.repository;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("manageBoardDao")
 public class ManageBoardDao implements ManageBoardDaoI{
 
 }

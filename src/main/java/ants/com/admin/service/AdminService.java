@@ -2,7 +2,7 @@ package ants.com.admin.service;
 
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("adminService")
 public class AdminService implements AdminServiceI{
 
 }

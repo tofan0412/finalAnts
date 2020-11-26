@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- 트랜잭션의 적용 : service의 메서드에 적용한다.
+		1. 트랜잭션을 관리할 매니저의 선언 - DataSourceTransactionManager( Spring에서 제공 )
+		. dataSource에 대한 정보가 필요하다.
+		2. Advisor 등록(element 이름은 : advice)
+		3. AOP 설정 : pointcut
+		 		
+	 -->
+	<bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<!-- 참조해야 할 설정파일이 별도로 존재하더라도, 한 파일에 함께 존재하는 것처럼 동일하게 참조하면 된다. 
+		또한 참조해야 할 bean이 아직 생성되지 않은 경우에도 Spring Container가 자동으로 해결해 준다.
+		** 즉, Spring Bean의 선언 순서는 중요하지 않다.
+	-->
+	<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<tx:advice id="txAdvisor" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 트랜잭션을 적용할 메서드의 이름, 패턴 적용 
+								select*
+								get*
+								insert*
+								* (메서드 전체를 의미)
+			-->
+			<tx:method name="*" />
+			<!--  rollback-for : 특정 예외에 대해 rollback를 실행한다. -->
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<!-- execution, within : 특정 패키지에 담겨 있는 클래스를 찾을 때, bean-spring bean -->
+		<aop:advisor advice-ref="txAdvisor" pointcut="within(ants.com..service.*)"/>
+	
+	</aop:config>
+</beans>
