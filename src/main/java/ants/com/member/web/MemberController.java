@@ -23,13 +23,13 @@ public class MemberController {
 	@Resource(name="memberService")
 	MemberServiceI memberService;
 	
-	@RequestMapping("/login/loginView")
+	@RequestMapping("/loginView")
 	public String loginView() {
 		logger.debug("로그인뷰 진입 ...");
 		return "login";
 	}
 	
-	@RequestMapping("/login/loginFunc")
+	@RequestMapping("/loginFunc")
 	public String login(String mem_id, String mem_pass,HttpSession session, Model model) {
 		logger.debug("로그인 메서드 진입 ...{}", mem_id);
 		Map<String, String> memInfo = new HashMap<>();
