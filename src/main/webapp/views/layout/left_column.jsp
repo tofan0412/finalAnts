@@ -3,11 +3,11 @@
 
 <aside class="main-sidebar sidebar-light-teal elevation-4">
 	<!-- Brand Logo -->
-	<a href="../../index3.html" class="brand-link">
-      <img src="../../dist/img/antslogo.png" class="brand-image " 
-      style="float: none; margin: 15px 0px 10px 12px;">
-      <img src="../../dist/img/ants.png" style="width: 100px;">
-    </a>
+	<a href="/index3.html" class="brand-link"> <img
+		src="/dist/img/antslogo.png" class="brand-image "
+		style="float: none; margin: 15px 0px 10px 12px;"> <img
+		src="/dist/img/ants.png" style="width: 100px;">
+	</a>
 
 	<!-- Sidebar -->
 	<div class="sidebar">
@@ -39,16 +39,16 @@
 								class="far fa-calendar-alt nav-icon"></i>
 								<p>전체캘린더</p>
 						</a></li>
-						
+
 						<!-- PL or PM일경우!!조건걸어서  -->
-<!-- 						<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 								class="far fa-circle nav-icon"></i> -->
-<!-- 								<p>PM-PL이슈게시판</p> -->
-<!-- 						</a></li> -->
+						<!-- 						<li class="nav-item"><a href="#" class="nav-link"> <i -->
+						<!-- 								class="far fa-circle nav-icon"></i> -->
+						<!-- 								<p>PM-PL이슈게시판</p> -->
+						<!-- 						</a></li> -->
 
 					</ul></li>
 				<br>
-				
+
 				<li class="nav-item has-treeview menu-close"><a href="#"
 					class="nav-link active"> <i
 						class="nav-icon fas fa-tachometer-alt"></i>
@@ -63,7 +63,7 @@
 						</a></li>
 
 					</ul></li>
-					
+
 				<br>
 				<li class="nav-item has-treeview menu-close"><a href="#"
 					class="nav-link active"> <i
@@ -71,8 +71,7 @@
 						<p>
 							진행중인 프로젝트 <i class="right fas fa-angle-left"></i>
 						</p>
-				</a>
-				 <!-- 프로젝트 목록 불러오기 -->
+				</a> <!-- 프로젝트 목록 불러오기 -->
 					<ul class="nav nav-treeview">
 						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="far fa-circle nav-icon"></i>
