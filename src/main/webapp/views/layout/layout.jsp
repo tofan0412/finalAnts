@@ -14,7 +14,6 @@
 		<!-- left Sidebar Container -->
 		<tiles:insertAttribute name="left" />
 
-		<!-- Content Wrapper. Contains page content -->
 		<!-- Main content -->
 		<tiles:insertAttribute name="content" />
 
