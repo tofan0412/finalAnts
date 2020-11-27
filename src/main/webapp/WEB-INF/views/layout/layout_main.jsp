@@ -14,9 +14,6 @@
 		<!-- main_header -->
 		<tiles:insertAttribute name="header" />
 		
-		<!-- left Sidebar Container -->
-		<tiles:insertAttribute name="left" />
-
 		<!-- Main content -->
 		<tiles:insertAttribute name="content" />
 
