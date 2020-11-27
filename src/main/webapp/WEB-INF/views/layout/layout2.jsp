@@ -17,7 +17,7 @@
 		<!-- Content Wrapper. Contains page content -->
 
 		<!-- Main content -->
-		<%@include file="contentmenu.jsp"%>
+		 <%@include file="contentmenu.jsp"%> 
 
 		<!-- Control Sidebar -->
 		<%@include file="rigth.jsp"%>
