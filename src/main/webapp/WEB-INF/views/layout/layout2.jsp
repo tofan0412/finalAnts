@@ -15,23 +15,12 @@
 		<%@include file="left.jsp"%>
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
 
-			<!-- Main content -->
-			<div class="content">
-				<div class="container-fluid">
-					<div class="row">
-					
-					
-					</div>
-				</div>
-			</div>
-		</div>
-
+		<!-- Main content -->
+		<%@include file="contentmenu.jsp"%>
 
 		<!-- Control Sidebar -->
 		<%@include file="rigth.jsp"%>
-
 
 		<!-- Main Footer -->
 		<%@include file="footer.jsp"%>
@@ -39,7 +28,7 @@
 
 	<!-- jQuery, style -->
 	<%@include file="commonLib.jsp"%>
-	
+
 </body>
 </html>
 
