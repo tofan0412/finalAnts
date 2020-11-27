@@ -1,0 +1,84 @@
+@charset "UTF-8"; /* 기본 설정: 페이지 전체 */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: #FFF;
+}
+
+.header_container {
+	display: flex;
+	align-items: center;
+	max-width: 1500px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.logo_container {
+	display: block;
+	margin: 5px 10px;
+	
+}
+
+
+.logo_container a {
+	font-size: 30px;
+	font-weight: 500;
+	text-decoration: none;
+	text-align: left;
+	color: rgba(0, 0, 0, 1);
+}
+
+.nav_container {
+	display: flex;
+	flex: 1;
+	justify-content: space-between;
+	align-items: center;
+	float: right;
+	display: block;
+}
+
+
+
+.menu_title {
+	display: block;
+	margin: 10px;
+	font-size: 20px;
+	text-decoration: none;
+	color: rgba(0, 0, 0, 1);
+}
+
+
+
+
+.login_container .login{
+	align-content: flex-end;
+	margin-right: 10px;
+	list-style: none;
+	display: flex;
+	float: right;
+	display: inline;
+}
+
+.footer_container {
+	height: 100px;
+	padding-top: 35px;
+	padding-bottom: 35px;
+	display: block;
+	cursor: default;
+	text-align: center;
+	color: rgba(255, 255, 255, 1);
+	background-color: rgba(25, 25, 25, 1);
+}
+
+.footer_container .footA {
+	font-size: 25px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.footer_container .footB {
+	font-size: 15px;
+}
