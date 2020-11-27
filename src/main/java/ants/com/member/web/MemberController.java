@@ -45,19 +45,19 @@ public class MemberController {
 	
 	
 	
-	@RequestMapping("/loginFunc")
-	public String login(String mem_id, String mem_pass,HttpSession session, Model model) {
-		logger.debug("MemberController loginFunc : {}", mem_id);
-		
-		MemberVo memberVo = memberService.getMember(mem_id);
-		
-		if (memberVo != null) {
-			session.setAttribute("s_member", memberVo);
-			return "success";
-		}
-		return "main";
-	}
-	
+//	@RequestMapping("/loginFunc")
+//	public String login(String mem_id, String mem_pass,HttpSession session, Model model) {
+//		logger.debug("MemberController loginFunc : {}", mem_id);
+//		
+//		MemberVo memberVo = memberService.getMember(mem_id);
+//		
+//		if (memberVo != null) {
+//			session.setAttribute("s_member", memberVo);
+//			return "success";
+//		}
+//		return "main";
+//	}
+//	
 	
 	
 	
