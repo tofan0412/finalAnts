@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ants.com.member.model.MemberVo;
 import ants.com.member.service.MemberServiceI;
 
-@RequestMapping("/member")
+@RequestMapping("/projectMember")
 @Controller
-public class MemberController {
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+public class ProjectMemberController {
+	private static final Logger logger = LoggerFactory.getLogger(ProjectMemberController.class);
 	
 	@Resource(name="memberService")
 	MemberServiceI memberService;

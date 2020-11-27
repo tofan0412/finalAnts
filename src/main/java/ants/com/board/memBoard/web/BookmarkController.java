@@ -1,10 +1,10 @@
-package ants.com.board.manageBoard.web;
+package ants.com.board.memBoard.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/manageBoard")
+@RequestMapping("/bookmark")
 @Controller
-public class ManageBoardController {
-
+public class BookmarkController {
+	
 }
