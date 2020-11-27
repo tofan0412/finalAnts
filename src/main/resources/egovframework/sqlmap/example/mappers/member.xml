@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
+	
 	<select id="getMember" parameterType="String" resultType="MemberVo">
 		SELECT * FROM MEMBER
-		 WHERE MEM_ID = #{mem_id, jdbcType=VARCHAR2}
+		 WHERE MEM_ID = #{mem_id}
 	</select>
-
 
 </mapper>
