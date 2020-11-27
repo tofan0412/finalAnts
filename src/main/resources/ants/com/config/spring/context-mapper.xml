@@ -16,6 +16,6 @@
 		<property name="configLocation"
 			value="classpath:/ants/com/config/sqlmap/mybatis-config.xml" />
 		<property name="mapperLocations"
-			value="classpath:/ants/comt/config/sqlmap/mappers/*.xml" />
+			value="classpath:/ants/com/config/sqlmap/mappers/*.xml" />
 	</bean>
 </beans>

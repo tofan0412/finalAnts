@@ -4,11 +4,12 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-                http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
-	
-	<context:component-scan base-package="ants.com" annotation-config="false">
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<context:component-scan base-package="ants.com"
+		annotation-config="false">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
@@ -45,7 +46,8 @@
 		<property name="order" value="1"></property>
 	</bean>
 
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- prefix : 접두어, suffix : 접미어 -->
 		<!-- Controller가 반환하는 문자열에 prefix, suffix를 적용하여 해당 경로의 파일로 응답을 생성 LoginController.getView() 
 			==> "login/view" prefix viewName suffix "/WEB-INF/views/" + "login/view" 
@@ -56,17 +58,18 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<bean id="paginationManager"
-		class="egovframework.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager">
-		<property name="rendererType">
-			<map>
-				<entry key="image" value-ref="imageRenderer" />
-			</map>
-		</property>
-	</bean>
-	
+	<!-- <bean id="paginationManager" -->
+	<!-- class="egovframework.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager"> -->
+	<!-- <property name="rendererType"> -->
+	<!-- <map> -->
+	<!-- <entry key="image" value-ref="imageRenderer" /> -->
+	<!-- </map> -->
+	<!-- </property> -->
+	<!-- </bean> -->
+
 	<!-- /For Pagination Tag -->
-<!-- 	<mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator" /> -->
+	<!-- <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator" 
+		/> -->
 
 	<!-- 정적자원 매핑처리 -->
 	<!-- localhost/resoureces.style.css -->
@@ -76,7 +79,6 @@
 		location="/resources/plugins/" />
 	<mvc:resources mapping="/dist/**"
 		location="/resources/dist/" />
-
 
 	<!-- tiles view resolver 추가 1. tiles 설정 작업 : TilesConfigurer를 통해 설정 2. tiles 
 		view resolver 등록 -->
@@ -95,8 +97,8 @@
 			value="org.springframework.web.servlet.view.tiles3.TilesView"></property>
 		<property name="order" value="0"></property>
 	</bean>
+ 
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:default-servlet-handler />
 	
-	
-
-
 </beans>
