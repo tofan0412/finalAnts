@@ -22,7 +22,6 @@
 		<!-- Control Sidebar -->
 		<%@include file="rigth.jsp"%>
 
-
 		<!-- Main Footer -->
 		<%@include file="footer.jsp"%>
 	</div>

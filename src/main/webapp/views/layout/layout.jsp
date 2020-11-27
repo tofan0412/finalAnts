@@ -11,6 +11,7 @@
 
 		<!-- main_header -->
 		<tiles:insertAttribute name="header" />
+		
 		<!-- left Sidebar Container -->
 		<tiles:insertAttribute name="left" />
 
@@ -20,9 +21,9 @@
 		<!-- Control Sidebar -->
 		<tiles:insertAttribute name="right" />
 
-
 		<!-- Main Footer -->
 		<tiles:insertAttribute name="footer" />
+		
 	</div>
 
 	<!-- jQuery, style -->
