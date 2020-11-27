@@ -21,7 +21,7 @@ public class TodoController {
 	}
 
 	// 일감 등록
-	@RequestMapping("/todoInsertView")
+	@RequestMapping("/todoInsert")
 	public String todoInsert() {
 		return "";
 	}

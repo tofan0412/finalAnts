@@ -36,7 +36,7 @@ public class MemberController {
 	@RequestMapping("/mainView")
 	public String mainView() {
 		logger.debug("메인뷰 진입");
-		return "main";
+		return "main.tiles/main";
 	}
 	
 	
