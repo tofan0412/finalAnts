@@ -29,27 +29,36 @@ public class MemberController {
 		return "login";
 	}
 	
+	
+	@RequestMapping("/mainView")
+	public String mainView() {
+		logger.debug("메인뷰 진입");
+		return "main";
+	}
+	
+	
+	@RequestMapping("/viewlogin")
+	public String viewlogin() {
+		logger.debug("MemberController viewlogin");
+		return "member/login";
+	}
+	
+	
+	
 	@RequestMapping("/loginFunc")
 	public String login(String mem_id, String mem_pass,HttpSession session, Model model) {
-		logger.debug("로그인 메서드 진입 ...{}", mem_id);
-		Map<String, String> memInfo = new HashMap<>();
-		memInfo.put("mem_id", mem_id);
-		memInfo.put("mem_pass", mem_pass);
+		logger.debug("MemberController loginFunc : {}", mem_id);
 		
-		MemberVo memberVo = memberService.login(memInfo);
+		MemberVo memberVo = memberService.getMember(mem_id);
 		
-		logger.debug("DB에서 찾은 값은 ? {}", memberVo);
 		if (memberVo != null) {
 			session.setAttribute("s_member", memberVo);
 			return "success";
 		}
-		return "login";
+		return "main";
 	}
 	
-	@RequestMapping("/project")
-	public String test() {
-		return "content/project";
-	}
+	
 	
 	
 	
