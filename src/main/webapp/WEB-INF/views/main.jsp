@@ -12,7 +12,9 @@
 <div class="main_container jg">
 	
 	
-	<div style="height : 400px; background-color : lightblue;">
+	<div style="height : 400px; 
+			background-image : 
+			url('${pageContext.request.contextPath}/resources/dist_main/img/main_background.png');">
 		<div class="conA" style="float : left; padding-left : 150px;">
 			<div class="img1">
 				<img src="${pageContext.request.contextPath }/resources/dist_main/img/mainimg.jpg"
