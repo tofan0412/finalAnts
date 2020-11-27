@@ -11,7 +11,7 @@ $(function(){
 	$("#loginBtn").on('click', function(){
 		var mem_id ="java";
 		var mem_pass ="java";
-		$(location).attr('href', '${pageContext.request.contextPath}/login/loginFunc?mem_id='+mem_id+"&mem_pass="+mem_pass);
+		$(location).attr('href', '${pageContext.request.contextPath}/member/loginFunc?mem_id='+mem_id+"&mem_pass="+mem_pass);
 	})
 })
 
