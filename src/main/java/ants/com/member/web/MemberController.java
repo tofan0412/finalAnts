@@ -44,6 +44,7 @@ public class MemberController {
 	}
 	
 	
+	
 //	@RequestMapping("/loginFunc")
 //	public String login(String mem_id, String mem_pass,HttpSession session, Model model) {
 //		logger.debug("MemberController loginFunc : {}", mem_id);
