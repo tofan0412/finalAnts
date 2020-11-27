@@ -8,9 +8,6 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<mvc:annotation-driven />
-	<mvc:default-servlet-handler />
-
 	<context:component-scan base-package="ants.com"
 		annotation-config="false">
 		<context:include-filter type="annotation"
@@ -100,6 +97,8 @@
 			value="org.springframework.web.servlet.view.tiles3.TilesView"></property>
 		<property name="order" value="0"></property>
 	</bean>
-
-
+ 
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:default-servlet-handler />
+	
 </beans>
