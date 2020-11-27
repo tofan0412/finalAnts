@@ -64,4 +64,10 @@
     <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
     <mvc:annotation-driven/>
     
+    <!-- 정적자원 매핑처리 -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
+	<mvc:resources mapping="/dist/**" location="/resources/dist/"/>
+    
+    
 </beans>
