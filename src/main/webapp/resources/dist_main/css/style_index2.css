@@ -1,0 +1,124 @@
+.index-session._animation-target.image.play{
+webkit-tap-highlight-color: rgba(0,0,0,0);
+font-size: 14px;
+line-height: 1.42857143;
+color: #81F79F;
+box-sizing: border-box;
+word-break: keep-all;
+font-family: 'Noto Sans Korean',Roboto,"Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif,serif!important;
+background: linear-gradient(90deg,rgba(65,229,161,1)0,rgba(91,201,187,1)55%);
+height: 100px;
+}
+
+
+.inner-wrapper{
+	webkit-tap-highlight-color: rgba(0,0,0,0);
+font-size: 14px;
+line-height: 1.42857143;
+color: #333;
+background-image: url(../dist2/img/mainimg.jpg);
+box-sizing: border-box;
+word-break: keep-all;
+margin: 0 auto;
+position: relative;
+height: 100%;
+text-align: center;
+max-width: 100%;
+font-family: 'Noto Sans Korean',Roboto,"Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif,serif!important;
+}
+
+/* .hero-image{ */
+/* 	webkit-tap-highlight-color: rgba(0,0,0,0); */
+/* font-size: 14px; */
+/* line-height: 1.42857143; */
+/* color: #333; */
+/* text-align: center; */
+/* box-sizing: border-box; */
+/* word-break: keep-all; */
+/* font-family: 'Noto Sans Korean',Roboto,"Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif,serif!important; */
+/* background: url(https://cdn.jandi.com/landing/assets/images/hero/f9430ad4.lp_bg_product.png) no-repeat 50% 50%; */
+/* position: absolute; */
+/* width: 796px; */
+/* height: 683px; */
+/* z-index: 3; */
+/* left: auto; */
+/* top: auto; */
+/* right: calc(50% - 404px); */
+/* transform: scale(0.5); */
+/* bottom: -120px; */
+/* } */
+
+/* /*left*/ */
+.section-content.left.heading{
+	webkit-tap-highlight-color: rgba(0,0,0,0);
+font-size: 14px;
+line-height: 1.42857143;
+color: #333;
+box-sizing: border-box;
+word-break: keep-all;
+font-family: 'Noto Sans Korean',Roboto,"Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif,serif!important;
+position: absolute;
+z-index: 3;
+width: 500px;
+opacity: 0;
+left: 50%;
+margin-left: -250px!important;
+text-align: center;
+top: 80px;
+animation-delay: .5s;
+animation-name: bottom-up;
+animation-duration: 1.35s;
+animation-timing-function: cubic-bezier(0.5,.04,0,1.04);
+animation-iteration-count: 1;
+animation-fill-mode: forwards;
+}
+
+.heading-title{
+	webkit-tap-highlight-color: rgba(0,0,0,0);
+text-align: center;
+box-sizing: border-box;
+word-break: keep-all;
+font-family: 'Noto Sans Korean',Roboto,"Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif,serif!important;
+color: #FFF;
+font-weight: 700;
+line-height: 1.2;
+text-shadow: 0 1px 3px rgba(0,0,0,.2);
+width: 99%!important;
+font-size: 12vw;
+margin-bottom: 4vw;
+}
+
+.content-desc{
+	webkit-tap-highlight-color: rgba(0,0,0,0);
+text-align: center;
+box-sizing: border-box;
+word-break: keep-all;
+font-family: 'Noto Sans Korean',Roboto,"Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif,serif!important;
+color: #FFF;
+text-shadow: 0 1px 3px rgba(0,0,0,.2);
+font-size: 16px;
+line-height: 1.5em;
+width: 300px;
+max-width: 95%;
+margin: 4vw auto;
+}
+
+.btn-box{
+	webkit-tap-highlight-color: rgba(0,0,0,0);
+font-size: 14px;
+line-height: 1.42857143;
+color: #333;
+text-align: center;
+box-sizing: border-box;
+word-break: keep-all;
+font-family: 'Noto Sans Korean',Roboto,"Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif,serif!important;
+padding: 0;
+width: 80%;
+margin: 0 auto;
+}
+
+
+
+
+
+
