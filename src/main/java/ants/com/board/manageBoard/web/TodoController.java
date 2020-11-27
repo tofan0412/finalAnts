@@ -17,7 +17,7 @@ public class TodoController {
 	// 일감 등록 화면 출력 메서드
 	@RequestMapping("/todoInsertView")
 	public String todoInsertView() {
-		return "";
+		return "tiles/manager/pl_toInsert";
 	}
 
 	// 일감 등록

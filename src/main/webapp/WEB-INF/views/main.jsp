@@ -1,22 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 <!-- <div class="chatbot_container"> -->
 <!-- 		<ul class="chatbot"> -->
 <!-- 			<li class="menu_chat"><a class="menu_title" href="#">챗봇</a></li> -->
 <!-- 		</ul> -->
 <!-- </div> -->
 
-<div class="main_container">
+<div class="main_container jg">
 	
-	<div class="conA">
-		<div class="img1">
-			<img src="${pageContext.request.contextPath }/resource/dist_main/img/mainimg.jpg"
-				res=""><a class="menu_title" href="#">회원가입</a></img>
+	
+	<div style="height : 400px; background-color : lightblue;">
+		<div class="conA" style="float : left; padding-left : 150px;">
+			<div class="img1">
+				<img src="${pageContext.request.contextPath }/resources/dist_main/img/mainimg.jpg"
+					res=""><a class="menu_title" href="#">회원가입</a></img>
+			</div>
+		</div>
+		
+		<div style="float : right; padding-right : 150px;">
+			div2
 		</div>
 	</div>
-	
-	<div class="conB">
+
 		<div class="conB_title">
 			<h4>Ants 주요기능</h4>
 		</div>

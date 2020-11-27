@@ -20,7 +20,7 @@
 		 <%@include file="contentmenu.jsp"%> 
 
 		<!-- Control Sidebar -->
-		<%@include file="rigth.jsp"%>
+		<%@include file="right.jsp"%>
 
 		<!-- Main Footer -->
 		<%@include file="footer.jsp"%>
