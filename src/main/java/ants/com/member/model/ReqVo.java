@@ -1,6 +1,6 @@
 package ants.com.member.model;
 
-public class ReqListVo {
+public class ReqVo {
 	
 	
 	private String req_id;
