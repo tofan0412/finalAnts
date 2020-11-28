@@ -45,7 +45,7 @@ public class ProjectMemberController {
 		MemberVo memberVo = memberService.getMember(mem_id);
 		
 		logger.debug("DB에서 찾은 값은 ? {}", memberVo);
-		if (memberVo != null && memberVo.getMem_pass().equals(memberVo.getMem_pass())) {
+		if (memberVo != null && memberVo.getMemPass().equals(memberVo.getMemPass())) {
 			session.setAttribute("s_member", memberVo);
 			
 			return "content/project";
