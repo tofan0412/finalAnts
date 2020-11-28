@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="issue">
+
+   <!-- 이슈게시글 리스트 가져오기 -->
+	<select id="getissuelist" resultType="IssueVo" parameterType="String">
+	
+		select a.issue_id, a.issue_title, a.issue_cont, a.reg_dt, b.mem_name as mem_id
+		from( select issue_id, issue_title, issue_cont, reg_dt , mem_id
+		        from issue
+		        where req_id =1 ) a , member b
+		where a.mem_id = b.mem_id
+				
+	</select>
+	
+	<!-- 이슈게시글 작성자 이름 가져오기  -->
+	<select id="getwritername" resultType="String" parameterType="String">
+		 SELECT mem_name
+		 FROM member
+		 WHERE mem_id = #{mem_id}
+		
+	</select>
+	
+	<!-- 각 이슈게시글 내용 가져오기 -->
+	<select id="geteachissue" resultType="IssueVo" parameterType="String">
+		 SELECT *
+		 FROM issue
+		 WHERE issue_id = #{issue_id}		
+	</select>
+	
+	
+
+
+</mapper>
