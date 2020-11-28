@@ -5,50 +5,43 @@ import java.util.Date;
 public class ProjectVo {
 	
 	
-	private String REQ_ID;
-	private String MEM_ID;
-	private String PRO_NAME;
-	private String PERCENT;
-	private Date REG_DT;
+	private String req_id;
+	private String mem_id;
+	private String pro_name;
+	private String percent;
+	private Date reg_dt;
 	
+	public String getReq_id() {
+		return req_id;
+	}
+	public void setReq_id(String req_id) {
+		this.req_id = req_id;
+	}
+	public String getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
+	public String getPro_name() {
+		return pro_name;
+	}
+	public void setPro_name(String pro_name) {
+		this.pro_name = pro_name;
+	}
+	public String getPercent() {
+		return percent;
+	}
+	public void setPercent(String percent) {
+		this.percent = percent;
+	}
+	public Date getReg_dt() {
+		return reg_dt;
+	}
+	public void setReg_dt(Date reg_dt) {
+		this.reg_dt = reg_dt;
+	}
 	
-	public String getREQ_ID() {
-		return REQ_ID;
-	}
-	public void setREQ_ID(String rEQ_ID) {
-		REQ_ID = rEQ_ID;
-	}
-	public String getMEM_ID() {
-		return MEM_ID;
-	}
-	public void setMEM_ID(String mEM_ID) {
-		MEM_ID = mEM_ID;
-	}
-	public String getPRO_NAME() {
-		return PRO_NAME;
-	}
-	public void setPRO_NAME(String pRO_NAME) {
-		PRO_NAME = pRO_NAME;
-	}
-	public String getPERCENT() {
-		return PERCENT;
-	}
-	public void setPERCENT(String pERCENT) {
-		PERCENT = pERCENT;
-	}
-	public Date getREG_DT() {
-		return REG_DT;
-	}
-	public void setREG_DT(Date rEG_DT) {
-		REG_DT = rEG_DT;
-	}
-	
-	
-	@Override
-	public String toString() {
-		return "ProjectVo [REQ_ID=" + REQ_ID + ", MEM_ID=" + MEM_ID + ", PRO_NAME=" + PRO_NAME + ", PERCENT=" + PERCENT
-				+ ", REG_DT=" + REG_DT + "]";
-	}
 	
 	
 }
