@@ -48,11 +48,11 @@
 
 <title>회원 등록</title>
 
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="/sources/bootstrap/plugins/fontawesome-free/css/all.min.css">
-<!-- Theme style -->
-<link rel="stylesheet" href="/sources/bootstrap/dist/css/adminlte.min.css">
-
+<!--  Font Awesome Icons 
+<link rel="stylesheet" href="/resources/bootstrap/plugins/fontawesome-free/css/all.min.css">
+Theme style
+<link rel="stylesheet" href="/resources/bootstrap/dist/css/adminlte.min.css">
+ -->
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
 

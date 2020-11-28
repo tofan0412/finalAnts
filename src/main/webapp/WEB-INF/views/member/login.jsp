@@ -38,7 +38,7 @@
     	<img src="../dist/loginimage.png" height="100%" width="100%" alt="Avatar">
     </div>
     
-    <div class="col-sm-6" style="background-color:lavenderblush;">
+    <div class="col-sm-6" style="background-color:white;">
     	<div class="center">
     			<form action="/member/loginFunc" method="get"> 
 					<div class="form-group has-feedback">
@@ -74,9 +74,6 @@
 </div>
 	
 	<script>
-	$(document).ready(function(){
-	 
-
 /* 		
 		
 	    // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
@@ -108,6 +105,9 @@
 	});
 	
 	 */
+	$(document).ready(function(){
+	 
+
 	
 	function setCookie(cookieName, value, exdays){
 	    var exdate = new Date();
