@@ -23,17 +23,18 @@
     del
 ) VALUES (
     todo_seq.nextval,
-    TO_DATE(#{todo_start},'YYYY/MM/DD'),
-    TO_DATE(#{todo_end},'YYYY/MM/DD'),
-    #{todo_title},
+    TO_DATE(#{todoStart},'YYYY/MM/DD'),
+    TO_DATE(#{todoEnd},'YYYY/MM/DD'),
+    #{todoCont},
+    #{todoTitle},
     '0',
-    'gen',
+    #{todoImportance},
     NULL,
-    '2',
-    'mimi',
-    NULL,
-    NULL
-);
+    #{reqId},
+    #{memId},
+    #{todoParentid},
+    NULL                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+)
 
 
 </insert>

@@ -1,7 +1,5 @@
 package ants.com.board.manageBoard.model;
 
-import java.util.Date;
-
 public class TodoVo {
 	
 	private String todoId;
@@ -9,7 +7,7 @@ public class TodoVo {
 	private String todoEnd;
 	private String todoCont;
 	private String todoTitle;
-	private String percent;
+	private String todoPercent;
 	private String todoImportance;
 	private String todoLevel;
 	private String reqId;
@@ -48,12 +46,7 @@ public class TodoVo {
 	public void setTodoTitle(String todoTitle) {
 		this.todoTitle = todoTitle;
 	}
-	public String getPercent() {
-		return percent;
-	}
-	public void setPercent(String percent) {
-		this.percent = percent;
-	}
+	
 	public String getTodoImportance() {
 		return todoImportance;
 	}
@@ -90,12 +83,18 @@ public class TodoVo {
 	public void setDel(String del) {
 		this.del = del;
 	}
+	public String getTodoPercent() {
+		return todoPercent;
+	}
+	public void setTodoPercent(String todoPercent) {
+		this.todoPercent = todoPercent;
+	}
 	@Override
 	public String toString() {
 		return "TodoVo [todoId=" + todoId + ", todoStart=" + todoStart + ", todoEnd=" + todoEnd + ", todoCont="
-				+ todoCont + ", todoTitle=" + todoTitle + ", percent=" + percent + ", todoImportance=" + todoImportance
-				+ ", todoLevel=" + todoLevel + ", reqId=" + reqId + ", memId=" + memId + ", todoParentid="
-				+ todoParentid + ", del=" + del + "]";
+				+ todoCont + ", todoTitle=" + todoTitle + ", todoPercent=" + todoPercent + ", todoImportance="
+				+ todoImportance + ", todoLevel=" + todoLevel + ", reqId=" + reqId + ", memId=" + memId
+				+ ", todoParentid=" + todoParentid + ", del=" + del + "]";
 	}
 	
 	
