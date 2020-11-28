@@ -16,5 +16,10 @@
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
+<!-- 
+캐시무력화 
+<script src="/dist/js/adminlte.min.js?ver=1"></script>
+파라미터로 ver=1, ver=2..이런식으로 진행시 캐시무력화함 (캐시삭제하지말고 무력화할것!)
+-->
 
 

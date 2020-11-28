@@ -5,57 +5,58 @@ import java.util.Date;
 public class NoticeVo {
 	
 	
-	private String NOTICE_ID;
-	private String NOTICE_TITLE;
-	private String NOTICE_CONT;
-	private Date REG_DT;
-	private String ADMIN_ID;
-	private String DEL;
+	private String noticeId;
+	private String noticeTitle;
+	private String noticeCont;
+	private String regDt;
+	private String adminId;
+	private String del;
 	
-	
-	public String getNOTICE_ID() {
-		return NOTICE_ID;
+	public String getNoticeId() {
+		return noticeId;
 	}
-	public void setNOTICE_ID(String nOTICE_ID) {
-		NOTICE_ID = nOTICE_ID;
+	public void setNoticeId(String noticeId) {
+		this.noticeId = noticeId;
 	}
-	public String getNOTICE_TITLE() {
-		return NOTICE_TITLE;
+	public String getNoticeTitle() {
+		return noticeTitle;
 	}
-	public void setNOTICE_TITLE(String nOTICE_TITLE) {
-		NOTICE_TITLE = nOTICE_TITLE;
+	public void setNoticeTitle(String noticeTitle) {
+		this.noticeTitle = noticeTitle;
 	}
-	public String getNOTICE_CONT() {
-		return NOTICE_CONT;
+	public String getNoticeCont() {
+		return noticeCont;
 	}
-	public void setNOTICE_CONT(String nOTICE_CONT) {
-		NOTICE_CONT = nOTICE_CONT;
+	public void setNoticeCont(String noticeCont) {
+		this.noticeCont = noticeCont;
 	}
-	public Date getREG_DT() {
-		return REG_DT;
+	public String getRegDt() {
+		return regDt;
 	}
-	public void setREG_DT(Date rEG_DT) {
-		REG_DT = rEG_DT;
+	public void setRegDt(String regDt) {
+		this.regDt = regDt;
 	}
-	public String getADMIN_ID() {
-		return ADMIN_ID;
+	public String getAdminId() {
+		return adminId;
 	}
-	public void setADMIN_ID(String aDMIN_ID) {
-		ADMIN_ID = aDMIN_ID;
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
 	}
-	public String getDEL() {
-		return DEL;
+	public String getDel() {
+		return del;
 	}
-	public void setDEL(String dEL) {
-		DEL = dEL;
+	public void setDel(String del) {
+		this.del = del;
 	}
-	
 	
 	@Override
 	public String toString() {
-		return "NoticeVo [NOTICE_ID=" + NOTICE_ID + ", NOTICE_TITLE=" + NOTICE_TITLE + ", NOTICE_CONT=" + NOTICE_CONT
-				+ ", REG_DT=" + REG_DT + ", ADMIN_ID=" + ADMIN_ID + ", DEL=" + DEL + "]";
+		return "NoticeVo [noticeId=" + noticeId + ", noticeTitle=" + noticeTitle + ", noticeCont=" + noticeCont
+				+ ", regDt=" + regDt + ", adminId=" + adminId + ", del=" + del + "]";
 	}
+	
+	
+	
 	
 	
 	

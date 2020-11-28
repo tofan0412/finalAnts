@@ -6,6 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style type="text/css">
+.hold-transition sidebar-mini{
+	min-height: 1800px;
+	min-width: 1600px; 
+}
+body{
+ overflow-x: hidden;
+}
+</style>
+
 </head>
 
 <title>Ants - 협업관리 프로젝트 툴</title>

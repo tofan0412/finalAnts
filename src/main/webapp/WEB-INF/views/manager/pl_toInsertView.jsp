@@ -13,7 +13,6 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<%@ include file="../layout/commonLib.jsp"%>
 <script type="text/javascript">
 	 	$(document).ready(function(){
 	 		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
