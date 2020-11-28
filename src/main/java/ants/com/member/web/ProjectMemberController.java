@@ -26,7 +26,6 @@ public class ProjectMemberController {
 	@Resource(name="memberService")
 	MemberServiceI memberService;
 	
-<<<<<<< HEAD
 	@Resource(name="promemService")
 	ProjectmemberServiceI promemService;
 	
@@ -53,11 +52,6 @@ public class ProjectMemberController {
 		}
 		return "login";
 	}
-=======
-	
-	
-
->>>>>>> 814cc8dd8376be58f1e5da33b953afa93bad3a3c
 	
 	
 	@RequestMapping("/project")
