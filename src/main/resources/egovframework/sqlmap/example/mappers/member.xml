@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-	<select id="login" parameterType="map" resultType="MemberVo">
-		SELECT *
-		  FROM MEMBER
+	
+	<select id="getMember" parameterType="String" resultType="MemberVo">
+		SELECT * FROM MEMBER
 		 WHERE MEM_ID = #{mem_id}
-		   AND MEM_PASS = #{mem_pass}
 	</select>
-
+	
+	<insert id="insertMember" parameterType="MemberVo">
+    	INSERT INTO MEMBER VALUES(#{mem_id}, #{mem_name}, #{mem_pass}, #{mem_tel}, #{mem_filepath}, #{mem_filename}, #{mem_alert}, #{del}, #{mem_type})
+   	</insert>
 
 </mapper>

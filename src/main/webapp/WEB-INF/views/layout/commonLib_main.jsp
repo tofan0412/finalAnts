@@ -3,6 +3,16 @@
 
 <!-- Font Awesome Icons -->
 <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+
+<!-- 도입문의, 회원 가입 버튼 스타일 적용 -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/dist_main/css/style_main_button.css">
+
+<!-- 메인 이미지 효과 적용 -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/dist_main/css/style_main_imgEffect.css">
+
+<!-- 왼쪽 글씨 효과 적용 -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/dist_main/css/style_main_text.css">
+
 <!-- Theme style -->
 <link rel="stylesheet" href="/dist/css/adminlte.min.css">
 <!-- Google Font: Source Sans Pro -->
