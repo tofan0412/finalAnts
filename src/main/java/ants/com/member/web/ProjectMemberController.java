@@ -62,39 +62,102 @@ public class ProjectMemberController {
 	
 	
 	@RequestMapping("/eachproject")
-	public String eachproject() {
+	public String eachproject(HttpSession session) {
 		
 		return "board/eachproject";
 	}
 	
 	
 	@RequestMapping("/issuelist")
-	public String getissuelist(String req_id, HttpSession session, Model model) {
+	public String getissuelist(HttpSession session, Model model) {
 		
-//		 MemberVo memberVo = (MemberVo)session.getAttribute("s_member");
-//		 String mem_id = memberVo.getMem_id();
-		System.out.println("req_id : " + req_id);
-//		String req_id = "1";
-		List<IssueVo> issuelist = promemService.issuelist(req_id);
+		String reqId = (String)session.getAttribute("reqId");
 		
-		System.out.println("issuelist : " + issuelist);
+		List<IssueVo> issuelist = promemService.issuelist(reqId);		
 		model.addAttribute("issuelist", issuelist);
 		 
 		return "board/issuelist";
 	}
 	
-	@RequestMapping("/eachissue")
-	public String geteachissue(String issue_id, HttpSession session, Model model) {
+	// 각 이슈 상세보기
+	@RequestMapping("/eachissueDetail")
+	public String geteachissue(String issueId, HttpSession session, Model model) {
 		
-//		 MemberVo memberVo = (MemberVo)session.getAttribute("s_member");
-//		 String mem_id = memberVo.getMem_id();
-		System.out.println("issue_id : " + issue_id);
-//		String req_id = "1";
-		IssueVo issuevo = promemService.geteachissue(issue_id);
+		IssueVo issuevo = promemService.geteachissue(issueId);
 		
 		model.addAttribute("issuevo", issuevo);
 		 
 		return "board/issueDetail";
+	}
+	
+	// 이슈 작성 View
+	@RequestMapping("/insertissueView")
+	public String insertissueView(HttpSession session) {
+
+		return "board/issueInsert";
+	}
+	
+	// 이슈 작성
+	@RequestMapping("/insertissue")
+	public String insertissue(IssueVo issueVo, HttpSession session, Model model) {
+		
+		String reqId = (String)session.getAttribute("reqId");
+		issueVo.setReqId(reqId);
+		issueVo.setMemId("cony@naver.com");
+		
+//		System.out.println(issueVo);
+		int insertCnt = promemService.insertissue(issueVo);
+
+		if(insertCnt>0) {		
+			return "redirect:/projectMember/issuelist";
+		}else {
+			return "redirect:/projectMember/insertissueView";
+			
+		}
+	}
+	
+	// 이슈 update View
+	@RequestMapping("/updateissueView")
+	public String updateissueView(String issueId, HttpSession session, Model model) {
+		
+		IssueVo issuevo = promemService.geteachissue(issueId);
+		model.addAttribute("issueVo", issuevo);
+		
+		return "board/issueUpdate";
+	}
+	
+	// 이슈 update 
+	@RequestMapping("/updateissue")
+	public String updateissue(IssueVo issueVo, HttpSession session, Model model) {
+		
+		String reqId = (String)session.getAttribute("reqId");
+		issueVo.setReqId(reqId);
+		issueVo.setMemId("cony@naver.com");
+		
+		int insertCnt = promemService.insertissue(issueVo);
+		
+		if(insertCnt>0) {		
+			return "redirect:/projectMember/issuelist";
+		}else {
+			return "redirect:/projectMember/updateissueView";
+			
+		}
+	}
+	
+	
+	// 이슈 delete 
+	@RequestMapping("/delissue")
+	public String delissue(String issueId, HttpSession session, Model model) {
+		
+		
+		int delCnt = promemService.delissue(issueId);
+		System.out.println(delCnt);
+		
+		if(delCnt>0) {		
+			return "redirect:/projectMember/issuelist";
+		}else {
+			return "redirect:/projectMember/eachissueDetail?issue="+issueId;
+		}
 	}
 	
 	
