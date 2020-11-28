@@ -23,28 +23,9 @@ public class ProjectController {
 	@Resource(name="memberService")
 	MemberServiceI memberService;
 	
-	@RequestMapping("/loginView")
-	public String loginView() {
-		logger.debug("로그인뷰 진입 ...");
-		return "login";
-	}
+
 	
-	@RequestMapping("/loginFunc")
-	public String login(String mem_id, String mem_pass,HttpSession session, Model model) {
-		logger.debug("로그인 메서드 진입 ...{}", mem_id);
-		Map<String, String> memInfo = new HashMap<>();
-		memInfo.put("mem_id", mem_id);
-		memInfo.put("mem_pass", mem_pass);
-		
-		MemberVo memberVo = memberService.login(memInfo);
-		
-		logger.debug("DB에서 찾은 값은 ? {}", memberVo);
-		if (memberVo != null) {
-			session.setAttribute("s_member", memberVo);
-			return "success";
-		}
-		return "login";
-	}
+
 	
 	@RequestMapping("/project")
 	public String test() {

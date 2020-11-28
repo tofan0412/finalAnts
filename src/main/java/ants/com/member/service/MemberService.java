@@ -19,9 +19,9 @@ public class MemberService implements MemberServiceI {
 	MemberDaoI memberDao;
 	
 	@Override
-	public MemberVo login(Map<String, String> memInfo) {
-		logger.debug("Dao 진입 ...");
-		return memberDao.login(memInfo);
+	public MemberVo getMember(String mem_id) {
+		logger.debug("memberService login : {}", mem_id);
+		return memberDao.getMember(mem_id);
 	}
-
+	
 }

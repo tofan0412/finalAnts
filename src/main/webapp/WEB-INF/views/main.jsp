@@ -73,8 +73,6 @@
 		
 	</div>
 
-
-	<div class="conB" style="float : bottom; ">
 		<div class="conB_title">
 			<h4>Ants 주요기능</h4>
 		</div>
