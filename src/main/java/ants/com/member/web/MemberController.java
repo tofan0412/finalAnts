@@ -64,7 +64,14 @@ public class MemberController {
 		if(dbMember != (null) && memberVo.getMem_pass().equals(dbMember.getMem_pass()) ) {
 			session.setAttribute("S_MEMBER", memberVo);
 			model.addAttribute("to_day", new Date());
-			return "main";
+			
+			if(dbMember.getMem_type().equals("pl")) {
+				return "manager/pl_main";
+			}else if(dbMember.getMem_type().equals("pm")) {
+				return "manager/pm_main";
+			}else {
+				return "main";
+			}
 			
 		}else {
 			return "member/login";
@@ -123,7 +130,10 @@ public class MemberController {
 		
 		//try {
 		if(insertCnt == 1){
+		
 			return "main";
+			
+			
 		//}catch() {
 			
 		//}
