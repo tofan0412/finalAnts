@@ -42,7 +42,7 @@ public class ProjectMemberController {
 		memInfo.put("mem_id", mem_id);
 		memInfo.put("mem_pass", mem_pass);
 		
-		MemberVo memberVo = memberService.login(memInfo);
+		MemberVo memberVo = memberService.getMember(mem_id);
 		
 		logger.debug("DB에서 찾은 값은 ? {}", memberVo);
 		if (memberVo != null && memberVo.getMem_pass().equals(memberVo.getMem_pass())) {
