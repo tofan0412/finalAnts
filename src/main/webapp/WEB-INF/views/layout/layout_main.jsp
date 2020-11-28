@@ -12,7 +12,9 @@
 	min-height: 1800px;
 	min-width: 1600px; 
 }
-
+body{
+ overflow-x: hidden;
+}
 </style>
 
 </head>

@@ -90,7 +90,7 @@
 		</div>
 		
 		<div class="conA main-right">
-			<div class="img1" >
+			<div class="img1" style="overflow : hidden;">
 				<img class="shadow-pop-tr" src="${pageContext.request.contextPath }/resources/dist_main/img/main_right_img.png"
 					res=""></img>
 			</div>
