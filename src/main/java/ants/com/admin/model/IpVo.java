@@ -3,43 +3,43 @@ package ants.com.admin.model;
 public class IpVo {
 	
 	
-	private String ip_id;
-	private String ip_addr;
-	private String ip_status;
-	private String admin_id;
+	private String ipId;
+	private String ipAddr;
+	private String ipStatus;
+	private String adminId;
 	
-	
-	public String getIp_id() {
-		return ip_id;
+	public String getIpId() {
+		return ipId;
 	}
-	public void setIp_id(String ip_id) {
-		this.ip_id = ip_id;
+	public void setIpId(String ipId) {
+		this.ipId = ipId;
 	}
-	public String getIp_addr() {
-		return ip_addr;
+	public String getIpAddr() {
+		return ipAddr;
 	}
-	public void setIp_addr(String ip_addr) {
-		this.ip_addr = ip_addr;
+	public void setIpAddr(String ipAddr) {
+		this.ipAddr = ipAddr;
 	}
-	public String getIp_status() {
-		return ip_status;
+	public String getIpStatus() {
+		return ipStatus;
 	}
-	public void setIp_status(String ip_status) {
-		this.ip_status = ip_status;
+	public void setIpStatus(String ipStatus) {
+		this.ipStatus = ipStatus;
 	}
-	public String getAdmin_id() {
-		return admin_id;
+	public String getAdminId() {
+		return adminId;
 	}
-	public void setAdmin_id(String admin_id) {
-		this.admin_id = admin_id;
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
 	}
 	
 	
 	@Override
 	public String toString() {
-		return "IpVo [ip_id=" + ip_id + ", ip_addr=" + ip_addr + ", ip_status=" + ip_status + ", admin_id=" + admin_id
-				+ "]";
+		return "IpVo [ipId=" + ipId + ", ipAddr=" + ipAddr + ", ipStatus=" + ipStatus + ", adminId=" + adminId + "]";
 	}
+	
+	
 	
 	
 }

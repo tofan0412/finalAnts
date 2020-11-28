@@ -14,8 +14,8 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<%@ include file="../layout/commonLib.jsp"%>
 <script type="text/javascript">
+
 </script>
 <style type="text/css">
 #todoTable{
@@ -48,10 +48,13 @@
 			<tbody id="todoList">
 				<c:forEach items="${todoList}" var="todo">
 					<tr data-userid="${todo.todo_id}">
-						<td>${todo.todo_importance}</td>
+						<td>
+						<c:if test="${todo.todo_importance eq 'gen'}">일반</c:if>
+						<c:if test="${todo.todo_importance eq 'emg'}">긴급</c:if>
+						</td>
 						<td>${todo.todo_title}</td>
 						<td>${todo.mem_id}</td>
-<%-- 						<td>${todo.todo_todopercent(}</td> --%>
+<%-- 						<td>${todo.todo_percent(}</td> --%>
 						<td>${todo.todo_title}</td>
 						<td>${todo.todo_end}</td>
 					</tr>
