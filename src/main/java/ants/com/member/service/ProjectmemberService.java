@@ -19,16 +19,34 @@ public class ProjectmemberService extends EgovAbstractServiceImpl implements Pro
 	
 	// 이슈글 리스트
 	@Override
-	public List<IssueVo> issuelist(String req_id) {
+	public List<IssueVo> issuelist(String reqId) {
 		
-		
-		return projectmemdao.issuelist(req_id);
+		return projectmemdao.issuelist(reqId);
 	}
 
 	// 각 이슈글 내용
 	@Override
-	public IssueVo geteachissue(String issue_id) {
-		return projectmemdao.geteachissue(issue_id);
+	public IssueVo geteachissue(String issueId) {
+		return projectmemdao.geteachissue(issueId);
+	}
+
+	// 이슈글 작성하기
+	@Override
+	public int insertissue(IssueVo issueVo) {
+		
+		return projectmemdao.insertissue(issueVo);
+	}
+
+	// 이슈글 수정하기
+	@Override
+	public int updateissue(IssueVo issueVo) {
+		
+		return projectmemdao.updateissue(issueVo);
+	}
+
+	@Override
+	public int delissue(String issueId) {
+		return projectmemdao.delissue(issueId);
 	}
 
 }

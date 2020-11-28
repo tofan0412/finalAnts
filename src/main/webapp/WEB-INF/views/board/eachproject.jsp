@@ -10,9 +10,7 @@
 <script type="text/javascript">
 $(function(){
 	$("#issuebtn").on('click', function(){
-		var req_id ="1";
-		var mem_pass ="java";
-		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/issuelist?req_id='+req_id);
+		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/issuelist');
 	})
 })
 </script>

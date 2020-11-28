@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="issue">
+
+	<resultMap id="issues" type="ants.com.board.memBoard.model.IssueVo">
+		<result property="issueId" column="issue_id"/>
+		<result property="issueTitle" column="issue_title"/>
+		<result property="issueCont" column="issue_cont"/>
+		<result property="regDt" column="reg_dt"/>
+		<result property="categoryId" column="category_id"/>
+		<result property="issueKind" column="issue_kind"/>
+		<result property="issueDel" column="issue_del"/>
+		<result property="todoId" column="todo_id"/>
+		<result property="reqId" column="req_id"/>
+		<result property="memId" column="mem_id"/>
+	</resultMap>
+
+	
+	
 
    <!-- 이슈게시글 리스트 가져오기 -->
 	<select id="getissuelist" resultType="IssueVo" parameterType="String">
 	
-		select a.issue_id, a.issue_title, a.issue_cont, a.reg_dt, b.mem_name as mem_id
-		from( select issue_id, issue_title, issue_cont, reg_dt , mem_id
+		select a.issue_id as issueId, a.issue_title as issueTitle, a.issue_cont as issueCont, a.reg_dt as regDt, b.mem_name as memId
+		from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id
 		        from issue
-		        where req_id =1 ) a , member b
-		where a.mem_id = b.mem_id
+		        where req_id = #{reqId} ) a , member b
+		where a.mem_id = b.mem_id and a.issue_del = 'n'
 				
 	</select>
 	
@@ -17,18 +34,58 @@
 	<select id="getwritername" resultType="String" parameterType="String">
 		 SELECT mem_name
 		 FROM member
-		 WHERE mem_id = #{mem_id}
+		 WHERE mem_id = #{issue.memId}
 		
 	</select>
 	
 	<!-- 각 이슈게시글 내용 가져오기 -->
 	<select id="geteachissue" resultType="IssueVo" parameterType="String">
-		 SELECT *
-		 FROM issue
-		 WHERE issue_id = #{issue_id}		
+	
+		select a.issue_id, a.issue_title, a.issue_cont, a.reg_dt, a.category_id , a.issue_kind, b.mem_name as mem_id
+		from( select issue_id, issue_title, issue_cont, reg_dt , category_id, issue_kind, mem_id
+		        from issue ) a , member b
+		where a.mem_id = b.mem_id and a.issue_id = #{issue.issueId}
 	</select>
 	
 	
-
-
+	<!-- 이슈 작성하기 -->
+	<insert id="insertissue" parameterType="IssueVo">
+		
+		INSERT INTO issue (
+		    issue_id, issue_title, issue_cont,  reg_dt,  category_id,  
+		    issue_kind, issue_del, todo_id, req_id, mem_id
+		) VALUES (
+		    ISSUE_SEQ.nextval, #{issue.issueTitle}, #{issue.issueCont}, sysdate,  #{issue.categoryId}, 
+		    #{issue.issueKind}, 'n', '', #{issue.reqId}, #{issue.memId}
+		)
+		
+	</insert>
+	
+	<!-- 이슈 수정하기 -->
+	<update id="updateissue" parameterType="IssueVo">
+		UPDATE issue
+	    <set>
+	        <if test="issue_title != null">issue_title=#{issue.issueTitle},</if>
+	        <if test="issue_cont != null">issue_cont=#{issue.issueCont},</if>
+	        <if test="issue_kind != null">issue_kind=#{issue.issueKind},</if>
+	        <if test="category_id != null">category_id=#{issue.categoryId},</if>	 	            
+	        <if test="reg_dt != null">reg_dt=sydate,</if>	 	            
+	        <if test="mem_id != null">mem_id=#{issue.memId},</if>	 	            
+	        <if test="issue_del != null">issue_del=#{issue.issueDel},</if>	 	            
+	        <if test="todo_id != null">todo_id=#{issue.todoId},</if>	 	            
+	        <if test="req_id != null">req_id=#{issue.reqId}</if>	 	            
+	    </set>    
+	    where issue_id = #{issue.issueId}
+	</update>
+	
+	
+	<!-- 이슈 삭제하기 -->
+	<update id="delissue" parameterType="String"> 
+		UPDATE issue 
+			set issue_del = 'y' 
+		where issue_id = #{issue_id}
+	</update>
+	
+	
+	
 </mapper>
