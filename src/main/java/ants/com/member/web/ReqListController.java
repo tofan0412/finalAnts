@@ -22,6 +22,11 @@ public class ReqListController {
 	
 	@RequestMapping("/reqList")
 	public String selectReqList() {
+		
+		
+		
+		
+		
 		return "member/pmReqList";
 	}
 
