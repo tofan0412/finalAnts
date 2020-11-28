@@ -9,27 +9,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ants.com.member.service.MemberServiceI;
+import ants.com.member.service.PmServiceI;
 
 
-@RequestMapping("/reqList")
+@RequestMapping("/req")
 @Controller
 public class ReqListController {
 	private static final Logger logger = LoggerFactory.getLogger(ReqListController.class);
 	
-	@Resource(name="memberService")
-	MemberServiceI memberService;
+	@Resource(name="pmService")
+	private PmServiceI pmService;
 	
-
-	
-
-	
-	@RequestMapping("/project")
-	public String test() {
-		return "content/project";
+	@RequestMapping("/reqList")
+	public String selectReqList() {
+		return "member/pmReqList";
 	}
-	
-	
 
 	
 }
