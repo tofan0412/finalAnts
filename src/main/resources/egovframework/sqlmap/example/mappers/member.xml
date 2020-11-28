@@ -6,5 +6,9 @@
 		SELECT * FROM MEMBER
 		 WHERE MEM_ID = #{mem_id}
 	</select>
+	
+	<insert id="insertMember" parameterType="MemberVo">
+    	INSERT INTO MEMBER VALUES(#{mem_id}, #{mem_name}, #{mem_pass}, #{mem_tel}, #{mem_filepath}, #{mem_filename}, #{mem_alert}, #{del}, #{mem_type})
+   	</insert>
 
 </mapper>

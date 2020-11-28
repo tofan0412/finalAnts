@@ -24,4 +24,12 @@ public class MemberService implements MemberServiceI {
 		return memberDao.getMember(mem_id);
 	}
 	
+	
+	@Override
+	public int insertMember(MemberVo memberVo) {
+		logger.debug("memberService memberVo : {}", memberVo);
+		return memberDao.insertMember(memberVo);
+	}
+		
+	
 }

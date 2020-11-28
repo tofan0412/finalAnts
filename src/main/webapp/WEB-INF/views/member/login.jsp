@@ -3,12 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
   <style>
   	 .ff{
@@ -29,6 +28,8 @@
   </style>
   
 </head>
+
+<title>Bootstrap Example</title>
 <body>
 
 <div class="ff">
@@ -41,14 +42,15 @@
     	<div class="center">
     			<form action="/member/loginFunc" method="get"> 
 					<div class="form-group has-feedback">
-						<input type="email" class="form-control" name="mem_id" id="mem_id" placeholder="이메일을 입력하세요" value="">  
+						<input type="email" class="form-control" name="mem_id" id="mem_id" placeholder="이메일을 입력하세요" value="hsj@thousandOfAnts.com">  
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>	
+					
 					<div class="form-group has-feedback">
-						<input type="password" class="form-control" name="mem_pass"
-																placeholder="패스워드를 입력하세요" value=""> <span
-							class="glyphicon glyphicon-lock form-control-feedback"></span>
+						<input type="password" class="form-control" name="mem_pass" placeholder="패스워드를 입력하세요" value="123"> 
+						<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 					</div>
+					
 					<div class="row">
 						<div class="col-sm-8">
 							<div class="checkbox icheck">
@@ -58,9 +60,9 @@
 						</div>
 						<!-- /.col -->
 						<div class="form-group has-feedback">
-						
+							
 							<br><br><br>
-							<a href="/member/insertmemberview"><button type="button" class="btn btn-primary btn-block btn-flat">회원가입</button></a>
+							<a href="/member/memberRegistview"><button type="button" class="btn btn-primary btn-block btn-flat">회원가입</button></a>
 							<button type="submit" class="btn btn-primary btn-block btn-flat">로그인</button>
 						</div>
 						<!-- /.col -->
@@ -74,12 +76,8 @@
 	<script>
 	$(document).ready(function(){
 	 
-		$('#rememberMe').click(function() {
-			  if ($(this).is(':checked')) {
-			    // Do stuff
-			  }
-			});
-		
+
+/* 		
 		
 	    // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
 	    $("#rememberMe").prop("checked", false);
@@ -109,7 +107,7 @@
 	    });
 	});
 	
-	
+	 */
 	
 	function setCookie(cookieName, value, exdays){
 	    var exdate = new Date();

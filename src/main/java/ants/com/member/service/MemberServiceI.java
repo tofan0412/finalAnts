@@ -8,5 +8,7 @@ public interface MemberServiceI {
 	
 	public MemberVo getMember(String mem_id);
 	
-		
+	int insertMember(MemberVo memberVo);
+	
+	
 }

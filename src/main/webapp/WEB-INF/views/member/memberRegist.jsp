@@ -1,18 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-<html lang="en">
+<html>
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
 	<script>
@@ -20,15 +16,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
  	
- 			$('#mem_id').val("hsj");
+ 			$('#mem_id').val("hsj2@thousandOfAnts.com");
  			$('#mem_name').val("한상진");
  			$('#mem_pass').val("123");
  			$('#mem_tel').val("010-1111-2222");
- 			$('#mem_alert').val("1");
- 			$('#del').val("1");
- 			$('#mem_type').val("1");
-	
+ 			$('#mem_alert').val("y");
+ 			$('#del').val("n");
+ 			$('#mem_type').val("mem");
+		})
 		
+				
 		
 		$(document).ready(function(){
 			$("#registBtn").on('click', function(){
@@ -44,14 +41,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					}	
 			})
 		}) 
-		})
 	</script>
+
+</head>
 
 
 <title>회원 등록</title>
 
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="/sources/bootstrap/plugins/fontawesome-free/css/all.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/sources/bootstrap/dist/css/adminlte.min.css">
 
-</head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
 
