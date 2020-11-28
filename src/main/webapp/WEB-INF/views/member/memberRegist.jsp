@@ -32,9 +32,9 @@
 		
 		$(document).ready(function(){
 			$("#registBtn").on('click', function(){
-				var userid = document.getElementById('mem_id');
-				var usernm = document.getElementById('mem_name');
-				var pass = document.getElementById('mem_pass');
+				var userid = document.getElementById('memId');
+				var usernm = document.getElementById('memName');
+				var pass = document.getElementById('memPass');
 
 				
 					if(userid.value == "" || usernm.value == "" || pass.value == ""){
@@ -91,7 +91,7 @@
 									
 									
 									
-									
+
 									
 										 
 									<div class="form-group row">
@@ -99,7 +99,7 @@
 											<span style="color: red; font-weight: bold;">*</span>아이디
 										</label>
 										<div class="col-sm-9 input-group-sm">
-											<input name="mem_id" type="text" class="form-control" id="mem_id" placeholder="회원 id" value="">
+											<input name="memId" type="text" class="form-control" id="memId" placeholder="회원 id" value="">
 										</div>
 									</div>
 									
@@ -108,7 +108,7 @@
 											<span style="color: red; font-weight: bold;">*</span>이 름
 										</label>
 										<div class="col-sm-9 input-group-sm">
-											<input class="form-control" name="mem_name" type="text" id="mem_name" placeholder="이름" />
+											<input class="form-control" name="memName" type="text" id="memName" placeholder="이름" />
 										</div>
 
 									</div>
@@ -117,23 +117,23 @@
 										<label for="pwd" class="col-sm-3" style="font-size: 0.9em;">
 											<span style="color: red; font-weight: bold;">*</span>패스워드</label>
 										<div class="col-sm-9 input-group-sm">
-											<input class="form-control" name="mem_pass" type="password" class="form-control" id="mem_pass" placeholder="비밀번호" />
+											<input class="form-control" name="memPass" type="password" class="form-control" id="memPass" placeholder="비밀번호" />
 										</div>
 									</div>
 									
 									<div class="form-group row">
 										<label for="alias" class="col-sm-3" style="font-size: 0.9em;">전화번호</label>
 										<div class="col-sm-9 input-group-sm">
-											<input class="form-control" name="mem_tel" type="text" id="mem_tel" placeholder="전화번호">
+											<input class="form-control" name="memTel" type="text" id="memTel" placeholder="전화번호">
 										</div>
 									</div>
 				
 				
 				
 									<div class="form-group row" style="display: none">
-										<br>알람 : <input class="form-control" name="mem_alert" type="text" id="mem_alert" placeholder="알람"><br>
+										<br>알람 : <input class="form-control" name="memAlert" type="text" id="memAlert" placeholder="알람"><br>
 											삭제여부 : <input class="form-control" name="del" type="text" id="del" placeholder="삭제여부"><br>
-											멤버구분 : <input class="form-control" name="mem_type" type="text" id="mem_type" placeholder="멤버구분"><br>
+											멤버구분 : <input class="form-control" name="memType" type="text" id="memType" placeholder="멤버구분"><br>
 									</div>
 						
 						
@@ -188,9 +188,9 @@
 		
 		$(document).ready(function(){
 			$("#registBtn").on('click', function(){
-				var userid = document.getElementById('userid');
-				var usernm = document.getElementById('usernm');
-				var pass = document.getElementById('pass');
+				var userid = document.getElementById('memId');
+				var usernm = document.getElementById('memName');
+				var pass = document.getElementById('memPass');
 
 				
 					if(userid.value == "" || usernm.value == "" || pass.value == ""){
