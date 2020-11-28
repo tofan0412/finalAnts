@@ -42,9 +42,6 @@ public class PageVO implements Serializable {
 	/** 검색Keyword */
 	private String searchKeyword = "";
 
-	/** 검색사용여부 */
-	private String searchUseYn = "";
-
 	/** 현재페이지 */
 	private int pageIndex = 1;
 
@@ -53,39 +50,6 @@ public class PageVO implements Serializable {
 
 	/** 페이지사이즈 */
 	private int pageSize = 10;
-
-	/** firstIndex */
-	private int firstIndex = 1;
-
-	/** lastIndex */
-	private int lastIndex = 1;
-
-	/** recordCountPerPage */
-	private int recordCountPerPage = 10;
-
-	public int getFirstIndex() {
-		return firstIndex;
-	}
-
-	public void setFirstIndex(int firstIndex) {
-		this.firstIndex = firstIndex;
-	}
-
-	public int getLastIndex() {
-		return lastIndex;
-	}
-
-	public void setLastIndex(int lastIndex) {
-		this.lastIndex = lastIndex;
-	}
-
-	public int getRecordCountPerPage() {
-		return recordCountPerPage;
-	}
-
-	public void setRecordCountPerPage(int recordCountPerPage) {
-		this.recordCountPerPage = recordCountPerPage;
-	}
 
 	public String getSearchCondition() {
 		return searchCondition;
@@ -101,14 +65,6 @@ public class PageVO implements Serializable {
 
 	public void setSearchKeyword(String searchKeyword) {
 		this.searchKeyword = searchKeyword;
-	}
-
-	public String getSearchUseYn() {
-		return searchUseYn;
-	}
-
-	public void setSearchUseYn(String searchUseYn) {
-		this.searchUseYn = searchUseYn;
 	}
 
 	public int getPageIndex() {
@@ -135,9 +91,57 @@ public class PageVO implements Serializable {
 		this.pageSize = pageSize;
 	}
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + pageIndex;
+		result = prime * result + pageSize;
+		result = prime * result + pageUnit;
+		result = prime * result + ((searchCondition == null) ? 0 : searchCondition.hashCode());
+		result = prime * result + ((searchKeyword == null) ? 0 : searchKeyword.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PageVO other = (PageVO) obj;
+		if (pageIndex != other.pageIndex)
+			return false;
+		if (pageSize != other.pageSize)
+			return false;
+		if (pageUnit != other.pageUnit)
+			return false;
+		if (searchCondition == null) {
+			if (other.searchCondition != null)
+				return false;
+		} else if (!searchCondition.equals(other.searchCondition))
+			return false;
+		if (searchKeyword == null) {
+			if (other.searchKeyword != null)
+				return false;
+		} else if (!searchKeyword.equals(other.searchKeyword))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "PageVO [searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", pageIndex="
+				+ pageIndex + ", pageUnit=" + pageUnit + ", pageSize=" + pageSize + "]";
+	}
+	
+	
+	
+	
 }
