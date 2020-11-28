@@ -28,4 +28,16 @@ public class MemberDao implements MemberDaoI{
 		return memberVo;
 	}
 
+	
+	@Override
+	public int insertMember(MemberVo memberVo) {
+		logger.debug("MemberDao.java memberVo : {}", memberVo);
+		
+		int insertCnt = 0;
+			insertCnt = sqlSession.insert("member.insertMember", memberVo);
+		
+		return insertCnt;
+	}
+	
+	
 }

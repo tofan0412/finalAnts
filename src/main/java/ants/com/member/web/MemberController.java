@@ -1,24 +1,31 @@
 package ants.com.member.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import ants.com.member.model.MemberVo;
 import ants.com.member.service.MemberServiceI;
 
-//@MultipartConfig
+@MultipartConfig
 @RequestMapping("/member")
 @Controller
 public class MemberController {
@@ -26,12 +33,6 @@ public class MemberController {
 	
 	@Resource(name="memberService")
 	MemberServiceI memberService;
-	
-	@RequestMapping("/loginView")
-	public String loginView() {
-		logger.debug("로그인뷰 진입 ...");
-		return "login";
-	}
 	
 	
 	@RequestMapping("/mainView")
@@ -41,13 +42,11 @@ public class MemberController {
 	}
 	
 	
-	
-	@RequestMapping("/viewlogin")
+	@RequestMapping("/loginView")
 	public String viewlogin() {
-		logger.debug("MemberController viewlogin");
+		logger.debug("MemberController loginView");
 		return "member/login";
 	}
-	
 	
 	
 	
@@ -76,16 +75,17 @@ public class MemberController {
 	
 	
 	
-	@RequestMapping(path = "/insertmemberview", method = RequestMethod.GET)	
+	@RequestMapping(path= "/memberRegistview", method = RequestMethod.GET)	
 	public String getView() {
 		logger.debug("memberRegist-Controller.getView()");
 		return "member/memberRegist";	
 	}
 	
 	
-	/*
+	
+	/*, BindingResult br ,@RequestPart("realFilename") MultipartFile file*/
 	@RequestMapping(path="/memberRegist", method = RequestMethod.POST)							
-	public String process(@Valid MemberVo memberVo, BindingResult br ,@RequestPart("realFilename") MultipartFile file) { 
+	public String memberRegist(String mem_id, MemberVo memberVo, BindingResult br ,@RequestPart("realFilename") MultipartFile file) { 
 		
 		logger.debug("memberVo : {}", memberVo );
 		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(), file.getSize());
@@ -109,30 +109,31 @@ public class MemberController {
 		
 		logger.debug("---------------------통과-------------------");
 		
-		memberVo.setFilename(Filename);
-		memberVo.setRealFilename(file.getOriginalFilename());
+		
+		memberVo.setMem_filepath(Filename);
+		memberVo.setMem_filename(file.getOriginalFilename());
 		
 //		 사용자 정보 등록   ,real_Filename,file.getOriginalFilename()     , real_Filename, file.getOriginalFilename()
 //		memberVo = new MemberVo();
 		
+		logger.debug("mem_id : {}", mem_id);
 		logger.debug("memberVo : {}", memberVo);
 		int insertCnt = memberService.insertMember(memberVo);
 		logger.debug("insertCnt : {}", insertCnt);
 		
 		//try {
 		if(insertCnt == 1){
-			return "redirect:/member/view?userid="+ memberVo.getUserid();
+			return "main";
 		//}catch() {
 			
 		//}
 		
-			
+		
 		}else {
-			return "member/memberRegist";
+			return "redirect:member/memberRegist";
 		}
 	}
 	
-	*/
 	
 	
 }
