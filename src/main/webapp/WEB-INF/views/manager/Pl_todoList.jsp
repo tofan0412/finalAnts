@@ -15,6 +15,7 @@
 <link rel="icon" href="../../favicon.ico">
 
 <script type="text/javascript">
+
 </script>
 <style type="text/css">
 #todoTable{
@@ -53,7 +54,7 @@
 						</td>
 						<td>${todo.todo_title}</td>
 						<td>${todo.mem_id}</td>
-<%-- 						<td>${todo.todo_todopercent(}</td> --%>
+<%-- 						<td>${todo.todo_percent(}</td> --%>
 						<td>${todo.todo_title}</td>
 						<td>${todo.todo_end}</td>
 					</tr>
