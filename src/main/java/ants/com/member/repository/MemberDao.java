@@ -20,9 +20,24 @@ public class MemberDao implements MemberDaoI{
 	SqlSessionTemplate sqlSession;
 	
 	@Override
-	public MemberVo login(Map<String, String> memInfo) {
-		logger.debug("서비스 진입 ...");
-		return sqlSession.selectOne("member.login", memInfo);
+	public MemberVo getMember(String mem_id) {
+		logger.debug("MemberDao login : {}", mem_id);
+		MemberVo memberVo = sqlSession.selectOne("member.getMember", mem_id);
+		logger.debug("MemberDao memberVo : {}", memberVo);
+		
+		return memberVo;
 	}
 
+	
+	@Override
+	public int insertMember(MemberVo memberVo) {
+		logger.debug("MemberDao.java memberVo : {}", memberVo);
+		
+		int insertCnt = 0;
+			insertCnt = sqlSession.insert("member.insertMember", memberVo);
+		
+		return insertCnt;
+	}
+	
+	
 }

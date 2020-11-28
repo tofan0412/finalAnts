@@ -136,7 +136,7 @@
 
 
 		<!-- Control Sidebar -->
-		<%@include file="../layout/rigth.jsp"%>
+		<%@include file="../layout/right.jsp"%>
 
 
 		<!-- Main Footer -->

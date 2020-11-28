@@ -17,10 +17,10 @@
 		<!-- Content Wrapper. Contains page content -->
 
 		<!-- Main content -->
-		<%@include file="contentmenu.jsp"%>
+		 <%@include file="contentmenu.jsp"%> 
 
 		<!-- Control Sidebar -->
-		<%@include file="rigth.jsp"%>
+		<%@include file="right.jsp"%>
 
 		<!-- Main Footer -->
 		<%@include file="footer.jsp"%>

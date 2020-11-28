@@ -5,6 +5,10 @@ import java.util.Map;
 import ants.com.member.model.MemberVo;
 
 public interface MemberServiceI {
-	public MemberVo login(Map<String, String> memInfo);
-		
+	
+	public MemberVo getMember(String mem_id);
+	
+	int insertMember(MemberVo memberVo);
+	
+	
 }

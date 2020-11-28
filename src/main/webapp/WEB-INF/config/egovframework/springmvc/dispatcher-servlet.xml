@@ -69,5 +69,24 @@
 	<mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
 	<mvc:resources mapping="/dist/**" location="/resources/dist/"/>
     
+    <!-- 파일 업로드 처리를 위한 multipartResolver 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	</bean>
+    
+    <!-- tiles view resolver 추가
+		1. tiles 설정 작업 : TilesConfigurer를 통해 설정
+		2. tiles view resolver 등록 -->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>classpath:egovframework/tiles/tilesDefinition.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"></property>
+		<property name="order" value="0"></property>
+	</bean> 
     
 </beans>
