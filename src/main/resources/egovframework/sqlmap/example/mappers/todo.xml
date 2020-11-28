@@ -3,9 +3,39 @@
 <mapper namespace="todo">
 	
 <select id="getTodo" parameterType="String" resultType="todoVo">
-SELECT  * FROM todo
-where req_id=#{req_id}
+	SELECT *
+	FROM todo
+	where req_id=#{reqId}
 </select>
+<insert id="insertTodo">
+	INSERT INTO todo (
+    todo_id,
+    todo_start,
+    todo_end,
+    todo_cont,
+    todo_title,
+    percent,
+    todo_importance,
+    todo_level,
+    req_id,
+    mem_id,
+    todo_parentid,
+    del
+) VALUES (
+    todo_seq.nextval,
+    TO_DATE(#{todo_start},'YYYY/MM/DD'),
+    TO_DATE(#{todo_end},'YYYY/MM/DD'),
+    #{todo_title},
+    '0',
+    'gen',
+    NULL,
+    '2',
+    'mimi',
+    NULL,
+    NULL
+);
 
+
+</insert>
 
 </mapper>

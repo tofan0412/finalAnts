@@ -4,50 +4,49 @@ import java.util.Date;
 
 public class TodoVo {
 	
-	
-	private String todo_id;
-	private Date todo_start;
-	private Date todo_end;
-	private String todo_cont;
-	private String todo_title;
+	private String todoId;
+	private String todoStart;
+	private String todoEnd;
+	private String todoCont;
+	private String todoTitle;
 	private String percent;
-	private String todo_importance;
-	private String todo_level;
-	private String req_id;
-	private String mem_id;
-	private String todo_parentid;
+	private String todoImportance;
+	private String todoLevel;
+	private String reqId;
+	private String memId;
+	private String todoParentid;
 	private String del;
 	
-	
-	public String getTodo_id() {
-		return todo_id;
+	public String getTodoId() {
+		return todoId;
 	}
-	public void setTodo_id(String todo_id) {
-		this.todo_id = todo_id;
+	public void setTodoId(String todoId) {
+		this.todoId = todoId;
 	}
-	public Date getTodo_start() {
-		return todo_start;
+
+	public String getTodoStart() {
+		return todoStart;
 	}
-	public void setTodo_start(Date todo_start) {
-		this.todo_start = todo_start;
+	public void setTodoStart(String todoStart) {
+		this.todoStart = todoStart;
 	}
-	public Date getTodo_end() {
-		return todo_end;
+	public String getTodoEnd() {
+		return todoEnd;
 	}
-	public void setTodo_end(Date todo_end) {
-		this.todo_end = todo_end;
+	public void setTodoEnd(String todoEnd) {
+		this.todoEnd = todoEnd;
 	}
-	public String getTodo_cont() {
-		return todo_cont;
+	public String getTodoCont() {
+		return todoCont;
 	}
-	public void setTodo_cont(String todo_cont) {
-		this.todo_cont = todo_cont;
+	public void setTodoCont(String todoCont) {
+		this.todoCont = todoCont;
 	}
-	public String getTodo_title() {
-		return todo_title;
+	public String getTodoTitle() {
+		return todoTitle;
 	}
-	public void setTodo_title(String todo_title) {
-		this.todo_title = todo_title;
+	public void setTodoTitle(String todoTitle) {
+		this.todoTitle = todoTitle;
 	}
 	public String getPercent() {
 		return percent;
@@ -55,35 +54,35 @@ public class TodoVo {
 	public void setPercent(String percent) {
 		this.percent = percent;
 	}
-	public String getTodo_importance() {
-		return todo_importance;
+	public String getTodoImportance() {
+		return todoImportance;
 	}
-	public void setTodo_importance(String todo_importance) {
-		this.todo_importance = todo_importance;
+	public void setTodoImportance(String todoImportance) {
+		this.todoImportance = todoImportance;
 	}
-	public String getTodo_level() {
-		return todo_level;
+	public String getTodoLevel() {
+		return todoLevel;
 	}
-	public void setTodo_level(String todo_level) {
-		this.todo_level = todo_level;
+	public void setTodoLevel(String todoLevel) {
+		this.todoLevel = todoLevel;
 	}
-	public String getReq_id() {
-		return req_id;
+	public String getReqId() {
+		return reqId;
 	}
-	public void setReq_id(String req_id) {
-		this.req_id = req_id;
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
 	}
-	public String getMem_id() {
-		return mem_id;
+	public String getMemId() {
+		return memId;
 	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
-	public String getTodo_parentid() {
-		return todo_parentid;
+	public String getTodoParentid() {
+		return todoParentid;
 	}
-	public void setTodo_parentid(String todo_parentid) {
-		this.todo_parentid = todo_parentid;
+	public void setTodoParentid(String todoParentid) {
+		this.todoParentid = todoParentid;
 	}
 	public String getDel() {
 		return del;
@@ -91,15 +90,14 @@ public class TodoVo {
 	public void setDel(String del) {
 		this.del = del;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "TodoVo [todo_id=" + todo_id + ", todo_start=" + todo_start + ", todo_end=" + todo_end + ", todo_cont="
-				+ todo_cont + ", todo_title=" + todo_title + ", percent=" + percent + ", todo_importance="
-				+ todo_importance + ", todo_level=" + todo_level + ", req_id=" + req_id + ", mem_id=" + mem_id
-				+ ", todo_parentid=" + todo_parentid + ", del=" + del + "]";
+		return "TodoVo [todoId=" + todoId + ", todoStart=" + todoStart + ", todoEnd=" + todoEnd + ", todoCont="
+				+ todoCont + ", todoTitle=" + todoTitle + ", percent=" + percent + ", todoImportance=" + todoImportance
+				+ ", todoLevel=" + todoLevel + ", reqId=" + reqId + ", memId=" + memId + ", todoParentid="
+				+ todoParentid + ", del=" + del + "]";
 	}
+	
 	
 	
 }
