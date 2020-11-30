@@ -23,9 +23,9 @@
  			$('#mem_tel').val("010-1111-2222");
  			 */
  			
- 			$('#mem_alert').val("y");
+ 			$('#memAlert').val("y");
  			$('#del').val("n");
- 			$('#mem_type').val("mem");
+ 			$('#memType').val("mem");
 		})
 		
 				

@@ -9,14 +9,14 @@
         <Logger name="java.sql" level="DEBUG" additivity="false">
             <AppenderRef ref="console" />
         </Logger>
-        <Logger name="ants.com" level="INFO" additivity="false">
+        <Logger name="ants.com" level="DEBUG" additivity="false">
             <AppenderRef ref="console" />
         </Logger>
           <!-- log SQL with timing information, post execution -->
-        <Logger name="jdbc.sqltiming" level="INFO" additivity="false">
+        <Logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
             <AppenderRef ref="console" />
         </Logger>
-        <Logger name="org.springframework" level="INFO" additivity="false">
+        <Logger name="org.springframework" level="DEBUG" additivity="false">
             <AppenderRef ref="console" />
         </Logger>
         

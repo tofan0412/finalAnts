@@ -19,23 +19,36 @@ public class ProjectmemberDao  implements ProjectmemberDaoI {
 	
 	// 이슈게시판리스트
 	@Override
-	public List<IssueVo> issuelist(String req_id) {
+	public List<IssueVo> issuelist(String reqId) {
 		
-		return sqlSession.selectList("issue.getissuelist",req_id);
+		return sqlSession.selectList("issue.getissuelist", reqId);
 	}
 	
 	// 각 이슈게시글 내용
 	@Override
-	public IssueVo geteachissue(String issue_id) {
+	public IssueVo geteachissue(String issueId) {
 		
-		return sqlSession.selectOne("issue.geteachissue", issue_id);
+		return sqlSession.selectOne("issue.geteachissue", issueId);
 	}
 
-	// 이슈게시글 작성자 이름 가져오기
+
+	// 이슈게시글 작성하기
 	@Override
-	public String getwritername(String mem_id) {
+	public int insertissue(IssueVo issueVo) {
+		return sqlSession.insert("issue.insertissue", issueVo);
+	}
+
+	// 이슈게시글 수정하기
+	@Override
+	public int updateissue(IssueVo issueVo) {
 		
-		return sqlSession.selectOne("issue.getwritername", mem_id);
+		return sqlSession.update("issue.updateissue", issueVo);
+	}
+
+	@Override
+	public int delissue(String issueId) {
+		
+		return sqlSession.update("issue.delissue", issueId);
 	}
 
 }

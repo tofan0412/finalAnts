@@ -50,11 +50,10 @@ public class MemberController {
 	
 	
 	
-	@RequestMapping(path="/loginFunc", params= {"memId"}, method = RequestMethod.GET )							
+	@RequestMapping(path="/loginFunc", method = RequestMethod.GET )							
 	public String process(String memId, String memPass, MemberVo memberVo, HttpSession session, Model model) {
 		
-		logger.debug("LoginCOntroller.process() {} / {} / {}", memId, memPass, memberVo);	
-		logger.debug("memId : {}", memId);	
+		logger.debug("LoginCOntroller - memId : {} / memPass: {} ", memId, memPass);	
 
 		
 		MemberVo dbMember = memberService.getMember(memId);
