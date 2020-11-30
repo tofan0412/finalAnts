@@ -76,7 +76,7 @@ public class MemberController {
 			}else if(dbMember.getMemType().equals("pm")) {
 				return "manager/pm_main";
 			}else {
-				return mainView();
+				return "content/project";
 			}
 			
 		}else {
