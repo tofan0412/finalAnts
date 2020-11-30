@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="pm">
+<mapper namespace="req">
 
 	<resultMap id="ReqVo" type="ants.com.member.model.ReqVo">
 		<result property="reqId" column="req_id"/>
@@ -20,8 +20,9 @@
 		    	SELECT ROWNUM rnum, a.*
 				FROM reqlist a
 				WHERE mem_id = #{memId}
-				  AND rownum <= #{lastIndex})
-	    WHERE rnum >= #{firstIndex}
+				  AND rownum <= #{lastIndex}
+				  ORDER BY a.req_id DESC)
+	    WHERE rnum > #{firstIndex}
 	    ]]>
 	</select>
 	

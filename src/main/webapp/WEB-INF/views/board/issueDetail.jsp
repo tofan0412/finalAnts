@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -44,7 +44,7 @@ $(function(){
 		</tr>
 		<tr>
 			<td class="sort">작성일  </td> 			
-			<td><fmt:formatDate value="${issuevo.regDt }" pattern="yyyy-MM-dd"/></td> 						
+			<td>${issuevo.regDt }</td> 						
 		</tr>
 		<tr>
 			<td class="sort">이슈 내용  </td> 			

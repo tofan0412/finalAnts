@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ants.com.common.model;
+package ants.com.base.model;
 
 import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 
 /**
  * @Class Name : SampleDefaultVO.java
@@ -29,7 +30,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
 
  */
-public class PageVO implements Serializable {
+public class BaseVo implements Serializable {
 
 	/**
 	 *  serialVersion UID
@@ -49,7 +50,7 @@ public class PageVO implements Serializable {
 	private int pageIndex = 1;
 
 	/** 페이지갯수 */
-	private int pageUnit = 2;
+	private int pageUnit = 3;
 
 	/** 페이지사이즈 */
 	private int pageSize = 10;
@@ -142,65 +143,12 @@ public class PageVO implements Serializable {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + firstIndex;
-		result = prime * result + lastIndex;
-		result = prime * result + pageIndex;
-		result = prime * result + pageSize;
-		result = prime * result + pageUnit;
-		result = prime * result + ((searchCondition == null) ? 0 : searchCondition.hashCode());
-		result = prime * result + ((searchKeyword == null) ? 0 : searchKeyword.hashCode());
-		result = prime * result + ((searchUseYn == null) ? 0 : searchUseYn.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PageVO other = (PageVO) obj;
-		if (firstIndex != other.firstIndex)
-			return false;
-		if (lastIndex != other.lastIndex)
-			return false;
-		if (pageIndex != other.pageIndex)
-			return false;
-		if (pageSize != other.pageSize)
-			return false;
-		if (pageUnit != other.pageUnit)
-			return false;
-		if (searchCondition == null) {
-			if (other.searchCondition != null)
-				return false;
-		} else if (!searchCondition.equals(other.searchCondition))
-			return false;
-		if (searchKeyword == null) {
-			if (other.searchKeyword != null)
-				return false;
-		} else if (!searchKeyword.equals(other.searchKeyword))
-			return false;
-		if (searchUseYn == null) {
-			if (other.searchUseYn != null)
-				return false;
-		} else if (!searchUseYn.equals(other.searchUseYn))
-			return false;
-		return true;
-	}
-
-	@Override
 	public String toString() {
-		return "PageVO [searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", searchUseYn="
-				+ searchUseYn + ", pageIndex=" + pageIndex + ", pageUnit=" + pageUnit + ", pageSize=" + pageSize
-				+ ", firstIndex=" + firstIndex + ", lastIndex=" + lastIndex + "]";
+		return ToStringBuilder.reflectionToString(this);
 	}
 	
-	
+
+
 	
 	
 	

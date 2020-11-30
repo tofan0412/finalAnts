@@ -37,8 +37,8 @@ $(function(){
 		<tr>
 		
 			<td><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> ${issue.issueTitle }</a> </td>
-			<td> ${issue.mem_id }</td>
-			<td> <fmt:formatDate value="${issue.reg_dt }" pattern="yyyy-MM-dd"/></td>
+			<td> ${issue.memId }</td>
+			<td> ${issue.regDt }</td>
 			 
 		</tr>
 	 </c:forEach> 

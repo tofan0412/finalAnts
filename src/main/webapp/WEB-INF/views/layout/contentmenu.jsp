@@ -27,17 +27,14 @@
 .nm{font-family: 'Nanum Myeongjo', serif;}
 .jh{font-family: 'Jeju Hallasan', cursive;}
 .ngc{font-family: 'Nanum Gothic Coding', monospace;}
+
+
 </style>
 
 </head>
 <title>협업관리프로젝트</title>
 <body class="hold-transition sidebar-mini accent-teal">
-	<div class="wrapper">
 
-		
-		<!-- Content Wrapper. Contains page content -->
-		  <div class="content-wrapper">
-		    <!-- Content Header (Page header) -->
 		    <section class="content-header" style="
 											border-bottom: 1px solid #dee2e6;
 											background: linear-gradient(-10deg, #007bff, lightgoldenrodyellow) fixed;">
@@ -88,33 +85,7 @@
 	                  </li>
 	                </ul>
 	              </div>
-	              <!-- 내용 -->
-	              <div class="card-body">
-	                <div class="tab-content" id="custom-tabs-three-tabContent">
-	                  <div class="tab-pane fade active show" id="custom-tabs-three-work" role="tabpanel" aria-labelledby="custom-tabs-three-work-tab">
-	                  	일감내용입니다.
-	                  </div>
-	                  <div class="tab-pane fade" id="custom-tabs-three-gantt" role="tabpanel" aria-labelledby="custom-tabs-three-gantt-tab">
-	                  	간트차트입니다.
-	                  </div>
-	                  <div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab">
-	                  	이슈내용입니다.
-	                  </div>
-	                  <div class="tab-pane fade" id="custom-tabs-three-suggest" role="tabpanel" aria-labelledby="custom-tabs-three-suggest-tab">
-	                  	건의사항입니다.
-	                  </div>
-	                  <div class="tab-pane fade" id="custom-tabs-three-calendar" role="tabpanel" aria-labelledby="custom-tabs-three-calendar-tab">
-	                  	캘린더입니다
-	                  </div>
-	                  <div class="tab-pane fade" id="custom-tabs-three-mywork" role="tabpanel" aria-labelledby="custom-tabs-three-mywork-tab">
-	                  	내일감 입니다.
-	                  </div>
-	                  <div class="tab-pane fade" id="custom-tabs-three-files" role="tabpanel" aria-labelledby="custom-tabs-three-files-tab">
-	                  	파일함 입니다.
-	                  </div>
-	                </div>
-	              </div>
-	              <!-- /.card -->
+	             
 	            </div>
           	</div>
 		      
@@ -122,16 +93,7 @@
 		      
 		    </section>
 		    <!-- /.content -->
-		  </div>
-  <!-- /.content-wrapper -->
-
-		<!-- Content Wrapper. Contains page content -->
-		<%-- 		<%@include file="content.jsp"%> --%>
-
-
 	
-	</div>
-
 	
 	
 </body>
