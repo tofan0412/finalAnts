@@ -10,36 +10,36 @@
 	</settings>
 	
 	
-  <typeAliases>
-  	<typeAlias type="ants.com.admin.model.AdminVo" alias="AdminVo"/>
-  	<typeAlias type="ants.com.admin.model.AdminVo" alias="IpVo"/>
-  	<typeAlias type="ants.com.admin.model.AdminVo" alias="NoticeVo"/>
-  	<typeAlias type="ants.com.board.manageBoard.model.HotIssueVo" alias="HotIssueVo"/>
-  	<typeAlias type="ants.com.board.manageBoard.model.TodoLogVo" alias="TodoLogVo"/>
-  	<typeAlias type="ants.com.board.manageBoard.model.TodoVo" alias="TodoVo"/>
-  	<typeAlias type="ants.com.board.memBoard.model.BookmarkVo" alias="BookmarkVo"/>
-  	<typeAlias type="ants.com.board.memBoard.model.CategoryVo" alias="CategoryVo"/>
-  	<typeAlias type="ants.com.board.memBoard.model.IssueVo" alias="IssueVo"/>
-  	<typeAlias type="ants.com.board.memBoard.model.ReplyVo" alias="ReplyVo"/>
-  	<typeAlias type="ants.com.board.memBoard.model.ScheduleVo" alias="ScheduleVo"/>
-  	<typeAlias type="ants.com.board.memBoard.model.SuggestVo" alias="SuggestVo"/>
-  	<typeAlias type="ants.com.board.vote.model.VoteItemVo" alias="VoteItemVo"/>
-  	<typeAlias type="ants.com.board.vote.model.VoteResultVo" alias="VoteResultVo"/>
-  	<typeAlias type="ants.com.board.vote.model.VoteVo" alias="VoteVo"/>
-  	<typeAlias type="ants.com.chatting.model.ChatGroupVo" alias="ChatGroupVo"/>
-  	<typeAlias type="ants.com.chatting.model.ChatMemberVo" alias="ChatMemberVo"/>
-  	<typeAlias type="ants.com.chatting.model.ChatVo" alias="ChatVo"/>
-  	<typeAlias type="ants.com.common.model.AlarmVo" alias="AlarmVo"/>
-  	<typeAlias type="ants.com.common.model.ChatBotVo" alias="ChatBotVo"/>
-  	<typeAlias type="ants.com.common.model.QnaVo" alias="QnaVo"/>
-  	<typeAlias type="ants.com.file.model.HotIssueFileVo" alias="HotIssueFileVo"/>
-  	<typeAlias type="ants.com.file.model.PrivateFileVo" alias="PrivateFileVo"/>
-  	<typeAlias type="ants.com.file.model.PublicFileVo" alias="PublicFileVo"/>
-  	<typeAlias type="ants.com.member.model.MemberVo" alias="MemberVo"/>
-  	<typeAlias type="ants.com.member.model.ProjectMemberVo" alias="ProjectMemberVo"/>
-  	<typeAlias type="ants.com.member.model.ProjectVo" alias="ProjectVo"/>
-  	<typeAlias type="ants.com.member.model.ReqVo" alias="ReqVo"/>
-  </typeAliases>
+<!--   <typeAliases> -->
+<!--   	<typeAlias type="ants.com.admin.model.AdminVo" alias="AdminVo"/> -->
+<!--   	<typeAlias type="ants.com.admin.model.AdminVo" alias="IpVo"/> -->
+<!--   	<typeAlias type="ants.com.admin.model.AdminVo" alias="NoticeVo"/> -->
+<!--   	<typeAlias type="ants.com.board.manageBoard.model.HotIssueVo" alias="HotIssueVo"/> -->
+<!--   	<typeAlias type="ants.com.board.manageBoard.model.TodoLogVo" alias="TodoLogVo"/> -->
+<!--   	<typeAlias type="ants.com.board.manageBoard.model.TodoVo" alias="TodoVo"/> -->
+<!--   	<typeAlias type="ants.com.board.memBoard.model.BookmarkVo" alias="BookmarkVo"/> -->
+<!--   	<typeAlias type="ants.com.board.memBoard.model.CategoryVo" alias="CategoryVo"/> -->
+<!--   	<typeAlias type="ants.com.board.memBoard.model.IssueVo" alias="IssueVo"/> -->
+<!--   	<typeAlias type="ants.com.board.memBoard.model.ReplyVo" alias="ReplyVo"/> -->
+<!--   	<typeAlias type="ants.com.board.memBoard.model.ScheduleVo" alias="ScheduleVo"/> -->
+<!--   	<typeAlias type="ants.com.board.memBoard.model.SuggestVo" alias="SuggestVo"/> -->
+<!--   	<typeAlias type="ants.com.board.vote.model.VoteItemVo" alias="VoteItemVo"/> -->
+<!--   	<typeAlias type="ants.com.board.vote.model.VoteResultVo" alias="VoteResultVo"/> -->
+<!--   	<typeAlias type="ants.com.board.vote.model.VoteVo" alias="VoteVo"/> -->
+<!--   	<typeAlias type="ants.com.chatting.model.ChatGroupVo" alias="ChatGroupVo"/> -->
+<!--   	<typeAlias type="ants.com.chatting.model.ChatMemberVo" alias="ChatMemberVo"/> -->
+<!--   	<typeAlias type="ants.com.chatting.model.ChatVo" alias="ChatVo"/> -->
+<!--   	<typeAlias type="ants.com.common.model.AlarmVo" alias="AlarmVo"/> -->
+<!--   	<typeAlias type="ants.com.common.model.ChatBotVo" alias="ChatBotVo"/> -->
+<!--   	<typeAlias type="ants.com.common.model.QnaVo" alias="QnaVo"/> -->
+<!--   	<typeAlias type="ants.com.file.model.HotIssueFileVo" alias="HotIssueFileVo"/> -->
+<!--   	<typeAlias type="ants.com.file.model.PrivateFileVo" alias="PrivateFileVo"/> -->
+<!--   	<typeAlias type="ants.com.file.model.PublicFileVo" alias="PublicFileVo"/> -->
+<!--   	<typeAlias type="ants.com.member.model.MemberVo" alias="MemberVo"/> -->
+<!--   	<typeAlias type="ants.com.member.model.ProjectMemberVo" alias="ProjectMemberVo"/> -->
+<!--   	<typeAlias type="ants.com.member.model.ProjectVo" alias="ProjectVo"/> -->
+<!--   	<typeAlias type="ants.com.member.model.ReqVo" alias="ReqVo"/> -->
+<!--   </typeAliases> -->
 
 <!--   <mappers> -->
 <!--     <mapper resource="ants/com/config/sqlmap/mappers/member.xml"/> -->
