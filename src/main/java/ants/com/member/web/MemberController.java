@@ -17,6 +17,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.validator.constraints.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -59,11 +60,11 @@ public class MemberController {
 	
 	// 로그인 로직
 	@RequestMapping(path="/loginFunc", method = RequestMethod.GET )							
-	public String process(String memId, String memPass, MemberVo memberVo, HttpSession session, Model model) {
+	public String process(MemberVo memberVo, HttpSession session, Model model) {
 		
-		logger.debug("LoginCOntroller - memId : {} / memPass: {} ", memId, memPass);	
+		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);	
 		
-		MemberVo dbMember = memberService.getMember(memId);
+		MemberVo dbMember = memberService.getMember(memberVo.getMemId());
 		logger.debug("dbMember : {}", dbMember);
 		
 		if(dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass()) ) {
@@ -96,7 +97,7 @@ public class MemberController {
 	
 	// 회원가입 로직
 	@RequestMapping(path="/memberRegist", method = RequestMethod.POST)							
-	public String memberRegist(String memId, MemberVo memberVo, BindingResult br ,@RequestPart("realFilename") MultipartFile file) { 
+	public String memberRegist(MemberVo memberVo, BindingResult br ,@RequestPart("realFilename") MultipartFile file) { 
 		
 		logger.debug("memberVo : {}", memberVo );
 		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(), file.getSize());
@@ -120,7 +121,7 @@ public class MemberController {
 		memberVo.setMemFilepath(Filename);
 		memberVo.setMemFilename(file.getOriginalFilename());
 		
-		logger.debug("memId : {}", memId);
+		logger.debug("memId : {}", memberVo.getMemId());
 		logger.debug("memberVo : {}", memberVo);
 		int insertCnt = memberService.insertMember(memberVo);
 		logger.debug("insertCnt : {}", insertCnt);
@@ -138,14 +139,14 @@ public class MemberController {
 	@RequestMapping(path= "/memberforgotview", method = RequestMethod.GET)	
 	public String memberforgotview() {
 		logger.debug("memberRegist-Controller.memberforgotview()");
-		return "member/memberforgot";	
+		return "tiles/member/memberforgot";	
 	}
 	
 	
 	
 	/** 자바 메일 발송 * @throws MessagingException * @throws AddressException **/ 
 	@RequestMapping(value = "/mailsender") 
-	public String mailSender(HttpServletRequest request, ModelMap mo, String mail) throws AddressException, MessagingException { 
+	public String mailSender(MemberVo memberVo, HttpServletRequest request, ModelMap mo) throws AddressException, MessagingException { 
 		
 		// 네이버일 경우 smtp.naver.com 을 입력합니다. 
 		// Google일 경우 smtp.gmail.com 을 입력합니다. 
@@ -154,6 +155,9 @@ public class MemberController {
 		// 네이버 메일 환경설정에서 "POP3/IMAP" 설정 사용으로 바꿔준다.
 		String host = "smtp.naver.com"; 
 		
+		String email = memberVo.getMemId().split("@")[0];
+		
+		
 		// POP3/IMAP 설정시 네이버에서 알려줌
 		final String username = "noylit"; 		//네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요. 
 		final String password = "1234a5678"; 	//네이버 이메일 비밀번호를 입력해주세요. 
@@ -161,7 +165,7 @@ public class MemberController {
 		
 		
 		// 메일 내용 
-		String recipient = "noylit@naver.com"; //받는 사람의 메일주소를 입력해주세요. 
+		String recipient = memberVo.getMemId(); //받는 사람의 메일주소를 입력해주세요. 
 		String subject = "메일테스트"; //메일 제목 입력해주세요. 
 		String body = username+"님으로 부터 메일을 받았습니다."; //메일 내용 입력해주세요. 
 		
@@ -187,7 +191,7 @@ public class MemberController {
 		session.setDebug(true); //for debug 
 		
 		Message mimeMessage = new MimeMessage(session); //MimeMessage 생성 
-		mimeMessage.setFrom(new InternetAddress("noylit@naver.com")); //발신자 셋팅 , 보내는 사람의 이메일주소를 한번 더 입력합니다. 이때는 이메일 풀 주소를 다 작성해주세요. 
+		mimeMessage.setFrom(new InternetAddress(memberVo.getMemId())); //발신자 셋팅 , 보내는 사람의 이메일주소를 한번 더 입력합니다. 이때는 이메일 풀 주소를 다 작성해주세요. 
 		mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); //수신자셋팅 //.TO 외에 .CC(참조) .BCC(숨은참조) 도 있음 
 		
 		

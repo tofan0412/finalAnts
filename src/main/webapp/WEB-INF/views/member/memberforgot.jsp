@@ -16,18 +16,19 @@
 	margin-top: 10%;
 	height: 300px;
 	width: 300px;
+	background-color: white;
 }
 .inp{
 	width: 300px;
 }
 
 </style>  
-  
-  
+
+
 <title>Insert title here</title>
 </head>
 <body>
-비밀번호 찾기
+
 
 <div id="box">
 	<ul class="nav nav-tabs">
