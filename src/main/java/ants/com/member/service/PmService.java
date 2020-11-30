@@ -1,5 +1,6 @@
 package ants.com.member.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +21,20 @@ public class PmService implements PmServiceI {
 	private PmDaoI pmDao;
 	
 	@Override
-	public List<ReqVo> reqList(String mem_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReqVo> reqList(ReqVo reqVo) {
+		return pmDao.reqList(reqVo);
 	}
 
+	@Override
+	public int reqListCount(ReqVo reqVo) {
+		return pmDao.reqListCount(reqVo);
+	}
+	
+	
+	
+	
+	
+	
 	@Override
 	public int reqInsert(Map<String, Object> reqIMap) {
 		// TODO Auto-generated method stub
@@ -42,7 +52,12 @@ public class PmService implements PmServiceI {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
+
+
+
+
+
 
 
 }

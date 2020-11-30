@@ -1,45 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 
-<link href="http://fonts.googleapis.com/earlyaccess/nanumpenscript.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/jejumyeongjo.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/kopubbatang.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/jejuhallasan.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
-<style>
-.np{font-family: 'Nanum Pen Script', cursive;}
-.jg{font-family: 'Jeju Gothic', sans-serif;}
-.jm{font-family: 'Jeju Myeongjo', serif;}
-.kb{font-family: 'KoPub Batang', serif;}
-.nb{font-family: 'Nanum Brush Script', cursive;}
-.ns{font-family: 'Noto Sans KR', sans-serif;}
-.hn{font-family: 'Hanna', sans-serif;}
-.ng{font-family: 'Nanum Gothic', sans-serif;}
-.nm{font-family: 'Nanum Myeongjo', serif;}
-.jh{font-family: 'Jeju Hallasan', cursive;}
-.ngc{font-family: 'Nanum Gothic Coding', monospace;}
-</style>
+<script type="text/javascript">
+	function fn_egov_link_page(pageNo){
+		document.listForm.pageIndex.value = pageNo;
+		document.listForm.action = "<c:url value='/req/reqList'/>";
+	   	document.listForm.submit();
+	}
+
+</script>
 
 </head>
 <title>협업관리프로젝트</title>
-<body class="hold-transition sidebar-mini accent-teal">
+<form:form commandName="reqVo" id="listForm" name="listForm" method="post">
+
 	<div class="wrapper">
-
-		<!-- main_header -->
-		<%@include file="../layout/header.jsp"%>
-		
-
-		<!-- left Sidebar Container -->
-		<%@include file="../layout/left.jsp"%>
 
 		<!-- Content Wrapper. Contains page content -->
 		  <div class="content-wrapper">
@@ -85,56 +67,33 @@
 	                <table class="table">
 	                  <thead>
 	                    <tr>
-	                      <th style="width: 10px">#</th>
-	                      <th>Task</th>
-	                      <th>Progress</th>
-	                      <th style="width: 40px">Label</th>
+	                      <th>#</th>
+	                      <th>요구사항정의서 제목</th>
+	                      <th>기간</th>
+	                      <th>담당자 지정</th>
+	                      <th>응답 상태</th>
 	                    </tr>
 	                  </thead>
 	                  <tbody>
-	                    <tr>
-	                      <td>1.</td>
-	                      <td>Update software</td>
-	                      <td>
-	                        <div class="progress progress-xs">
-	                          <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-	                        </div>
-	                      </td>
-	                      <td><span class="badge bg-danger">55%</span></td>
-	                    </tr>
-	                    <tr>
-	                      <td>2.</td>
-	                      <td>Clean database</td>
-	                      <td>
-	                        <div class="progress progress-xs">
-	                          <div class="progress-bar bg-warning" style="width: 70%"></div>
-	                        </div>
-	                      </td>
-	                      <td><span class="badge bg-warning">70%</span></td>
-	                    </tr>
-	                    <tr>
-	                      <td>3.</td>
-	                      <td>Cron job running</td>
-	                      <td>
-	                        <div class="progress progress-xs progress-striped active">
-	                          <div class="progress-bar bg-primary" style="width: 30%"></div>
-	                        </div>
-	                      </td>
-	                      <td><span class="badge bg-primary">30%</span></td>
-	                    </tr>
-	                    <tr>
-	                      <td>4.</td>
-	                      <td>Fix and squish bugs</td>
-	                      <td>
-	                        <div class="progress progress-xs progress-striped active">
-	                          <div class="progress-bar bg-success" style="width: 90%"></div>
-	                        </div>
-	                      </td>
-	                      <td><span class="badge bg-success">90%</span></td>
-	                    </tr>
+	                      <c:forEach items="${reqList }" var="req" >
+	                    	<tr>
+		                      <td>${reqList.indexOf(req)+1 } .</td>
+		                      <td>${req.reqTitle }</td>
+		                      <td>${req.reqPeriod }</td>
+	                    	  <td>${req.plId }</td>
+		                      <td>${req.status }</td>
+		                      
+		                    </tr>
+	                      </c:forEach>
+	                  
 	                  </tbody>
 	                </table>
 	              </div>
+	              
+	              <div id="paging">
+        			<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page" />
+        			<form:hidden path="pageIndex" />
+        		</div>
 	              <!-- /.card-body -->
 	            </div>
             </div>
@@ -151,16 +110,9 @@
 		<%-- 		<%@include file="content.jsp"%> --%>
 
 
-		<!-- Control Sidebar -->
-		<%@include file="../layout/right.jsp"%>
 
-
-		<!-- Main Footer -->
-		<%@include file="../layout/footer.jsp"%>
-	</div>
-
+</form:form>
 	<!-- jQuery, style -->
 	<%@include file="../layout/commonLib.jsp"%>
-	
 </body>
 </html>

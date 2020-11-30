@@ -1,67 +1,153 @@
 package ants.com.member.model;
 
-public class ReqVo {
+import ants.com.common.model.PageVO;
+
+public class ReqVo extends PageVO{
 	
 	
-	private String req_id;
-	private String req_title;
-	private String req_cont;
-	private String req_period;
-	private String req_filepath;
-	private String req_filename;
-	private String mem_id;
+	private String reqId;
+	private String reqTitle;
+	private String reqCont;
+	private String reqPeriod;
+	private String reqFilepath;
+	private String reqFilename;
+	private String memId;
+	private String plId;
+	private String status;
 	
-	
-	public String getReq_id() {
-		return req_id;
+	public String getReqId() {
+		return reqId;
 	}
-	public void setReq_id(String req_id) {
-		this.req_id = req_id;
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
 	}
-	public String getReq_title() {
-		return req_title;
+	public String getReqTitle() {
+		return reqTitle;
 	}
-	public void setReq_title(String req_title) {
-		this.req_title = req_title;
+	public void setReqTitle(String reqTitle) {
+		this.reqTitle = reqTitle;
 	}
-	public String getReq_cont() {
-		return req_cont;
+	public String getReqCont() {
+		return reqCont;
 	}
-	public void setReq_cont(String req_cont) {
-		this.req_cont = req_cont;
+	public void setReqCont(String reqCont) {
+		this.reqCont = reqCont;
 	}
-	public String getReq_period() {
-		return req_period;
+	public String getReqPeriod() {
+		return reqPeriod;
 	}
-	public void setReq_period(String req_period) {
-		this.req_period = req_period;
+	public void setReqPeriod(String reqPeriod) {
+		this.reqPeriod = reqPeriod;
 	}
-	public String getReq_filepath() {
-		return req_filepath;
+	public String getReqFilepath() {
+		return reqFilepath;
 	}
-	public void setReq_filepath(String req_filepath) {
-		this.req_filepath = req_filepath;
+	public void setReqFilepath(String reqFilepath) {
+		this.reqFilepath = reqFilepath;
 	}
-	public String getReq_filename() {
-		return req_filename;
+	public String getReqFilename() {
+		return reqFilename;
 	}
-	public void setReq_filename(String req_filename) {
-		this.req_filename = req_filename;
+	public void setReqFilename(String reqFilename) {
+		this.reqFilename = reqFilename;
 	}
-	public String getMem_id() {
-		return mem_id;
+	public String getMemId() {
+		return memId;
 	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
-	
-	
+	public String getPlId() {
+		return plId;
+	}
+	public void setPlId(String plId) {
+		this.plId = plId;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
-		return "ReqListVo [req_id=" + req_id + ", req_title=" + req_title + ", req_cont=" + req_cont + ", req_period="
-				+ req_period + ", req_filepath=" + req_filepath + ", req_filename=" + req_filename + ", mem_id="
-				+ mem_id + "]";
+		return "ReqVo [reqId=" + reqId + ", reqTitle=" + reqTitle + ", reqCont=" + reqCont + ", reqPeriod=" + reqPeriod
+				+ ", reqFilepath=" + reqFilepath + ", reqFilename=" + reqFilename + ", memId=" + memId + ", plId="
+				+ plId + ", status=" + status + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((memId == null) ? 0 : memId.hashCode());
+		result = prime * result + ((plId == null) ? 0 : plId.hashCode());
+		result = prime * result + ((reqCont == null) ? 0 : reqCont.hashCode());
+		result = prime * result + ((reqFilename == null) ? 0 : reqFilename.hashCode());
+		result = prime * result + ((reqFilepath == null) ? 0 : reqFilepath.hashCode());
+		result = prime * result + ((reqId == null) ? 0 : reqId.hashCode());
+		result = prime * result + ((reqPeriod == null) ? 0 : reqPeriod.hashCode());
+		result = prime * result + ((reqTitle == null) ? 0 : reqTitle.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ReqVo other = (ReqVo) obj;
+		if (memId == null) {
+			if (other.memId != null)
+				return false;
+		} else if (!memId.equals(other.memId))
+			return false;
+		if (plId == null) {
+			if (other.plId != null)
+				return false;
+		} else if (!plId.equals(other.plId))
+			return false;
+		if (reqCont == null) {
+			if (other.reqCont != null)
+				return false;
+		} else if (!reqCont.equals(other.reqCont))
+			return false;
+		if (reqFilename == null) {
+			if (other.reqFilename != null)
+				return false;
+		} else if (!reqFilename.equals(other.reqFilename))
+			return false;
+		if (reqFilepath == null) {
+			if (other.reqFilepath != null)
+				return false;
+		} else if (!reqFilepath.equals(other.reqFilepath))
+			return false;
+		if (reqId == null) {
+			if (other.reqId != null)
+				return false;
+		} else if (!reqId.equals(other.reqId))
+			return false;
+		if (reqPeriod == null) {
+			if (other.reqPeriod != null)
+				return false;
+		} else if (!reqPeriod.equals(other.reqPeriod))
+			return false;
+		if (reqTitle == null) {
+			if (other.reqTitle != null)
+				return false;
+		} else if (!reqTitle.equals(other.reqTitle))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 	

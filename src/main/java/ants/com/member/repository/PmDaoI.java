@@ -7,7 +7,9 @@ import ants.com.member.model.ReqVo;
 
 public interface PmDaoI {
 
-	public List<ReqVo> reqList(String mem_id);
+	public List<ReqVo> reqList(ReqVo reqVo);
+	
+	public int reqListCount(ReqVo reqVo);
 
 	public int reqInsert(ReqVo reqVo);
 

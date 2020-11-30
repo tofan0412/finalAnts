@@ -7,7 +7,9 @@ import ants.com.member.model.ReqVo;
 
 public interface PmServiceI {
 	
-	public List<ReqVo> reqList(String mem_id);
+	public List<ReqVo> reqList(ReqVo reqVo);
+	
+	public int reqListCount(ReqVo reqVo);
 	
 	public int reqInsert(Map<String, Object> reqIMap);
 	
