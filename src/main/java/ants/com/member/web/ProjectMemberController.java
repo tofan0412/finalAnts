@@ -67,7 +67,7 @@ public class ProjectMemberController {
 		
 		session.setAttribute("reqId", "1");
 		
-		return "tiles/layout/contentmenu";
+		return "board/eachproject";
 	}
 	
 	
