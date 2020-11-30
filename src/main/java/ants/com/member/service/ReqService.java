@@ -1,6 +1,5 @@
 package ants.com.member.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,29 +10,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import ants.com.member.model.ReqVo;
-import ants.com.member.repository.PmDaoI;
+import ants.com.member.repository.ReqDaoI;
 
-@Service("pmService")
-public class PmService implements PmServiceI {
-	private static final Logger logger = LoggerFactory.getLogger(PmService.class);
+@Service("reqService")
+public class ReqService implements ReqServiceI {
+	private static final Logger logger = LoggerFactory.getLogger(ReqService.class);
 	
-	@Resource(name="pmDao")
-	private PmDaoI pmDao;
+	@Resource(name="reqDao")
+	private ReqDaoI reqDao;
 	
 	@Override
 	public List<ReqVo> reqList(ReqVo reqVo) {
-		return pmDao.reqList(reqVo);
+		return reqDao.reqList(reqVo);
 	}
 
 	@Override
 	public int reqListCount(ReqVo reqVo) {
-		return pmDao.reqListCount(reqVo);
+		return reqDao.reqListCount(reqVo);
 	}
-	
-	
-	
-	
-	
 	
 	@Override
 	public int reqInsert(Map<String, Object> reqIMap) {

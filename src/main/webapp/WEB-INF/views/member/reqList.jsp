@@ -14,17 +14,15 @@
 		document.listForm.action = "<c:url value='/req/reqList'/>";
 	   	document.listForm.submit();
 	}
+	
+	$("a").addClass("page-link");  
 
 </script>
 
 </head>
 <title>협업관리프로젝트</title>
-<form:form commandName="reqVo" id="listForm" name="listForm" method="post">
+	<form:form commandName="reqVo" id="listForm" name="listForm" method="post">
 
-	<div class="wrapper">
-
-		<!-- Content Wrapper. Contains page content -->
-		  <div class="content-wrapper">
 		    <!-- Content Header (Page header) -->
 		    <section class="content-header" style="
 											border-bottom: 1px solid #dee2e6;
@@ -50,7 +48,7 @@
 		      <div class="col-md-12">
 			      <div class="card" style="border-radius: inherit;">
 	              <div class="card-header">
-	                <h3 class="card-title">요구사항 정의서</h3>
+	                <h3 class="card-title">요구사항 정의서 등록</h3>
 	
 	                <div class="card-tools">
 	                  <ul class="pagination pagination-sm float-right">
@@ -77,7 +75,7 @@
 	                  <tbody>
 	                      <c:forEach items="${reqList }" var="req" >
 	                    	<tr>
-		                      <td>${reqList.indexOf(req)+1 } .</td>
+		                      <td><c:out value="${paginationInfo.totalRecordCount - ((reqVo.pageIndex-1) * reqVo.pageUnit + reqList.indexOf(req))}"/></td>
 		                      <td>${req.reqTitle }</td>
 		                      <td>${req.reqPeriod }</td>
 	                    	  <td>${req.plId }</td>
@@ -90,29 +88,24 @@
 	                </table>
 	              </div>
 	              
-	              <div id="paging">
-        			<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page" />
-        			<form:hidden path="pageIndex" />
-        		</div>
+	              <div id="paging" class="card-tools">
+	              	<ul class="pagination pagination-sm float-right">
+	                    <li class="page-item"><a class="page-link" href="#">«</a></li>
+		        			<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page"  />
+		        			<form:hidden path="pageIndex" />
+	                    <li class="page-item"><a class="page-link" href="#">»</a></li>
+	                 </ul>
+        		  </div>
+        		 
+        		  
+        		  
 	              <!-- /.card-body -->
 	            </div>
-            </div>
+             </div>
 		    </section>
-		    <!-- /.content -->
-		  </div>
 		      
-		    </section>
-		    <!-- /.content -->
-		  </div>
-  <!-- /.content-wrapper -->
 
-		<!-- Content Wrapper. Contains page content -->
-		<%-- 		<%@include file="content.jsp"%> --%>
+	</form:form>
 
-
-
-</form:form>
-	<!-- jQuery, style -->
-	<%@include file="../layout/commonLib.jsp"%>
 </body>
 </html>
