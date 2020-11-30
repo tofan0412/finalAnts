@@ -1,8 +1,6 @@
 package ants.com.admin.model;
 
 public class IpVo {
-	
-	
 	private String ipId;
 	private String ipAddr;
 	private String ipStatus;

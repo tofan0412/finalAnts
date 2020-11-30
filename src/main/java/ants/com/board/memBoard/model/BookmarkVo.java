@@ -3,43 +3,37 @@ package ants.com.board.memBoard.model;
 public class BookmarkVo {
 	
 	
-	private String book_id;
-	private String issue_id;
-	private String req_id;
-	private String mem_id;
+	private String bookId;
+	private String issueId;
+	private String reqId;
+	private String memId;
 	
-	
-	public String getBook_id() {
-		return book_id;
+	public String getBookId() {
+		return bookId;
 	}
-	public void setBook_id(String book_id) {
-		this.book_id = book_id;
+	public void setBookId(String bookId) {
+		this.bookId = bookId;
 	}
-	public String getIssue_id() {
-		return issue_id;
+	public String getIssueId() {
+		return issueId;
 	}
-	public void setIssue_id(String issue_id) {
-		this.issue_id = issue_id;
+	public void setIssueId(String issueId) {
+		this.issueId = issueId;
 	}
-	public String getReq_id() {
-		return req_id;
+	public String getReqId() {
+		return reqId;
 	}
-	public void setReq_id(String req_id) {
-		this.req_id = req_id;
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
 	}
-	public String getMem_id() {
-		return mem_id;
+	public String getMemId() {
+		return memId;
 	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "BookmarkVo [book_id=" + book_id + ", issue_id=" + issue_id + ", req_id=" + req_id + ", mem_id=" + mem_id
-				+ "]";
+		return "BookmarkVo [bookId=" + bookId + ", issueId=" + issueId + ", reqId=" + reqId + ", memId=" + memId + "]";
 	}
-	
-	
 }

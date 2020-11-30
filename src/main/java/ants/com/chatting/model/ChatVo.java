@@ -4,46 +4,39 @@ import java.util.Date;
 
 public class ChatVo {
 	
-	
-	private String CHAT_ID;
-	private String CHAT_CONT;
-	private Date REG_DT;
-	private String CHATMEM_ID;
-	
-	
-	public String getCHAT_ID() {
-		return CHAT_ID;
+	private String chatId;
+	private String chatCont;
+	private Date regDt;
+	private String chatmemId;
+	public String getChatId() {
+		return chatId;
 	}
-	public void setCHAT_ID(String cHAT_ID) {
-		CHAT_ID = cHAT_ID;
+	public void setChatId(String chatId) {
+		this.chatId = chatId;
 	}
-	public String getCHAT_CONT() {
-		return CHAT_CONT;
+	public String getChatCont() {
+		return chatCont;
 	}
-	public void setCHAT_CONT(String cHAT_CONT) {
-		CHAT_CONT = cHAT_CONT;
+	public void setChatCont(String chatCont) {
+		this.chatCont = chatCont;
 	}
-	public Date getREG_DT() {
-		return REG_DT;
+	public Date getRegDt() {
+		return regDt;
 	}
-	public void setREG_DT(Date rEG_DT) {
-		REG_DT = rEG_DT;
+	public void setRegDt(Date regDt) {
+		this.regDt = regDt;
 	}
-	public String getCHATMEM_ID() {
-		return CHATMEM_ID;
+	public String getChatmemId() {
+		return chatmemId;
 	}
-	public void setCHATMEM_ID(String cHATMEM_ID) {
-		CHATMEM_ID = cHATMEM_ID;
+	public void setChatmemId(String chatmemId) {
+		this.chatmemId = chatmemId;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "ChatVo [CHAT_ID=" + CHAT_ID + ", CHAT_CONT=" + CHAT_CONT + ", REG_DT=" + REG_DT + ", CHATMEM_ID="
-				+ CHATMEM_ID + "]";
+		return "ChatVo [chatId=" + chatId + ", chatCont=" + chatCont + ", regDt=" + regDt + ", chatmemId=" + chatmemId
+				+ "]";
 	}
-	
-	
 	
 	
 }

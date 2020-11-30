@@ -53,7 +53,13 @@
     border-radius: 0.85rem !important; 
 }
 </style>
-
+<script type="text/javascript">
+	$(function(){
+		$("#loginBtn").on('click',function(){
+			$("#lform").submit();
+		})	
+	})
+</script>
 </head>
 
 <title>Bootstrap Example</title>
@@ -78,7 +84,7 @@
 					</h4>
 				</div>
 				<br>
-				<form action="/member/loginFunc" method="get">
+				<form id="lform" action="/member/loginFunc" method="get">
 					<div class="form-group has-feedback">
 						<header class="jg" style="font-size: 1.2em;">
 							Email<br>
@@ -117,7 +123,7 @@
 						<br>
 						<br>
 							<div style="float : right;">
-								<button type="button" class="jg loginBtn"
+								<button type="button" id="loginBtn" class="jg loginBtn"
 								style="width : 100px;">로그인</button>
 							</div> 
 						</div>
