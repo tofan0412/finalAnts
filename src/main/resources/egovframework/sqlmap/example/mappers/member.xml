@@ -18,10 +18,10 @@
 
 
 	
-	<select id="getMember" parameterType="String" resultMap="MemberVo">
-		SELECT * FROM MEMBER
+	<select id="getMember" parameterType="String" resultType="ants.com.member.model.MemberVo">
+SELECT * FROM MEMBER
 		 WHERE MEM_ID = #{memId}
-	</select>
+</select>
 	
 	<insert id="insertMember" parameterType="MemberVo">
     	INSERT INTO MEMBER VALUES(#{memId}, #{memName}, #{memPass}, #{memTel}, #{memFilepath}, #{memFilename}, #{memAlert}, #{del}, #{memType})

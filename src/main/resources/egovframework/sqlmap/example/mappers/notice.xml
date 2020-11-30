@@ -11,4 +11,8 @@
 	</resultMap>
 
 
+<select id="select" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+SELECT * 
+  FROM notice
+</select>
 </mapper>

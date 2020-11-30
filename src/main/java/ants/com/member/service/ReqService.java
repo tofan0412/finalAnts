@@ -9,39 +9,34 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import ants.com.member.mapper.ReqMapper;
 import ants.com.member.model.ReqVo;
-import ants.com.member.repository.ReqDaoI;
 
 @Service("reqService")
-public class ReqService implements ReqServiceI {
+public class ReqService{
 	private static final Logger logger = LoggerFactory.getLogger(ReqService.class);
 	
-	@Resource(name="reqDao")
-	private ReqDaoI reqDao;
+	@Resource(name="reqMapper")
+	private ReqMapper mapper;
 	
-	@Override
 	public List<ReqVo> reqList(ReqVo reqVo) {
-		return reqDao.reqList(reqVo);
+		return mapper.reqList(reqVo);
 	}
 
-	@Override
 	public int reqListCount(ReqVo reqVo) {
-		return reqDao.reqListCount(reqVo);
+		return mapper.reqListCount(reqVo);
 	}
 	
-	@Override
 	public int reqInsert(Map<String, Object> reqIMap) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public int reqUpdate(Map<String, Object> reqUMap) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public int reqDelete(String req_id) {
 		// TODO Auto-generated method stub
 		return 0;

@@ -1,21 +1,22 @@
-package ants.com.member.service;
+package ants.com.member.mapper;
 
 import java.util.List;
 import java.util.Map;
 
 import ants.com.member.model.ReqVo;
+import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
-public interface ReqServiceI {
-	
+@Mapper("reqMapper")
+public interface ReqMapper {
+
 	public List<ReqVo> reqList(ReqVo reqVo);
 	
 	public int reqListCount(ReqVo reqVo);
-	
-	public int reqInsert(Map<String, Object> reqIMap);
-	
+
+	public int reqInsert(ReqVo reqVo);
+
 	public int reqUpdate(Map<String, Object> reqUMap);
-	
+
 	public int reqDelete(String req_id);
-	
-		
+
 }
