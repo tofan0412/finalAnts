@@ -89,7 +89,6 @@ public class MemberController {
 	
 	
 	
-	/*, BindingResult br ,@RequestPart("realFilename") MultipartFile file*/
 	@RequestMapping(path="/memberRegist", method = RequestMethod.POST)							
 	public String memberRegist(String memId, MemberVo memberVo, BindingResult br ,@RequestPart("realFilename") MultipartFile file) { 
 		
@@ -98,15 +97,13 @@ public class MemberController {
 		
 	
 //		logger.debug("br.hasErrors() : {}", br.hasErrors() );
-//		if(br.hasErrors()) {					// 왜 안될까...... 메세지는 제대로 뜨는데...
+//		if(br.hasErrors()) {					
 //			return "member/memberRegist";	
 //		}
 		
-		// jsp에서 넘어오는 <input type = file name="realfilename> 이름이 겹쳐서 mapping이 값을 넣어주려고 하기 때문에 이름이 겹치지 않게 해주어야 한다.
 		String Filename = "D:\\upload\\" + file.getOriginalFilename();
 		File uploadFile = new File(Filename);
 		
-		// 파일 업로드		// 이미지 파일 realname, name 둘중 하나만 값이 있으면 오류발생 둘다 널이면 괜찮음
 		try {
 			file.transferTo(uploadFile);
 		} catch (IllegalStateException | IOException e) {
@@ -119,25 +116,14 @@ public class MemberController {
 		memberVo.setMemFilepath(Filename);
 		memberVo.setMemFilename(file.getOriginalFilename());
 		
-//		 사용자 정보 등록   ,real_Filename,file.getOriginalFilename()     , real_Filename, file.getOriginalFilename()
-//		memberVo = new MemberVo();
 		
 		logger.debug("memId : {}", memId);
 		logger.debug("memberVo : {}", memberVo);
 		int insertCnt = memberService.insertMember(memberVo);
 		logger.debug("insertCnt : {}", insertCnt);
 		
-		//try {
 		if(insertCnt == 1){
-		
 			return "main";
-			
-			
-		//}catch() {
-			
-		//}
-		
-		
 		}else {
 			return "redirect:member/memberRegist";
 		}
