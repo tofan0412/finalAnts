@@ -65,21 +65,44 @@
 	                <table class="table">
 	                  <thead>
 	                    <tr>
-	                      <th>#</th>
-	                      <th>요구사항정의서 제목</th>
+	                      <th style="width: 100px;">No.</th>
+	                      <th>제목</th>
 	                      <th>기간</th>
-	                      <th>담당자 지정</th>
-	                      <th>응답 상태</th>
+	                      <th>담당자</th>
+	                      <th style="text-align: center;">응답 상태</th>
+	                      <th></th>
 	                    </tr>
 	                  </thead>
 	                  <tbody>
-	                      <c:forEach items="${reqList }" var="req" >
+	                      <c:forEach items="${reqList }" var="req" varStatus="sts" >
 	                    	<tr>
-		                      <td><c:out value="${paginationInfo.totalRecordCount - ((reqVo.pageIndex-1) * reqVo.pageUnit + reqList.indexOf(req))}"/></td>
+		                      <td><c:out value="${paginationInfo.totalRecordCount - ((reqVo.pageIndex-1) * reqVo.pageUnit + sts.index)}"/>.</td>
 		                      <td>${req.reqTitle }</td>
 		                      <td>${req.reqPeriod }</td>
 	                    	  <td>${req.plId }</td>
-		                      <td>${req.status }</td>
+		                      <td style="text-align: center;">
+		                      	<c:choose>
+		                      	  <c:when test="${req.status eq '대기' }"><span class="badge badge-warning">${req.status }</span></c:when>
+		                      	  <c:when test="${req.status eq '반려' }"><span class="badge badge-danger">${req.status }</span></c:when>
+		                      	  <c:when test="${req.status eq '수락' }"><span class="badge badge-success">${req.status }</span></c:when>
+		                      	</c:choose>
+		                      <td class="project-actions text-right" style="opacity: .9;">
+		                          <a class="btn btn-primary btn-sm" href="#">
+		                              <i class="fas fa-folder">
+		                              </i>
+		                              View
+		                          </a>
+		                          <a class="btn btn-info btn-sm" href="#">
+		                              <i class="fas fa-pencil-alt">
+		                              </i>
+		                              Edit
+		                          </a>
+		                          <a class="btn btn-danger btn-sm" href="#">
+		                              <i class="fas fa-trash">
+		                              </i>
+		                              Delete
+		                          </a>
+		                      </td>
 		                      
 		                    </tr>
 	                      </c:forEach>
@@ -96,6 +119,10 @@
 	                    <li class="page-item"><a class="page-link" href="#">»</a></li>
 	                 </ul>
         		  </div>
+        		  
+        		  <div class="card-footer clearfix">
+	                <button type="button" class="btn btn-default float-right"><i class="fas fa-plus"></i>등 록</button>
+	              </div>
         		 
         		  
         		  
