@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.member.mapper.ProjectmemberMapper;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -18,8 +19,8 @@ public class ProjectmemberService extends EgovAbstractServiceImpl{
 	
 	
 	// 이슈글 리스트
-	public List<IssueVo> issuelist(String reqId) {
-		return mapper.issuelist(reqId);
+	public List<IssueVo> issuelist(IssueVo issueVo) {
+		return mapper.issuelist(issueVo);
 	}
 
 	// 각 이슈글 내용
@@ -41,5 +42,16 @@ public class ProjectmemberService extends EgovAbstractServiceImpl{
 	// 이슈글 삭제하기
 	public int delissue(String issueId) {
 		return mapper.delissue(issueId);
+	}
+	
+	
+	// 회원이 사용가능한 카테고리 조회
+	public List<CategoryVo> categorylist(String memId) {
+		return mapper.categorylist(memId);
+	}
+	
+	// 회원이 사용가능한 카테고리 조회
+	public int issuePagingListCnt(IssueVo issueVo) {
+		return mapper.issuePagingListCnt(issueVo);
 	}
 }

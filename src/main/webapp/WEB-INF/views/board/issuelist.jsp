@@ -24,31 +24,39 @@ $(function(){
 })
 </script>
 </head>
-<body>
-	<h3>협업이슈 리스트</h3>
-	<input type= "button" value="작성하기" id="insertissue">
-	<table border="1">
-		<tr>
-			<td>  이슈 제목</td> 
-			<td>   작성자 </td>
-			<td>   날짜   </td>
-		</tr>
-	 <c:forEach items = "${issuelist }" var ="issue">
-		<tr>
-		
-			<td><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> ${issue.issueTitle }</a> </td>
-			<td> ${issue.memId }</td>
-			<td> ${issue.regDt }</td>
-			 
-		</tr>
-	 </c:forEach> 
-	
-	</table>
 
-	
-	
-	
-	
+<%@include file="./issuecontentmenu.jsp"%>
+
+<body>
+<div class="col-12 col-sm-9">
+	<div class="card card-teal ">
+	  <div class="card-body">
+		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab">
+		 	<h3>협업이슈 리스트</h3>
+				<input type= "button" value="작성하기" id="insertissue">
+				<table border="1">
+					<tr>
+						<td>  이슈 제목</td> 
+						<td>   작성자 </td>
+						<td>   날짜   </td>
+					</tr>
+				 <c:forEach items = "${issuelist }" var ="issue">
+					<tr>
+					
+						<td><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> ${issue.issueTitle }</a> </td>
+						<td> ${issue.memId }</td>
+						<td> ${issue.regDt }</td>
+						 
+					</tr>
+				 </c:forEach> 
+				
+				</table>
+	    </div>      
+	  </div>
+	 </div>      
+</div>
+
+
 	
 </body>
 </html>
