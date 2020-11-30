@@ -55,16 +55,19 @@ public class ProjectMemberController {
 	
 	
 	@RequestMapping("/project")
-	public String projectmain() {
+	public String projectmain(HttpSession session) {
 		
-		return "content/project";
+		session.setAttribute("reqId", "1");
+		return "tiles/layout/contentmenu";
 	}
 	
 	
 	@RequestMapping("/eachproject")
 	public String eachproject(HttpSession session) {
 		
-		return "board/eachproject";
+		session.setAttribute("reqId", "1");
+		
+		return "tiles/layout/contentmenu";
 	}
 	
 	
