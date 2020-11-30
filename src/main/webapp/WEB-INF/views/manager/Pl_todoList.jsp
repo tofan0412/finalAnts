@@ -30,12 +30,13 @@
   }
 
 }
+
 </style>
 </head>
 <body>
-<div style="padding-left: 18%; padding-right: 5%;"><br>
-	<div style="padding-left: 25%;"><h3>일감등록</h3></div><br>
-		<a class="btn btn-default pull-right" href="${pageContext.request.contextPath }/todo/todoInsertView">일감 등록</a>
+	<%@include file="../layout/contentmenu.jsp"%>
+	<div style="padding-left: 30px;">
+		<a class="btn btn-default pull-right" href="${pageContext.request.contextPath }/todo/todoInsertView?reqId=2">일감 등록</a>
 		<br>
 		<table id="todoTable">
 			<tr>
@@ -46,19 +47,26 @@
 				<th>종료일</th>
 			</tr>
 			<tbody id="todoList">
+			<c:if test="${todoList ne null}">
 				<c:forEach items="${todoList}" var="todo">
-					<tr data-userid="${todo.todo_id}">
+					<tr data-userid="${todo.todoId}">
 						<td>
-						<c:if test="${todo.todo_importance eq 'gen'}">일반</c:if>
-						<c:if test="${todo.todo_importance eq 'emg'}">긴급</c:if>
+						<c:if test="${todo.todoImportance eq 'gen'}">일반</c:if>
+						<c:if test="${todo.todoImportance eq 'emg'}">긴급</c:if>
 						</td>
-						<td>${todo.todo_title}</td>
-						<td>${todo.mem_id}</td>
-<%-- 						<td>${todo.todo_percent(}</td> --%>
-						<td>${todo.todo_title}</td>
-						<td>${todo.todo_end}</td>
+						<td>${todo.todoTitle}</td>
+						<td>${todo.memId}</td>
+						<td>
+						<c:if test= "${todo.todoPercent eq null}">0%</c:if>
+						<c:if test= "${todo.todoPercent ne null}">${todo.todoPsercent}%</c:if>
+						</td>
+						<td>${todo.todoEnd}</td>
 					</tr>
 				</c:forEach>
+				</c:if>
+				<c:if test="${todoList eq null}">
+				"등록된 일감이없습니다."
+				</c:if>
 			</tbody>
 		</table>
 			</div>			

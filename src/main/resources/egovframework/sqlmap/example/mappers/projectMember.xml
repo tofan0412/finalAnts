@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projectMember">
+
+	<resultMap id="ProjectMemberVo"
+		type="ants.com.member.model.ProjectMemberVo">
+		<result property="reqId" column="req_id" />
+		<result property="promemId" column="promem_id" />
+		<result property="promemStatus" column="promem_status" />
+	</resultMap>
+
+
+	<!--참여중인 팀원 조회 -->
+	<select id="projectMemList" parameterMap="String" resultMap="ProjectMemberVo">
+		SELECT mem_id
+		FROM projectmember
+		where promem_status='in'
+		and req_id = #{reqId}
+	</select>
+	
+	
+
+</mapper>
