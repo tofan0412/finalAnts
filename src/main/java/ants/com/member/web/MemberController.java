@@ -155,8 +155,6 @@ public class MemberController {
 		// 네이버 메일 환경설정에서 "POP3/IMAP" 설정 사용으로 바꿔준다.
 		String host = "smtp.naver.com"; 
 		
-		String email = memberVo.getMemId().split("@")[0];
-		
 		
 		// POP3/IMAP 설정시 네이버에서 알려줌
 		final String username = "noylit"; 		//네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요. 
@@ -167,7 +165,8 @@ public class MemberController {
 		// 메일 내용 
 		String recipient = memberVo.getMemId(); //받는 사람의 메일주소를 입력해주세요. 
 		String subject = "메일테스트"; //메일 제목 입력해주세요. 
-		String body = username+"님으로 부터 메일을 받았습니다."; //메일 내용 입력해주세요. 
+		String body = username+"님으로 부터 메일을 받았습니다."
+					+ "키값...?"; //메일 내용 입력해주세요. 
 		
 		Properties props = System.getProperties(); // 정보를 담기 위한 객체 생성 
 		
