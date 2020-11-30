@@ -1,29 +1,23 @@
 package ants.com.common.model;
 
 public class ChatBotVo {
-	
-	
-	private String bot_id;
-	private String bot_cont;
-	
-	
-	public String getBot_id() {
-		return bot_id;
+	private String botId;
+	private String botCont;
+	public String getBotId() {
+		return botId;
 	}
-	public void setBot_id(String bot_id) {
-		this.bot_id = bot_id;
+	public void setBotId(String botId) {
+		this.botId = botId;
 	}
-	public String getBot_cont() {
-		return bot_cont;
+	public String getBotCont() {
+		return botCont;
 	}
-	public void setBot_cont(String bot_cont) {
-		this.bot_cont = bot_cont;
+	public void setBotCont(String botCont) {
+		this.botCont = botCont;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "ChatBotVo [bot_id=" + bot_id + ", bot_cont=" + bot_cont + "]";
+		return "ChatBotVo [botId=" + botId + ", botCont=" + botCont + "]";
 	}
 	
 	

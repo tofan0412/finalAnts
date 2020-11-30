@@ -5,57 +5,55 @@ import java.util.Date;
 public class VoteVo {
 	
 	
-	private String vote_id;
-	private String vote_totalno;
-	private Date vote_deadline;
-	private String vote_status;
-	private String category_id;
-	private String req_id;
-	private String mem_id;
+	private String voteId;
+	private String voteTotalno;
+	private Date voteDeadline;
+	private String voteStatus;
+	private String categoryId;
+	private String reqId;
+	private String memId;
 	private String del;
-	
-	
-	public String getVote_id() {
-		return vote_id;
+	public String getVoteId() {
+		return voteId;
 	}
-	public void setVote_id(String vote_id) {
-		this.vote_id = vote_id;
+	public void setVoteId(String voteId) {
+		this.voteId = voteId;
 	}
-	public String getVote_totalno() {
-		return vote_totalno;
+	public String getVoteTotalno() {
+		return voteTotalno;
 	}
-	public void setVote_totalno(String vote_totalno) {
-		this.vote_totalno = vote_totalno;
+	public void setVoteTotalno(String voteTotalno) {
+		this.voteTotalno = voteTotalno;
 	}
-	public Date getVote_deadline() {
-		return vote_deadline;
+	public Date getVoteDeadline() {
+		return voteDeadline;
 	}
-	public void setVote_deadline(Date vote_deadline) {
-		this.vote_deadline = vote_deadline;
+	public void setVoteDeadline(Date voteDeadline) {
+		this.voteDeadline = voteDeadline;
 	}
-	public String getVote_status() {
-		return vote_status;
+	public String getVoteStatus() {
+		return voteStatus;
 	}
-	public void setVote_status(String vote_status) {
-		this.vote_status = vote_status;
+	public void setVoteStatus(String voteStatus) {
+		this.voteStatus = voteStatus;
 	}
-	public String getCategory_id() {
-		return category_id;
+	public String getCategoryId() {
+		return categoryId;
 	}
-	public void setCategory_id(String category_id) {
-		this.category_id = category_id;
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
-	public String getReq_id() {
-		return req_id;
+	public String getReqId() {
+		return reqId;
 	}
-	public void setReq_id(String req_id) {
-		this.req_id = req_id;
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
 	}
-	public String getMem_id() {
-		return mem_id;
+	public String getMemId() {
+		return memId;
 	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
 	public String getDel() {
 		return del;
@@ -63,15 +61,11 @@ public class VoteVo {
 	public void setDel(String del) {
 		this.del = del;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "VoteVo [vote_id=" + vote_id + ", vote_totalno=" + vote_totalno + ", vote_deadline=" + vote_deadline
-				+ ", vote_status=" + vote_status + ", category_id=" + category_id + ", req_id=" + req_id + ", mem_id="
-				+ mem_id + ", del=" + del + "]";
+		return "VoteVo [voteId=" + voteId + ", voteTotalno=" + voteTotalno + ", voteDeadline=" + voteDeadline
+				+ ", voteStatus=" + voteStatus + ", categoryId=" + categoryId + ", reqId=" + reqId + ", memId=" + memId
+				+ ", del=" + del + "]";
 	}
-	
-	
 	
 }

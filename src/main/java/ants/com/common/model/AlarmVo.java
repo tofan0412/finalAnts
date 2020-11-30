@@ -3,44 +3,39 @@ package ants.com.common.model;
 public class AlarmVo {
 
 	
-	private String alarm_id;
-	private String alarm_cont;
-	private String alarm_status;
-	private String mem_id;
-	
-	
-	public String getAlarm_id() {
-		return alarm_id;
+	private String alarmId;
+	private String alarmCont;
+	private String alarmStatus;
+	private String memId;
+
+	public String getAlarmId() {
+		return alarmId;
 	}
-	public void setAlarm_id(String alarm_id) {
-		this.alarm_id = alarm_id;
+	public void setAlarmId(String alarmId) {
+		this.alarmId = alarmId;
 	}
-	public String getAlarm_cont() {
-		return alarm_cont;
+	public String getAlarmCont() {
+		return alarmCont;
 	}
-	public void setAlarm_cont(String alarm_cont) {
-		this.alarm_cont = alarm_cont;
+	public void setAlarmCont(String alarmCont) {
+		this.alarmCont = alarmCont;
 	}
-	public String getAlarm_status() {
-		return alarm_status;
+	public String getAlarmStatus() {
+		return alarmStatus;
 	}
-	public void setAlarm_status(String alarm_status) {
-		this.alarm_status = alarm_status;
+	public void setAlarmStatus(String alarmStatus) {
+		this.alarmStatus = alarmStatus;
 	}
-	public String getMem_id() {
-		return mem_id;
+	public String getMemId() {
+		return memId;
 	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "AlarmVo [alarm_id=" + alarm_id + ", alarm_cont=" + alarm_cont + ", alarm_status=" + alarm_status
-				+ ", mem_id=" + mem_id + "]";
+		return "AlarmVo [alarmId=" + alarmId + ", alarmCont=" + alarmCont + ", alarmStatus=" + alarmStatus + ", memId="
+				+ memId + "]";
 	}
-	
-	
 	
 }

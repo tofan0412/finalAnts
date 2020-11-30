@@ -3,37 +3,30 @@ package ants.com.chatting.model;
 public class ChatMemberVo {
 
 	
-	private String cgroup_id;
-	private String chatmem_id;
-	private String promem_id;
-	
-	
-	public String getCgroup_id() {
-		return cgroup_id;
+	private String cgroupId;
+	private String chatmemId;
+	private String promemId;
+	public String getCgroupId() {
+		return cgroupId;
 	}
-	public void setCgroup_id(String cgroup_id) {
-		this.cgroup_id = cgroup_id;
+	public void setCgroupId(String cgroupId) {
+		this.cgroupId = cgroupId;
 	}
-	public String getChatmem_id() {
-		return chatmem_id;
+	public String getChatmemId() {
+		return chatmemId;
 	}
-	public void setChatmem_id(String chatmem_id) {
-		this.chatmem_id = chatmem_id;
+	public void setChatmemId(String chatmemId) {
+		this.chatmemId = chatmemId;
 	}
-	public String getPromem_id() {
-		return promem_id;
+	public String getPromemId() {
+		return promemId;
 	}
-	public void setPromem_id(String promem_id) {
-		this.promem_id = promem_id;
+	public void setPromemId(String promemId) {
+		this.promemId = promemId;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "ChatMemberVo [cgroup_id=" + cgroup_id + ", chatmem_id=" + chatmem_id + ", promem_id=" + promem_id + "]";
+		return "ChatMemberVo [cgroupId=" + cgroupId + ", chatmemId=" + chatmemId + ", promemId=" + promemId + "]";
 	}
-	
-	
-	
 	
 }

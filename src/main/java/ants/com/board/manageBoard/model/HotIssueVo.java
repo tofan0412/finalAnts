@@ -5,64 +5,62 @@ import java.util.Date;
 public class HotIssueVo {
 
 	
-	private String hissue_id;
-	private String hissue_title;
-	private String hissuet_cont;
-	private Date reg_dt;
-	private String req_id;
-	private String category_id;
-	private String hissue_parentid;
-	private String hissue_level;
+	private String hissueId;
+	private String hissueTitle;
+	private String hissuetCont;
+	private Date regDt;
+	private String reqId;
+	private String categoryId;
+	private String hissueParentid;
+	private String hissueLevel;
 	private String del;
-	
-	
-	public String getHissue_id() {
-		return hissue_id;
+	public String getHissueId() {
+		return hissueId;
 	}
-	public void setHissue_id(String hissue_id) {
-		this.hissue_id = hissue_id;
+	public void setHissueId(String hissueId) {
+		this.hissueId = hissueId;
 	}
-	public String getHissue_title() {
-		return hissue_title;
+	public String getHissueTitle() {
+		return hissueTitle;
 	}
-	public void setHissue_title(String hissue_title) {
-		this.hissue_title = hissue_title;
+	public void setHissueTitle(String hissueTitle) {
+		this.hissueTitle = hissueTitle;
 	}
-	public String getHissuet_cont() {
-		return hissuet_cont;
+	public String getHissuetCont() {
+		return hissuetCont;
 	}
-	public void setHissuet_cont(String hissuet_cont) {
-		this.hissuet_cont = hissuet_cont;
+	public void setHissuetCont(String hissuetCont) {
+		this.hissuetCont = hissuetCont;
 	}
-	public Date getReg_dt() {
-		return reg_dt;
+	public Date getRegDt() {
+		return regDt;
 	}
-	public void setReg_dt(Date reg_dt) {
-		this.reg_dt = reg_dt;
+	public void setRegDt(Date regDt) {
+		this.regDt = regDt;
 	}
-	public String getReq_id() {
-		return req_id;
+	public String getReqId() {
+		return reqId;
 	}
-	public void setReq_id(String req_id) {
-		this.req_id = req_id;
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
 	}
-	public String getCategory_id() {
-		return category_id;
+	public String getCategoryId() {
+		return categoryId;
 	}
-	public void setCategory_id(String category_id) {
-		this.category_id = category_id;
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
-	public String getHissue_parentid() {
-		return hissue_parentid;
+	public String getHissueParentid() {
+		return hissueParentid;
 	}
-	public void setHissue_parentid(String hissue_parentid) {
-		this.hissue_parentid = hissue_parentid;
+	public void setHissueParentid(String hissueParentid) {
+		this.hissueParentid = hissueParentid;
 	}
-	public String getHissue_level() {
-		return hissue_level;
+	public String getHissueLevel() {
+		return hissueLevel;
 	}
-	public void setHissue_level(String hissue_level) {
-		this.hissue_level = hissue_level;
+	public void setHissueLevel(String hissueLevel) {
+		this.hissueLevel = hissueLevel;
 	}
 	public String getDel() {
 		return del;
@@ -71,13 +69,11 @@ public class HotIssueVo {
 		this.del = del;
 	}
 	
-	
 	@Override
 	public String toString() {
-		return "HotIssueVo [hissue_id=" + hissue_id + ", hissue_title=" + hissue_title + ", hissuet_cont="
-				+ hissuet_cont + ", reg_dt=" + reg_dt + ", req_id=" + req_id + ", category_id=" + category_id
-				+ ", hissue_parentid=" + hissue_parentid + ", hissue_level=" + hissue_level + ", del=" + del + "]";
+		return "HotIssueVo [hissueId=" + hissueId + ", hissueTitle=" + hissueTitle + ", hissuetCont=" + hissuetCont
+				+ ", regDt=" + regDt + ", reqId=" + reqId + ", categoryId=" + categoryId + ", hissueParentid="
+				+ hissueParentid + ", hissueLevel=" + hissueLevel + ", del=" + del + "]";
 	}
-	
 	
 }

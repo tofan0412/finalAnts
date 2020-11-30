@@ -5,59 +5,54 @@ import java.util.Date;
 public class HotIssueFileVo {
 	
 	
-	private String hissuef_id;
-	private String hissue_id;
-	private String hiussef_filepath;
-	private String hissuef_filename;
-	private Date reg_dt;
-	private String hissuef_size;
+	private String hissuefId;
+	private String hissueId;
+	private String hiussefFilepath;
+	private String hissuefFilename;
+	private Date regDt;
+	private String hissuefSize;
 	
-	
-	public String getHissuef_id() {
-		return hissuef_id;
+	public String getHissuefId() {
+		return hissuefId;
 	}
-	public void setHissuef_id(String hissuef_id) {
-		this.hissuef_id = hissuef_id;
+	public void setHissuefId(String hissuefId) {
+		this.hissuefId = hissuefId;
 	}
-	public String getHissue_id() {
-		return hissue_id;
+	public String getHissueId() {
+		return hissueId;
 	}
-	public void setHissue_id(String hissue_id) {
-		this.hissue_id = hissue_id;
+	public void setHissueId(String hissueId) {
+		this.hissueId = hissueId;
 	}
-	public String getHiussef_filepath() {
-		return hiussef_filepath;
+	public String getHiussefFilepath() {
+		return hiussefFilepath;
 	}
-	public void setHiussef_filepath(String hiussef_filepath) {
-		this.hiussef_filepath = hiussef_filepath;
+	public void setHiussefFilepath(String hiussefFilepath) {
+		this.hiussefFilepath = hiussefFilepath;
 	}
-	public String getHissuef_filename() {
-		return hissuef_filename;
+	public String getHissuefFilename() {
+		return hissuefFilename;
 	}
-	public void setHissuef_filename(String hissuef_filename) {
-		this.hissuef_filename = hissuef_filename;
+	public void setHissuefFilename(String hissuefFilename) {
+		this.hissuefFilename = hissuefFilename;
 	}
-	public Date getReg_dt() {
-		return reg_dt;
+	public Date getRegDt() {
+		return regDt;
 	}
-	public void setReg_dt(Date reg_dt) {
-		this.reg_dt = reg_dt;
+	public void setRegDt(Date regDt) {
+		this.regDt = regDt;
 	}
-	public String getHissuef_size() {
-		return hissuef_size;
+	public String getHissuefSize() {
+		return hissuefSize;
 	}
-	public void setHissuef_size(String hissuef_size) {
-		this.hissuef_size = hissuef_size;
+	public void setHissuefSize(String hissuefSize) {
+		this.hissuefSize = hissuefSize;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "HotIssueFileVo [hissuef_id=" + hissuef_id + ", hissue_id=" + hissue_id + ", hiussef_filepath="
-				+ hiussef_filepath + ", hissuef_filename=" + hissuef_filename + ", reg_dt=" + reg_dt + ", hissuef_size="
-				+ hissuef_size + "]";
+		return "HotIssueFileVo [hissuefId=" + hissuefId + ", hissueId=" + hissueId + ", hiussefFilepath="
+				+ hiussefFilepath + ", hissuefFilename=" + hissuefFilename + ", regDt=" + regDt + ", hissuefSize="
+				+ hissuefSize + "]";
 	}
-	
-	
 	
 }
