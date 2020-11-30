@@ -42,11 +42,13 @@
     	<div class="center">
     			<form action="/member/loginFunc" method="get"> 
 					<div class="form-group has-feedback">
+						Email
 						<input type="email" class="form-control" name="memId" id="memId" placeholder="이메일을 입력하세요" value="hsj@thousandOfAnts.com">  
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>	
 					
 					<div class="form-group has-feedback">
+						Password					
 						<input type="password" class="form-control" name="memPass" placeholder="패스워드를 입력하세요" value="123"> 
 						<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 					</div>
@@ -58,6 +60,8 @@
 								</label>
 							</div>
 						</div>
+						
+						<a href="/member/memberforgotview">Forgot Password ?</a>
 						<!-- /.col -->
 						<div class="form-group has-feedback">
 							
