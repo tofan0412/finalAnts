@@ -3,28 +3,44 @@
 <mapper namespace="member">
 
 
-
-	<resultMap id="MemberVo" type="ants.com.member.model.MemberVo">
-		<result column="mem_id" property="memId"/>
-		<result column="mem_name" property="memName"/>
-		<result column="mem_pass" property="memPass"/>
-		<result column="mem_tel" property="memTel"/>	
-		<result column="mem_filepath" property="memFilepath"/>	
-		<result column="mem_filename" property="memFilename"/>	
-		<result column="mem_alert" property="memAlert"/>	
-		<result column="del" property="del"/>	
-		<result column="mem_type" property="memType"/>	
+	<resultMap id="MemberVo"
+		type="ants.com.member.model.MemberVo">
+		<result column="mem_id" property="memId" />
+		<result column="mem_name" property="memName" />
+		<result column="mem_pass" property="memPass" />
+		<result column="mem_tel" property="memTel" />
+		<result column="mem_filepath" property="memFilepath" />
+		<result column="mem_filename" property="memFilename" />
+		<result column="mem_alert" property="memAlert" />
+		<result column="del" property="del" />
+		<result column="mem_type" property="memType" />
 	</resultMap>
 
 
-	
-	<select id="getMember" parameterType="String" resultType="ants.com.member.model.MemberVo">
-SELECT * FROM MEMBER
-		 WHERE MEM_ID = #{memId}
-</select>
-	
-	<insert id="insertMember" parameterType="MemberVo">
-    	INSERT INTO MEMBER VALUES(#{memId}, #{memName}, #{memPass}, #{memTel}, #{memFilepath}, #{memFilename}, #{memAlert}, #{del}, #{memType})
-   	</insert>
 
+	<select id="getMember" parameterType="String"
+		resultType="ants.com.member.model.MemberVo">
+		SELECT * FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
+
+	<insert id="insertMember" parameterType="MemberVo">
+		INSERT INTO MEMBER VALUES(#{memId}, #{memName}, #{memPass}, #{memTel},
+		#{memFilepath}, #{memFilename}, #{memAlert}, #{del}, #{memType})
+	</insert>
+
+	<!--참여중인 팀원 조회 -->
+	<select id="projectMemList" parameterType="String"
+		resultMap="MemberVo">
+		SELECT
+		member.mem_name,
+		member.mem_id
+		FROM
+		member,
+		projectmember
+		WHERE
+		member.mem_id = projectmember.mem_id
+		AND projectmember.req_id = #{reqId}
+		AND projectmember.promem_status = 'in'
+	</select>
 </mapper>

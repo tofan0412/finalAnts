@@ -23,7 +23,7 @@
 		select a.issue_id , a.issue_title , a.issue_cont , to_char(a.reg_dt,'YYYY-MM-DD') as reg_dt , b.mem_name as mem_id
 		from( select issue_id, issue_title, issue_cont, reg_dt, issue_del, mem_id
 		        from issue
-		        where req_id = #{reqId} ) a , member b
+		        where req_id = #{reqId}) a , member b
 		where a.mem_id = b.mem_id and a.issue_del = 'n'
 	    ]]>		
 				
@@ -32,14 +32,12 @@
 	
 	<!-- 각 이슈게시글 내용 가져오기 -->
 	<select id="geteachissue"  resultMap ="IssueVo" parameterType="String">
-		select * 
-		from(
-				select  a.issue_id ,  a.issue_title , a.issue_cont ,TO_CHAR( a.reg_dt,'YYYY-MM-DD') as reg_dt, b.mem_name as mem_id
-				from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id
-				        from issue
-				        where req_id = 1 ) a , member b 
-				where a.mem_id = b.mem_id and a.issue_del = 'n' 
-			)
+		select  a.issue_id ,  a.issue_title , a.issue_cont ,TO_CHAR( a.reg_dt,'YYYY-MM-DD') as reg_dt, b.mem_name as mem_id
+		from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id
+		        from issue
+		        where issue_id = #{issueId} ) a , member b 
+		where a.mem_id = b.mem_id and a.issue_del = 'n' 
+			
 		
 	</select>
 	
@@ -52,7 +50,7 @@
 		    issue_kind, issue_del, todo_id, req_id, mem_id
 		) VALUES (
 		    ISSUE_SEQ.nextval, #{issueTitle}, #{issueCont}, sysdate,  #{categoryId}, 
-		    #{issueKind}, 'n', '', #{reqId}, #{memId}
+		    #{issueKind}, 'n', '', , #{memId}
 		)
 		
 	</insert>

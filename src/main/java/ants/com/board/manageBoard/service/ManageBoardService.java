@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ants.com.board.manageBoard.mapper.ManageBoardMapper;
 import ants.com.board.manageBoard.model.TodoVo;
-import ants.com.member.model.ProjectMemberVo;
+import ants.com.member.model.MemberVo;
 
 @Service("manageBoardService")
 public class ManageBoardService{
@@ -20,12 +20,16 @@ public class ManageBoardService{
 		return mapper.todoInsert(todoVo);
 	}
 
-	public List<TodoVo> getTodo(String req_id) {
-		return mapper.getTodo(req_id);
+	public List<TodoVo> getTodoList(String req_id) {
+		return mapper.getTodoList(req_id);
 	}
 
-	public List<ProjectMemberVo> projectMemList(String req_id) {
+	public List<MemberVo> projectMemList(String req_id) {
 		return mapper.projectMemList(req_id);
+	}
+	
+	public TodoVo getTodo(String todo_id) {
+		return mapper.getTodo(todo_id);
 	}
 
 }
