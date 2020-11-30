@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- jQuery, style -->
+	<%@include file="commonLib.jsp"%>
 </head>
 <title>협업관리프로젝트</title>
 <body class="hold-transition sidebar-mini">
@@ -29,8 +31,7 @@
 
 	</div>
 
-	<!-- jQuery, style -->
-	<%@include file="commonLib.jsp"%>
+
 </body>
 </html>
 

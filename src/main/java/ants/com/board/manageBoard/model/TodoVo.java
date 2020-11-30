@@ -1,6 +1,8 @@
 package ants.com.board.manageBoard.model;
 
-public class TodoVo {
+import ants.com.base.model.BaseVo;
+
+public class TodoVo extends BaseVo{
 	
 	private String todoId;
 	private String todoStart;

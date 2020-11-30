@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ants.com.board.manageBoard.mapper.ManageBoardMapper">
-
-<!-- 	<resultMap id="TodoVo" -->
-<!-- 		type="ants.com.board.manageBoard.model.TodoVo"> -->
-<!-- 		<result property="todoId" column="todo_id" /> -->
-<!-- 		<result property="todoStart" column="todo_start" /> -->
-<!-- 		<result property="todoEnd" column="todo_end" /> -->
-<!-- 		<result property="todoCont" column="todo_cont" /> -->
-<!-- 		<result property="todoTitle" column="todo_title" /> -->
-<!-- 		<result property="todoPercent" column="todo_percent" /> -->
-<!-- 		<result property="todoImportance" column="todo_importance" /> -->
-<!-- 		<result property="todoLevel" column="todo_level" /> -->
-<!-- 		<result property="reqId" column="req_id" /> -->
-<!-- 		<result property="memId" column="mem_id" /> -->
-<!-- 		<result property="todoParentid" column="todo_parentid" /> -->
-<!-- 		<result property="del" column="del" /> -->
-
-<!-- 	</resultMap> -->
+<mapper
+	namespace="ants.com.board.manageBoard.mapper.ManageBoardMapper">
 
 	<!--할일 리스트조회 -->
-	<select id="getTodoList" parameterType="String"
+	<select id="getTodoList"
+		parameterType="ants.com.board.manageBoard.model.TodoVo"
 		resultType="ants.com.board.manageBoard.model.TodoVo">
 		<![CDATA[
 	SELECT
@@ -39,12 +24,16 @@
 	FROM( select * from member)member, todo todo
 	WHERE
 	    member.mem_id = todo.mem_id
-	    AND   todo.req_id = #{reqId}
+	    AND todo.req_id = #{reqId}
+	    AND todo.del ='N'
 	    ]]>
 	</select>
 
+
 	<!-- 한개의 할일 조회 -->
-	<select id="getTodo" parameterType="String" resultType="ants.com.board.manageBoard.model.TodoVo">
+	<select id="getTodo"
+		parameterType="ants.com.board.manageBoard.model.TodoVo"
+		resultType="ants.com.board.manageBoard.model.TodoVo">
 		<![CDATA[
 	SELECT
 	    todo.todo_id,
@@ -66,7 +55,10 @@
 	    ]]>
 	</select>
 
-	<select id="projectMemList" parameterType="String"
+
+	<!-- 팀원 조회 -->
+	<select id="projectMemList"
+		parameterType="ants.com.board.manageBoard.model.TodoVo"
 		resultType="ants.com.board.manageBoard.model.TodoVo">
 		SELECT
 		member.mem_name,
@@ -83,37 +75,59 @@
 	</select>
 
 
-	<!-- 유지보수를 위해서 parameterType은 String보다 VO타입으로 사용 -->
-
-	<!-- <insert id="todoInsert" parameterMap="TodoVo"> -->
-	<!-- INSERT INTO todo ( -->
-	<!-- todo_id, -->
-	<!-- todo_start, -->
-	<!-- todo_end, -->
-	<!-- todo_cont, -->
-	<!-- todo_title, -->
-	<!-- percent, -->
-	<!-- todo_importance, -->
-	<!-- todo_level, -->
-	<!-- req_id, -->
-	<!-- mem_id, -->
-	<!-- todo_parentid, -->
-	<!-- del -->
-	<!-- ) VALUES ( -->
-	<!-- todo_seq.nextval, -->
-	<!-- sysdate, -->
-	<!-- TO_DATE(#{todoEnd},'YYYY/MM/DD'), -->
-	<!-- #{todoCont}, -->
-	<!-- #{todoTitle}, -->
-	<!-- '0', -->
-	<!-- #{todoImportance}, -->
-	<!-- NULL, -->
-	<!-- #{reqId}, -->
-	<!-- #{memId}, -->
-	<!-- #{todoParentid}, -->
-	<!-- NULL -->
-	<!-- ) -->
-	<!-- </insert> -->
-
-
+	<!-- 일감 생성 -->
+	<insert id="todoInsert" parameterType="ants.com.board.manageBoard.model.TodoVo">
+		INSERT INTO todo (
+		todo_id,
+		todo_start,
+		todo_end,
+		TODO_CONT,
+		todo_title,
+		todo_percent,
+		todo_importance,
+		todo_level,
+		req_id,
+		mem_id,
+		todo_parentid,
+		del
+		) VALUES (
+		todo_seq.nextval,
+		TO_DATE(#{todoStart},'YYYY/MM/DD'),
+		TO_DATE(#{todoEnd},'YYYY/MM/DD'),
+		#{todoCont},
+		#{todoTitle},
+		'0',
+		#{todoImportance},
+		'1',
+		#{reqId},
+		#{memId},
+		#{todoParentid},
+		'N'
+		)
+	</insert>
+	
+	
+	<!-- 일감수정 -->
+	<update id="todoupdate" parameterType="ants.com.board.manageBoard.model.TodoVo">
+		UPDATE todo
+		SET
+		todo_start = TO_DATE('#{todoStart},'YYYY/MM/DD'),
+		todo_end = TO_DATE(#{todoEnd},'YYYY/MM/DD'),
+		todo_cont =#{todoCont},
+		todo_title =#{todoTitle},
+		todo_percent =#{todoPercent},
+		todo_importance =#{todoImportance},
+		todo_level ='1',
+		mem_id= #{memId}
+		WHERE
+		todo_id = #{todo_id}
+	</update>
+	
+	<update id="tododelete" parameterType="ants.com.board.manageBoard.model.TodoVo">
+	UPDATE todo
+    SET del='Y'
+	WHERE
+    todo_id = #{todo_id}
+    </update>
+	
 </mapper>
