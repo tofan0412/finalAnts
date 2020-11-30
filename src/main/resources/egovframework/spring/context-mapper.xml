@@ -15,8 +15,8 @@
 		<property name="mapperLocations" value="classpath:/egovframework/sqlmap/example/mappers/*.xml" />
 	</bean>
 
-<!--  	<bean class="egovframework.rte.psl.dataaccess.mapper.MapperConfigurer"> -->
-<!-- 		<property name="basePackage" value="egovframework.example.sample.service.impl" /> -->
-<!--  	</bean> -->
+ 	<bean class="egovframework.rte.psl.dataaccess.mapper.MapperConfigurer">
+		<property name="basePackage" value="ants.com" />
+ 	</bean>
     
 </beans>

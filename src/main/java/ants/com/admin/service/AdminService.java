@@ -9,6 +9,6 @@ import ants.com.admin.mapper.AdminMapper;
 @Service("adminService")
 public class AdminService {
 	@Resource(name="adminMapper")
-	private AdminMapper adminMapper;
+	private AdminMapper mapper;
 	
 }

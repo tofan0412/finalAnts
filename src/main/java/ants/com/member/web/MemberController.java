@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import ants.com.member.mapper.MemberMapper;
 import ants.com.member.model.MemberVo;
 import ants.com.member.service.MemberService;
 
