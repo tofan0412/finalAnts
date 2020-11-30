@@ -30,34 +30,48 @@ $(function(){
 </style>
 
 </head>
+
+<%@include file="../layout/contentmenu.jsp"%>
+
 <body>
-	<h3>협업이슈 상세내역</h3>
-	
-	<table>
-		<tr>
-			<td class="sort">작성자  </td> 			
-			<td>${issuevo.memId }</td> 						
-		</tr>
-		<tr>
-			<td class="sort" >이슈제목 </td> 			
-			<td>${issuevo.issueTitle}</td> 						
-		</tr>
-		<tr>
-			<td class="sort">작성일  </td> 			
-			<td>${issuevo.regDt }</td> 						
-		</tr>
-		<tr>
-			<td class="sort">이슈 내용  </td> 			
-			<td>${issuevo.issueCont }</td> 						
-		</tr>
-		
-	</table>
-	
-		<p>파일 : (파일 존재시 다운로드)  </p>
-		<p><input type="button" value="다운로드" id="filedown"></p>
-		
-		<input type= "button" value="수정하기" id ="modissue">
-		<input type= "button" value="삭제하기" id="delissue" >
-	
+
+<div class="col-12 col-sm-9">
+	<div class="card card-teal ">
+	  <div class="card-body">
+		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab">
+			<h3>협업이슈 상세내역</h3>
+			
+			<table>
+				<tr>
+					<td class="sort">작성자  </td> 			
+					<td>${issuevo.memId }</td> 						
+				</tr>
+				<tr>
+					<td class="sort" >이슈제목 </td> 			
+					<td>${issuevo.issueTitle}</td> 						
+				</tr>
+				<tr>
+					<td class="sort">작성일  </td> 			
+					<td>${issuevo.regDt }</td> 						
+				</tr>
+				<tr>
+					<td class="sort">이슈 내용  </td> 			
+					<td>${issuevo.issueCont }</td> 						
+				</tr>
+				
+			</table>
+			
+				<p>파일 : (파일 존재시 다운로드)  </p>
+				<p><input type="button" value="다운로드" id="filedown"></p>
+				
+				<input type= "button" value="수정하기" id ="modissue">
+				<input type= "button" value="삭제하기" id="delissue" >
+
+
+	    </div>      
+	   </div>
+	 </div>      
+</div>
+
 </body>
 </html>

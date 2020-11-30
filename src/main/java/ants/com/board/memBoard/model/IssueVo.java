@@ -1,7 +1,8 @@
 package ants.com.board.memBoard.model;
 
+import ants.com.base.model.BaseVo;
 
-public class IssueVo {
+public class IssueVo extends BaseVo{
 
 	
 	private String issueId;

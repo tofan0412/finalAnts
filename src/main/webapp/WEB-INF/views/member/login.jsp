@@ -84,13 +84,13 @@
 					</h4>
 				</div>
 				<br>
-				<form id="lform" action="/member/loginFunc" method="get">
+				<form id="lform" action="/member/loginFunc" method="POST">
 					<div class="form-group has-feedback">
 						<header class="jg" style="font-size: 1.2em;">
 							Email<br>
 						</header>
 						<input type="email" class="form-control login" name="memId"
-							id="memId" value="hsj@thousandOfAnts.com"
+							value="hsj@thousandOfAnts.com"
 							style="border : 0; outline : 0;">
 					</div>
 			

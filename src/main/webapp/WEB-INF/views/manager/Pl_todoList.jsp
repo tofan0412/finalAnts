@@ -13,12 +13,12 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
-
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#todoList tr").on("click",function(){
 		var todoId = $(this).data("todoid");
-		location.href = "/todo/onetodo?todoId="+todoId;
+ 		$(location).attr('href', '${pageContext.request.contextPath}/todo/onetodoView?todoId='+todoId);
 		});
 	});
 </script>
@@ -61,7 +61,7 @@ $(document).ready(function(){
 						<td>${todo.memId}</td>
 						<td>
 						<c:if test= "${todo.todoPercent eq null}">0%</c:if>
-						<c:if test= "${todo.todoPercent ne null}">${todo.todoPsercent}%</c:if>
+						<c:if test= "${todo.todoPercent ne null}">${todo.todoPercent}%</c:if>
 						</td>
 						<td>${todo.todoEnd}</td>
 					</tr>

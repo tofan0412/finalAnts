@@ -1,5 +1,6 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
    <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -26,6 +27,11 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      <li class="jg" style="padding-top : 5px;">
+      	<c:if test="${SMEMBER.memId ne null }">
+    	  환영합니다, ${SMEMBER.memId }님!
+   		</c:if>
+      </li>
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -121,15 +127,18 @@
           <a href="#" class="dropdown-item">
             <i class="fas fa-user-edit mr-2"></i>프로필
           </a>
+          
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
             <i class="fas fa-bell mr-2"></i>알림설정
           </a>
+          
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
             <i class="fas fa-toggle-off mr-2"></i>로그아웃
           </a>
-          </div>
+        </div>
+          
       </li>
       
       <li class="nav-item">

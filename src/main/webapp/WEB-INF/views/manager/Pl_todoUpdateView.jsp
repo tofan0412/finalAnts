@@ -21,9 +21,9 @@
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 <br>
-<div style="padding-left: 30px;"><h3>일감등록</h3><br>
+<div style="padding-left: 30px;"><h3>일감 수정</h3><br>
 
-	<form method="post" action="${pageContext.request.contextPath }/todo/todoInsert" id="todoform"  >	
+	<form method="post" action="${pageContext.request.contextPath }/todo/updateissueView" id="todoform"  >	
 		<label for="todoTitle" class="col-sm-1 control-label">제목</label>
 		<input type="text" name="todoTitle" style="width: 580px;"><br><br>
 		<label for="todoCont" class="col-sm-1 control-label">할일</label>
@@ -32,7 +32,7 @@
 		<select name="memId" id="mem-select">
 		    <option value="">담당자를 선택해 주세요</option>
 			<c:forEach items="${promemList}" var="mem">
-				<option value="${mem.memId}">${mem.memName}</option>
+				<option value="${mem.memId}">${mem.memId}</option>
 			</c:forEach>
 		</select><br><br>
 		<label for="status-select" class="col-sm-1 control-label">우선순위</label>
@@ -44,9 +44,11 @@
 		<input type='date' id='currentDate' name="todoStart"/><br><br>
 		<label for="todoEnd" class="col-sm-1 control-label">종료 일</label>
 		<input type='date' id='todo_end' name="todoEnd"/><br><br>
-		<c:if test="${todoVo.todoParentid ne null}">
-		<input type="hidden" name="todoParentid" value="${todoVo.todoParentid}"></c:if>
-		<button type="submit" class="btn btn-default" id="regBtn">등록</button>
+<!-- 		<label for="realFilename" class="col-sm-1 control-label">파일</label> -->
+<!-- 		<input type="file" name="realFilename" id="realFilename"/> -->
+<%-- 		<c:if test="${상위일감을클릭해서 들어오면... }"> --%>
+<%-- 		<input type="hidden" name="" value="${상위일감.....id}"></c:if> --%>
+		<button type="button" class="btn btn-default" id="regBtn">수정</button>
 	</form>
 </div>
 </html>

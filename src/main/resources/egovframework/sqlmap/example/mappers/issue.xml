@@ -18,14 +18,37 @@
 
 
    <!-- 이슈게시글 리스트 가져오기 -->
-	<select id="issuelist" resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="String">
-	 	<![CDATA[
-		select a.issue_id , a.issue_title , a.issue_cont , to_char(a.reg_dt,'YYYY-MM-DD') as reg_dt , b.mem_name as mem_id
-		from( select issue_id, issue_title, issue_cont, reg_dt, issue_del, mem_id
-		        from issue
-		        where req_id = #{reqId}) a , member b
-		where a.mem_id = b.mem_id and a.issue_del = 'n'
-	    ]]>		
+	<select id="issuelist" resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="ants.com.board.memBoard.model.IssueVo">
+	 	
+	 	
+ 		SELECT c.*
+	      FROM (
+	      	SELECT ROWNUM RNUM,
+	           	   S.*
+		      FROM (
+				select a.issue_id , a.issue_title , a.issue_cont , to_char(a.reg_dt,'YYYY-MM-DD') as reg_dt , b.mem_name as mem_id
+				from( select issue_id, issue_title, issue_cont, reg_dt, issue_del, mem_id
+				        from issue
+				        where req_id = #{reqId}) a , member b 
+				where a.mem_id = b.mem_id and a.issue_del = 'n' 
+				ORDER BY a.reg_dt 
+			  ) S
+				
+				<if test="searchKeyword != null and searchKeyword != ''">
+				        <choose>
+				            <when test="searchCondition == 0">
+								AND	TITLE LIKE '%' || #{searchKeyword} || '%'
+							</when>
+				            <when test="searchCondition == 1">
+								AND	CONTENTS LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</if>
+				
+				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 
+				
+	      ) c
+	     <![CDATA[WHERE c.RNUM > #{firstIndex}]]>
 				
 	</select>
 
@@ -81,5 +104,34 @@
 	</update>
 	
 	
+	 <!-- 카테고리 가져오기-->
+	<select id="categorylist" resultType ="ants.com.board.memBoard.model.CategoryVo" parameterType="String">
 	
+		select a.category_id, a.category_name 
+		from category a, (select substr(mem_type,1,1) as mem_type from member where mem_id = #{memId}) b
+		where substr(a.category_auth,1,1) in( b.mem_type, 'm')
+		order by a.category_id
+			
+	</select>
+
+ 	<!-- 이슈게시글 수 조회하기 -->	
+	<select id="issuePagingListCnt" parameterType="ants.com.board.memBoard.model.IssueVo"  resultType="int">
+		select count(*) as totCnt
+		from issue
+		where req_id = #{reqId}
+		
+		<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 0">
+						AND	TITLE LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 1">
+						AND	CONTENTS LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>		
+	</select>
+
+
+
 </mapper>
