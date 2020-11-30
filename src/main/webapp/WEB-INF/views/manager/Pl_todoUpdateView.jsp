@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
-
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript">
 	 	$(document).ready(function(){
 	 		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
