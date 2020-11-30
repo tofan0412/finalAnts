@@ -20,16 +20,24 @@ public class ManageBoardService{
 		return mapper.todoInsert(todoVo);
 	}
 
-	public List<TodoVo> getTodoList(String req_id) {
-		return mapper.getTodoList(req_id);
+	public List<TodoVo> getTodoList(TodoVo todoVo) {
+		return mapper.getTodoList(todoVo);
 	}
 
-	public List<MemberVo> projectMemList(String req_id) {
-		return mapper.projectMemList(req_id);
+	public List<MemberVo> projectMemList(TodoVo todoVo) {
+		return mapper.projectMemList(todoVo);
 	}
 	
-	public TodoVo getTodo(String todo_id) {
-		return mapper.getTodo(todo_id);
+	public TodoVo getTodo(TodoVo todoVo) {
+		return mapper.getTodo(todoVo);
+	}
+
+	public TodoVo todoupdate(TodoVo todoVo) {
+		return mapper.todoupdate(todoVo);
+	}
+
+	public int tododelete(TodoVo todoVo) {
+		return mapper.tododelete(todoVo);
 	}
 
 }

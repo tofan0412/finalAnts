@@ -13,11 +13,18 @@ public interface ManageBoardMapper {
 	public int todoInsert(TodoVo todoVo);
 
 	// 일감리스트 조회
-	public List<TodoVo> getTodoList(String req_id);
+	public List<TodoVo> getTodoList(TodoVo todoVo);
 
 	// 한개의 일감 조회
-	public TodoVo getTodo(String todo_id);
+	public TodoVo getTodo(TodoVo todoVo);
 
 	// 팀원 조회
-	public List<MemberVo> projectMemList(String req_id);
+	public List<MemberVo> projectMemList(TodoVo todoVo);
+	
+	// 일감 수정
+	public TodoVo todoupdate(TodoVo todoVo);
+	
+	// 일감 삭제
+	public int tododelete(TodoVo todoVo);
+	
 }
