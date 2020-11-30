@@ -29,17 +29,17 @@ public class TodoController {
 	// 일감 등록 메서드
 	@RequestMapping("/todoInsert")
 	public String todoInsert(Model model, TodoVo todoVo) {
-		int todoInsert = managerSerive.todoInsert(todoVo);
+		logger.debug("파라미터",todoVo);
+//		int todoInsert = managerSerive.todoInsert(todoVo);
 		return "";
 	}
 
 	// 일감 조회 메서드
 	@RequestMapping("/todoList")
-	public String todoListView(String req_id, Model model) {
-		List<TodoVo> todoList = managerSerive.getTodo(req_id);
+	public String todoListView(String reqId, Model model) {
+		List<TodoVo> todoList = managerSerive.getTodo(reqId);
 		model.addAttribute("todoList", todoList);
-		logger.debug("나오니:{}",todoList);
-		logger.debug("나오니2:{}",req_id);
+		logger.debug(".무엇 :{}", todoList);
 		return "tiles/manager/Pl_todoList";
 	}
 
