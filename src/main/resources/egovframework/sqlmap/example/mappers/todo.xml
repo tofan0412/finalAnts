@@ -19,21 +19,54 @@
 
 	</resultMap>
 
-	<!--할일 조회 -->
-	<select id="getTodo" parameterType="String" resultMap="TodoVo">
-		SELECT *
-		FROM todo
-		where req_id=#{reqId}
+	<!--할일 리스트조회 -->
+	<select id="getTodoList" parameterType="String"
+		resultMap="TodoVo">
+		<![CDATA[
+	SELECT
+	    todo.todo_id,
+	    todo.todo_start,
+	    todo.todo_end,
+	    todo.todo_cont,
+	    todo.todo_title,
+	    todo.todo_percent,
+	    todo_importance,
+	    todo_level,
+	    todo.req_id,
+	    todo.todo_parentid,
+	    todo.del,
+	    member.mem_name as mem_id
+	FROM( select * from member)member, todo todo
+	WHERE
+	    member.mem_id = todo.mem_id
+	    AND   todo.req_id = #{reqId}
+	    ]]>
 	</select>
 
-	<!--팀원 조회 -->
-	<select id="getMem" parameterType="String" resultMap="TodoVo">
-		SELECT mem_id
-		FROM projectmember
-		where promem_status='in'
-		and req_id = #{reqId}
+	<select id="getTodo" parameterType="String" resultMap="TodoVo">
+		<![CDATA[
+	SELECT
+	    todo.todo_id,
+	    todo.todo_start,
+	    todo.todo_end,
+	    todo.todo_cont,
+	    todo.todo_title,
+	    todo.todo_percent,
+	    todo_importance,
+	    todo_level,
+	    todo.req_id,
+	    todo.todo_parentid,
+	    todo.del,
+	    member.mem_name as mem_id
+	FROM( select * from member)member, todo todo
+	WHERE
+	    member.mem_id = todo.mem_id
+	    AND   todo.todo_id = #{todoId}
+	    ]]>
 	</select>
-	
+
+
+
 	<!-- 유지보수를 위해서 parameterType은 String보다 VO타입으로 사용 -->
 
 	<!-- <insert id="todoInsert" parameterMap="TodoVo"> -->

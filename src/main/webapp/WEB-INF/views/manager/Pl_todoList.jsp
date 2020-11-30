@@ -15,7 +15,12 @@
 <link rel="icon" href="../../favicon.ico">
 
 <script type="text/javascript">
-
+$(document).ready(function(){
+	$("#todoList tr").on("click",function(){
+		var todoId = $(this).data("todoid");
+		location.href = "/todo/onetodo?todoId="+todoId;
+		});
+	});
 </script>
 <style type="text/css">
 #todoTable{
@@ -28,8 +33,6 @@
     border-bottom: 1px solid #444444;
     padding: 10px;
   }
-
-
 
 </style>
 </head>
@@ -49,7 +52,7 @@
 			<tbody id="todoList">
 			<c:if test="${todoList ne null}">
 				<c:forEach items="${todoList}" var="todo">
-					<tr data-userid="${todo.todoId}">
+					<tr data-todoid="${todo.todoId}">
 						<td>
 						<c:if test="${todo.todoImportance eq 'gen'}">일반</c:if>
 						<c:if test="${todo.todoImportance eq 'emg'}">긴급</c:if>
