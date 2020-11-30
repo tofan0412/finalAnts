@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="req">
+<mapper namespace="ants.com.member.mapper.ReqMapper">
 
-	<resultMap id="ReqVo" type="ants.com.member.model.ReqVo">
-		<result property="reqId" column="req_id"/>
-		<result property="reqTitle" column="req_title"/>
-		<result property="reqPeriod" column="req_period"/>
-		<result property="reqFilepath" column="req_filepath"/>
-		<result property="reqFilename" column="req_filename"/>
-		<result property="memId" column="mem_id"/>
-		<result property="status" column="status"/>
-		<result property="plId" column="pl_id"/>
-	</resultMap>
+<!-- 	<resultMap id="ReqVo" type="ants.com.member.model.ReqVo"> -->
+<!-- 		<result property="reqId" column="req_id"/> -->
+<!-- 		<result property="reqTitle" column="req_title"/> -->
+<!-- 		<result property="reqPeriod" column="req_period"/> -->
+<!-- 		<result property="reqFilepath" column="req_filepath"/> -->
+<!-- 		<result property="reqFilename" column="req_filename"/> -->
+<!-- 		<result property="memId" column="mem_id"/> -->
+<!-- 		<result property="status" column="status"/> -->
+<!-- 		<result property="plId" column="pl_id"/> -->
+<!-- 	</resultMap> -->
 	
-	<select id="reqList" parameterType="ReqVo" resultMap="ReqVo">
+	<select id="reqList" parameterType="ants.com.member.model.ReqVo" resultType="ants.com.member.model.ReqVo">
 		<![CDATA[
 		SELECT  *
 		    FROM(
@@ -34,7 +34,7 @@
 	    ]]>
 	</select>
 	
-	<insert id="reqInsert" parameterType="ReqVo" >
+	<insert id="reqInsert" parameterType="ants.com.member.model.ReqVo" >
 		INSERT INTO REQLIST
 			VALUES(REQ_SEQ.nextval,#{req_title},#{req_period},#{req_filepath},#{req_filename},#{mem_id},#{status},#{pl_id}
 	</insert>

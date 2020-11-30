@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="issue">
+<mapper namespace="ants.com.member.mapper.ProjectmemberMapper">
 
-	<resultMap id="IssueVo" type="ants.com.board.memBoard.model.IssueVo">
-		<result property="issueId" column="issue_id"/>
-		<result property="issueTitle" column="issue_title"/>
-		<result property="issueCont" column="issue_cont"/>
-		<result property="regDt" column="reg_dt"/>
-		<result property="categoryId" column="category_id"/>
-		<result property="issueKind" column="issue_kind"/>
-		<result property="issueDel" column="issue_del"/>
-		<result property="todoId" column="todo_id"/>
-		<result property="reqId" column="req_id"/>
-		<result property="memId" column="mem_id"/>
-	</resultMap>
+<!-- 	<resultMap id="IssueVo" type="ants.com.board.memBoard.mapper.ProjectmemberMapper"> -->
+<!-- 		<result property="issueId" column="issue_id"/> -->
+<!-- 		<result property="issueTitle" column="issue_title"/> -->
+<!-- 		<result property="issueCont" column="issue_cont"/> -->
+<!-- 		<result property="regDt" column="reg_dt"/> -->
+<!-- 		<result property="categoryId" column="category_id"/> -->
+<!-- 		<result property="issueKind" column="issue_kind"/> -->
+<!-- 		<result property="issueDel" column="issue_del"/> -->
+<!-- 		<result property="todoId" column="todo_id"/> -->
+<!-- 		<result property="reqId" column="req_id"/> -->
+<!-- 		<result property="memId" column="mem_id"/> -->
+<!-- 	</resultMap> -->
 
 
    <!-- 이슈게시글 리스트 가져오기 -->
-	<select id="getissuelist" resultMap ="IssueVo" parameterType="String">
+	<select id="issuelist" resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="String">
 	 	<![CDATA[
 		select a.issue_id , a.issue_title , a.issue_cont , to_char(a.reg_dt,'YYYY-MM-DD') as reg_dt , b.mem_name as mem_id
 		from( select issue_id, issue_title, issue_cont, reg_dt, issue_del, mem_id
@@ -31,7 +31,7 @@
 
 	
 	<!-- 각 이슈게시글 내용 가져오기 -->
-	<select id="geteachissue"  resultMap ="IssueVo" parameterType="String">
+	<select id="geteachissue"  resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="String">
 		select  a.issue_id ,  a.issue_title , a.issue_cont ,TO_CHAR( a.reg_dt,'YYYY-MM-DD') as reg_dt, b.mem_name as mem_id
 		from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id
 		        from issue
@@ -43,7 +43,7 @@
 	
 	
 	<!-- 이슈 작성하기 -->
-	<insert id="insertissue" parameterType="IssueVo">
+	<insert id="insertissue" parameterType="ants.com.board.memBoard.model.IssueVo">
 		
 		INSERT INTO issue (
 		    issue_id, issue_title, issue_cont,  reg_dt,  category_id,  
@@ -56,7 +56,7 @@
 	</insert>
 	
 	<!-- 이슈 수정하기 -->
-	<update id="updateissue" parameterType="IssueVo">
+	<update id="updateissue" parameterType="ants.com.board.memBoard.model.IssueVo">
 		UPDATE issue
 	    <set>
 	        <if test="issue_title != null">issue_title=#{issueTitle},</if>

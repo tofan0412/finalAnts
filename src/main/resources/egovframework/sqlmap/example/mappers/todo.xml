@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="todo">
+<mapper namespace="ants.com.board.manageBoard.mapper.ManageBoardMapper">
 
-	<resultMap id="TodoVo"
-		type="ants.com.board.manageBoard.model.TodoVo">
-		<result property="todoId" column="todo_id" />
-		<result property="todoStart" column="todo_start" />
-		<result property="todoEnd" column="todo_end" />
-		<result property="todoCont" column="todo_cont" />
-		<result property="todoTitle" column="todo_title" />
-		<result property="todoPercent" column="todo_percent" />
-		<result property="todoImportance" column="todo_importance" />
-		<result property="todoLevel" column="todo_level" />
-		<result property="reqId" column="req_id" />
-		<result property="memId" column="mem_id" />
-		<result property="todoParentid" column="todo_parentid" />
-		<result property="del" column="del" />
+<!-- 	<resultMap id="TodoVo" -->
+<!-- 		type="ants.com.board.manageBoard.model.TodoVo"> -->
+<!-- 		<result property="todoId" column="todo_id" /> -->
+<!-- 		<result property="todoStart" column="todo_start" /> -->
+<!-- 		<result property="todoEnd" column="todo_end" /> -->
+<!-- 		<result property="todoCont" column="todo_cont" /> -->
+<!-- 		<result property="todoTitle" column="todo_title" /> -->
+<!-- 		<result property="todoPercent" column="todo_percent" /> -->
+<!-- 		<result property="todoImportance" column="todo_importance" /> -->
+<!-- 		<result property="todoLevel" column="todo_level" /> -->
+<!-- 		<result property="reqId" column="req_id" /> -->
+<!-- 		<result property="memId" column="mem_id" /> -->
+<!-- 		<result property="todoParentid" column="todo_parentid" /> -->
+<!-- 		<result property="del" column="del" /> -->
 
-	</resultMap>
+<!-- 	</resultMap> -->
 
 	<!--할일 리스트조회 -->
 	<select id="getTodoList" parameterType="String"
-		resultMap="TodoVo">
+		resultType="ants.com.board.manageBoard.model.TodoVo">
 		<![CDATA[
 	SELECT
 	    todo.todo_id,
@@ -43,7 +43,8 @@
 	    ]]>
 	</select>
 
-	<select id="getTodo" parameterType="String" resultMap="TodoVo">
+	<!-- 한개의 할일 조회 -->
+	<select id="getTodo" parameterType="String" resultType="ants.com.board.manageBoard.model.TodoVo">
 		<![CDATA[
 	SELECT
 	    todo.todo_id,
@@ -65,6 +66,21 @@
 	    ]]>
 	</select>
 
+	<select id="projectMemList" parameterType="String"
+		resultType="ants.com.board.manageBoard.model.TodoVo">
+		SELECT
+		member.mem_name,
+		member.mem_id
+		FROM
+		member,
+		projectmember
+		WHERE
+		member.mem_id = projectmember.mem_id
+		AND
+		projectmember.req_id =
+		#{reqId}
+		AND projectmember.promem_status = 'in'
+	</select>
 
 
 	<!-- 유지보수를 위해서 parameterType은 String보다 VO타입으로 사용 -->
