@@ -30,15 +30,13 @@
   }
 
 }
-#content{
-  min-height: calc(100vh - calc(3.5rem + 1px) - calc(3.5rem + 1px));
-}
+
 </style>
 </head>
 <body>
 	<%@include file="../layout/contentmenu.jsp"%>
 	<div style="padding-left: 30px;">
-		<a class="btn btn-default pull-right" href="${pageContext.request.contextPath }/todo/todoInsertView">일감 등록</a>
+		<a class="btn btn-default pull-right" href="${pageContext.request.contextPath }/todo/todoInsertView?reqId=2">일감 등록</a>
 		<br>
 		<table id="todoTable">
 			<tr>
@@ -49,6 +47,7 @@
 				<th>종료일</th>
 			</tr>
 			<tbody id="todoList">
+			<c:if test="${todoList ne null}">
 				<c:forEach items="${todoList}" var="todo">
 					<tr data-userid="${todo.todoId}">
 						<td>
@@ -64,6 +63,10 @@
 						<td>${todo.todoEnd}</td>
 					</tr>
 				</c:forEach>
+				</c:if>
+				<c:if test="${todoList eq null}">
+				"등록된 일감이없습니다."
+				</c:if>
 			</tbody>
 		</table>
 			</div>			

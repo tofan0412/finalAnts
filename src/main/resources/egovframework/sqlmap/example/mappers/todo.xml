@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="todo">
 
-	<resultMap id="TodoVo" type="ants.com.board.manageBoard.model.TodoVo">
+	<resultMap id="TodoVo"
+		type="ants.com.board.manageBoard.model.TodoVo">
 		<result property="todoId" column="todo_id" />
 		<result property="todoStart" column="todo_start" />
 		<result property="todoEnd" column="todo_end" />
@@ -15,44 +16,55 @@
 		<result property="memId" column="mem_id" />
 		<result property="todoParentid" column="todo_parentid" />
 		<result property="del" column="del" />
-		
+
 	</resultMap>
 
+	<!--할일 조회 -->
 	<select id="getTodo" parameterType="String" resultMap="TodoVo">
 		SELECT *
 		FROM todo
 		where req_id=#{reqId}
 	</select>
+
+	<!--팀원 조회 -->
+	<select id="getMem" parameterType="String" resultMap="TodoVo">
+		SELECT mem_id
+		FROM projectmember
+		where promem_status='in'
+		and req_id = #{reqId}
+	</select>
+	
 	<!-- 유지보수를 위해서 parameterType은 String보다 VO타입으로 사용 -->
 
-<!-- 	<insert id="todoInsert" parameterMap="TodoVo"> -->
-<!-- 		INSERT INTO todo ( -->
-<!-- 		todo_id, -->
-<!-- 		todo_start, -->
-<!-- 		todo_end, -->
-<!-- 		todo_cont, -->
-<!-- 		todo_title, -->
-<!-- 		percent, -->
-<!-- 		todo_importance, -->
-<!-- 		todo_level, -->
-<!-- 		req_id, -->
-<!-- 		mem_id, -->
-<!-- 		todo_parentid, -->
-<!-- 		del -->
-<!-- 		) VALUES ( -->
-<!-- 		todo_seq.nextval, -->
-<!-- 		sysdate, -->
-<!-- 		TO_DATE(#{todoEnd},'YYYY/MM/DD'), -->
-<!-- 		#{todoCont}, -->
-<!-- 		#{todoTitle}, -->
-<!-- 		'0', -->
-<!-- 		#{todoImportance}, -->
-<!-- 		NULL, -->
-<!-- 		#{reqId}, -->
-<!-- 		#{memId}, -->
-<!-- 		#{todoParentid}, -->
-<!-- 		NULL -->
-<!-- 		) -->
-<!-- 	</insert> -->
+	<!-- <insert id="todoInsert" parameterMap="TodoVo"> -->
+	<!-- INSERT INTO todo ( -->
+	<!-- todo_id, -->
+	<!-- todo_start, -->
+	<!-- todo_end, -->
+	<!-- todo_cont, -->
+	<!-- todo_title, -->
+	<!-- percent, -->
+	<!-- todo_importance, -->
+	<!-- todo_level, -->
+	<!-- req_id, -->
+	<!-- mem_id, -->
+	<!-- todo_parentid, -->
+	<!-- del -->
+	<!-- ) VALUES ( -->
+	<!-- todo_seq.nextval, -->
+	<!-- sysdate, -->
+	<!-- TO_DATE(#{todoEnd},'YYYY/MM/DD'), -->
+	<!-- #{todoCont}, -->
+	<!-- #{todoTitle}, -->
+	<!-- '0', -->
+	<!-- #{todoImportance}, -->
+	<!-- NULL, -->
+	<!-- #{reqId}, -->
+	<!-- #{memId}, -->
+	<!-- #{todoParentid}, -->
+	<!-- NULL -->
+	<!-- ) -->
+	<!-- </insert> -->
+
 
 </mapper>
