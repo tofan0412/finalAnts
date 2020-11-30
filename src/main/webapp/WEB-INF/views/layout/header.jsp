@@ -16,7 +16,7 @@
     <!-- SEARCH FORM -->
     <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
-        <input class="form-control form-control-n	avbar" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-navbar" type="submit">
             <i class="fas fa-search"></i>
@@ -27,6 +27,11 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      <li class="jg" style="padding-top : 5px;">
+      	<c:if test="${SMEMBER.memId ne null }">
+    	  환영합니다, ${SMEMBER.memId }님!
+   		</c:if>
+      </li>
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -118,12 +123,6 @@
           <i class="far fa-user-circle"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <c:if test="${SMEMBER.memId ne null }">
-	          <a href="#" class="dropdown-item">
-	            <i class="fas fa-user-edit mr-2"></i>사용자 정보
-	          </a>
-          </c:if>
-          
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
             <i class="fas fa-user-edit mr-2"></i>프로필

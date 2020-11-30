@@ -5,7 +5,7 @@
 <head>
 
 <%@include file="/WEB-INF/views/layout/fonts.jsp"%>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <title>협업관리프로젝트</title>
 <body class="hold-transition sidebar-mini accent-teal ngc">

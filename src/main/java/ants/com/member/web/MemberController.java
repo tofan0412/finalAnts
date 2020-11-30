@@ -59,7 +59,7 @@ public class MemberController {
 	
 	
 	// 로그인 로직
-	@RequestMapping(path="/loginFunc", method = RequestMethod.GET )							
+	@RequestMapping(path="/loginFunc")							
 	public String process(MemberVo memberVo, HttpSession session, Model model) {
 		
 		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);	
@@ -80,7 +80,7 @@ public class MemberController {
 			}
 			
 		}else {
-			return "member/login";
+			return "redirect:member/login";
 		}
 			
 	}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ants.com.chatting.mapper.ChatMapper">
+	
+	
+
+
+
+<select id="readChatList" resultType="ants.com.chatting.model.ChatGroupVo">
+SELECT * 
+  FROM CHATGROUP
+ WHERE REQ_ID = '1'
+  <!-- 나중에 프로젝트별 채팅방 목록을 불러올 수 있도록 수정해야 한다.  -->
+</select>
+
+<select id="readMessages" resultType="ants.com.chatting.model.ChatVo" parameterType="java.lang.String">
+SELECT *
+  FROM CHAT
+ WHERE CGROUP_ID = '1'
+ORDER BY REG_DT
+</select>
+
+
+
+
+</mapper>
