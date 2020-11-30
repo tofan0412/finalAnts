@@ -1,5 +1,7 @@
 package ants.com.board.manageBoard.repository;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,7 +17,12 @@ public class ManageBoardDao implements ManageBoardDaoI{
 	
 	@Override
 	public int todoInsert(TodoVo todoVo) {
-		return sqlSession.insert("manager.todoInsert",todoVo);
+		return sqlSession.insert("todo.todoInsert",todoVo);
 	}
 
+	@Override
+	public List<TodoVo> getTodo(String req_id) {
+		return sqlSession.selectList("todo.getTodo", req_id);
+	}
+	
 }

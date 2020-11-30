@@ -3,58 +3,58 @@ package ants.com.member.model;
 public class MemberVo {
 	
 	
-	private String mem_id;
-	private String mem_name;
-	private String mem_pass;
-	private String mem_tel;
-	private String mem_filepath;
-	private String mem_filename;
-	private String mem_alert;
+	private String memId;
+	private String memName;
+	private String memPass;
+	private String memTel;
+	private String memFilepath;
+	private String memFilename;
+	private String memAlert;
 	private String del;
-	private String mem_type;
+	private String memType;
 	
 	
-	public String getMem_id() {
-		return mem_id;
+	public String getMemId() {
+		return memId;
 	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
-	public String getMem_name() {
-		return mem_name;
+	public String getMemName() {
+		return memName;
 	}
-	public void setMem_name(String mem_name) {
-		this.mem_name = mem_name;
+	public void setMemName(String memName) {
+		this.memName = memName;
 	}
-	public String getMem_pass() {
-		return mem_pass;
+	public String getMemPass() {
+		return memPass;
 	}
-	public void setMem_pass(String mem_pass) {
-		this.mem_pass = mem_pass;
+	public void setMemPass(String memPass) {
+		this.memPass = memPass;
 	}
-	public String getMem_tel() {
-		return mem_tel;
+	public String getMemTel() {
+		return memTel;
 	}
-	public void setMem_tel(String mem_tel) {
-		this.mem_tel = mem_tel;
+	public void setMemTel(String memTel) {
+		this.memTel = memTel;
 	}
-	public String getMem_filepath() {
-		return mem_filepath;
+	public String getMemFilepath() {
+		return memFilepath;
 	}
-	public void setMem_filepath(String mem_filepath) {
-		this.mem_filepath = mem_filepath;
+	public void setMemFilepath(String memFilepath) {
+		this.memFilepath = memFilepath;
 	}
-	public String getMem_filename() {
-		return mem_filename;
+	public String getMemFilename() {
+		return memFilename;
 	}
-	public void setMem_filename(String mem_filename) {
-		this.mem_filename = mem_filename;
+	public void setMemFilename(String memFilename) {
+		this.memFilename = memFilename;
 	}
-	public String getMem_alert() {
-		return mem_alert;
+	public String getMemAlert() {
+		return memAlert;
 	}
-	public void setMem_alert(String mem_alert) {
-		this.mem_alert = mem_alert;
+	public void setMemAlert(String memAlert) {
+		this.memAlert = memAlert;
 	}
 	public String getDel() {
 		return del;
@@ -62,21 +62,20 @@ public class MemberVo {
 	public void setDel(String del) {
 		this.del = del;
 	}
-	public String getMem_type() {
-		return mem_type;
+	public String getMemType() {
+		return memType;
 	}
-	public void setMem_type(String mem_type) {
-		this.mem_type = mem_type;
+	public void setMemType(String memType) {
+		this.memType = memType;
 	}
 	
 	
 	@Override
 	public String toString() {
-		return "MemberVo [mem_id=" + mem_id + ", mem_name=" + mem_name + ", mem_pass=" + mem_pass + ", mem_tel="
-				+ mem_tel + ", mem_filepath=" + mem_filepath + ", mem_filename=" + mem_filename + ", mem_alert="
-				+ mem_alert + ", del=" + del + ", mem_type=" + mem_type + "]";
+		return "MemberVo [memId=" + memId + ", memName=" + memName + ", memPass=" + memPass + ", memTel=" + memTel
+				+ ", memFilepath=" + memFilepath + ", memFilename=" + memFilename + ", memAlert=" + memAlert + ", del="
+				+ del + ", memType=" + memType + "]";
 	}
-	
-	
+
 	
 }

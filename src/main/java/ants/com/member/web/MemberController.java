@@ -50,21 +50,27 @@ public class MemberController {
 	
 	
 	
-	@RequestMapping(path="/loginFunc", params= {"mem_id"}, method = RequestMethod.GET )							
-	public String process(String mem_id, String mem_pass, MemberVo memberVo, HttpSession session, Model model) {
+	@RequestMapping(path="/loginFunc", method = RequestMethod.GET )							
+	public String process(String memId, String memPass, MemberVo memberVo, HttpSession session, Model model) {
 		
-		logger.debug("LoginCOntroller.process() {} / {} / {}", mem_id, mem_pass, memberVo);	
-		logger.debug("user_id : {}", mem_id);	
+		logger.debug("LoginCOntroller - memId : {} / memPass: {} ", memId, memPass);	
 
 		
-		MemberVo dbMember = memberService.getMember(mem_id);
+		MemberVo dbMember = memberService.getMember(memId);
 		logger.debug("dbMember : {}", dbMember);
 		
 		
-		if(dbMember != (null) && memberVo.getMem_pass().equals(dbMember.getMem_pass()) ) {
+		if(dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass()) ) {
 			session.setAttribute("S_MEMBER", memberVo);
 			model.addAttribute("to_day", new Date());
-			return "main";
+			
+			if(dbMember.getMemType().equals("pl")) {
+				return "manager/pl_main";
+			}else if(dbMember.getMemType().equals("pm")) {
+				return "manager/pm_main";
+			}else {
+				return "main";
+			}
 			
 		}else {
 			return "member/login";
@@ -85,7 +91,7 @@ public class MemberController {
 	
 	/*, BindingResult br ,@RequestPart("realFilename") MultipartFile file*/
 	@RequestMapping(path="/memberRegist", method = RequestMethod.POST)							
-	public String memberRegist(String mem_id, MemberVo memberVo, BindingResult br ,@RequestPart("realFilename") MultipartFile file) { 
+	public String memberRegist(String memId, MemberVo memberVo, BindingResult br ,@RequestPart("realFilename") MultipartFile file) { 
 		
 		logger.debug("memberVo : {}", memberVo );
 		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(), file.getSize());
@@ -110,20 +116,23 @@ public class MemberController {
 		logger.debug("---------------------통과-------------------");
 		
 		
-		memberVo.setMem_filepath(Filename);
-		memberVo.setMem_filename(file.getOriginalFilename());
+		memberVo.setMemFilepath(Filename);
+		memberVo.setMemFilename(file.getOriginalFilename());
 		
 //		 사용자 정보 등록   ,real_Filename,file.getOriginalFilename()     , real_Filename, file.getOriginalFilename()
 //		memberVo = new MemberVo();
 		
-		logger.debug("mem_id : {}", mem_id);
+		logger.debug("memId : {}", memId);
 		logger.debug("memberVo : {}", memberVo);
 		int insertCnt = memberService.insertMember(memberVo);
 		logger.debug("insertCnt : {}", insertCnt);
 		
 		//try {
 		if(insertCnt == 1){
+		
 			return "main";
+			
+			
 		//}catch() {
 			
 		//}

@@ -3,28 +3,30 @@ package ants.com.admin.model;
 public class AdminVo {
 	
 	
-	private String admin_id;
-	private String admin_pass;
+	private String adminId;
+	private String adminPass;
 	
-	
-	public String getAdmin_id() {
-		return admin_id;
+	public String getAdminId() {
+		return adminId;
 	}
-	public void setAdmin_id(String admin_id) {
-		this.admin_id = admin_id;
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
 	}
-	public String getAdmin_pass() {
-		return admin_pass;
+	public String getAdminPass() {
+		return adminPass;
 	}
-	public void setAdmin_pass(String admin_pass) {
-		this.admin_pass = admin_pass;
+	public void setAdminPass(String adminPass) {
+		this.adminPass = adminPass;
 	}
-	
 	
 	@Override
 	public String toString() {
-		return "AdminVo [admin_id=" + admin_id + ", admin_pass=" + admin_pass + "]";
+		return "AdminVo [adminId=" + adminId + ", adminPass=" + adminPass + "]";
 	}
+	
+	
+	
+	
 	
 	
 }

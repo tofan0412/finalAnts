@@ -1,5 +1,7 @@
 package ants.com.board.manageBoard.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +19,11 @@ public class ManageBoardService implements ManageBoardServiceI{
 	@Override
 	public int todoInsert(TodoVo todoVo) {
 		return managerDao.todoInsert(todoVo);
+	}
+
+	@Override
+	public List<TodoVo> getTodo(String req_id) {
+		return managerDao.getTodo(req_id);
 	}
 
 }

@@ -19,9 +19,9 @@ public class MemberService implements MemberServiceI {
 	MemberDaoI memberDao;
 	
 	@Override
-	public MemberVo getMember(String mem_id) {
-		logger.debug("memberService login : {}", mem_id);
-		return memberDao.getMember(mem_id);
+	public MemberVo getMember(String memId) {
+		logger.debug("memberService login : {}", memId);
+		return memberDao.getMember(memId);
 	}
 	
 	
