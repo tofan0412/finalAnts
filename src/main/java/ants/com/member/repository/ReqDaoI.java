@@ -5,7 +5,7 @@ import java.util.Map;
 
 import ants.com.member.model.ReqVo;
 
-public interface PmDaoI {
+public interface ReqDaoI {
 
 	public List<ReqVo> reqList(ReqVo reqVo);
 	
