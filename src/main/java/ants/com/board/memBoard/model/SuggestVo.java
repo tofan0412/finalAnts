@@ -5,57 +5,55 @@ import java.util.Date;
 public class SuggestVo {
 
 	
-	private String sgt_id;
-	private String sgt_title;
-	private String sgt_cont;
-	private Date reg_dt;
-	private String sgt_status;
-	private String category_id;
-	private String todo_id;
+	private String sgtId;
+	private String sgtTitle;
+	private String sgtCont;
+	private Date regDt;
+	private String sgtStatus;
+	private String categoryId;
+	private String todoId;
 	private String del;
-	
-	
-	public String getSgt_id() {
-		return sgt_id;
+	public String getSgtId() {
+		return sgtId;
 	}
-	public void setSgt_id(String sgt_id) {
-		this.sgt_id = sgt_id;
+	public void setSgtId(String sgtId) {
+		this.sgtId = sgtId;
 	}
-	public String getSgt_title() {
-		return sgt_title;
+	public String getSgtTitle() {
+		return sgtTitle;
 	}
-	public void setSgt_title(String sgt_title) {
-		this.sgt_title = sgt_title;
+	public void setSgtTitle(String sgtTitle) {
+		this.sgtTitle = sgtTitle;
 	}
-	public String getSgt_cont() {
-		return sgt_cont;
+	public String getSgtCont() {
+		return sgtCont;
 	}
-	public void setSgt_cont(String sgt_cont) {
-		this.sgt_cont = sgt_cont;
+	public void setSgtCont(String sgtCont) {
+		this.sgtCont = sgtCont;
 	}
-	public Date getReg_dt() {
-		return reg_dt;
+	public Date getRegDt() {
+		return regDt;
 	}
-	public void setReg_dt(Date reg_dt) {
-		this.reg_dt = reg_dt;
+	public void setRegDt(Date regDt) {
+		this.regDt = regDt;
 	}
-	public String getSgt_status() {
-		return sgt_status;
+	public String getSgtStatus() {
+		return sgtStatus;
 	}
-	public void setSgt_status(String sgt_status) {
-		this.sgt_status = sgt_status;
+	public void setSgtStatus(String sgtStatus) {
+		this.sgtStatus = sgtStatus;
 	}
-	public String getCategory_id() {
-		return category_id;
+	public String getCategoryId() {
+		return categoryId;
 	}
-	public void setCategory_id(String category_id) {
-		this.category_id = category_id;
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
-	public String getTodo_id() {
-		return todo_id;
+	public String getTodoId() {
+		return todoId;
 	}
-	public void setTodo_id(String todo_id) {
-		this.todo_id = todo_id;
+	public void setTodoId(String todoId) {
+		this.todoId = todoId;
 	}
 	public String getDel() {
 		return del;
@@ -63,16 +61,11 @@ public class SuggestVo {
 	public void setDel(String del) {
 		this.del = del;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "SuggestVo [sgt_id=" + sgt_id + ", sgt_title=" + sgt_title + ", sgt_cont=" + sgt_cont + ", reg_dt="
-				+ reg_dt + ", sgt_status=" + sgt_status + ", category_id=" + category_id + ", todo_id=" + todo_id
-				+ ", del=" + del + "]";
+		return "SuggestVo [sgtId=" + sgtId + ", sgtTitle=" + sgtTitle + ", sgtCont=" + sgtCont + ", regDt=" + regDt
+				+ ", sgtStatus=" + sgtStatus + ", categoryId=" + categoryId + ", todoId=" + todoId + ", del=" + del
+				+ "]";
 	}
-	
-	
-	
 	
 }

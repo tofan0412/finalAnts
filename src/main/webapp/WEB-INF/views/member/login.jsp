@@ -53,7 +53,13 @@
     border-radius: 0.85rem !important; 
 }
 </style>
-
+<script type="text/javascript">
+	$(function(){
+		$("#loginBtn").on('click',function(){
+			$("#lform").submit();
+		})	
+	})
+</script>
 </head>
 
 <title>Bootstrap Example</title>
@@ -78,16 +84,16 @@
 					</h4>
 				</div>
 				<br>
-				<form action="/member/loginFunc" method="get">
+				<form id="lform" action="/member/loginFunc" method="get">
 					<div class="form-group has-feedback">
 						<header class="jg" style="font-size: 1.2em;">
 							Email<br>
 						</header>
 						<input type="email" class="form-control login" name="memId"
-							id="memId" 
+							id="memId" value="hsj@thousandOfAnts.com"
 							style="border : 0; outline : 0;">
 					</div>
-
+			
 					<div class="form-group has-feedback">
 						<div>
 							<header class="jg" style="font-size: 1.2em; float : left;">
@@ -97,10 +103,10 @@
 						<div>
 							<header class="jg" style="font-size: 1.0em; float : right; 
 							color: #0BB783;">
-								비밀번호를 잊으셨나요?<br>
+								<a href="/member/memberforgotview">비밀번호를 잊으셨나요?</a><br>
 							</header>
 						</div>
-						<input type="password" class="form-control login" name="memPass"
+						<input type="password" class="form-control login" name="memPass" value="123"
 						style="border : 0; outline : 0;">
 					</div>
 
@@ -117,7 +123,7 @@
 						<br>
 						<br>
 							<div style="float : right;">
-								<button type="button" class="jg loginBtn"
+								<button type="button" id="loginBtn" class="jg loginBtn"
 								style="width : 100px;">로그인</button>
 							</div> 
 						</div>

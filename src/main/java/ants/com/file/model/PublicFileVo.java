@@ -5,79 +5,76 @@ import java.util.Date;
 public class PublicFileVo {
 	
 	
-	private String PUB_ID;
-	private String PUB_FILEPATH;
-	private String PUB_FILENAME;
-	private String PUB_EXTENSION;
-	private Date REG_DT;
-	private String CATEGORY_ID;
-	private String SOME_ID;
-	private String REQ_ID;
-	private String PUB_SIZE;
-	
-	
-	public String getPUB_ID() {
-		return PUB_ID;
+	private String pubId;
+	private String pubFilepath;
+	private String pubFilename;
+	private String pubExtension;
+	private Date regDt;
+	private String categoryId;
+	private String someId;
+	private String reqId;
+	private String pubSize;
+	public String getPubId() {
+		return pubId;
 	}
-	public void setPUB_ID(String pUB_ID) {
-		PUB_ID = pUB_ID;
+	public void setPubId(String pubId) {
+		this.pubId = pubId;
 	}
-	public String getPUB_FILEPATH() {
-		return PUB_FILEPATH;
+	public String getPubFilepath() {
+		return pubFilepath;
 	}
-	public void setPUB_FILEPATH(String pUB_FILEPATH) {
-		PUB_FILEPATH = pUB_FILEPATH;
+	public void setPubFilepath(String pubFilepath) {
+		this.pubFilepath = pubFilepath;
 	}
-	public String getPUB_FILENAME() {
-		return PUB_FILENAME;
+	public String getPubFilename() {
+		return pubFilename;
 	}
-	public void setPUB_FILENAME(String pUB_FILENAME) {
-		PUB_FILENAME = pUB_FILENAME;
+	public void setPubFilename(String pubFilename) {
+		this.pubFilename = pubFilename;
 	}
-	public String getPUB_EXTENSION() {
-		return PUB_EXTENSION;
+	public String getPubExtension() {
+		return pubExtension;
 	}
-	public void setPUB_EXTENSION(String pUB_EXTENSION) {
-		PUB_EXTENSION = pUB_EXTENSION;
+	public void setPubExtension(String pubExtension) {
+		this.pubExtension = pubExtension;
 	}
-	public Date getREG_DT() {
-		return REG_DT;
+	public Date getRegDt() {
+		return regDt;
 	}
-	public void setREG_DT(Date rEG_DT) {
-		REG_DT = rEG_DT;
+	public void setRegDt(Date regDt) {
+		this.regDt = regDt;
 	}
-	public String getCATEGORY_ID() {
-		return CATEGORY_ID;
+	public String getCategoryId() {
+		return categoryId;
 	}
-	public void setCATEGORY_ID(String cATEGORY_ID) {
-		CATEGORY_ID = cATEGORY_ID;
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
-	public String getSOME_ID() {
-		return SOME_ID;
+	public String getSomeId() {
+		return someId;
 	}
-	public void setSOME_ID(String sOME_ID) {
-		SOME_ID = sOME_ID;
+	public void setSomeId(String someId) {
+		this.someId = someId;
 	}
-	public String getREQ_ID() {
-		return REQ_ID;
+	public String getReqId() {
+		return reqId;
 	}
-	public void setREQ_ID(String rEQ_ID) {
-		REQ_ID = rEQ_ID;
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
 	}
-	public String getPUB_SIZE() {
-		return PUB_SIZE;
+	public String getPubSize() {
+		return pubSize;
 	}
-	public void setPUB_SIZE(String pUB_SIZE) {
-		PUB_SIZE = pUB_SIZE;
+	public void setPubSize(String pubSize) {
+		this.pubSize = pubSize;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "PublicFileVo [PUB_ID=" + PUB_ID + ", PUB_FILEPATH=" + PUB_FILEPATH + ", PUB_FILENAME=" + PUB_FILENAME
-				+ ", PUB_EXTENSION=" + PUB_EXTENSION + ", REG_DT=" + REG_DT + ", CATEGORY_ID=" + CATEGORY_ID
-				+ ", SOME_ID=" + SOME_ID + ", REQ_ID=" + REQ_ID + ", PUB_SIZE=" + PUB_SIZE + "]";
+		return "PublicFileVo [pubId=" + pubId + ", pubFilepath=" + pubFilepath + ", pubFilename=" + pubFilename
+				+ ", pubExtension=" + pubExtension + ", regDt=" + regDt + ", categoryId=" + categoryId + ", someId="
+				+ someId + ", reqId=" + reqId + ", pubSize=" + pubSize + "]";
 	}
+	
 	
 	
 	

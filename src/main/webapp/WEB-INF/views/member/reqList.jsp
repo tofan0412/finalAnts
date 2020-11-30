@@ -9,6 +9,15 @@
 <head>
 
 <script type="text/javascript">
+
+	/* 글 등록 화면 function */
+	function fn_egov_reqInsert() {
+	   	document.listForm.action = "<c:url value='/req/reqInsert'/>";
+	   	document.listForm.submit();
+	}
+
+
+	/* pagination 페이지 링크 function */
 	function fn_egov_link_page(pageNo){
 		document.listForm.pageIndex.value = pageNo;
 		document.listForm.action = "<c:url value='/req/reqList'/>";
@@ -121,7 +130,7 @@
         		  </div>
         		  
         		  <div class="card-footer clearfix">
-	                <button type="button" class="btn btn-default float-right"><i class="fas fa-plus"></i>등 록</button>
+	                <button type="button" class="btn btn-default float-right" onclick="fn_egov_reqInsert()"><i class="fas fa-plus"></i>등 록</button>
 	              </div>
         		 
         		  

@@ -5,58 +5,53 @@ import java.util.Date;
 public class PrivateFileVo {
 	
 	
-	private String priv_id;
-	private String priv_filepath;
-	private String priv_filename;
-	private Date reg_dt;
-	private String priv_size;
-	private String mem_id;
-	
-	
-	public String getPriv_id() {
-		return priv_id;
+	private String privId;
+	private String privFilepath;
+	private String privFilename;
+	private Date regDt;
+	private String privSize;
+	private String memId;
+	public String getPrivId() {
+		return privId;
 	}
-	public void setPriv_id(String priv_id) {
-		this.priv_id = priv_id;
+	public void setPrivId(String privId) {
+		this.privId = privId;
 	}
-	public String getPriv_filepath() {
-		return priv_filepath;
+	public String getPrivFilepath() {
+		return privFilepath;
 	}
-	public void setPriv_filepath(String priv_filepath) {
-		this.priv_filepath = priv_filepath;
+	public void setPrivFilepath(String privFilepath) {
+		this.privFilepath = privFilepath;
 	}
-	public String getPriv_filename() {
-		return priv_filename;
+	public String getPrivFilename() {
+		return privFilename;
 	}
-	public void setPriv_filename(String priv_filename) {
-		this.priv_filename = priv_filename;
+	public void setPrivFilename(String privFilename) {
+		this.privFilename = privFilename;
 	}
-	public Date getReg_dt() {
-		return reg_dt;
+	public Date getRegDt() {
+		return regDt;
 	}
-	public void setReg_dt(Date reg_dt) {
-		this.reg_dt = reg_dt;
+	public void setRegDt(Date regDt) {
+		this.regDt = regDt;
 	}
-	public String getPriv_size() {
-		return priv_size;
+	public String getPrivSize() {
+		return privSize;
 	}
-	public void setPriv_size(String priv_size) {
-		this.priv_size = priv_size;
+	public void setPrivSize(String privSize) {
+		this.privSize = privSize;
 	}
-	public String getMem_id() {
-		return mem_id;
+	public String getMemId() {
+		return memId;
 	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "PrivateFileVo [priv_id=" + priv_id + ", priv_filepath=" + priv_filepath + ", priv_filename="
-				+ priv_filename + ", reg_dt=" + reg_dt + ", priv_size=" + priv_size + ", mem_id=" + mem_id + "]";
+		return "PrivateFileVo [privId=" + privId + ", privFilepath=" + privFilepath + ", privFilename=" + privFilename
+				+ ", regDt=" + regDt + ", privSize=" + privSize + ", memId=" + memId + "]";
 	}
-	
 	
 	
 }
