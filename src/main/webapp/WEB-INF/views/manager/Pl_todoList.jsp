@@ -18,7 +18,6 @@
 $(document).ready(function(){
 	$("#todoList tr").on("click",function(){
 		var todoId = $(this).data("todoid");
-		console.log(todoId);
  		$(location).attr('href', '${pageContext.request.contextPath}/todo/onetodoView?todoId='+todoId);
 		});
 	});

@@ -15,11 +15,26 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript">
 $(function(){
+	//수정
 	$("#updateBtn").on('click', function(){
 		var todoId="${todoVo.todoId}"; 
 // 		$(location).attr('href', '${pageContext.request.contextPath}/todo/insertissueView');
 	})
 	
+	// 일감 생성
+	$("#creattodoBtn").on('click', function(){
+ 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView');
+	})
+	
+	// 하위 일감 생성
+	$("#creatChildBtn").on('click', function(){
+		var todoParentid="${todoVo.todoId}"; 
+		alert(todoParentid);
+ 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView?todoParentid='+todoParentid);
+       
+	})
+	
+	// 일감 삭제
 	$("#deleteBtn").on('click', function(){
 		var todoId="${todoVo.todoId}"; 
 		var reqId="${todoVo.reqId}"; 
@@ -61,6 +76,8 @@ $(function(){
 
 		<button type="button" class="btn btn-default" id="updateBtn" >수정</button>
 		<button type="button" class="btn btn-default" id="deleteBtn" onclick="removeCheck()">삭제</button>
+		<button type="button" class="btn btn-default" id="creatChildBtn">하위일감 생성</button>
+		<button type="button" class="btn btn-default" id="creattodoBtn">일감 생성</button>
 	
 </div>
 </html>
