@@ -68,8 +68,8 @@ public class MemberController {
 		logger.debug("dbMember : {}", dbMember);
 		
 		if(dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass()) ) {
-			session.setAttribute("S_MEMBER", memberVo);
-			model.addAttribute("to_day", new Date());
+			session.setAttribute("SMEMBER", memberVo);
+			model.addAttribute("TODAY", new Date());
 			
 			if(dbMember.getMemType().equals("pl")) {
 				return "manager/pl_main";
