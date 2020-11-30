@@ -32,7 +32,7 @@ public class ManageBoardService{
 		return mapper.getTodo(todoVo);
 	}
 
-	public TodoVo todoupdate(TodoVo todoVo) {
+	public int todoupdate(TodoVo todoVo) {
 		return mapper.todoupdate(todoVo);
 	}
 

@@ -67,9 +67,9 @@ public class TodoController {
 	}
 	
 	// 일감 수정 
-	@RequestMapping("/updatetodoView")
+	@RequestMapping("/updatetodo")
 	public String todoupdate(TodoVo todoVo, Model model) {
-		TodoVo dbtodoVo = manageBoardService.todoupdate(todoVo);
+		int dbtodoVo = manageBoardService.todoupdate(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
 		return "tiles/manager/Pl_todoUpdateView";
 	}

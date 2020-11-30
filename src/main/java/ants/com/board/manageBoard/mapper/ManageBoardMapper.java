@@ -22,7 +22,7 @@ public interface ManageBoardMapper {
 	public List<MemberVo> projectMemList(TodoVo todoVo);
 	
 	// 일감 수정
-	public TodoVo todoupdate(TodoVo todoVo);
+	public int todoupdate(TodoVo todoVo);
 	
 	// 일감 삭제
 	public int tododelete(TodoVo todoVo);
