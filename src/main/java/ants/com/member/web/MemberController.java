@@ -145,16 +145,20 @@ public class MemberController {
 	
 	/** 자바 메일 발송 * @throws MessagingException * @throws AddressException **/ 
 	@RequestMapping(value = "/mailsender") 
-	public String mailSender(HttpServletRequest request, ModelMap mo) throws AddressException, MessagingException { 
+	public String mailSender(HttpServletRequest request, ModelMap mo, String mail) throws AddressException, MessagingException { 
 		
 		// 네이버일 경우 smtp.naver.com 을 입력합니다. 
 		// Google일 경우 smtp.gmail.com 을 입력합니다. 
 		
+		
+		// 네이버 메일 환경설정에서 "POP3/IMAP" 설정 사용으로 바꿔준다.
 		String host = "smtp.naver.com"; 
 		
-		final String username = "noylit"; //네이버 아이디를 입력해주세요. @nave.com은 입력하지 마시구요. 
-		final String password = "1234a5678"; //네이버 이메일 비밀번호를 입력해주세요. 
-		int port=465; //포트번호 
+		// POP3/IMAP 설정시 네이버에서 알려줌
+		final String username = "noylit"; 		//네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요. 
+		final String password = "1234a5678"; 	//네이버 이메일 비밀번호를 입력해주세요. 
+		int port=465; 							//포트번호 
+		
 		
 		// 메일 내용 
 		String recipient = "noylit@naver.com"; //받는 사람의 메일주소를 입력해주세요. 
@@ -162,6 +166,7 @@ public class MemberController {
 		String body = username+"님으로 부터 메일을 받았습니다."; //메일 내용 입력해주세요. 
 		
 		Properties props = System.getProperties(); // 정보를 담기 위한 객체 생성 
+		
 		
 		// SMTP 서버 정보 설정 
 		props.put("mail.smtp.host", host); 
