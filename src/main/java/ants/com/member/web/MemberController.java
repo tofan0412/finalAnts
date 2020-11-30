@@ -28,8 +28,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import ants.com.member.mapper.MemberMapper;
 import ants.com.member.model.MemberVo;
-import ants.com.member.service.MemberServiceI;
+import ants.com.member.service.MemberService;
 
 @MultipartConfig
 @RequestMapping("/member")
@@ -38,7 +39,7 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Resource(name="memberService")
-	MemberServiceI memberService;
+	private MemberService memberService;
 	
 	
 	@RequestMapping("/mainView")

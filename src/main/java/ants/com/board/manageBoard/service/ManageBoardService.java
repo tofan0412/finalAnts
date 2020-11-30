@@ -6,30 +6,26 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import ants.com.board.manageBoard.mapper.ManageBoardMapper;
 import ants.com.board.manageBoard.model.TodoVo;
-import ants.com.board.manageBoard.repository.ManageBoardDaoI;
 import ants.com.member.model.ProjectMemberVo;
-import ants.com.member.repository.MemberDaoI;
 
 @Service("manageBoardService")
-public class ManageBoardService implements ManageBoardServiceI{
+public class ManageBoardService{
 	
-	@Resource(name="manageBoardDao")
-	ManageBoardDaoI managerDao;
+	@Resource(name="manageBoardMapper")
+	private ManageBoardMapper mapper;
 	
-	@Override
 	public int todoInsert(TodoVo todoVo) {
-		return managerDao.todoInsert(todoVo);
+		return mapper.todoInsert(todoVo);
 	}
 
-	@Override
 	public List<TodoVo> getTodo(String req_id) {
-		return managerDao.getTodo(req_id);
+		return mapper.getTodo(req_id);
 	}
 
-	@Override
 	public List<ProjectMemberVo> projectMemList(String req_id) {
-		return managerDao.projectMemList(req_id);
+		return mapper.projectMemList(req_id);
 	}
 
 }

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.member.model.MemberVo;
-import ants.com.member.service.MemberServiceI;
-import ants.com.member.service.ProjectmemberServiceI;
+import ants.com.member.service.MemberService;
+import ants.com.member.service.ProjectmemberService;
 
 @RequestMapping("/projectMember")
 @Controller
@@ -24,10 +24,10 @@ public class ProjectMemberController {
 	private static final Logger logger = LoggerFactory.getLogger(ProjectMemberController.class);
 	
 	@Resource(name="memberService")
-	MemberServiceI memberService;
+	MemberService memberService;
 	
 	@Resource(name="promemService")
-	ProjectmemberServiceI promemService;
+	ProjectmemberService promemService;
 	
 	@RequestMapping("/loginView")
 	public String loginView() {

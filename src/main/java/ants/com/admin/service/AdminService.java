@@ -1,8 +1,14 @@
 package ants.com.admin.service;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
-@Service("adminService")
-public class AdminService implements AdminServiceI{
+import ants.com.admin.mapper.AdminMapper;
 
+@Service("adminService")
+public class AdminService {
+	@Resource(name="adminMapper")
+	private AdminMapper adminMapper;
+	
 }

@@ -2,8 +2,14 @@
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
-<configuration>
 
+<configuration>
+	
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	
+	
   <typeAliases>
   	<typeAlias type="ants.com.admin.model.AdminVo" alias="AdminVo"/>
   	<typeAlias type="ants.com.admin.model.AdminVo" alias="IpVo"/>
