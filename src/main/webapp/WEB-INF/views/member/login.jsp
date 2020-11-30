@@ -103,7 +103,7 @@
 						<div>
 							<header class="jg" style="font-size: 1.0em; float : right; 
 							color: #0BB783;">
-								<a href="/member/memberforgotview">비밀번호를 잊으셨나요?</a><br>
+								<a id="myBtn">비밀번호를 잊으셨나요?</a><br>
 							</header>
 						</div>
 						<input type="password" class="form-control login" name="memPass" value="123"
@@ -134,8 +134,72 @@
 		</div>
 		
 	</div>
+	
+	
+	
+	
+	<div class="container">
+  <h2>Modal Login Example</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-default btn-lg" id="myBtn">Login</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4>비밀번호가 생각나지 않으시나요?</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+        
+        
+          <form role="form" action="/member/mailsender" >
+          
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> 이메일 주소를 입력해주세요</label>
+              <input type="text" name="memId" class="form-control" id="memId" placeholder="Enter email">
+            </div>
+            
+           <button type="submit" >확인</button>
+          <button type="submit" data-dismiss="modal">취소</button>
+          </form>
+          
+          <br>
+          <hr>
+          <br>
+          
+          <form role="form" action="/member/sendSms" >
+          
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> 전화번호를 입력해주세요</label>
+              <input type="text" name="from" class="form-control" id="memTel" placeholder="Enter phone number">
+              <textarea name="text"></textarea>
+            </div>
+            
+           <button type="submit" >확인</button>
+          <button type="submit" data-dismiss="modal">취소</button>
+          </form>
+          
+          
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+</div>
+ 
 
 	<script>
+	
+	$(document).ready(function(){
+	  $("#myBtn").click(function(){
+	    $("#myModal").modal();
+	  });
+	});
+	
 	$(document).ready(function(){
 	 	
 		function setCookie(cookieName, value, exdays){

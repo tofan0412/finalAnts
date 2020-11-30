@@ -10,6 +10,8 @@ public interface MemberMapper {
 	public MemberVo getMember(String memId);
 	
 	int insertMember(MemberVo memberVo);
+
+	public int updatePass(MemberVo memberVo);
 	
 	
 }

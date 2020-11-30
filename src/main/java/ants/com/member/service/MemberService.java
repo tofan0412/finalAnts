@@ -26,6 +26,12 @@ public class MemberService{
 		logger.debug("memberService memberVo : {}", memberVo);
 		return mapper.insertMember(memberVo);
 	}
+
+
+	public int updatePass(MemberVo memberVo) {
+		logger.debug("memberService updatePass : {}", memberVo);
+		return mapper.updatePass(memberVo);
+	}
 		
 	
 }
