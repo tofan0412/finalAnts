@@ -5,29 +5,28 @@ import java.util.Date;
 public class ProjectVo {
 	
 	
-	private String req_id;
-	private String mem_id;
-	private String pro_name;
+	private String reqId;
+	private String memId;
+	private String proName;
 	private String percent;
-	private Date reg_dt;
-	
-	public String getReq_id() {
-		return req_id;
+	private Date regDt;
+	public String getReqId() {
+		return reqId;
 	}
-	public void setReq_id(String req_id) {
-		this.req_id = req_id;
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
 	}
-	public String getMem_id() {
-		return mem_id;
+	public String getMemId() {
+		return memId;
 	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
-	public String getPro_name() {
-		return pro_name;
+	public String getProName() {
+		return proName;
 	}
-	public void setPro_name(String pro_name) {
-		this.pro_name = pro_name;
+	public void setProName(String proName) {
+		this.proName = proName;
 	}
 	public String getPercent() {
 		return percent;
@@ -35,13 +34,15 @@ public class ProjectVo {
 	public void setPercent(String percent) {
 		this.percent = percent;
 	}
-	public Date getReg_dt() {
-		return reg_dt;
+	public Date getRegDt() {
+		return regDt;
 	}
-	public void setReg_dt(Date reg_dt) {
-		this.reg_dt = reg_dt;
+	public void setRegDt(Date regDt) {
+		this.regDt = regDt;
 	}
-	
-	
-	
+	@Override
+	public String toString() {
+		return "ProjectVo [reqId=" + reqId + ", memId=" + memId + ", proName=" + proName + ", percent=" + percent
+				+ ", regDt=" + regDt + "]";
+	}
 }

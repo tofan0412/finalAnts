@@ -5,80 +5,74 @@ import java.util.Date;
 public class QnaVo {
 	
 	
-	private String QNA_ID;
-	private String QNA_TITLE;
-	private String QNA_CONT;
-	private Date REG_DT;
-	private String MEM_ID;
-	private String QNA_PARENTID;
-	private String QNA_LEVEL;
-	private String QNA_STATUS;
-	private String DEL;
-	
-	
-	public String getQNA_ID() {
-		return QNA_ID;
+	private String qnaId;
+	private String qnaTitle;
+	private String qnaCont;
+	private Date regDt;
+	private String memId;
+	private String qnaParentid;
+	private String qnaLevel;
+	private String qnaStatus;
+	private String del;
+	public String getQnaId() {
+		return qnaId;
 	}
-	public void setQNA_ID(String qNA_ID) {
-		QNA_ID = qNA_ID;
+	public void setQnaId(String qnaId) {
+		this.qnaId = qnaId;
 	}
-	public String getQNA_TITLE() {
-		return QNA_TITLE;
+	public String getQnaTitle() {
+		return qnaTitle;
 	}
-	public void setQNA_TITLE(String qNA_TITLE) {
-		QNA_TITLE = qNA_TITLE;
+	public void setQnaTitle(String qnaTitle) {
+		this.qnaTitle = qnaTitle;
 	}
-	public String getQNA_CONT() {
-		return QNA_CONT;
+	public String getQnaCont() {
+		return qnaCont;
 	}
-	public void setQNA_CONT(String qNA_CONT) {
-		QNA_CONT = qNA_CONT;
+	public void setQnaCont(String qnaCont) {
+		this.qnaCont = qnaCont;
 	}
-	public Date getREG_DT() {
-		return REG_DT;
+	public Date getRegDt() {
+		return regDt;
 	}
-	public void setREG_DT(Date rEG_DT) {
-		REG_DT = rEG_DT;
+	public void setRegDt(Date regDt) {
+		this.regDt = regDt;
 	}
-	public String getMEM_ID() {
-		return MEM_ID;
+	public String getMemId() {
+		return memId;
 	}
-	public void setMEM_ID(String mEM_ID) {
-		MEM_ID = mEM_ID;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
-	public String getQNA_PARENTID() {
-		return QNA_PARENTID;
+	public String getQnaParentid() {
+		return qnaParentid;
 	}
-	public void setQNA_PARENTID(String qNA_PARENTID) {
-		QNA_PARENTID = qNA_PARENTID;
+	public void setQnaParentid(String qnaParentid) {
+		this.qnaParentid = qnaParentid;
 	}
-	public String getQNA_LEVEL() {
-		return QNA_LEVEL;
+	public String getQnaLevel() {
+		return qnaLevel;
 	}
-	public void setQNA_LEVEL(String qNA_LEVEL) {
-		QNA_LEVEL = qNA_LEVEL;
+	public void setQnaLevel(String qnaLevel) {
+		this.qnaLevel = qnaLevel;
 	}
-	public String getQNA_STATUS() {
-		return QNA_STATUS;
+	public String getQnaStatus() {
+		return qnaStatus;
 	}
-	public void setQNA_STATUS(String qNA_STATUS) {
-		QNA_STATUS = qNA_STATUS;
+	public void setQnaStatus(String qnaStatus) {
+		this.qnaStatus = qnaStatus;
 	}
-	public String getDEL() {
-		return DEL;
+	public String getDel() {
+		return del;
 	}
-	public void setDEL(String dEL) {
-		DEL = dEL;
+	public void setDel(String del) {
+		this.del = del;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "QnaVo [QNA_ID=" + QNA_ID + ", QNA_TITLE=" + QNA_TITLE + ", QNA_CONT=" + QNA_CONT + ", REG_DT=" + REG_DT
-				+ ", MEM_ID=" + MEM_ID + ", QNA_PARENTID=" + QNA_PARENTID + ", QNA_LEVEL=" + QNA_LEVEL + ", QNA_STATUS="
-				+ QNA_STATUS + ", DEL=" + DEL + "]";
+		return "QnaVo [qnaId=" + qnaId + ", qnaTitle=" + qnaTitle + ", qnaCont=" + qnaCont + ", regDt=" + regDt
+				+ ", memId=" + memId + ", qnaParentid=" + qnaParentid + ", qnaLevel=" + qnaLevel + ", qnaStatus="
+				+ qnaStatus + ", del=" + del + "]";
 	}
-	
-	
 	
 }

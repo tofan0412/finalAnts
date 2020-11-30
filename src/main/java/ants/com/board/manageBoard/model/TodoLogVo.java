@@ -5,59 +5,53 @@ import java.util.Date;
 public class TodoLogVo {
 
 	
-	private String todo_id;
-	private String log_id;
-	private String log_comment;
-	private String before_id;
-	private String after_id;
-	private Date reg_dt;
+	private String todoId;
+	private String logId;
+	private String logComment;
+	private String beforeId;
+	private String afterId;
+	private Date regDt;
 	
-	
-	public String getTodo_id() {
-		return todo_id;
+	public String getTodoId() {
+		return todoId;
 	}
-	public void setTodo_id(String todo_id) {
-		this.todo_id = todo_id;
+	public void setTodoId(String todoId) {
+		this.todoId = todoId;
 	}
-	public String getLog_id() {
-		return log_id;
+	public String getLogId() {
+		return logId;
 	}
-	public void setLog_id(String log_id) {
-		this.log_id = log_id;
+	public void setLogId(String logId) {
+		this.logId = logId;
 	}
-	public String getLog_comment() {
-		return log_comment;
+	public String getLogComment() {
+		return logComment;
 	}
-	public void setLog_comment(String log_comment) {
-		this.log_comment = log_comment;
+	public void setLogComment(String logComment) {
+		this.logComment = logComment;
 	}
-	public String getBefore_id() {
-		return before_id;
+	public String getBeforeId() {
+		return beforeId;
 	}
-	public void setBefore_id(String before_id) {
-		this.before_id = before_id;
+	public void setBeforeId(String beforeId) {
+		this.beforeId = beforeId;
 	}
-	public String getAfter_id() {
-		return after_id;
+	public String getAfterId() {
+		return afterId;
 	}
-	public void setAfter_id(String after_id) {
-		this.after_id = after_id;
+	public void setAfterId(String afterId) {
+		this.afterId = afterId;
 	}
-	public Date getReg_dt() {
-		return reg_dt;
+	public Date getRegDt() {
+		return regDt;
 	}
-	public void setReg_dt(Date reg_dt) {
-		this.reg_dt = reg_dt;
+	public void setRegDt(Date regDt) {
+		this.regDt = regDt;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "TodoLogVo [todo_id=" + todo_id + ", log_id=" + log_id + ", log_comment=" + log_comment + ", before_id="
-				+ before_id + ", after_id=" + after_id + ", reg_dt=" + reg_dt + "]";
+		return "TodoLogVo [todoId=" + todoId + ", logId=" + logId + ", logComment=" + logComment + ", beforeId="
+				+ beforeId + ", afterId=" + afterId + ", regDt=" + regDt + "]";
 	}
-	
-	
-	
 	
 }

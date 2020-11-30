@@ -5,39 +5,38 @@ import java.util.Date;
 public class ReplyVo {
 	
 	
-	private String reply_id;
-	private String some_id;
-	private String reply_cont;
-	private Date reg_dt;
+	private String replyId;
+	private String someId;
+	private String replyCont;
+	private Date regDt;
 	private String del;
-	private String category_id;
-	private String req_id;
-	private String mem_id;
+	private String categoryId;
+	private String reqId;
+	private String memId;
 	
-	
-	public String getReply_id() {
-		return reply_id;
+	public String getReplyId() {
+		return replyId;
 	}
-	public void setReply_id(String reply_id) {
-		this.reply_id = reply_id;
+	public void setReplyId(String replyId) {
+		this.replyId = replyId;
 	}
-	public String getSome_id() {
-		return some_id;
+	public String getSomeId() {
+		return someId;
 	}
-	public void setSome_id(String some_id) {
-		this.some_id = some_id;
+	public void setSomeId(String someId) {
+		this.someId = someId;
 	}
-	public String getReply_cont() {
-		return reply_cont;
+	public String getReplyCont() {
+		return replyCont;
 	}
-	public void setReply_cont(String reply_cont) {
-		this.reply_cont = reply_cont;
+	public void setReplyCont(String replyCont) {
+		this.replyCont = replyCont;
 	}
-	public Date getReg_dt() {
-		return reg_dt;
+	public Date getRegDt() {
+		return regDt;
 	}
-	public void setReg_dt(Date reg_dt) {
-		this.reg_dt = reg_dt;
+	public void setRegDt(Date regDt) {
+		this.regDt = regDt;
 	}
 	public String getDel() {
 		return del;
@@ -45,33 +44,30 @@ public class ReplyVo {
 	public void setDel(String del) {
 		this.del = del;
 	}
-	public String getCategory_id() {
-		return category_id;
+	public String getCategoryId() {
+		return categoryId;
 	}
-	public void setCategory_id(String category_id) {
-		this.category_id = category_id;
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
-	public String getReq_id() {
-		return req_id;
+	public String getReqId() {
+		return reqId;
 	}
-	public void setReq_id(String req_id) {
-		this.req_id = req_id;
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
 	}
-	public String getMem_id() {
-		return mem_id;
+	public String getMemId() {
+		return memId;
 	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
-	
 	
 	@Override
 	public String toString() {
-		return "ReplyVo [reply_id=" + reply_id + ", some_id=" + some_id + ", reply_cont=" + reply_cont + ", reg_dt="
-				+ reg_dt + ", del=" + del + ", category_id=" + category_id + ", req_id=" + req_id + ", mem_id=" + mem_id
-				+ "]";
+		return "ReplyVo [replyId=" + replyId + ", someId=" + someId + ", replyCont=" + replyCont + ", regDt=" + regDt
+				+ ", del=" + del + ", categoryId=" + categoryId + ", reqId=" + reqId + ", memId=" + memId + "]";
 	}
-	
 	
 	
 }
