@@ -1,7 +1,6 @@
 package ants.com.member.service;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -27,19 +26,20 @@ public class ReqService{
 		return mapper.reqListCount(reqVo);
 	}
 	
-	public int reqInsert(Map<String, Object> reqIMap) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int reqInsert(ReqVo reqVo) {
+		return mapper.reqInsert(reqVo);
 	}
 
-	public int reqUpdate(Map<String, Object> reqUMap) {
-		// TODO Auto-generated method stub
+	public int reqUpdate(ReqVo reqVo) {
 		return 0;
 	}
 
 	public int reqDelete(String req_id) {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public ReqVo getReq(ReqVo reqVo) {
+		return mapper.getReq(reqVo);
 	}
 
 
