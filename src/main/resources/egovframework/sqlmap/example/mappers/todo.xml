@@ -15,8 +15,8 @@
 	    todo.todo_cont,
 	    todo.todo_title,
 	    todo.todo_percent,
-	    todo_importance,
-	    todo_level,
+	    todo.todo_importance,
+	    todo.todo_level,
 	    todo.req_id,
 	    todo.todo_parentid,
 	    todo.del,
@@ -68,9 +68,7 @@
 		projectmember
 		WHERE
 		member.mem_id = projectmember.mem_id
-		AND
-		projectmember.req_id =
-		#{reqId}
+		AND projectmember.req_id = #{reqId}
 		AND projectmember.promem_status = 'in'
 	</select>
 
@@ -120,14 +118,14 @@
 		todo_level ='1',
 		mem_id= #{memId}
 		WHERE
-		todo_id = #{todo_id}
+		todo_id = #{todoId}
 	</update>
 	
 	<update id="tododelete" parameterType="ants.com.board.manageBoard.model.TodoVo">
 	UPDATE todo
     SET del='Y'
 	WHERE
-    todo_id = #{todo_id}
+    todo_id = #{todoId}
     </update>
 	
 </mapper>
