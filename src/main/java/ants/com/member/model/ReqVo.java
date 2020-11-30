@@ -1,8 +1,8 @@
 package ants.com.member.model;
 
-import ants.com.common.model.PageVO;
+import ants.com.base.model.BaseVo;
 
-public class ReqVo extends PageVO{
+public class ReqVo extends BaseVo{
 	
 	
 	private String reqId;

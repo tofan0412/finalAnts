@@ -5,12 +5,12 @@ import java.util.Date;
 public class NoticeVo {
 	
 	
-	private String noticeId;
-	private String noticeTitle;
-	private String noticeCont;
-	private String regDt;
-	private String adminId;
-	private String del;
+	private String noticeId; //인덱스
+	private String noticeTitle; //글제목
+	private String noticeCont; //글내용
+	private String regDt; //작성일
+	private String adminId; //작성자
+	private String del; //삭제여부
 	
 	public String getNoticeId() {
 		return noticeId;
