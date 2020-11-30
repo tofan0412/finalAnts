@@ -29,6 +29,7 @@ public class TodoController {
 	// 일감 등록 메서드
 	@RequestMapping("/todoInsert")
 	public String todoInsert(Model model, TodoVo todoVo) {
+		int todoInsert = managerSerive.todoInsert(todoVo);
 		return "";
 	}
 
@@ -37,6 +38,8 @@ public class TodoController {
 	public String todoListView(String req_id, Model model) {
 		List<TodoVo> todoList = managerSerive.getTodo(req_id);
 		model.addAttribute("todoList", todoList);
+		logger.debug("나오니:{}",todoList);
+		logger.debug("나오니2:{}",req_id);
 		return "tiles/manager/Pl_todoList";
 	}
 

@@ -7,7 +7,9 @@
 	FROM todo
 	where req_id=#{reqId}
 </select>
-<insert id="insertTodo">
+<!-- 유지보수를 위해서 parameterType은 String보다 VO타입으로 사용 -->
+
+<insert id="todoInsert" parameterType="todoVo">
 	INSERT INTO todo (
     todo_id,
     todo_start,
@@ -23,7 +25,7 @@
     del
 ) VALUES (
     todo_seq.nextval,
-    TO_DATE(#{todoStart},'YYYY/MM/DD'),
+    sysdate,
     TO_DATE(#{todoEnd},'YYYY/MM/DD'),
     #{todoCont},
     #{todoTitle},
@@ -35,8 +37,6 @@
     #{todoParentid},
     NULL                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
 )
-
-
 </insert>
 
 </mapper>
