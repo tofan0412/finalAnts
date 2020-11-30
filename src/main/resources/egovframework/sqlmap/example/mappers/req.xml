@@ -33,6 +33,11 @@
 				WHERE mem_id = #{memId}
 	    ]]>
 	</select>
+	
+	<insert id="reqInsert" parameterType="ReqVo" >
+		INSERT INTO REQLIST
+			VALUES(REQ_SEQ.nextval,#{req_title},#{req_period},#{req_filepath},#{req_filename},#{mem_id},#{status},#{pl_id}
+	</insert>
 		
 	
 

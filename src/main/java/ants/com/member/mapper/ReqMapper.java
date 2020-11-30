@@ -19,4 +19,6 @@ public interface ReqMapper {
 
 	public int reqDelete(String req_id);
 
+	public ReqVo getReq(ReqVo reqVo);
+
 }
