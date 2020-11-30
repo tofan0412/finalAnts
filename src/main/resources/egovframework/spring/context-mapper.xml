@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 	
 	<!-- sqlSession : setter 주입 -->
-	<bean id="SqlSessionTemplate"
-		class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="sqlSession"/>
-	</bean>
+<!-- 	<bean id="SqlSessionTemplate" -->
+<!-- 		class="org.mybatis.spring.SqlSessionTemplate"> -->
+<!-- 		<constructor-arg ref="sqlSession"/> -->
+<!-- 	</bean> -->
 	
 	<!-- SqlSession setup for MyBatis Database Layer -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -15,8 +15,8 @@
 		<property name="mapperLocations" value="classpath:/egovframework/sqlmap/example/mappers/*.xml" />
 	</bean>
 
-<!--  	<bean class="egovframework.rte.psl.dataaccess.mapper.MapperConfigurer"> -->
-<!-- 		<property name="basePackage" value="egovframework.example.sample.service.impl" /> -->
-<!--  	</bean> -->
+ 	<bean class="egovframework.rte.psl.dataaccess.mapper.MapperConfigurer">
+		<property name="basePackage" value="ants.com" />
+ 	</bean>
     
 </beans>

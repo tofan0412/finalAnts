@@ -7,46 +7,39 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import ants.com.board.memBoard.model.IssueVo;
-import ants.com.member.repository.ProjectmemberDaoI;
+import ants.com.member.mapper.ProjectmemberMapper;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("promemService")
-public class ProjectmemberService extends EgovAbstractServiceImpl implements ProjectmemberServiceI{
+public class ProjectmemberService extends EgovAbstractServiceImpl{
 	
-	@Resource(name ="promemRepository")
-	ProjectmemberDaoI projectmemdao;
+	@Resource(name ="promemMapper")
+	private ProjectmemberMapper mapper;
 	
 	
 	// 이슈글 리스트
-	@Override
 	public List<IssueVo> issuelist(String reqId) {
-		
-		return projectmemdao.issuelist(reqId);
+		return mapper.issuelist(reqId);
 	}
 
 	// 각 이슈글 내용
-	@Override
 	public IssueVo geteachissue(String issueId) {
-		return projectmemdao.geteachissue(issueId);
+		return mapper.geteachissue(issueId);
 	}
 
 	// 이슈글 작성하기
-	@Override
 	public int insertissue(IssueVo issueVo) {
-		
-		return projectmemdao.insertissue(issueVo);
+		return mapper.insertissue(issueVo);
 	}
 
 	// 이슈글 수정하기
-	@Override
 	public int updateissue(IssueVo issueVo) {
 		
-		return projectmemdao.updateissue(issueVo);
+		return mapper.updateissue(issueVo);
 	}
 
-	@Override
+	// 이슈글 삭제하기
 	public int delissue(String issueId) {
-		return projectmemdao.delissue(issueId);
+		return mapper.delissue(issueId);
 	}
-
 }

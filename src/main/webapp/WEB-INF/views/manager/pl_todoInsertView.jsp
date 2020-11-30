@@ -32,9 +32,9 @@
 		<label for="mem-select" class="col-sm-1 control-label">담당자</label>
 		<select name="memId" id="mem-select">
 		    <option value="">담당자를 선택해 주세요</option>
-<%-- 			<c:forEach items="${해당 팀원id 불러와서 뿌릴 예정}" var="mem"> --%>
-<!-- 				<option value=""></option> -->
-<%-- 			</c:forEach> --%>
+			<c:forEach items="${promemList}" var="mem">
+				<option value="${mem.memId}">${mem.memId}</option>
+			</c:forEach>
 		</select><br><br>
 		<label for="status-select" class="col-sm-1 control-label">우선순위</label>
 		<select name="todoImportance" id="status-select">

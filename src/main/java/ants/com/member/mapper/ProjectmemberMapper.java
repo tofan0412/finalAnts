@@ -1,10 +1,12 @@
-package ants.com.member.repository;
+package ants.com.member.mapper;
 
 import java.util.List;
 
 import ants.com.board.memBoard.model.IssueVo;
+import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
-public interface ProjectmemberDaoI {
+@Mapper("promemMapper")
+public interface ProjectmemberMapper {
 	
 	// 이슈리스트
 	public List<IssueVo> issuelist(String reqId);

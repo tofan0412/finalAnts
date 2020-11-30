@@ -11,7 +11,7 @@
 
 
 	<!--참여중인 팀원 조회 -->
-	<select id="projectMemList" parameterMap="String" resultMap="ProjectMemberVo">
+	<select id="projectMemList" parameterType="String" resultMap="ProjectMemberVo">
 		SELECT mem_id
 		FROM projectmember
 		where promem_status='in'

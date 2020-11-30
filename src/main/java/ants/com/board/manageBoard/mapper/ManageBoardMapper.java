@@ -1,11 +1,13 @@
-package ants.com.board.manageBoard.repository;
+package ants.com.board.manageBoard.mapper;
 
 import java.util.List;
 
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.member.model.ProjectMemberVo;
+import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
-public interface ManageBoardDaoI {
+@Mapper("manageBoardMapper")
+public interface ManageBoardMapper {
 
 	// 일감 등록
 	public int todoInsert(TodoVo todoVo);

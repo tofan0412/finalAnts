@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ants.com.member.model.ReqVo;
-import ants.com.member.service.ReqServiceI;
+import ants.com.member.service.ReqService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 
@@ -25,7 +25,7 @@ public class ReqController {
 	private static final Logger logger = LoggerFactory.getLogger(ReqController.class); 
 	
 	@Resource(name="reqService")
-	private ReqServiceI reqService;
+	private ReqService reqService;
 	
 	@RequestMapping("/reqList")
 	public String selectReqList(@ModelAttribute("reqVo") ReqVo reqVo, ModelMap model, @RequestParam(name="memID",required=false) String memId) {
