@@ -16,8 +16,35 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		todoDetail("${param.todoId}");
-	});
-	
+
+		//수정
+		$(document).on('click','#updateBtn', function(){
+			var todoId = $("#todoId").val();
+ 	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/updatetodoView?todoId='+todoId);
+		})
+		
+		//생성
+		$(document).on('click','#creattodoBtn', function(){
+	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView');
+		})
+		
+		//하위
+		$(document).on('click','#creatChildBtn', function(){
+			var todoId = $("#todoId").val();
+	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView?todoParentid='+todoId);
+		})
+		
+		// 일감 삭제
+		$(document).on('click','#deleteBtn', function(){
+			var todoId = $("#todoId").val();
+			 if(confirm("정말 삭제하시겠습니까 ?") == true){
+				$(location).attr('href', '${pageContext.request.contextPath}/todo/deletetodo?todoId='+todoId);
+			    }
+			    else{
+			        return ;
+			    }
+		})
+	})
 	function todoDetail(todoId) {
 		$.ajax({
 			url : "/todo/onetodo",
@@ -32,6 +59,7 @@
 				$("#todoImportance").html(data.todoVo.todoImportance);
 				$("#todoStart").html(data.todoVo.todoStart);
 				$("#todoEnd").html(data.todoVo.todoEnd);
+				$("#todoId").val(data.todoVo.todoId);
 				
 				var res = "";
 					res += '<button type="button" class="btn btn-default" id="updateBtn" >수정</button>';
@@ -45,40 +73,16 @@
 		});
 	
 	}
-	$(function(){
-		//수정
-		$("#updateBtn").on('click', function(){
-			var todoId="${todoVo.todoId}"; 
-	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView');
-		})
-		
-		// 일감 생성
-		$("#creattodoBtn").on('click', function(){
-	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView');
-		})
-		
-		// 하위 일감 생성
-		$("#creatChildBtn").on('click', function(){
-	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView?todoParentid=${todoVo.todoId}');
-	       
-		})
-		
-		// 일감 삭제
-		$("#deleteBtn").on('click', function(){
-			 if(confirm("정말 삭제하시겠습니까 ?") == true){
-				$(location).attr('href', '${pageContext.request.contextPath}/todo/deletetodo?todoId=${todoVo.todoId}&reqId=${todoVo.reqId}');
-			    }
-			    else{
-			        return ;
-			    }
-		})
-	})
+
 	
 </script>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 <br>
 <div style="padding-left: 30px;"><h3>일감 상세보기</h3><br>
+		
+		
+		<input type="hidden" id="todoId">
 		
 		<label for="todoTitle" class="col-sm-1 control-label">제목</label>
 		<label class="control-label" id="todoTitle"></label><br><br>
@@ -97,7 +101,6 @@
 		
 		<label for="todoEnd" class="col-sm-1 control-label">종료 일</label>
 		<label class="control-label" id="todoEnd"></label><br><br>
-		
 		<div id="btnMenu"></div>
 </div>
 </html>

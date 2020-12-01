@@ -27,27 +27,34 @@ $(document).ready(function(){
 	width : 1000px;
     border-top: 1px solid #444444;
     border-collapse: collapse;
-    text-align: center;
   }
   th, td {
     border-bottom: 1px solid #444444;
     padding: 10px;
   }
+  
 
 </style>
 </head>
 <body>
 	<%@include file="../layout/contentmenu.jsp"%>
 	<div style="padding-left: 30px;">
-		<a class="btn btn-default pull-right" href="${pageContext.request.contextPath }/todo/todoInsertView?reqId=2">일감 등록</a>
+		<a class="btn btn-default pull-right" href="${pageContext.request.contextPath }/todo/todoInsertView">일감 등록</a>
 		<br>
+		<c:if test="${todoList eq null}">
+				"등록된 일감이없습니다."
+		</c:if>
+		<c:if test="${todoList ne null}">
+		
 		<table id="todoTable">
+		
 			<tr>
 				<th>상태</th>
 				<th>제목</th>
 				<th>담당자</th>
 				<th>진행도</th>
-				<th>종료일</th>
+				<th>진행일</th>
+				<th>마감일</th>
 			</tr>
 			<tbody id="todoList">
 			<c:if test="${todoList ne null}">
@@ -57,21 +64,25 @@ $(document).ready(function(){
 						<c:if test="${todo.todoImportance eq 'gen'}">일반</c:if>
 						<c:if test="${todo.todoImportance eq 'emg'}">긴급</c:if>
 						</td>
+						<c:if test="${todo.todoLevel ne '1'}">
+						<td style="padding-left: 20px;">➜${todo.todoTitle}</td>
+						</c:if>
+						<c:if test="${todo.todoLevel eq '1'}">
 						<td>${todo.todoTitle}</td>
+						</c:if>
 						<td>${todo.memId}</td>
 						<td>
 						<c:if test= "${todo.todoPercent eq null}">0%</c:if>
 						<c:if test= "${todo.todoPercent ne null}">${todo.todoPercent}%</c:if>
 						</td>
+						<td>${todo.todoStart}일</td>
 						<td>${todo.todoEnd}</td>
 					</tr>
 				</c:forEach>
 				</c:if>
-				<c:if test="${todoList eq null}">
-				"등록된 일감이없습니다."
-				</c:if>
 			</tbody>
 		</table>
+		</c:if>
 			</div>			
 </body>
 </html>

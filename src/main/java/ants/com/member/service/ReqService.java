@@ -31,11 +31,11 @@ public class ReqService{
 	}
 
 	public int reqUpdate(ReqVo reqVo) {
-		return 0;
+		return mapper.reqUpdate(reqVo);
 	}
 
-	public int reqDelete(String req_id) {
-		return 0;
+	public int reqDelete(String reqId) {
+		return mapper.reqDelete(reqId);
 	}
 	
 	public ReqVo getReq(ReqVo reqVo) {

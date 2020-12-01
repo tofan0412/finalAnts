@@ -22,31 +22,18 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
-		todoDetail("${param.todoId}");		
 		$('#summernote').summernote();
+
+		var todo_start = $('#todo_start').val();
+		var todo_end = $('#todo_end').val();
+		document.getElementById('todoStart').value = new Date(todo_start).toISOString().substring(0, 10);
+ 		document.getElementById('todoEnd').value = new Date(todo_end).toISOString().substring(0, 10);
+		
 		$("#regBtn").on("click", function() {
 			$("#todoform").submit();
 		});
  	});
-	function todoDetail(todoId) {
-		$.ajax({
-			url : "/todo/onetodo",
-			method : "get",
-			data : {
-				todoId : todoId
-			},
-			success : function(data) {
-				$("#todoTitle").val(data.todoVo.todoTitle);
-				$("#todoCont").val(data.todoVo.todoCont);
-				$("#mem-select").val(data.todoVo.memId);
-				$("#status-select").val(data.todoVo.todoImportance);
-				$("#currentDate").val(data.todoVo.todoStart);
-				$("#todo_end").val(data.todoVo.todoEnd);
-			}
-	
-		});
-	}
+
 </script>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
@@ -55,17 +42,17 @@
 	<h3>일감 수정</h3>
 	<br>
 	<form method="post" action="${pageContext.request.contextPath }/todo/updatetodo" id="todoform"  >	
+		<input type="hidden" name="todoId" value="${todoVo.todoId }">
 		<label for="todoTitle" class="col-sm-1 control-label">제목</label>
-		<input type="text" name="todoTitle" style="width: 580px;" id="todoTitle"><br><br>
+		<input type="text" name="todoTitle" style="width: 580px;" id="todoTitle" value="${todoVo.todoTitle }"><br><br>
 		
 		<div style="width: 80%;">
 		<label for="todoCont" class="col-sm-1 control-label">할일</label>
-		<textarea id="summernote" name="todoCont" id="todoCont"></textarea>
+		<textarea id="summernote" name="todoCont" id="todoCont">${todoVo.todoCont }</textarea>
 		</div>
 		<br><br>
 		<label for="mem-select" class="col-sm-1 control-label">담당자</label>
 		<select name="memId" id="mem-select">
-		    <option value="">담당자를 선택해 주세요</option>
 			<c:forEach items="${promemList}" var="mem">
 				<option value="${mem.memId}">${mem.memName}</option>
 			</c:forEach>
@@ -73,18 +60,26 @@
 		
 		<label for="status-select" class="col-sm-1 control-label">우선순위</label>
 		<select name="todoImportance" id="status-select">
+		    <c:if test="${todoVo.todoImportance eq 'gen' }">
 		    <option value="gen">보통</option>
 		    <option value="emg">긴급</option>
+		    </c:if>
+		    <c:if test="${todoVo.todoImportance eq 'emg' }">
+		    <option value="emg">긴급</option>
+		    <option value="gen">보통</option>
+		    </c:if>
 		</select><br><br>
 		
-		<label for="currentDate" class="col-sm-1 control-label">시작 일</label>
-		<input type='date' id='currentDate' name="todoStart"/><br><br>
+		<label for="todoPercent" class="col-sm-1 control-label">진행도</label>
+		<input type="text" id="todoPercent" name="todoPercent" value="${todoVo.todoPercent }"/><br><br>
+		
+		<label for="todoStart" class="col-sm-1 control-label">시작 일</label>
+		<input type='date' id='todoStart' name="todoStart"/><br><br>
+		<input type="hidden" id='todo_start' value="${todoVo.todoStart}"/><br><br>
 		
 		<label for="todoEnd" class="col-sm-1 control-label">종료 일</label>
-		<input type='date' id='todo_end' name="todoEnd"/><br><br>
-		
-		<c:if test="${todoVo.todoParentid ne null}">
-		<input type="hidden" name="todoParentid" value="${todoVo.todoParentid}"></c:if>
+		<input type='date' id='todoEnd' name="todoEnd"/><br><br>
+		<input type="hidden" id='todo_end' value="${todoVo.todoEnd}"/><br><br>
 		
 		<button type="button" class="btn btn-default" id="regBtn">수정</button>
 	</form>
