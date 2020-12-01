@@ -11,23 +11,32 @@
 .ke{
 	width : 300px;
 }
+.lic{
+	width : 200px;
+}
+#di{
+	margin-top: 13%;
+	margin-left: 25%;
+	margin-bottom : 18%;
+}
 </style>
 <body>
+<div id="di">
 	비밀번호 변경페이지(전화번호)<br><br><br><br>
 	<input type="text" class="ke" id="uid" value="${uuid}" style="display:none"><br>
 	
 	<form id="passup" action="/member/passupdate">
 		<input type="text" class="ke" name="memTel" value="${memTel}" style="display:none"><br>
-		코드 : <input type="text" class="ke" id="keyval"><br>
-		아이디 : <input type="text" id="memId" name="memId"><br>
-		새로 변경할 비밀번호 : <input type="text" id="newpass1" name="memPass"><br>
-		새로 변경할 비밀번호 확인 : <input type="text" id="newpass2" name="newpass2"><br>
+		<label class="lic">코드</label> <input type="text" class="ke" id="keyval"><br>
+		<label class="lic">아이디</label> <input type="text" id="memId" name="memId"><br>
+		<label class="lic">새로 변경할 비밀번호</label> <input type="text" id="newpass1" name="memPass"><br>
+		<label class="lic">새로 변경할 비밀번호 확인</label> <input type="text" id="newpass2" name="newpass2"><br>
 	</form>
 	
 	<button id="sub">확인</button>
 	<button>취소</button>
+</div>
 </body>
-
 <script>
 $(document).ready(function(){
 	$("#sub").on('click', function(){
