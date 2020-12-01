@@ -41,13 +41,20 @@ $(document).ready(function(){
 	<div style="padding-left: 30px;">
 		<a class="btn btn-default pull-right" href="${pageContext.request.contextPath }/todo/todoInsertView?reqId=2">일감 등록</a>
 		<br>
+		<c:if test="${todoList eq null}">
+				"등록된 일감이없습니다."
+		</c:if>
+		<c:if test="${todoList ne null}">
+		
 		<table id="todoTable">
+		
 			<tr>
 				<th>상태</th>
 				<th>제목</th>
 				<th>담당자</th>
 				<th>진행도</th>
-				<th>종료일</th>
+				<th>진행일</th>
+				<th>마감일</th>
 			</tr>
 			<tbody id="todoList">
 			<c:if test="${todoList ne null}">
@@ -63,15 +70,17 @@ $(document).ready(function(){
 						<c:if test= "${todo.todoPercent eq null}">0%</c:if>
 						<c:if test= "${todo.todoPercent ne null}">${todo.todoPercent}%</c:if>
 						</td>
+						<td>
+						<c:if test="${todo.todoStart eq '0'}">오늘 등록한 일감입니다 :)</c:if>
+						<c:if test="${todo.todoStart ne '0'}">${todo.todoStart }</c:if>
+						</td>
 						<td>${todo.todoEnd}</td>
 					</tr>
 				</c:forEach>
 				</c:if>
-				<c:if test="${todoList eq null}">
-				"등록된 일감이없습니다."
-				</c:if>
 			</tbody>
 		</table>
+		</c:if>
 			</div>			
 </body>
 </html>
