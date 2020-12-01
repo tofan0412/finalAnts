@@ -47,4 +47,14 @@ public class ChatController {
 		
 		return "chat/msgList";
 	}
+	
+	// 전송한 메시지를 DB에 저장한다..
+	@RequestMapping("/sendMessage")
+	public void sendMessage(ChatVo chatVo) {
+		int result = chatService.sendMessage(chatVo);
+		
+		logger.debug("chat 전송 결과 : {}",result);
+	}
+	
+	
 }

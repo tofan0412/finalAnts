@@ -13,4 +13,6 @@ public interface ChatMapper {
 	public List<ChatVo> readMessages(String cgroupId);
 	
 	public ChatGroupVo readChatGroup(String cgroupId);
+	
+	public int sendMessage(ChatVo chatVo);
 }

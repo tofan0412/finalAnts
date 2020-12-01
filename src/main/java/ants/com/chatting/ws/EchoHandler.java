@@ -4,6 +4,7 @@ package ants.com.chatting.ws;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) 
 			throws Exception {
 		sessionList.add(session);
+		
 		LOGGER.info("{} 연결 됨\n", session.getId());
 		
 	}
@@ -29,9 +31,9 @@ public class EchoHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(
 			WebSocketSession session, TextMessage message) throws Exception {
-		LOGGER.info("{}로부터 {} 받음\n", session.getId(), message.getPayload()); 
+		LOGGER.info("{}로부터 \'{}\' 받음\n", session.getId(), message.getPayload()); 
 		for(WebSocketSession sess : sessionList) {
-			sess.sendMessage(new TextMessage("echo: " + message.getPayload()));
+			sess.sendMessage(new TextMessage(message.getPayload()));
 		}
 	}
 
