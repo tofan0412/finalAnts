@@ -23,4 +23,9 @@ ORDER BY REG_DT
 
 
 
+<select id="readChatGroup" parameterType="java.lang.String" resultType="ants.com.chatting.model.ChatGroupVo">
+SELECT * 
+  FROM CHATGROUP
+ WHERE CGROUP_ID = #{cgroupId}
+</select>
 </mapper>

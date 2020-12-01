@@ -5,18 +5,18 @@ $(function(){
 	readChatList();
 	
 	$(".chatList").on('click', 'li', function(){
+		$(".chatList").css('color', '#A9E2F3');
 		var cgroupId = $(this).attr("cgroupId");
 		$(".chatList").empty();
+		$(".chatList").css('font-color', 'black');
 		$.ajax({
 			url : "/chat/readMessages",
 			data : {cgroupId : cgroupId},
 			method : "POST", 
 			success : function(res){
-				
-				
+				var html = res.split("$$$$$$$");
+				$('.chatList').html(html);
 			}
-			
-			
 		})
 		
 	})
@@ -41,7 +41,7 @@ $(function(){
 		<h5 class="jg">
 			<i class="far fa-comments">&nbsp;</i>채팅
 		</h5>
-		<div class="chatList">
+		<div class="chatList jg">
 		
 		</div>
 	</div>

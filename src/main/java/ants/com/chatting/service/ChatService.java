@@ -23,4 +23,8 @@ public class ChatService{
 		return mapper.readMessages(cgroupId);
 	}
 	
+	public ChatGroupVo readChatGroup(String cgroupId) {
+		return mapper.readChatGroup(cgroupId);
+	}
+	
 }
