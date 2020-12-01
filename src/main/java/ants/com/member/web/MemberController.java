@@ -35,8 +35,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ants.com.member.model.MemberVo;
 import ants.com.member.service.MemberService;
-import net.nurigo.java_sdk.Coolsms;
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @MultipartConfig
 @RequestMapping("/member")
@@ -276,7 +274,7 @@ public class MemberController {
 		    // params.put("subject", "Message Title"); // set msg title for LMS and MMS
 		    // params.put("charset", "euckr"); // For Korean language, set euckr or utf-8
 		    // params.put("app_version", "Purplebook 4.1") // 어플리케이션 버전
-
+		    	
 		    try {
 		      JSONObject obj = (JSONObject) coolsms.send(params);
 		      System.out.println(obj.toString());
@@ -286,7 +284,7 @@ public class MemberController {
 		    }
 	  }
 
-	
+	 
 /*	
 	final String URL = "https://api.coolsms.co.kr";
 	private String sms_url = URL + "/sms/1.5/";
