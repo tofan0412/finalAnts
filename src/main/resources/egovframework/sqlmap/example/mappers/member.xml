@@ -33,4 +33,10 @@
 		WHERE MEM_ID = #{memId}
 	</update>
 	
+	
+	<select id="checkSignup" parameterType="ants.com.member.model.MemberVo" resultType="int">
+		SELECT NVL(COUNT(*), 0) FROM MEMBER
+        WHERE MEM_ID = #{memId} 
+	</select>
+	
 </mapper>

@@ -2,6 +2,7 @@ package ants.com.member.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
+import org.apache.catalina.tribes.UniqueId;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,12 +33,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ants.com.member.model.MemberVo;
 import ants.com.member.service.MemberService;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
-import static javax.swing.JOptionPane.*;
+import java.sql.SQLException;
 
 @MultipartConfig
 @RequestMapping("/member")
@@ -104,11 +107,13 @@ public class MemberController {
 		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),
 				file.getSize());
 
-		// logger.debug("br.hasErrors() : {}", br.hasErrors() );
-		// if(br.hasErrors()) {
-		// return "member/memberRegist";
-		// }
-
+		 logger.debug("br.hasErrors() : {}", br.hasErrors() );
+		 
+		
+		if(br.hasErrors()) {
+			return "main.tiles/member/memberRegist";
+		}
+		
 		String Filename = "D:\\upload\\" + file.getOriginalFilename();
 		File uploadFile = new File(Filename);
 
@@ -125,7 +130,14 @@ public class MemberController {
 
 		logger.debug("memId : {}", memberVo.getMemId());
 		logger.debug("memberVo : {}", memberVo);
-		int insertCnt = memberService.insertMember(memberVo);
+		
+		int insertCnt = 0;
+		try {
+			insertCnt = memberService.insertMember(memberVo);
+		} catch (SQLException | IOException e) {
+			return "main.tiles/member/memberRegist";
+		}
+		
 		logger.debug("insertCnt : {}", insertCnt);
 		
 		if (insertCnt == 1) {
@@ -134,6 +146,16 @@ public class MemberController {
 		} else {
 			return "redirect:member/memberRegist";
 		}
+	}
+	
+	// 중복아이디 체크
+	@ResponseBody @RequestMapping(path = "/checkSignup", method = RequestMethod.POST) 
+	public String checkSignup(HttpServletRequest request) { 
+		String memId = request.getParameter("memId"); 
+		int rowcount = memberService.checkSignup(memId); 
+		logger.debug("checkSignup : {}", rowcount);
+		
+		return String.valueOf(rowcount);
 	}
 
 	

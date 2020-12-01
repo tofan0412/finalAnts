@@ -1,5 +1,7 @@
 package ants.com.member.service;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -24,7 +26,7 @@ public class MemberService{
 	}
 	
 	
-	public int insertMember(MemberVo memberVo) {
+	public int insertMember(MemberVo memberVo) throws SQLException, IOException {
 		logger.debug("memberService memberVo : {}", memberVo);
 		return mapper.insertMember(memberVo);
 	}
@@ -39,4 +41,9 @@ public class MemberService{
 		return mapper.getAllMember();
 	}
 	
+	
+	public int checkSignup(String memId) {
+		logger.debug("memberService checkSignup : {}", memId);
+		return mapper.checkSignup(memId);
+	}
 }

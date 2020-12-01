@@ -48,7 +48,7 @@
 	<div class="card">
 		
 			<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
-			
+			<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 				<div id="pictureView" style="border: 1px solid green; height: 200px; width: 140px; margin: 0 auto;">
 					<img id="pictureViewImg" style="width: 100%; height: 100%;" />
 				</div>
@@ -63,9 +63,11 @@
 					</label>
 					<div id="idcheck">
 						<input class="input" name="memId" type="text" id="memId" placeholder="    회원 id"/>
+						<button type="submit" id="checkbtn" class="btn btn-default">중복확인</button>
+						<div class="check_font" id="checkMsg"></div>
 					</div>
 				</div>
-
+				
 				<div class="content">
 					<label for="name" style="font-size: 0.9em;">
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>이 름
@@ -101,7 +103,7 @@
 					<br><br><br>
 					<div class="content" id="butt">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="button" id="registBtn" class="btn btn-info">등록</button>
+						<button type="button" id="registBtn" class="btn btn-info" disabled="disabled">등록</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="button" id="cancelBtn" onclick="window.history.back()">&nbsp;&nbsp;&nbsp;취 &nbsp;&nbsp; 소 &nbsp;&nbsp;&nbsp;</button>
 					</div>
@@ -109,7 +111,8 @@
 			</form>
 	</div>
 </body>
-	<script>
+
+<script type="text/javascript">
 		$(document).ready(function() {
 			// picture input의 파일 변경시 이벤트 
 			$("#picture").change(function() {
@@ -138,11 +141,36 @@
 				if (memId.value == "" || memName.value == "" || memPass.value == "") {
 					alert("필수입력 사항을 입력해주세요")
 				} else {
-				    
+					$('#fmin').submit();
 				}
 		         
 			})
 		})
 		
-	</script>
+		
+		$(document).ready(function(){ 
+			$('#checkbtn').on('click', function(){ 
+				$.ajax({ type: 'POST', 
+					url: '/member/checkSignup', 
+					dataType : 'json',
+					data: { "memId" : $('#memId').val() }, 
+					success: function(data){
+						if($.trim(data) == 0){ 
+							$('#checkMsg').html('<p style="color:blue">사용가능</p>'); 
+							btn = document.getElementById('registBtn')
+							btn.disabled = false;
+						}else{ 
+							$('#checkMsg').html('<p style="color:red">사용불가능</p>'); 
+						} 
+					}
+				}); //end ajax 
+				return false;
+			}); //end on 
+		}); 
+		
+</script>
+	
+
+
+
 </html>

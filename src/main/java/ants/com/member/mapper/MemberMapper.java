@@ -1,6 +1,7 @@
 package ants.com.member.mapper;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import ants.com.member.model.MemberVo;
@@ -11,11 +12,13 @@ public interface MemberMapper {
 	
 	public MemberVo getMember(String memId);
 	
-	int insertMember(MemberVo memberVo);
+	int insertMember(MemberVo memberVo) throws IOException;
 
 	public int updatePass(MemberVo memberVo);
 
 	public List<MemberVo> getAllMember();
+
+	public int checkSignup(String memId);
 	
 	
 }
