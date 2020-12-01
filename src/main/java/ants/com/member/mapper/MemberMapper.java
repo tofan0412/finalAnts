@@ -1,6 +1,8 @@
 package ants.com.member.mapper;
 
 
+import java.util.List;
+
 import ants.com.member.model.MemberVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -12,6 +14,8 @@ public interface MemberMapper {
 	int insertMember(MemberVo memberVo);
 
 	public int updatePass(MemberVo memberVo);
+
+	public List<MemberVo> getAllMember();
 	
 	
 }

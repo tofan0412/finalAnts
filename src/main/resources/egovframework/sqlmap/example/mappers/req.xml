@@ -84,4 +84,11 @@
 		  FROM reqlist
 		 WHERE req_id = #{reqId} 
 	</delete>
+	
+	<select id="getAllMember" resultType="ants.com.member.model.MemberVo">
+		SELECT mem_id, mem_name, mem_tel, mem_filepath, mem_filename 
+		  FROM member
+		 WHERE UPPER(del) = 'N'
+	</select>
+	
 </mapper>

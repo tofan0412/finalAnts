@@ -1,5 +1,7 @@
 package ants.com.member.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -32,6 +34,9 @@ public class MemberService{
 		logger.debug("memberService updatePass : {}", memberVo);
 		return mapper.updatePass(memberVo);
 	}
-		
+	
+	public List<MemberVo> getAllMember(){
+		return mapper.getAllMember();
+	}
 	
 }

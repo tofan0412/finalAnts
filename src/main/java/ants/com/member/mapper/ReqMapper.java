@@ -1,8 +1,8 @@
 package ants.com.member.mapper;
 
 import java.util.List;
-import java.util.Map;
 
+import ants.com.member.model.MemberVo;
 import ants.com.member.model.ReqVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -20,5 +20,7 @@ public interface ReqMapper {
 	public int reqDelete(String reqId);
 
 	public ReqVo getReq(ReqVo reqVo);
+	
+	public List<MemberVo> getAllMember();
 
 }
