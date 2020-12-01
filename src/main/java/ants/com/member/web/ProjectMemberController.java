@@ -132,6 +132,7 @@ public class ProjectMemberController {
 	@RequestMapping("/insertissue")
 	public String insertissue(IssueVo issueVo, HttpSession session, Model model) {
 		
+		System.out.println(issueVo);
 		String reqId = (String)session.getAttribute("reqId");
 		issueVo.setReqId(reqId);
 		issueVo.setMemId("cony@naver.com");

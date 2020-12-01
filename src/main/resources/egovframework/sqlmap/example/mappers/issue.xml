@@ -17,7 +17,7 @@
 				        from issue
 				        where req_id = #{reqId}) a , member b 
 				where a.mem_id = b.mem_id and a.issue_del = 'n' 
-				ORDER BY a.reg_dt 
+				ORDER BY a.reg_dt desc
 			  ) S
 				
 				<if test="searchKeyword != null and searchKeyword != ''">
@@ -60,7 +60,7 @@
 		    issue_kind, issue_del, todo_id, req_id, mem_id
 		) VALUES (
 		    ISSUE_SEQ.nextval, #{issueTitle}, #{issueCont}, sysdate,  #{categoryId}, 
-		    #{issueKind}, 'n', '', , #{memId}
+		    #{issueKind}, 'n', '', #{reqId} , #{memId}
 		)
 		
 	</insert>
