@@ -27,8 +27,9 @@
 	
 	<form id="passup" action="/member/passupdate">
 		<input type="text" class="ke" name="memTel" value="${memTel}" style="display:none"><br>
+		<label class="lic">아이디</label> <input type="text" id="memId" name="memId" value="${memId}"  style="display:none"><br>
+		
 		<label class="lic">코드</label> <input type="text" class="ke" id="keyval"><br>
-		<label class="lic">아이디</label> <input type="text" id="memId" name="memId"><br>
 		<label class="lic">새로 변경할 비밀번호</label> <input type="text" id="newpass1" name="memPass"><br>
 		<label class="lic">새로 변경할 비밀번호 확인</label> <input type="text" id="newpass2" name="newpass2"><br>
 	</form>
