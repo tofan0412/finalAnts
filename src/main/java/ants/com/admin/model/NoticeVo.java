@@ -2,7 +2,9 @@ package ants.com.admin.model;
 
 import java.util.Date;
 
-public class NoticeVo {
+import ants.com.base.model.BaseVo;
+
+public class NoticeVo extends BaseVo{
 	
 	
 	private String noticeId; //인덱스

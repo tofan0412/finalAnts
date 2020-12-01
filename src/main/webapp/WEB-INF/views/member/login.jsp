@@ -175,8 +175,7 @@
           
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> 전화번호를 입력해주세요</label>
-              <input type="text" name="from" class="form-control" id="memTel" placeholder="Enter phone number">
-              <textarea name="text"></textarea>
+              <input type="text" name="memTel" class="form-control" id="memTel" placeholder="Enter phone number">
             </div>
             
            <button type="submit" >확인</button>

@@ -2,43 +2,69 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ants.com.member.mapper.ReqMapper">
 
-<!-- 	<resultMap id="ReqVo" type="ants.com.member.model.ReqVo"> -->
-<!-- 		<result property="reqId" column="req_id"/> -->
-<!-- 		<result property="reqTitle" column="req_title"/> -->
-<!-- 		<result property="reqPeriod" column="req_period"/> -->
-<!-- 		<result property="reqFilepath" column="req_filepath"/> -->
-<!-- 		<result property="reqFilename" column="req_filename"/> -->
-<!-- 		<result property="memId" column="mem_id"/> -->
-<!-- 		<result property="status" column="status"/> -->
-<!-- 		<result property="plId" column="pl_id"/> -->
-<!-- 	</resultMap> -->
-	
-	<select id="reqList" parameterType="ants.com.member.model.ReqVo" resultType="ants.com.member.model.ReqVo">
-		<![CDATA[
-		SELECT  *
+	<!-- <resultMap id="ReqVo" type="ants.com.member.model.ReqVo"> -->
+	<!-- <result property="reqId" column="req_id"/> -->
+	<!-- <result property="reqTitle" column="req_title"/> -->
+	<!-- <result property="reqPeriod" column="req_period"/> -->
+	<!-- <result property="reqFilepath" column="req_filepath"/> -->
+	<!-- <result property="reqFilename" column="req_filename"/> -->
+	<!-- <result property="memId" column="mem_id"/> -->
+	<!-- <result property="status" column="status"/> -->
+	<!-- <result property="plId" column="pl_id"/> -->
+	<!-- </resultMap> -->
+
+	<select id="reqList" parameterType="ants.com.member.model.ReqVo"
+		resultType="ants.com.member.model.ReqVo">
+	     <![CDATA[
+	    SELECT  *
 		    FROM(
 		    	SELECT ROWNUM rnum, a.*
-				FROM reqlist a
-				WHERE mem_id = #{memId}
-				  AND rownum <= #{lastIndex}
-				  ORDER BY a.req_id DESC)
-	    WHERE rnum > #{firstIndex}
-	    ]]>
+				FROM (SELECT b.*
+                        FROM reqlist b
+                        WHERE mem_id = #{memId}
+                        ORDER BY TO_NUMBER(b.REQ_ID)DESC) a
+                WHERE rownum <= #{lastIndex})
+            WHERE rnum > #{firstIndex} 
+             ]]>
 	</select>
-	
-	<select id="reqListCount" parameterType="String" resultType="java.lang.Integer">
+
+	<select id="reqListCount" parameterType="String"
+		resultType="java.lang.Integer">
 		<![CDATA[
 		    	SELECT COUNT(*)
 				FROM reqlist
 				WHERE mem_id = #{memId}
 	    ]]>
 	</select>
-	
-	<insert id="reqInsert" parameterType="ants.com.member.model.ReqVo" >
-		INSERT INTO REQLIST
-			VALUES(REQ_SEQ.nextval,#{req_title},#{req_period},#{req_filepath},#{req_filename},#{mem_id},#{status},#{pl_id}
-	</insert>
-		
-	
 
+	<insert id="reqInsert"
+		parameterType="ants.com.member.model.ReqVo">
+		INSERT INTO REQLIST
+			(REQ_ID
+			 ,REQ_TITLE
+			 ,REQ_CONT
+			 ,REQ_PERIOD
+			 ,REQ_FILEPATH
+			 ,REQ_FILENAME
+			 ,MEM_ID
+			 ,STATUS
+			 ,PL_ID)
+		VALUES(REQ_SEQ.nextval
+			 ,#{reqTitle}
+			 ,#{reqCont}
+			 ,#{reqPeriod}
+			 ,#{reqFilepath, jdbcType=VARCHAR}
+			 ,#{reqFilename, jdbcType=VARCHAR}
+			 ,#{memId}
+			 ,#{status, jdbcType=VARCHAR}
+			 ,#{plId, jdbcType=VARCHAR})
+	</insert>
+
+
+
+
+
+	<delete id="delete">
+		DELETE
+	</delete>
 </mapper>

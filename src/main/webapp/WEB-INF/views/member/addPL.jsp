@@ -35,14 +35,14 @@
 	  <li class="active"><a data-toggle="tab" href="#email">이메일로 찾기</a></li>
 	  <li><a data-toggle="tab" href="#phone">전화번호로 찾기</a></li>
 	</ul>
-		
+	
 	<div class="tab-content">
 	  <div id="email" class="tab-pane fade in active">
 	    <h3>이메일로 찾기</h3>
 	    <br>   
 	       이메일 입력<br>
 	    <input type="text" class="inp">
-	    <a href="/member/mailsender"><input id="esub" type="button" value="제출"></a>
+	    <a href="/member/mailsender"><input type="button" value="제출"></a>
 	  </div>
 	  <div id="phone" class="tab-pane fade">
 	    <h3>전화번호로 찾기</h3>
@@ -55,16 +55,5 @@
 	
 </div>
 
-
 </body>
-<script>
-	$(document).ready(function(){
-			
-		// picture input의 파일 변경시 이벤트 
-		$("#picture").change(function(){
-		   readURL(this);
-		});
-	});
-</script>
-
 </html>

@@ -50,7 +50,7 @@ public class BaseVo implements Serializable {
 	private int pageIndex = 1;
 
 	/** 페이지갯수 */
-	private int pageUnit = 3;
+	private int pageUnit = 10;
 
 	/** 페이지사이즈 */
 	private int pageSize = 10;
