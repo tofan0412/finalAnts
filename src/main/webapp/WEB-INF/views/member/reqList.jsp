@@ -12,7 +12,12 @@
 
 	/* 글 등록 화면 function */
 	function fn_egov_reqInsert() {
-	   	document.listForm.action = "<c:url value='/req/reqInsert'/>";
+	   	document.listForm.action = "<c:url value='/req/reqInsertView'/>";
+	   	document.listForm.submit();
+	}
+	/* 글 등록 화면 function */
+	function fn_egov_addPL() {
+	   	document.listForm.action = "<c:url value='/req/addPLView'/>";
 	   	document.listForm.submit();
 	}
 
@@ -24,7 +29,7 @@
 	   	document.listForm.submit();
 	}
 	
-	$("a").addClass("page-link");  
+	//$("a").addClass("page-link");  
 
 </script>
 
@@ -77,7 +82,7 @@
 	                      <th style="width: 100px;">No.</th>
 	                      <th>제목</th>
 	                      <th>기간</th>
-	                      <th>담당자</th>
+	                      <th style="text-align: center;">담당자</th>
 	                      <th style="text-align: center;">응답 상태</th>
 	                      <th></th>
 	                    </tr>
@@ -88,7 +93,17 @@
 		                      <td><c:out value="${paginationInfo.totalRecordCount - ((reqVo.pageIndex-1) * reqVo.pageUnit + sts.index)}"/>.</td>
 		                      <td>${req.reqTitle }</td>
 		                      <td>${req.reqPeriod }</td>
-	                    	  <td>${req.plId }</td>
+	                    	  <td style="text-align: center;">
+	                    	  	<c:choose>
+		                      	  <c:when test="${req.plId==null }">
+		                      	  	<a class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+		                              <i class="fas fa-plus"></i>
+		                              PL등록
+		                          	</a>
+		                      	  </c:when>
+		                      	  <c:otherwise>${req.plId }</c:otherwise>
+		                      	</c:choose>
+	                    	  </td>
 		                      <td style="text-align: center;">
 		                      	<c:choose>
 		                      	  <c:when test="${req.status eq '대기' }"><span class="badge badge-warning">${req.status }</span></c:when>
@@ -97,22 +112,18 @@
 		                      	</c:choose>
 		                      <td class="project-actions text-right" style="opacity: .9;">
 		                          <a class="btn btn-primary btn-sm" href="#">
-		                              <i class="fas fa-folder">
-		                              </i>
+		                              <i class="fas fa-folder"></i>
 		                              View
 		                          </a>
 		                          <a class="btn btn-info btn-sm" href="#">
-		                              <i class="fas fa-pencil-alt">
-		                              </i>
+		                              <i class="fas fa-pencil-alt"></i>
 		                              Edit
 		                          </a>
 		                          <a class="btn btn-danger btn-sm" href="#">
-		                              <i class="fas fa-trash">
-		                              </i>
+		                              <i class="fas fa-trash"></i>
 		                              Delete
 		                          </a>
 		                      </td>
-		                      
 		                    </tr>
 	                      </c:forEach>
 	                  
@@ -132,16 +143,45 @@
         		  <div class="card-footer clearfix">
 	                <button type="button" class="btn btn-default float-right" onclick="fn_egov_reqInsert()"><i class="fas fa-plus"></i>등 록</button>
 	              </div>
-        		 
-        		  
         		  
 	              <!-- /.card-body -->
 	            </div>
              </div>
 		    </section>
-		      
-
 	</form:form>
+	
+	<!-- PL등록 모달창 -->
+	<div class="modal fade" id="addPL" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="addPLLable">New message</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form>
+	          <div class="form-group">
+	            <label for="recipient-name" class="control-label">이메일:</label>
+	            <input type="text" class="form-control" id="recipient-name" name="memId">
+	          </div>
+	          <div class="form-group">
+	            <label for="message-text" class="control-label">첨부할 내용:</label>
+	            <textarea class="form-control" id="message-text"></textarea>
+	          </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Send message</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+		
+	
+	
+	
+	
 
 </body>
 </html>
