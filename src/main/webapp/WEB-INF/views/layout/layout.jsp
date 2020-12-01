@@ -6,6 +6,7 @@
 <head>
 	<!-- jQuery, style -->
 	<%@include file="commonLib.jsp"%>
+	<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 </head>
 <title>협업관리프로젝트</title>
 <body class="hold-transition sidebar-mini">
