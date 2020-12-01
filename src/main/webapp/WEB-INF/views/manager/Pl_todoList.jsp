@@ -27,12 +27,12 @@ $(document).ready(function(){
 	width : 1000px;
     border-top: 1px solid #444444;
     border-collapse: collapse;
-    text-align: center;
   }
   th, td {
     border-bottom: 1px solid #444444;
     padding: 10px;
   }
+  
 
 </style>
 </head>
@@ -64,7 +64,12 @@ $(document).ready(function(){
 						<c:if test="${todo.todoImportance eq 'gen'}">일반</c:if>
 						<c:if test="${todo.todoImportance eq 'emg'}">긴급</c:if>
 						</td>
+						<c:if test="${todo.todoLevel ne '1'}">
+						<td style="padding-left: 20px;">➜${todo.todoTitle}</td>
+						</c:if>
+						<c:if test="${todo.todoLevel eq '1'}">
 						<td>${todo.todoTitle}</td>
+						</c:if>
 						<td>${todo.memId}</td>
 						<td>
 						<c:if test= "${todo.todoPercent eq null}">0%</c:if>

@@ -7,13 +7,33 @@
 	<select id="getTodoList"
 		parameterType="ants.com.board.manageBoard.model.TodoVo"
 		resultType="ants.com.board.manageBoard.model.TodoVo">
+<!-- 		<![CDATA[ -->
+<!-- 	SELECT -->
+<!-- 	    todo.todo_id, -->
+<!-- 	    ABS(TO_DATE(TO_CHAR(todo.todo_start, 'YYYYMMDD')) - To_date(to_char(SYSDATE,'yyyymmdd'))) as todo_start, -->
+<!-- 	    TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) - To_date(to_char(todo.todo_end,'yyyymmdd')) as todo_end, -->
+<!-- 	    todo.todo_cont, -->
+<!-- 	    todo.todo_title, -->
+<!-- 	    todo.todo_percent, -->
+<!-- 	    todo.todo_importance, -->
+<!-- 	    todo.todo_level, -->
+<!-- 	    todo.req_id, -->
+<!-- 	    todo.todo_parentid, -->
+<!-- 	    todo.del, -->
+<!-- 	    member.mem_name as mem_id -->
+<!-- 	FROM( select * from member)member, todo todo -->
+<!-- 	WHERE -->
+<!-- 	    member.mem_id = todo.mem_id -->
+<!-- 	    AND todo.req_id = #{reqId} -->
+<!-- 	    AND todo.del ='N' -->
+<!-- 	    ]]> -->
 		<![CDATA[
-	SELECT
+		SELECT
 	    todo.todo_id,
 	    ABS(TO_DATE(TO_CHAR(todo.todo_start, 'YYYYMMDD')) - To_date(to_char(SYSDATE,'yyyymmdd'))) as todo_start,
-	    TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) - To_date(to_char(todo.todo_end,'yyyymmdd'))as todo_end,
+	    TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) - To_date(to_char(todo.todo_end,'yyyymmdd')) as todo_end,
 	    todo.todo_cont,
-	    todo.todo_title,
+	    lpad(' ', (level - 1) * 4)|| todo_title AS todo_title,
 	    todo.todo_percent,
 	    todo.todo_importance,
 	    todo.todo_level,
@@ -24,9 +44,13 @@
 	FROM( select * from member)member, todo todo
 	WHERE
 	    member.mem_id = todo.mem_id
-	    AND todo.req_id = #{reqId}
-	    AND todo.del ='N'
-	    ]]>
+        and todo.del = 'N'
+	    AND todo.req_id = 1 start with
+        todo.todo_parentid is null
+	    CONNECT BY
+    PRIOR todo_id = TODO_PARENTID
+	order siblings by todo_id desc
+ 	    ]]> 
 	</select>
 
 
@@ -37,8 +61,8 @@
 		<![CDATA[
 	SELECT
 	    todo.todo_id,
-	    todo.todo_start,
-	    todo.todo_end,
+	    TO_CHAR(todo.todo_start,'yyyy/mm/dd') as todo_start,
+	    TO_CHAR(todo.todo_end,'yyyy/mm/dd') as todo_end,
 	    todo.todo_cont,
 	    todo.todo_title,
 	    todo.todo_percent,
@@ -62,7 +86,8 @@
 		resultType="ants.com.member.model.MemberVo">
 		SELECT
 		member.mem_name,
-		member.mem_id
+		member.mem_id,
+		projectmember.promem_id
 		FROM
 		member,
 		projectmember
@@ -109,8 +134,8 @@
 	<update id="todoupdate" parameterType="ants.com.board.manageBoard.model.TodoVo">
 		UPDATE todo
 		SET
-		todo_start = TO_DATE('#{todoStart},'YYYY/MM/DD'),
-		todo_end = TO_DATE(#{todoEnd},'YYYY/MM/DD'),
+		todo_start = TO_DATE(#{todoStart}, 'YYYY/MM/DD'),
+		todo_end = TO_DATE(#{todoEnd}, 'YYYY/MM/DD'),
 		todo_cont =#{todoCont},
 		todo_title =#{todoTitle},
 		todo_percent =#{todoPercent},
