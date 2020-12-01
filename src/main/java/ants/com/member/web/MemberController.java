@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
-import org.apache.catalina.tribes.UniqueId;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,32 +72,37 @@ public class MemberController {
 	}
 
 	// 로그인 로직
-	@RequestMapping(path = "/loginFunc")
-	public String process(MemberVo memberVo, HttpSession session, Model model) {
+		@RequestMapping(path = "/loginFunc")
+		public String process(MemberVo memberVo, HttpSession session, Model model) {
 
-		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
+			logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
 
-		MemberVo dbMember = memberService.getMember(memberVo.getMemId());
-		logger.debug("dbMember : {}", dbMember);
+			MemberVo dbMember = memberService.getMember(memberVo.getMemId());
+			logger.debug("dbMember : {}", dbMember);
 
-		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
-			session.setAttribute("SMEMBER", memberVo);
-			List<ProjectVo>proList = projectService.memInProjectList(memberVo.getMemId());
-			if(proList.size()!=0) {
-				session.setAttribute("projectList", proList);	
-			}
+			if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
+				session.setAttribute("SMEMBER", memberVo);
+				List<ProjectVo>proList = projectService.memInProjectList(memberVo.getMemId());
+				logger.debug("projectList:{}",proList);
+				if(proList.size()!=0) {
+					session.setAttribute("projectList", proList);	
+				}
 
-			if (dbMember.getMemType().equals("pl") || dbMember.getMemType().equals("pm")) {				
-				return "content/project";
+				if (dbMember.getMemType().equals("PL") || dbMember.getMemType().equals("PM")) {
+					List<ProjectVo> plpmList = projectService.plpmInProjectList(memberVo.getMemId());
+					session.setAttribute("plpmList", plpmList);	
+					logger.debug("plpmList:{}",plpmList);
+					return "content/project";
+				} else {
+					return "content/project";
+				}
+
 			} else {
-				return "content/project";
+				JOptionPane.showMessageDialog(null, "일치하는 회원정보가 없습니다.");
+				return "redirect:/member/loginView";
 			}
-
-		} else {
-			JOptionPane.showMessageDialog(null, "일치하는 회원정보가 없습니다.");
-			return "redirect:/member/loginView";
 		}
-	}
+		
 	
 	
 	

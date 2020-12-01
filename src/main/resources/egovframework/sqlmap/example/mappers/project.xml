@@ -12,5 +12,15 @@
 		    projectmember.req_id = project.req_id
 	        and projectmember.mem_id = #{memId}
 	</select>
+	
+	<select id="plpmInProjectList" parameterType="String"
+	resultType="ants.com.member.model.ProjectVo">
+		    SELECT
+		  DISTINCT project.req_id, project.pro_name, project.mem_id, project.pro_percent, project.reg_dt
+		FROM(select * from project)project, reqlist reqlist
+		WHERE
+		    reqlist.req_id = project.req_id
+            and (reqlist.mem_id= #{memId} or reqlist.pl_id= #{memId})
+	</select>
 
 </mapper>

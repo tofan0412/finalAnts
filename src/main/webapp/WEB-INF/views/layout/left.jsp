@@ -45,16 +45,12 @@
 				<p>전체캘린더</p>
                 </a>
               </li>
-             
-							<!-- PL or PM일경우!!조건걸어서  -->
-							<!-- 						<li class="nav-item"><a href="#" class="nav-link"> <i -->
-							<!-- 								class="nav-icon far fa-copy"></i> -->
-							<!-- 								<p>PM-PL이슈게시판</p> -->
-							<!-- 						</a></li> -->
-	
-						</ul>
-					</li>
-				<br>
+              <c:if test="${plpmList ne null }">
+              <li class="nav-item"><a href="#" class="nav-link"> 
+              <i class="nav-icon far fa-copy"></i><p>PM-PL이슈게시판</p></a></li> 
+            </c:if>
+			</ul>
+		</li><br>
 
 				<li class="nav-item has-treeview ">
 		            <a href="#" class="nav-link">
@@ -94,18 +90,34 @@
 				        <ul class="nav nav-treeview" style="display: block;">
 				        	<c:forEach items="${projectList}" var="project">
 					        <li class="nav-item">
+<%-- 							<a href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}"> --%>
 							<a href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
 							 <i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p></a></li>
 							</c:forEach>
 						</ul>
-			</c:if>
-			 <c:if test="${projectList eq null}">
+			 </c:if>
+			 <c:if test="${projectList eq null && plpmList eq null}">
 				<li class="nav-item has-treeview menu-close">
 		            <a href="#" class="nav-link">
 			        	<i class="nav-icon fas fa-poll-h"></i>
 						<p>프로젝트 없음</p></a>
+			 </c:if>
+			
+			  <c:if test="${plpmList ne null}">
+				<li class="nav-item has-treeview menu-close">
+		            <a href="#" class="nav-link">
+			        	<i class="nav-icon fas fa-poll-h"></i>
+						<p>진행중인 프로젝트<i class="fas fa-angle-left right"></i></p></a>
 						
-			</c:if>
+				        <ul class="nav nav-treeview" style="display: block;">
+				        	<c:forEach items="${plpmList}" var="project">
+					        <li class="nav-item">
+							<a href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+							 <i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p></a></li>
+							</c:forEach>
+						</ul>
+			 </c:if>
+			 
 				</li>
 			</ul>
 		</nav>

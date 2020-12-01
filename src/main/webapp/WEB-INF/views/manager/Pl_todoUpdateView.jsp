@@ -32,6 +32,10 @@
 		$("#regBtn").on("click", function() {
 			$("#todoform").submit();
 		});
+		
+		$("#mem-select").on("change", function() {
+			$("#changemem").val('${todoVo.memId }');
+		});
  	});
 
 </script>
@@ -57,6 +61,8 @@
 				<option value="${mem.memId}">${mem.memName}</option>
 			</c:forEach>
 		</select><br><br>
+		
+		<input type="hidden" name="changemem" id="changemem" />
 		
 		<label for="status-select" class="col-sm-1 control-label">우선순위</label>
 		<select name="todoImportance" id="status-select">

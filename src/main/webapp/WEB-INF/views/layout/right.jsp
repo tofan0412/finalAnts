@@ -23,7 +23,6 @@ $(function(){
 		
 	})
 	
-	
 	function readChatList(){
 		var memId = '${SMEMBER.memId}';	
 		$.ajax({
