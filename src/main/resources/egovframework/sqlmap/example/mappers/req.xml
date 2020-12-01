@@ -85,10 +85,11 @@
 		 WHERE req_id = #{reqId} 
 	</delete>
 	
-	<select id="getAllMember" resultType="ants.com.member.model.MemberVo">
+	<select id="getAllMember" parameterType="String" resultType="ants.com.member.model.MemberVo">
 		SELECT mem_id, mem_name, mem_tel, mem_filepath, mem_filename 
 		  FROM member
 		 WHERE UPPER(del) = 'N'
+		   AND UPPER(mem_id) like '%' || UPPER(#{term}) || '%'
 	</select>
 	
 </mapper>

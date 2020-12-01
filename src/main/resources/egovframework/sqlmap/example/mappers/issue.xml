@@ -9,28 +9,36 @@
 	 	
  		SELECT c.*
 	      FROM (
-	      	SELECT ROWNUM RNUM,
+	      	SELECT ROWNUM RNUM , 
 	           	   S.*
 		      FROM (
-				select a.issue_id , a.issue_title , a.issue_cont , to_char(a.reg_dt,'YYYY-MM-DD') as reg_dt , b.mem_name as mem_id
-				from( select issue_id, issue_title, issue_cont, reg_dt, issue_del, mem_id
+				select a.issue_id , a.issue_title , a.issue_cont , to_char(a.reg_dt,'YYYY-MM-DD') as reg_dt ,
+				       a.issue_kind, b.mem_name as mem_id
+				from( select issue_id, issue_title, issue_cont, reg_dt, issue_del, mem_id, issue_kind
 				        from issue
 				        where req_id = #{reqId}) a , member b 
 				where a.mem_id = b.mem_id and a.issue_del = 'n' 
-				ORDER BY a.reg_dt desc
-			  ) S
-				
-				<if test="searchKeyword != null and searchKeyword != ''">
+				     
+					<if test="searchKeyword != null and searchKeyword != ''">
 				        <choose>
-				            <when test="searchCondition == 0">
-								AND	TITLE LIKE '%' || #{searchKeyword} || '%'
+<!-- 				         	<when test="searchCondition == 0"> -->
+<!-- 								AND	a.issue_kind LIKE '%' || #{searchKeyword} || '%' -->
+<!-- 							</when> -->
+				         	<when test="searchCondition == 1">
+								AND	a.mem_id LIKE '%' || #{searchKeyword} || '%'
 							</when>
-				            <when test="searchCondition == 1">
-								AND	CONTENTS LIKE '%' || #{searchKeyword} || '%'
+				            <when test="searchCondition == 2">
+								AND	a.issue_title LIKE '%' || #{searchKeyword} || '%'
 							</when>
+				            <when test="searchCondition == 3">
+								AND	a.issue_cont LIKE '%' || #{searchKeyword} || '%'
+							</when>
+				     
 						</choose>
 					</if>
-				
+					ORDER BY a.reg_dt desc
+			  ) S
+		
 				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 
 				
 	      ) c
@@ -73,7 +81,7 @@
 	        <if test="issueCont != null">issue_cont=#{issueCont},</if>
 	        <if test="issueKind != null">issue_kind=#{issueKind},</if>
 	        <if test="categoryId != null">category_id=#{categoryId},</if>	 	            
-	        <if test="regDt != null">reg_dt=sydate,</if>	 	            
+	        <if test="regDt != null">reg_dt=sysdate,</if>	 	            
 	        <if test="memId != null">mem_id=#{memId},</if>	 	            
 	        <if test="issueDel != null">issue_del=#{issueDel},</if>	 	            
 	        <if test="todoId != null">todo_id=#{todoId},</if>	 	            
@@ -105,15 +113,21 @@
 	<select id="issuePagingListCnt" parameterType="ants.com.board.memBoard.model.IssueVo"  resultType="int">
 		select count(*) as totCnt
 		from issue
-		where req_id = #{reqId}
+		where req_id = #{reqId} and issue_del = 'n'
 		
 		<if test="searchKeyword != null and searchKeyword != ''">
 		        <choose>
-		            <when test="searchCondition == 0">
-						AND	TITLE LIKE '%' || #{searchKeyword} || '%'
-					</when>
+<!-- 		        	<when test="searchCondition == 1"> -->
+<!-- 						AND	issue_kind LIKE '%' || #{searchKeyword} || '%' -->
+<!-- 					</when> -->
 		            <when test="searchCondition == 1">
-						AND	CONTENTS LIKE '%' || #{searchKeyword} || '%'
+						AND	mem_id LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 2">
+						AND	issue_title LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 3">
+						AND	issue_cont LIKE '%' || #{searchKeyword} || '%'
 					</when>
 				</choose>
 			</if>		

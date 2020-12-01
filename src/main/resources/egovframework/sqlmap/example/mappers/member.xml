@@ -12,21 +12,6 @@
 		INSERT INTO MEMBER VALUES(#{memId}, #{memName}, #{memPass}, #{memTel},
 		#{memFilepath}, #{memFilename}, #{memAlert}, #{del}, #{memType})
 	</insert>
-
-	<!--참여중인 팀원 조회 -->
-	<select id="projectMemList" parameterType="String"
-		resultType="ants.com.member.model.MemberVo">
-		SELECT
-		member.mem_name,
-		member.mem_id
-		FROM
-		member,
-		projectmember
-		WHERE
-		member.mem_id = projectmember.mem_id
-		AND projectmember.req_id = #{reqId}
-		AND projectmember.promem_status = 'in'
-	</select>
 	
 	<update id="updatePass" parameterType="ants.com.member.model.MemberVo">
 		UPDATE MEMBER SET MEM_PASS = #{memPass}
@@ -34,9 +19,12 @@
 	</update>
 	
 	
+<<<<<<< HEAD
 	<select id="checkSignup" parameterType="ants.com.member.model.MemberVo" resultType="int">
 		SELECT NVL(COUNT(*), 0) FROM MEMBER
         WHERE MEM_ID = #{memId} 
 	</select>
 	
+=======
+>>>>>>> 414514964257ea45b967e892ece3b5139238cf40
 </mapper>

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script>
-	let sock = new SockJS("http://localhost:80/echo");
+	let sock = new SockJS("/echo");
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;
 
@@ -33,6 +33,7 @@
 #msgArea{
 	overflow-y : scroll;
 	padding : 5px;
+	max-height : 500px;
 }
 .Msg{
 	color : black;

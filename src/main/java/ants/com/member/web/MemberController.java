@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.UUID;
@@ -37,7 +38,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectVo;
 import ants.com.member.service.MemberService;
+import ants.com.member.service.ProjectService;
+import ants.com.member.service.ProjectmemberService;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import java.sql.SQLException;
 
@@ -49,6 +53,11 @@ public class MemberController {
 
 	@Resource(name = "memberService")
 	private MemberService memberService;
+	
+	@Resource(name = "projectService")
+	private ProjectService projectService;
+	
+	
 
 	@RequestMapping("/mainView")
 	public String mainView() {
@@ -74,12 +83,13 @@ public class MemberController {
 
 		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
 			session.setAttribute("SMEMBER", memberVo);
-			model.addAttribute("TODAY", new Date());
+			List<ProjectVo>proList = projectService.memInProjectList(memberVo.getMemId());
+			if(proList.size()!=0) {
+				session.setAttribute("projectList", proList);	
+			}
 
-			if (dbMember.getMemType().equals("pl")) {
-				return "manager/pl_main";
-			} else if (dbMember.getMemType().equals("pm")) {
-				return "manager/pm_main";
+			if (dbMember.getMemType().equals("pl") || dbMember.getMemType().equals("pm")) {				
+				return "content/project";
 			} else {
 				return "content/project";
 			}

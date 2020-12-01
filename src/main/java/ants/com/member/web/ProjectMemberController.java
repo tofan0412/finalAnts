@@ -73,7 +73,7 @@ public class ProjectMemberController {
 	public String getissuelist(@ModelAttribute("issueVo") IssueVo issueVo, HttpSession session, Model model) throws Exception{
 		
 		String reqId = (String)session.getAttribute("reqId");
-		 
+	
 //		IssueVo issueVo = new IssueVo();
 		issueVo.setReqId(reqId);
 		

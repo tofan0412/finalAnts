@@ -8,26 +8,6 @@
 <html>
 <head>
 
-<script type="text/javascript">
-
-	/* 글 등록 화면 function */
-	function fn_egov_reqInsert() {
-	   	document.listForm.action = "<c:url value='/req/reqInsert'/>";
-	   	document.listForm.submit();
-	}
-
-
-	/* pagination 페이지 링크 function */
-	function fn_egov_link_page(pageNo){
-		document.listForm.pageIndex.value = pageNo;
-		document.listForm.action = "<c:url value='/req/reqList'/>";
-	   	document.listForm.submit();
-	}
-	
-	$("a").addClass("page-link");  
-
-</script>
-
 </head>
 <title>협업관리프로젝트</title>
 	<form:form commandName="reqVo" id="listForm" name="listForm" method="post">
@@ -57,7 +37,7 @@
 		      <!-- Default box -->
 		      <div class="card">
 		        <div class="card-header">
-		          <h3 class="card-title">Projects Detail</h3>
+		          <a class="jg" href="/member/memberRegistview" style="color: #0BB783;">프로젝트 공간으로 가시겠습니까?</a>
 		
 		          <div class="card-tools">
 		            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -75,24 +55,24 @@
 		                <div class="col-12 col-sm-4">
 		                  <div class="info-box bg-light">
 		                    <div class="info-box-content">
-		                      <span class="info-box-text text-center text-muted">Estimated budget</span>
-		                      <span class="info-box-number text-center text-muted mb-0">2300</span>
+		                      <span class="info-box-text text-center text-muted">예상 기간</span>
+		                      <span class="info-box-number text-center text-muted mb-0">${reqVo.reqPeriod }일</span>
 		                    </div>
 		                  </div>
 		                </div>
 		                <div class="col-12 col-sm-4">
 		                  <div class="info-box bg-light">
 		                    <div class="info-box-content">
-		                      <span class="info-box-text text-center text-muted">Total amount spent</span>
-		                      <span class="info-box-number text-center text-muted mb-0">2000</span>
+		                      <span class="info-box-text text-center text-muted">Project Leader </span>
+		                      <span class="info-box-number text-center text-muted mb-0">${reqVo.plId }</span>
 		                    </div>
 		                  </div>
 		                </div>
 		                <div class="col-12 col-sm-4">
 		                  <div class="info-box bg-light">
 		                    <div class="info-box-content">
-		                      <span class="info-box-text text-center text-muted">Estimated project duration</span>
-		                      <span class="info-box-number text-center text-muted mb-0">20</span>
+		                      <span class="info-box-text text-center text-muted">프로젝트 생성여부</span>
+		                      <span class="info-box-number text-center text-muted mb-0"></span>
 		                    </div>
 		                  </div>
 		                </div>
@@ -161,20 +141,19 @@
 		                </div>
 		              </div>
 		            </div>
+		            <!-- 요구사항정의서 title, content -->
 		            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-		              <h3 class="text-primary"><i class="fas fa-paint-brush"></i> AdminLTE v3</h3>
-		              <p class="text-muted">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</p>
+		              <h3 class="text-primary" ><i class="fas fa-paint-brush"></i> ${reqVo.reqTitle }</h3>
+		              <p class="text-muted">${reqVo.reqCont }</p>
 		              <br>
 		              <div class="text-muted">
-		                <p class="text-sm">Client Company
-		                  <b class="d-block">Deveint Inc</b>
-		                </p>
 		                <p class="text-sm">Project Leader
-		                  <b class="d-block">Tony Chicken</b>
+		                  <b class="d-block">${reqVo.plId }</b>
 		                </p>
 		              </div>
-		
-		              <h5 class="mt-5 text-muted">Project files</h5>
+						
+					<!-- 파일 목록 -->
+		              <h5 class="mt-5 text-muted">요구사항 정의서 파일</h5>
 		              <ul class="list-unstyled">
 		                <li>
 		                  <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
