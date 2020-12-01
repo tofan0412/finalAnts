@@ -79,8 +79,7 @@
 				<div>
 					<h2 class="jg" style="line-height: 25px;">Ants에 오신 걸 환영합니다 !</h2>
 					<h4 class="jg">
-						새로 오신 분인가요 ? <a href="/member/memberRegistview" style="color: #0BB783;"><strong>새
-								계정을 만드세요.</strong></a>
+						새로 오신 분인가요 ? <a href="/member/memberRegistview" style="color: #0BB783;"><strong>새계정을 만드세요.</strong></a>
 					</h4>
 				</div>
 				<br>
@@ -90,11 +89,9 @@
 						<header class="jg" style="font-size: 1.2em;">
 							Email<br>
 						</header>
-						<input type="email" class="form-control login" name="memId"
-							value="hsj@thousandOfAnts.com"
-							style="border : 0; outline : 0;">
+						<input type="email" class="form-control login" name="memId" value="hsj@thousandOfAnts.com" style="border : 0; outline : 0;">
 					</div>
-			
+					
 					<div class="form-group has-feedback">
 						<div>
 							<header class="jg" style="font-size: 1.2em; float : left;">
@@ -102,19 +99,18 @@
 							</header>
 						</div>
 						<div>
-							<header class="jg" style="font-size: 1.0em; float : right; 
-							color: #0BB783;">
+							<header class="jg" style="font-size: 1.0em; float : right; color: #0BB783;">
 								<a id="myBtn">비밀번호를 잊으셨나요?</a><br>
 							</header>
 						</div>
-						<input type="password" class="form-control login" name="memPass" value="123"
-						style="border : 0; outline : 0;">
+						<input type="password" class="form-control login" name="memPass" value="123" style="border : 0; outline : 0;">
 					</div>
 
 					<div class="row">
 						<div class="col-sm-8">
 							<div class="checkbox icheck">
-								<label> <input type="checkbox" id="rememberMe" name="rememberMe" value=""> 아이디 기억하기
+								<label> 
+									<input type="checkbox" id="rememberMe" name="rememberMe" value=""> 아이디 기억하기
 								</label>
 							</div>
 						</div>
@@ -150,7 +146,16 @@
           <h4>비밀번호가 생각나지 않으시나요?</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-        
+  <div class="panel-group" id="accordion">
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><li>이메일로 찾기</li></a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div class="panel-body">
         
           <form role="form" action="/member/mailsender" >
           
@@ -163,13 +168,26 @@
           <button type="submit" data-dismiss="modal">취소</button>
           </form>
           
-          <br>
-          <hr>
-          <br>
+        </div>
+      </div>
+    </div>
+  
+  
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><li>전화번호로 찾기</li></a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">
           
           <form role="form" action="/member/sendSms" >
           
             <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> 아이디를 입력해주세요</label>
+              <input type="text" name="memId" class="form-control" id="memId" placeholder="Enter phone number">
+              
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> 전화번호를 입력해주세요</label>
               <input type="text" name="memTel" class="form-control" id="memTel" placeholder="Enter phone number">
             </div>
@@ -177,6 +195,23 @@
            <button type="submit" >확인</button>
           <button type="submit" data-dismiss="modal">취소</button>
           </form>
+        
+        </div>
+      </div>
+    </div>
+    
+  </div> 
+        
+        
+          
+          <br>
+          <hr>
+          <br>
+          
+          
+          
+          
+          
           
           
         </div>

@@ -28,8 +28,9 @@
 		
 		<form id="passup" action="/member/passupdate">
 			<input type="text" id="memId" name="memId" value="${memId}" style="display:none"><br>
-			<label class="lic">코드</label> <input type="text" class="ke" id="keyval"><br>
-			<label class="lic">새로 변경할 비밀번호</label> <input type="text" id="newpass1" name="memPass"><br>
+			<input type="text" class="ke" id="keyval" style="display:none"><br>
+			
+			<label class="lic">새로 변경할 비밀번호</label> <input type="text" id="newpass1" name="memPass" value="${memPass}"><br>
 			<label class="lic">새로 변경할 비밀번호 확인 </label> <input type="text" id="newpass2" name="newpass2"><br><br>
 		</form>
 		
@@ -41,24 +42,16 @@
 <script>
 $(document).ready(function(){
 	$("#sub").on('click', function(){
- 		var uid = document.getElementById('uid');
- 		var keyval = document.getElementById('keyval');
 		
-		if(uid.value==keyval.value){
-			var newpass1 = document.getElementById('newpass1');
-			var newpass2 = document.getElementById('newpass2');
+		var newpass1 = document.getElementById('newpass1');
+		var newpass2 = document.getElementById('newpass2');
 			
-			if(newpass1.value == newpass2.value){
-				$('#passup').submit();	
-			}else{
-				alert("비밀번호가 일치하지 않습니다.")
-			}
-			
+		if(newpass1.value == newpass2.value){
+			$('#passup').submit();	
 		}else{
-			alert('코드값이 일치하지 않습니다.')
+			alert("비밀번호가 일치하지 않습니다.")
 		}
-		
-	
+			
 	});
 });
 

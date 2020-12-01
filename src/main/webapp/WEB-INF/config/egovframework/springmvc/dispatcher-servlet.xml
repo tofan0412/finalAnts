@@ -5,7 +5,9 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
-	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
@@ -117,11 +119,14 @@
 		<property name="order" value="0"></property>
 	</bean>
 	
+	<!-- 웹소켓 관련 설정 -->
+	<bean id="echoHandler" class="ants.com.chatting.ws.EchoHandler"></bean>
+		
 	<websocket:handlers>
-		<websocket:mapping handler="echoHandler" path="/echo" />
+		<websocket:mapping handler="echoHandler" path="/echo"/>
 		<websocket:sockjs />
 	</websocket:handlers>
-    
-    <bean id="echoHandler" class="ants.com.chatting.ws.EchoHandler"></bean>
-
+	
+	<!-- 처리할 수 없는 경우, serlvet 기본 핸들러가 처리한다. -->
+    <mvc:default-servlet-handler/>
 </beans>
