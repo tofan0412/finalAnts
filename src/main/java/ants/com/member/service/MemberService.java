@@ -1,5 +1,7 @@
 package ants.com.member.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ants.com.member.mapper.MemberMapper;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectVo;
 
 @Service("memberService")
 public class MemberService{
@@ -32,6 +35,11 @@ public class MemberService{
 		logger.debug("memberService updatePass : {}", memberVo);
 		return mapper.updatePass(memberVo);
 	}
-		
+	
+	public List<MemberVo> getAllMember(){
+		return mapper.getAllMember();
+	}
+
+	
 	
 }

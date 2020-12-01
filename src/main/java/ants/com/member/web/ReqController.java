@@ -2,34 +2,25 @@ package ants.com.member.web;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 
 import javax.annotation.Resource;
-import javax.enterprise.inject.New;
-import javax.jws.WebParam.Mode;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ReqVo;
+import ants.com.member.service.MemberService;
 import ants.com.member.service.ReqService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -40,6 +31,9 @@ public class ReqController {
 
 	@Resource(name = "reqService")
 	private ReqService reqService;
+	
+	@Resource(name = "memberService")
+	private MemberService memberService;
 
 	/**
 	 * 요구사항정의서 목록을 조회한다
@@ -180,9 +174,11 @@ public class ReqController {
 	@RequestMapping(value = "/json", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String json(Locale locale, Model model) {	
-		String[] array = {"김치 볶음밥", "신라면", "진라면", "라볶이", "팥빙수","너구리","삼양라면","안성탕면","불닭볶음면","짜왕","라면사리"};
-//		Gson gson = new Gson();
-	    return "jsonView";
+		List<MemberVo> memList = reqService.getAllMember(); 
+		logger.debug("멤버리스트  : {}",memList);
+		Gson gson = new Gson();
+		
+	    return gson.toJson(memList);
 
 	}
 

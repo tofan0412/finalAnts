@@ -26,11 +26,16 @@ $(function(){
 </script>
 
 <style type="text/css">
-	.sort{
+	label{
 	
-		width : 120px;
+		width : auto;
 		height : 30px;
+		font-size: 1.2em;
 	}
+/* 	.col-sm-2{ */
+/* 		font-size: 1.3em; */
+/* 		font-weight: bold; */
+/* 	} */
 </style>
 
 </head>
@@ -46,34 +51,33 @@ $(function(){
 	  <div class="card-body">
 <!-- 		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 			<h3>협업이슈 상세내역</h3>
+			<br>
 			
-			<table>
-				<tr>
-					<td class="sort">작성자  </td> 			
-					<td>${issuevo.memId }</td> 						
-				</tr>
-				<tr>
-					<td class="sort" >이슈제목 </td> 			
-					<td>${issuevo.issueTitle}</td> 						
-				</tr>
-				<tr>
-					<td class="sort">작성일  </td> 			
-					<td>${issuevo.regDt }</td> 						
-				</tr>
-				<tr>
-					<td class="sort">이슈 내용  </td> 			
-					<td>${issuevo.issueCont }</td> 						
-				</tr>
-				
-			</table>
+			<label for="memId" class="col-sm-2 control-label">작성자</label>
+			<label id ="memId" class="control-label">${issuevo.memId }</label>
 			
-				<p>파일 : (파일 존재시 다운로드)  </p>
-				<p><input type="button" value="다운로드" id="filedown"></p>
-				
-				<c:if test="${issuevo.memId == memId}">
-					<input type= "button" value="수정하기" id ="modissue">
-					<input type= "button" value="삭제하기" id="delissue" >			
-				</c:if>
+			<br>
+			<label for="regDt" class="col-sm-2 control-label">작성일</label>
+			<label id ="regDt" class="control-label">${issuevo.regDt }</label>
+			
+			<br>
+			<label for="issueTitle" class="col-sm-2 control-label">이슈제목</label>
+			<label id ="issueTitle" class="control-label">${issuevo.issueTitle}</label>
+			
+			
+			<br>
+			<label for="issueCont" class="col-sm-2 control-label">이슈 내용</label>
+			<label id ="issueCont" class="control-label">${issuevo.issueCont }</label>
+			
+			<br><br>
+			<p>파일 : (파일 존재시 다운로드)  </p>
+			<p><input type="button" value="다운로드" id="filedown" class="btn btn-default"></p>
+			
+			<br>
+			<c:if test="${issuevo.memId == memId}">
+				<input type= "button" value="수정하기" id ="modissue" class="btn btn-default">
+				<input type= "button" value="삭제하기" id="delissue"  class="btn btn-default">			
+			</c:if>
 				
 
 

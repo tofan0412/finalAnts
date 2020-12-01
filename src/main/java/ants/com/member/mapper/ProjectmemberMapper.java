@@ -4,6 +4,7 @@ import java.util.List;
 
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.member.model.ProjectVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("promemMapper")
@@ -30,4 +31,7 @@ public interface ProjectmemberMapper {
 	
 	// 회원이 사용가능한 카테고리 조회
 	public int issuePagingListCnt(IssueVo issueVo);
+	
+	//프로젝트명 불러오기
+	public List<ProjectVo> memInProjectList(String memId);
 }

@@ -46,36 +46,36 @@
 <div class="col-12 col-sm-9">
 	<div class="card card-teal ">
 	  <div class="card-body">
-<div style="padding-left: 30px;">
-	<h3>협업이슈 작성하기</h3>
-	<br>
-	<form method="post" action="${pageContext.request.contextPath}/projectMember/insertissue" id="todoform"  >	
-		<label for="issueTitle" class="col-sm-2 control-label">이슈제목 </label>
-		<input type="text" name="issueTitle" style="width: 580px;" id="issueTitle"><br><br>
+		<div style="padding-left: 30px;">
+			<h3>협업이슈 작성하기</h3>
+			<br>
+			<form method="post" action="${pageContext.request.contextPath}/projectMember/insertissue" id="todoform"  >	
+				<label for="issueTitle" class="col-sm-2 control-label">이슈제목 </label>
+				<input type="text" name="issueTitle" style="width: 580px;" id="issueTitle"><br><br>
+				
+				<div style="width: 80%;">
+				<label for="todoCont" class="col-sm-2 control-label">이슈 내용</label>
+				<textarea id="summernote" name="issueCont" id="issueCont"></textarea>
+				</div>
+				<br><br>
+				
+				<label for="file" class="col-sm-2 control-label">첨부파일</label>
+				<div id ="file" class="col-sm-10">
+				<input type="button" id="add" value="+"> <br>
+					<input type="file" id="file1" name="file1" >
+					<input type="hidden" id="file2" name="file2" >											
+					<input type="hidden" id="file3" name="file3" >											
+					<input type="hidden" id="file4" name="file4" >											
+					<input type="hidden" id="file5" name="file5" >											
+				</div>
 		
-		<div style="width: 80%;">
-		<label for="todoCont" class="col-sm-2 control-label">이슈 내용</label>
-		<textarea id="summernote" name="issueCont" id="issueCont"></textarea>
+				
+				
+				<input type="text" value="issue" name="issueKind">		
+				<input type="text" value="3" name="categoryId">
+				<input type="submit" class="btn btn-default" id="insertbtn" value="작성하기"> 
+			</form>
 		</div>
-		<br><br>
-		
-		<label for="file" class="col-sm-2 control-label">첨부파일</label>
-		<div id ="file" class="col-sm-10">
-		<input type="button" id="add" value="+"> <br>
-			<input type="file" id="file1" name="file1" >
-			<input type="hidden" id="file2" name="file2" >											
-			<input type="hidden" id="file3" name="file3" >											
-			<input type="hidden" id="file4" name="file4" >											
-			<input type="hidden" id="file5" name="file5" >											
-		</div>
-
-		
-		
-		<input type="text" value="issue" name="issueKind">		
-		<input type="text" value="3" name="categoryId">
-		<input type="submit" class="btn btn-default" id="insertbtn" value="작성하기"> 
-	</form>
-</div>
 	   </div>
 	 </div>      
 </div>

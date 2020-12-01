@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <aside class="main-sidebar sidebar-light-teal elevation-4">
 	<!-- Brand Logo -->
 	<a href="/index3.html" class="brand-link"> 
@@ -45,8 +46,6 @@
                 </a>
               </li>
              
-				
-	
 							<!-- PL or PM일경우!!조건걸어서  -->
 							<!-- 						<li class="nav-item"><a href="#" class="nav-link"> <i -->
 							<!-- 								class="nav-icon far fa-copy"></i> -->
@@ -92,22 +91,13 @@
 						<p>진행중인 프로젝트<i class="fas fa-angle-left right"></i></p></a>
 						
 			        <ul class="nav nav-treeview" style="display: block;">
-			        <!-- 프로젝트 목록 불러오기 -->
-			        	<li class="nav-item">
-			        	<a href="${pageContext.request.contextPath}/todo/projectgetReq" class="nav-link">
-			            <i class="nav-icon fas fa-layer-group"></i>
-						<p>test</p></a></li>
-			        	<li class="nav-item">
-			        	<a href="#" class="nav-link">
-			            <i class="nav-icon fas fa-layer-group"></i>
-						<p>프로젝트명</p></a></li>
+			        <c:forEach items="${projectList}" var="project">
+			        <li class="nav-item">
+					<a href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+					 <i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p></a></li>
+					</c:forEach>
 					</ul>
 				</li>
-				
-				
-				
-				
-			
 			</ul>
 		</nav>
 		<!-- /.sidebar-menu -->
