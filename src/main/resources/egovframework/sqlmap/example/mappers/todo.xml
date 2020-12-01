@@ -121,7 +121,7 @@
 		#{todoTitle},
 		'0',
 		#{todoImportance},
-		'1',
+		#{todoLevel},
 		#{reqId},
 		#{memId},
 		#{todoParentid, jdbcType=VARCHAR},

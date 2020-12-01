@@ -66,7 +66,13 @@
 		<input type='date' id='todo_end' name="todoEnd"/><br><br>
 		
 		<c:if test="${todoVo.todoParentid ne null}">
-		<input type="hidden" name="todoParentid" value="${todoVo.todoParentid}"></c:if>
+		<input type="hidden" name="todoParentid" value="${todoVo.todoParentid}">
+		<input type="hidden" name="todoLevel" value="2">		
+		</c:if>
+		<c:if test="${todoVo.todoParentid eq null}">
+		<input type="hidden" name="todoLevel" value="1">		
+		</c:if>
+		
 		
 		<button type="button" class="btn btn-default" id="regBtn">등록</button>
 	</form>
