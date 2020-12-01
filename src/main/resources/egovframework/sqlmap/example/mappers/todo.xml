@@ -10,8 +10,8 @@
 		<![CDATA[
 	SELECT
 	    todo.todo_id,
-	    todo.todo_start,
-	    todo.todo_end,
+	    ABS(TO_DATE(TO_CHAR(todo.todo_start, 'YYYYMMDD')) - To_date(to_char(SYSDATE,'yyyymmdd'))) as todo_start,
+	    TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) - To_date(to_char(todo.todo_end,'yyyymmdd'))as todo_end,
 	    todo.todo_cont,
 	    todo.todo_title,
 	    todo.todo_percent,

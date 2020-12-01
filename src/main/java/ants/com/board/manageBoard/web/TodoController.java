@@ -64,6 +64,7 @@ public class TodoController {
 		String reqId = (String) session.getAttribute("reqId");
 		todoVo.setReqId(reqId);
 		List<TodoVo> todoList = manageBoardService.getTodoList(todoVo);
+		logger.debug("todododododo:{}",todoList);
 		model.addAttribute("todoList", todoList);
 		return "tiles/manager/Pl_todoList";
 	}
@@ -85,24 +86,27 @@ public class TodoController {
 
 	// 일감 수정 화면 출력
 	@RequestMapping("/updatetodoView")
-	public String todoupdateView() {
-		return "tiles/manager/Pl_todoUpdateView";
-	}
-
-	// 일감 수정
-	@RequestMapping("/updatetodo")
-	public String todoupdate(TodoVo todoVo, Model model) {
-		int dbtodoVo = manageBoardService.todoupdate(todoVo);
+	public String todoupdateView(Model model, TodoVo todoVo) {
+		TodoVo dbtodoVo = manageBoardService.getTodo(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
 		return "tiles/manager/Pl_todoUpdateView";
 	}
 
+	// 일감 수정
+//	@RequestMapping("/updatetodo")
+//	public String todoupdate(TodoVo todoVo, Model model) {
+//		int dbtodoVo = manageBoardService.todoupdate(todoVo);
+//		model.addAttribute("todoVo", dbtodoVo);
+//		return "tiles/manager/Pl_todoUpdateView";
+//	}
+
 	// 일감 삭제
 	@RequestMapping("/deletetodo")
-	public String tododelete(TodoVo todoVo, Model model) {
+	public String tododelete(TodoVo todoVo, Model model, HttpSession session) {
+		String reqId = (String) session.getAttribute("reqId");
 		int delTodoCnt = manageBoardService.tododelete(todoVo);
 		if (delTodoCnt > 0) {
-			return "redirect:/todo/todoList?reqId=" + todoVo.getReqId();
+			return "redirect:/todo/todoList?reqId=" + reqId;
 		} else {
 			return "redirect:/todo/updatetodoView?todoId=" + todoVo.getTodoId();
 		}

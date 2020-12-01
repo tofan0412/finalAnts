@@ -79,11 +79,12 @@
 				<div>
 					<h2 class="jg" style="line-height: 25px;">Ants에 오신 걸 환영합니다 !</h2>
 					<h4 class="jg">
-						새로 오신 분인가요 ? <a href="#" style="color: #0BB783;"><strong>새
+						새로 오신 분인가요 ? <a href="/member/memberRegistview" style="color: #0BB783;"><strong>새
 								계정을 만드세요.</strong></a>
 					</h4>
 				</div>
 				<br>
+				
 				<form id="lform" action="/member/loginFunc" method="POST">
 					<div class="form-group has-feedback">
 						<header class="jg" style="font-size: 1.2em;">
@@ -113,8 +114,7 @@
 					<div class="row">
 						<div class="col-sm-8">
 							<div class="checkbox icheck">
-								<label> <input type="checkbox" id="rememberMe"
-									name="rememberMe" value=""> 아이디 기억하기
+								<label> <input type="checkbox" id="rememberMe" name="rememberMe" value=""> 아이디 기억하기
 								</label>
 							</div>
 						</div>
@@ -123,8 +123,7 @@
 						<br>
 						<br>
 							<div style="float : right;">
-								<button type="button" id="loginBtn" class="jg loginBtn"
-								style="width : 100px;">로그인</button>
+								<button type="button" id="loginBtn" class="jg loginBtn" style="width : 100px;">로그인</button>
 							</div> 
 						</div>
 						<!-- /.col -->
@@ -139,9 +138,6 @@
 	
 	
 	<div class="container">
-  <h2>Modal Login Example</h2>
-  <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-default btn-lg" id="myBtn">Login</button>
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -197,6 +193,36 @@
 	  $("#myBtn").click(function(){
 	    $("#myModal").modal();
 	  });
+	  
+	  
+	  
+	   // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
+	    $("#rememberMe").attr("checked", true);
+	    var key = getCookie("key");
+	    $("#userid").val(key); 
+	     
+		
+	    if($("#userid").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
+	        $("#rememberMe").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
+	    }
+	    
+	     
+	    $("#rememberMe").change(function(){ // 체크박스에 변화가 있다면,
+	        if($("#rememberMe").is(":checked")){ // ID 저장하기 체크했을 때,
+	            setCookie("key", $("#userid").val(), 7); // 7일 동안 쿠키 보관 
+	        }else{ // ID 저장하기 체크 해제 시,
+	            deleteCookie("key");
+	        }
+	    });
+	    
+	    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
+	    $("#userid").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+	        if($("#rememberMe").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+	            setCookie("key", $("#userid").val(), 7); // 7일 동안 쿠키 보관 
+	        }
+	    });
+	    
+	    
 	});
 	
 	$(document).ready(function(){

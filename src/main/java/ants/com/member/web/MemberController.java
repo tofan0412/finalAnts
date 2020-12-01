@@ -9,7 +9,6 @@ import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.json.JsonObject;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -20,8 +19,8 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 
-import org.hibernate.validator.constraints.Email;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ants.com.member.model.MemberVo;
 import ants.com.member.service.MemberService;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import static javax.swing.JOptionPane.*;
 
 @MultipartConfig
 @RequestMapping("/member")
@@ -82,16 +82,18 @@ public class MemberController {
 			}
 
 		} else {
-			return "redirect:member/login";
+			JOptionPane.showMessageDialog(null, "계정정보가 잘못 입력 되었습니다.");
+			return viewlogin();
 		}
-
 	}
-
+	
+	
+	
 	// 회원가입 페이지 이동
 	@RequestMapping(path = "/memberRegistview", method = RequestMethod.GET)
 	public String getView() {
 		logger.debug("memberRegist-Controller.getView()");
-		return "member/memberRegist";
+		return "main.tiles/member/memberRegist";
 	}
 
 	// 회원가입 로직
@@ -127,7 +129,7 @@ public class MemberController {
 		logger.debug("insertCnt : {}", insertCnt);
 
 		if (insertCnt == 1) {
-			return "main";
+			return "main.tiles/main";
 		} else {
 			return "redirect:member/memberRegist";
 		}
@@ -201,7 +203,7 @@ public class MemberController {
 		mimeMessage.setText(body); // 내용셋팅
 		Transport.send(mimeMessage); // javax.mail.Transport.send() 이용 }
 
-		return "tiles/member/memberPassmodified";
+		return "main.tiles/member/memberPassmodified";
 	}
 	
 	
@@ -218,9 +220,9 @@ public class MemberController {
 			return mainView();
 		} else {					// 수정하는 정보에 전화번호가 없으면   메일 수정창으로 복귀
 			if (memberVo.getMemTel().equals(null) || memberVo.getMemTel().equals("")) {
-				return "member/memberPassmodified";
+				return "main.tiles/member/memberPassmodified";
 			}else {		// 수정하는 정보에 전화번호가 있으면 전화번호 수정창으로 복귀
-				return "member/memberPassmodified2";
+				return "main.tiles/member/memberPassmodified2";
 			}
 		}
 	}
@@ -356,7 +358,7 @@ public class MemberController {
 			System.out.println(e.getCode());
 		}
 		
-		return "member/memberPassmodified2";
+		return "main.tiles/member/memberPassmodified2";
 	}
 
 

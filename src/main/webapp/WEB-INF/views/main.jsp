@@ -85,7 +85,7 @@
 			<div id="main-left-bottom">이메일이 필요없는 간편한 소통과 파일 공유,<br>빠른 피드백 확인까지.<br>바라던 기능들을 모두 담았습니다.</div>
 			
 			<div id="main-left-button">
-				<button>도입 문의</button>&nbsp;&nbsp;&nbsp;&nbsp;<button>회원가입</button>
+				<button>도입 문의</button>&nbsp;&nbsp;&nbsp;&nbsp; <a href="/member/memberRegistview" style="color: #0BB783;"><button>회원가입</button></a>
 			</div>
 		</div>
 		
