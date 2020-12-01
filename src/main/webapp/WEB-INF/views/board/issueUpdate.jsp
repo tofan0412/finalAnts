@@ -36,7 +36,16 @@
 		          ['insert', ['link', 'picture', 'video']],
 		          ['view', ['fullscreen', 'codeview', 'help']]
 		        ]	      
-		      })		
+		 })
+		 
+		$("#kindselect option").each(function() {
+			var $this = $(this);		
+			if($this.val() == '${issueVo.issueKind }')				
+			$this.prop('selected', 'selected');
+		});
+		 
+		 
+		      
  	});
 	
 </script>
@@ -46,41 +55,42 @@
 <div class="col-12 col-sm-9">
 	<div class="card card-teal ">
 	  <div class="card-body">
-<div style="padding-left: 30px;">
-	<h3>협업이슈 수정하기</h3>
-	<br>
-	<form method="post" action="${pageContext.request.contextPath}/projectMember/updateissue" id="todoform"  >	
-		<label for="issueTitle" class="col-sm-2 control-label">이슈제목 </label>
-		<input type="text" name="issueTitle" style="width: 580px;" value="${issueVo.issueTitle }" id="issueTitle"><br><br>
+		<div style="padding-left: 30px;">
+			<h3>협업이슈 수정하기</h3>
+			<br>
+			<form method="post" action="${pageContext.request.contextPath}/projectMember/updateissue" id="todoform"  >	
+			
+				<label for="issueTitle" class="col-sm-2 control-label">이슈종류 </label>
+				<select name="issueKind" id="kindselect">
+				    <option value="issue">이슈</option>
+				    <option value="notice">공지사항</option>
+				</select><br><br>
+				<label for="issueTitle" class="col-sm-2 control-label">이슈제목 </label>
+				<input type="text" name="issueTitle" style="width: 580px;" value="${issueVo.issueTitle }" id="issueTitle"><br><br>
+				
+				<div style="width: 80%;">
+				<label for="todoCont" class="col-sm-2 control-label">이슈 내용</label>
+				<textarea id="summernote" name="issueCont" id="issueCont">${issueVo.issueCont }</textarea>
+				</div>
+				<br><br>
+				
+				
+				<label for="file" class="col-sm-2 control-label">첨부파일</label>
+				<div id ="file" class="col-sm-10">
+				<input type="button" id="add" value="+"> <br>
+					<input type="file" id="file1" name="file1" >
+					<input type="hidden" id="file2" name="file2" >											
+					<input type="hidden" id="file3" name="file3" >											
+					<input type="hidden" id="file4" name="file4" >											
+					<input type="hidden" id="file5" name="file5" >											
+				</div>
 		
-		<div style="width: 80%;">
-		<label for="todoCont" class="col-sm-2 control-label">이슈 내용</label>
-		<textarea id="summernote" name="issueCont" id="issueCont">${issueVo.issueCont }</textarea>
+				
+				 <input type="hidden" value="${issueVo.issueId }" name="issueId">
+				<input type="hidden" name="categoryId" value="${issueVo.categoryId }">
+				<input type="submit" class="btn btn-default" id="updateBtn" value="수정하기">
+			</form>
 		</div>
-		<br><br>
-		
-		<label for="issueTitle" class="col-sm-2 control-label">이슈종류 </label>
-		<select name="issueKind" id="status-select">
-		    <option value="issue">이슈</option>
-		    <option value="notice">공지사항</option>
-		</select><br><br>
-		
-		<label for="file" class="col-sm-2 control-label">첨부파일</label>
-		<div id ="file" class="col-sm-10">
-		<input type="button" id="add" value="+"> <br>
-			<input type="file" id="file1" name="file1" >
-			<input type="hidden" id="file2" name="file2" >											
-			<input type="hidden" id="file3" name="file3" >											
-			<input type="hidden" id="file4" name="file4" >											
-			<input type="hidden" id="file5" name="file5" >											
-		</div>
-
-		
-		 <input type="hidden" value="${issueVo.issueId }" name="issueId">
-		<input type="hidden" name="categoryId" value="${issueVo.categoryId }">
-		<input type="submit" class="btn btn-default" id="updateBtn" value="수정하기">
-	</form>
-</div>
 	   </div>
 	 </div>      
 </div>
