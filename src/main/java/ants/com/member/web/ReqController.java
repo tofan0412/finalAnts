@@ -73,6 +73,15 @@ public class ReqController {
 
 		return "tiles/member/reqList";
 	}
+	
+	@RequestMapping(value="/reqDetail")
+	public String reqDetail(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
+		reqVo = reqService.getReq(reqVo);
+		model.addAttribute("reqVo", reqVo);
+		logger.debug("요구사항 상세정보 :{}",reqVo);
+		
+		return "tiles/member/reqDetail";
+	}
 
 	/**
 	 * 요구사항정의서 등록화면을 조회한다
@@ -173,8 +182,9 @@ public class ReqController {
 	
 	@RequestMapping(value = "/json", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String json(Locale locale, Model model) {	
-		List<MemberVo> memList = reqService.getAllMember(); 
+	public String json(Locale locale, Model model, String term) {	
+		logger.debug("term:{}",term);
+		List<MemberVo> memList = reqService.getAllMember(term); 
 		logger.debug("멤버리스트  : {}",memList);
 		Gson gson = new Gson();
 		

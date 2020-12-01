@@ -13,6 +13,13 @@
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<style type="text/css">
+/* bootstrap모달창에서 autocomplete 안먹을 때 설정 */
+  .ui-autocomplete {
+  	z-index:2147483647;
+  }
+
+</style>
 
 </head>
 <title>협업관리프로젝트</title>
@@ -75,13 +82,13 @@
 			                      	  <input type="hidden" id="${req.reqId }" name="${req.reqId }">
 			                      </td>
 			                      <td>${req.reqTitle }</td>
-			                      <td>${req.reqPeriod }</td>
+			                      <td>${req.reqPeriod }일</td>
 		                    	  <td style="text-align: center;">
 		                    	  	<c:choose>
 			                      	  <c:when test="${req.plId==null }">
-			                      	  	<a class="btn btn-info btn-sm" data-toggle="modal" data-target="#addpl">
-			                              <i class="fas fa-plus"></i>
-			                              PL등록
+			                      	  	<a class="btn btn-default btn-sm" data-toggle="modal" data-target="#addpl">
+			                              <i class="fas fa-envelope"></i>
+			                               PL등록
 			                          	</a>
 			                      	  </c:when>
 			                      	  <c:otherwise>${req.plId }</c:otherwise>
@@ -94,17 +101,17 @@
 			                      	  <c:when test="${req.status eq '수락' }"><span class="badge badge-success">${req.status }</span></c:when>
 			                      	</c:choose>
 			                      <td class="project-actions text-right" style="opacity: .9;">
-			                          <a class="btn btn-primary btn-sm" href="#">
+			                          <a class="btn btn-primary btn-sm" href="javascript:reqDetail(${req.reqId });">
 			                              <i class="fas fa-folder"></i>
-			                              View
+			                              	보기
 			                          </a>
 			                          <a class="btn btn-info btn-sm" href="javascript:reqUpdate(${req.reqId });">
 			                              <i class="fas fa-pencil-alt"></i>
-			                              Edit
+			                               	수정
 			                          </a>
 			                          <a class="btn btn-danger btn-sm" href="javascript:reqDelete(${req.reqId });">
 			                              <i class="fas fa-trash"></i>
-			                              Delete
+			                              	삭제
 			                          </a>
 			                      </td>
 			                    </tr>
@@ -124,8 +131,9 @@
         		  </div>
         		  
         		  <div class="card-footer clearfix">
-        		  	
-	                <button type="button" class="btn btn-default float-right" onclick="fn_egov_reqInsert()"><i class="fas fa-plus"></i>등 록</button>
+	                <a class="btn btn-app float-right" href="javascript:fn_egov_reqInsert();">
+                  		<i class="fas fa-edit"></i> 작성하기
+                	</a>
 	              </div>
         		  
 	              <!-- /.card-body -->
@@ -136,7 +144,7 @@
 	
 	<!-- PL등록 모달창 -->
 	<div class="modal fade" id="addpl" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-	  <div class="modal-dialog modal-xl" role="document">
+	  <div class="modal-dialog modal-lg" role="document">
 	    <div class="modal-content" style="height: 500px;">
 	      <div class="modal-header">
 	        <h3 class="modal-title jg" id="addplLable">팀원에게 프로젝트관리를 요청해보세요!</h3>
@@ -146,12 +154,12 @@
 	      	<form:form commandName="memberVo" id="addplForm" name="addplForm" method="post">
 	          <div class="col-md-6" style="float: left">
 	            <label for="recipient-name" class="control-label">이메일:</label>
-	            <input type="text" class="form-control" id="plId" name="memId">
+	            <input type="text" class="form-control" id="searchInput" name="memId"> <!-- searchInput id에 -->
 	          </div>
 	        </form:form>
 	        
-	        <div class="col-md-5" style="float: right">
-	          <img alt="" src="/dist/img/addpl.png" style="width: 100%; margin-right: 3%;">
+	        <div class="col-md-6" style="float: right">
+	          <img alt="" src="/dist/img/addpl.png" style="width: 100%; margin-right: 4%;">
 	        </div>
 	        
 	      </div>
@@ -163,78 +171,62 @@
 	  </div>
 	</div>
 	
-	<input id="searchInput">
-	
-		
 	
 <script type="text/javascript">
 	
-	$(function() {	//화면 다 뜨면 시작
+	$(function() {	
+		// 해당 id에서 값이 입력되면 실행
 		$("#searchInput").autocomplete({
+			//자동완성 대상
 			source : function( request, response ) {
 	             $.ajax({
 	                    type: 'get',
 	                    url: "/req/json",
-	                    dataType: "json",
-	                    //request.term = $("#autocomplete").val()
-	                   	//data: {"param":"param"},
+	                    dataType : "json",
+	                    //검색데이터 보내기
+	                    data : request,
 	                    success: function(data) {
 	                        //서버에서 json 데이터 response 후 목록에 추가
 	                        response(
-	                            $.map(data, function(item) {	//json[i] 번째 에 있는게 item 임.
+	                            $.map(data, function(item) {
 	                                return {
-	                                    label: item+"label",	//UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
-	                                    value: item,	//그냥 사용자 설정값?
-	                                    test : item+"test"	//이런식으로 사용
+	                                    label   : item.memId ,	//UI에서 표시되는 값
+	                                    value   : item.memId ,	//선택시 input태그에 표시되는 값
+	                                    memName : item.memName  //사용자 설정값으로 담을 수 도 있다. 
 	
-	                                    //[
-					    //    {"name": "하늘이", "dogType": "푸들", "age": 1, "weight": 2.14},
-					    //    {"name": "콩이", "dogType": "푸들", "age": 3, "weight": 2.5},
-					    //    {"name": "람이", "dogType": "허스키", "age": 7, "weight": 3.1}
-					    //]
-	                                    // json이 다음 처럼 넘어오면
-	                                    // 상황 : name으로 찾고 dogType을 넘겨야 하는 상황이면 
-	                                    // label : item.dogType ,	//오토컴플릿이 되고 싶은 단어 
-	                                    // value : item.family ,	//넘겨야 하는 단어
-	                                    // age : item.age ,
-	                                    // weight : item.weight
 	                                }
 	                            })
 	                        );
 	                    }
 	               });
-	            },	// source 는 자동 완성 대상
+	            },	
 			select : function(event, ui) {	//아이템 선택시
 				console.log(ui);//사용자가 오토컴플릿이 만들어준 목록에서 선택을 하면 반환되는 객체
-				console.log(ui.item.label);	//김치 볶음밥label
-				console.log(ui.item.value);	//김치 볶음밥
-				console.log(ui.item.test);	//김치 볶음밥test
+				console.log(ui.item.label);	
+				console.log(ui.item.value);	
+				console.log(ui.item.test);	
 				
 			},
-			focus : function(event, ui) {	//포커스 가면
+			focus : function(event, ui) {	
 				return false;//한글 에러 잡기용도로 사용됨
 			},
 			minLength: 1,// 최소 글자수
 			autoFocus: true, //첫번째 항목 자동 포커스 기본값 false
-			classes: {	//잘 모르겠음
+			classes: {	
 			    "ui-autocomplete": "highlight"
 			},
-			delay: 500,	//검색창에 글자 써지고 나서 autocomplete 창 뜰 때 까지 딜레이 시간(ms)
-	//		disabled: true, //자동완성 기능 끄기
-			position: { my : "right top", at: "right bottom" },	//잘 모르겠음
-			close : function(event){	//자동완성창 닫아질때 호출
-				console.log(event);
+			delay: 100,	//검색창에 글자 써지고 나서 autocomplete 창 뜰 때 까지 딜레이 시간(ms)
+		  //disabled: false, //자동완성 기능 끄기
+			position: { my : "right top", at: "right bottom" },	
+			close : function(event, ui){	//자동완성창 닫아질때 호출
+				
+				//checkmemId();
 			}
-		});
+		})
 		
 	});
 
-
-
-
-	
-
-	/* 요구사항정의서 삭제하기*/
+	/* 요구사항정의서 삭제하기 */
 	function reqDelete(reqId){
 		if(confirm("삭제한 정보는 복구할 수 없습니다. 정말 삭제하시겠습니까?")){
 			document.location = "/req/reqDelete?reqId="+reqId;
@@ -243,9 +235,14 @@
 		}
 	}
 	
-	/* 요구사항정의서 수정하기*/
+	/* 요구사항정의서 수정하기 */
 	function reqUpdate(reqId){
 	   	document.location = "/req/reqUpdateView?reqId="+reqId;
+	}
+	
+	/* 요구사항정의서 상세보기 */
+	function reqDetail(reqId){
+		document.location = "/req/reqDetail?reqId="+reqId;
 	}
 	
 	/* 글 등록 화면 function */
@@ -260,7 +257,8 @@
 	   	document.listForm.submit();
 	}
 	
-	function memberCheck(){
+	/* 사용자 아이디 체크하기 */
+	function checkmemId(){
 		$.ajax({url  : "/member/memberCheck",
 				data : $('#plForm').serialize(),
 				method : "POST",
@@ -271,9 +269,6 @@
 				}
 		})
 	}
-	
-	
-	
 	
 	// addpl plId,status(대기)로 변경
 	function reqModify(reqVo){
