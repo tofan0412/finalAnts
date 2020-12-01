@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
 import ants.com.board.memBoard.model.IssueVo;
@@ -97,14 +98,21 @@ public class TodoController {
 
 	// 일감 수정
 	@RequestMapping("/updatetodo")
-	public String todoupdate(TodoVo todoVo, Model model) {
+	public String todoupdate(TodoVo todoVo, Model model, @RequestParam(name="changemem", required=false)String changemem) {
+			//인수인계 쿼리짜기!
+//			logger.debug("change:{}",changemem);
+//			if(!changemem.equals(todoVo.getMemId())) {
+//				TodoLogVo todoLogVo = new TodoLogVo();
+//				todoLogVo.setBeforeId(changemem);
+//				todoLogVo.setAfterId(todoVo.getMemId());
+//				int changeCnt = manageBoardService.todoChangeMem(todoLogVo);
+//			}
 		int updateCnt = manageBoardService.todoupdate(todoVo);
 		if (updateCnt > 0) {
 			return "redirect:/todo/todoList?reqId=" + todoVo.getReqId();
 		} else {
 			return "redirect:/todo/updatetodoView?todoId=" + todoVo.getTodoId();
 		}
-	
 	}
 
 	// 일감 삭제

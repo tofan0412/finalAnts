@@ -153,4 +153,7 @@
     todo_id = #{todoId}
     </update>
 	
+	<insert id="todoChangeMem" parameterType="ants.com.board.manageBoard.model.TodoLogVo">
+		
+	</insert>
 </mapper>

@@ -90,6 +90,7 @@
 				        <ul class="nav nav-treeview" style="display: block;">
 				        	<c:forEach items="${projectList}" var="project">
 					        <li class="nav-item">
+<%-- 							<a href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}"> --%>
 							<a href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
 							 <i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p></a></li>
 							</c:forEach>

@@ -2,6 +2,7 @@ package ants.com.board.manageBoard.mapper;
 
 import java.util.List;
 
+import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.member.model.MemberVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
@@ -26,5 +27,8 @@ public interface ManageBoardMapper {
 	
 	// 일감 삭제
 	public int tododelete(TodoVo todoVo);
+	
+	// 인수인계
+	public int todoChangeMem(TodoLogVo todoLogVo);
 	
 }
