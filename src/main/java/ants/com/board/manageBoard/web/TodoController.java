@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
@@ -26,21 +28,28 @@ public class TodoController {
 	// 프로젝트명 클릭시 세션저장
 	@RequestMapping("/projectgetReq")
 	public String projectgetReq(HttpSession session) {
-		session.setAttribute("reqId", "2");
+		session.setAttribute("reqId", "1");
 		return "redirect:/todo/todoList";
 	}
 
 	// 일감 등록 화면 출력 메서드
 	@RequestMapping("/todoInsertView")
-	public String todoInsertView(Model model, TodoVo todoVo) {
+	public String todoInsertView(Model model, TodoVo todoVo, HttpSession session, @RequestParam(name="todoParentid", required=false)String todoParentid) {
+		String reqId = (String) session.getAttribute("reqId");
+		todoVo.setReqId(reqId);
 		List<MemberVo> promemList = manageBoardService.projectMemList(todoVo);
 		model.addAttribute("promemList", promemList);
+		todoVo.setTodoParentid(todoParentid);
+		model.addAttribute("todoVo",todoVo);
 		return "tiles/manager/pl_todoInsertView";
 	}
+	
 
 	// 일감 등록 메서드
 	@RequestMapping("/todoInsert")
-	public String todoInsert(Model model, TodoVo todoVo) {
+	public String todoInsert(Model model, TodoVo todoVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("reqId");
+		todoVo.setReqId(reqId);
 		int todoInsert = manageBoardService.todoInsert(todoVo);
 		if (todoInsert > 0) {
 			return "redirect:/todo/todoList?reqId=" + todoVo.getReqId();
@@ -54,21 +63,17 @@ public class TodoController {
 	public String todoListView(Model model, TodoVo todoVo, HttpSession session) {
 		String reqId = (String) session.getAttribute("reqId");
 		todoVo.setReqId(reqId);
-		logger.debug("req_id:{}", reqId);
 		List<TodoVo> todoList = manageBoardService.getTodoList(todoVo);
 		model.addAttribute("todoList", todoList);
-		logger.debug("todoList:{}", todoList);
 		return "tiles/manager/Pl_todoList";
 	}
 
-	
 
 	// 한개의 일감 조회 메서드
 	@RequestMapping("/onetodoView")
 	public String todoView(Model model, TodoVo todoVo) {
 		TodoVo dbtodoVo = manageBoardService.getTodo(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
-		logger.debug("dbtodoVo:{}",dbtodoVo);
 		return "tiles/manager/Pl_Onetodo";
 	}
 	

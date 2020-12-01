@@ -59,7 +59,7 @@
 	<!-- 팀원 조회 -->
 	<select id="projectMemList"
 		parameterType="ants.com.board.manageBoard.model.TodoVo"
-		resultType="ants.com.board.manageBoard.model.TodoVo">
+		resultType="ants.com.member.model.MemberVo">
 		SELECT
 		member.mem_name,
 		member.mem_id
@@ -69,7 +69,7 @@
 		WHERE
 		member.mem_id = projectmember.mem_id
 		AND projectmember.req_id = #{reqId}
-		AND projectmember.promem_status = 'in'
+		AND projectmember.promem_status = 'Y'
 	</select>
 
 
@@ -99,7 +99,7 @@
 		'1',
 		#{reqId},
 		#{memId},
-		#{todoParentid},
+		#{todoParentid, jdbcType=VARCHAR},
 		'N'
 		)
 	</insert>

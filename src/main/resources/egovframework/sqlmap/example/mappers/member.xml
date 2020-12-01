@@ -27,4 +27,10 @@
 		AND projectmember.req_id = #{reqId}
 		AND projectmember.promem_status = 'in'
 	</select>
+	
+	<update id="updatePass" parameterType="ants.com.member.model.MemberVo">
+		UPDATE MEMBER SET MEM_PASS = #{memPass}
+		WHERE MEM_ID = #{memId}
+	</update>
+	
 </mapper>

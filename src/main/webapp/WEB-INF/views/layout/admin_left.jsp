@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <aside class="main-sidebar sidebar-light-teal elevation-4">
 	<!-- Brand Logo -->
 	<a href="/index3.html" class="brand-link"> 
 	<img src="/dist/img/antslogo.png" class="brand-image "style="float: none; margin: 15px 0px 10px 12px;">
-	<img src="/dist/img/ants.png" style="width: 100px;">
+	<img src="/dist/img/ants.png" style="width: 100px; margin-left: 6px">
 	</a>
 
 	<!-- Sidebar -->
@@ -19,31 +19,35 @@
              <i class="nav-icon fas fa-newspaper"></i>
 						<p>전체정보<i class="fas fa-angle-left right"></i></p>
             </a>
+            
             <ul class="nav nav-treeview" style="display: block;">
               <li class="nav-item">
                 <a href="#" class="nav-link">
                  <i class="nav-icon fas fa-bullhorn"></i>
-					<p>새로운 소식</p>
+					<p>공지사항</p>
                 </a>
               </li>
+              
               <li class="nav-item">
                 <a href="#" class="nav-link">
 				<i class="nav-icon fas fa-bookmark"></i>
 				<p>북마크</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-				<i class="nav-icon far fa-lightbulb"></i>
-				<p>내가작성한 이슈</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
-				<p>전체캘린더</p>
-                </a>
-              </li>
+              
+<!--               <li class="nav-item"> -->
+<!--                 <a href="#" class="nav-link"> -->
+<!-- 				<i class="nav-icon far fa-lightbulb"></i> -->
+<!-- 				<p>내가작성한 이슈</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+              
+<!--               <li class="nav-item"> -->
+<!--                 <a href="#" class="nav-link"> -->
+<!--                 <i class="nav-icon far fa-calendar-alt"></i> -->
+<!-- 				<p>전체캘린더</p> -->
+<!--                 </a> -->
+<!--               </li> -->
              
 				
 	
