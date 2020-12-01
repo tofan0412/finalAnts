@@ -1,19 +1,79 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<ul>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js">
+</script>
+<script>
+$(function(){
+	let sock = new SockJS("http://localhost/echo");
+	sock.onmessage = onMessage;
+	sock.onclose = onClose;
+	
+	// 메시지 전송
+	function sendMessage() {
+		sock.send($("#msg").val());
+	}
+	// 서버로부터 메시지를 받았을 때
+	function onMessage(msg) {
+		var data = msg.data;
+		$("#msgArea").append(data + "<br/>");
+	}
+	// 서버와 연결을 끊었을 때
+	function onClose(evt) {
+		$("#msgArea").append("연결 끊김");
+	}
+
+
+	$('#sendMsg').on('click',function(){
+		alert("전송 !");
+		sendMessage();
+		$('#msg').val('');
+	})	
+})
+</script>
+<style>
+#msgArea{
+	overflow-y : scroll;
+	padding : 5px;
+}
+.Msg{
+	color : black;
+	background-color : yellow;
+	border-radius: 0.3rem !important;
+	padding : 5px;
+	margin-top : 5px;
+}
+.myMsg{
+	float : right;
+	margin-left : 60px;
+	font-size : 1em;
+}
+.yourMsg{
+	float : left;
+	margin-right : 60px;
+	font-size : 1em;
+	
+}
+
+</style>
+<div>${cgroup.cgroupName }</div>
+<!-- 채팅 메시지 목록 부분  -->
+<div id="msgArea">	
 	<c:forEach items="${msgList }" var="msg">
-		<input type="text" value="${msg.cgroupId }" hidden="hidden">
 		
-		<a href="#" class="msgBox" >
-		<c:if test="${SMEMBER.memId == msg.memId}"></c:if>
-		<li class="jg">${chat.cgroupName }&nbsp;
-		</a>
-		<span style="font-size : 0.8em; color : ">${chatList.size() }</span>
-		</li>
+		<c:if test="${msg.memId eq SMEMBER.memId }">
+			<div class="myMsg Msg">${msg.chatCont }</div>
+		</c:if>
+		<c:if test="${msg.memId ne SMEMBER.memId }">
+			<div class="yourMsg Msg">${msg.chatCont }</div>
+		</c:if>
 	</c:forEach>
-	<c:if test="${msgList.size() < 1 }">
-		<li class="jg">아직까지 나눈 대화가 없습니다. 새로운 대화를 나눠보세요 !</li>
-	</c:if>
-</ul>
+</div>	
+<!-- 텍스트 전송 부분 .. -->
+<div style="float : left;">
+	<textarea id='msg' cols='17' rows='3' style='resize : none;'/>
+	<button id="sendMsg" type='button' style="height : 60px;">전송</button>
+</div>
+	
 $$$$$$$

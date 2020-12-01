@@ -100,6 +100,7 @@ public class ProjectMemberController {
 		
 		String memId = "cony@naver.com";
 		List<CategoryVo> categorylist = promemService.categorylist(memId);
+
 		model.addAttribute("categorylist", categorylist);
 		
 		
@@ -113,6 +114,9 @@ public class ProjectMemberController {
 		IssueVo issuevo = promemService.geteachissue(issueId);
 		
 		model.addAttribute("issuevo", issuevo);
+		
+		
+		model.addAttribute("memId", "cony");
 		 
 		return "tiles/board/issueDetail";
 	}
@@ -128,6 +132,7 @@ public class ProjectMemberController {
 	@RequestMapping("/insertissue")
 	public String insertissue(IssueVo issueVo, HttpSession session, Model model) {
 		
+		System.out.println(issueVo);
 		String reqId = (String)session.getAttribute("reqId");
 		issueVo.setReqId(reqId);
 		issueVo.setMemId("cony@naver.com");
@@ -161,7 +166,7 @@ public class ProjectMemberController {
 		issueVo.setReqId(reqId);
 		issueVo.setMemId("cony@naver.com");
 		
-		int insertCnt = promemService.insertissue(issueVo);
+		int insertCnt = promemService.updateissue(issueVo);
 		
 		if(insertCnt>0) {		
 			return "redirect:/projectMember/issuelist";

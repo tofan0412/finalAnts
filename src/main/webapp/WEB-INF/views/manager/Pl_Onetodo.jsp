@@ -14,70 +14,90 @@
 <link rel="icon" href="../../favicon.ico">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript">
-$(function(){
-	//수정
-	$("#updateBtn").on('click', function(){
-		var todoId="${todoVo.todoId}"; 
-// 		$(location).attr('href', '${pageContext.request.contextPath}/todo/insertissueView');
-	})
+	$(document).ready(function() {
+		todoDetail("${param.todoId}");
+	});
 	
-	// 일감 생성
-	$("#creattodoBtn").on('click', function(){
- 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView');
-	})
+	function todoDetail(todoId) {
+		$.ajax({
+			url : "/todo/onetodo",
+			method : "get",
+			data : {
+				todoId : todoId
+			},
+			success : function(data) {
+				$("#todoTitle").html(data.todoVo.todoTitle);
+				$("#todoCont").html(data.todoVo.todoCont);
+				$("#memId").html(data.todoVo.memId);
+				$("#todoImportance").html(data.todoVo.todoImportance);
+				$("#todoStart").html(data.todoVo.todoStart);
+				$("#todoEnd").html(data.todoVo.todoEnd);
+				
+				var res = "";
+					res += '<button type="button" class="btn btn-default" id="updateBtn" >수정</button>';
+					res += '<button type="button" class="btn btn-default" id="deleteBtn">삭제</button>';
+					res += '<button type="button" class="btn btn-default" id="creatChildBtn">하위일감 생성</button>';
+					res += '<button type="button" class="btn btn-default" id="creattodoBtn">일감 생성</button>';
+				
+				$("#btnMenu").html(res);
+			}
 	
-	// 하위 일감 생성
-	$("#creatChildBtn").on('click', function(){
-		var todoParentid="${todoVo.todoId}"; 
-		alert(todoParentid);
- 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView?todoParentid='+todoParentid);
-       
-	})
+		});
 	
-	// 일감 삭제
-	$("#deleteBtn").on('click', function(){
-		var todoId="${todoVo.todoId}"; 
-		var reqId="${todoVo.reqId}"; 
-		 if(confirm("정말 삭제하시겠습니까 ?") == true){
-			$(location).attr('href', '${pageContext.request.contextPath}/todo/deletetodo?todoId='+todoId+'&reqId='+reqId);
-		    }
-		    else{
-		        return ;
-		    }
+	}
+	$(function(){
+		//수정
+		$("#updateBtn").on('click', function(){
+			var todoId="${todoVo.todoId}"; 
+	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView');
+		})
+		
+		// 일감 생성
+		$("#creattodoBtn").on('click', function(){
+	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView');
+		})
+		
+		// 하위 일감 생성
+		$("#creatChildBtn").on('click', function(){
+	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView?todoParentid=${todoVo.todoId}');
+	       
+		})
+		
+		// 일감 삭제
+		$("#deleteBtn").on('click', function(){
+			 if(confirm("정말 삭제하시겠습니까 ?") == true){
+				$(location).attr('href', '${pageContext.request.contextPath}/todo/deletetodo?todoId=${todoVo.todoId}&reqId=${todoVo.reqId}');
+			    }
+			    else{
+			        return ;
+			    }
+		})
 	})
-})
 	
 </script>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 <br>
 <div style="padding-left: 30px;"><h3>일감 상세보기</h3><br>
-
-		
 		
 		<label for="todoTitle" class="col-sm-1 control-label">제목</label>
-		<label class="control-label" id="todoTitle">${todoVo.todoTitle }</label><br><br>
+		<label class="control-label" id="todoTitle"></label><br><br>
 		
 		<label for="todoCont" class="col-sm-1 control-label">할일</label>
-		<label class="control-label" id="todoCont">${todoVo.todoCont }</label><br><br>
+		<label class="control-label" id="todoCont"></label><br><br>
 		
 		<label for="memId" class="col-sm-1 control-label">담당자</label>
-		<label class="control-label" id="memId">${todoVo.memId }</label><br><br>
+		<label class="control-label" id="memId"></label><br><br>
 		
 		<label for="todoImportance" class="col-sm-1 control-label">우선순위</label>
-		<label class="control-label" id="todoImportance">${todoVo.todoImportance }</label><br><br>
+		<label class="control-label" id="todoImportance"></label><br><br>
 
 		<label for="todoStart" class="col-sm-1 control-label">시작 일</label>
-		<label class="control-label" id="todoStart">${todoVo.todoStart }</label><br><br>
+		<label class="control-label" id="todoStart"></label><br><br>
 		
 		<label for="todoEnd" class="col-sm-1 control-label">종료 일</label>
-		<label class="control-label" id="todoEnd">${todoVo.todoEnd }</label><br><br>
-
-
-		<button type="button" class="btn btn-default" id="updateBtn" >수정</button>
-		<button type="button" class="btn btn-default" id="deleteBtn" onclick="removeCheck()">삭제</button>
-		<button type="button" class="btn btn-default" id="creatChildBtn">하위일감 생성</button>
-		<button type="button" class="btn btn-default" id="creattodoBtn">일감 생성</button>
-	
+		<label class="control-label" id="todoEnd"></label><br><br>
+		
+		<div id="btnMenu"></div>
 </div>
 </html>

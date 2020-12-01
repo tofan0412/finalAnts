@@ -37,7 +37,10 @@ public class ChatController {
 	public String readMessages(String cgroupId, Model model) {
 		List<ChatVo> msgList = chatService.readMessages(cgroupId);
 		
+		ChatGroupVo cgroup = chatService.readChatGroup(cgroupId);
+		
 		model.addAttribute("msgList", msgList);
+		model.addAttribute("cgroup", cgroup);
 		
 		return "chat/msgList";
 	}

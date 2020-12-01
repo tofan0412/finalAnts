@@ -37,6 +37,11 @@
 <script type="text/javascript">
 $(function(){ 
 	
+	$('#3').attr('aria-selected', true);
+	$('#3').addClass("active");
+	
+	
+	
 	$("a nav-link").on('click', function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/insertissueView');
 	})
@@ -74,19 +79,32 @@ $(function(){
 	              <div class="card-header p-0 pt-1 border-bottom-0">
 	                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
 	                
-	                <c:forEach items = "${categorylist }" var ="category">
+<%-- 	                <c:forEach items = "${categorylist }" var ="category"> --%>
 	               		          
-			               <li class="nav-item">
-		                    	 <a class="nav-link " id="${category.categoryId }" data-toggle="pill" href="projectMember/issuelist" role="tab" aria-controls="custom-tabs-three" aria-selected="false">${category.categoryName }</a>
-		                   </li>
+<!-- 			               <li class="nav-item"> -->
+<%-- 		                    	 <a class="nav-link " id="${category.categoryId }" data-toggle="pill" href="projectMember/issuelist" role="tab" aria-controls="custom-tabs-three" aria-selected="false">${category.categoryName }</a> --%>
+<!-- 		                   </li> -->
 
-				 	</c:forEach> 
+<%-- 				 	</c:forEach>  --%>
+
+ 					<li class="nav-item">
+	                    <a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-work" role="tab" aria-controls="custom-tabs-three-home" aria-selected="false">일감</a>
+	                  </li>
+	                  <li class="nav-item">
+	                    <a class="nav-link" id="custom-tabs-three-gantt-tab" data-toggle="pill" href="#custom-tabs-three-gantt" role="tab" aria-controls="custom-tabs-three-gantt" aria-selected="false">간트</a>
+	                  </li>
+	                  <li class="nav-item">
+	                    <a class="nav-link" id="3" data-toggle="pill" href="#custom-tabs-three-issue" role="tab" aria-controls="custom-tabs-three-issue" aria-selected="false">이슈</a>
+	                  </li>
+	                  <li class="nav-item">
+	                    <a class="nav-link" id="custom-tabs-three-settings-suggest" data-toggle="pill" href="#custom-tabs-three-suggest" role="tab" aria-controls="custom-tabs-three-suggest" aria-selected="false">건의사항</a>
+	                  </li>
 				 	
-                   	<c:if test="${categorylist.size() == 4 }" >
-			               <li class="nav-item">
-                    			<a class="nav-link" id="custom-tabs-three-mywork-tab" data-toggle="pill" href="#custom-tabs-three-mywork" role="tab" aria-controls="custom-tabs-three-mywork" aria-selected="false">내 일감</a>
-                  		   </li>
-	                 </c:if>
+<%--                    	<c:if test="${categorylist.size() == 4 }" > --%>
+		               <li class="nav-item">
+                   			<a class="nav-link" id="custom-tabs-three-mywork-tab" data-toggle="pill" href="#custom-tabs-three-mywork" role="tab" aria-controls="custom-tabs-three-mywork" aria-selected="false">내 일감</a>
+                 	   </li>
+<%-- 	                 </c:if> --%>
 	                 
 	   
 	                  <li class="nav-item">
