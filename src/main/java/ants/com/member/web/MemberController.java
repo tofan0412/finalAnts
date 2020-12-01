@@ -36,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ants.com.member.model.MemberVo;
 import ants.com.member.service.MemberService;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @MultipartConfig
 @RequestMapping("/member")

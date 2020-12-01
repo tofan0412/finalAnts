@@ -23,10 +23,10 @@ import egovframework.rte.fdl.property.EgovPropertyService;
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
-	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+//	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
-	@Resource(name="AdminService")
-	AdminService adminService;
+//	@Resource(name="AdminService")
+//	AdminService adminService;
 	
 //	@RequestMapping("/project")
 //	public String projectmain(HttpSession session) {
@@ -35,18 +35,18 @@ public class AdminController {
 //		return "tiles/board/issuecontentmenu";
 //	}
 	
-	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
-	
-	
-	@RequestMapping("/notice_eachproject")
-	public String eachproject(HttpSession session) {
-		
-		session.setAttribute("noticeId", "1");
-		
-		return "notice/notice_eachproject";
-	}
+//	/** EgovPropertyService */
+//	@Resource(name = "propertiesService")
+//	protected EgovPropertyService propertiesService;
+//	
+//	
+//	@RequestMapping("/notice_eachproject")
+//	public String eachproject(HttpSession session) {
+//		
+//		session.setAttribute("noticeId", "1");
+//		
+//		return "notice/notice_eachproject";
+//	}
 	
 //	// 카테고리 내역 조회
 //		@RequestMapping("/eachproject2")
@@ -93,38 +93,38 @@ public class AdminController {
 //	}
 //	
 //	
-	//게시글 목록
-	@RequestMapping("/noticeList")
-	public String getnoticelist(HttpSession session, Model model) {
+//	//게시글 목록
+//	@RequestMapping("/noticeList")
+//	public String getnoticelist(HttpSession session, Model model) {
 //		
 //		String adminId = (String)session.getAttribute("adminId");
 //		
 //		List<NoticeVo> noticelist = AdminService.noticelist(adminId);		
 //		model.addAttribute("noticelist", noticelist);
 //		 
-		return "notice/noticeList";
-	}
+//		return "notice/noticeList";
+//	}
 	
-	//게시글 등록
-	@RequestMapping("/noticeWrite")
-	public String getnoticewrite(HttpSession session, Model model) {
-		
-		return "notice/noticeWrite";
-	}
-	
-	//게시글 조회
-	@RequestMapping("/noticeRead")
-	public String getnoticeread(HttpSession session, Model model) {
-		
-		return "notice/noticeRead";
-	}
-	
-	//게시글 수정
-	@RequestMapping("/noticeModify")
-	public String getnoticemodify(HttpSession session, Model model) {
-		
-		return "notice/noticeModify";
-	}
+//	//게시글 등록
+//	@RequestMapping("/noticeWrite")
+//	public String getnoticewrite(HttpSession session, Model model) {
+//		
+//		return "notice/noticeWrite";
+//	}
+//	
+//	//게시글 조회
+//	@RequestMapping("/noticeRead")
+//	public String getnoticeread(HttpSession session, Model model) {
+//		
+//		return "notice/noticeRead";
+//	}
+//	
+//	//게시글 수정
+//	@RequestMapping("/noticeModify")
+//	public String getnoticemodify(HttpSession session, Model model) {
+//		
+//		return "notice/noticeModify";
+//	}
 	
 	
 //	//등록 페이지
