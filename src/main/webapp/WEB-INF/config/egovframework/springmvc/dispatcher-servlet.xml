@@ -121,12 +121,9 @@
 	
 	<!-- 웹소켓 관련 설정 -->
 	<bean id="echoHandler" class="ants.com.chatting.ws.EchoHandler"></bean>
-	<bean id="chatHandler" class="ants.com.chatting.ws.ChatHandler"></bean>
 		
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo"/>
-		<websocket:mapping handler="chatHandler" path="/echo"/>
-		
 		<websocket:sockjs />
 	</websocket:handlers>
 	
