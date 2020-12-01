@@ -16,7 +16,11 @@ $(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/updateissueView?issueId=${issuevo.issueId}');
 	})
 	$("#delissue").on('click', function(){
-		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/delissue?issueId=${issuevo.issueId}');
+        if(confirm("정말 삭제하시겠습니까 ?") == true){
+			$(location).attr('href', '${pageContext.request.contextPath}/projectMember/delissue?issueId=${issuevo.issueId}');
+        }else{
+        	return;
+        }
 	})
 })
 </script>
