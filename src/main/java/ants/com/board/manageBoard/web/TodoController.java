@@ -27,8 +27,8 @@ public class TodoController {
 
 	// 프로젝트명 클릭시 세션저장
 	@RequestMapping("/projectgetReq")
-	public String projectgetReq(HttpSession session) {
-		session.setAttribute("reqId", "1");
+	public String projectgetReq(HttpSession session, String reqId) {
+		session.setAttribute("reqId", reqId);
 		return "redirect:/todo/todoList";
 	}
 

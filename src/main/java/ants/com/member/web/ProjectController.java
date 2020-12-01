@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ants.com.member.service.MemberService;
+import ants.com.member.service.ProjectService;
 import ants.com.member.service.ProjectmemberService;
 
 @RequestMapping("/project")
@@ -16,8 +17,8 @@ import ants.com.member.service.ProjectmemberService;
 public class ProjectController {
 	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 	
-	@Resource(name="promemService")
-	ProjectmemberService promemService;
+	@Resource(name = "projectService")
+	private ProjectService projectService;
 	
 
 	

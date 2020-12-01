@@ -12,4 +12,7 @@ public interface ProjectMapper {
 	
 	//프로젝트명 불러오기
 	public List<ProjectVo> memInProjectList(String memId);
+	
+	//pl,pm메뉴 불러오기
+	public List<ProjectVo> plpmInProjectList(String memId);
 }
