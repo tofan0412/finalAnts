@@ -11,8 +11,8 @@ public interface AdminMapper {
 //		// 공지사항리스트
 //		public List<NoticeVo> noticelist(String adminId);
 //		
-//		// 공지사항
-//		public NoticeVo geteachnotice(String noticeVo);
+////		// 공지사항
+////		public NoticeVo geteachnotice(String noticeVo);
 //		
 //		// 공지사항 작성
 //		public int insertissue(NoticeVo noticeVo);
@@ -22,7 +22,7 @@ public interface AdminMapper {
 //	
 //		// 공지사항 삭제
 //		public int delnotice(String noticeId);
-	
+//	
 	
 //		public void create(NoticeVo noticeVo) throws Exception;
 //		

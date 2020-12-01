@@ -16,7 +16,11 @@ $(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/updateissueView?issueId=${issuevo.issueId}');
 	})
 	$("#delissue").on('click', function(){
-		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/delissue?issueId=${issuevo.issueId}');
+        if(confirm("정말 삭제하시겠습니까 ?") == true){
+			$(location).attr('href', '${pageContext.request.contextPath}/projectMember/delissue?issueId=${issuevo.issueId}');
+        }else{
+        	return;
+        }
 	})
 })
 </script>
@@ -31,14 +35,16 @@ $(function(){
 
 </head>
 
-<%@include file="../layout/contentmenu.jsp"%>
+<%@include file="./issuecontentmenu.jsp"%>
+<%-- <%@include file="./eachproject.jsp"%> --%>
+
 
 <body>
 
 <div class="col-12 col-sm-9">
 	<div class="card card-teal ">
 	  <div class="card-body">
-		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab">
+<!-- 		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 			<h3>협업이슈 상세내역</h3>
 			
 			<table>
@@ -64,13 +70,16 @@ $(function(){
 				<p>파일 : (파일 존재시 다운로드)  </p>
 				<p><input type="button" value="다운로드" id="filedown"></p>
 				
-				<input type= "button" value="수정하기" id ="modissue">
-				<input type= "button" value="삭제하기" id="delissue" >
+				<c:if test="${issuevo.memId == memId}">
+					<input type= "button" value="수정하기" id ="modissue">
+					<input type= "button" value="삭제하기" id="delissue" >			
+				</c:if>
+				
 
 
 	    </div>      
 	   </div>
-	 </div>      
+<!-- 	 </div>       -->
 </div>
 
 </body>

@@ -100,6 +100,7 @@ public class ProjectMemberController {
 		
 		String memId = "cony@naver.com";
 		List<CategoryVo> categorylist = promemService.categorylist(memId);
+
 		model.addAttribute("categorylist", categorylist);
 		
 		
@@ -113,6 +114,9 @@ public class ProjectMemberController {
 		IssueVo issuevo = promemService.geteachissue(issueId);
 		
 		model.addAttribute("issuevo", issuevo);
+		
+		
+		model.addAttribute("memId", "cony");
 		 
 		return "tiles/board/issueDetail";
 	}
@@ -161,7 +165,7 @@ public class ProjectMemberController {
 		issueVo.setReqId(reqId);
 		issueVo.setMemId("cony@naver.com");
 		
-		int insertCnt = promemService.insertissue(issueVo);
+		int insertCnt = promemService.updateissue(issueVo);
 		
 		if(insertCnt>0) {		
 			return "redirect:/projectMember/issuelist";

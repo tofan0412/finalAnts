@@ -20,10 +20,10 @@ public class AdminService {
 //		return mapper.noticelist(adminId);
 //	}
 //	
-//	// 공지사항
-//	public NoticeVo geteachnotice(String noticeVo) {
-//		return mapper.geteachnotice(noticeVo);
-//	}
+////	// 공지사항
+////	public NoticeVo geteachnotice(String noticeVo) {
+////		return mapper.geteachnotice(noticeVo);
+////	}
 //	
 //	// 공지사항 작성
 //	public int insertissue(NoticeVo noticeVo) {

@@ -11,9 +11,7 @@
 
 <script type="text/javascript">
 $(function(){
-	$("#insertissue").on('click', function(){
-		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/insertissueView');
-	})
+	
 })
 </script>
 <style type="text/css">
@@ -26,7 +24,8 @@ $(function(){
 
 </head>
 
-<%@include file="../layout/contentmenu.jsp"%>
+<%@include file="./issuecontentmenu.jsp"%>
+<%-- <%@include file="./eachproject.jsp"%> --%>
 
 <body>
 
@@ -34,11 +33,13 @@ $(function(){
 <div class="col-12 col-sm-9">
 	<div class="card card-teal ">
 	  <div class="card-body">
-		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab">
+<!-- 		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 		
 			<h3>협업이슈 수정하기</h3>
 			<form id="frm"  class="form-horizontal" method="post" 
 										    action="${pageContext.request.contextPath}/projectMember/updateissue" >
+					 <input type="hidden" value="${issueVo.issueId }" name="issueId">
+			
 				<table>
 					<tr>
 						<td class="sort" >이슈제목 </td> 			
@@ -69,7 +70,7 @@ $(function(){
 				<p><input type="button" value="다운로드" id="filedown"></p>
 	    </div>      
 	   </div>
-	 </div>      
+<!-- 	 </div>       -->
 </div>
 	
 </body>

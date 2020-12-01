@@ -35,7 +35,7 @@
 	  <li class="active"><a data-toggle="tab" href="#email">이메일로 찾기</a></li>
 	  <li><a data-toggle="tab" href="#phone">전화번호로 찾기</a></li>
 	</ul>
-	
+		
 	<div class="tab-content">
 	  <div id="email" class="tab-pane fade in active">
 	    <h3>이메일로 찾기</h3>

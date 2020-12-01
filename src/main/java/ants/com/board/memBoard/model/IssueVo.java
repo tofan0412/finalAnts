@@ -11,7 +11,7 @@ public class IssueVo extends BaseVo{
 	private String regDt;
 	private String categoryId;
 	private String issueKind;
-	private String issuDel;
+	private String issueDel;
 	private String todoId;
 	private String reqId;
 	private String memId;
@@ -51,11 +51,11 @@ public class IssueVo extends BaseVo{
 	public void setIssueKind(String issueKind) {
 		this.issueKind = issueKind;
 	}
-	public String getIssuDel() {
-		return issuDel;
+	public String getIssueDel() {
+		return issueDel;
 	}
-	public void setIssuDel(String issuDel) {
-		this.issuDel = issuDel;
+	public void setIssuDel(String issueDel) {
+		this.issueDel = issueDel;
 	}
 	public String getTodoId() {
 		return todoId;
@@ -78,7 +78,7 @@ public class IssueVo extends BaseVo{
 	@Override
 	public String toString() {
 		return "IssueVo [issueId=" + issueId + ", issueTitle=" + issueTitle + ", issueCont=" + issueCont + ", regDt="
-				+ regDt + ", categoryId=" + categoryId + ", issueKind=" + issueKind + ", issuDel=" + issuDel
+				+ regDt + ", categoryId=" + categoryId + ", issueKind=" + issueKind + ", issueDel=" + issueDel
 				+ ", todoId=" + todoId + ", reqId=" + reqId + ", memId=" + memId + "]";
 	}
 	

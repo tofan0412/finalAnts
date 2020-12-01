@@ -69,20 +69,23 @@ public class TodoController {
 	}
 
 
-	// 한개의 일감 조회 메서드
-	@RequestMapping("/onetodoView")
-	public String todoView(Model model, TodoVo todoVo) {
+	// 한개의 일감 조회 Ajax
+	@RequestMapping("/onetodo")
+	public String todoDetailView(Model model, TodoVo todoVo) {
 		TodoVo dbtodoVo = manageBoardService.getTodo(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
-		return "tiles/manager/Pl_Onetodo";
+		return "jsonView";
 	}
 	
+	// 한개의 일감조회 화면 출력
+	@RequestMapping("/onetodoView")
+	public String todoView() {
+		return "tiles/manager/Pl_Onetodo";
+	}
 
 	// 일감 수정 화면 출력
 	@RequestMapping("/updatetodoView")
-	public String todoupdateView(TodoVo todoVo, Model model) {
-		TodoVo dbtodoVo = manageBoardService.getTodo(todoVo);
-		model.addAttribute("todoVo", dbtodoVo);
+	public String todoupdateView() {
 		return "tiles/manager/Pl_todoUpdateView";
 	}
 
