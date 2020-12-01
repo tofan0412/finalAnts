@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ants.com.member.mapper.MemberMapper;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectVo;
 
 @Service("memberService")
 public class MemberService{
@@ -38,5 +39,7 @@ public class MemberService{
 	public List<MemberVo> getAllMember(){
 		return mapper.getAllMember();
 	}
+
+	
 	
 }

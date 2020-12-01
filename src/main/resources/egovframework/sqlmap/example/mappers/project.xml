@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ants.com.member.mapper.ProjectMapper">
+
+
+	<select id="memInProjectList" parameterType="String"
+	resultType="ants.com.member.model.ProjectVo">
+		SELECT
+		   project.req_id, project.mem_id, project.pro_name, project.pro_percent, project.reg_dt
+		FROM(select * from project)project, projectmember projectmember
+		WHERE
+		    projectmember.req_id = project.req_id
+	        and projectmember.mem_id = #{memId}
+	</select>
+
+</mapper>

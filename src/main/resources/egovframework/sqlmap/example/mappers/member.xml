@@ -12,25 +12,11 @@
 		INSERT INTO MEMBER VALUES(#{memId}, #{memName}, #{memPass}, #{memTel},
 		#{memFilepath}, #{memFilename}, #{memAlert}, #{del}, #{memType})
 	</insert>
-
-	<!--참여중인 팀원 조회 -->
-	<select id="projectMemList" parameterType="String"
-		resultType="ants.com.member.model.MemberVo">
-		SELECT
-		member.mem_name,
-		member.mem_id
-		FROM
-		member,
-		projectmember
-		WHERE
-		member.mem_id = projectmember.mem_id
-		AND projectmember.req_id = #{reqId}
-		AND projectmember.promem_status = 'in'
-	</select>
 	
 	<update id="updatePass" parameterType="ants.com.member.model.MemberVo">
 		UPDATE MEMBER SET MEM_PASS = #{memPass}
 		WHERE MEM_ID = #{memId}
 	</update>
+	
 	
 </mapper>

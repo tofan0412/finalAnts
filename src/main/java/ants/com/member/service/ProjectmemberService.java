@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.member.mapper.ProjectmemberMapper;
+import ants.com.member.model.ProjectVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("promemService")
@@ -54,4 +55,9 @@ public class ProjectmemberService extends EgovAbstractServiceImpl{
 	public int issuePagingListCnt(IssueVo issueVo) {
 		return mapper.issuePagingListCnt(issueVo);
 	}
+	
+	// left바 프로젝트명 불러오는 메서드 
+		public List<ProjectVo> memInProjectList(String memId) {
+			return mapper.memInProjectList(memId);
+		}
 }
