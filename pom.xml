@@ -209,15 +209,26 @@
 		</dependency>
 
 		<!-- 문자전송 라이브러리 -->
-		<!-- https://mvnrepository.com/artifact/net.nurigo/javaSDK -->
 		<dependency>
 		    <groupId>net.nurigo</groupId>
 		    <artifactId>javaSDK</artifactId>
 		    <version>2.2</version>
 		</dependency>
-
 		
-		   
+		<!-- 테스트 코드 작성 위한 spring-test 등록 -->
+		<dependency> 
+			<groupId>org.springframework</groupId> 
+			<artifactId>spring-test</artifactId> 
+			<version>4.3.16.RELEASE</version> 
+			<scope>test</scope> 
+		</dependency>
+		
+		<dependency> 
+			<groupId>javax.inject</groupId> 
+			<artifactId>javax.inject</artifactId> 
+			<version>1</version> 
+			<scope>test</scope> 
+		</dependency>
 		
 	</dependencies>
 
