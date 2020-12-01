@@ -19,12 +19,9 @@
 	</update>
 	
 	
-<<<<<<< HEAD
 	<select id="checkSignup" parameterType="ants.com.member.model.MemberVo" resultType="int">
 		SELECT NVL(COUNT(*), 0) FROM MEMBER
         WHERE MEM_ID = #{memId} 
 	</select>
 	
-=======
->>>>>>> 414514964257ea45b967e892ece3b5139238cf40
 </mapper>
