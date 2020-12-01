@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ants.com.member.mapper.ReqMapper">
-
-	<!-- <resultMap id="ReqVo" type="ants.com.member.model.ReqVo"> -->
-	<!-- <result property="reqId" column="req_id"/> -->
-	<!-- <result property="reqTitle" column="req_title"/> -->
-	<!-- <result property="reqPeriod" column="req_period"/> -->
-	<!-- <result property="reqFilepath" column="req_filepath"/> -->
-	<!-- <result property="reqFilename" column="req_filename"/> -->
-	<!-- <result property="memId" column="mem_id"/> -->
-	<!-- <result property="status" column="status"/> -->
-	<!-- <result property="plId" column="pl_id"/> -->
-	<!-- </resultMap> -->
-
+	
+	<!-- 요구사항정의서 목록가져오기 -->
 	<select id="reqList" parameterType="ants.com.member.model.ReqVo"
 		resultType="ants.com.member.model.ReqVo">
 	     <![CDATA[
@@ -27,14 +17,30 @@
             WHERE rnum > #{firstIndex} 
              ]]>
 	</select>
-
+	
+	<!-- 페이지처리위한 요구사항개수 -->
 	<select id="reqListCount" parameterType="String"
 		resultType="java.lang.Integer">
 		<![CDATA[
 		    	SELECT COUNT(*)
-				FROM reqlist
-				WHERE mem_id = #{memId}
+				  FROM reqlist
+				 WHERE mem_id = #{memId}
 	    ]]>
+	</select>
+	
+	<!-- 요구사항정의서 정보 가져오기 -->
+	<select id="getReq" parameterType="ants.com.member.model.ReqVo" resultType="ants.com.member.model.ReqVo" >
+		SELECT REQ_ID
+			 , REQ_TITLE
+			 , REQ_CONT
+			 , REQ_PERIOD
+			 , REQ_FILEPATH
+			 , REQ_FILENAME
+			 , MEM_ID
+			 , STATUS
+			 , PL_ID
+		  FROM reqlist
+		 WHERE req_id = #{reqId} 
 	</select>
 
 	<insert id="reqInsert"
@@ -59,12 +65,23 @@
 			 ,#{status, jdbcType=VARCHAR}
 			 ,#{plId, jdbcType=VARCHAR})
 	</insert>
+	
+	<update id="reqUpdate" parameterType="ants.com.member.model.ReqVo">
+		UPDATE   reqlist
+		 <set>
+		        <if test="reqTitle != null">req_title = #{reqTitle},</if>
+		        <if test="reqCont != null">req_cont = #{reqCont},</if>
+		        <if test="reqPeriod != null">req_period = #{reqPeriod},</if>
+		        <if test="reqFilepath != null">req_filepath = #{reqFilepath},</if>	 	            
+		        <if test="reqFilename != null">req_filename = #{reqFilename}</if>	 	            
+	     </set>    
+		 WHERE   1=1
+		   AND   req_id = #{reqId}
+	</update>
 
-
-
-
-
-	<delete id="delete">
-		DELETE
+	<delete id="reqDelete" parameterType="String">
+		DELETE 
+		  FROM reqlist
+		 WHERE req_id = #{reqId} 
 	</delete>
 </mapper>

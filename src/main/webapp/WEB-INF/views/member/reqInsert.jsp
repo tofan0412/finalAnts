@@ -7,8 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
-
+    <c:set var="registerFlag" value="${empty reqVo.reqId ? 'create' : 'modify'}"/>
 </head>
 <title>협업관리프로젝트</title>
 <form:form commandName="reqVo" id="detailForm" name="detailForm">
@@ -35,7 +34,9 @@
 	                    <label for="inputEmail3" class="col-sm-2 col-form-label">제 목</label>
 	                    <div class="col-sm-10">
 	                      <input type="text" class="form-control" id="reqTitle" name="reqTitle" placeholder="제목을 입력하세요" value="${reqVo.reqTitle }">
-	                      <input type="hidden" name="memId" value="pm1"> 
+	                      <input type="hidden" id="reqId" name="reqId" value="${reqVo.reqId }">
+	                      <c:if test="${registerFlag == 'create' }"><input type="hidden" name="memId" value="pm1"></c:if>
+	                      <c:if test="${registerFlag == 'modify' }"><input type="hidden" name="memId" value="${reqVo.memId }"></c:if>
 	                	</div>
                   	</div>
 	            </div>
@@ -56,14 +57,21 @@
 	              <div class="row col-md-2">
 	                  <label>내용 :</label>
 	              </div>
-	              <textarea id="summernote" style="display: none;" name="reqCont" value="${reqVo.reqCont }" ></textarea>
+	              <textarea id="summernote" style="display: none;" name="reqCont" >${reqVo.reqCont }</textarea>
 	              <!-- 파일첨부 -->
 	            </div>
 	            <div class="card-footer">
 				     <div class="row">
 					     <div class="col-12">
 					       <a href="#" class="btn btn-secondary">취소</a>
-					       <a href="javascript:fn_egov_save();" class="btn btn-success float-right">저장</a>
+					       <c:choose>
+						       	<c:when test="${registerFlag == 'modify' }">
+						       		<a href="javascript:fn_egov_save();" class="btn btn-success float-right">수정</a>
+						       	</c:when>
+						       	<c:when test="${registerFlag == 'create' }">
+						       		<a href="javascript:fn_egov_save();" class="btn btn-success float-right">저장</a>
+						       	</c:when>
+					       </c:choose>
 					     </div>
 					 </div>
 	            </div>
@@ -97,25 +105,10 @@
 	 /* 글 등록 function */
     function fn_egov_save() {
     	frm = document.detailForm;
-        	frm.action = "<c:url value='/req/reqInsert'/>";
+        	frm.action = "<c:url value="${registerFlag == 'create' ? '/req/reqInsert' : '/req/reqUpdate' }"/>";
             frm.submit();
     }
-
 	
-	// pl메일 전송
-	function mailsender(memId){
-		$.ajax({url : "/req/mailsender",
-				data : {memId:memId},
-				method : "GET",
-				success : function(data){
-					if(data.cnt == 0){
-						alert("메일이 성공적으로 전송되었습니다.")
-					}else{
-						alert("메일 전송에 실패했습니다. 다시 시도해주세요.");
-					}
-				}
-		});
-	}
 	
 	function initData(){
 		$('#reqTitle').val("텀블러 자동세척기 개발");

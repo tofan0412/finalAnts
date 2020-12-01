@@ -15,9 +15,9 @@ public interface ReqMapper {
 
 	public int reqInsert(ReqVo reqVo);
 
-	public int reqUpdate(Map<String, Object> reqUMap);
+	public int reqUpdate(ReqVo reqVo);
 
-	public int reqDelete(String req_id);
+	public int reqDelete(String reqId);
 
 	public ReqVo getReq(ReqVo reqVo);
 

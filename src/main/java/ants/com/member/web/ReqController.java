@@ -1,6 +1,7 @@
 package ants.com.member.web;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.annotation.Resource;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ReqVo;
@@ -42,11 +44,9 @@ public class ReqController {
 	/**
 	 * 요구사항정의서 목록을 조회한다
 	 * 
-	 * @param reqVo
-	 *            사용자 아이디와 일치하는 요구사항정의서
+	 * @param reqVo 사용자 아이디와 일치하는 요구사항정의서
 	 * @param model
-	 * @param memId
-	 *            사용자 아이디
+	 * @param memId 사용자 아이디
 	 * @return
 	 */
 	@RequestMapping("/reqList")
@@ -90,18 +90,19 @@ public class ReqController {
 	@RequestMapping(value = "/reqInsertView")
 	public String insertReqView(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
 		model.addAttribute("reqVo", reqVo);
+
+		logger.debug("reqinsert Controller reqVo:{}",reqVo);
 		return "tiles/member/reqInsert";
 	}
 
 	/**
 	 * 요구사항정의서를 등록한다.
 	 * 
-	 * @param reqVo
-	 *            - 등록할 요구사항정의서정보가 담긴 Vo
-	 * @return
+	 * @param reqVo - 등록할 요구사항정의서정보가 담긴 Vo
+	 * @return 성공: 요구사항리스트  실패:등록화면
 	 */
 	@RequestMapping(value = "/reqInsert", method = RequestMethod.POST)
-	public String insertReq(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
+	public String reqInsert(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
 		logger.debug("등록할 요구사항 정의서 정보:{}", reqVo);
 
 		int cnt = reqService.reqInsert(reqVo);
@@ -114,68 +115,77 @@ public class ReqController {
 			return "tiles/member/reqInsert";
 		}
 	}
-
 	
-	@RequestMapping(path = "/addPLView")
+	/**
+	 * 요구사항정의서 수정화면을 조회한다
+	 * 
+	 * @param reqVo
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/reqUpdateView")
+	public String reqUpdateView(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
+		logger.debug("요구사항 정보가져올 reqVo:{}",reqVo);
+		reqVo = reqService.getReq(reqVo);
+		model.addAttribute("reqVo", reqVo);
+		logger.debug("reqinsert Controller reqVo:{}",reqVo);
+		
+		return "tiles/member/reqInsert";
+	}
+	
+	/**
+	 * 요구사항정의서 수정
+	 * @param reqVo
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/reqUpdate", method = RequestMethod.POST)
+	public String reqUpdate(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
+		logger.debug("수정할 요구사항 정의서 정보:{}", reqVo);
+		
+		int cnt = reqService.reqUpdate(reqVo);
+		logger.debug("요구사항정의서 등록 결과...:{}", cnt);
+		
+		if (cnt == 1) {
+			return "redirect:/req/reqList";
+		} else {
+			model.addAttribute(reqVo);
+			return "tiles/member/reqInsert";
+		}
+	}
+	
+	/**
+	 * 요구사항정의서 삭제
+	 * @param reqId 요구사항정의서 id
+	 * @param model 실패메세지담기
+	 * @return 요구사항정의서 리스트
+	 */
+	@RequestMapping(value = "/reqDelete")
+	public String reqDelete(String reqId, Model model) {
+		logger.debug("--삭제할 요구사항정의서 id : {}", reqId);
+
+		int cnt = reqService.reqDelete(reqId);
+
+		if (cnt == 0) {
+			model.addAttribute("msg", "등록실패");
+		}
+		return "redirect:/req/reqList";
+	}
+
+	@RequestMapping(path = "/addPL")
 	public String addPLView() {
 		return "tiles/member/addPL";
 	}
+	
+	@RequestMapping(value = "/json", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String json(Locale locale, Model model) {	
+		String[] array = {"김치 볶음밥", "신라면", "진라면", "라볶이", "팥빙수","너구리","삼양라면","안성탕면","불닭볶음면","짜왕","라면사리"};
+		Gson gson = new Gson();
+	    return "jsonView";
 
-	/** 자바 메일 발송 * @throws MessagingException * @throws AddressException **/
-	@RequestMapping(value = "/mailsender")
-	public String mailSender(MemberVo memberVo, HttpServletRequest request, ModelMap mo)
-			throws AddressException, MessagingException {
-
-		// 네이버일 경우 smtp.naver.com 을 입력합니다.
-		// Google일 경우 smtp.gmail.com 을 입력합니다.
-
-		// 네이버 메일 환경설정에서 "POP3/IMAP" 설정 사용으로 바꿔준다.
-		String host = "smtp.naver.com";
-
-		String email = memberVo.getMemId().split("@")[0];
-
-		// POP3/IMAP 설정시 네이버에서 알려줌
-		final String username = "ays157"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
-		final String password = "alalal02628"; // 네이버 이메일 비밀번호를 입력해주세요.
-		int port = 465; // 포트번호
-
-		// 메일 내용
-		String recipient = memberVo.getMemId(); // 받는 사람의 메일주소를 입력해주세요.
-		String subject = "메일테스트"; // 메일 제목 입력해주세요.
-		String body = username + "님으로 부터 메일을 받았습니다.   http://localhost/req/reqList"; // 메일 내용 입력해주세요.
-
-		Properties props = System.getProperties(); // 정보를 담기 위한 객체 생성
-
-		// SMTP 서버 정보 설정
-		props.put("mail.smtp.host", host);
-		props.put("mail.smtp.port", port);
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.ssl.enable", "true");
-		props.put("mail.smtp.ssl.trust", host);
-
-		// Session 생성
-		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-			String un = username;
-			String pw = password;
-
-			protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-				return new javax.mail.PasswordAuthentication(un, pw);
-			}
-		});
-
-		session.setDebug(true); // for debug
-
-		Message mimeMessage = new MimeMessage(session); // MimeMessage 생성
-		mimeMessage.setFrom(new InternetAddress(memberVo.getMemId())); // 발신자 셋팅 , 보내는 사람의 이메일주소를 한번 더 입력합니다. 이때는 이메일 풀
-																		// 주소를 다 작성해주세요.
-		mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); // 수신자셋팅 //.TO 외에 .CC(참조)
-																							// .BCC(숨은참조) 도 있음
-
-		mimeMessage.setSubject(subject); // 제목셋팅
-		mimeMessage.setText(body); // 내용셋팅
-		Transport.send(mimeMessage); // javax.mail.Transport.send() 이용 }
-
-		return "main";
 	}
+
+	
 
 }
