@@ -209,13 +209,15 @@
 		</dependency>
 
 		<!-- 문자전송 라이브러리 -->
+		<!-- https://mvnrepository.com/artifact/net.nurigo/javaSDK -->
 		<dependency>
 		    <groupId>net.nurigo</groupId>
 		    <artifactId>javaSDK</artifactId>
 		    <version>2.2</version>
 		</dependency>
+
 		
-		  
+		   
 		
 	</dependencies>
 
