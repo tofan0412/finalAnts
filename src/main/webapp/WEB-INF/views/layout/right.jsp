@@ -11,6 +11,7 @@ $(function(){
 		$(".chatList").empty();
 		$(".chatList").css('font-color', 'black');
 		$.ajax({
+			crossOrigin : true,
 			url : "/chat/readMessages",
 			data : {cgroupId : cgroupId},
 			method : "POST", 

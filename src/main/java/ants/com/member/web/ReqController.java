@@ -181,7 +181,7 @@ public class ReqController {
 	@ResponseBody
 	public String json(Locale locale, Model model) {	
 		String[] array = {"김치 볶음밥", "신라면", "진라면", "라볶이", "팥빙수","너구리","삼양라면","안성탕면","불닭볶음면","짜왕","라면사리"};
-		Gson gson = new Gson();
+//		Gson gson = new Gson();
 	    return "jsonView";
 
 	}
