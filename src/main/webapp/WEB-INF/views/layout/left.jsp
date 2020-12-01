@@ -94,9 +94,9 @@
 			        <ul class="nav nav-treeview" style="display: block;">
 			        <!-- 프로젝트 목록 불러오기 -->
 			        	<li class="nav-item">
-			        	<a href="#" class="nav-link">
+			        	<a href="${pageContext.request.contextPath}/todo/projectgetReq" class="nav-link">
 			            <i class="nav-icon fas fa-layer-group"></i>
-						<p>프로젝트명</p></a></li>
+						<p>test</p></a></li>
 			        	<li class="nav-item">
 			        	<a href="#" class="nav-link">
 			            <i class="nav-icon fas fa-layer-group"></i>
