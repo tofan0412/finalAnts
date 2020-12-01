@@ -50,9 +50,9 @@
 			<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
 			<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 				<div id="pictureView" style="border: 1px solid green; height: 200px; width: 140px; margin: 0 auto;">
-					<img id="pictureViewImg" style="width: 100%; height: 100%;" />
+					<img src="/profile/user.png" id="pictureViewImg" style="width: 100%; height: 100%;" />
 				</div>
-				
+					
 				<div class="content">
 					<input id="picture" type="file" name="realFilename" accept=".gif, .jpg, .png" style="height: 37px;" />
 				</div>
@@ -115,11 +115,11 @@
 <script type="text/javascript">
 		$(document).ready(function() {
 			// picture input의 파일 변경시 이벤트 
-			$("#picture").change(function() {
+			$("#picture").on(function() {
 				readURL(this);
 			});
 		});
-		
+		 
 		function readURL(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();

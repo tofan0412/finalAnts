@@ -111,7 +111,7 @@ public class MemberController {
 
 	// 회원가입 로직
 	@RequestMapping(path = "/memberRegist", method = RequestMethod.POST)
-	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart("realFilename") MultipartFile file, Model model) {
+	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="realFilename", required=false) MultipartFile file, Model model) {
 
 		logger.debug("memberVo : {}", memberVo);
 		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),
@@ -124,7 +124,13 @@ public class MemberController {
 			return "main.tiles/member/memberRegist";
 		}
 		
-		String Filename = "D:\\upload\\" + file.getOriginalFilename();
+		String Filename = "";
+		if(file.getOriginalFilename().equals(null)) {	// 파일 선택 안했을때 기본값
+			Filename =  "D:\\upload\\user.png";
+		}else {
+			Filename = "D:\\upload\\" + file.getOriginalFilename();
+		}
+
 		File uploadFile = new File(Filename);
 
 		try {
@@ -136,8 +142,14 @@ public class MemberController {
 		logger.debug("---------------------통과-------------------");
 
 		memberVo.setMemFilepath(Filename);
-		memberVo.setMemFilename(file.getOriginalFilename());
-
+		if(file.getOriginalFilename().equals(null)) {	// 파일 선택 안했을때 기본값
+			memberVo.setMemFilename("user.png");
+		}else {
+			memberVo.setMemFilename(file.getOriginalFilename());
+		}
+		
+		
+		
 		logger.debug("memId : {}", memberVo.getMemId());
 		logger.debug("memberVo : {}", memberVo);
 		
