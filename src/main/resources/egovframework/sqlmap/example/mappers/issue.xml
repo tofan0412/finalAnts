@@ -3,20 +3,6 @@
 
 <mapper namespace="ants.com.member.mapper.ProjectmemberMapper">
 
-<!-- 	<resultMap id="IssueVo" type="ants.com.board.memBoard.mapper.ProjectmemberMapper"> -->
-<!-- 		<result property="issueId" column="issue_id"/> -->
-<!-- 		<result property="issueTitle" column="issue_title"/> -->
-<!-- 		<result property="issueCont" column="issue_cont"/> -->
-<!-- 		<result property="regDt" column="reg_dt"/> -->
-<!-- 		<result property="categoryId" column="category_id"/> -->
-<!-- 		<result property="issueKind" column="issue_kind"/> -->
-<!-- 		<result property="issueDel" column="issue_del"/> -->
-<!-- 		<result property="todoId" column="todo_id"/> -->
-<!-- 		<result property="reqId" column="req_id"/> -->
-<!-- 		<result property="memId" column="mem_id"/> -->
-<!-- 	</resultMap> -->
-
-
    <!-- 이슈게시글 리스트 가져오기 -->
 	<select id="issuelist" resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="ants.com.board.memBoard.model.IssueVo">
 	 	
@@ -55,8 +41,9 @@
 	
 	<!-- 각 이슈게시글 내용 가져오기 -->
 	<select id="geteachissue"  resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="String">
-		select  a.issue_id ,  a.issue_title , a.issue_cont ,TO_CHAR( a.reg_dt,'YYYY-MM-DD') as reg_dt, b.mem_name as mem_id
-		from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id
+		select  a.issue_id ,  a.issue_title , a.issue_cont ,TO_CHAR( a.reg_dt,'YYYY-MM-DD') as reg_dt, b.mem_name as mem_id, 
+				category_id, issue_kind
+		from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id, category_id, issue_kind
 		        from issue
 		        where issue_id = #{issueId} ) a , member b 
 		where a.mem_id = b.mem_id and a.issue_del = 'n' 
@@ -82,15 +69,15 @@
 	<update id="updateissue" parameterType="ants.com.board.memBoard.model.IssueVo">
 		UPDATE issue
 	    <set>
-	        <if test="issue_title != null">issue_title=#{issueTitle},</if>
-	        <if test="issue_cont != null">issue_cont=#{issueCont},</if>
-	        <if test="issue_kind != null">issue_kind=#{issueKind},</if>
-	        <if test="category_id != null">category_id=#{categoryId},</if>	 	            
-	        <if test="reg_dt != null">reg_dt=sydate,</if>	 	            
-	        <if test="mem_id != null">mem_id=#{memId},</if>	 	            
-	        <if test="issue_del != null">issue_del=#{issueDel},</if>	 	            
-	        <if test="todo_id != null">todo_id=#{todoId},</if>	 	            
-	        <if test="req_id != null">req_id=#{reqId}</if>	 	            
+	        <if test="issueTitle != null">issue_title=#{issueTitle},</if>
+	        <if test="issueCont != null">issue_cont=#{issueCont},</if>
+	        <if test="issueKind != null">issue_kind=#{issueKind},</if>
+	        <if test="categoryId != null">category_id=#{categoryId},</if>	 	            
+	        <if test="regDt != null">reg_dt=sydate,</if>	 	            
+	        <if test="memId != null">mem_id=#{memId},</if>	 	            
+	        <if test="issueDel != null">issue_del=#{issueDel},</if>	 	            
+	        <if test="todoId != null">todo_id=#{todoId},</if>	 	            
+	        <if test="reqId != null">req_id=#{reqId}</if>	 	            
 	    </set>    
 	    where issue_id = #{issueId}
 	</update>

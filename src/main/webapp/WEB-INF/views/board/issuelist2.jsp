@@ -35,17 +35,27 @@ $(function(){
     document.listForm.submit();
  }
  
+ function issueInsert(){
+ 	document.listForm.action = "<c:url value='${pageContext.request.contextPath}/projectMember/insertissueView'/>";
+    document.listForm.submit();
+ }
+ 
+ 
+ 
+ 
 	 
 </script>
 </head>
 
 <%@include file="./issuecontentmenu.jsp"%>
+<%-- <%@include file="./eachproject.jsp"%> --%>
 
 <body>
+<!-- 	<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 <form:form commandName="issueVo" id="listForm" name="listForm" method="post">
 
 		    <!-- Content Header (Page header) -->
-		    <section class="content-header" style="
+		    <section class="content-header col-md-10" style="
 											border-bottom: 1px solid #dee2e6;
 											background: white;">
 		      <div class="container-fluid">
@@ -67,7 +77,7 @@ $(function(){
 <!-- 				<input type= "button" value="작성하기" id="insertissue"> -->
 	
 			<section class="content">
-		      <div class="col-md-12">
+		      <div class="col-md-10">
 			      <div class="card" style="border-radius: inherit;">
 <!-- 	              <div class="card-header"> -->
 <!-- 	                <h3 class="card-title">현업이슈 리스트 등록</h3> -->
@@ -144,7 +154,7 @@ $(function(){
         		  </div>
         		  
         		  <div class="card-footer clearfix">
-	                <button type="button" class="btn btn-default float-right" onclick="fn_egov_reqInsert()"><i class="fas fa-plus"></i>등 록</button>
+	                <button id="insertissue" type="button" class="btn btn-default float-right" onclick="issueInsert()"><i class="fas fa-plus"></i>등 록</button>
 	              </div>
         		 
         		  
@@ -154,55 +164,9 @@ $(function(){
              </div>
 		    </section>
 				
-				
-<!-- 				<div class="card-body" style="text-align: center;"> -->
-<!-- 							<div class="row"> -->
-<!-- 								<div class="col-sm-12"> -->
-<!-- 									<table class="table table-bordered"> -->
-									
-<!-- 											<tr> -->
-<!-- 												<td>  이슈 제목</td>  -->
-<!-- 												<td>   작성자 </td> -->
-<!-- 												<td>   날짜   </td> -->
-<!-- 												yyyy-MM-dd  -->
-<!-- 											</tr> -->
-<!-- 											<tbody id = "memberlist"> -->
-<%-- 												 <c:forEach items = "${issuelist }" var ="issue"> --%>
-<!-- 													<tr> -->
-													
-<%-- 														<td><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> ${issue.issueTitle }</a> </td> --%>
-<%-- 														<td> ${issue.memId }</td> --%>
-<%-- 														<td> ${issue.regDt }</td> --%>
-														 
-<!-- 													</tr> -->
-<%-- 												 </c:forEach> 										 --%>
-<!-- 											</tbody> -->
-<!-- 									</table> -->
-<!-- 								</div> -->
-<!-- 								col-sm-12 -->
-<!-- 							</div> -->
-<!-- 							row -->
-<!-- 						</div> -->
-						
-				 <!-- card-body -->
-<!-- 				  <div id="paging" class="card-tools"> -->
-<!-- 	              	<ul class="pagination pagination-sm float-right"> -->
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">«</a></li> -->
-<%-- 		        			<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page"  /> --%>
-<%-- 		        			<form:hidden path="pageIndex" /> --%>
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">»</a></li> -->
-<!-- 	                 </ul> -->
-<!--         		  </div> -->
-        		  
-<!--         		  <div class="card-footer clearfix"> -->
-<!-- 	                <button type="button" class="btn btn-default float-right" onclick="fn_egov_reqInsert()"><i class="fas fa-plus"></i>등 록</button> -->
-<!-- 	              </div> -->
-<!-- 	    </div>       -->
-<!-- 	  </div> -->
-<!-- 	 </div>       -->
-<!-- </div> -->
-
+		
 
 </form:form>	
+<!-- </div> -->
 </body>
 </html>
