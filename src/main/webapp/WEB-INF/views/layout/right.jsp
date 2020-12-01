@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <script>
 $(function(){
+	
 	readChatList();
 	
 	$(".chatList").on('click', 'li', function(){
