@@ -28,4 +28,13 @@ SELECT *
   FROM CHATGROUP
  WHERE CGROUP_ID = #{cgroupId}
 </select>
+
+
+<insert id="sendMessage" parameterType="ants.com.chatting.model.ChatGroupVo">
+INSERT INTO chat (cgroup_id,chat_id,mem_id,chat_cont,reg_dt
+) VALUES (#{cgroupId},CHAT_SEQ.NEXTVAL,#{memId},#{chatCont},to_date(#{regDt}, 'YYYY-MM-DD-HH24:MI:SS'))
+</insert>
+
+
+
 </mapper>
