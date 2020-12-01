@@ -3,12 +3,15 @@ package ants.com.chatting.web;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.xml.registry.infomodel.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.support.SecurityContextProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import ants.com.chatting.model.ChatGroupVo;
 import ants.com.chatting.model.ChatVo;
@@ -44,5 +47,4 @@ public class ChatController {
 		
 		return "chat/msgList";
 	}
-	
 }

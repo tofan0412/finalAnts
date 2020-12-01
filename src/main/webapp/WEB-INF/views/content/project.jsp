@@ -9,6 +9,8 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js">
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
 </head>
 <title>협업관리프로젝트</title>
 <body class="hold-transition sidebar-mini accent-teal ngc">
