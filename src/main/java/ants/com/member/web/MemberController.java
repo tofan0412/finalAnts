@@ -80,13 +80,14 @@ public class MemberController {
 
 		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
 			session.setAttribute("SMEMBER", memberVo);
-			model.addAttribute("TODAY", new Date());
+			List<ProjectVo>proList = projectService.memInProjectList(memberVo.getMemId());
+			if(proList.size()!=0) {
+				session.setAttribute("projectList", proList);	
+			}
 
 			if (dbMember.getMemType().equals("pl") || dbMember.getMemType().equals("pm")) {				
-				return "manager/pl_main";
+				return "content/project";
 			} else {
-				List<ProjectVo>proList = projectService.memInProjectList(dbMember.getMemId());
-				session.setAttribute("projectList", proList);				
 				return "content/project";
 			}
 

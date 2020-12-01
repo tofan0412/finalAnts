@@ -85,12 +85,12 @@
 				<br>
 				
 				
+			 <c:if test="${projectList ne null}">
 				<li class="nav-item has-treeview menu-close">
 		            <a href="#" class="nav-link">
 			        	<i class="nav-icon fas fa-poll-h"></i>
 						<p>진행중인 프로젝트<i class="fas fa-angle-left right"></i></p></a>
 						
-			        <c:if test="${projectList ne null}">
 				        <ul class="nav nav-treeview" style="display: block;">
 				        	<c:forEach items="${projectList}" var="project">
 					        <li class="nav-item">
@@ -98,14 +98,14 @@
 							 <i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p></a></li>
 							</c:forEach>
 						</ul>
-					</c:if>
-			        <c:if test="${projectList eq null}">
-				        <ul class="nav nav-treeview" style="display: block;">
-					        <li class="nav-item">
-							<a href="#">
-							 <i class="nav-icon fas fa-layer-group"></i><p>진행중인 프로젝트가 없어요</p></a></li>
-						</ul>
-					</c:if>
+			</c:if>
+			 <c:if test="${projectList eq null}">
+				<li class="nav-item has-treeview menu-close">
+		            <a href="#" class="nav-link">
+			        	<i class="nav-icon fas fa-poll-h"></i>
+						<p>프로젝트 없음</p></a>
+						
+			</c:if>
 				</li>
 			</ul>
 		</nav>
