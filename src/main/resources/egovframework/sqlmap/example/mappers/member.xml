@@ -4,8 +4,16 @@
 	
 	<select id="getMember" parameterType="ants.com.member.model.MemberVo"
 		resultType="ants.com.member.model.MemberVo">
-		SELECT * FROM MEMBER
+		SELECT * 
+		FROM MEMBER
 		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<select id="getAllMember" resultType="ants.com.member.model.MemberVo">
+		SELECT mem_id, mem_name, mem_tel, mem_filepath, mem_filename 
+			FROM member
+		  WHERE UPPER(del) = 'N'
+			AND UPPER(mem_id) like '%' || UPPER(#{term}) || '%'
 	</select>
 
 	<insert id="insertMember" parameterType="ants.com.member.model.MemberVo">

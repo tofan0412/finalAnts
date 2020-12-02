@@ -44,6 +44,10 @@ public class ReqService{
 		return mapper.getAllMember(term);
 	}
 
+	public MemberVo getMember(MemberVo memberVo) {
+		return mapper.getMember(memberVo);
+	}
+
 
 
 

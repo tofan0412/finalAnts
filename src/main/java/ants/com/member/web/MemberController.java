@@ -90,7 +90,7 @@ public class MemberController {
 
 			if (dbMember.getMemType().equals("PL") || dbMember.getMemType().equals("PM")) {
 				List<ProjectVo> plpmList = projectService.plpmInProjectList(memberVo.getMemId());
-				session.setAttribute("plpmList", plpmList);
+				session.setAttribute("plpmList", plpmList); 
 				logger.debug("plpmList:{}", plpmList);
 				return "content/project";
 			} else {

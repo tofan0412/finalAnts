@@ -63,7 +63,7 @@
 	            <div class="card-footer">
 				     <div class="row">
 					     <div class="col-12">
-					       <a href="#" class="btn btn-secondary">취소</a>
+					       <a href="#" class="btn btn-secondary" id="back">취소</a>
 					       <c:choose>
 						       	<c:when test="${registerFlag == 'modify' }">
 						       		<a href="javascript:fn_egov_save();" class="btn btn-success float-right">수정</a>
@@ -88,6 +88,12 @@
 	<script src="/plugins/summernote/summernote-bs4.min.js"></script>
 	<script src="/plugins/summernote/lang/summernote-ko-KR.js"></script>
 	<script>
+	
+	//뒤로가기
+	$("#back").on("click", function() {
+		window.history.back();
+	});
+	
 	$(function () {
 	  // Summernote
 	  $('#summernote').summernote({

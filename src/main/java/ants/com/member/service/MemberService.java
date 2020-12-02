@@ -23,7 +23,6 @@ public class MemberService{
 	private MemberMapper mapper;
 	
 	public MemberVo getMember(MemberVo memberVo) {
-		logger.debug("memberService login : {}", memberVo);
 		return mapper.getMember(memberVo);
 	}
 	
@@ -40,8 +39,8 @@ public class MemberService{
 	}
 	
 	
-	public List<MemberVo> getAllMember(){
-		return mapper.getAllMember();
+	public List<MemberVo> getAllMember(String term){
+		return mapper.getAllMember(term);
 	}
 	
 	
