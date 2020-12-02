@@ -39,8 +39,8 @@ public class ChatService{
 	}
 	
 	// 채팅방 개설 위해 해당 프로젝트에서 현재 참여하고 있는 인원 리스트 불러오기 ..
-	public List<ProjectMemberVo> readChatMembers(String reqId){
-		List<ProjectMemberVo> result = mapper.readChatMembers(reqId);
+	public List<ProjectMemberVo> readChatMembers(String projectId){
+		List<ProjectMemberVo> result = mapper.readChatMembers(projectId);
 		return result;
 	}
 	

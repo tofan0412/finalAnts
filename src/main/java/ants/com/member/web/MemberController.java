@@ -346,7 +346,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		
 		session.removeAttribute("SMEMBER");
-		session.removeAttribute("reqId");
+		session.removeAttribute("projectId");
 		return loginView();
 	}
 	

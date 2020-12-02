@@ -8,10 +8,10 @@ $(function(){
 	// 프로젝트에 참여하고 있는 회원 목록 불러오기
 	$(".chatList").on('click', '#mkNewChat',function(){
 		$(".chatList").empty();
-		var reqId = '${reqId}';
+		var projectId = '${projectId}';
 		$.ajax({
 			url : "/chat/readChatMembers",
-			data : {reqId : reqId}, 
+			data : {projectId : projectId}, 
 			method : "POST",
 			success : function(res){
 				var html = res.split("$$$$$$$");
@@ -33,7 +33,7 @@ $(function(){
 		});
 	};
 	
-	// 채팅방 이름 클릭 시 해당 채팅방으로 이동.c
+	// 채팅방 이름 클릭 시 해당 채팅방으로 이동.
 	$(".chatList").on('click', 'li.cgroupName', function(){
 		$(".chatList").css('color', '#A9E2F3');
 		var cgroupId = $(this).attr("cgroupId");
