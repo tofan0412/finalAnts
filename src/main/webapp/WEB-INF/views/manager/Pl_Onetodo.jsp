@@ -34,6 +34,11 @@
 	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView?todoParentid='+todoId);
 		})
 		
+		// 뒤로가기
+		$(document).on('click','#back', function(){
+			window.history.back();
+		})
+		
 		// 일감 삭제
 		$(document).on('click','#deleteBtn', function(){
 			var todoId = $("#todoId").val();
@@ -66,8 +71,13 @@
 					res += '<button type="button" class="btn btn-default" id="deleteBtn">삭제</button>';
 					res += '<button type="button" class="btn btn-default" id="creatChildBtn">하위일감 생성</button>';
 					res += '<button type="button" class="btn btn-default" id="creattodoBtn">일감 생성</button>';
+					res += '<button type="button" class="btn btn-default" id="back">뒤로가기</button>';
 				
 				$("#btnMenu").html(res);
+				
+				if(data.todoVo.todoLevel == '2'){
+					$("#creatChildBtn").hide();
+				}	
 			}
 	
 		});

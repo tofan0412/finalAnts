@@ -24,16 +24,24 @@
 	$(document).ready(function() {
 		$("#memChangecomment").hide();
 		$('#summernote').summernote();
-
+		
+		// db일자 가져오기
 		var todo_start = $('#todo_start').val();
 		var todo_end = $('#todo_end').val();
 		document.getElementById('todoStart').value = new Date(todo_start).toISOString().substring(0, 10);
  		document.getElementById('todoEnd').value = new Date(todo_end).toISOString().substring(0, 10);
 		
+ 		// 등록
 		$("#regBtn").on("click", function() {
 			$("#todoform").submit();
 		});
 		
+ 		// 뒤로가기
+		$("#back").on("click", function() {
+			window.history.back();
+		});
+		
+ 		// 담당자 변경
 		$("#mem-select").on("change", function() {
 			$("#changemem").val('${todoVo.memId }');
 			$("#memChangecomment").show();
@@ -95,6 +103,7 @@
 		<input type="hidden" id='todo_end' value="${todoVo.todoEnd}"/><br><br>
 		
 		<button type="button" class="btn btn-default" id="regBtn">수정</button>
+		<button type="button" class="btn btn-default" id="back">뒤로가기</button>
 	</form>
 </div>
 </html>
