@@ -28,6 +28,7 @@
 	<!-- </property> -->
 	<!-- </bean> -->
 
+	
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<property name="order" value="1"></property>

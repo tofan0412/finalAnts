@@ -2,31 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ants.com.chatting.mapper.ChatMapper">
 	
-	
-
-
-
 <select id="readChatList" resultType="ants.com.chatting.model.ChatGroupVo" parameterType="java.lang.String">
-SELECT * 
-  FROM CHATGROUP
- WHERE REQ_ID = #{reqId}
-  <!-- 나중에 프로젝트별 채팅방 목록을 불러올 수 있도록 수정해야 한다.  -->
+<!-- SELECT *  -->
+<!--   FROM CHATGROUP -->
+<!--  WHERE REQ_ID = #{reqId} -->
+SELECT B.CGROUP_ID, B.CGROUP_NAME, B.REQ_ID
+  FROM (SELECT *
+          FROM CHATMEMBER
+         WHERE MEM_ID = #{memId}) A, CHATGROUP B
+ WHERE A.CGROUP_ID = B.CGROUP_ID
 </select>
 
-<select id="readMessages" resultType="ants.com.chatting.model.ChatVo" parameterType="java.lang.String">
-SELECT *
-  FROM CHAT
- WHERE CGROUP_ID = '1'
-ORDER BY REG_DT
-</select>
-
-
-<select id="readChatGroup" parameterType="java.lang.String" resultType="ants.com.chatting.model.ChatGroupVo">
+<select id="readCgroupName" resultType="ants.com.chatting.model.ChatGroupVo" parameterType="java.lang.String">
 SELECT * 
   FROM CHATGROUP
  WHERE CGROUP_ID = #{cgroupId}
 </select>
 
+
+<select id="readMessages" resultType="ants.com.chatting.model.ChatVo" parameterType="java.lang.String">
+SELECT *
+  FROM CHAT
+ WHERE CGROUP_ID = #{cgroupId}
+ORDER BY REG_DT
+</select>
 
 <insert id="sendMessage" parameterType="ants.com.chatting.model.ChatGroupVo">
 INSERT INTO chat (cgroup_id,chat_id,mem_id,chat_cont,reg_dt
@@ -42,6 +41,23 @@ SELECT *
 </select>
 
 
+<insert id="insertChatGroup" parameterType="ants.com.chatting.model.ChatGroupVo">
+<selectKey keyProperty="cgroupId" resultType="String" order="AFTER">
+<!-- KEYpROPERTY의 이름을 boardVo에 있는 속성값과 동일하게 해야 setter ,getter를 찾을 수 있다. -->
+	SELECT CGROUP_SEQ.CURRVAL FROM DUAL
+</selectKey>
+
+INSERT INTO CHATGROUP (cgroup_id,cgroup_name,req_id) 
+VALUES (CGROUP_SEQ.NEXTVAL,#{cgroupName},#{reqId})
+</insert>
 
 
+<insert id="insertChatMembers" parameterType="ants.com.chatting.model.ChatMemberVo">
+INSERT INTO CHATMEMBER (
+    CHATMEM_ID,
+    CGROUP_ID,
+    MEM_ID
+) VALUES (CHATMEM_SEQ.NEXTVAL,#{cgroupId},#{memId})
+
+</insert>
 </mapper>

@@ -22,9 +22,9 @@ $(function(){
 	
 	// 해당 프로젝트에 존재하는 모든 채팅방 목록 불러오기.
 	function readChatList(){
-		var reqId = '${reqId}';	
+		var memId = '${SMEMBER.memId}';	
 		$.ajax({
-			url : "/chat/readChatList?reqId="+reqId,
+			url : "/chat/readChatList?memId="+memId,
 			method : "GET",
 			success : function(res){
 				var html = res.split("$$$$$$$");
@@ -34,9 +34,12 @@ $(function(){
 	};
 	
 	// 채팅방 이름 클릭 시 해당 채팅방으로 이동.c
-	$(".chatList").on('click', 'li', function(){
+	$(".chatList").on('click', 'li.cgroupName', function(){
 		$(".chatList").css('color', '#A9E2F3');
 		var cgroupId = $(this).attr("cgroupId");
+
+// 		alert(cgroupId);
+
 		$(".chatList").empty();
 		$(".chatList").css('font-color', 'black');
 		$.ajax({
