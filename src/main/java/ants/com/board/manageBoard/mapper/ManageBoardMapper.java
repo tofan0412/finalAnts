@@ -5,6 +5,7 @@ import java.util.List;
 import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ReqVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("manageBoardMapper")
@@ -15,6 +16,9 @@ public interface ManageBoardMapper {
 
 	// 일감리스트 조회
 	public List<TodoVo> getTodoList(TodoVo todoVo);
+	
+	// 페이징 리스트 Count
+	public int todoListCount(TodoVo todoVo);
 
 	// 한개의 일감 조회
 	public TodoVo getTodo(TodoVo todoVo);

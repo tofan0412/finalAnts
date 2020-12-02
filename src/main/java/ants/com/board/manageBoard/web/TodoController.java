@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,6 +20,8 @@ import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ReqVo;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @RequestMapping("/todo")
 @Controller
@@ -61,14 +65,28 @@ public class TodoController {
 
 	// 일감 리스트 조회 메서드
 	@RequestMapping("/todoList")
-	public String todoListView(Model model, TodoVo todoVo, HttpSession session) {
+	public String todoListView(@ModelAttribute("todoVo") TodoVo todoVo, ModelMap model, HttpSession session) {
 		String reqId = (String) session.getAttribute("reqId");
 		todoVo.setReqId(reqId);
-		List<TodoVo> todoList = manageBoardService.getTodoList(todoVo);
+		
+		/** pageing setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(todoVo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(todoVo.getPageUnit());
+		paginationInfo.setPageSize(todoVo.getPageSize());
+
+		todoVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		todoVo.setLastIndex(paginationInfo.getLastRecordIndex());
+		todoVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		
+		List<?> todoList = manageBoardService.getTodoList(todoVo);
 		model.addAttribute("todoList", todoList);
+		int totCnt = manageBoardService.todoListCount(todoVo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
 		return "tiles/manager/Pl_todoList";
 	}
-
 
 	// 한개의 일감 조회 Ajax
 	@RequestMapping("/onetodo")
