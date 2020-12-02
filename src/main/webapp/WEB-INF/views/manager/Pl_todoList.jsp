@@ -28,6 +28,10 @@
 		document.listForm.action = "<c:url value='/todo/todoList'/>";
 	   	document.listForm.submit();
 	}
+	 function search(){
+		document.listForm.action = "<c:url value='/todo/todoList'/>";
+		document.listForm.submit();
+	}
 </script>
 <style type="text/css"> 
 #todoTable{
@@ -50,6 +54,25 @@
 	<form:form commandName="todoVo" id="listForm" name="listForm" method="post">
 		<a class="btn btn-default " href="${pageContext.request.contextPath }/todo/todoInsertView"><i class="fas fa-edit"></i>일감 등록</a>
 		<br>
+		    <div class="card-header with-border">
+				<div id="keyword" class="card-tools float-right" style="width: 550px;">
+					<div class="input-group row">						
+        				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
+							<form:option value="1" label="담당자"/>
+							<form:option value="2" label="내용"/>
+							<form:option value="3" label="제목"/>
+						</form:select> 
+							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
+	                        <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
+							<span class="input-group-append">							
+							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
+								<i class="fa fa-fw fa-search"></i>
+							</button>
+						</span>
+					</div>
+		        </div>
+		        
+		      </div>
 		<c:if test="${todoList eq null}">
 				"등록된 일감이없습니다."
 		</c:if>

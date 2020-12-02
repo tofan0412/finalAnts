@@ -58,8 +58,8 @@ public class ChatController {
 	}
 	
 	@RequestMapping("/readChatMembers")
-	public String readChatMembers(String reqId, Model model) {
-		List<ProjectMemberVo> chatMemList = chatService.readChatMembers(reqId);
+	public String readChatMembers(String projectId, Model model) {
+		List<ProjectMemberVo> chatMemList = chatService.readChatMembers(projectId);
 		
 		model.addAttribute("chatMemList", chatMemList);
 		return "chat/chatMemList";

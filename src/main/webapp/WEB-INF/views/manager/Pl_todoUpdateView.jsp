@@ -42,7 +42,7 @@
 		});
 		
  		// 담당자 변경
-		$("#mem-select").on("change", function() {
+		$("#memChange").on("click", function() {
 			$("#changemem").val('${todoVo.memId }');
 			$("#memChangecomment").show();
 		});
@@ -66,14 +66,20 @@
 		</div>
 		<br><br>
 		<label for="mem-select" class="col-sm-1 control-label">담당자</label>
-		<select name="memId" id="mem-select">
-			<c:forEach items="${promemList}" var="mem">
-				<option value="${mem.memId}">${mem.memName}</option>
-			</c:forEach>
-		</select>
+		<input type="text" id="mem-select" name="memId" value="${todoVo.memId }" readonly="readonly">
+		<input type="button" id="memChange" value="인수인계">
+		
 		<div id="memChangecomment">
 		<label for="memChangeComment" class="col-sm-1 control-label">인수인계 내용</label>
 		<input type="text" id="memChangeComment" name ="logComment"/>
+		
+		<label for="mem-select" class="col-sm-1 control-label">변경 담당자</label>
+		<select name="memId" id="mem-select">
+		<c:forEach items="${promemList}" var="mem">
+			<c:if test="${mem.memName ne todoVo.memId }">
+		<option value="${mem.memId}">${mem.memName}</option></c:if>
+ 		</c:forEach>
+ 		</select>
 		</div>
 		
 		<br><br>

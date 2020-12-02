@@ -54,13 +54,13 @@ $(function(){
 		// 동일한 이름을 갖는 채팅방이 존재하는지 확인해야 한다.
 		
 		else{
-			// 먼저, 해당 reqId와 이름을 갖는, chatGroup을 하나 입력한다.
-			var reqId = '${reqId}';
+			// 먼저, 해당 projectId와 이름을 갖는, chatGroup을 하나 입력한다.
+			var projectId = '${projectId}';
 			var cgroupName = $('#cgroupName').val();
 			
 			$.ajax({
 				url : "/chat/insertChatGroup",
-				data : {reqId : reqId, cgroupName : cgroupName},
+				data : {reqId : projectId, cgroupName : cgroupName},
 				method : "POST",
 				success : function(res){
 					var ajaxArr = {"memList" : MemListArr, "cgroupId" : res}; 

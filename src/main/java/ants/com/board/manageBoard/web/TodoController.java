@@ -18,15 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
-import ants.com.board.memBoard.model.IssueVo;
 import ants.com.member.model.MemberVo;
-import ants.com.member.model.ReqVo;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @RequestMapping("/todo")
 @Controller
 public class TodoController {
 	private static final Logger logger = LoggerFactory.getLogger(TodoController.class);
+
 	@Resource(name = "manageBoardService")
 	private ManageBoardService manageBoardService;
 
@@ -63,12 +62,12 @@ public class TodoController {
 		}
 	}
 
-	// 일감 리스트 조회 메서드
+	// 일감 리스트 조회 메서드(전체)
 	@RequestMapping("/todoList")
 	public String todoListView(@ModelAttribute("todoVo") TodoVo todoVo, ModelMap model, HttpSession session) {
 		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
-		
+		logger.debug("searchKeyword!!!!:{}",todoVo.getSearchKeyword());
 		/** pageing setting */
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(todoVo.getPageIndex());
@@ -78,7 +77,6 @@ public class TodoController {
 		todoVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		todoVo.setLastIndex(paginationInfo.getLastRecordIndex());
 		todoVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-		
 		
 		List<?> todoList = manageBoardService.getTodoList(todoVo);
 		model.addAttribute("todoList", todoList);

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <ul>
 	<!-- 요구사항정의서 번호가 null이 아닌 경우에만 채팅방 목록을 출력한다. -->
-	<c:if test="${reqId ne null }">
+	<c:if test="${projectId ne null }">
 		<c:forEach items="${chatList }" var="chat">
 			<input type="text" value="${chat.cgroupId }" hidden="hidden">
 
