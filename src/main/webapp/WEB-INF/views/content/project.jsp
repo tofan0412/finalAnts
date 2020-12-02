@@ -9,7 +9,6 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js">
 </script>
-<script src="/resources/js/jquery.ajax-cross-origin.min.js"></script>
 </head>
 <title>협업관리프로젝트</title>
 <body class="hold-transition sidebar-mini accent-teal ngc">
