@@ -66,7 +66,7 @@ public class MemberController {
 
 	// 로그인 페이지 이동
 	@RequestMapping("/loginView")
-	public String viewlogin() {
+	public String loginView() {
 		logger.debug("MemberController loginView");
 		return "member/login";
 	}
@@ -409,6 +409,15 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 		
 		return "main.tiles/member/memberPassmodified2";
 	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		
+		session.removeAttribute("SMEMBER");
+		session.removeAttribute("reqId");
+		return loginView();
+	}
+	
 
 
 

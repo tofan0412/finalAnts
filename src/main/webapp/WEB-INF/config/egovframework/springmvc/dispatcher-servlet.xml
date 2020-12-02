@@ -127,6 +127,11 @@
 		
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo"/>
+		<!-- Interceptor는 http통신에서 request, response를 가로채는 역할을 한다. -->
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		
 		<websocket:sockjs />
 	</websocket:handlers>
 	

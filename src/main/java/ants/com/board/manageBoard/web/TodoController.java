@@ -98,15 +98,15 @@ public class TodoController {
 
 	// 일감 수정
 	@RequestMapping("/updatetodo")
-	public String todoupdate(TodoVo todoVo, Model model, @RequestParam(name="changemem", required=false)String changemem) {
-			//인수인계 쿼리짜기!
-//			logger.debug("change:{}",changemem);
-//			if(!changemem.equals(todoVo.getMemId())) {
-//				TodoLogVo todoLogVo = new TodoLogVo();
-//				todoLogVo.setBeforeId(changemem);
-//				todoLogVo.setAfterId(todoVo.getMemId());
-//				int changeCnt = manageBoardService.todoChangeMem(todoLogVo);
-//			}
+	public String todoupdate(TodoVo todoVo, Model model, @RequestParam(name="changemem", required=false)String changemem, @RequestParam(name="logComment", required=false)String logComment) {
+			if(!changemem.equals(todoVo.getMemId())) {
+				TodoLogVo todoLogVo = new TodoLogVo();
+				todoLogVo.setBeforeId(changemem);
+				todoLogVo.setAfterId(todoVo.getMemId());
+				todoLogVo.setLogComment(logComment);
+				todoLogVo.setTodoId(todoVo.getTodoId());
+				manageBoardService.todoChangeMem(todoLogVo);
+			}
 		int updateCnt = manageBoardService.todoupdate(todoVo);
 		if (updateCnt > 0) {
 			return "redirect:/todo/todoList?reqId=" + todoVo.getReqId();
