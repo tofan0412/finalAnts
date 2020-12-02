@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import ants.com.member.mapper.MemberMapper;
 import ants.com.member.model.MemberVo;
@@ -21,12 +22,12 @@ public class MemberService{
 	@Resource(name="memberMapper")
 	private MemberMapper mapper;
 	
-	public MemberVo getMember(String memId) {
-		logger.debug("memberService login : {}", memId);
-		return mapper.getMember(memId);
+	public MemberVo getMember(MemberVo memberVo) {
+		logger.debug("memberService login : {}", memberVo);
+		return mapper.getMember(memberVo);
 	}
 	
-	
+	 
 	public int insertMember(MemberVo memberVo) throws SQLException, IOException {
 		logger.debug("memberService memberVo : {}", memberVo);
 		return mapper.insertMember(memberVo);
@@ -38,15 +39,20 @@ public class MemberService{
 		return mapper.updatePass(memberVo);
 	}
 	
+	
 	public List<MemberVo> getAllMember(){
 		return mapper.getAllMember();
 	}
-
 	
 	
+	public int checkSignup(MemberVo memberVo) {
+		logger.debug("memberService checkSignup : {}", memberVo);
+		return mapper.checkSignup(memberVo);
+	}
 	
-	public int checkSignup(String memId) {
-		logger.debug("memberService checkSignup : {}", memId);
-		return mapper.checkSignup(memId);
+	
+	public MemberVo logincheck(MemberVo memberVo) {
+		logger.debug("memberService logincheck : {}", memberVo);
+		return mapper.logincheck(memberVo);
 	}
 }
