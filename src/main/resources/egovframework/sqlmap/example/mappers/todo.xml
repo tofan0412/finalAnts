@@ -147,13 +147,28 @@
 	</update>
 	
 	<update id="tododelete" parameterType="ants.com.board.manageBoard.model.TodoVo">
-	UPDATE todo
-    SET del='Y'
-	WHERE
-    todo_id = #{todoId}
+		UPDATE todo
+	    SET del='Y'
+		WHERE
+	    todo_id = #{todoId}
     </update>
 	
 	<insert id="todoChangeMem" parameterType="ants.com.board.manageBoard.model.TodoLogVo">
-		
+		            
+		INSERT INTO todolog (
+		    todo_id,
+		    log_id,
+		    log_comment,
+		    before_id,
+		    after_id,
+		    reg_dt
+		) VALUES (
+		    #{todoId},
+		    LOG_SEQ.NEXTVAL,
+		    #{logComment},
+		    #{beforeId},
+		    #{afterId},
+		    sysdate
+		)
 	</insert>
 </mapper>

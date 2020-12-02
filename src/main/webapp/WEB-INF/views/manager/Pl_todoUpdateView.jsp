@@ -22,6 +22,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#memChangecomment").hide();
 		$('#summernote').summernote();
 
 		var todo_start = $('#todo_start').val();
@@ -35,6 +36,7 @@
 		
 		$("#mem-select").on("change", function() {
 			$("#changemem").val('${todoVo.memId }');
+			$("#memChangecomment").show();
 		});
  	});
 
@@ -60,8 +62,13 @@
 			<c:forEach items="${promemList}" var="mem">
 				<option value="${mem.memId}">${mem.memName}</option>
 			</c:forEach>
-		</select><br><br>
+		</select>
+		<div id="memChangecomment">
+		<label for="memChangeComment" class="col-sm-1 control-label">인수인계 내용</label>
+		<input type="text" id="memChangeComment" name ="logComment"/>
+		</div>
 		
+		<br><br>
 		<input type="hidden" name="changemem" id="changemem" />
 		
 		<label for="status-select" class="col-sm-1 control-label">우선순위</label>
