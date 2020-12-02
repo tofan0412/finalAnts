@@ -31,6 +31,10 @@
       	<c:if test="${SMEMBER.memId ne null }">
     	  환영합니다, ${SMEMBER.memId }님!
    		</c:if>
+   		<c:if test="${reqId ne null }">
+    	  현재 프로젝트 번호 : ${reqId}
+   		</c:if>
+   		
       </li>
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">

@@ -10,38 +10,31 @@ import org.springframework.stereotype.Service;
 
 import ants.com.chatting.mapper.ChatMapper;
 import ants.com.chatting.model.ChatGroupVo;
+import ants.com.chatting.model.ChatMemberVo;
 import ants.com.chatting.model.ChatVo;
 import ants.com.member.model.ProjectMemberVo;
 
 @Service("chatService")
 public class ChatService{
-	private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
 	
 	@Resource(name="chatMapper")
 	private ChatMapper mapper;
 
-	public List<ChatGroupVo> readChatList(String reqId){
-		return mapper.readChatList(reqId);
+	public List<ChatGroupVo> readChatList(String memId){
+		return mapper.readChatList(memId);
 	}
 	
 	public List<ChatVo> readMessages(String cgroupId){
 		return mapper.readMessages(cgroupId);
 	}
 	
-	public ChatGroupVo readChatGroup(String cgroupId) {
-		return mapper.readChatGroup(cgroupId);
+	public ChatGroupVo readCgroupName(String cgroupId) {
+		return mapper.readCgroupName(cgroupId);
 	}
 	
 	// 전송한 메시지 DB에 저장하기..
 	public int sendMessage(ChatVo chatVo) {
-		logger.debug("그룹 : {}, 아이디 : {}, 내용 : {}, 입력일 : {}",
-								chatVo.getCgroupId(), 
-								chatVo.getMemId(), 
-								chatVo.getChatCont(),
-								chatVo.getRegDt());	
-		
 		int result = mapper.sendMessage(chatVo);
-		logger.debug("result : {}", result);
 		return result;
 	}
 	
@@ -50,5 +43,17 @@ public class ChatService{
 		List<ProjectMemberVo> result = mapper.readChatMembers(reqId);
 		return result;
 	}
+	
+	public int insertChatGroup(ChatGroupVo chatGroupVo) {
+		int result = mapper.insertChatGroup(chatGroupVo);
+		return result;
+	}
+	
+	public int insertChatMembers(ChatMemberVo chatMemberVo) {
+		return mapper.insertChatMembers(chatMemberVo);
+	}
+
+	
+	
 	
 }

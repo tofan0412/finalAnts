@@ -54,7 +54,7 @@
 
 </head>
 
-<title>Bootstrap Example</title>
+<title>Ants - 로그인</title>
 <body>
 
 	<div class="ff">

@@ -23,4 +23,6 @@ public interface ReqMapper {
 	
 	public List<MemberVo> getAllMember(String term);
 
+	public MemberVo getMember(MemberVo memberVo);
+
 }

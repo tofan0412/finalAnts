@@ -43,14 +43,30 @@
 		        </div>
 		      </div><!-- /.container-fluid -->
 		    </section>
-		
 
     <!-- Main content -->
 		    <section class="content">
 		      <div class="col-md-12">
 			      <div class="card" style="border-radius: inherit;">
 	              <div class="card-header">
-	                <h3 class="card-title">요구사항 정의서 등록</h3>
+	                <h3 class="card-title">
+	                	<div class="input-group mb-3 ">
+		                  <select class="form-control col-md-4" name="searchCondition" id="searchCondition" style="font-size: 0.7em;">
+	                          <option value="0">제목</option>
+	                          <option value="1">기간</option>
+	                          <option value="2">담당자</option>
+	                          <option value="3">응답상태</option>
+	                      </select>
+		                  <!-- /btn-group -->
+		                  <input type="text" class="form-control" name="searchKeyword" value="${reqVo.searchKeyword }">
+		                  <a href="javascript:fn_egov_selectList();" >
+		                  	<button type="button" class="btn-default" style="height: 100%;">
+                               <i class="fa fa-search"></i>
+                          	</button>
+                          </a>
+		                </div>
+	                
+	                </h3>
 	
 	                <div class="card-tools">
 	                  <ul class="pagination pagination-sm float-right">
@@ -72,6 +88,7 @@
 	                      <th>기간</th>
 	                      <th style="text-align: center;">담당자</th>
 	                      <th style="text-align: center;">응답 상태</th>
+	                      <th>진행도</th>
 	                      <th></th>
 	                    </tr>
 	                  </thead>
@@ -86,7 +103,7 @@
 		                    	  <td style="text-align: center;">
 		                    	  	<c:choose>
 			                      	  <c:when test="${req.plId==null }">
-			                      	  	<a class="btn btn-default btn-sm" data-toggle="modal" data-target="#addpl">
+			                      	  	<a class="btn btn-default btn-sm addplModal" data-toggle="modal" data-target="#addpl" reqId="${req.reqId}">
 			                              <i class="fas fa-envelope"></i>
 			                               PL등록
 			                          	</a>
@@ -100,6 +117,10 @@
 			                      	  <c:when test="${req.status eq '반려' }"><span class="badge badge-danger">${req.status }</span></c:when>
 			                      	  <c:when test="${req.status eq '수락' }"><span class="badge badge-success">${req.status }</span></c:when>
 			                      	</c:choose>
+			                      </td>
+			                      <td>
+			                      	
+			                      </td>
 			                      <td class="project-actions text-right" style="opacity: .9;">
 			                          <a class="btn btn-primary btn-sm" href="javascript:reqDetail(${req.reqId });">
 			                              <i class="fas fa-folder"></i>
@@ -120,7 +141,7 @@
 	                  </tbody>
 	                </table>
 	              </div>
-	              
+	              <!-- paging -->
 	              <div id="paging" class="card-tools">
 	              	<ul class="pagination pagination-sm float-right">
 	                    <li class="page-item"><a class="page-link" href="#">«</a></li>
@@ -131,6 +152,7 @@
         		  </div>
         		  
         		  <div class="card-footer clearfix">
+					<button type="button" class="btn btn-default" id="back">뒤로가기</button>
 	                <a class="btn btn-app float-right" href="javascript:fn_egov_reqInsert();">
                   		<i class="fas fa-edit"></i> 작성하기
                 	</a>
@@ -140,6 +162,7 @@
 	            </div>
              </div>
 		    </section>
+		    
 	</form:form>
 	
 	<!-- PL등록 모달창 -->
@@ -151,10 +174,15 @@
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	      </div>
 	      <div class="modal-body">
-	      	<form:form commandName="memberVo" id="addplForm" name="addplForm" method="post">
+	      	<form:form commandName="memberVo" id="plForm" name="plForm" method="post">
 	          <div class="col-md-6" style="float: left">
+	          	<input type="hidden" id="modalReqId" name="reqId" value="">
+	          	<input type="hidden" name="status" value="대기">
 	            <label for="recipient-name" class="control-label">이메일:</label>
-	            <input type="text" class="form-control" id="searchInput" name="memId"> <!-- searchInput id에 -->
+	            <input type="text" class="form-control" id="searchInput" name="memId"> 
+	            <div class="card-title error-page jg" id="memIdCheck" style="width: auto">
+		            
+	            </div>
 	          </div>
 	        </form:form>
 	        
@@ -165,7 +193,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary" onclick="fn_egov_addpl()">요청 보내기</button>
+	        <button type="button" class="btn btn-primary" id="addplBtn">요청 보내기</button>
 	      </div>
 	    </div>
 	  </div>
@@ -173,9 +201,30 @@
 	
 	
 <script type="text/javascript">
+	var searchCondition = "${reqVo.searchCondition}";
+	$('#searchCondition').val(""+searchCondition+"").attr("selected","selected");
 	
-	$(function() {	
-		// 해당 id에서 값이 입력되면 실행
+	//뒤로가기
+	$("#back").on("click", function() {
+		window.history.back();
+	});
+	
+	
+	$(function() {
+		
+		$('.addplModal').on('click',function(){
+			var reqId = $(this).attr("reqId");
+			console.log(reqId);
+			$('#modalReqId').val(reqId);
+			
+			
+		});
+		
+		/* memId입력창에서 키업이벤트 발생시 */
+		$('#searchInput').on('keyup',function(){
+			memIdCheck();
+		});
+		/* memId 자동완성 */
 		$("#searchInput").autocomplete({
 			//자동완성 대상
 			source : function( request, response ) {
@@ -220,11 +269,41 @@
 			position: { my : "right top", at: "right bottom" },	
 			close : function(event, ui){	//자동완성창 닫아질때 호출
 				
-				//checkmemId();
+				
 			}
-		})
+		});
+		
+		/* pl요청 전송버튼 클릭 */
+		$('#addplBtn').on('click',function(){
+			$('#searchInput').attr('name','plId');
+			addpl();
+		});
 		
 	});
+	
+	/* 사용자 아이디 체크하기 */
+	function memIdCheck(){
+		$.ajax({url  : "/req/memIdCheck",
+				data : $('#plForm').serialize(),
+				method : "POST",
+				success: function(data){
+					console.log(data);
+					console.log(data.memberVo);
+					// 메세지 추가
+					if(data.memberVo == null){
+						$('#memIdCheck').html(
+							'<div><h3><i class="fas fa-exclamation-triangle text-warning"></i> 해당하는 회원이 없습니다.</h3><p>pl요청은 회원에게만 할 수 있습니다.<br> <a href="../../index.html">초대링크를 보낼 수 있어요!</a></p></div>'		
+						);
+						$('#memIdCheck').attr('memIdCheckFlag','false');
+					}else{
+						$('#memIdCheck').html(
+							'<div><h3><i class="fas fa-check fa-2x text-success"></i> 요청을 보낼 수 있습니다.</h3></div>'		
+						);
+						$('#memIdCheck').attr('memIdCheckFlag','true');
+					}
+				}
+		})
+	}
 
 	/* 요구사항정의서 삭제하기 */
 	function reqDelete(reqId){
@@ -257,22 +336,10 @@
 	   	document.listForm.submit();
 	}
 	
-	/* 사용자 아이디 체크하기 */
-	function checkmemId(){
-		$.ajax({url  : "/member/memberCheck",
-				data : $('#plForm').serialize(),
-				method : "POST",
-				success: function(data){
-					if(data.cnt == 1){
-						$('#memberCheck').append
-					}
-				}
-		})
-	}
-	
-	// addpl plId,status(대기)로 변경
-	function reqModify(reqVo){
-		
+	/* pl요청 보내기 */
+	function addpl(){
+		document.plForm.action = "<c:url value='/req/reqUpdate'/>";
+		document.plForm.submit();
 	}
 
 </script>

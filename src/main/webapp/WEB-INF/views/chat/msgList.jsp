@@ -142,22 +142,25 @@
 #msgArea::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment {
 width:16px;height:16px;background:#f1ef79;} 
 </style>
+
+<!-- 채팅방 이름을 표시한다. -->
 <div>${cgroup.cgroupName }</div>
+
 <!-- 채팅 메시지 목록 부분  -->
 <div id="msgArea">	
 	<c:forEach items="${msgList }" var="msg">
 			
-			<input type="text" value='${cgroup.cgroupId }' hidden="hidden">
-			<c:if test="${msg.memId eq SMEMBER.memId }">
-			<div class="oneMsg">
-				<div class="myMemId memId">${msg.memId }</div>
-				<div class="myChatCont chatCont">${msg.chatCont }</div><br>
-				<div class="myRegDt">${msg.regDt }</div>
-				<br>
-			</div>
-			</c:if>
+		<!-- 접속한 사용자의 아이디와 일치하는 경우, 우측 배열 -->
+		<c:if test="${msg.memId eq SMEMBER.memId }">
+		<div class="oneMsg">
+			<div class="myMemId memId">${msg.memId }</div>
+			<div class="myChatCont chatCont">${msg.chatCont }</div><br>
+			<div class="myRegDt">${msg.regDt }</div>
+			<br>
+		</div>
+		</c:if>
 		
-		
+		<!-- 접속한 사용자가 보낸 메시지가 아닌 경우, 좌측 배열 -->
 		<c:if test="${msg.memId ne SMEMBER.memId }">
 			<div class="oneMsg">
 				<div class="yourMemId memId">${msg.memId }</div>
@@ -173,5 +176,4 @@ width:16px;height:16px;background:#f1ef79;}
 	<textarea id='sendChatCont' cols='17' rows='3' style='resize : none; margin-top : 5px;'/>
 	<input id="sendMsg" type='button' style="height : 40px;" value="전송">
 </div>
-	
 $$$$$$$

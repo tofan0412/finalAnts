@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -41,17 +42,27 @@
 		      <div class="container-fluid">
 		        <div class="row mb-2">
 		          <div class="col-sm-6">
-		            <h1 class="jg">협업관리툴 개발</h1>
+		         <c:if test="${plpmList ne null}">
+					<c:forEach items="${plpmList}" var="project">
+						<c:if test="${reqId eq project.reqId}"><h1 class="jg">${project.proName}</h1><c:set var="projectNAME" value="${project.proName}"></c:set></c:if>
+					</c:forEach>
+		         </c:if>
+		         <c:if test="${projectList ne null}">
+					<c:forEach items="${projectList}" var="project">
+						<c:if test="${reqId eq project.reqId}"><h1 class="jg">${project.proName}</h1><c:set var="projectNAME" value="${project.proName}"></c:set></c:if>
+					</c:forEach>
+		         </c:if>
+		            
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right">
 		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active">협업관리툴 개발</li>
+		              <li class="breadcrumb-item active">${projectNAME}</li>
 		            </ol>
 		          </div>
 		        </div>
 		        <div class="row mb-2">
-		        	<p style = "color : lightslategray;">프로젝트 설명을 입력하세요.</p>
+		        	<p style = "color : lightslategray;">프로젝트 설명을 입력하세요.컬럼 만들어야 하나.. 회의하자!</p>
 		        </div>
 		      </div><!-- /.container-fluid -->
 		    </section>

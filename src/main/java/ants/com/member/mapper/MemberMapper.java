@@ -19,7 +19,7 @@ public interface MemberMapper {
 
 	public int updatePass(MemberVo memberVo);
 
-	public List<MemberVo> getAllMember();
+	public List<MemberVo> getAllMember(String term);
 
 	public int checkSignup(MemberVo memberVo);
 	
