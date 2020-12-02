@@ -33,14 +33,14 @@ public class TodoController {
 	// 프로젝트명 클릭시 세션저장
 	@RequestMapping("/projectgetReq")
 	public String projectgetReq(HttpSession session, String reqId) {
-		session.setAttribute("reqId", reqId);
+		session.setAttribute("projectId", reqId);
 		return "redirect:/todo/todoList";
 	}
 
 	// 일감 등록 화면 출력 메서드
 	@RequestMapping("/todoInsertView")
 	public String todoInsertView(Model model, TodoVo todoVo, HttpSession session, @RequestParam(name="todoParentid", required=false)String todoParentid) {
-		String reqId = (String) session.getAttribute("reqId");
+		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
 		List<MemberVo> promemList = manageBoardService.projectMemList(todoVo);
 		model.addAttribute("promemList", promemList);
@@ -53,7 +53,7 @@ public class TodoController {
 	// 일감 등록 메서드
 	@RequestMapping("/todoInsert")
 	public String todoInsert(Model model, TodoVo todoVo, HttpSession session) {
-		String reqId = (String) session.getAttribute("reqId");
+		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
 		int todoInsert = manageBoardService.todoInsert(todoVo);
 		if (todoInsert > 0) {
@@ -66,7 +66,7 @@ public class TodoController {
 	// 일감 리스트 조회 메서드
 	@RequestMapping("/todoList")
 	public String todoListView(@ModelAttribute("todoVo") TodoVo todoVo, ModelMap model, HttpSession session) {
-		String reqId = (String) session.getAttribute("reqId");
+		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
 		
 		/** pageing setting */
@@ -105,7 +105,7 @@ public class TodoController {
 	// 일감 수정 화면 출력
 	@RequestMapping("/updatetodoView")
 	public String todoupdateView(Model model, TodoVo todoVo, HttpSession session) {
-		String reqId = (String) session.getAttribute("reqId");
+		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
 		List<MemberVo> promemList = manageBoardService.projectMemList(todoVo);
 		TodoVo dbtodoVo = manageBoardService.getTodo(todoVo);
@@ -136,7 +136,7 @@ public class TodoController {
 	// 일감 삭제
 	@RequestMapping("/deletetodo")
 	public String tododelete(TodoVo todoVo, Model model, HttpSession session) {
-		String reqId = (String) session.getAttribute("reqId");
+		String reqId = (String) session.getAttribute("projectId");
 		int delTodoCnt = manageBoardService.tododelete(todoVo);
 		if (delTodoCnt > 0) {
 			return "redirect:/todo/todoList?reqId=" + reqId;
