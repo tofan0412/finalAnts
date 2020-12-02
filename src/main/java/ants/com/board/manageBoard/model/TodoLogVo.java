@@ -10,7 +10,7 @@ public class TodoLogVo {
 	private String logComment;
 	private String beforeId;
 	private String afterId;
-	private Date regDt;
+	private String regDt;
 	
 	public String getTodoId() {
 		return todoId;
@@ -42,10 +42,10 @@ public class TodoLogVo {
 	public void setAfterId(String afterId) {
 		this.afterId = afterId;
 	}
-	public Date getRegDt() {
+	public String getRegDt() {
 		return regDt;
 	}
-	public void setRegDt(Date regDt) {
+	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
 	@Override
@@ -53,5 +53,6 @@ public class TodoLogVo {
 		return "TodoLogVo [todoId=" + todoId + ", logId=" + logId + ", logComment=" + logComment + ", beforeId="
 				+ beforeId + ", afterId=" + afterId + ", regDt=" + regDt + "]";
 	}
+	
 	
 }

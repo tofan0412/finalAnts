@@ -26,8 +26,15 @@
 	 		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
 	 		
 	 		$('#summernote').summernote();
+	 		
+	 		// 등록
 			$("#regBtn").on("click", function() {
 				$("#todoform").submit();
+			});
+	 		
+			// 뒤로가기
+			$("#back").on("click", function() {
+				window.history.back();
 			});
 	 	});
 </script>
@@ -75,6 +82,7 @@
 		
 		
 		<button type="button" class="btn btn-default" id="regBtn">등록</button>
+		<button type="button" class="btn btn-default" id="back">뒤로가기</button>
 	</form>
 	
 </div>
