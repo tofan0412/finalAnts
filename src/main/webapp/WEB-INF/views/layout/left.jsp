@@ -96,7 +96,7 @@
 							</c:forEach>
 						</ul>
 			 </c:if>
-			 <c:if test="${projectList eq null && plpmList eq null}">
+			 <c:if test="${projectList eq null and plpmList eq null}">
 				<li class="nav-item has-treeview menu-close">
 		            <a href="#" class="nav-link">
 			        	<i class="nav-icon fas fa-poll-h"></i>

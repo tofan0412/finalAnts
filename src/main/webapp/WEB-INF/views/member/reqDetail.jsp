@@ -37,7 +37,7 @@
 		      <!-- Default box -->
 		      <div class="card">
 		        <div class="card-header">
-		          <a class="jg" href="/member/memberRegistview" style="color: #0BB783;">프로젝트 공간으로 가시겠습니까?</a>
+		          <a class="jg" href="/todo/projectgetReq?reqId=${reqVo.reqId }" style="color: #0BB783;">프로젝트 공간으로 가시겠습니까?</a>
 		
 		          <div class="card-tools">
 		            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -71,8 +71,8 @@
 		                <div class="col-12 col-sm-4">
 		                  <div class="info-box bg-light">
 		                    <div class="info-box-content">
-		                      <span class="info-box-text text-center text-muted">프로젝트 생성여부</span>
-		                      <span class="info-box-number text-center text-muted mb-0"></span>
+		                      <span class="info-box-text text-center text-muted">응답 상태</span>
+		                      <span class="info-box-number text-center text-muted mb-0">${reqVo.status }</span>
 		                    </div>
 		                  </div>
 		                </div>
@@ -145,7 +145,7 @@
 		            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
 		              <h3 class="text-primary" ><i class="fas fa-paint-brush"></i> ${reqVo.reqTitle }</h3>
 		              <p class="text-muted">${reqVo.reqCont }</p>
-		              <br>
+		              <br> 
 		              <div class="text-muted">
 		                <p class="text-sm">Project Leader
 		                  <b class="d-block">${reqVo.plId }</b>
@@ -179,13 +179,13 @@
 		          </div>
 		        </div>
 		        <!-- /.card-body -->
+		        <div class="card-footer">
+			        <a href="/req/reqList" class="btn btn-secondary" id="back">목록</a>
+		        </div>
 		      </div>
 		      <!-- /.card -->
 		
 		    </section>
-		      
-
 	</form:form>
-
 </body>
 </html>

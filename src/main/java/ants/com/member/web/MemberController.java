@@ -72,39 +72,108 @@ public class MemberController {
 	}
 
 	// 로그인 로직
-		@RequestMapping(path = "/loginFunc")
-		public String process(MemberVo memberVo, HttpSession session, Model model) {
+	@RequestMapping(path = "/loginFunc")
+	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
 
-			logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
+		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
 
-			MemberVo dbMember = memberService.getMember(memberVo.getMemId());
-			logger.debug("dbMember : {}", dbMember);
-
-			if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
-				session.setAttribute("SMEMBER", memberVo);
-				List<ProjectVo>proList = projectService.memInProjectList(memberVo.getMemId());
-				logger.debug("projectList:{}",proList);
-				if(proList.size()!=0) {
-					session.setAttribute("projectList", proList);	
-				}
-
-				if (dbMember.getMemType().equals("PL") || dbMember.getMemType().equals("PM")) {
-					List<ProjectVo> plpmList = projectService.plpmInProjectList(memberVo.getMemId());
-					session.setAttribute("plpmList", plpmList);	
-					logger.debug("plpmList:{}",plpmList);
-					return "content/project";
-				} else {
-					return "content/project";
-				}
-
-			} else {
-				JOptionPane.showMessageDialog(null, "일치하는 회원정보가 없습니다.");
-				return "redirect:/member/loginView";
+		MemberVo dbMember = memberService.getMember(memberVo);
+		logger.debug("dbMember : {}", dbMember);
+		
+		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
+			session.setAttribute("SMEMBER", memberVo);
+			List<ProjectVo> proList = projectService.memInProjectList(memberVo.getMemId());
+			logger.debug("projectList:{}", proList);
+			if (proList.size() != 0) {
+				session.setAttribute("projectList", proList);
 			}
+
+			if (dbMember.getMemType().equals("PL") || dbMember.getMemType().equals("PM")) {
+				List<ProjectVo> plpmList = projectService.plpmInProjectList(memberVo.getMemId());
+				session.setAttribute("plpmList", plpmList); 
+				logger.debug("plpmList:{}", plpmList);
+				return "content/project";
+			} else {
+				return "content/project";
+			}
+
+		} else {
+			return "redirect:/member/loginView";
 		}
+
+	}
 		
 	
+	// 로그인 체크 ajax
+	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
+	public String logincheck(MemberVo memberVo, Model model) {
+		
+		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
+		MemberVo dbMember = memberService.logincheck(memberVo);
+		logger.debug("logincheck rowcount : {}", dbMember);
+		model.addAttribute("memId", dbMember.getMemId());
+		model.addAttribute("memPass", dbMember.getMemPass());
+		
+		return "member/login";
+	}
 	
+	/*
+ 	// 로그인 체크 ajax
+@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
+public @ResponseBody JSONObject logincheck(MemberVo memberVo, Model model, 
+		@RequestBody ReplyVO replyVO, ModelMap modelMap,Principal principal) {
+
+	logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
+	
+try {
+		MemberVo dbMember = memberService.logincheck(memberVo);
+		logger.debug("logincheck rowcount : {}", dbMember);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+
+	return ObjectToMap.ConvertObjectToJSONObject(memberVo);
+}
+
+
+@SuppressWarnings("unchecked")
+
+public static JSONObject ConvertObjectToJSONObject(Object obj) {
+
+	try {
+
+		Field[] fields = obj.getClass().getDeclaredFields();
+
+		JSONObject jsonObj = new JSONObject();
+
+		for (int i = 0; i < fields.length; i++) {
+
+			fields[i].setAccessible(true);
+
+			jsonObj.put(fields[i].getName(), (String) fields[i].get(obj));
+
+		}
+
+		return dbMember;
+
+	} catch (IllegalArgumentException e) {
+
+		e.printStackTrace();
+
+	} catch (IllegalAccessException e) {
+
+		e.printStackTrace();
+
+	} catch (Exception e) {
+
+		e.printStackTrace();
+
+	}
+
+	return null;
+	
+}
+  */
 	
 	// 회원가입 페이지 이동
 	@RequestMapping(path = "/memberRegistview", method = RequestMethod.GET)
@@ -176,9 +245,9 @@ public class MemberController {
 	
 	// 중복아이디 체크
 	@ResponseBody @RequestMapping(path = "/checkSignup", method = RequestMethod.POST) 
-	public String checkSignup(HttpServletRequest request) { 
+	public String checkSignup(HttpServletRequest request, MemberVo memberVo) { 
 		String memId = request.getParameter("memId"); 
-		int rowcount = memberService.checkSignup(memId); 
+		int rowcount = memberService.checkSignup(memberVo); 
 		logger.debug("checkSignup : {}", rowcount);
 		
 		return String.valueOf(rowcount);
@@ -237,17 +306,16 @@ public class MemberController {
 																		// 주소를 다 작성해주세요.
 		mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); // 수신자셋팅 //.TO 외에 .CC(참조)
 																							// .BCC(숨은참조) 도 있음
-
+		
 		mimeMessage.setSubject(subject); // 제목셋팅
 		mimeMessage.setText(body); // 내용셋팅
 		Transport.send(mimeMessage); // javax.mail.Transport.send() 이용 }
 		
 		return "main.tiles/main";
-		
 	}
 	
 	
-	// 비밀번호 수정
+	// 비밀번호 수정 - 이메일
 	@RequestMapping(path = "/passupdateemail", method = RequestMethod.GET)
 	public String passupdateemail(MemberVo memberVo,Model model) {
 		model.addAttribute("memId", memberVo.getMemId());
@@ -258,7 +326,7 @@ public class MemberController {
 	
 	
 
-	// 비밀번호 수정
+	// 비밀번호 수정 (문자,메일 -> 비밀번호 수정 쿼리로)
 	@RequestMapping(path = "/passupdate", method = RequestMethod.GET)
 	public String passupdate(MemberVo memberVo) {
 		logger.debug("memberRegist-Controller - passupdate()");
@@ -267,7 +335,7 @@ public class MemberController {
 		logger.debug("memberRegist-Controller - passupdate()-updatecnt : {}", updatecnt);
 
 		if (updatecnt == 1) {
-			return mainView();
+			return mainView();		// 수정되면 메인으로
 		} else {					// 수정하는 정보에 전화번호가 없으면   메일 수정창으로 복귀
 			if (memberVo.getMemTel().equals(null) || memberVo.getMemTel().equals("")) {
 				return "main.tiles/member/memberPassmodified";
@@ -307,7 +375,7 @@ public class MemberController {
 		return numStr;
 	}
 
-	// 문자로 비밀번호 변경
+	// 비밀번호 수정 - 문자
 	@RequestMapping(path = "/sendSms")
 	public String sendSms(HttpServletRequest request, MemberVo memberVo, Model model) throws Exception {
 

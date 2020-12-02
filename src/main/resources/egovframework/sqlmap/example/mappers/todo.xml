@@ -3,32 +3,19 @@
 <mapper
 	namespace="ants.com.board.manageBoard.mapper.ManageBoardMapper">
 
-	<!--할일 리스트조회 -->
+	<!--할일 리스트 조회 -->
 	<select id="getTodoList"
 		parameterType="ants.com.board.manageBoard.model.TodoVo"
 		resultType="ants.com.board.manageBoard.model.TodoVo">
-<!-- 		<![CDATA[ -->
-<!-- 	SELECT -->
-<!-- 	    todo.todo_id, -->
-<!-- 	    ABS(TO_DATE(TO_CHAR(todo.todo_start, 'YYYYMMDD')) - To_date(to_char(SYSDATE,'yyyymmdd'))) as todo_start, -->
-<!-- 	    TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) - To_date(to_char(todo.todo_end,'yyyymmdd')) as todo_end, -->
-<!-- 	    todo.todo_cont, -->
-<!-- 	    todo.todo_title, -->
-<!-- 	    todo.todo_percent, -->
-<!-- 	    todo.todo_importance, -->
-<!-- 	    todo.todo_level, -->
-<!-- 	    todo.req_id, -->
-<!-- 	    todo.todo_parentid, -->
-<!-- 	    todo.del, -->
-<!-- 	    member.mem_name as mem_id -->
-<!-- 	FROM( select * from member)member, todo todo -->
-<!-- 	WHERE -->
-<!-- 	    member.mem_id = todo.mem_id -->
-<!-- 	    AND todo.req_id = #{reqId} -->
-<!-- 	    AND todo.del ='N' -->
-<!-- 	    ]]> -->
 		<![CDATA[
+		 SELECT *
+		FROM
+		(
 		SELECT
+		ROWNUM rnum, a.*
+		FROM 
+		(select * from
+        (SELECT
 	    todo.todo_id,
 	    ABS(TO_DATE(TO_CHAR(todo.todo_start, 'YYYYMMDD')) - To_date(to_char(SYSDATE,'yyyymmdd'))) as todo_start,
 	    TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) - To_date(to_char(todo.todo_end,'yyyymmdd')) as todo_end,
@@ -42,17 +29,29 @@
 	    todo.del,
 	    member.mem_name as mem_id
 	FROM( select * from member)member, todo todo
-	WHERE
+        WHERE
 	    member.mem_id = todo.mem_id
         and todo.del = 'N'
 	    AND todo.req_id = 1 start with
         todo.todo_parentid is null
 	    CONNECT BY
     PRIOR todo_id = TODO_PARENTID
-	order siblings by todo_id desc
+	order siblings by todo_id desc))a
+		WHERE rownum <= #{lastIndex})
+        WHERE rnum > #{firstIndex} 
  	    ]]> 
 	</select>
 
+	<!-- 페이지처리위한 요구사항개수 -->
+	<select id="todoListCount" parameterType="String"
+		resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM todo
+			WHERE req_id = #{reqId}
+			and del = 'N'
+	    ]]>
+	</select>
 
 	<!-- 한개의 할일 조회 -->
 	<select id="getTodo"
