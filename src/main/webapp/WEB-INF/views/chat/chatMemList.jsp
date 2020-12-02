@@ -20,7 +20,7 @@ $(function(){
 	})
 	
 	$(".addMemList").on("click", "li", function(){
-		
+				
 	})
 	
 })
@@ -38,7 +38,14 @@ $(function(){
 <div class="chatMemList">
 	<div id="chatMemListHeader">회원목록</div>
 	<c:forEach items="${chatMemList }" var="member">
+		
+		<!-- 자기 자신을 초대할 수는 없으므로 출력 목록에서 제외한다.  -->
+		<c:if test="${member.memId eq SMEMBER.memId}">
+		</c:if>
+				
+		<c:if test="${member.memId ne SMEMBER.memId}">
 		<div class="singleMem" memId="${member.memId }">${member.memId }</div><br>
+		</c:if>
 	</c:forEach>
 </div>
 
