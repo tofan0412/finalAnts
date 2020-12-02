@@ -6,10 +6,10 @@
 
 
 
-<select id="readChatList" resultType="ants.com.chatting.model.ChatGroupVo">
+<select id="readChatList" resultType="ants.com.chatting.model.ChatGroupVo" parameterType="java.lang.String">
 SELECT * 
   FROM CHATGROUP
- WHERE REQ_ID = '1'
+ WHERE REQ_ID = #{reqId}
   <!-- 나중에 프로젝트별 채팅방 목록을 불러올 수 있도록 수정해야 한다.  -->
 </select>
 
@@ -19,8 +19,6 @@ SELECT *
  WHERE CGROUP_ID = '1'
 ORDER BY REG_DT
 </select>
-
-
 
 
 <select id="readChatGroup" parameterType="java.lang.String" resultType="ants.com.chatting.model.ChatGroupVo">
@@ -34,6 +32,15 @@ SELECT *
 INSERT INTO chat (cgroup_id,chat_id,mem_id,chat_cont,reg_dt
 ) VALUES (#{cgroupId},CHAT_SEQ.NEXTVAL,#{memId},#{chatCont},to_date(#{regDt}, 'YYYY-MM-DD-HH24:MI:SS'))
 </insert>
+
+
+
+<select id="readChatMembers" parameterType="java.lang.String" resultType="ants.com.member.model.ProjectMemberVo">
+SELECT * 
+  FROM PROJECTMEMBER
+ WHERE REQ_ID = #{reqId}
+</select>
+
 
 
 

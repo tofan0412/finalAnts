@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ants.com.chatting.model.ChatGroupVo;
 import ants.com.chatting.model.ChatVo;
 import ants.com.chatting.service.ChatService;
+import ants.com.member.model.ProjectMemberVo;
 
 @RequestMapping("/chat")
 @Controller
@@ -26,9 +27,9 @@ public class ChatController {
 	
 	
 	@RequestMapping("/readChatList")
-	public String readChatList(String memId, Model model) {
+	public String readChatList(String reqId, Model model) {
 		
-		List<ChatGroupVo> chatList = chatService.readChatList(memId);
+		List<ChatGroupVo> chatList = chatService.readChatList(reqId);
 		logger.debug("불러온 채팅 개수 : {}", chatList.size());
 		
 		
@@ -55,6 +56,16 @@ public class ChatController {
 		
 		logger.debug("chat 전송 결과 : {}",result);
 	}
+	
+	@RequestMapping("/readChatMembers")
+	public String readChatMembers(String reqId, Model model) {
+		List<ProjectMemberVo> chatMemList = chatService.readChatMembers(reqId);
+		
+		model.addAttribute("chatMemList", chatMemList);
+		return "chat/chatMemList";
+	}
+	
+	
 	
 	
 }

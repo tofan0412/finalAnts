@@ -5,6 +5,35 @@ $(function(){
 	
 	readChatList();
 	
+	// 프로젝트에 참여하고 있는 회원 목록 불러오기
+	$(".chatList").on('click', '#mkNewChat',function(){
+		$(".chatList").empty();
+		var reqId = '${reqId}';
+		$.ajax({
+			url : "/chat/readChatMembers",
+			data : {reqId : reqId}, 
+			method : "POST",
+			success : function(res){
+				var html = res.split("$$$$$$$");
+				$('.chatList').html(html);
+			}
+		})
+	})
+	
+	// 해당 프로젝트에 존재하는 모든 채팅방 목록 불러오기.
+	function readChatList(){
+		var reqId = '${reqId}';	
+		$.ajax({
+			url : "/chat/readChatList?reqId="+reqId,
+			method : "GET",
+			success : function(res){
+				var html = res.split("$$$$$$$");
+				$('.chatList').html(html);
+			}
+		});
+	};
+	
+	// 채팅방 이름 클릭 시 해당 채팅방으로 이동.c
 	$(".chatList").on('click', 'li', function(){
 		$(".chatList").css('color', '#A9E2F3');
 		var cgroupId = $(this).attr("cgroupId");
@@ -20,20 +49,9 @@ $(function(){
 				$('.chatList').html(html);
 			}
 		})
-		
 	})
 	
-	function readChatList(){
-		var memId = '${SMEMBER.memId}';	
-		$.ajax({
-			url : "/chat/readChatList?memId="+memId,
-			method : "GET",
-			success : function(res){
-				var html = res.split("$$$$$$$");
-				$('.chatList').html(html);
-			}
-		});
-	};
+	
 });
 </script>
 <aside class="control-sidebar control-sidebar-dark">

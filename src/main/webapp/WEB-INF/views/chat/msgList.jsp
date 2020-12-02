@@ -21,6 +21,8 @@
 			var regDt = '${currTime}';
 			var cgroupId = '${cgroup.cgroupId }';
 			var chatCont = $('#sendChatCont').val(); 
+			sendMessage();
+			$('#sendChatCont').val('');
 			
 			$.ajax({
 				url : "/chat/sendMessage",
@@ -30,8 +32,7 @@
 					    chatCont : chatCont},
 				method : "POST",
 				success : function(res){
-					$('#sendChatCont').val('');
-					sendMessage();
+					
 				}
 			})	
 		}
@@ -41,25 +42,44 @@
 	function sendMessage() {
 		sock.send($("#sendChatCont").val());
 	}
-	// 서버로부터 메시지를 받았을 때
+	// 서버로부터 메시지를 받았을 때. 내 아이디인 경우 우측에 배치하고 상대방인 경우 좌측에 배치한다. 
 	function onMessage(msg) {
 		var data = msg.data;
-		var memId = "<div class=\'myMemId memId\'>${SMEMBER.memId}</div>";
-		var timeCode = "<div class='myRegDt'>";
-		timeCode += "<c:out value='${currTime}'/></div>";
-		
-		$('#msgArea').append("<div class=\'oneMsg\'>");
-		$('#msgArea').append(memId);
-		$("#msgArea").append("<div class=\'myChatCont chatCont\'>"+ data + "</div><br>");
-		$("#msgArea").append(timeCode);
-		$('#msgArea').append("</div>");
-		$('#msgArea').append("<br>");
-		$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);
-		
+		var arr = data.split("$$$$");
+		var id = arr[0];
+		var chatCont = arr[1];
+	
+		// 내가 전송한 글인 경우 ..
+		if (id == '${SMEMBER.memId}'){
+			var memId = "<br><div class=\'myMemId memId\'>"+ id + "</div>";
+			var timeCode = "<div class='myRegDt'>";
+			timeCode += "<c:out value='${currTime}'/></div>";
+			
+			$('#msgArea').append("<div class=\'oneMsg\'>");
+			$('#msgArea').append(memId);
+			$("#msgArea").append("<div class=\'myChatCont chatCont\'>"+ chatCont + "</div><br>");
+			$("#msgArea").append(timeCode);
+			$('#msgArea').append("</div>");
+			$('#msgArea').append("<br>");
+			$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);	
+		}
+		else{
+			var memId = "<br><div class=\'yourMemId memId\'>"+ id + "</div>";
+			var timeCode = "<div class='yourRegDt'>";
+			timeCode += "<c:out value='${currTime}'/></div>";
+			
+			$('#msgArea').append("<div class=\'oneMsg\'>");
+			$('#msgArea').append(memId);
+			$("#msgArea").append("<div class=\'yourChatCont chatCont\'>"+ chatCont + "</div><br>");
+			$("#msgArea").append(timeCode);
+			$('#msgArea').append("</div>");
+			$('#msgArea').append("<br>");
+			$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);
+		}	
 	}
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {
-		$("#msgArea").append("연결 끊김");
+		$("#msgArea").append("서버 연결 끊김..");
 	}
 </script>
 <style>
@@ -132,7 +152,7 @@ width:16px;height:16px;background:#f1ef79;}
 			<div class="oneMsg">
 				<div class="myMemId memId">${msg.memId }</div>
 				<div class="myChatCont chatCont">${msg.chatCont }</div><br>
-				<div class="myRegDt">${msg.regDt }></div>
+				<div class="myRegDt">${msg.regDt }</div>
 				<br>
 			</div>
 			</c:if>
