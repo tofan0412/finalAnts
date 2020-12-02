@@ -7,167 +7,184 @@
 	<select id="getTodoList"
 		parameterType="ants.com.board.manageBoard.model.TodoVo"
 		resultType="ants.com.board.manageBoard.model.TodoVo">
-		<![CDATA[
-		 SELECT *
-		FROM
-		(
-		SELECT
-		ROWNUM rnum, a.*
-		FROM 
-		(select * from
-        (SELECT
-	    todo.todo_id,
-	    ABS(TO_DATE(TO_CHAR(todo.todo_start, 'YYYYMMDD')) - To_date(to_char(SYSDATE,'yyyymmdd'))) as todo_start,
-	    TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) - To_date(to_char(todo.todo_end,'yyyymmdd')) as todo_end,
-	    todo.todo_cont,
-	    lpad(' ', (level - 1) * 4)|| todo_title AS todo_title,
-	    todo.todo_percent,
-	    todo.todo_importance,
-	    todo.todo_level,
-	    todo.req_id,
-	    todo.todo_parentid,
-	    todo.del,
-	    member.mem_name as mem_id
-	FROM( select * from member)member, todo todo
-        WHERE
-	    member.mem_id = todo.mem_id
-        and todo.del = 'N'
-	    AND todo.req_id = 1 start with
-        todo.todo_parentid is null
-	    CONNECT BY
-    PRIOR todo_id = TODO_PARENTID
-	order siblings by todo_id desc))a
-		WHERE rownum <= #{lastIndex})
-        WHERE rnum > #{firstIndex} 
- 	    ]]> 
-	</select>
+
+		SELECT c.*
+			FROM (
+				SELECT
+				ROWNUM rnum, a.*
+				FROM (select * from (SELECT
+					todo.todo_id,
+					ABS(TO_DATE(TO_CHAR(todo.todo_start, 'YYYYMMDD')) -
+					To_date(to_char(SYSDATE,'yyyymmdd'))) as todo_start,
+					TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
+					To_date(to_char(todo.todo_end,'yyyymmdd')) as todo_end,
+					todo.todo_cont,
+					lpad(' ', (level - 1) * 4)|| todo_title AS todo_title,
+					todo.todo_percent,
+					todo.todo_importance,
+					todo.todo_level,
+					todo.req_id,
+					todo.todo_parentid,
+					todo.del,
+					member.mem_name AS mem_id
+				FROM( select *
+					from member)member, todo todo
+				WHERE
+					member.mem_id = todo.mem_id
+				AND
+					todo.del = 'N'
+				AND todo.req_id = 1 
+				start with todo.todo_parentid is null
+				CONNECT BY
+				PRIOR todo_id = TODO_PARENTID
+					<if test="searchKeyword != null and searchKeyword != ''">
+						<choose>
+							<when test="searchCondition == 1">
+								AND member.mem_name LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 2">
+								AND todo.todo_cont LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 3">
+								AND todo.todo_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</if>
+				order siblings by todo_id desc))a
+				WHERE rownum  <![CDATA[ <= ]]> #{lastIndex}) c
+        		<![CDATA[WHERE rnum > #{firstIndex}]]>
+		</select>
 
 	<!-- 페이지처리위한 요구사항개수 -->
-	<select id="todoListCount" parameterType="String"
-		resultType="java.lang.Integer">
-		<![CDATA[
-			SELECT COUNT(*)
-			FROM todo
-			WHERE req_id = #{reqId}
-			and del = 'N'
-	    ]]>
-	</select>
+		<select id="todoListCount" parameterType="String"
+			resultType="java.lang.Integer">
+			<![CDATA[
+				SELECT COUNT(*)
+					FROM todo
+					WHERE req_id = #{reqId}
+					AND del = 'N'
+		    ]]>
+		</select>
 
 	<!-- 한개의 할일 조회 -->
-	<select id="getTodo"
-		parameterType="ants.com.board.manageBoard.model.TodoVo"
-		resultType="ants.com.board.manageBoard.model.TodoVo">
-		<![CDATA[
-	SELECT
-	    todo.todo_id,
-	    TO_CHAR(todo.todo_start,'yyyy/mm/dd') as todo_start,
-	    TO_CHAR(todo.todo_end,'yyyy/mm/dd') as todo_end,
-	    todo.todo_cont,
-	    todo.todo_title,
-	    todo.todo_percent,
-	    todo_importance,
-	    todo_level,
-	    todo.req_id,
-	    todo.todo_parentid,
-	    todo.del,
-	    member.mem_name as mem_id
-	FROM( select * from member)member, todo todo
-	WHERE
-	    member.mem_id = todo.mem_id
-	    AND   todo.todo_id = #{todoId}
-	    ]]>
-	</select>
+		<select id="getTodo"
+			parameterType="ants.com.board.manageBoard.model.TodoVo"
+			resultType="ants.com.board.manageBoard.model.TodoVo">
+			<![CDATA[
+			SELECT
+			    todo.todo_id,
+			    TO_CHAR(todo.todo_start,'yyyy/mm/dd') as todo_start,
+			    TO_CHAR(todo.todo_end,'yyyy/mm/dd') as todo_end,
+			    todo.todo_cont,
+			    todo.todo_title,
+			    todo.todo_percent,
+			    todo_importance,
+			    todo_level,
+			    todo.req_id,
+			    todo.todo_parentid,
+			    todo.del,
+			    member.mem_name as mem_id
+			FROM( select * from member)member, todo todo
+			WHERE
+			    member.mem_id = todo.mem_id
+			AND   todo.todo_id = #{todoId}]]>
+		</select>
 
 
 	<!-- 팀원 조회 -->
-	<select id="projectMemList"
-		parameterType="ants.com.board.manageBoard.model.TodoVo"
-		resultType="ants.com.member.model.MemberVo">
-		SELECT
-		member.mem_name,
-		member.mem_id,
-		projectmember.promem_id
-		FROM
-		member,
-		projectmember
-		WHERE
-		member.mem_id = projectmember.mem_id
-		AND projectmember.req_id = #{reqId}
-		AND projectmember.promem_status = 'Y'
-	</select>
+		<select id="projectMemList"
+			parameterType="ants.com.board.manageBoard.model.TodoVo"
+			resultType="ants.com.member.model.MemberVo">
+			SELECT
+				member.mem_name,
+				member.mem_id,
+				projectmember.promem_id
+			FROM
+				member,
+				projectmember
+			WHERE
+				member.mem_id =
+				projectmember.mem_id
+			AND projectmember.req_id = #{reqId}
+			AND projectmember.promem_status = 'Y'
+		</select>
 
 
 	<!-- 일감 생성 -->
-	<insert id="todoInsert" parameterType="ants.com.board.manageBoard.model.TodoVo">
-		INSERT INTO todo (
-		todo_id,
-		todo_start,
-		todo_end,
-		TODO_CONT,
-		todo_title,
-		todo_percent,
-		todo_importance,
-		todo_level,
-		req_id,
-		mem_id,
-		todo_parentid,
-		del
-		) VALUES (
-		todo_seq.nextval,
-		TO_DATE(#{todoStart},'YYYY/MM/DD'),
-		TO_DATE(#{todoEnd},'YYYY/MM/DD'),
-		#{todoCont},
-		#{todoTitle},
-		'0',
-		#{todoImportance},
-		#{todoLevel},
-		#{reqId},
-		#{memId},
-		#{todoParentid, jdbcType=VARCHAR},
-		'N'
-		)
-	</insert>
+		<insert id="todoInsert"
+			parameterType="ants.com.board.manageBoard.model.TodoVo">
+			INSERT INTO todo (
+				todo_id,
+				todo_start,
+				todo_end,
+				TODO_CONT,
+				todo_title,
+				todo_percent,
+				todo_importance,
+				todo_level,
+				req_id,
+				mem_id,
+				todo_parentid,
+				del
+			) VALUES (
+				todo_seq.nextval,
+				TO_DATE(#{todoStart},'YYYY/MM/DD'),
+				TO_DATE(#{todoEnd},'YYYY/MM/DD'),
+				#{todoCont},
+				#{todoTitle},
+				'0',
+				#{todoImportance},
+				#{todoLevel},
+				#{reqId},
+				#{memId},
+				#{todoParentid, jdbcType=VARCHAR},
+				'N'
+			)
+		</insert>
+
+
+		<!-- 일감수정 -->
+		<update id="todoupdate"
+			parameterType="ants.com.board.manageBoard.model.TodoVo">
+			UPDATE todo
+			SET
+				todo_start = TO_DATE(#{todoStart},
+				'YYYY/MM/DD'),
+				todo_end = TO_DATE(#{todoEnd}, 'YYYY/MM/DD'),
+				todo_cont =#{todoCont},
+				todo_title =#{todoTitle},
+				todo_percent =#{todoPercent},
+				todo_importance =#{todoImportance},
+				todo_level ='1',
+				mem_id= #{memId}
+			WHERE
+				todo_id = #{todoId}
+		</update>
 	
+		<update id="tododelete"
+			parameterType="ants.com.board.manageBoard.model.TodoVo">
+			UPDATE todo
+				SET del='Y'
+				WHERE
+				todo_id = #{todoId}
+		</update>
 	
-	<!-- 일감수정 -->
-	<update id="todoupdate" parameterType="ants.com.board.manageBoard.model.TodoVo">
-		UPDATE todo
-		SET
-		todo_start = TO_DATE(#{todoStart}, 'YYYY/MM/DD'),
-		todo_end = TO_DATE(#{todoEnd}, 'YYYY/MM/DD'),
-		todo_cont =#{todoCont},
-		todo_title =#{todoTitle},
-		todo_percent =#{todoPercent},
-		todo_importance =#{todoImportance},
-		todo_level ='1',
-		mem_id= #{memId}
-		WHERE
-		todo_id = #{todoId}
-	</update>
-	
-	<update id="tododelete" parameterType="ants.com.board.manageBoard.model.TodoVo">
-		UPDATE todo
-	    SET del='Y'
-		WHERE
-	    todo_id = #{todoId}
-    </update>
-	
-	<insert id="todoChangeMem" parameterType="ants.com.board.manageBoard.model.TodoLogVo">
-		            
-		INSERT INTO todolog (
-		    todo_id,
-		    log_id,
-		    log_comment,
-		    before_id,
-		    after_id,
-		    reg_dt
-		) VALUES (
-		    #{todoId},
-		    LOG_SEQ.NEXTVAL,
-		    #{logComment},
-		    #{beforeId},
-		    #{afterId},
-		    sysdate
-		)
-	</insert>
+		<insert id="todoChangeMem"
+			parameterType="ants.com.board.manageBoard.model.TodoLogVo">
+			INSERT INTO todolog (
+				todo_id,
+				log_id,
+				log_comment,
+				before_id,
+				after_id,
+				reg_dt
+			) VALUES (
+				#{todoId},
+				LOG_SEQ.NEXTVAL,
+				#{logComment},
+				#{beforeId},
+				#{afterId},
+				sysdate
+			)
+		</insert>
 </mapper>
