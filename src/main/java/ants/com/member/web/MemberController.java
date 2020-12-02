@@ -3,7 +3,6 @@ package ants.com.member.web;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -21,7 +20,6 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.JOptionPane;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -40,9 +38,7 @@ import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.service.MemberService;
 import ants.com.member.service.ProjectService;
-import ants.com.member.service.ProjectmemberService;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
-import java.sql.SQLException;
 
 @MultipartConfig
 @RequestMapping("/member")
@@ -117,110 +113,45 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	/*
- 	// 로그인 체크 ajax
-@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
-public @ResponseBody JSONObject logincheck(MemberVo memberVo, Model model, 
-		@RequestBody ReplyVO replyVO, ModelMap modelMap,Principal principal) {
 
-	logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
-	
-try {
-		MemberVo dbMember = memberService.logincheck(memberVo);
-		logger.debug("logincheck rowcount : {}", dbMember);
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-
-	return ObjectToMap.ConvertObjectToJSONObject(memberVo);
-}
-
-
-@SuppressWarnings("unchecked")
-
-public static JSONObject ConvertObjectToJSONObject(Object obj) {
-
-	try {
-
-		Field[] fields = obj.getClass().getDeclaredFields();
-
-		JSONObject jsonObj = new JSONObject();
-
-		for (int i = 0; i < fields.length; i++) {
-
-			fields[i].setAccessible(true);
-
-			jsonObj.put(fields[i].getName(), (String) fields[i].get(obj));
-
-		}
-
-		return dbMember;
-
-	} catch (IllegalArgumentException e) {
-
-		e.printStackTrace();
-
-	} catch (IllegalAccessException e) {
-
-		e.printStackTrace();
-
-	} catch (Exception e) {
-
-		e.printStackTrace();
-
-	}
-
-	return null;
-	
-}
-  */
-	
 	// 회원가입 페이지 이동
 	@RequestMapping(path = "/memberRegistview", method = RequestMethod.GET)
 	public String getView() {
 		logger.debug("memberRegist-Controller.getView()");
 		return "main.tiles/member/memberRegist";
 	}
-
+	
+	
 	// 회원가입 로직
-	@RequestMapping(path = "/memberRegist", method = RequestMethod.POST)
+	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
 	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="realFilename", required=false) MultipartFile file, Model model) {
-
+		
 		logger.debug("memberVo : {}", memberVo);
 		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),
 				file.getSize());
 
-		 logger.debug("br.hasErrors() : {}", br.hasErrors() );
-		 
+		if(!file.getOriginalFilename().equals(null) && !file.getOriginalFilename().equals("")) {
 		
-		if(br.hasErrors()) {
-			return "main.tiles/member/memberRegist";
-		}
-		
-		String Filename = "";
-		if(file.getOriginalFilename().equals(null)) {	// 파일 선택 안했을때 기본값
-			Filename =  "D:\\upload\\user.png";
-		}else {
-			Filename = "D:\\upload\\" + file.getOriginalFilename();
-		}
-
-		File uploadFile = new File(Filename);
-
-		try {
-			file.transferTo(uploadFile);
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-
-		logger.debug("---------------------통과-------------------");
-
-		memberVo.setMemFilepath(Filename);
-		if(file.getOriginalFilename().equals(null)) {	// 파일 선택 안했을때 기본값
-			memberVo.setMemFilename("user.png");
-		}else {
+			logger.debug("br.hasErrors() : {}", br.hasErrors() );
+			
+			if(br.hasErrors()) {
+				return "main.tiles/member/memberRegist";
+			}
+			
+			String Filename =  "D:\\upload\\" + file.getOriginalFilename();
+			File uploadFile = new File(Filename);
+			
+			try {
+				file.transferTo(uploadFile);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+			logger.debug("---------------------통과-------------------");
+	
+			memberVo.setMemFilepath(Filename);
 			memberVo.setMemFilename(file.getOriginalFilename());
 		}
-		
 		
 		
 		logger.debug("memId : {}", memberVo.getMemId());
@@ -243,6 +174,7 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 		}
 	}
 	
+	
 	// 중복아이디 체크
 	@ResponseBody @RequestMapping(path = "/checkSignup", method = RequestMethod.POST) 
 	public String checkSignup(HttpServletRequest request, MemberVo memberVo) { 
@@ -252,7 +184,7 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 		
 		return String.valueOf(rowcount);
 	}
-
+	
 	
 	// 비밀번호 수정 - 이메일
 	/** 자바 메일 발송 * @throws MessagingException * @throws AddressException **/

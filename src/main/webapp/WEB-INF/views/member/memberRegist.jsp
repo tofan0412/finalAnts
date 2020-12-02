@@ -37,38 +37,24 @@
 	}
 
 </style>	
-<script>
-	$(document).ready(function(){
-	/* 
-		$('#mem_id').val("hsj2@thousandOfAnts.com");
-		$('#mem_name').val("한상진");
-		$('#mem_pass').val("123");
-		$('#mem_tel').val("010-1111-2222");
-	*/
-		$('#memAlert').val("y");
-		$('#del').val("n");
-		$('#memType').val("mem");
-	})
-</script>
+
 </head>
 
 
 <title>회원 등록</title>
 <body>
 	<div class="card">
-	<div id="clickmsg"></div>
-	<hr>
 			
 			<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
 			<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 				<div id="pictureView" style="border: 1px solid green; height: 200px; width: 200px; margin: 0 auto;">
-					<img src="/profile/user.png" id="pictureViewImg" style="width: 100%; height: 100%;" />
+					<img id="pictureViewImg" style="width: 100%; height: 100%;" />
 				</div>
 					
 				<div class="content">
 					<button id="basicimg" type="button">기본이미지</button>
 					<input id="picture" type="file" name="realFilename" accept=".gif, .jpg, .png" style="height: 37px;"/>
-					<input type="text" id="real_filename" name="real_filename">
+					<input type="text" id="real_filename" name="real_filename" style="display: none">
 				</div>
 				
 				<div class="content"> 
@@ -205,6 +191,19 @@
 			}
 		}
 		
+		
+		$(document).ready(function(){
+			/* 
+				$('#mem_id').val("hsj2@thousandOfAnts.com");
+				$('#mem_name').val("한상진");
+				$('#mem_pass').val("123");
+				$('#mem_tel').val("010-1111-2222");
+			*/
+				$('#memAlert').val("Y");
+				$('#del').val("N");
+				$('#memType').val("MEM");
+			})
+			
 		
 		// 등록버튼시 미입력 된것 있으면 경고창
 		$(document).ready(function() {
