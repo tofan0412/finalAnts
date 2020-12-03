@@ -88,15 +88,19 @@
 	                  <li class="nav-item">
 	                    <a class="nav-link" id="custom-tabs-three-calendar-tab"  href="#custom-tabs-three-calendar" >캘린더</a>
 	                  </li>
+	                  <c:if test="${SMEMBER.memId ne projectVo.memId }">
 	                  <li class="nav-item">
 	                    <a class="nav-link" id="custom-tabs-three-mywork-tab"  href="${pageContext.request.contextPath}/todo/MytodoList" >내 일감</a>
 	                  </li>
+	                  </c:if>
 	                  <li class="nav-item">
 	                    <a class="nav-link" id="custom-tabs-three-files-tab"  href="#custom-tabs-three-files">파일함</a>
 	                  </li>
+	                  <c:if test="${SMEMBER.memId eq projectVo.memId }">
+	                    <a class="nav-link" id="custom-tabs-three-files-tab"  href="#custom-tabs-three-files">PM-PL이슈게시판</a>	                  
+	                  </c:if>
 	                </ul>
 	              </div>
-	             
 	            </div>
           	</div>
 		      

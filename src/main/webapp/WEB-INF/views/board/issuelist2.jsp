@@ -57,6 +57,8 @@ $(function(){
 	})
 	
 	$("#pagenum a").addClass("page-link");  
+	
+
 
 })
 
@@ -125,32 +127,21 @@ $(function(){
 		        </div>
 		        
 		        <div class="card-header  ">
-				<div id="keyword" class="card-tools float-right" style="width: 450px;">
+				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">
-						<!-- sort num -->
-<!-- 						<select class="form-control col-md-3" name="pageSize" id="pageSize" > -->
-<!-- 							<option value="0">정렬개수</option> -->
-<!-- 							<option value="3">3개씩</option> -->
-<!-- 							<option value="5">5개씩</option> -->
-<!-- 							<option value="7">7개씩</option> -->
-<!-- 						</select> -->
-						<!-- search bar -->
 						<label for="searchCondition" style="visibility:hidden;"></label>
-						
-<!-- 						<select class="form-control col-md-3" name="issueKind" id="issueKind"  style="width: 100px;">						 -->
-<!-- 							<option value="issue">이슈</option> -->
-<!-- 							<option value="notice">공지사항</option> -->
-<!-- 						</select>  -->
 					
+						<form:select path="IssueKind" id="issuekindselect" cssClass="use" class="form-control col-md-3" style="width: 100px;">
+							<form:option value="" label="전체글"/>
+							<form:option value="issue" label="이슈"/>
+							<form:option value="notice" label="공지사항"/>
+						</form:select>
+						
 						
         				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
-<!-- 						<select class="form-control col-md-3" name="searchType" id="searchType" required> -->
-						
-<%-- 							<form:option value="0" label="종류"/> --%>
 							<form:option value="1" label="작성자"/>
 							<form:option value="2" label="제목"/>
 							<form:option value="3" label="내용"/>
-						
 						</form:select> 
 						
 						
@@ -169,22 +160,7 @@ $(function(){
 		        </div>
 		        
 		      </div><!-- /.container-fluid -->
-			      
-			      
-			      
-<!-- 	              <div class="card-header"> -->
-<!-- 	                <h3 class="card-title">현업이슈 리스트 등록</h3> -->
-	
-<!-- 	                <div class="card-tools"> -->
-<!-- 	                  <ul class="pagination pagination-sm float-right"> -->
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">«</a></li> -->
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">1</a></li> -->
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">2</a></li> -->
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">»</a></li> -->
-<!-- 	                  </ul> -->
-<!-- 	                </div> -->
-<!-- 	              </div> -->
+
 	              <!-- /.card-header -->
 	              <div class="card-body p-0">
 	                <table class="table">
@@ -201,29 +177,25 @@ $(function(){
 	                  </thead>
 	                  <tbody>
 	                      
-		                       <c:forEach items = "${issuelist }" var ="issue" varStatus="status">
-									<tr>
-<%-- 					                    <td>${status.index+1 }</td> --%>
-<%-- 					                    <td>${issue.issueId }</td> --%>
-					                 
-					                    <td  style="width: 150px; padding-left: 50px;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
-									
-										<td  style="padding-left: 30px;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> ${issue.issueTitle }</a> </td>
-										<td> ${issue.memId }</td>
-										<td> ${issue.regDt }</td>
-										<c:if test="${issue.issueKind == 'issue'}">
-											<td> 이슈</td>										
-										</c:if>
-										<c:if test="${issue.issueKind == 'notice'}">
-											<td> 공지사항</td>										
-										</c:if>
-				                      <td style="text-align: center;">
-										 
-									</tr>
-								 </c:forEach> 
+	                       <c:forEach items = "${issuelist }" var ="issue" varStatus="status">
+								<tr>
+				                 
+				                    <td  style="width: 150px; padding-left: 50px;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
+								
+									<td  style="padding-left: 30px;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> ${issue.issueTitle }</a> </td>
+									<td> ${issue.memId }</td>
+									<td> ${issue.regDt }</td>
+									<c:if test="${issue.issueKind == 'issue'}">
+										<td> 이슈</td>										
+									</c:if>
+									<c:if test="${issue.issueKind == 'notice'}">
+										<td> 공지사항</td>										
+									</c:if>
+			                      <td style="text-align: center;">
+									 
+								</tr>
+							 </c:forEach> 
 
-		                      
-	                  
 	                  </tbody>
 	                </table>
 	              </div>
@@ -233,16 +205,9 @@ $(function(){
 	              <div id="paging" class="card-tools">
 	              	<ul class="pagination pagination-sm" id ="pagingui">
 	              	
-<%--               		<c:if test="${pages > issueVo.lastIndex }"> --%>
-<%--                     	<li class="page-item pagingui"><a class="page-link" href="${pageContext.request.contextPath}/projectMember/issuelist?pageIndex=1">«</a></li> --%>
-<%--                     </c:if>	 --%>
 		        		<li  class="page-item" id ="pagenum" >	
-<%-- 		        		<input type="button" value="#{paginationInfo}" > --%>
 		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
-		        			<form:hidden path="pageIndex" />
-<%-- 	        		<c:if test="${pages > issueVo.lastIndex }"> --%>
-<%--                     	<li class="page-item pagingui"><a class="page-link" href="${pageContext.request.contextPath}/projectMember/issuelist?pageIndex=${issueVo.lastIndex}">»</a></li> --%>
-<%--                     </c:if>	 --%>
+		        		<form:hidden path="pageIndex" />		        		
                     
 	                 </ul>
         		  </div>

@@ -54,8 +54,6 @@ public class MemberController {
 	@Resource(name = "projectService")
 	private ProjectService projectService;
 	
-	
-
 	@RequestMapping("/mainView")
 	public String mainView() {
 		return "main.tiles/main";
@@ -86,9 +84,9 @@ public class MemberController {
 			if (dbMember.getMemType().equals("PL") || dbMember.getMemType().equals("PM")) {
 				List<ProjectVo> plpmList = projectService.plpmInProjectList(dbMember.getMemId());
 				session.setAttribute("plpmList", plpmList); 
-				return "content/project";
+				return "tiles/layout/contentmenu";
 			} else {
-				return "content/project";
+				return "tiles/layout/contentmenu";
 			}
 
 		} else {

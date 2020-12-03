@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,16 +22,67 @@ $(function(){
         	return;
         }
 	})
+	
+ 	if('${issuevo.issueKind}' == 'issue'){ 		
+ 	
+ 		$('#issueKind').text('이슈');	
+ 			
+ 			console.log()
+	 		todo();
+ 		
+ 		
+//  		html = '<label for="todoId" class="col-sm-2 control-label">일감</label>'
+//  		html += '<label id ="todoId" class="control-label"><a href=#"'+${issuevo.todoId}+'"></a></label>'
+ 		
+//  		$('#todo').html(html);
+ 	}else if('${issuevo.issueKind}' == 'notice'){
+ 		$('#issueKind').text('공지사항');	
+ 	}
+	
+	
+	
+	// 뒤로가기
+	$(document).on('click','#back', function(){
+		window.history.back();
+	})
+	
 })
+
+function todo(){
+
+ 	$.ajax({url :"${pageContext.request.contextPath}/todo/onetodo",
+		   data :{todoId : "${issuevo.todoId}"},
+		   method : "get",
+		   success :function(data){	
+				console.log(data.todoVo)
+			
+			 
+				html = '<label for="todoId" class="col-sm-2 control-label">일감</label>'
+				html += '<label id ="todoId" class="control-label"><a href='+data.todoVo.todoId+'>'+data.todoVo.todoTitle+'</a></label>'
+
+				$('#todo').html(html);
+		 }
+	})
+}
+
+
+
+
+
 </script>
 
 <style type="text/css">
 	label{
 	
 		width : auto;
-		height : 30px;
+/* 		height : 30px; */
 		font-size: 1.2em;
 	}
+	#issuecont{
+		display: inline-block;
+		float: left;
+	}
+	
 /* 	.col-sm-2{ */
 /* 		font-size: 1.3em; */
 /* 		font-weight: bold; */
@@ -48,46 +99,74 @@ $(function(){
 
 <div class="col-12 col-sm-9">
 	<div class="card card-teal ">
-	  <div class="card-body">
+	  <div class="card-body" id="detailDiv">
 <!-- 		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 			<h3>협업이슈 상세내역</h3>
 			<br>
+			<div class="form-group">
+				<label for="issueKind" class="col-sm-2 control-label">종류</label>
+				<label id ="issueKind" class="control-label"></label> 							
+			</div>
 			
-			<label for="memId" class="col-sm-2 control-label">작성자</label>
-			<label id ="memId" class="control-label">${issuevo.memId }</label>
-			
-			<br>
-			<label for="regDt" class="col-sm-2 control-label">작성일</label>
-			<label id ="regDt" class="control-label">${issuevo.regDt }</label>
-			
-			<br>
-			<label for="issueTitle" class="col-sm-2 control-label">이슈제목</label>
-			<label id ="issueTitle" class="control-label">${issuevo.issueTitle}</label>
-			
-			
-			<br>
-			<label for="issueCont" class="col-sm-2 control-label">이슈 내용</label>
-			<label id ="issueCont" class="control-label">${issuevo.issueCont }</label>
-			
-			<br><br>
-			
-			<label for="File" class="col-sm-2 control-label">첨부파일</label>
-			<c:if test="${filelist.size() == 0}">
-				[ 첨부파일이 없습니다. ]
-			</c:if>
-			
-			<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
-							
-				<a href="${cp }/file/publicfileDown?pubId=${files.pubId}"><input id ="files${vs.index}"  type="button" class="btn btn-default" name="${files.pubId}" value="${files.pubFilename} 다운로드" ></a>
-			</c:forEach>
-			
-			<br><br><br><br>
-			<c:if test="${issuevo.memId == memId}">
-				<input type= "button" value="수정하기" id ="modissue" class="btn btn-default">
-				<input type= "button" value="삭제하기" id="delissue"  class="btn btn-default">			
-			</c:if>
+			<div class="form-group" id ="todo">
 				
+			</div>
+			
 
+			<div class="form-group">
+				<label for="memId" class="col-sm-2 control-label">작성자</label>
+				<label id ="memId" class="control-label">${issuevo.memId }</label> 
+			</div>
+
+
+			<div class="form-group">
+				<label for="regDt" class="col-sm-2 control-label">작성일</label>
+				<label id ="regDt" class="control-label">${issuevo.regDt }</label> 
+			</div>
+	
+			<div class="form-group">
+				<label for="issueTitle" class="col-sm-2 control-label">이슈제목</label>
+				<label id ="issueTitle" class="control-label">${issuevo.issueTitle}</label>
+			</div>
+
+			<div class="form-group">
+				<label id="issuecont" for="issueCont" class="col-sm-2 control-label">이슈 내용</label>
+			
+				<c:if test="${issuevo.issueCont == '<p><br></p>'}">
+					[ 내용이 없습니다. ]
+				</c:if>
+				
+				<label id ="issueCont" class="control-label">${issuevo.issueCont }</label>
+			</div>	
+			
+
+			<div class="form-group">
+				<label for="File" class="col-sm-2 control-label">첨부파일</label>
+				<c:if test="${filelist.size() == 0}">
+					[ 첨부파일이 없습니다. ]
+				</c:if>
+				
+				<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
+								
+					<a href="${cp }/file/publicfileDown?pubId=${files.pubId}"><input id ="files${vs.index}"  type="button" class="btn btn-default" name="${files.pubId}" value="${files.pubFilename} 다운로드" ></a>
+				</c:forEach>
+			</div>
+			
+<!-- 			<br><br><br><br> -->
+<%-- 			<c:if test="${issuevo.memId == memId}"> --%>
+<!-- 				<input type= "button" value="수정하기" id ="modissue" class="btn btn-default"> -->
+<!-- 				<input type= "button" value="삭제하기" id="delissue"  class="btn btn-default">			 -->
+<%-- 			</c:if> --%>
+				
+			<div class="card-footer clearfix" >
+				
+		 			<c:if test="${issuevo.memId == memId}">
+						<input type= "button" value="삭제하기" id="delissue"  class="btn btn-default float-right" >			
+						<input type= "button" value="수정하기" id ="modissue" class="btn btn-default float-right" style="margin-right: 5px;">
+						<input type= "button" value="목록으로" id ="back" class="btn btn-default float-left" >
+					</c:if>
+				
+             </div>
 
 	    </div>      
 	   </div>
