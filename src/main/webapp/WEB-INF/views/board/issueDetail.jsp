@@ -12,6 +12,9 @@
 
 <script type="text/javascript">
 $(function(){
+	
+	$('#todoDetail').hide();
+	
 	$("#modissue").on('click', function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/updateissueView?issueId=${issuevo.issueId}');
 	})
@@ -41,10 +44,28 @@ $(function(){
 	
 	
 	
-	// 뒤로가기
+	// issue에서 뒤로가기
 	$(document).on('click','#back', function(){
 		window.history.back();
 	})
+	
+	// todo에서 뒤로가기
+	$(document).on('click','#todoback', function(){
+		$('#todoDetail').hide();
+		$('#detailDiv').show();
+	})
+	
+	// 일감링크
+	$(document).on('click','#todolink', function(){
+		 todoId = $(this).data("todoid")
+		 
+		 $('#todoDetail').show();
+		 $('#detailDiv').hide();
+			
+// 		 todoDetail(todoId)
+	})
+	
+	
 	
 })
 
@@ -54,18 +75,62 @@ function todo(){
 		   data :{todoId : "${issuevo.todoId}"},
 		   method : "get",
 		   success :function(data){	
-				console.log(data.todoVo)
-			
+				console.log(data.todoVo)	
 			 
 				html = '<label for="todoId" class="col-sm-2 control-label">일감</label>'
-				html += '<label id ="todoId" class="control-label"><a href='+data.todoVo.todoId+'>'+data.todoVo.todoTitle+'</a></label>'
+				html += '<label id ="todoId" class="control-label"><a  data-todoid='+data.todoVo.todoId+' id="todolink" href="#">'+data.todoVo.todoTitle+'</a></label>'
 
 				$('#todo').html(html);
+				
+				$("#todoTitle").html(data.todoVo.todoTitle);
+				$("#todoCont").html(data.todoVo.todoCont);
+				$("#memId").html(data.todoVo.memId);
+				
+				if(data.todoVo.todoImportance =='gen'){
+					$("#todoImportance").html('일반');
+				}else if(data.todoVo.todoImportance =='emg'){
+					$("#todoImportance").html('긴급');
+				}
+				$("#todoStart").html(data.todoVo.todoStart);
+				$("#todoEnd").html(data.todoVo.todoEnd);
+				$("#todoId").val(data.todoVo.todoId);
+				
 		 }
 	})
 }
 
+function todoDetail(todoId) {
+	$.ajax({
+		url : "/todo/onetodo",
+		method : "get",
+		data : {
+			todoId : todoId
+		},
+		success : function(data) {
+			
+			$('#todoDetail').show();
+			$('#detailDiv').hide();
+			
+			$("#todoTitle").html(data.todoVo.todoTitle);
+			$("#todoCont").html(data.todoVo.todoCont);
+			$("#memId").html(data.todoVo.memId);
+			if(data.todoVo.todoImportance =='gen'){
+				$("#todoImportance").html('일반');
+			}else if(data.todoVo.todoImportance =='emg'){
+				$("#todoImportance").html('긴급');
+			}
+			
+			$("#todoImportance").html(data.todoVo.todoImportance);
+			$("#todoStart").html(data.todoVo.todoStart);
+			$("#todoEnd").html(data.todoVo.todoEnd);
+			$("#todoId").val(data.todoVo.todoId);
+			
+		
+		}
 
+	});
+
+}
 
 
 
@@ -99,6 +164,7 @@ function todo(){
 
 <div class="col-12 col-sm-9">
 	<div class="card card-teal ">
+	  <!-- 이슈 상세보기 -->
 	  <div class="card-body" id="detailDiv">
 <!-- 		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 			<h3>협업이슈 상세내역</h3>
@@ -114,8 +180,8 @@ function todo(){
 			
 
 			<div class="form-group">
-				<label for="memId" class="col-sm-2 control-label">작성자</label>
-				<label id ="memId" class="control-label">${issuevo.memId }</label> 
+				<label for="memid" class="col-sm-2 control-label">작성자</label>
+				<label id ="memid" class="control-label">${issuevo.memId }</label> 
 			</div>
 
 
@@ -151,12 +217,7 @@ function todo(){
 					<a href="${cp }/file/publicfileDown?pubId=${files.pubId}"><input id ="files${vs.index}"  type="button" class="btn btn-default" name="${files.pubId}" value="${files.pubFilename} 다운로드" ></a>
 				</c:forEach>
 			</div>
-			
-<!-- 			<br><br><br><br> -->
-<%-- 			<c:if test="${issuevo.memId == memId}"> --%>
-<!-- 				<input type= "button" value="수정하기" id ="modissue" class="btn btn-default"> -->
-<!-- 				<input type= "button" value="삭제하기" id="delissue"  class="btn btn-default">			 -->
-<%-- 			</c:if> --%>
+		
 				
 			<div class="card-footer clearfix" >
 				
@@ -166,12 +227,62 @@ function todo(){
 						<input type= "button" value="목록으로" id ="back" class="btn btn-default float-left" >
 					</c:if>
 				
-             </div>
+            </div>
 
-	    </div>      
+	    </div>
+	    <!-- 이슈 상세보기 끝-->
+	    
+	    
+	    <!-- 일감 상세보기 -->
+	    <div id="todoDetail" class="card-body">
+	    
+	    	<h3>일감 상세보기</h3><br>
+		
+			<input type="hidden" id="todoId">
+			<div class="form-group">
+				<label for="todoTitle" class="col-sm-2 control-label">제목</label>
+				<label class="control-label" id="todoTitle"></label><br><br>
+			</div>
+			
+			<div class="form-group">
+				<label for="todoCont" class="col-sm-2 control-label">할일</label>
+				<label class="control-label" id="todoCont"></label><br><br>
+			</div>
+			<div class="form-group">
+				<label for="memId" class="col-sm-2 control-label">담당자</label>
+				<label class="control-label" id="memId"></label><br><br>
+			</div>
+			
+			<div class="form-group">
+				<label for="todoImportance" class="col-sm-2 control-label">우선순위</label>
+				
+				<label class="control-label" id="todoImportance"></label><br><br>
+			</div>
+			
+			<div class="form-group">
+				<label for="todoStart" class="col-sm-2 control-label">시작 일</label>
+				<label class="control-label" id="todoStart"></label><br><br>
+			</div>
+			
+			<div class="form-group">
+				<label for="todoEnd" class="col-sm-2 control-label">종료 일</label>
+				<label class="control-label" id="todoEnd"></label><br><br>
+			</div>
+			
+			<div class="card-footer clearfix" >
+				<button type="button" class="btn btn-default" id="todoback">뒤로가기</button>					
+			</div>
+		
+		</div>
+	    
+	          
 	   </div>
-<!-- 	 </div>       -->
+	   <!-- 일감 상세보기   끝-->
 </div>
+
+
+
+
 
 </body>
 </html>

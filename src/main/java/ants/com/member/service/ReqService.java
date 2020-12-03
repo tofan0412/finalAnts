@@ -48,6 +48,10 @@ public class ReqService{
 		return mapper.getMember(memberVo);
 	}
 
+	public int plDelete(ReqVo reqVo) {
+		return mapper.plDelete(reqVo);
+	}
+
 
 
 

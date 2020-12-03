@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,8 +47,10 @@ public class ReqController {
 	 */
 	@RequestMapping("/reqList")
 	public String selectReqList(@ModelAttribute("reqVo") ReqVo reqVo, ModelMap model,
-			@RequestParam(name = "memId", required = false) String memId) {
-		reqVo.setMemId(memId);
+			HttpSession session) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER"); 
+		reqVo.setMemId(memberVo.getMemId());
+		logger.debug("받아온 reqVo:{}",reqVo);
 
 		/** pageing setting */
 		PaginationInfo paginationInfo = new PaginationInfo();
@@ -59,15 +62,11 @@ public class ReqController {
 		reqVo.setLastIndex(paginationInfo.getLastRecordIndex());
 		reqVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		logger.debug("--reqVo 페이지정보:{},{}", reqVo.getFirstIndex(), reqVo.getLastIndex());
-		logger.debug("--검색조건, 검색내용:{},{}", reqVo.getSearchCondition(),reqVo.getSearchKeyword());
-
 		List<?> reqList = reqService.reqList(reqVo);
 		model.addAttribute("reqList", reqList);
-		logger.debug("reqList:{}", reqList);
+		logger.debug("결과reqVo...........:{}",reqVo);
 
 		int totCnt = reqService.reqListCount(reqVo);
-		logger.debug("totCnt:{}", totCnt);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 
@@ -75,11 +74,12 @@ public class ReqController {
 	}
 	
 	@RequestMapping(value="/reqDetail")
-	public String reqDetail(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
-		logger.debug("reqdetail",reqVo);
+	public String reqDetail(@RequestParam(name="selectedId", required= false) String id,@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
+		if(id != null) {
+			reqVo.setReqId(id);
+		}
 		reqVo = reqService.getReq(reqVo);
 		model.addAttribute("reqVo", reqVo);
-		logger.debug("요구사항 상세정보 :{}",reqVo);
 		
 		return "tiles/member/reqDetail";
 	}
@@ -93,9 +93,9 @@ public class ReqController {
 	 */
 	@RequestMapping(value = "/reqInsertView")
 	public String insertReqView(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
+		reqVo.setReqId(null);
 		model.addAttribute("reqVo", reqVo);
 
-		logger.debug("reqinsert Controller reqVo:{}",reqVo);
 		return "tiles/member/reqInsert";
 	}
 
@@ -106,11 +106,11 @@ public class ReqController {
 	 * @return 성공: 요구사항리스트  실패:등록화면
 	 */
 	@RequestMapping(value = "/reqInsert", method = RequestMethod.POST)
-	public String reqInsert(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
-		logger.debug("등록할 요구사항 정의서 정보:{}", reqVo);
-
+	public String reqInsert(@ModelAttribute("reqVo") ReqVo reqVo, Model model, HttpSession session) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		reqVo.setMemId(memberVo.getMemId());
+		
 		int cnt = reqService.reqInsert(reqVo);
-		logger.debug("요구사항정의서 등록 결과...:{}", cnt);
 
 		if (cnt == 1) {
 			return "redirect:/req/reqList";
@@ -128,11 +128,12 @@ public class ReqController {
 	 * @return
 	 */
 	@RequestMapping(value = "/reqUpdateView")
-	public String reqUpdateView(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
-		logger.debug("요구사항 정보가져올 reqVo:{}",reqVo);
+	public String reqUpdateView(@ModelAttribute("reqVo") ReqVo reqVo, Model model, HttpSession session, @RequestParam(name="selectedId", required= false) String id) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		reqVo.setMemId(memberVo.getMemId());
+		reqVo.setReqId(id);
 		reqVo = reqService.getReq(reqVo);
 		model.addAttribute("reqVo", reqVo);
-		logger.debug("reqinsert Controller reqVo:{}",reqVo);
 		
 		return "tiles/member/reqInsert";
 	}
@@ -145,10 +146,8 @@ public class ReqController {
 	 */
 	@RequestMapping(value = "/reqUpdate", method = RequestMethod.POST)
 	public String reqUpdate(@ModelAttribute("reqVo") ReqVo reqVo, Model model, RedirectAttributes ra) {
-		logger.debug("수정할 요구사항 정의서 정보:{}", reqVo);
 		
 		int cnt = reqService.reqUpdate(reqVo);
-		logger.debug("요구사항정의서 등록 결과...:{}", cnt);
 		
 		if (cnt == 1) {
 			ra.addFlashAttribute("reqVo", reqVo);
@@ -166,13 +165,12 @@ public class ReqController {
 	 * @return 요구사항정의서 리스트
 	 */
 	@RequestMapping(value = "/reqDelete")
-	public String reqDelete(String reqId, Model model) {
-		logger.debug("--삭제할 요구사항정의서 id : {}", reqId);
+	public String reqDelete(@RequestParam(name="selectedId", required= false) String id, Model model) {
 
-		int cnt = reqService.reqDelete(reqId);
+		int cnt = reqService.reqDelete(id);
 
 		if (cnt == 0) {
-			model.addAttribute("msg", "등록실패");
+			model.addAttribute("msg", "삭제에 실패했습니다.");
 		}
 		return "redirect:/req/reqList";
 	}
@@ -192,9 +190,7 @@ public class ReqController {
 	@RequestMapping(value = "/json", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String json(Locale locale, Model model, String term) {	
-		logger.debug("term:{}",term);
 		List<MemberVo> memList = memberService.getAllMember(term); 
-		logger.debug("멤버리스트  : {}",memList);
 		Gson gson = new Gson();
 		
 	    return gson.toJson(memList);
@@ -209,6 +205,13 @@ public class ReqController {
 		return "jsonView";
 	}
 	
+	@RequestMapping(value="/plDelete")
+	public String plDelete(ReqVo reqVo, @RequestParam(name="selectedId", required= false) String id) {
+		reqVo.setReqId(id);
+		int cnt = reqService.plDelete(reqVo);
+		
+		return "redirect:/req/reqList";
+	}
 	
 
 	

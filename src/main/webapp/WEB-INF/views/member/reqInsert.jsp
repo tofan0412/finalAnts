@@ -7,15 +7,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <c:set var="registerFlag" value="${empty reqVo.reqId ? 'create' : 'modify'}"/>
+<c:set var="registerFlag" value="${empty reqVo.reqId ? 'create' : 'modify'}"/>
 </head>
 <title>협업관리프로젝트</title>
-<form:form commandName="reqVo" id="detailForm" name="detailForm">
+<form:form commandName="reqVo" id="saveForm" name="saveForm">
 	<section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>요구사항 정의서 등록</h1>
+          	<c:if test="${registerFlag == 'create' }"><h1>요구사항 정의서 등록</h1></c:if>
+          	<c:if test="${registerFlag == 'modify' }"><h1>요구사항 정의서 수정</h1></c:if>
+            
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -35,7 +37,6 @@
 	                    <div class="col-sm-10">
 	                      <form:input path="reqTitle" id="reqTitle" placeholder="제목을 입력하세요" class="form-control"/>
 	                      <form:hidden path="reqId" />
-	                      <form:hidden path="memId" />
 	                	</div>
                   	</div>
 	            </div>
@@ -109,7 +110,7 @@
 	
 	 /* 글 등록 function */
     function fn_egov_save() {
-    	frm = document.detailForm;
+    	frm = document.saveForm;
         	frm.action = "<c:url value="${registerFlag == 'create' ? '/req/reqInsert' : '/req/reqUpdate' }"/>";
             frm.submit();
     }

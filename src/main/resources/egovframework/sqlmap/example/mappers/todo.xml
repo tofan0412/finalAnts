@@ -33,9 +33,6 @@
 					todo.del = 'N'
 				AND todo.req_id = #{reqId} 
 				AND member.mem_id = #{memId} 
-				start with todo.todo_parentid is null
-				CONNECT BY
-				PRIOR todo_id = TODO_PARENTID
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>
 							<when test="searchCondition == 1">
@@ -49,6 +46,9 @@
 							</when>
 						</choose>
 					</if>
+				start with todo.todo_parentid is null
+				CONNECT BY
+				PRIOR todo_id = TODO_PARENTID
 				order siblings by todo_id desc))a
 				WHERE rownum  <![CDATA[ <= ]]> #{lastIndex}) c
         		<![CDATA[WHERE rnum > #{firstIndex}]]>
@@ -87,8 +87,6 @@
 					todo.del = 'N'
 				AND todo.req_id = #{reqId} 
 				start with todo.todo_parentid is null
-				CONNECT BY
-				PRIOR todo_id = TODO_PARENTID
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>
 							<when test="searchCondition == 1">
@@ -102,6 +100,8 @@
 							</when>
 						</choose>
 					</if>
+				CONNECT BY
+				PRIOR todo_id = TODO_PARENTID
 				order siblings by todo_id desc))a
 				WHERE rownum  <![CDATA[ <= ]]> #{lastIndex}) c
         		<![CDATA[WHERE rnum > #{firstIndex}]]>

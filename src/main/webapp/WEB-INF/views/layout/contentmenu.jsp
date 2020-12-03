@@ -5,32 +5,7 @@
 <html>
 <head>
 
-<link href="http://fonts.googleapis.com/earlyaccess/nanumpenscript.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/jejumyeongjo.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/kopubbatang.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/jejuhallasan.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
-<style>
-.np{font-family: 'Nanum Pen Script', cursive;}
-.jg{font-family: 'Jeju Gothic', sans-serif;}
-.jm{font-family: 'Jeju Myeongjo', serif;}
-.kb{font-family: 'KoPub Batang', serif;}
-.nb{font-family: 'Nanum Brush Script', cursive;}
-.ns{font-family: 'Noto Sans KR', sans-serif;}
-.hn{font-family: 'Hanna', sans-serif;}
-.ng{font-family: 'Nanum Gothic', sans-serif;}
-.nm{font-family: 'Nanum Myeongjo', serif;}
-.jh{font-family: 'Jeju Hallasan', cursive;}
-.ngc{font-family: 'Nanum Gothic Coding', monospace;}
-
-
-</style>
+<%@include file="fonts.jsp"%>
 
 </head>
 <title>협업관리프로젝트</title>
@@ -88,19 +63,15 @@
 	                  <li class="nav-item">
 	                    <a class="nav-link" id="custom-tabs-three-calendar-tab"  href="#custom-tabs-three-calendar" >캘린더</a>
 	                  </li>
-	                  <c:if test="${SMEMBER.memId ne projectVo.memId }">
 	                  <li class="nav-item">
 	                    <a class="nav-link" id="custom-tabs-three-mywork-tab"  href="${pageContext.request.contextPath}/todo/MytodoList" >내 일감</a>
 	                  </li>
-	                  </c:if>
 	                  <li class="nav-item">
 	                    <a class="nav-link" id="custom-tabs-three-files-tab"  href="#custom-tabs-three-files">파일함</a>
 	                  </li>
-	                  <c:if test="${SMEMBER.memId eq projectVo.memId }">
-	                    <a class="nav-link" id="custom-tabs-three-files-tab"  href="#custom-tabs-three-files">PM-PL이슈게시판</a>	                  
-	                  </c:if>
 	                </ul>
 	              </div>
+	             
 	            </div>
           	</div>
 		      

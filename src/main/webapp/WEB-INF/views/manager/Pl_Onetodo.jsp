@@ -6,12 +6,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="../../favicon.ico">
+
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -36,10 +31,9 @@
 		})
 		
 		//진행도 수정
-		$(document).on('click','#progress', function(){
-			var todoId = $("#todoId").val();
-		 
-// 			$(location).attr('href', '${pageContext.request.contextPath}/todo/progressChange?todoId='+todoId);
+		$(document).on('click','#modalBtn', function(){
+				document.proForm.action = "<c:url value='/todo/progressChange'/>";
+				document.proForm.submit();
 		})
 		
 		// 뒤로가기
@@ -66,13 +60,17 @@
 				todoId : todoId
 			},
 			success : function(data) {
+			
 				$("#todoTitle").html(data.todoVo.todoTitle);
 				$("#todoCont").html(data.todoVo.todoCont);
 				$("#memId").html(data.todoVo.memId);
 				$("#todoImportance").html(data.todoVo.todoImportance);
 				$("#todoStart").html(data.todoVo.todoStart);
 				$("#todoEnd").html(data.todoVo.todoEnd);
+				$("#todoPercent").html(data.todoVo.todoPercent+"%");
+				
 				$("#todoId").val(data.todoVo.todoId);
+				$("#todoId_in").val(data.todoVo.todoId);
 				
 				if(data.todoVo.todoLevel == '2'){
 					$("#creatChildBtn").hide();
@@ -105,6 +103,9 @@
 		<label for="memId" class="col-sm-1 control-label">담당자</label>
 		<label class="control-label" id="memId"></label><br><br>
 		
+		<label for="todoPercent" class="col-sm-1 control-label">진행도</label>
+		<label class="control-label" id="todoPercent"></label><br><br>
+		
 		<label for="todoImportance" class="col-sm-1 control-label">우선순위</label>
 		<label class="control-label" id="todoImportance"></label><br><br>
 
@@ -120,14 +121,35 @@
 		<button type="button" class="btn btn-default" id="creatChildBtn">하위일감 생성</button>
 		<button type="button" class="btn btn-default" id="creattodoBtn">일감 생성</button>
 		</c:if>
-		<button type="button" class="btn btn-default" id="progress">진행도 수정</button>
-		<button type="button" class="btn btn-default" id="back">뒤로가기</button>
-				
+		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">진행도</button>	
+		<button type="button" class="btn btn-default" id="back">뒤로가기</button>	
 		</div>
-		
-		
-		
 </div>
+
+ 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">진행도 수정</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+       	진행도를 입력해주세요!
+       	<form id="proForm" name="proForm" method="post">
+       	<input type="hidden" name="todoId" id="todoId_in">
+       	<input type="text" name="todoPercent">
+       	</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="modalBtn">등록</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 		
 </html>

@@ -10,7 +10,7 @@
 
 </head>
 <title>협업관리프로젝트</title>
-	<form:form commandName="reqVo" id="listForm" name="listForm" method="post">
+	<form:form commandName="reqVo" id="DetailForm" name="DetailForm" method="post">
 
 		    <!-- Content Header (Page header) -->
 		    <section class="content-header" style="
