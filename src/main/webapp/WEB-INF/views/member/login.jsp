@@ -343,10 +343,10 @@
 	 	        data: { "memId" : $('#memId').val(),
 		        		"memPass" : $('#memPass').val()},
 		        dataType : "text",
-		        success : function(data, textStatus, jqXHR, request, res) {
+		        success : function(data) {
 		         	$('#lform').submit();
 		        },  
-		        error : function(request, status, error) {
+		        error : function(error) {
 		        	$('#sp').html('일치하는 회원정보가 없습니다.'); 
 		        }
 			}) 	

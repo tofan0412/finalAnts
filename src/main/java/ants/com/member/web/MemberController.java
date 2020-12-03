@@ -70,16 +70,19 @@ public class MemberController {
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
 
-		memberVo = memberService.getMember(memberVo);
+		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
+
+		MemberVo dbMember = memberService.getMember(memberVo);
+		logger.debug("dbMember : {}", dbMember);
 		
-		if (memberVo != (null) && memberVo.getMemPass().equals(memberVo.getMemPass())) {
+		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
 			session.setAttribute("SMEMBER", memberVo);
 			List<ProjectVo> proList = projectService.memInProjectList(memberVo.getMemId());
 			if (proList.size() != 0) {
 				session.setAttribute("projectList", proList);
 			}
-
-			if (memberVo.getMemType().equals("PL") || memberVo.getMemType().equals("PM")) {
+			
+			if (dbMember.getMemType().equals("PL") || dbMember.getMemType().equals("PM")) {
 				List<ProjectVo> plpmList = projectService.plpmInProjectList(memberVo.getMemId());
 				session.setAttribute("plpmList", plpmList); 
 				return "content/project";
@@ -98,7 +101,13 @@ public class MemberController {
 	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
 	public String logincheck(MemberVo memberVo, Model model) {
 		
+		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
+		
 		MemberVo dbMember = memberService.logincheck(memberVo);
+		
+		logger.debug("logincheck rowcount : {}", dbMember);
+		
+		
 		model.addAttribute("memId", dbMember.getMemId());
 		model.addAttribute("memPass", dbMember.getMemPass());
 		
@@ -117,36 +126,8 @@ public class MemberController {
 	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
 
 	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model) {
-
-		if(br.hasErrors()) {
-			return "main.tiles/member/memberRegist";
-		}
-		
-		String Filename = "";
-		if(file.getOriginalFilename().equals(null)) {	// 파일 선택 안했을때 기본값
-			Filename =  "D:\\upload\\user.png";
-		}else {
-			Filename = "D:\\upload\\" + file.getOriginalFilename();
-		}
-
-		File uploadFile = new File(Filename);
-
-		try {
-			file.transferTo(uploadFile);
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-
-
-		memberVo.setMemFilepath(Filename);
-		if(file.getOriginalFilename().equals(null)) {	// 파일 선택 안했을때 기본값
-			memberVo.setMemFilename("user.png");
-
-
-		
 		logger.debug("memberVo : {}", memberVo);
-		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),
-				file.getSize());
+		logger.debug("filename : {} / memFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),file.getSize());
 		
 		String Filename = "";
 		String Filepath = "";
@@ -227,7 +208,7 @@ public class MemberController {
 
 		// POP3/IMAP 설정시 네이버에서 알려줌
 		final String username = "noylit"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
-		final String password = "1234a5678"; // 네이버 이메일 비밀번호를 입력해주세요.
+		final String password = "1234b5678"; // 네이버 이메일 비밀번호를 입력해주세요.
 		int port = 465; // 포트번호
 
 		String uuid = UUID.randomUUID().toString();

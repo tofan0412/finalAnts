@@ -58,15 +58,13 @@
 		<property name="exceptionMappings">
 			<props>
 				<prop key="org.springframework.dao.DataAccessException">cmmn/dataAccessFailure</prop>
-				<prop
-					key="org.springframework.transaction.TransactionException">cmmn/transactionFailure</prop>
-				<prop
-					key="egovframework.rte.fdl.cmmn.exception.EgovBizException">cmmn/egovError</prop>
+				<prop key="org.springframework.transaction.TransactionException">cmmn/transactionFailure</prop>
+				<prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">cmmn/egovError</prop>
 				<prop key="org.springframework.security.AccessDeniedException">cmmn/egovError</prop>
 			</props>
 		</property>
 	</bean>
-
+	
 	<bean
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver"
 		p:order="2"

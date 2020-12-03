@@ -44,6 +44,7 @@
 	<select id="logincheck" parameterType="ants.com.member.model.MemberVo" resultType="ants.com.member.model.MemberVo">
 		SELECT * FROM MEMBER
 		WHERE MEM_ID = #{memId}
+		AND MEM_PASS = #{memPass}
 	</select>
 	
 </mapper>
