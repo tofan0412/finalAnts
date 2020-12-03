@@ -41,9 +41,9 @@ import ants.com.member.service.MemberService;
 import ants.com.member.service.ProjectService;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
-@MultipartConfig
 @RequestMapping("/member")
 @Controller
+@MultipartConfig
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -123,7 +123,6 @@ public class MemberController {
 	
 	// 회원가입 로직
 	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
-
 	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model, @RequestParam(value="imgname", required=false)String imgname) {
 		
 		String Filename = "";
@@ -371,11 +370,11 @@ public class MemberController {
 	
 	
 	// 프로필 업데이트 
-	@RequestMapping("/profileupdate")
-	public String profileupdate(HttpSession session, MemberVo memberVo, Model model, BindingResult br, 
-																@RequestPart(required=false) MultipartFile file, 
-																@RequestParam(value="imgname", required=false)String imgname) {
+	@RequestMapping(path="/profileupdate", method = RequestMethod.POST)				// VO 객체 바로 뒤에 Binding 와야함... 안그럼 매칭안됨
+	public String profileupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
+																@RequestPart(value="memFilename", required=false) MultipartFile file) {
 		
+		logger.debug("memFilename : {}", file.getOriginalFilename());
 		String Filename = "";
 		String Filepath = "";
 		
@@ -386,8 +385,8 @@ public class MemberController {
 			}
 	
 			String filekey = UUID.randomUUID().toString();
-			
-			Filepath = "D:\\upload\\"+ filekey + "\\"+ file.getOriginalFilename();
+			 /*filekey + "\\"+*/
+			Filepath = "D:\\upload\\"+ file.getOriginalFilename();
 			Filename = file.getOriginalFilename();
 			File uploadFile = new File(Filepath);
 			
@@ -417,7 +416,7 @@ public class MemberController {
 		int updateCnt = memberService.profileupdate(memberVo);
 		
 		if(updateCnt == 1){
-			return "redirect:member/memberProfile";
+			return "redirect:/member/profile";
 		}else {
 			return "tiles/member/profileupdateview";	
 		}

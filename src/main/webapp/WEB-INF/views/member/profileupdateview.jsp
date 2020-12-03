@@ -60,11 +60,11 @@
 			<form id="fmin" role="form" class="form-horizontal" action="/member/profileupdate" method="POST" enctype="multipart/form-data">
 			<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 				<div id="pictureView" style="border: 1px solid green; height: 200px; width: 200px; margin: 0 auto;">
-					<img src="${memberVo.memFilepath}" id="pictureViewImg" style="width: 100%; height: 100%;" />
+					<img src="/profileImgView?memId=${memberVo.memFilepath}" id="pictureViewImg" style="width: 100%; height: 100%;" />
 				</div>
 				<div class="content">
 					<button id="basicimg" type="button">기본이미지</button>
-					<input id="picture" type="file" accept=".gif, .jpg, .png" style="height: 37px;"/>
+					<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px;"/>
 				</div>
 				
 				<br><br>
@@ -207,12 +207,11 @@
 				picture.value = null;
 				
 			// picture input의 파일 변경시 이벤트 
-			$("#picture").change(function(){
-				
+			$("#picture").change(function(){ 
 				readURL(this);
 			});
 		});
-		
+	
 		// 이미지 뷰어 src속성에 등록
 		function readURL(input) {
 			if (input.files && input.files[0]) {
@@ -228,6 +227,7 @@
 		
 		var newpass1 = document.getElementById('memPass');
 		var newpass2 = document.getElementById('memPass2');
+		
 		
 		// 등록버튼시 미입력 된것 있으면 경고창
 		$(document).ready(function() {
@@ -256,21 +256,6 @@
 			})
 		})
 		
-		
-	$(document).ready(function(){
-	$("#sub").on('click', function(){
-		
-		var newpass1 = document.getElementById('newpass1');
-		var newpass2 = document.getElementById('newpass2');
-			
-		if(newpass1.value == newpass2.value){
-			$('#passup').submit();	
-		}else{
-			alert("비밀번호가 일치하지 않습니다.")
-		}
-			
-	});
-});
 		
 		
 		

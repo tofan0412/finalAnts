@@ -64,7 +64,7 @@
 				</div>
 				<div class="content">
 					<button id="basicimg" type="button">기본이미지</button>
-					<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px;"/>
+					<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px;" />
 				</div>
 				
 				<br><br>
