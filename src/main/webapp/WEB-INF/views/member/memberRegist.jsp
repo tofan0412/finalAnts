@@ -45,12 +45,13 @@
 <title>회원 등록</title>
 <body>
 	<div class="card">
-			<div id="clickmsg">ff:</div>
-			<hr>
+			<!-- <div id="clickmsg">경로 : </div>	경로 미리보기용
+			<hr>  -->
+			
 			<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
 			<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 				<div id="pictureView" style="border: 1px solid green; height: 200px; width: 200px; margin: 0 auto;">
-					<img id="pictureViewImg" style="width: 100%; height: 100%;" />
+					<img src="http://localhost/profile/user-0.png" id="pictureViewImg" style="width: 100%; height: 100%;" />
 				</div>
 				
 				<div class="content">
@@ -101,6 +102,7 @@
 					멤버구분 : <input class="form-control" name="memType" type="text" id="memType" placeholder="멤버구분"><br>
 				</div>
 				
+				<input type="text" id="imgname" name="imgname" style="display: none">
 				<div id="row1">
 					<br><br><br>
 					<div class="content" id="butt">
@@ -180,8 +182,12 @@
 
 		$(document).ready(function(){
 			
+				// 기본이미지 선택하면 파일 값 날리기
+				var picture = document.getElementById('picture');
+				picture.value = null;
 			// picture input의 파일 변경시 이벤트 
 			$("#picture").change(function(){
+				
 				readURL(this);
 			});
 		});
@@ -253,38 +259,395 @@
 		}); 
 		
 	
+		
+		
+		
+												/* 기본이미지 선택  */
+		
 		// 기본이미지 모달창 띄으기
 		$(document).ready(function(){
 			$('#basicimg').click(function(){
 				$("#myModal").modal();
 			})
 			
-		
-			$('#img'+0).click(function(){
-				realsrc = document.getElementById('img'+0).src
-				src = "/" + realsrc.split('/')[4]
+			
+			
+			$('#img0').click(function(){
+				// 기본이미지 선택하면 파일 값 날리기
+				var picture = document.getElementById('picture');
+				picture.value = null;
+
+				// 0번 이미지 경로 가져오기
+				/* imgsrc = document.getElementById('img0').src */
 				
-				/* $('#clickmsg').append(src);  */
-				$('#realFilename').attr('value', src); 
+				$('#clickmsg').append(imgsrc);		 		// 이미지 경로 미리보기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 이미지 뷰어에 보이기
+				$('#imgname').attr('value', imgsrc);			// input 태그에 value값으로 경로 추가
+				/* 
+				var pass = document.getElementById('imgname');	// img name 에 담긴 value값 가져오기
+				alert(pass.value);								// img name 의 value 값 확인
+				*/
+ 				// 모달창 닫기
 				$("#myModal").modal('hide');
-			})
-			$('#img'+1).click(function(){
-				$('#clickmsg').append(document.getElementById('img'+1).src); 
-				$('#pictureViewImg').attr('src', document.getElementById('img'+1).src); 
-				$("#myModal").modal('hide');
-			})
-			$('#img'+2).click(function(){
-				$('#clickmsg').append(document.getElementById('img'+2).src); 
-				$('#pictureViewImg').attr('src', document.getElementById('img'+2).src); 
-				$("#myModal").modal('hide');
-			})
-			$('#img'+3).click(function(){
-				$('#clickmsg').append(document.getElementById('img'+3).src); 
-				$('#pictureViewImg').attr('src', document.getElementById('img'+3).src); 
-				$("#myModal").modal('hide');
+				
 			})
 			
+			
+			$('#img1').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img1').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img2').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img2').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img3').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img3').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img4').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img4').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			
+			
+			
+			
+			
+			$('#img5').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img5').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img6').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img6').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img7').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img7').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img8').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img8').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img9').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img9').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			
+			
+			
+			
+			
+			$('#img10').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img10').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img11').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img11').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img12').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img12').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img13').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img13').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img14').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img14').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			
+			
+			
+			
+			
+			$('#img15').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img15').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img16').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img16').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img17').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img17').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img18').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img18').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img19').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img19').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+		
+			
+			
+			
+			
+			
+			
+			$('#img20').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img20').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img21').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img21').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img22').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img22').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img23').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img23').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img24').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img24').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			
+			
+			
+			
+			
+			
+			
+			$('#img25').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img25').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img26').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img26').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img27').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img27').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img28').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img28').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			$('#img29').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img29').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
+			
+			
+			
+			
+			
+			
+			$('#img30').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+				
+				imgsrc = document.getElementById('img30').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
+				
+				$("#myModal").modal('hide');					// 모달창 닫기
+			})
 		})
+		
+		
+		
+		/* 
+				realsrc = document.getElementById('img'+1).src
+				src = "/" + realsrc.split('/')[4]
+				
+				$('#clickmsg').append('src : ' + src);
+				$('#memFilename').attr('value', src); 
+				file = $('memFilename').val()
+				file = src;
+				$('#clickmsg').append('file : ' + file);
+				
+				
+				$("#myModal").modal('hide');
+		*/
+		
+		
+		
 		
 		/* 	
 		var imaMap = new Map();

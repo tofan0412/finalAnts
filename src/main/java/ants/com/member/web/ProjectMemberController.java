@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.web.FileController;
+import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ReqVo;
 import ants.com.member.service.ProjectmemberService;
 import egovframework.rte.fdl.property.EgovPropertyService;
+import egovframework.rte.psl.dataaccess.mapper.Mapper;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @RequestMapping("/projectMember")
@@ -64,13 +67,6 @@ public class ProjectMemberController {
 		List<CategoryVo> categorylist = promemService.categorylist(memId);
 		String reqId = (String)session.getAttribute("reqId");
 		
-//		List<IssueVo> issuelist = promemService.issuelist(reqId);		
-		
-		
-//		model.addAttribute("issuelist", issuelist);
-//		model.addAttribute("categorylist", categorylist);
-//		System.out.println(categorylist);
-		
 		return "board/mailWrite";
 	}
 	
@@ -79,8 +75,6 @@ public class ProjectMemberController {
 	public String getissuelist(@ModelAttribute("issueVo") IssueVo issueVo, HttpSession session, Model model) throws Exception{
 		
 		String reqId = (String)session.getAttribute("reqId");
-	
-//		IssueVo issueVo = new IssueVo();
 		issueVo.setReqId(reqId);
 		
 		/** EgovPropertyService.sample */
@@ -109,11 +103,6 @@ public class ProjectMemberController {
 
 		model.addAttribute("categorylist", categorylist);
 		
-		int pages = (int)Math.ceil((double)totCnt/ paginationInfo.getRecordCountPerPage());
-		
-		model.addAttribute("pages", pages);
-//		System.out.println("pageSize : " + paginationInfo.getPageSize());
-		
 		return "tiles/board/issuelist2";
 	}
 	
@@ -131,7 +120,7 @@ public class ProjectMemberController {
 		filecontroller.getfiles(pfv, model);
 
 		model.addAttribute("issuevo", issuevo);	
-		model.addAttribute("memId", "cony");
+		model.addAttribute("memId", issuevo.getMemId());
 		 
 		return "tiles/board/issueDetail";
 	}
@@ -148,14 +137,15 @@ public class ProjectMemberController {
 	@RequestMapping("/insertissue")
 	public String insertissue(IssueVo issueVo, MultipartHttpServletRequest multirequest, HttpSession session, Model model) {
 		
-		System.out.println(issueVo);
 		String reqId = (String)session.getAttribute("reqId");
 		issueVo.setReqId(reqId);
 		issueVo.setMemId("cony@naver.com");
 		
-//		System.out.println(issueVo);
+		
+		System.out.println(issueVo);
 		String insertseq  = promemService.insertissue(issueVo);
 		
+		System.out.println(insertseq);
 		
 		PublicFileVo pfv = new PublicFileVo();
 		pfv.setCategoryId("3");
@@ -165,14 +155,31 @@ public class ProjectMemberController {
 		filecontroller.insertfile(pfv, model, multirequest);
 
 		
-		
-//		if(insertseq != null) {		
-//			return "redirect:/projectMember/insertissueView";
-//		}else {
-			return "redirect:/projectMember/issuelist";
-//			
-//		}
+		return "redirect:/projectMember/issuelist";
+
 	}
+	
+	
+	// 이슈 mytodolist
+	@RequestMapping("/mytodolist")
+	public String mytodolist(HttpSession session, Model model) {
+		String memId = "cony@naver.com";
+		String reqId = (String)session.getAttribute("reqId");
+		
+		ProjectMemberVo promemVo = new ProjectMemberVo();
+		promemVo.setMemId(memId);
+		promemVo.setReqId(reqId);
+		
+		List<TodoVo> mytodolist = promemService.mytodolist(promemVo);
+		model.addAttribute("todolist", mytodolist);
+		
+		System.out.println("todolist : " + mytodolist);
+		
+		return "jsonView";
+		
+	}
+	
+	
 	
 	// 이슈 update View
 	@RequestMapping("/updateissueView")
