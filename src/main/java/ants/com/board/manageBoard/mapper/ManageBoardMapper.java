@@ -35,4 +35,10 @@ public interface ManageBoardMapper {
 	// 인수인계
 	public int todoChangeMem(TodoLogVo todoLogVo);
 	
+	// 내 리스트 조회
+	public List<TodoVo> getMyTodoList(TodoVo todoVo);
+	
+	// 페이징 리스트 Count
+	public int todoMyListCount(TodoVo todoVo);
 }
+

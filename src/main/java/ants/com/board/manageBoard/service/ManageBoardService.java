@@ -30,6 +30,10 @@ public class ManageBoardService{
 		return mapper.todoListCount(todoVo);
 	}
 	
+	public int todoMyListCount(TodoVo todoVo) {
+		return mapper.todoListCount(todoVo);
+	}
+	
 	public List<MemberVo> projectMemList(TodoVo todoVo) {
 		return mapper.projectMemList(todoVo);
 	}
@@ -50,4 +54,7 @@ public class ManageBoardService{
 		return mapper.todoChangeMem(todoLogVo);
 	}
 
+	public List<TodoVo> getMyTodoList(TodoVo todoVo) {
+		return mapper.getMyTodoList(todoVo);
+	}
 }

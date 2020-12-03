@@ -66,15 +66,6 @@
 				$("#todoEnd").html(data.todoVo.todoEnd);
 				$("#todoId").val(data.todoVo.todoId);
 				
-				var res = "";
-					res += '<button type="button" class="btn btn-default" id="updateBtn" >수정</button>';
-					res += '<button type="button" class="btn btn-default" id="deleteBtn">삭제</button>';
-					res += '<button type="button" class="btn btn-default" id="creatChildBtn">하위일감 생성</button>';
-					res += '<button type="button" class="btn btn-default" id="creattodoBtn">일감 생성</button>';
-					res += '<button type="button" class="btn btn-default" id="back">뒤로가기</button>';
-				
-				$("#btnMenu").html(res);
-				
 				if(data.todoVo.todoLevel == '2'){
 					$("#creatChildBtn").hide();
 				}	
@@ -111,6 +102,15 @@
 		
 		<label for="todoEnd" class="col-sm-1 control-label">종료 일</label>
 		<label class="control-label" id="todoEnd"></label><br><br>
-		<div id="btnMenu"></div>
+		<div id="btnMenu">
+		<c:if test="${SMEMBER.memType eq 'PL' }">
+		<button type="button" class="btn btn-default" id="updateBtn" >수정</button>
+		<button type="button" class="btn btn-default" id="deleteBtn">삭제</button>
+		<button type="button" class="btn btn-default" id="creatChildBtn">하위일감 생성</button>
+		<button type="button" class="btn btn-default" id="creattodoBtn">일감 생성</button>
+		</c:if>
+		<button type="button" class="btn btn-default" id="back">뒤로가기</button>
+				
+		</div>
 </div>
 </html>

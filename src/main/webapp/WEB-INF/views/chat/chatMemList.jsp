@@ -2,16 +2,19 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-#chatMemListHeader{
-	color : white;
-	font-size : 1.1em;
-}
 .warning{
 	color : red; 
 	font-size : 0.7em;
 }
 .singleMem{
-	color : lightgreen;
+	color : black;
+}
+.listHeader{
+	text-align : center;
+	color : black;
+	padding-top : 5px;
+	border-bottom : 2px solid #d2d6de; 
+	height : 30px;
 }
 </style>
 <script>
@@ -34,7 +37,7 @@ $(function(){
 		
 	})
 	// 추가되어 있는 회원 아이디를 클릭하면 제거된다.
-	$(".MemList").on('click','li',function(){
+	$(".MemList").on('click','.addedMemId',function(){
 		var memId = $(this).attr('memId');
 		
 		if (memId == '${SMEMBER.memId}'){
@@ -47,7 +50,7 @@ $(function(){
 	// 채팅방 개설 버튼을 누르면 채팅방이 개설된다.
 	$(".NewBtn").on('click', function(){
 		$('.warning').text("");
-		if (MemListArr.length == 0){
+		if (MemListArr.length == 0 || MemListArr.length == 1){
 			$('.warning').text("채팅방 최소 인원은 2명입니다.");	
 		}
 		
@@ -105,7 +108,7 @@ $(function(){
 	function listMember(MemListArr){
 		$('.MemList').empty();
 		for (i = 0 ; i < MemListArr.length ; i++){
-			$('.MemList').append("<li class=\'singleMem\' memId='"+MemListArr[i]+"'>"+MemListArr[i]+"</li>");	
+			$('.MemList').append("<div class=\'singleMem addedMemId\' memId='"+MemListArr[i]+"'>"+MemListArr[i]+"</div>");	
 		}	
 // 		alert("현재 회원 상태 : "+MemListArr);
 	}
@@ -113,31 +116,29 @@ $(function(){
 })
 
 </script>
-<br>
-<div class="chatMemList"><div id="chatMemListHeader">초대할 회원&nbsp;<span class="warning"></span></div>
-	
-	<div class="MemList">
+<!-- 바깥은 chatList라는 DIV가 여전히 감싸고 있다. -->
+<div class="listHeader">초대할 회원&nbsp;<br><span class="warning"></span></div>
+
+<div class="chatList">
+	<div class="MemList" style="padding-top : 10px; padding-left : 10px; height : 100px; border-bottom : 1px solid #d2d6de;"></div>
+	<div class="chatMemList">
+		<div class="listHeader">회원 목록</div>
+		<c:forEach items="${chatMemList }" var="member">
+			<!-- 자기 자신을 초대할 수는 없으므로 출력 목록에서 제외한다.  -->
+			<c:if test="${member.memId eq SMEMBER.memId}">
+			</c:if>
+					
+			<c:if test="${member.memId ne SMEMBER.memId}">
+			<div class="singleMem" memId="${member.memId }">${member.memId }</div><br>
+			</c:if>
+		</c:forEach>
 		
-	</div>
-	
-</div>
-<br>
-<div class="chatMemList">
-	<div id="chatMemListHeader">회원목록</div>
-	<c:forEach items="${chatMemList }" var="member">
-		
-		<!-- 자기 자신을 초대할 수는 없으므로 출력 목록에서 제외한다.  -->
-		<c:if test="${member.memId eq SMEMBER.memId}">
-		</c:if>
-				
-		<c:if test="${member.memId ne SMEMBER.memId}">
-		<div class="singleMem" memId="${member.memId }">${member.memId }</div><br>
-		</c:if>
-	</c:forEach>
-	
-	<div style="text-align : center;">
-		<input type="text" id="cgroupName" placeholder="채팅방 이름을 입력하세요 ..">
-		<input type="button" class="NewBtn" value="채팅방 개설하기">
+		<div style="text-align : center;">
+			<input type="text" id="cgroupName" class="form-control" style="width : 100%;" placeholder="채팅방 이름을 입력하세요 ..">
+			<br>
+			<input type="button" class="btn btn-success returnBtn" value="돌아가기" style="float : left;">
+			<input type="button" class="btn btn-success NewBtn" value="개설하기">
+		</div>
 	</div>
 </div>
 

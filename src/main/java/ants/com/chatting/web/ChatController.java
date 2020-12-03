@@ -73,16 +73,19 @@ public class ChatController {
 	}
 	
 	@RequestMapping("/insertChatMembers")
-	public void insertChatMembers(@RequestParam(value="memList[]")String[] memList, 
+	@ResponseBody	// view를 생성하는 것이 아니라, Object 또는 JSON 을 전송할 수 있다.
+	public int insertChatMembers(@RequestParam(value="memList[]")String[] memList, 
 								  @RequestParam(value="cgroupId") String cgroupId) {
 		
+		int result = 0;
 		for (int i = 0 ; i < memList.length ; i++) {
 			
 			ChatMemberVo chatMemberVo = new ChatMemberVo();
 			chatMemberVo.setMemId(memList[i]);
 			chatMemberVo.setCgroupId(cgroupId);
 			
-			chatService.insertChatMembers(chatMemberVo);
+			result += chatService.insertChatMembers(chatMemberVo);
 		}
+		return result;
 	}
 }
