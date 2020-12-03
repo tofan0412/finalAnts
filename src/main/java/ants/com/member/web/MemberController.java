@@ -297,16 +297,12 @@ public class MemberController {
 	
 	// 인증번호 생성
 	public static String numberGen(int len, int dupCd) {
-
-
 		Random rand = new Random();
 		String numStr = ""; // 난수가 저장될 변수
 
 		for (int i = 0; i < len; i++) {
-
 			// 0~9 까지 난수 생성
 			String ran = Integer.toString(rand.nextInt(10));
-
 			if (dupCd == 1) {
 				// 중복 허용시 numStr에 append
 				numStr += ran;
@@ -323,6 +319,7 @@ public class MemberController {
 		}
 		return numStr;
 	}
+	
 
 	// 비밀번호 수정 - 문자
 	@RequestMapping(path = "/sendSms")
@@ -359,9 +356,32 @@ public class MemberController {
 		return "main.tiles/member/memberPassmodified2";
 	}
 	
+	
+	
+	// 프로필 보기
+	@RequestMapping("/profile")
+	public String profile(HttpSession session, MemberVo memberVo, Model model) {
+		
+		memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
+		MemberVo dbMember = memberService.getMember(memberVo);
+		logger.debug("dbMember : {}", dbMember);
+		
+		model.addAttribute("memberVo",dbMember);
+		return "tiles/member/memberProfile";
+	}
+	
+	
+	
+	
+	
+	
+	
+	// 로그아웃
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return loginView();
 	}
+	
 }
