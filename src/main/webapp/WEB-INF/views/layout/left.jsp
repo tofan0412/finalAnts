@@ -44,10 +44,6 @@
 						<p>전체캘린더</p>
 		                </a>
 		              </li>
-		              <c:if test="${plpmList ne null }">
-		              	<li class="nav-item"><a href="#" class="nav-link"> 
-		              		<i class="nav-icon far fa-copy"></i><p>PM-PL이슈게시판</p></a></li> 
-		              </c:if>
 					</ul>
 				</li><br>
 
@@ -85,7 +81,7 @@
 								</li>
 							</ul>	
 						</c:when>
-						<c:when test="${SMEMBER.memType eq 'MEM' or SMEMBER.memType eq 'PL'}">
+						<c:when test="${SMEMBER.memType ne 'PM' }">
 							<a href="#"	class="nav-link active"><i class="nav-icon fa fa-check"></i>
 								<p>협업공간</p>
 							</a>	

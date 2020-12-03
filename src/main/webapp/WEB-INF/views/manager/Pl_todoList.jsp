@@ -54,10 +54,6 @@
 	<div style="padding-left: 30px; background-color: white;">
 		<c:if test="${SMEMBER.memId eq projectVo.memId }">
 		<a class="btn btn-default " href="${pageContext.request.contextPath }/todo/todoInsertView"><i class="fas fa-edit"></i>일감 등록</a></c:if>
-		<c:if test="${ empty  todoList}">
-				<p>"등록된 일감이없습니다."</p>
-		</c:if>
-		<c:if test="${ not empty todoList}">
 		<br>
 		    <div class="card-header with-border">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
@@ -148,7 +144,6 @@
 				</c:forEach>
 			</tbody>
 		</table>
-	</c:if>
 		
 		<div id="paging" class="card-tools">
 		    <ul class="pagination pagination-sm float-right">

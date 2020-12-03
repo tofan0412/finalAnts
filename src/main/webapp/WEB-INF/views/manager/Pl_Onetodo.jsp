@@ -38,7 +38,7 @@
 		//진행도 수정
 		$(document).on('click','#progress', function(){
 			var todoId = $("#todoId").val();
-			
+		 
 // 			$(location).attr('href', '${pageContext.request.contextPath}/todo/progressChange?todoId='+todoId);
 		})
 		
@@ -124,6 +124,9 @@
 		<button type="button" class="btn btn-default" id="back">뒤로가기</button>
 				
 		</div>
+		
+		
+		
 </div>
 
 		
