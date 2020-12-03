@@ -211,6 +211,16 @@
 		</insert>
 
 
+		<!-- 진행도 작성 -->
+		<update id="progressChange"
+			parameterType="ants.com.board.manageBoard.model.TodoVo">
+			UPDATE todo
+			SET
+				todo_percent =#{todoPercent}
+			WHERE
+				todo_id = #{todoId}
+		</update>
+		
 		<!-- 일감수정 -->
 		<update id="todoupdate"
 			parameterType="ants.com.board.manageBoard.model.TodoVo">
@@ -229,6 +239,7 @@
 				todo_id = #{todoId}
 		</update>
 	
+		<!-- 일감 삭제 -->
 		<update id="tododelete"
 			parameterType="ants.com.board.manageBoard.model.TodoVo">
 			UPDATE todo
@@ -255,4 +266,9 @@
 				sysdate
 			)
 		</insert>
+		
+		<select id="projectList" parameterType="ants.com.member.model.ProjectVo"
+		resultType="ants.com.member.model.ProjectVo">
+		select * from project where mem_id= #{memId} and req_id = #{reqId}
+		</select>
 </mapper>

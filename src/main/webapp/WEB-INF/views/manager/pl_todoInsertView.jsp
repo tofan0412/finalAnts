@@ -85,7 +85,9 @@
         </c:if>
         
         <button type="button" class="btn btn-default" id="regBtn">등록</button>
+        <c:if test="${not empty todoVo.todoParentid}">
         <button type="button" class="btn btn-default" id="creatChildBtn">등록하고 하위일감 생성하러 가기</button>
+        </c:if>
         <button type="button" class="btn btn-default" id="back">뒤로가기</button>
     </form>
 	
