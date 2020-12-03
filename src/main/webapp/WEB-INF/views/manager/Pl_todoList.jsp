@@ -11,7 +11,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
@@ -32,6 +32,8 @@
 		document.listForm.action = "<c:url value='/todo/todoList'/>";
 		document.listForm.submit();
 	}
+	 
+	 
 </script>
 <style type="text/css"> 
 #todoTable{
@@ -58,22 +60,22 @@
 		    <div class="card-header with-border">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">						
-        				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
-							<form:option value="1" label="담당자"/>
-							<form:option value="2" label="내용"/>
-							<form:option value="3" label="제목"/>
-						</form:select> 
-							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                        <form:input style="width: 200px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
-							<span class="input-group-append">							
-							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
-								<i class="fa fa-fw fa-search"></i>
-							</button>
-						</span>
+        				<select name="searchCondition" class="form-control col-md-3" style="width: 100px;">
+							<option value="1" label="담당자"/>
+							<option value="2" label="내용"/>
+							<option value="3" label="제목"/>
+							<option value="4" label="진행도"/>
+						</select> 
+							 <label for="searchKeyword" style="visibility:hidden; display:none;"></label>
+	                         <input type="text" class="form-control" name="searchKeyword" value="${todoVo.searchKeyword }">
+		                  <a href="javascript:search();">
+		                  	<button type="button" class="btn-default" style="height: 100%;">
+                               <i class="fa fa-search"></i>
+                          	</button>
+                          </a>
 					</div>
 		        </div>
 		      </div>
-		
 		<table id="todoTable">
 			<tr>
 				<th>No.</th>
