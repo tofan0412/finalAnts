@@ -53,8 +53,6 @@ public class MemberController {
 	@Resource(name = "projectService")
 	private ProjectService projectService;
 	
-	
-
 	@RequestMapping("/mainView")
 	public String mainView() {
 		return "main.tiles/main";
