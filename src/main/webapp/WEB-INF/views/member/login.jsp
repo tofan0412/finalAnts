@@ -162,14 +162,14 @@
 													placeholder="Enter email">
 											</div>
 
-											<button type="submit">확인</button>
-											<button type="submit" data-dismiss="modal">취소</button>
+											<input type="submit" value="확인">
+											<button type="button" data-dismiss="modal">취소</button>
 										</form>
 
 									</div>
 								</div>
 							</div>
-
+ 
 
 							<div class="panel panel-default">
 								<div class="panel-heading">
@@ -194,8 +194,8 @@
 													placeholder="Enter phone number">
 											</div>
 
-											<button type="submit">확인</button>
-											<button type="submit" data-dismiss="modal">취소</button>
+											<input type="submit" value="확인">
+											<button type="button" data-dismiss="modal">취소</button>
 										</form>
 
 									</div>
@@ -226,11 +226,11 @@
 	
 	<script>
  	$(document).ready(function(){
+ 		
+ 		// 모달창 열기
 		$("#myBtn").click(function(){
 	    	$("#myModal").modal();
 	    });
-		
-		
 		
 		
 		$(function(){ 
@@ -254,17 +254,9 @@
 					Cookies.remove("rememberMe");
 					Cookies.remove("memId");
 				}
- 
-				// submit
-				$("form").submit();
-				
 			})
-			
-
-			
 		})
 		
- 
 		
 		function getCookieValues(cookieName){
 			
@@ -298,16 +290,13 @@
 		function deleteCookie(cookieName){
 			setCookie(cookieName, "", -1);	
 		}
-		
-		
-		
 	
 		
 	    if($("#memId").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
 	        $("#rememberMe").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
 	    }
 	    
-	     
+	    
 	    $("#rememberMe").change(function(){ // 체크박스에 변화가 있다면,
 	        if($("#rememberMe").is(":checked")){ // ID 저장하기 체크했을 때,
 	            setCookie("key", $("#memId").val(), 7); // 7일 동안 쿠키 보관 
@@ -316,23 +305,21 @@
 	        }
 	    });
 	    
+	    
 	    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
 	    $("#memId").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
 	        if($("#rememberMe").is(":checked")){ // ID 저장하기를 체크한 상태라면,
 	            setCookie("key", $("#memId").val(), 7); // 7일 동안 쿠키 보관 
 	        }
 	    });
-	});
- 	
 
-	
-	
-	
-	
-	//로그인시 회원가입 안한 멤버 거르기
-	/* action="/member/loginFunc" method="POST" */
-	$(document).ready(function(){
-		$('#loginBtn').click(function() {
+	    
+		//로그인시 회원가입 안한 멤버 거르기
+		/* action="/member/loginFunc" method="POST" */
+		$('#loginBtn').click(function(e) {
+			
+			e.stopPropagation();    // 이벤트전달? 실행 중지                       
+ 			e.preventDefault();		// 폼전송 정지
 			
 			var memId = $('#memId').val();
 		 	var memPass = $('#memPass').val();
@@ -343,15 +330,17 @@
 	 	        data: { "memId" : $('#memId').val(),
 		        		"memPass" : $('#memPass').val()},
 		        dataType : "text",
-		        success : function(data, textStatus, jqXHR, request, res) {
+		        success : function(data) {
 		         	$('#lform').submit();
 		        },  
-		        error : function(request, status, error) {
+		        error : function(error) {
 		        	$('#sp').html('일치하는 회원정보가 없습니다.'); 
 		        }
-			}) 	
-			return false;
-		});	
+			}) 
+			//return false;
+		});
+		
+		
 	})
 </script>
 

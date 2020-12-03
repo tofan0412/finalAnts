@@ -4,9 +4,17 @@
 	
 	<select id="getMember" parameterType="ants.com.member.model.MemberVo"
 		resultType="ants.com.member.model.MemberVo">
-		SELECT * 
-		FROM MEMBER
-		WHERE MEM_ID = #{memId}
+		SELECT  mem_id,
+			    mem_name,
+			    mem_pass,
+			    mem_tel,
+			    mem_filepath,
+			    mem_filename,
+			    UPPER(mem_alert) as mem_alert,
+			    UPPER(del) as del,
+			    UPPER(mem_type) as mem_type
+		FROM 	MEMBER
+		WHERE 	MEM_ID = #{memId}
 	</select>
 	
 	<select id="getAllMember" resultType="ants.com.member.model.MemberVo">
@@ -36,6 +44,7 @@
 	<select id="logincheck" parameterType="ants.com.member.model.MemberVo" resultType="ants.com.member.model.MemberVo">
 		SELECT * FROM MEMBER
 		WHERE MEM_ID = #{memId}
+		AND MEM_PASS = #{memPass}
 	</select>
 	
 </mapper>

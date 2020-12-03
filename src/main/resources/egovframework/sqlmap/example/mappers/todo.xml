@@ -2,8 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="ants.com.board.manageBoard.mapper.ManageBoardMapper">
-
-	<!--할일 리스트 조회 -->
+	
+	<!--mem : 할일 리스트 조회 -->
+	<select id="getMyTodoList" parameterType="ants.com.board.manageBoard.model.TodoVo"
+		resultType="ants.com.board.manageBoard.model.TodoVo">
+		SELECT c.*
+			FROM (
+				SELECT
+				ROWNUM rnum, a.*
+				FROM (select * from (SELECT
+					todo.todo_id,
+					ABS(TO_DATE(TO_CHAR(todo.todo_start, 'YYYYMMDD')) -
+					To_date(to_char(SYSDATE,'yyyymmdd'))) as todo_start,
+					TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
+					To_date(to_char(todo.todo_end,'yyyymmdd')) as todo_end,
+					todo.todo_cont,
+					lpad(' ', (level - 1) * 4)|| todo_title AS todo_title,
+					todo.todo_percent,
+					todo.todo_importance,
+					todo.todo_level,
+					todo.req_id,
+					todo.todo_parentid,
+					todo.del,
+					member.mem_name AS mem_id
+				FROM( select *
+					from member)member, todo todo
+				WHERE
+					member.mem_id = todo.mem_id
+				AND
+					todo.del = 'N'
+				AND todo.req_id = #{reqId} 
+				AND member.mem_id = #{memId} 
+				start with todo.todo_parentid is null
+				CONNECT BY
+				PRIOR todo_id = TODO_PARENTID
+					<if test="searchKeyword != null and searchKeyword != ''">
+						<choose>
+							<when test="searchCondition == 1">
+								AND member.mem_name LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 2">
+								AND todo.todo_cont LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 3">
+								AND todo.todo_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</if>
+				order siblings by todo_id desc))a
+				WHERE rownum  <![CDATA[ <= ]]> #{lastIndex}) c
+        		<![CDATA[WHERE rnum > #{firstIndex}]]>
+		
+		
+		</select>
+	<!--PL : 할일 리스트 조회 -->
 	<select id="getTodoList"
 		parameterType="ants.com.board.manageBoard.model.TodoVo"
 		resultType="ants.com.board.manageBoard.model.TodoVo">
@@ -33,7 +85,7 @@
 					member.mem_id = todo.mem_id
 				AND
 					todo.del = 'N'
-				AND todo.req_id = 1 
+				AND todo.req_id = #{reqId} 
 				start with todo.todo_parentid is null
 				CONNECT BY
 				PRIOR todo_id = TODO_PARENTID
@@ -62,6 +114,18 @@
 				SELECT COUNT(*)
 					FROM todo
 					WHERE req_id = #{reqId}
+					AND del = 'N'
+		    ]]>
+		</select>
+		
+	<!-- 내일감 페이지 천리를 위한 요구사항개수 -->
+		<select id="todoMyListCount" parameterType="String"
+			resultType="java.lang.Integer">
+			<![CDATA[
+				SELECT COUNT(*)
+					FROM todo
+					WHERE req_id = #{reqId}
+					AND mem_id= #{memId}
 					AND del = 'N'
 		    ]]>
 		</select>
@@ -140,6 +204,10 @@
 				#{todoParentid, jdbcType=VARCHAR},
 				'N'
 			)
+			
+			<selectKey keyProperty="todoId" resultType="String">
+			select todo_seq.currval from dual
+		</selectKey>
 		</insert>
 
 

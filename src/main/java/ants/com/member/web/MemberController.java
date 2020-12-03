@@ -30,6 +30,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,6 +47,7 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
+
 	@Resource(name = "memberService")
 	private MemberService memberService;
 	
@@ -56,14 +58,12 @@ public class MemberController {
 
 	@RequestMapping("/mainView")
 	public String mainView() {
-		logger.debug("메인뷰 진입");
 		return "main.tiles/main";
 	}
 
 	// 로그인 페이지 이동
 	@RequestMapping("/loginView")
 	public String loginView() {
-		logger.debug("MemberController loginView");
 		return "member/login";
 	}
 
@@ -77,17 +77,15 @@ public class MemberController {
 		logger.debug("dbMember : {}", dbMember);
 		
 		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
-			session.setAttribute("SMEMBER", memberVo);
-			List<ProjectVo> proList = projectService.memInProjectList(memberVo.getMemId());
-			logger.debug("projectList:{}", proList);
+			session.setAttribute("SMEMBER", dbMember);
+			List<ProjectVo> proList = projectService.memInProjectList(dbMember.getMemId());
 			if (proList.size() != 0) {
 				session.setAttribute("projectList", proList);
 			}
-
+			
 			if (dbMember.getMemType().equals("PL") || dbMember.getMemType().equals("PM")) {
-				List<ProjectVo> plpmList = projectService.plpmInProjectList(memberVo.getMemId());
+				List<ProjectVo> plpmList = projectService.plpmInProjectList(dbMember.getMemId());
 				session.setAttribute("plpmList", plpmList); 
-				logger.debug("plpmList:{}", plpmList);
 				return "content/project";
 			} else {
 				return "content/project";
@@ -105,8 +103,12 @@ public class MemberController {
 	public String logincheck(MemberVo memberVo, Model model) {
 		
 		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
+		
 		MemberVo dbMember = memberService.logincheck(memberVo);
+		
 		logger.debug("logincheck rowcount : {}", dbMember);
+		
+		
 		model.addAttribute("memId", dbMember.getMemId());
 		model.addAttribute("memPass", dbMember.getMemPass());
 		
@@ -117,18 +119,16 @@ public class MemberController {
 	// 회원가입 페이지 이동
 	@RequestMapping(path = "/memberRegistview", method = RequestMethod.GET)
 	public String getView() {
-		logger.debug("memberRegist-Controller.getView()");
 		return "main.tiles/member/memberRegist";
 	}
 	
 	
 	// 회원가입 로직
 	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
-	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="realFilename", required=false) MultipartFile file, Model model) {
-		
-		logger.debug("memberVo : {}", memberVo);
-		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),
-				file.getSize());
+
+	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model, @RequestParam(value="imgname", required=false)String imgname) {
+		logger.debug("memberVo : {} / imgname : {}", memberVo, imgname);
+		logger.debug("filename : {} / memFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),file.getSize());
 		
 		String Filename = "";
 		String Filepath = "";
@@ -138,7 +138,7 @@ public class MemberController {
 			logger.debug("br.hasErrors() : {}", br.hasErrors());
 	
 			if (br.hasErrors()) {
-				return "main.tiles/member/memberRegist";
+//				return "main.tiles/member/memberRegist";
 			}
 	
 			String filekey = UUID.randomUUID().toString();
@@ -155,25 +155,37 @@ public class MemberController {
 	
 			logger.debug("---------------------통과-------------------");
 			
+			
 		}else {
-			Filepath = "D:\\upload\\users-00";
-			Filename = "users-00.png";
+			
+			// 기본 이미지 중에 선택했을때
+			if(!imgname.equals("") && !imgname.equals(null)) {
+				Filepath = imgname;
+				Filename = imgname.split("/")[4];
+			
+			// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+			}else { 
+				Filepath = "http://localhost/profile/user-0.png";
+				Filename = "user-0.png";
+			}
+			
+		
 		}
 		
+
 		memberVo.setMemFilepath(Filepath);
 		memberVo.setMemFilename(Filename);
 		
 		logger.debug("memId : {}", memberVo.getMemId());
 		logger.debug("memberVo : {}", memberVo);
 		
+
 		int insertCnt = 0;
 		try {
 			insertCnt = memberService.insertMember(memberVo);
 		} catch (SQLException | IOException e) {
 			return "main.tiles/member/memberRegist";
 		}
-		
-		logger.debug("insertCnt : {}", insertCnt);
 		
 		if (insertCnt == 1) {
 			model.addAttribute("cnt", insertCnt);
@@ -187,9 +199,8 @@ public class MemberController {
 	// 중복아이디 체크
 	@ResponseBody @RequestMapping(path = "/checkSignup", method = RequestMethod.POST) 
 	public String checkSignup(HttpServletRequest request, MemberVo memberVo) { 
-		String memId = request.getParameter("memId"); 
+		String memId = request.getParameter("memId");
 		int rowcount = memberService.checkSignup(memberVo); 
-		logger.debug("checkSignup : {}", rowcount);
 		
 		return String.valueOf(rowcount);
 	}
@@ -200,7 +211,6 @@ public class MemberController {
 	@RequestMapping(value = "/mailsender")
 	public String mailSender(MemberVo memberVo, HttpServletRequest request, ModelMap mo, Model model)
 			throws AddressException, MessagingException {
-		logger.debug("memberRegist-Controller - mailSender()");
 
 		// 네이버일 경우 smtp.naver.com 을 입력합니다.
 		// Google일 경우 smtp.gmail.com 을 입력합니다.
@@ -210,7 +220,7 @@ public class MemberController {
 
 		// POP3/IMAP 설정시 네이버에서 알려줌
 		final String username = "noylit"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
-		final String password = "1234a5678"; // 네이버 이메일 비밀번호를 입력해주세요.
+		final String password = "1234b5678"; // 네이버 이메일 비밀번호를 입력해주세요.
 		int port = 465; // 포트번호
 
 		String uuid = UUID.randomUUID().toString();
@@ -270,10 +280,8 @@ public class MemberController {
 	// 비밀번호 수정 (문자,메일 -> 비밀번호 수정 쿼리로)
 	@RequestMapping(path = "/passupdate", method = RequestMethod.GET)
 	public String passupdate(MemberVo memberVo) {
-		logger.debug("memberRegist-Controller - passupdate()");
 
 		int updatecnt = memberService.updatePass(memberVo);
-		logger.debug("memberRegist-Controller - passupdate()-updatecnt : {}", updatecnt);
 
 		if (updatecnt == 1) {
 			return mainView();		// 수정되면 메인으로
@@ -353,13 +361,7 @@ public class MemberController {
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
-		
-		session.removeAttribute("SMEMBER");
-		session.removeAttribute("projectId");
+		session.invalidate();
 		return loginView();
 	}
-	
-
-
-
 }

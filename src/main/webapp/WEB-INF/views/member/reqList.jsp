@@ -24,7 +24,7 @@
 </head>
 <title>협업관리프로젝트</title>
 	<form:form commandName="reqVo" id="listForm" name="listForm" method="post">
-
+			<form:hidden path="memId"/>
 		    <!-- Content Header (Page header) -->
 		    <section class="content-header" style="
 											border-bottom: 1px solid #dee2e6;
@@ -56,7 +56,7 @@
 	                          <option value="1">기간</option>
 	                          <option value="2">담당자</option>
 	                          <option value="3">응답상태</option>
-	                      </select>
+	                      </select> 
 		                  <!-- /btn-group -->
 		                  <input type="text" class="form-control" name="searchKeyword" value="${reqVo.searchKeyword }">
 		                  <a href="javascript:fn_egov_selectList();" >
@@ -144,10 +144,8 @@
 	              <!-- paging -->
 	              <div id="paging" class="card-tools">
 	              	<ul class="pagination pagination-sm float-right">
-	                    <li class="page-item"><a class="page-link" href="#">«</a></li>
 		        			<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page"  />
 		        			<form:hidden path="pageIndex" />
-	                    <li class="page-item"><a class="page-link" href="#">»</a></li>
 	                 </ul>
         		  </div>
         		  
