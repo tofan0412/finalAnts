@@ -73,6 +73,7 @@ public class ChatController {
 	}
 	
 	@RequestMapping("/insertChatMembers")
+	@ResponseBody	// view를 생성하는 것이 아니라, Object 또는 JSON 을 전송할 수 있다.
 	public int insertChatMembers(@RequestParam(value="memList[]")String[] memList, 
 								  @RequestParam(value="cgroupId") String cgroupId) {
 		
