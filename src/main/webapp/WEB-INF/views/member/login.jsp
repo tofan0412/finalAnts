@@ -162,14 +162,14 @@
 													placeholder="Enter email">
 											</div>
 
-											<button type="submit">확인</button>
-											<button type="submit" data-dismiss="modal">취소</button>
+											<input type="submit" value="확인">
+											<button type="button" data-dismiss="modal">취소</button>
 										</form>
 
 									</div>
 								</div>
 							</div>
-
+ 
 
 							<div class="panel panel-default">
 								<div class="panel-heading">
@@ -194,8 +194,8 @@
 													placeholder="Enter phone number">
 											</div>
 
-											<button type="submit">확인</button>
-											<button type="submit" data-dismiss="modal">취소</button>
+											<input type="submit" value="확인">
+											<button type="button" data-dismiss="modal">취소</button>
 										</form>
 
 									</div>
@@ -254,14 +254,7 @@
 					Cookies.remove("rememberMe");
 					Cookies.remove("memId");
 				}
- 
-				// submit
-				$("form").submit();
-				
 			})
-			
-
-			
 		})
 		
  
@@ -332,7 +325,10 @@
 	//로그인시 회원가입 안한 멤버 거르기
 	/* action="/member/loginFunc" method="POST" */
 	$(document).ready(function(){
-		$('#loginBtn').click(function() {
+		$('#loginBtn').click(function(e) {
+			
+			e.stopPropagation();                                      
+ 			e.preventDefault();
 			
 			var memId = $('#memId').val();
 		 	var memPass = $('#memPass').val();
@@ -349,8 +345,8 @@
 		        error : function(error) {
 		        	$('#sp').html('일치하는 회원정보가 없습니다.'); 
 		        }
-			}) 	
-			return false;
+			}) 
+			//return false;
 		});	
 	})
 </script>
