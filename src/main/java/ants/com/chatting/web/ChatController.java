@@ -73,16 +73,18 @@ public class ChatController {
 	}
 	
 	@RequestMapping("/insertChatMembers")
-	public void insertChatMembers(@RequestParam(value="memList[]")String[] memList, 
+	public int insertChatMembers(@RequestParam(value="memList[]")String[] memList, 
 								  @RequestParam(value="cgroupId") String cgroupId) {
 		
+		int result = 0;
 		for (int i = 0 ; i < memList.length ; i++) {
 			
 			ChatMemberVo chatMemberVo = new ChatMemberVo();
 			chatMemberVo.setMemId(memList[i]);
 			chatMemberVo.setCgroupId(cgroupId);
 			
-			chatService.insertChatMembers(chatMemberVo);
+			result += chatService.insertChatMembers(chatMemberVo);
 		}
+		return result;
 	}
 }
