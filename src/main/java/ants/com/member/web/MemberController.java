@@ -76,14 +76,14 @@ public class MemberController {
 		logger.debug("dbMember : {}", dbMember);
 		
 		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
-			session.setAttribute("SMEMBER", memberVo);
-			List<ProjectVo> proList = projectService.memInProjectList(memberVo.getMemId());
+			session.setAttribute("SMEMBER", dbMember);
+			List<ProjectVo> proList = projectService.memInProjectList(dbMember.getMemId());
 			if (proList.size() != 0) {
 				session.setAttribute("projectList", proList);
 			}
 			
 			if (dbMember.getMemType().equals("PL") || dbMember.getMemType().equals("PM")) {
-				List<ProjectVo> plpmList = projectService.plpmInProjectList(memberVo.getMemId());
+				List<ProjectVo> plpmList = projectService.plpmInProjectList(dbMember.getMemId());
 				session.setAttribute("plpmList", plpmList); 
 				return "content/project";
 			} else {
