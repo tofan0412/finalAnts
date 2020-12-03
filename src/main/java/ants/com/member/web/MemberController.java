@@ -366,13 +366,7 @@ public class MemberController {
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
-		
-		session.removeAttribute("SMEMBER");
-		session.removeAttribute("projectId");
+		session.invalidate();
 		return loginView();
 	}
-	
-
-
-
 }
