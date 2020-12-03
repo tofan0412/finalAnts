@@ -3,17 +3,16 @@ package ants.com.chatting.web;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.xml.registry.infomodel.User;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.support.SecurityContextProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ants.com.chatting.model.ChatGroupVo;
+import ants.com.chatting.model.ChatMemberVo;
 import ants.com.chatting.model.ChatVo;
 import ants.com.chatting.service.ChatService;
 import ants.com.member.model.ProjectMemberVo;
@@ -21,17 +20,13 @@ import ants.com.member.model.ProjectMemberVo;
 @RequestMapping("/chat")
 @Controller
 public class ChatController {
-	private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 	@Resource(name="chatService")
 	ChatService chatService;
 	
-	
 	@RequestMapping("/readChatList")
-	public String readChatList(String reqId, Model model) {
+	public String readChatList(String memId, Model model) {
 		
-		List<ChatGroupVo> chatList = chatService.readChatList(reqId);
-		logger.debug("불러온 채팅 개수 : {}", chatList.size());
-		
+		List<ChatGroupVo> chatList = chatService.readChatList(memId);
 		
 		model.addAttribute("chatList", chatList);
 		return "chat/chatList";
@@ -39,9 +34,11 @@ public class ChatController {
 	
 	@RequestMapping("/readMessages")
 	public String readMessages(String cgroupId, Model model) {
+		// 채팅방 번호에 맞는 메시지를 모두 불러온다 !
 		List<ChatVo> msgList = chatService.readMessages(cgroupId);
 		
-		ChatGroupVo cgroup = chatService.readChatGroup(cgroupId);
+		// 채팅방 이름을 불러오기 위해, cgroupId PK를 이용하여 객체를 불러온다.
+		ChatGroupVo cgroup = chatService.readCgroupName(cgroupId);
 		
 		model.addAttribute("msgList", msgList);
 		model.addAttribute("cgroup", cgroup);
@@ -51,21 +48,41 @@ public class ChatController {
 	
 	// 전송한 메시지를 DB에 저장한다..
 	@RequestMapping("/sendMessage")
-	public void sendMessage(ChatVo chatVo) {
+	@ResponseBody
+	public String sendMessage(ChatVo chatVo) {
 		int result = chatService.sendMessage(chatVo);
-		
-		logger.debug("chat 전송 결과 : {}",result);
+		if (result > 0) {
+			return "yes";
+		}
+		else return "error";
 	}
 	
 	@RequestMapping("/readChatMembers")
-	public String readChatMembers(String reqId, Model model) {
-		List<ProjectMemberVo> chatMemList = chatService.readChatMembers(reqId);
+	public String readChatMembers(String projectId, Model model) {
+		List<ProjectMemberVo> chatMemList = chatService.readChatMembers(projectId);
 		
 		model.addAttribute("chatMemList", chatMemList);
 		return "chat/chatMemList";
 	}
 	
+	@RequestMapping("/insertChatGroup")
+	@ResponseBody	// view를 생성하는 것이 아니라, Object 또는 JSON 을 전송할 수 있다.
+	public String insertChatGroup(ChatGroupVo chatGroupVo, Model model) {
+		chatService.insertChatGroup(chatGroupVo);
+		return chatGroupVo.getCgroupId();
+	}
 	
-	
-	
+	@RequestMapping("/insertChatMembers")
+	public void insertChatMembers(@RequestParam(value="memList[]")String[] memList, 
+								  @RequestParam(value="cgroupId") String cgroupId) {
+		
+		for (int i = 0 ; i < memList.length ; i++) {
+			
+			ChatMemberVo chatMemberVo = new ChatMemberVo();
+			chatMemberVo.setMemId(memList[i]);
+			chatMemberVo.setCgroupId(cgroupId);
+			
+			chatService.insertChatMembers(chatMemberVo);
+		}
+	}
 }

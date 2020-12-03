@@ -70,10 +70,18 @@ $(function(){
 			<label id ="issueCont" class="control-label">${issuevo.issueCont }</label>
 			
 			<br><br>
-			<p>파일 : (파일 존재시 다운로드)  </p>
-			<p><input type="button" value="다운로드" id="filedown" class="btn btn-default"></p>
 			
-			<br>
+			<label for="File" class="col-sm-2 control-label">첨부파일</label>
+			<c:if test="${filelist.size() == 0}">
+				[ 첨부파일이 없습니다. ]
+			</c:if>
+			
+			<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
+							
+				<a href="${cp }/file/publicfileDown?pubId=${files.pubId}"><input id ="files${vs.index}"  type="button" class="btn btn-default" name="${files.pubId}" value="${files.pubFilename} 다운로드" ></a>
+			</c:forEach>
+			
+			<br><br><br><br>
 			<c:if test="${issuevo.memId == memId}">
 				<input type= "button" value="수정하기" id ="modissue" class="btn btn-default">
 				<input type= "button" value="삭제하기" id="delissue"  class="btn btn-default">			

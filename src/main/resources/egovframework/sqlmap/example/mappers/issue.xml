@@ -5,8 +5,7 @@
 
    <!-- 이슈게시글 리스트 가져오기 -->
 	<select id="issuelist" resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="ants.com.board.memBoard.model.IssueVo">
-	 	
-	 	
+ 	
  		SELECT c.*
 	      FROM (
 	      	SELECT ROWNUM RNUM , 
@@ -36,6 +35,10 @@
 				     
 						</choose>
 					</if>
+					<if test = "issueKind != null and issueKind != ''">
+							AND a.issue_kind = #{issueKind}
+					</if>
+					
 					ORDER BY a.reg_dt desc
 			  ) S
 		
@@ -56,18 +59,27 @@
 		        where issue_id = #{issueId} ) a , member b 
 		where a.mem_id = b.mem_id and a.issue_del = 'n' 
 			
-		
 	</select>
+	
+	
+	<!-- 본인이 가지고 있는 일감(todo)내역 -->
+	<select id="mytodolist" parameterType="ants.com.member.model.ProjectMemberVo">		
+		select todo_title from todo where mem_id = #{memId} and req_id = #{reqId}
+	</select>
+	
 	
 	
 	<!-- 이슈 작성하기 -->
 	<insert id="insertissue" parameterType="ants.com.board.memBoard.model.IssueVo">
+		<selectKey keyProperty="issueId" resultType="String" order="BEFORE">
+			SELECT  ISSUE_SEQ.nextval FROM DUAL
+		</selectKey>
 		
 		INSERT INTO issue (
 		    issue_id, issue_title, issue_cont,  reg_dt,  category_id,  
 		    issue_kind, issue_del, todo_id, req_id, mem_id
 		) VALUES (
-		    ISSUE_SEQ.nextval, #{issueTitle}, #{issueCont}, sysdate,  #{categoryId}, 
+		    #{issueId}, #{issueTitle}, #{issueCont}, sysdate,  #{categoryId}, 
 		    #{issueKind}, 'n', '', #{reqId} , #{memId}
 		)
 		

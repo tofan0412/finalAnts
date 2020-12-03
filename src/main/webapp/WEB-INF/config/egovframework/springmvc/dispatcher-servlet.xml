@@ -28,6 +28,7 @@
 	<!-- </property> -->
 	<!-- </bean> -->
 
+	<bean id ="FileDownloadView" class="ants.com.file.view.FileDownloadView"/>
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<property name="order" value="1"></property>
@@ -68,7 +69,7 @@
 
 	<bean
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver"
-		p:order="1"
+		p:order="2"
 		p:viewClass="org.springframework.web.servlet.view.JstlView"
 		p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
 

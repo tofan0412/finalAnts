@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,47 +45,46 @@
 <br>
 <div style="padding-left: 30px;"><h3>일감등록</h3><br>
 
-	<form method="post" action="${pageContext.request.contextPath }/todo/todoInsert" id="todoform"  >	
-		<label for="todoTitle" class="col-sm-1 control-label">제목</label>
-		<input type="text" name="todoTitle" style="width: 580px;"><br><br>
+	<form:form  commandName="todoVo" method="post" action="${pageContext.request.contextPath }/todo/todoInsert" id="todoform" >	
+		<form:label for="todoTitle" class="col-sm-1 control-label" path="todoTitle">제목</form:label>
+		<form:input path="todoTitle" cssStyle="width: 580px;"/><br><br>
 		
 		<div style="width: 80%;">
-		<label for="todoCont" class="col-sm-1 control-label">할일</label>
-		<textarea id="summernote" name="todoCont"></textarea>
+		<form:label for="todoCont" class="col-sm-1 control-label" path="todoCont">할일</form:label>
+		<form:textarea id="summernote" path="todoCont"></form:textarea>
 		</div>
 		<br><br>
-		<label for="mem-select" class="col-sm-1 control-label">담당자</label>
-		<select name="memId" id="mem-select">
-		    <option value="">담당자를 선택해 주세요</option>
-			<c:forEach items="${promemList}" var="mem">
-				<option value="${mem.memId}">${mem.memName}</option>
-			</c:forEach>
-		</select><br><br>
+		<form:label for="mem-select" class="col-sm-1 control-label" path="memId">담당자</form:label>
+			<form:select path="memId" id="mem-select" items="${promemList}">
+			    <form:option value="">담당자를 선택해 주세요</form:option>
+					<form:option value="${promemList.memId}">${promemList.memName}</form:option>
+			</form:select><br><br>
 		
-		<label for="status-select" class="col-sm-1 control-label">우선순위</label>
-		<select name="todoImportance" id="status-select">
-		    <option value="gen">보통</option>
-		    <option value="emg">긴급</option>
-		</select><br><br>
+		<form:label path="todoImportance" for="status-select" class="col-sm-1 control-label">우선순위</form:label>
+		<form:select path="todoImportance" id="status-select">
+		    <form:option value="gen">보통</form:option>
+		    <form:option value="emg">긴급</form:option>
+		</form:select><br><br>
 		
-		<label for="currentDate" class="col-sm-1 control-label">시작 일</label>
-		<input type='date' id='currentDate' name="todoStart"/><br><br>
+		<form:label path="currentDate" for="currentDate" class="col-sm-1 control-label">시작 일</form:label>
+		<form:input type='date' id='currentDate' path="todoStart"/><br><br>
 		
-		<label for="todoEnd" class="col-sm-1 control-label">종료 일</label>
-		<input type='date' id='todo_end' name="todoEnd"/><br><br>
+		<form:label path="todoEnd" for="todoEnd" class="col-sm-1 control-label">종료 일</form:label>
+		<form:input type='date' id='todo_end' path="todoEnd"/><br><br>
+		
 		
 		<c:if test="${todoVo.todoParentid ne null}">
-		<input type="hidden" name="todoParentid" value="${todoVo.todoParentid}">
-		<input type="hidden" name="todoLevel" value="2">		
+		<form:input type="hidden" path="todoParentid" value="${todoVo.todoParentid}"/>
+		<form:input type="hidden" path="todoLevel" value="2"/>		
 		</c:if>
 		<c:if test="${todoVo.todoParentid eq null}">
-		<input type="hidden" name="todoLevel" value="1">		
+		<form:input type="hidden" path="todoLevel" value="1"/>		
 		</c:if>
 		
 		
-		<button type="button" class="btn btn-default" id="regBtn">등록</button>
-		<button type="button" class="btn btn-default" id="back">뒤로가기</button>
-	</form>
+		<form:button class="btn btn-default" id="regBtn">등록</form:button>
+		<form:button class="btn btn-default" id="back">등록</form:button>
+	</form:form>
 	
 </div>
 </html>

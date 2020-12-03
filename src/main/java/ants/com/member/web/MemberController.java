@@ -102,73 +102,18 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	/*
- 	// 로그인 체크 ajax
-@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
-public @ResponseBody JSONObject logincheck(MemberVo memberVo, Model model, 
-		@RequestBody ReplyVO replyVO, ModelMap modelMap,Principal principal) {
 
-	logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
-	
-try {
-		MemberVo dbMember = memberService.logincheck(memberVo);
-		logger.debug("logincheck rowcount : {}", dbMember);
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-
-	return ObjectToMap.ConvertObjectToJSONObject(memberVo);
-}
-
-
-@SuppressWarnings("unchecked")
-
-public static JSONObject ConvertObjectToJSONObject(Object obj) {
-
-	try {
-
-		Field[] fields = obj.getClass().getDeclaredFields();
-
-		JSONObject jsonObj = new JSONObject();
-
-		for (int i = 0; i < fields.length; i++) {
-
-			fields[i].setAccessible(true);
-
-			jsonObj.put(fields[i].getName(), (String) fields[i].get(obj));
-
-		}
-
-		return dbMember;
-
-	} catch (IllegalArgumentException e) {
-
-		e.printStackTrace();
-
-	} catch (IllegalAccessException e) {
-
-		e.printStackTrace();
-
-	} catch (Exception e) {
-
-		e.printStackTrace();
-
-	}
-
-	return null;
-	
-}
-  */
-	
 	// 회원가입 페이지 이동
 	@RequestMapping(path = "/memberRegistview", method = RequestMethod.GET)
 	public String getView() {
 		return "main.tiles/member/memberRegist";
 	}
-
+	
+	
 	// 회원가입 로직
-	@RequestMapping(path = "/memberRegist", method = RequestMethod.POST)
+	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
 	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="realFilename", required=false) MultipartFile file, Model model) {
+
 
 		if(br.hasErrors()) {
 			return "main.tiles/member/memberRegist";
@@ -193,10 +138,51 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 		memberVo.setMemFilepath(Filename);
 		if(file.getOriginalFilename().equals(null)) {	// 파일 선택 안했을때 기본값
 			memberVo.setMemFilename("user.png");
+
+		
+		logger.debug("memberVo : {}", memberVo);
+		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),
+				file.getSize());
+		
+		String Filename = "";
+		String Filepath = "";
+		
+		if(!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
+			
+			logger.debug("br.hasErrors() : {}", br.hasErrors());
+	
+			if (br.hasErrors()) {
+				return "main.tiles/member/memberRegist";
+			}
+	
+			String filekey = UUID.randomUUID().toString();
+			
+			Filepath = "D:\\upload\\"+ filekey + "\\"+ file.getOriginalFilename();
+			Filename = file.getOriginalFilename();
+			File uploadFile = new File(Filepath);
+			
+			try {
+				file.transferTo(uploadFile);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+	
+			logger.debug("---------------------통과-------------------");
+			
+
 		}else {
-			memberVo.setMemFilename(file.getOriginalFilename());
+			Filepath = "D:\\upload\\users-00";
+			Filename = "users-00.png";
 		}
 		
+
+		memberVo.setMemFilepath(Filepath);
+		memberVo.setMemFilename(Filename);
+		
+		logger.debug("memId : {}", memberVo.getMemId());
+		logger.debug("memberVo : {}", memberVo);
+		
+
 		int insertCnt = 0;
 		try {
 			insertCnt = memberService.insertMember(memberVo);
@@ -212,6 +198,7 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 		}
 	}
 	
+	
 	// 중복아이디 체크
 	@ResponseBody @RequestMapping(path = "/checkSignup", method = RequestMethod.POST) 
 	public String checkSignup(HttpServletRequest request, MemberVo memberVo) { 
@@ -219,7 +206,7 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 		
 		return String.valueOf(rowcount);
 	}
-
+	
 	
 	// 비밀번호 수정 - 이메일
 	/** 자바 메일 발송 * @throws MessagingException * @throws AddressException **/
@@ -378,7 +365,7 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 	public String logout(HttpSession session) {
 		
 		session.removeAttribute("SMEMBER");
-		session.removeAttribute("reqId");
+		session.removeAttribute("projectId");
 		return loginView();
 	}
 	

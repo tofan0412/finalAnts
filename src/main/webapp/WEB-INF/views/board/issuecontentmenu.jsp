@@ -31,6 +31,9 @@
 .jh{font-family: 'Jeju Hallasan', cursive;}
 .ngc{font-family: 'Nanum Gothic Coding', monospace;}
 
+ln{
+	border-radius: 
+}
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -44,6 +47,11 @@ $(function(){
 	
 	$("a nav-link").on('click', function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/insertissueView');
+	})
+	
+	
+	$("#issuebtn").on('click', function(){
+		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/issuelist');
 	})
 })
 </script>
@@ -74,8 +82,8 @@ $(function(){
 		
 		    <!-- Main content -->
 		    <section class="content" style="margin-top: 13px;">
+	            <div class="card-teal card-outline col-12 col-sm-9" style="background: white; border-radius : 8px  8px 0px 0px; ">
 		      <div class="col-12 col-sm-9">
-	            <div class="card card-teal card-outline card-tabs">
 	              <div class="card-header p-0 pt-1 border-bottom-0">
 	                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
 	                
@@ -93,7 +101,7 @@ $(function(){
 	                  <li class="nav-item">
 	                    <a class="nav-link" id="custom-tabs-three-gantt-tab" data-toggle="pill" href="#custom-tabs-three-gantt" role="tab" aria-controls="custom-tabs-three-gantt" aria-selected="false">간트</a>
 	                  </li>
-	                  <li class="nav-item">
+	                  <li class="nav-item" id="issuebtn">
 	                    <a class="nav-link" id="3" data-toggle="pill" href="#custom-tabs-three-issue" role="tab" aria-controls="custom-tabs-three-issue" aria-selected="false">이슈</a>
 	                  </li>
 	                  <li class="nav-item">

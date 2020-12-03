@@ -43,12 +43,76 @@
 			if($this.val() == '${issueVo.issueKind }')				
 			$this.prop('selected', 'selected');
 		});
+		
 		 
+		
+		fileSlotCnt = "${filelist.size() }";
+		console.log(fileSlotCnt)
+		maxFileSlot =5;
+		 
+		$(document).on("click", "#btnMinus", function(){
+				var id = $(this).prev().attr('name')
+				$('#delfile').append(id + ",");
+				
+				var a = $('#delfile').text();
+				$('#delfile').val(a);
+				
+				fileSlotCnt++;
+				$(this).prev().prev().remove();
+	     	    $(this).prev().remove();
+	     	    $(this).remove();
+	    	    
+	    	    if($('input[type=seach]').length >= 5){
+	      			 $('#addbtn').hide()
+	      		}else{
+	      			 $('#addbtn').show()
+	      		}
+	       	    
+	     });
+        
+	    $('#addbtn').on('click', function(){
+
+   	  	    fileSlotCnt++;
+     		console.log(fileSlotCnt);
+    	    var html = '<br><input type="file" name="file" id="fileBtn">'
+   				    +'<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">'
+					+'<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>'
+				    +'</button>';
+		    $(this).next().next().append(html); 
+	  	
+			 
+	    	if(fileSlotCnt >= maxFileSlot){
+				 $('#addbtn').hide();
+				 alert("파일은 총 "+maxFileSlot+"개 까지만 첨부가능합니다.");
+		   	}else{
+		   		$('#addbtn').show()
+		   	}
+    	  
+	    	   
+	     })
 		 
 		      
  	});
 	
 </script>
+<style>
+	input[type=search]{
+		display : inline-block;
+		border: none; 
+		background: transparent;
+		 padding-bottom:  .5em;
+		 padding-top:  .5em;
+	}
+	#filelabel{
+		display: inline-block;
+		width: 100px;
+	}
+	#fileBtn{
+		 display: inline-block;
+		 padding-bottom:  .5em;
+		 padding-top:  .5em;
+	}
+</style>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 
@@ -58,7 +122,7 @@
 		<div style="padding-left: 30px;">
 			<h3>협업이슈 수정하기</h3>
 			<br>
-			<form method="post" action="${pageContext.request.contextPath}/projectMember/updateissue" id="todoform"  >	
+			<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/updateissue" id="todoform"  >	
 			
 				<label for="issueTitle" class="col-sm-2 control-label">이슈종류 </label>
 				<select name="issueKind" id="kindselect">
@@ -69,23 +133,30 @@
 				<input type="text" name="issueTitle" style="width: 580px;" value="${issueVo.issueTitle }" id="issueTitle"><br><br>
 				
 				<div style="width: 80%;">
-				<label for="todoCont" class="col-sm-2 control-label">이슈 내용</label>
-				<textarea id="summernote" name="issueCont" id="issueCont">${issueVo.issueCont }</textarea>
+					<label for="todoCont" class="col-sm-2 control-label">이슈 내용</label>
+					<textarea id="summernote" name="issueCont" id="issueCont">${issueVo.issueCont }</textarea>
 				</div>
 				<br><br>
 				
 				
-				<label for="file" class="col-sm-2 control-label">첨부파일</label>
+				<label id ="filelabel" for="file" class="col-sm-2 control-label">첨부파일</label>
+				<button type="button" id="addbtn" class="btn btn-light filebtn" style="outline: 0; border: 0;">
+					<i class="fas fa-fw fa-plus" style=" font-size:10px;"></i>
+				</button> <br>
 				<div id ="file" class="col-sm-10">
-				<input type="button" id="add" value="+"> <br>
-					<input type="file" id="file1" name="file1" >
-					<input type="hidden" id="file2" name="file2" >											
-					<input type="hidden" id="file3" name="file3" >											
-					<input type="hidden" id="file4" name="file4" >											
-					<input type="hidden" id="file5" name="file5" >											
+				
+					<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
+						<input type="search" name="${files.pubId}" value="${files.pubFilename}" disabled >
+	   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">
+							<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>
+						</button><br>
+					</c:forEach>								
+					
+					<input type="hidden" id="delfile" name="delfile" value="">	
 				</div>
 		
-				
+		
+				<br><br>
 				 <input type="hidden" value="${issueVo.issueId }" name="issueId">
 				<input type="hidden" name="categoryId" value="${issueVo.categoryId }">
 				<input type="submit" class="btn btn-default" id="updateBtn" value="수정하기">

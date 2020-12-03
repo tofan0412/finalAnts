@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ants.com.file.mapper.FileMapper">
+
+ <!-- 파일 등록하기 -->
+  <insert id="insertfile" parameterType="ants.com.file.model.PublicFileVo">
+	  <selectKey resultType="String" keyProperty="pubId" order="BEFORE"> 
+	  		select pub_seq.nextval FROM dual
+	  </selectKey>
+	  
+	  INSERT INTO publicfile (
+							    pub_id,
+							    pub_filepath,
+							    pub_filename,
+							    pub_extension,
+							    reg_dt,
+							    category_id,
+							    some_id,
+							    req_id,
+							    pub_size
+							) VALUES (
+							    #{pubId},
+							    #{pubFilepath},
+							    #{pubFilename},
+							    #{pubExtension},
+							    sysdate,
+							    #{categoryId},
+							    #{someId},
+							    #{reqId},
+							    #{pubSize}
+							)
+  </insert>
+  
+   <!-- 해당 게시글 파일들 조회 -->
+  <select id="getfiles" parameterType="ants.com.file.model.PublicFileVo" resultType="ants.com.file.model.PublicFileVo">
+  	 SELECT * 
+     FROM publicfile 
+     WHERE some_id = #{someId} and category_id = #{categoryId} and req_id = #{reqId}
+  </select>
+  
+  <delete id="delfiles">
+  	DELETE FROM publicfile where pub_id= #{pubId}
+  
+  </delete>
+  
+  
+  
+  <!-- 클릭한 파일 정보 -->
+  <select id="getfileDetail" parameterType="String" resultType="ants.com.file.model.PublicFileVo">
+  	 SELECT * 
+     FROM publicfile 
+     WHERE pub_id = #{pubId}
+  </select>
+  
+</mapper>
