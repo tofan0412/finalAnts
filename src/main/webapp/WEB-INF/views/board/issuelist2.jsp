@@ -13,15 +13,13 @@
 
 <style type="text/css">
 
-	ul {
-		display: table; margin: auto; padding:0;
 
-		}
 	#pagenum a{
 		 display: inline-block;
 		 text-align: center;
-		 width : 30px;	 
-		 
+		 width : auto;	 
+		 border: none; 
+		background: transparent;
 	}
 	
 	li strong{
@@ -98,24 +96,36 @@ $(function(){
 <form:form commandName="issueVo" id="listForm" name="listForm" method="post">
 
 		    <!-- Content Header (Page header) -->
-		    <section class="content-header col-md-10" style="
-											border-bottom: 1px solid #dee2e6;
-											background: white;">
-		      <div class="container-fluid">
+		    
+		    
+		  
+		    
+		    
+<!-- 		 	<h3>협업이슈 리스트</h3> -->
+<!-- 				<input type= "button" value="작성하기" id="insertissue"> -->
+	
+			<section class="content" >
+		      <div class="col-12 col-sm-9">
+			      <div class="card" style="border-radius: inherit; padding : 2px;">
+			      
+			    <div class="container-fluid">
 		        <div class="row mb-2">
+		         <br>
 		          <div class="col-sm-6">
-		            <h1 class="jg">현업이슈 리스트</h1>
+		          <br>
+		            <h1 class="jg" style=" padding-left : 10px;">현업이슈 리스트</h1>
 		          </div>
 		          <div class="col-sm-6">
-		            <ol class="breadcrumb float-sm-right">
+		            <ol class="breadcrumb float-sm-right"  style="background : white">
 		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
 		              <li class="breadcrumb-item active">현업이슈 리스트</li>
 		            </ol>
 		          </div>
 		        </div>
+		        </div>
 		        
-		        <div class="card-header with-border">
-				<div id="keyword" class="card-tools float-right" style="width: 550px;">
+		        <div class="card-header  ">
+				<div id="keyword" class="card-tools float-right" style="width: 450px;">
 					<div class="input-group row">
 						<!-- sort num -->
 <!-- 						<select class="form-control col-md-3" name="pageSize" id="pageSize" > -->
@@ -144,30 +154,24 @@ $(function(){
 						</form:select> 
 						
 						
-							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                        <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
+						<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
+	                    <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
 <!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
 						<span class="input-group-append">							
 							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
 								<i class="fa fa-fw fa-search"></i>
 							</button>
 						</span>
+						
 						<!-- end : search bar -->
 					</div>
+					<br>
 		        </div>
 		        
 		      </div><!-- /.container-fluid -->
-		    </section>
-		    
-		  
-		    
-		    
-<!-- 		 	<h3>협업이슈 리스트</h3> -->
-<!-- 				<input type= "button" value="작성하기" id="insertissue"> -->
-	
-			<section class="content">
-		      <div class="col-md-10">
-			      <div class="card" style="border-radius: inherit;">
+			      
+			      
+			      
 <!-- 	              <div class="card-header"> -->
 <!-- 	                <h3 class="card-title">현업이슈 리스트 등록</h3> -->
 	
@@ -228,14 +232,18 @@ $(function(){
 	              <br>
 	              <div id="paging" class="card-tools">
 	              	<ul class="pagination pagination-sm" id ="pagingui">
-	                    <li class="page-item pagingui"><a class="page-link" href="#">«</a></li>
-	                    
+	              	
+<%--               		<c:if test="${pages > issueVo.lastIndex }"> --%>
+<%--                     	<li class="page-item pagingui"><a class="page-link" href="${pageContext.request.contextPath}/projectMember/issuelist?pageIndex=1">«</a></li> --%>
+<%--                     </c:if>	 --%>
 		        		<li  class="page-item" id ="pagenum" >	
 <%-- 		        		<input type="button" value="#{paginationInfo}" > --%>
 		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
 		        			<form:hidden path="pageIndex" />
-		        			
-	                    <li class="page-item pagingui"><a class="page-link" href="#">»</a></li>
+<%-- 	        		<c:if test="${pages > issueVo.lastIndex }"> --%>
+<%--                     	<li class="page-item pagingui"><a class="page-link" href="${pageContext.request.contextPath}/projectMember/issuelist?pageIndex=${issueVo.lastIndex}">»</a></li> --%>
+<%--                     </c:if>	 --%>
+                    
 	                 </ul>
         		  </div>
         		  <br>
@@ -249,7 +257,7 @@ $(function(){
 	            </div>
              </div>
 		    </section>
-				
+			<br>
 		
 
 </form:form>	
