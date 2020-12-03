@@ -63,16 +63,15 @@
 			<img src="../dist/loginimage.png" height="100%" width="100%"
 				alt="Avatar">
 		</div>
-
-
+		
+		
 
 		<div class="col-sm-6" style="background-color: white;">
 			<div class="center">
 				<div>
 					<h2 class="jg" style="line-height: 25px;">Ants에 오신 걸 환영합니다 !</h2>
 					<h4 class="jg">
-						새로 오신 분인가요 ? <a href="/member/memberRegistview"
-							style="color: #0BB783;"><strong>새계정을 만드세요.</strong></a>
+						새로 오신 분인가요 ? <a href="/member/memberRegistview" style="color: #0BB783;"><strong>새계정을 만드세요.</strong></a>
 					</h4>
 				</div>
 				<br>
@@ -82,8 +81,7 @@
 						<header class="jg" style="font-size: 1.2em;">
 							Email<br>
 						</header>
-						<input type="email" class="form-control login" id="memId" name="memId"
-							value="" style="border: 0; outline: 0;">
+						<input type="email" class="form-control login" id="memId" name="memId" value="" style="border: 0; outline: 0;">
 					</div>
 
 					<div class="form-group has-feedback">
@@ -93,8 +91,7 @@
 							</header>
 						</div>
 						<div>
-							<header class="jg"
-								style="font-size: 1.0em; float: right; color: #0BB783;">
+							<header class="jg" style="font-size: 1.0em; float: right; color: #0BB783;">
 								<a id="myBtn">비밀번호를 잊으셨나요?</a><br>
 							</header>
 						</div>

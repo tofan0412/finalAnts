@@ -86,9 +86,6 @@
 				AND
 					todo.del = 'N'
 				AND todo.req_id = #{reqId} 
-				start with todo.todo_parentid is null
-				CONNECT BY
-				PRIOR todo_id = TODO_PARENTID
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>
 							<when test="searchCondition == 1">
@@ -100,8 +97,14 @@
 							<when test="searchCondition == 3">
 								AND todo.todo_title LIKE '%' || #{searchKeyword} || '%'
 							</when>
+							<when test="searchCondition == 4">
+								AND todo.todo_percent LIKE '%' || #{searchKeyword} || '%'
+							</when>
 						</choose>
 					</if>
+				start with todo.todo_parentid is null
+				CONNECT BY
+				PRIOR todo_id = TODO_PARENTID
 				order siblings by todo_id desc))a
 				WHERE rownum  <![CDATA[ <= ]]> #{lastIndex}) c
         		<![CDATA[WHERE rnum > #{firstIndex}]]>
@@ -210,7 +213,21 @@
 		</selectKey>
 		</insert>
 
+<<<<<<< HEAD
 				
+=======
+
+		<!-- 진행도 작성 -->
+		<update id="progressChange"
+			parameterType="ants.com.board.manageBoard.model.TodoVo">
+			UPDATE todo
+			SET
+				todo_percent =#{todoPercent}
+			WHERE
+				todo_id = #{todoId}
+		</update>
+		
+>>>>>>> 32b80d70f74f377c0101100eb3e7bdbe49cd2986
 		<!-- 일감수정 -->
 		<update id="todoupdate"
 			parameterType="ants.com.board.manageBoard.model.TodoVo">
@@ -229,6 +246,7 @@
 				todo_id = #{todoId}
 		</update>
 	
+		<!-- 일감 삭제 -->
 		<update id="tododelete"
 			parameterType="ants.com.board.manageBoard.model.TodoVo">
 			UPDATE todo
@@ -254,5 +272,14 @@
 				#{afterId},
 				sysdate
 			)
+<<<<<<< HEAD
 		</insert>		
+=======
+		</insert>
+		
+		<select id="projectList" parameterType="ants.com.member.model.ProjectVo"
+		resultType="ants.com.member.model.ProjectVo">
+		select * from project where mem_id= #{memId} and req_id = #{reqId}
+		</select>
+>>>>>>> 32b80d70f74f377c0101100eb3e7bdbe49cd2986
 </mapper>

@@ -25,4 +25,6 @@ public interface ReqMapper {
 
 	public MemberVo getMember(MemberVo memberVo);
 
+	public int plDelete(ReqVo reqVo);
+
 }

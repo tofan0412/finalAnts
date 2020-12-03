@@ -30,7 +30,6 @@
 	
 	// 이슈 작성
 	function todoInsert(todoId){
-	   	document.location = "/todo/onetodoView?todoId="+todoId;
 	}
 	
 	// 건의사항 작성
@@ -62,8 +61,6 @@
 	
 	<form:form commandName="todoVo" id="listForm" name="listForm" method="post">
 	<div style="padding-left: 30px; background-color: white;">
-		<c:if test="${SMEMBER.memType eq 'PL' }">
-		<a class="btn btn-default " href="${pageContext.request.contextPath }/todo/todoInsertView"><i class="fas fa-edit"></i>일감 등록</a></c:if>
 		<c:if test="${ empty  todoList}">
 				<p>"등록된 일감이없습니다."</p>
 		</c:if>

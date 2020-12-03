@@ -15,6 +15,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#progress").hide();
 		todoDetail("${param.todoId}");
 
 		//수정
@@ -32,6 +33,13 @@
 		$(document).on('click','#creatChildBtn', function(){
 			var todoId = $("#todoId").val();
 	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView?todoParentid='+todoId);
+		})
+		
+		//진행도 수정
+		$(document).on('click','#progress', function(){
+			var todoId = $("#todoId").val();
+		 
+// 			$(location).attr('href', '${pageContext.request.contextPath}/todo/progressChange?todoId='+todoId);
 		})
 		
 		// 뒤로가기
@@ -69,6 +77,9 @@
 				if(data.todoVo.todoLevel == '2'){
 					$("#creatChildBtn").hide();
 				}	
+				if(data.todoVo.memId == '${SMEMBER.memName}'){
+					$("#progress").show();
+				}	
 			}
 	
 		});
@@ -103,14 +114,20 @@
 		<label for="todoEnd" class="col-sm-1 control-label">종료 일</label>
 		<label class="control-label" id="todoEnd"></label><br><br>
 		<div id="btnMenu">
-		<c:if test="${SMEMBER.memType eq 'PL' }">
+		<c:if test="${SMEMBER.memId eq projectVo.memId }">
 		<button type="button" class="btn btn-default" id="updateBtn" >수정</button>
 		<button type="button" class="btn btn-default" id="deleteBtn">삭제</button>
 		<button type="button" class="btn btn-default" id="creatChildBtn">하위일감 생성</button>
 		<button type="button" class="btn btn-default" id="creattodoBtn">일감 생성</button>
 		</c:if>
+		<button type="button" class="btn btn-default" id="progress">진행도 수정</button>
 		<button type="button" class="btn btn-default" id="back">뒤로가기</button>
 				
 		</div>
+		
+		
+		
 </div>
+
+		
 </html>

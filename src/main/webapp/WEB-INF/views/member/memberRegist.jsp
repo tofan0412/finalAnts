@@ -10,6 +10,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <style>
+	body{
+	    min-width: 1000px;
+	    min-height: 1000px;
+	}
 	#butt{
 	}
 	.ghgh{
@@ -23,6 +27,8 @@
 		margin-left:43%;
 	}
 	.input{ 
+		padding : 10px;
+		padding-left : 20px;
 		width: 330px;
 		height : 50px;
 		border-radius: 80px
@@ -35,6 +41,9 @@
 		width: 80px; 
 		height: 56px; 
 		cursor: pointer;
+	}
+	#checkbtn{
+		height : 42px;
 	}
 
 </style>	
@@ -60,12 +69,14 @@
 					<input type="text" id="real_filename" name="real_filename" style="display: none">
 				</div>
 				
+				<br><br>
 				<div class="content"> 
 					<label for="id" style="font-size: 0.9em;">
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>아이디
 					</label>
 					<div id="idcheck">
-						<input class="input" name="memId" type="text" id="memId" placeholder="    회원 id"/>
+						<input class="input" name="memId" type="email" id="memId" placeholder="회원 id"/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="submit" id="checkbtn" class="btn btn-default">중복확인</button>
 						<div class="check_font" id="checkMsg"></div>
 					</div>
@@ -76,7 +87,7 @@
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>이 름
 					</label>
 					<div>
-						<input class="input" name="memName" type="text" id="memName" placeholder="    이름"/>
+						<input class="input" name="memName" type="text" id="memName" placeholder="이름"/>
 					</div>
 				</div>
 
@@ -85,14 +96,14 @@
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드
 					</label>
 					<div>
-						<input class="input" name="memPass" type="password" id="memPass" placeholder="       비밀번호"/>
+						<input class="input" name="memPass" type="password" id="memPass" placeholder="비밀번호"/>
 					</div>
 				</div>
 
 				<div class="content">
 						&nbsp;&nbsp;&nbsp;&nbsp;<label for="alias" style="font-size: 0.9em;">전화번호</label>
 					<div>
-						<input class="input" name="memTel" type="text" id="memTel" placeholder="       전화번호"/>
+						<input class="input" name="memTel" type="tel" id="memTel" placeholder="전화번호( '-' 없이 작성해주세요)"/>
 					</div>
 				</div>
 

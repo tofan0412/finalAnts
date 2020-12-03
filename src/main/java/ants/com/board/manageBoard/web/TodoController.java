@@ -19,6 +19,7 @@ import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectVo;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @RequestMapping("/todo")
@@ -32,6 +33,13 @@ public class TodoController {
 	// 프로젝트명 클릭시 세션저장
 	@RequestMapping("/projectgetReq")
 	public String projectgetReq(HttpSession session, String reqId) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		ProjectVo projectVo = new ProjectVo();
+		projectVo.setMemId(memId);
+		projectVo.setReqId(reqId);
+		ProjectVo sessionVo = manageBoardService.projectList(projectVo);
+		session.setAttribute("projectVo", sessionVo);
 		session.setAttribute("projectId", reqId);
 		return "redirect:/todo/todoList";
 	}
@@ -142,6 +150,18 @@ public class TodoController {
 		int updateCnt = manageBoardService.todoupdate(todoVo);
 		if (updateCnt > 0) {
 			return "redirect:/todo/todoList?reqId=" + todoVo.getReqId();
+		} else {
+			return "redirect:/todo/updatetodoView?todoId=" + todoVo.getTodoId();
+		}
+	}
+	
+		
+	// 진행도 수정
+	@RequestMapping("/progressChange")
+	public String progressChange(TodoVo todoVo, Model model) {	
+		int proChangeCnt = manageBoardService.progressChange(todoVo);
+		if (proChangeCnt > 0) {
+			return "redirect:/todo/MytodoList";
 		} else {
 			return "redirect:/todo/updatetodoView?todoId=" + todoVo.getTodoId();
 		}
