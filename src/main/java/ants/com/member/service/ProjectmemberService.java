@@ -6,9 +6,11 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.member.mapper.ProjectmemberMapper;
+import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ProjectVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -18,6 +20,10 @@ public class ProjectmemberService extends EgovAbstractServiceImpl{
 	@Resource(name ="promemMapper")
 	private ProjectmemberMapper mapper;
 	
+	// 해당 프로젝트에 본인이 참여하고 있는 일감조회
+	public List<TodoVo> mytodolist(ProjectMemberVo promemVo){
+		return mapper.mytodolist(promemVo);
+	}
 	
 	// 이슈글 리스트
 	public List<IssueVo> issuelist(IssueVo issueVo) {
@@ -31,8 +37,7 @@ public class ProjectmemberService extends EgovAbstractServiceImpl{
 
 	// 이슈글 작성하기
 	public String insertissue(IssueVo issueVo) {
-		int insertCnt = mapper.insertissue(issueVo);
-		System.out.println("issueId : " + issueVo.getIssueId());
+		mapper.insertissue(issueVo);
 		return issueVo.getIssueId();
 	}
 

@@ -2,13 +2,18 @@ package ants.com.member.mapper;
 
 import java.util.List;
 
+import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ProjectVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("promemMapper")
 public interface ProjectmemberMapper {
+	
+	// 해당 프로젝트에 본인이 참여하고 있는 일감조회
+	public List<TodoVo> mytodolist(ProjectMemberVo promemVo);
 	
 	// 이슈리스트
 	public List<IssueVo> issuelist(IssueVo issueVo);
