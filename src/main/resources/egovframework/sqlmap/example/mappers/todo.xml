@@ -210,7 +210,7 @@
 		</selectKey>
 		</insert>
 
-
+				
 		<!-- 일감수정 -->
 		<update id="todoupdate"
 			parameterType="ants.com.board.manageBoard.model.TodoVo">
@@ -254,5 +254,5 @@
 				#{afterId},
 				sysdate
 			)
-		</insert>
+		</insert>		
 </mapper>
