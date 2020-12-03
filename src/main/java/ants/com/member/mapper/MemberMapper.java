@@ -25,5 +25,5 @@ public interface MemberMapper {
 	
 	public MemberVo logincheck(MemberVo memberVo);
 	
-	
+	public int profileupdate(MemberVo memberVo);
 }

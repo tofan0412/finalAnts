@@ -23,7 +23,7 @@
 		  WHERE UPPER(del) = 'N'
 			AND UPPER(mem_id) like '%' || UPPER(#{term}) || '%'
 	</select>
-
+	
 	<insert id="insertMember" parameterType="ants.com.member.model.MemberVo">
 		INSERT INTO MEMBER VALUES(#{memId}, #{memName}, #{memPass}, #{memTel},
 		#{memFilepath}, #{memFilename}, #{memAlert}, #{del}, #{memType})
@@ -46,5 +46,11 @@
 		WHERE MEM_ID = #{memId}
 		AND MEM_PASS = #{memPass}
 	</select>
+	
+				
+	<update id="profileupdate" parameterType="ants.com.member.model.MemberVo">
+		UPDATE MEMBER SET mem_name = #{memName}, mem_pass = #{memPass}, mem_tel = #{memTel}, mem_filepath = #{memFilepath}, mem_filename = #{memFilename}
+		WHERE MEM_ID = #{memId}
+	</update>
 	
 </mapper>

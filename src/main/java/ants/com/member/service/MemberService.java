@@ -54,4 +54,11 @@ public class MemberService{
 		logger.debug("memberService logincheck : {}", memberVo);
 		return mapper.logincheck(memberVo);
 	}
+
+	
+	public int profileupdate(MemberVo memberVo) {
+		logger.debug("memberService profileupdate : {}", memberVo);
+		return mapper.profileupdate(memberVo);
+	}
+	
 }
