@@ -30,8 +30,10 @@ public class ProjectmemberService extends EgovAbstractServiceImpl{
 	}
 
 	// 이슈글 작성하기
-	public int insertissue(IssueVo issueVo) {
-		return mapper.insertissue(issueVo);
+	public String insertissue(IssueVo issueVo) {
+		int insertCnt = mapper.insertissue(issueVo);
+		System.out.println("issueId : " + issueVo.getIssueId());
+		return issueVo.getIssueId();
 	}
 
 	// 이슈글 수정하기

@@ -36,10 +36,83 @@
 		          ['insert', ['link', 'picture', 'video']],
 		          ['view', ['fullscreen', 'codeview', 'help']]
 		        ]	      
-		      })		
+		 })
+		 
+		fileSlotCnt = 1;
+		 
+	    // 최대 첨부파일 수
+	    maxFileSlot = 5;
+	    $('#filediv').on('click', '#btnMinus', function(){
+	     	   if(fileSlotCnt > 1){
+	     		   fileSlotCnt--;
+	     		   console.log(fileSlotCnt);
+	     	   }
+	     	   console.log("minus clicked!!");
+	     	   $(this).prev().prev().remove();
+	     	   $(this).prev().remove();
+	     	   $(this).remove();
+	     	   $('#addbtn').show();
+	     	   
+	        })
+	        
+	         $('#addbtn').on('click', function(){
+	    	 
+				   fileSlotCnt++;
+		    	   console.log("click!!");
+		    	   var html = '<br><input type="file" name="file" id="fileBtn">'
+		    	   				+'<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">'
+									+'<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>'
+								+'</button>';
+		    	   $(this).next().next().append(html);  
+		    	   
+		    	   if(fileSlotCnt >= maxFileSlot){
+		    		   $(this).hide();
+	 	    		   alert("파일은 총 "+maxFileSlot+"개 까지만 첨부가능합니다.");
+		    	   }
+	    	   
+	     })
+
+		      
+		      
  	});
 	
 </script>
+<style>
+ /*	.btn-link {  
+		  background-color: #868a8929;
+ 	    border-color: #868a8929; 
+ 	} 
+*/
+/*	.filebtn { 
+ 	    color: black; 
+ 	    background-color: #868a8947;
+ 	    border-color: #868a8947; 
+ 	    box-shadow: none;
+ 	    width : 30px;
+ 	    height: 30px;
+ 	} */
+	input[type=text]{
+		hieght : 100px;
+	}
+	#fileBtn{
+		 display: inline-block;
+		 padding-bottom:  .5em;
+		 padding-top:  .5em;
+/*		 color: #fff;
+		 font-size: inherit;
+		 line-height: normal;
+		 vertical-align: middle;
+		 background-color: #868a8929;
+		 cursor: pointer;
+		 border: 1px solid #4cae4c;
+		 border-radius: .25em;
+		 -webkit-transition: background-color 0.2s;
+		 transition: background-color 0.2s;
+		 */
+	}
+}
+
+</style>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 
@@ -49,30 +122,39 @@
 		<div style="padding-left: 30px;">
 			<h3>협업이슈 작성하기</h3>
 			<br>
-			<form method="post" action="${pageContext.request.contextPath}/projectMember/insertissue" id="todoform"  >	
+			<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/insertissue" id="todoform"  >	
 				<label for="issueTitle" class="col-sm-2 control-label">이슈제목 </label>
 				<input type="text" name="issueTitle" style="width: 580px;" id="issueTitle"><br><br>
 				
 				<div style="width: 80%;">
-				<label for="todoCont" class="col-sm-2 control-label">이슈 내용</label>
+				<label for="issueCont" class="col-sm-2 control-label">이슈 내용</label>
 				<textarea id="summernote" name="issueCont" id="issueCont"></textarea>
 				</div>
 				<br><br>
 				
+				<label for="todoTitle" class="col-sm-2 control-label">일감</label>
+				<select name="todoTitle" id="todoselect">
+					
+				    <option value="">선택</option>
+					<c:forEach items="${todolist }" var="todo" begin ="0" varStatus="vs" end="${todolist.size() }" step="1" >
+						<option value="${todo.todoId }">${todo.todoTitle }</option>			
+					</c:forEach>			
+				</select><br><br>
+				
 				<label for="file" class="col-sm-2 control-label">첨부파일</label>
-				<div id ="file" class="col-sm-10">
-				<input type="button" id="add" value="+"> <br>
-					<input type="file" id="file1" name="file1" >
-					<input type="hidden" id="file2" name="file2" >											
-					<input type="hidden" id="file3" name="file3" >											
-					<input type="hidden" id="file4" name="file4" >											
-					<input type="hidden" id="file5" name="file5" >											
+				<button type="button" id="addbtn" class="btn btn-light filebtn" style="outline: 0; border: 0;">
+						<i class="fas fa-fw fa-plus" style=" font-size:10px;"></i>
+					</button> <br>
+				
+				<div id ="filediv" class="col-sm-10">
+					<input type="file" name="file" id="fileBtn">	
+								
 				</div>
 		
 				
-				
-				<input type="text" value="issue" name="issueKind">		
-				<input type="text" value="3" name="categoryId">
+				<br><br>
+				<input type="hidden" value="issue" name="issueKind">		
+				<input type="hidden" value="3" name="categoryId">
 				<input type="submit" class="btn btn-default" id="insertbtn" value="작성하기"> 
 			</form>
 		</div>

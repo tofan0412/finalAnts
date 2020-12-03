@@ -129,30 +129,39 @@ public class MemberController {
 		logger.debug("memberVo : {}", memberVo);
 		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),
 				file.getSize());
-
-		if(!file.getOriginalFilename().equals(null) && !file.getOriginalFilename().equals("")) {
 		
-			logger.debug("br.hasErrors() : {}", br.hasErrors() );
+		String Filename = "";
+		String Filepath = "";
+		
+		if(!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
 			
-			if(br.hasErrors()) {
+			logger.debug("br.hasErrors() : {}", br.hasErrors());
+	
+			if (br.hasErrors()) {
 				return "main.tiles/member/memberRegist";
 			}
+	
+			String filekey = UUID.randomUUID().toString();
 			
-			String Filename =  "D:\\upload\\" + file.getOriginalFilename();
-			File uploadFile = new File(Filename);
+			Filepath = "D:\\upload\\"+ filekey + "\\"+ file.getOriginalFilename();
+			Filename = file.getOriginalFilename();
+			File uploadFile = new File(Filepath);
 			
 			try {
 				file.transferTo(uploadFile);
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-			
-			logger.debug("---------------------통과-------------------");
 	
-			memberVo.setMemFilepath(Filename);
-			memberVo.setMemFilename(file.getOriginalFilename());
+			logger.debug("---------------------통과-------------------");
+			
+		}else {
+			Filepath = "D:\\upload\\users-00";
+			Filename = "users-00.png";
 		}
 		
+		memberVo.setMemFilepath(Filepath);
+		memberVo.setMemFilename(Filename);
 		
 		logger.debug("memId : {}", memberVo.getMemId());
 		logger.debug("memberVo : {}", memberVo);
