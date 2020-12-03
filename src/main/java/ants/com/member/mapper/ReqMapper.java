@@ -21,6 +21,8 @@ public interface ReqMapper {
 
 	public ReqVo getReq(ReqVo reqVo);
 	
-	public List<MemberVo> getAllMember();
+	public List<MemberVo> getAllMember(String term);
+
+	public MemberVo getMember(MemberVo memberVo);
 
 }

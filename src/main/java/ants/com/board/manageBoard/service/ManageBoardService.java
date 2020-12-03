@@ -7,8 +7,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import ants.com.board.manageBoard.mapper.ManageBoardMapper;
+import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ReqVo;
 
 @Service("manageBoardService")
 public class ManageBoardService{
@@ -24,6 +26,10 @@ public class ManageBoardService{
 		return mapper.getTodoList(todoVo);
 	}
 
+	public int todoListCount(TodoVo todoVo) {
+		return mapper.todoListCount(todoVo);
+	}
+	
 	public List<MemberVo> projectMemList(TodoVo todoVo) {
 		return mapper.projectMemList(todoVo);
 	}
@@ -38,6 +44,10 @@ public class ManageBoardService{
 
 	public int tododelete(TodoVo todoVo) {
 		return mapper.tododelete(todoVo);
+	}
+	
+	public int todoChangeMem(TodoLogVo todoLogVo) {
+		return mapper.todoChangeMem(todoLogVo);
 	}
 
 }

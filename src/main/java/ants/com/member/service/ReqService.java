@@ -40,8 +40,12 @@ public class ReqService{
 		return mapper.getReq(reqVo);
 	}
     
-	public List<MemberVo> getAllMember(){
-		return mapper.getAllMember();
+	public List<MemberVo> getAllMember(String term){
+		return mapper.getAllMember(term);
+	}
+
+	public MemberVo getMember(MemberVo memberVo) {
+		return mapper.getMember(memberVo);
 	}
 
 

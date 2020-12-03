@@ -5,27 +5,60 @@
 	<!-- 요구사항정의서 목록가져오기 -->
 	<select id="reqList" parameterType="ants.com.member.model.ReqVo"
 		resultType="ants.com.member.model.ReqVo">
-	     <![CDATA[
+	    
 	    SELECT  *
 		    FROM(
 		    	SELECT ROWNUM rnum, a.*
 				FROM (SELECT b.*
                         FROM reqlist b
                         WHERE mem_id = #{memId}
+                        <if test="searchKeyword != null and searchKeyword != ''">
+					        <choose>
+					            <when test="searchCondition == 0">
+									AND	req_title LIKE '%' || #{searchKeyword} || '%'
+								</when>
+					            <when test="searchCondition == 1">
+									AND	req_period LIKE '%' || #{searchKeyword} || '%'
+								</when>
+					            <when test="searchCondition == 2">
+									AND	plId LIKE '%' || #{searchKeyword} || '%'
+								</when>
+					            <when test="searchCondition == 3">
+									AND	status LIKE '%' || #{searchKeyword} || '%'
+								</when>
+							</choose>
+						</if>
                         ORDER BY TO_NUMBER(b.REQ_ID)DESC) a
+                 <![CDATA[
                 WHERE rownum <= #{lastIndex})
             WHERE rnum > #{firstIndex} 
              ]]>
 	</select>
 	
 	<!-- 페이지처리위한 요구사항개수 -->
-	<select id="reqListCount" parameterType="String"
+	<select id="reqListCount" parameterType="ants.com.member.model.ReqVo"
 		resultType="java.lang.Integer">
-		<![CDATA[
+	
 		    	SELECT COUNT(*)
 				  FROM reqlist
 				 WHERE mem_id = #{memId}
-	    ]]>
+				 <if test="searchKeyword != null and searchKeyword != ''">
+			        <choose>
+			            <when test="searchCondition == 0">
+							AND	req_title LIKE '%' || #{searchKeyword} || '%'
+						</when>
+			            <when test="searchCondition == 1">
+							AND	req_period LIKE '%' || #{searchKeyword} || '%'
+						</when>
+			            <when test="searchCondition == 2">
+							AND	plId LIKE '%' || #{searchKeyword} || '%'
+						</when>
+			            <when test="searchCondition == 3">
+							AND	status LIKE '%' || #{searchKeyword} || '%'
+						</when>
+					</choose>
+				</if>
+	
 	</select>
 	
 	<!-- 요구사항정의서 정보 가져오기 -->
@@ -73,7 +106,9 @@
 		        <if test="reqCont != null">req_cont = #{reqCont},</if>
 		        <if test="reqPeriod != null">req_period = #{reqPeriod},</if>
 		        <if test="reqFilepath != null">req_filepath = #{reqFilepath},</if>	 	            
-		        <if test="reqFilename != null">req_filename = #{reqFilename}</if>	 	            
+		        <if test="reqFilename != null">req_filename = #{reqFilename},</if>	 	            
+		        <if test="plId != null">pl_id = #{plId},</if>	 	            
+		        <if test="status != null">status = #{status}</if>	 	            
 	     </set>    
 		 WHERE   1=1
 		   AND   req_id = #{reqId}
@@ -85,10 +120,7 @@
 		 WHERE req_id = #{reqId} 
 	</delete>
 	
-	<select id="getAllMember" resultType="ants.com.member.model.MemberVo">
-		SELECT mem_id, mem_name, mem_tel, mem_filepath, mem_filename 
-		  FROM member
-		 WHERE UPPER(del) = 'N'
-	</select>
+	
+	
 	
 </mapper>

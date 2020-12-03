@@ -4,14 +4,19 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import ants.com.chatting.mapper.ChatMapper;
 import ants.com.chatting.model.ChatGroupVo;
+import ants.com.chatting.model.ChatMemberVo;
 import ants.com.chatting.model.ChatVo;
+import ants.com.member.model.ProjectMemberVo;
 
 @Service("chatService")
 public class ChatService{
+	
 	@Resource(name="chatMapper")
 	private ChatMapper mapper;
 
@@ -23,8 +28,32 @@ public class ChatService{
 		return mapper.readMessages(cgroupId);
 	}
 	
-	public ChatGroupVo readChatGroup(String cgroupId) {
-		return mapper.readChatGroup(cgroupId);
+	public ChatGroupVo readCgroupName(String cgroupId) {
+		return mapper.readCgroupName(cgroupId);
 	}
+	
+	// 전송한 메시지 DB에 저장하기..
+	public int sendMessage(ChatVo chatVo) {
+		int result = mapper.sendMessage(chatVo);
+		return result;
+	}
+	
+	// 채팅방 개설 위해 해당 프로젝트에서 현재 참여하고 있는 인원 리스트 불러오기 ..
+	public List<ProjectMemberVo> readChatMembers(String projectId){
+		List<ProjectMemberVo> result = mapper.readChatMembers(projectId);
+		return result;
+	}
+	
+	public int insertChatGroup(ChatGroupVo chatGroupVo) {
+		int result = mapper.insertChatGroup(chatGroupVo);
+		return result;
+	}
+	
+	public int insertChatMembers(ChatMemberVo chatMemberVo) {
+		return mapper.insertChatMembers(chatMemberVo);
+	}
+
+	
+	
 	
 }

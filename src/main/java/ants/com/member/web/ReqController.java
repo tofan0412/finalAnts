@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 
@@ -61,6 +62,7 @@ public class ReqController {
 		reqVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
 		logger.debug("--reqVo 페이지정보:{},{}", reqVo.getFirstIndex(), reqVo.getLastIndex());
+		logger.debug("--검색조건, 검색내용:{},{}", reqVo.getSearchCondition(),reqVo.getSearchKeyword());
 
 		List<?> reqList = reqService.reqList(reqVo);
 		model.addAttribute("reqList", reqList);
@@ -72,6 +74,16 @@ public class ReqController {
 		model.addAttribute("paginationInfo", paginationInfo);
 
 		return "tiles/member/reqList";
+	}
+	
+	@RequestMapping(value="/reqDetail")
+	public String reqDetail(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
+		logger.debug("reqdetail",reqVo);
+		reqVo = reqService.getReq(reqVo);
+		model.addAttribute("reqVo", reqVo);
+		logger.debug("요구사항 상세정보 :{}",reqVo);
+		
+		return "tiles/member/reqDetail";
 	}
 
 	/**
@@ -134,16 +146,17 @@ public class ReqController {
 	 * @return
 	 */
 	@RequestMapping(value = "/reqUpdate", method = RequestMethod.POST)
-	public String reqUpdate(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
+	public String reqUpdate(@ModelAttribute("reqVo") ReqVo reqVo, Model model, RedirectAttributes ra) {
 		logger.debug("수정할 요구사항 정의서 정보:{}", reqVo);
 		
 		int cnt = reqService.reqUpdate(reqVo);
 		logger.debug("요구사항정의서 등록 결과...:{}", cnt);
 		
 		if (cnt == 1) {
-			return "redirect:/req/reqList";
+			ra.addFlashAttribute("reqVo", reqVo);
+			return "redirect:/req/reqDetail";
 		} else {
-			model.addAttribute(reqVo);
+			model.addAttribute("reqVo",reqVo);
 			return "tiles/member/reqInsert";
 		}
 	}
@@ -171,16 +184,34 @@ public class ReqController {
 		return "tiles/member/addPL";
 	}
 	
+	/**
+	 * memId 자동완성기능
+	 * @param locale
+	 * @param model
+	 * @param term 입력한 검색키워드(memId에서 검색)
+	 * @return 검색조건에 해당하는 memberVo타입의 list
+	 */
 	@RequestMapping(value = "/json", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String json(Locale locale, Model model) {	
-		List<MemberVo> memList = reqService.getAllMember(); 
+	public String json(Locale locale, Model model, String term) {	
+		logger.debug("term:{}",term);
+		List<MemberVo> memList = memberService.getAllMember(term); 
 		logger.debug("멤버리스트  : {}",memList);
 		Gson gson = new Gson();
 		
 	    return gson.toJson(memList);
-
 	}
+	
+	@RequestMapping(value="/memIdCheck")
+	public String memIdCheck(MemberVo memberVo, Model model) {
+		//조회된 회원정보
+		memberVo = memberService.getMember(memberVo);
+		model.addAttribute("memberVo", memberVo);
+		
+		return "jsonView";
+	}
+	
+	
 
 	
 

@@ -31,6 +31,10 @@
       	<c:if test="${SMEMBER.memId ne null }">
     	  환영합니다, ${SMEMBER.memId }님!
    		</c:if>
+   		<c:if test="${projectId ne null }">
+    	  현재 프로젝트 번호 : ${projectId}
+   		</c:if>
+   		
       </li>
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
@@ -134,7 +138,7 @@
           </a>
           
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <a href="/member/logout" class="dropdown-item">
             <i class="fas fa-toggle-off mr-2"></i>로그아웃
           </a>
         </div>

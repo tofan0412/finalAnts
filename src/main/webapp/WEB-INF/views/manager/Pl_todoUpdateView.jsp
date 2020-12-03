@@ -22,15 +22,29 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#memChangecomment").hide();
 		$('#summernote').summernote();
-
+		
+		// db일자 가져오기
 		var todo_start = $('#todo_start').val();
 		var todo_end = $('#todo_end').val();
 		document.getElementById('todoStart').value = new Date(todo_start).toISOString().substring(0, 10);
  		document.getElementById('todoEnd').value = new Date(todo_end).toISOString().substring(0, 10);
 		
+ 		// 등록
 		$("#regBtn").on("click", function() {
 			$("#todoform").submit();
+		});
+		
+ 		// 뒤로가기
+		$("#back").on("click", function() {
+			window.history.back();
+		});
+		
+ 		// 담당자 변경
+		$("#memChange").on("click", function() {
+			$("#changemem").val('${todoVo.memId }');
+			$("#memChangecomment").show();
 		});
  	});
 
@@ -52,11 +66,24 @@
 		</div>
 		<br><br>
 		<label for="mem-select" class="col-sm-1 control-label">담당자</label>
+		<input type="text" id="mem-select" name="memId" value="${todoVo.memId }" readonly="readonly">
+		<input type="button" id="memChange" value="인수인계">
+		
+		<div id="memChangecomment">
+		<label for="memChangeComment" class="col-sm-1 control-label">인수인계 내용</label>
+		<input type="text" id="memChangeComment" name ="logComment"/>
+		
+		<label for="mem-select" class="col-sm-1 control-label">변경 담당자</label>
 		<select name="memId" id="mem-select">
-			<c:forEach items="${promemList}" var="mem">
-				<option value="${mem.memId}">${mem.memName}</option>
-			</c:forEach>
-		</select><br><br>
+		<c:forEach items="${promemList}" var="mem">
+			<c:if test="${mem.memName ne todoVo.memId }">
+		<option value="${mem.memId}">${mem.memName}</option></c:if>
+ 		</c:forEach>
+ 		</select>
+		</div>
+		
+		<br><br>
+		<input type="hidden" name="changemem" id="changemem" />
 		
 		<label for="status-select" class="col-sm-1 control-label">우선순위</label>
 		<select name="todoImportance" id="status-select">
@@ -82,6 +109,7 @@
 		<input type="hidden" id='todo_end' value="${todoVo.todoEnd}"/><br><br>
 		
 		<button type="button" class="btn btn-default" id="regBtn">수정</button>
+		<button type="button" class="btn btn-default" id="back">뒤로가기</button>
 	</form>
 </div>
 </html>

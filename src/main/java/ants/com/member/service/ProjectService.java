@@ -23,4 +23,9 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	public List<ProjectVo> memInProjectList(String memId) {
 		return mapper.memInProjectList(memId);
 	}
+	
+	// pm,pl left바 불러오는 메서드
+	public List<ProjectVo> plpmInProjectList(String memId) {
+		return mapper.plpmInProjectList(memId);
+	}
 }

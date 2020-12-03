@@ -28,6 +28,7 @@
 	<!-- </property> -->
 	<!-- </bean> -->
 
+	
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<property name="order" value="1"></property>
@@ -95,7 +96,10 @@
 		location="/resources/plugins/" />
 	<mvc:resources mapping="/dist/**"
 		location="/resources/dist/" />
-
+	<mvc:resources mapping="/profile/*"
+		location="/WEB-INF/views/userprofile/" />
+		
+		
 	<!-- 파일 업로드 처리를 위한 multipartResolver 설정 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -124,6 +128,11 @@
 		
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo"/>
+		<!-- Interceptor는 http통신에서 request, response를 가로채는 역할을 한다. -->
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		
 		<websocket:sockjs />
 	</websocket:handlers>
 	
