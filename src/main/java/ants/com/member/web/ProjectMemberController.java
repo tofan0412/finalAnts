@@ -7,13 +7,17 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.file.model.PublicFileVo;
+import ants.com.file.web.FileController;
 import ants.com.member.model.ReqVo;
 import ants.com.member.service.ProjectmemberService;
 import egovframework.rte.fdl.property.EgovPropertyService;
@@ -27,6 +31,8 @@ public class ProjectMemberController {
 	@Resource(name="promemService")
 	ProjectmemberService promemService;
 	
+	@Autowired
+	FileController filecontroller;
 
 	@RequestMapping("/project")
 	public String projectmain(HttpSession session) {
@@ -65,7 +71,7 @@ public class ProjectMemberController {
 //		model.addAttribute("categorylist", categorylist);
 //		System.out.println(categorylist);
 		
-		return "tiles/board/issuelist";
+		return "board/mailWrite";
 	}
 	
 	// 이슈리스트 출력
@@ -103,6 +109,10 @@ public class ProjectMemberController {
 
 		model.addAttribute("categorylist", categorylist);
 		
+		int pages = (int)Math.ceil((double)totCnt/ paginationInfo.getRecordCountPerPage());
+		
+		model.addAttribute("pages", pages);
+//		System.out.println("pageSize : " + paginationInfo.getPageSize());
 		
 		return "tiles/board/issuelist2";
 	}
@@ -111,15 +121,21 @@ public class ProjectMemberController {
 	@RequestMapping("/eachissueDetail")
 	public String geteachissue(String issueId, HttpSession session, Model model) {
 		
-		IssueVo issuevo = promemService.geteachissue(issueId);
+		IssueVo issuevo = promemService.geteachissue(issueId);	
 		
-		model.addAttribute("issuevo", issuevo);
+		PublicFileVo pfv = new PublicFileVo();
+		pfv.setReqId((String)session.getAttribute("reqId"));
+		pfv.setCategoryId("3");
+		pfv.setSomeId(issueId);
 		
-		
+		filecontroller.getfiles(pfv, model);
+
+		model.addAttribute("issuevo", issuevo);	
 		model.addAttribute("memId", "cony");
 		 
 		return "tiles/board/issueDetail";
 	}
+	
 	
 	// 이슈 작성 View
 	@RequestMapping("/insertissueView")
@@ -130,7 +146,7 @@ public class ProjectMemberController {
 	
 	// 이슈 작성
 	@RequestMapping("/insertissue")
-	public String insertissue(IssueVo issueVo, HttpSession session, Model model) {
+	public String insertissue(IssueVo issueVo, MultipartHttpServletRequest multirequest, HttpSession session, Model model) {
 		
 		System.out.println(issueVo);
 		String reqId = (String)session.getAttribute("reqId");
@@ -138,21 +154,40 @@ public class ProjectMemberController {
 		issueVo.setMemId("cony@naver.com");
 		
 //		System.out.println(issueVo);
-		int insertCnt = promemService.insertissue(issueVo);
+		String insertseq  = promemService.insertissue(issueVo);
+		
+		
+		PublicFileVo pfv = new PublicFileVo();
+		pfv.setCategoryId("3");
+		pfv.setReqId("1");
+		pfv.setSomeId(insertseq);
+		
+		filecontroller.insertfile(pfv, model, multirequest);
 
-		if(insertCnt>0) {		
+		
+		
+//		if(insertseq != null) {		
+//			return "redirect:/projectMember/insertissueView";
+//		}else {
 			return "redirect:/projectMember/issuelist";
-		}else {
-			return "redirect:/projectMember/insertissueView";
-			
-		}
+//			
+//		}
 	}
 	
 	// 이슈 update View
 	@RequestMapping("/updateissueView")
-	public String updateissueView(String issueId, HttpSession session, Model model) {
+	public String updateissueView(String issueId, Model model) {
 		
 		IssueVo issuevo = promemService.geteachissue(issueId);
+		
+		PublicFileVo pfv = new PublicFileVo();
+		pfv.setCategoryId("3");
+		pfv.setReqId("1");
+		pfv.setSomeId(issueId);
+		
+		filecontroller.getfiles(pfv, model);
+		
+		
 		model.addAttribute("issueVo", issuevo);
 		
 		return "tiles/board/issueUpdate";
@@ -160,7 +195,7 @@ public class ProjectMemberController {
 	
 	// 이슈 update 
 	@RequestMapping("/updateissue")
-	public String updateissue(IssueVo issueVo, HttpSession session, Model model) {
+	public String updateissue(IssueVo issueVo, String delfile, MultipartHttpServletRequest multirequest, HttpSession session, Model model ) {
 		
 		String reqId = (String)session.getAttribute("reqId");
 		issueVo.setReqId(reqId);
@@ -168,8 +203,20 @@ public class ProjectMemberController {
 		
 		int insertCnt = promemService.updateissue(issueVo);
 		
+		PublicFileVo pfv = new PublicFileVo();
+		pfv.setCategoryId("3");
+		pfv.setReqId("1");
+		pfv.setSomeId(issueVo.getIssueId());
+		
+		
+		filecontroller.delfiles(delfile);
+		
+		filecontroller.insertfile(pfv, model, multirequest);
+		
+		
+		
 		if(insertCnt>0) {		
-			return "redirect:/projectMember/issuelist";
+			return "redirect:/projectMember/eachissueDetail?issueId="+issueVo.getIssueId();
 		}else {
 			return "redirect:/projectMember/updateissueView";
 			

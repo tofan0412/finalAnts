@@ -1,19 +1,38 @@
 package ants.com.file.model;
 
-import java.util.Date;
 
 public class PublicFileVo {
-	
 	
 	private String pubId;
 	private String pubFilepath;
 	private String pubFilename;
 	private String pubExtension;
-	private Date regDt;
+	private String regDt;
 	private String categoryId;
 	private String someId;
 	private String reqId;
 	private String pubSize;
+	
+	public PublicFileVo() {
+		
+	}
+	
+	
+	
+	public PublicFileVo(String pubFilepath, String pubFilename, String pubExtension, String categoryId, String someId,
+			String reqId, String pubSize) {
+		super();
+		this.pubFilepath = pubFilepath;
+		this.pubFilename = pubFilename;
+		this.pubExtension = pubExtension;
+		this.categoryId = categoryId;
+		this.someId = someId;
+		this.reqId = reqId;
+		this.pubSize = pubSize;
+	}
+
+
+
 	public String getPubId() {
 		return pubId;
 	}
@@ -38,10 +57,10 @@ public class PublicFileVo {
 	public void setPubExtension(String pubExtension) {
 		this.pubExtension = pubExtension;
 	}
-	public Date getRegDt() {
+	public String getRegDt() {
 		return regDt;
 	}
-	public void setRegDt(Date regDt) {
+	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
 	public String getCategoryId() {
