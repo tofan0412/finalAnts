@@ -30,6 +30,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -125,8 +126,8 @@ public class MemberController {
 	// 회원가입 로직
 	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
 
-	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model) {
-		logger.debug("memberVo : {}", memberVo);
+	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model, @RequestParam(value="imgname", required=false)String imgname) {
+		logger.debug("memberVo : {} / imgname : {}", memberVo, imgname);
 		logger.debug("filename : {} / memFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),file.getSize());
 		
 		String Filename = "";
@@ -137,7 +138,7 @@ public class MemberController {
 			logger.debug("br.hasErrors() : {}", br.hasErrors());
 	
 			if (br.hasErrors()) {
-				return "main.tiles/member/memberRegist";
+//				return "main.tiles/member/memberRegist";
 			}
 	
 			String filekey = UUID.randomUUID().toString();
@@ -154,10 +155,21 @@ public class MemberController {
 	
 			logger.debug("---------------------통과-------------------");
 			
-
+			
 		}else {
-			Filepath = "D:\\upload\\users-00";
-			Filename = "users-00.png";
+			
+			// 기본 이미지 중에 선택했을때
+			if(!imgname.equals("") && !imgname.equals(null)) {
+				Filepath = imgname;
+				Filename = imgname.split("/")[4];
+			
+			// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+			}else { 
+				Filepath = "http://localhost/profile/user-0.png";
+				Filename = "user-0.png";
+			}
+			
+		
 		}
 		
 
