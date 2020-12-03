@@ -46,9 +46,7 @@ public class ReqController {
 	 */
 	@RequestMapping("/reqList")
 	public String selectReqList(@ModelAttribute("reqVo") ReqVo reqVo, ModelMap model,
-			@RequestParam(name = "memID", required = false) String memId) {
-		// member_id
-		memId = "pm1";
+			@RequestParam(name = "memId", required = false) String memId) {
 		reqVo.setMemId(memId);
 
 		/** pageing setting */

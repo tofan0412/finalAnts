@@ -33,10 +33,9 @@
 	                 <div class="form-group row col-md-6">
 	                    <label for="inputEmail3" class="col-sm-2 col-form-label">제 목</label>
 	                    <div class="col-sm-10">
-	                      <input type="text" class="form-control" id="reqTitle" name="reqTitle" placeholder="제목을 입력하세요" value="${reqVo.reqTitle }">
-	                      <input type="hidden" id="reqId" name="reqId" value="${reqVo.reqId }">
-	                      <c:if test="${registerFlag == 'create' }"><input type="hidden" name="memId" value="pm1"></c:if>
-	                      <c:if test="${registerFlag == 'modify' }"><input type="hidden" name="memId" value="${reqVo.memId }"></c:if>
+	                      <form:input path="reqTitle" id="reqTitle" placeholder="제목을 입력하세요" class="form-control"/>
+	                      <form:hidden path="reqId" />
+	                      <form:hidden path="memId" />
 	                	</div>
                   	</div>
 	            </div>
@@ -50,14 +49,14 @@
 	                    <div class="input-group-prepend">
 	                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
 	                    </div>
-	                    <input type="text" class="form-control" id="reqPeriod" name="reqPeriod"  placeholder="60일이면 60만 적으세요." value="${reqVo.reqPeriod }" >
+	                    <form:input path="reqPeriod" class="form-control" id="reqPeriod" placeholder="60일이면 60만 적으세요."/>
 	                  </div>
 	                  <!-- /.input group -->
 	               </div>
 	              <div class="row col-md-2">
 	                  <label>내용 :</label>
 	              </div>
-	              <textarea id="summernote" style="display: none;" name="reqCont" >${reqVo.reqCont }</textarea>
+	              <form:textarea path="reqCont" id="summernote" style="display: none;"/>
 	              <!-- 파일첨부 -->
 	            </div>
 	            <div class="card-footer">

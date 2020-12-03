@@ -3,7 +3,6 @@ package ants.com.member.web;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -21,11 +20,8 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.JOptionPane;
 
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -40,15 +36,13 @@ import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.service.MemberService;
 import ants.com.member.service.ProjectService;
-import ants.com.member.service.ProjectmemberService;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
-import java.sql.SQLException;
 
 @MultipartConfig
 @RequestMapping("/member")
 @Controller
 public class MemberController {
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
 
 	@Resource(name = "memberService")
 	private MemberService memberService;
@@ -60,14 +54,12 @@ public class MemberController {
 
 	@RequestMapping("/mainView")
 	public String mainView() {
-		logger.debug("메인뷰 진입");
 		return "main.tiles/main";
 	}
 
 	// 로그인 페이지 이동
 	@RequestMapping("/loginView")
 	public String loginView() {
-		logger.debug("MemberController loginView");
 		return "member/login";
 	}
 
@@ -75,23 +67,18 @@ public class MemberController {
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
 
-		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
-
-		MemberVo dbMember = memberService.getMember(memberVo);
-		logger.debug("dbMember : {}", dbMember);
+		memberVo = memberService.getMember(memberVo);
 		
-		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
+		if (memberVo != (null) && memberVo.getMemPass().equals(memberVo.getMemPass())) {
 			session.setAttribute("SMEMBER", memberVo);
 			List<ProjectVo> proList = projectService.memInProjectList(memberVo.getMemId());
-			logger.debug("projectList:{}", proList);
 			if (proList.size() != 0) {
 				session.setAttribute("projectList", proList);
 			}
 
-			if (dbMember.getMemType().equals("PL") || dbMember.getMemType().equals("PM")) {
+			if (memberVo.getMemType().equals("PL") || memberVo.getMemType().equals("PM")) {
 				List<ProjectVo> plpmList = projectService.plpmInProjectList(memberVo.getMemId());
 				session.setAttribute("plpmList", plpmList); 
-				logger.debug("plpmList:{}", plpmList);
 				return "content/project";
 			} else {
 				return "content/project";
@@ -108,9 +95,7 @@ public class MemberController {
 	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
 	public String logincheck(MemberVo memberVo, Model model) {
 		
-		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
 		MemberVo dbMember = memberService.logincheck(memberVo);
-		logger.debug("logincheck rowcount : {}", dbMember);
 		model.addAttribute("memId", dbMember.getMemId());
 		model.addAttribute("memPass", dbMember.getMemPass());
 		
@@ -178,7 +163,6 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 	// 회원가입 페이지 이동
 	@RequestMapping(path = "/memberRegistview", method = RequestMethod.GET)
 	public String getView() {
-		logger.debug("memberRegist-Controller.getView()");
 		return "main.tiles/member/memberRegist";
 	}
 
@@ -186,13 +170,6 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 	@RequestMapping(path = "/memberRegist", method = RequestMethod.POST)
 	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="realFilename", required=false) MultipartFile file, Model model) {
 
-		logger.debug("memberVo : {}", memberVo);
-		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),
-				file.getSize());
-
-		 logger.debug("br.hasErrors() : {}", br.hasErrors() );
-		 
-		
 		if(br.hasErrors()) {
 			return "main.tiles/member/memberRegist";
 		}
@@ -212,7 +189,6 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 			e.printStackTrace();
 		}
 
-		logger.debug("---------------------통과-------------------");
 
 		memberVo.setMemFilepath(Filename);
 		if(file.getOriginalFilename().equals(null)) {	// 파일 선택 안했을때 기본값
@@ -221,19 +197,12 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 			memberVo.setMemFilename(file.getOriginalFilename());
 		}
 		
-		
-		
-		logger.debug("memId : {}", memberVo.getMemId());
-		logger.debug("memberVo : {}", memberVo);
-		
 		int insertCnt = 0;
 		try {
 			insertCnt = memberService.insertMember(memberVo);
 		} catch (SQLException | IOException e) {
 			return "main.tiles/member/memberRegist";
 		}
-		
-		logger.debug("insertCnt : {}", insertCnt);
 		
 		if (insertCnt == 1) {
 			model.addAttribute("cnt", insertCnt);
@@ -246,9 +215,7 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 	// 중복아이디 체크
 	@ResponseBody @RequestMapping(path = "/checkSignup", method = RequestMethod.POST) 
 	public String checkSignup(HttpServletRequest request, MemberVo memberVo) { 
-		String memId = request.getParameter("memId"); 
 		int rowcount = memberService.checkSignup(memberVo); 
-		logger.debug("checkSignup : {}", rowcount);
 		
 		return String.valueOf(rowcount);
 	}
@@ -259,7 +226,6 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 	@RequestMapping(value = "/mailsender")
 	public String mailSender(MemberVo memberVo, HttpServletRequest request, ModelMap mo, Model model)
 			throws AddressException, MessagingException {
-		logger.debug("memberRegist-Controller - mailSender()");
 
 		// 네이버일 경우 smtp.naver.com 을 입력합니다.
 		// Google일 경우 smtp.gmail.com 을 입력합니다.
@@ -329,10 +295,8 @@ public static JSONObject ConvertObjectToJSONObject(Object obj) {
 	// 비밀번호 수정 (문자,메일 -> 비밀번호 수정 쿼리로)
 	@RequestMapping(path = "/passupdate", method = RequestMethod.GET)
 	public String passupdate(MemberVo memberVo) {
-		logger.debug("memberRegist-Controller - passupdate()");
 
 		int updatecnt = memberService.updatePass(memberVo);
-		logger.debug("memberRegist-Controller - passupdate()-updatecnt : {}", updatecnt);
 
 		if (updatecnt == 1) {
 			return mainView();		// 수정되면 메인으로
