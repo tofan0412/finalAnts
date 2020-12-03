@@ -121,13 +121,43 @@
 		<button type="button" class="btn btn-default" id="creattodoBtn">일감 생성</button>
 		</c:if>
 		<button type="button" class="btn btn-default" id="progress">진행도 수정</button>
-		<button type="button" class="btn btn-default" id="back">뒤로가기</button>
-				
+		<button type="button" class="btn btn-default" id="back">뒤로가기</button>	
 		</div>
-		
-		
-		
 </div>
+<div class="modal fade" id="addpl" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content" style="height: 500px;">
+			<div class="modal-header">
+				<h3 class="modal-title jg" id="addplLable">진행도를 입력하세요!</h3>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="progressForm" name="progressForm" method="post">
+					<div class="col-md-6" style="float: left">
+						<input type="hidden" id="modaltodoId" name="todoId" value="">
+						<label for="recipient-name" class="control-label">이메일:</label>
+						<input type="text" class="form-control" id="searchInput" name="memId">
+						<div class="card-title error-page jg" id="memIdCheck" style="width: auto"></div>
+					</div>
+				</form>
 
+				<div class="col-md-6" style="float: right">
+					<img alt="" src="/dist/img/addpl.png"
+						style="width: 100%; margin-right: 4%;">
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+				<button type="button" class="btn btn-primary" id="addplBtn">요청
+					보내기</button>
+			</div>
+		</div>
+	</div>
+</div>
 		
 </html>
