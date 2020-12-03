@@ -124,7 +124,7 @@ public class MemberController {
 	
 	// 회원가입 로직
 	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
-	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="realFilename", required=false) MultipartFile file, Model model) {
+	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model) {
 		
 		logger.debug("memberVo : {}", memberVo);
 		logger.debug("filename : {} / realFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),

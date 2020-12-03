@@ -45,7 +45,8 @@
 <title>회원 등록</title>
 <body>
 	<div class="card">
-			
+			<div id="clickmsg">ff:</div>
+			<hr>
 			<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
 			<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 				<div id="pictureView" style="border: 1px solid green; height: 200px; width: 200px; margin: 0 auto;">
@@ -54,7 +55,7 @@
 				
 				<div class="content">
 					<button id="basicimg" type="button">기본이미지</button>
-					<input id="picture" type="file" name="realFilename" accept=".gif, .jpg, .png" style="height: 37px;"/>
+					<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px;"/>
 					<input type="text" id="real_filename" name="real_filename" style="display: none">
 				</div>
 				
@@ -128,7 +129,7 @@
         </div>
         <div class="modal-body">
 	          <img src="/profile/user-0.png" id="img0" name="img0" class="imgc">
-	          <img src="/profile/user-1.png" id="img1" name="img1" class="imgc" onClick="check_img(this.src)">
+	          <img src="/profile/user-1.png" id="img1" name="img1" class="imgc">
 	          <img src="/profile/user-2.png" id="img2" name="img2" class="imgc"/>
 	          <img src="/profile/user-3.png" id="img3" name="img3" class="imgc"/>
 	          <img src="/profile/user-4.png" id="img4" name="img4" class="imgc"/>
@@ -181,9 +182,10 @@
 			
 			// picture input의 파일 변경시 이벤트 
 			$("#picture").change(function(){
-			   readURL(this);
+				readURL(this);
 			});
 		});
+		
 		
 		function readURL(input) {
 			if (input.files && input.files[0]) {
@@ -250,21 +252,45 @@
 			}); //end on 
 		}); 
 		
-		
-		
-		
-		// 기본이미지 보여주기 
+	
+		// 기본이미지 모달창 띄으기
 		$(document).ready(function(){
-			$("#basicimg").click(function(){
-				$("#myModal").modal('Show');
-			});
-		});
+			$('#basicimg').click(function(){
+				$("#myModal").modal();
+			})
+			
 		
+			$('#img'+0).click(function(){
+				realsrc = document.getElementById('img'+0).src
+				src = "/" + realsrc.split('/')[4]
+				
+				/* $('#clickmsg').append(src);  */
+				$('#realFilename').attr('value', src); 
+				$("#myModal").modal('hide');
+			})
+			$('#img'+1).click(function(){
+				$('#clickmsg').append(document.getElementById('img'+1).src); 
+				$('#pictureViewImg').attr('src', document.getElementById('img'+1).src); 
+				$("#myModal").modal('hide');
+			})
+			$('#img'+2).click(function(){
+				$('#clickmsg').append(document.getElementById('img'+2).src); 
+				$('#pictureViewImg').attr('src', document.getElementById('img'+2).src); 
+				$("#myModal").modal('hide');
+			})
+			$('#img'+3).click(function(){
+				$('#clickmsg').append(document.getElementById('img'+3).src); 
+				$('#pictureViewImg').attr('src', document.getElementById('img'+3).src); 
+				$("#myModal").modal('hide');
+			})
+			
+		})
 		
+		/* 	
 		var imaMap = new Map();
 		
 		// 기본이미지 선택
-	/* 	$(document).ready(function(){
+	 	$(document).ready(function(){
 			for(i=0; i<31; i++){
 				b = '#img' + i;
 				
@@ -286,22 +312,19 @@
 				 	bt.src = "/" + c.split('/')[1] + "/" + c.split('/')[2]
 				 	rf.value = "/" + c.split('/')[1] + "/" + c.split('/')[2]
 				 	
-				/*	$('#clickmsg').append(btn.src); 
+				//	$('#clickmsg').append(btn.src); 
 					
-					$('#clickmsg').append(btn.src); 
+				//	$('#clickmsg').append(btn.src); 
 					
-					$("#myModal").modal(imaMap.get('#img30')); */
+				//	$("#myModal").modal(imaMap.get('#img30')); 
 					
 					$("#myModal").modal('hide');
 				})
-			} */
-					
-			
-			function click_img(b){
-				alret(b.value);
-				alret($('img0').attr('src'));
-			}
-		})
+			} 
+	 	})			
+	 	 */
+	
+		
 </script>
 	
 
