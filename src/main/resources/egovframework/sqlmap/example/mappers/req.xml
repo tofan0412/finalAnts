@@ -9,26 +9,32 @@
 	    SELECT  *
 		    FROM(
 		    	SELECT ROWNUM rnum, a.*
-				FROM (SELECT b.*
-                        FROM reqlist b
-                        WHERE mem_id = #{memId}
-                        <if test="searchKeyword != null and searchKeyword != ''">
-					        <choose>
-					            <when test="searchCondition == 0">
-									AND	req_title LIKE '%' || #{searchKeyword} || '%'
-								</when>
-					            <when test="searchCondition == 1">
-									AND	req_period LIKE '%' || #{searchKeyword} || '%'
-								</when>
-					            <when test="searchCondition == 2">
-									AND	plId LIKE '%' || #{searchKeyword} || '%'
-								</when>
-					            <when test="searchCondition == 3">
-									AND	status LIKE '%' || #{searchKeyword} || '%'
-								</when>
-							</choose>
-						</if>
-                        ORDER BY TO_NUMBER(b.REQ_ID)DESC) a
+				FROM (SELECT b.req_id, b.req_title, b.req_period, b.req_filepath, b.req_filename,
+					 		 b.mem_id, b.status, b.pl_id, m.mem_name as pl_name, p.pro_percent, p.req_id as pro_id
+                        FROM (SELECT * 
+                        		FROM reqlist
+                        	   WHERE mem_id = #{memId}
+		                        <if test="searchKeyword != null and searchKeyword != ''">
+							        <choose>
+							            <when test="searchCondition == 0">
+											AND	req_title LIKE '%' || #{searchKeyword} || '%'
+										</when>
+							            <when test="searchCondition == 1">
+											AND	req_period LIKE '%' || #{searchKeyword} || '%'
+										</when>
+							            <when test="searchCondition == 2">
+											AND	pl_Id LIKE '%' || #{searchKeyword} || '%'
+										</when>
+							            <when test="searchCondition == 3">
+											AND	status LIKE '%' || #{searchKeyword} || '%'    
+										</when>
+									</choose>
+								</if> ) b
+                        LEFT OUTER JOIN project p 
+                        			 ON b.req_id = p.req_id
+                        LEFT OUTER JOIN member m
+                        			 ON b.pl_id = m.mem_id
+                        ORDER BY TO_NUMBER(b.req_id)DESC) a
                  <![CDATA[
                 WHERE rownum <= #{lastIndex})
             WHERE rnum > #{firstIndex} 
@@ -51,7 +57,7 @@
 							AND	req_period LIKE '%' || #{searchKeyword} || '%'
 						</when>
 			            <when test="searchCondition == 2">
-							AND	plId LIKE '%' || #{searchKeyword} || '%'
+							AND	pl_Id LIKE '%' || #{searchKeyword} || '%'
 						</when>
 			            <when test="searchCondition == 3">
 							AND	status LIKE '%' || #{searchKeyword} || '%'
@@ -112,6 +118,12 @@
 	     </set>    
 		 WHERE   1=1
 		   AND   req_id = #{reqId}
+	</update>
+	
+	<update id="plDelete" parameterType="ants.com.member.model.ReqVo">
+		UPDATE   reqlist
+		   SET   pl_id = null   
+		 WHERE   req_id = #{reqId}
 	</update>
 
 	<delete id="reqDelete" parameterType="String">

@@ -74,7 +74,7 @@
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="/req/reqList?memId=${SMEMBER.memId }" class="nav-link"><i class=" nav-icon fas fa-clipboard-list"></i>
+									<a href="/req/reqList" class="nav-link"><i class=" nav-icon fas fa-clipboard-list"></i>
 										<p>요구사항정의서 관리</p>
 									</a>
 								</li>

@@ -14,7 +14,9 @@ public class ReqVo extends BaseVo{
 	private String memId;
 	private String plId;
 	private String status;
-	
+	private String plName;
+	private String proPercent;
+	private String proId;
 	public String getReqId() {
 		return reqId;
 	}
@@ -69,18 +71,40 @@ public class ReqVo extends BaseVo{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getPlName() {
+		return plName;
+	}
+	public void setPlName(String plName) {
+		this.plName = plName;
+	}
+	public String getProPercent() {
+		return proPercent;
+	}
+	public void setProPercent(String proPercent) {
+		this.proPercent = proPercent;
+	}
+	public String getProId() {
+		return proId;
+	}
+	public void setProId(String proId) {
+		this.proId = proId;
+	}
 	@Override
 	public String toString() {
 		return "ReqVo [reqId=" + reqId + ", reqTitle=" + reqTitle + ", reqCont=" + reqCont + ", reqPeriod=" + reqPeriod
 				+ ", reqFilepath=" + reqFilepath + ", reqFilename=" + reqFilename + ", memId=" + memId + ", plId="
-				+ plId + ", status=" + status + "]";
+				+ plId + ", status=" + status + ", plName=" + plName + ", proPercent=" + proPercent + ", proId=" + proId
+				+ "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((memId == null) ? 0 : memId.hashCode());
 		result = prime * result + ((plId == null) ? 0 : plId.hashCode());
+		result = prime * result + ((plName == null) ? 0 : plName.hashCode());
+		result = prime * result + ((proId == null) ? 0 : proId.hashCode());
+		result = prime * result + ((proPercent == null) ? 0 : proPercent.hashCode());
 		result = prime * result + ((reqCont == null) ? 0 : reqCont.hashCode());
 		result = prime * result + ((reqFilename == null) ? 0 : reqFilename.hashCode());
 		result = prime * result + ((reqFilepath == null) ? 0 : reqFilepath.hashCode());
@@ -94,7 +118,7 @@ public class ReqVo extends BaseVo{
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -108,6 +132,21 @@ public class ReqVo extends BaseVo{
 			if (other.plId != null)
 				return false;
 		} else if (!plId.equals(other.plId))
+			return false;
+		if (plName == null) {
+			if (other.plName != null)
+				return false;
+		} else if (!plName.equals(other.plName))
+			return false;
+		if (proId == null) {
+			if (other.proId != null)
+				return false;
+		} else if (!proId.equals(other.proId))
+			return false;
+		if (proPercent == null) {
+			if (other.proPercent != null)
+				return false;
+		} else if (!proPercent.equals(other.proPercent))
 			return false;
 		if (reqCont == null) {
 			if (other.reqCont != null)
@@ -146,6 +185,8 @@ public class ReqVo extends BaseVo{
 			return false;
 		return true;
 	}
+	
+	
 	
 	
 	

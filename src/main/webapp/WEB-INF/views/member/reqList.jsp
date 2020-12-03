@@ -4,6 +4,7 @@
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,6 +19,37 @@
   .ui-autocomplete {
   	z-index:2147483647;
   }
+  
+  .dropbtn {
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  min-width: 200px;
+  z-index: 1;
+}
+
+ .dropdown-content a { 
+  color: black; 
+  padding: 12px 16px; 
+  text-decoration: none; 
+  display: block; 
+ } 
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 </style>
 
@@ -25,6 +57,8 @@
 <title>협업관리프로젝트</title>
 	<form:form commandName="reqVo" id="listForm" name="listForm" method="post">
 			<form:hidden path="memId"/>
+			<input type="hidden" name="selectedId" />
+			
 		    <!-- Content Header (Page header) -->
 		    <section class="content-header" style="
 											border-bottom: 1px solid #dee2e6;
@@ -58,8 +92,8 @@
 	                          <option value="3">응답상태</option>
 	                      </select> 
 		                  <!-- /btn-group -->
-		                  <input type="text" class="form-control" name="searchKeyword" value="${reqVo.searchKeyword }">
-		                  <a href="javascript:fn_egov_selectList();" >
+		                  <form:input path="searchKeyword" class="form-control"/>
+		                  <a href="javascript:fn_egov_reqList();" >
 		                  	<button type="button" class="btn-default" style="height: 100%;">
                                <i class="fa fa-search"></i>
                           	</button>
@@ -89,28 +123,38 @@
 	                      <th style="text-align: center;">담당자</th>
 	                      <th style="text-align: center;">응답 상태</th>
 	                      <th>진행도</th>
-	                      <th></th>
+	                      <th>#</th>
 	                    </tr>
 	                  </thead>
 	                  <tbody>
 	                      <c:forEach items="${reqList }" var="req" varStatus="sts" >
 		                    	<tr>
 			                      <td><c:out value="${paginationInfo.totalRecordCount - ((reqVo.pageIndex-1) * reqVo.pageUnit + sts.index)}"/>. 
-			                      	  <input type="hidden" id="${req.reqId }" name="${req.reqId }">
+			                      	  <form:hidden path="reqId"/>
 			                      </td>
 			                      <td>${req.reqTitle }</td>
 			                      <td>${req.reqPeriod }일</td>
-		                    	  <td style="text-align: center;">
 		                    	  	<c:choose>
-			                      	  <c:when test="${req.plId==null }">
-			                      	  	<a class="btn btn-default btn-sm addplModal" data-toggle="modal" data-target="#addpl" reqId="${req.reqId}">
-			                              <i class="fas fa-envelope"></i>
-			                               PL등록
-			                          	</a>
+			                      	  <c:when test="${req.plId eq null }">
+		                    	  		<td style="text-align: center;">
+				                      	  	<a class="btn btn-default btn-sm addplModal" data-toggle="modal" data-target="#addpl" reqId="${req.reqId}">
+				                              <i class="fas fa-envelope"></i>
+				                               PL등록
+				                          	</a>
+		                    	  		</td>
 			                      	  </c:when>
-			                      	  <c:otherwise>${req.plId }</c:otherwise>
+			                      	  <c:otherwise> 
+			                      	  	<td class="plDelete" style="text-align: center;">
+			                      	  		<div class ="dropdown">
+			                      	  			<button class="dropbtn btn btn-default btn-sm">${req.plName }</button>
+			                      	  			<div class = "dropdown-content " style="text-align: left;">
+			                      	  				<a href="#">${req.plId }</a>
+			                      	  				<a href="javascript:plDelete(${req.reqId });">삭제</a>
+			                      	  			</div>
+			                      	  		</div>
+			                      	  	</td>
+			                      	  </c:otherwise>
 			                      	</c:choose>
-		                    	  </td>
 			                      <td style="text-align: center;">
 			                      	<c:choose>
 			                      	  <c:when test="${req.status eq '대기' }"><span class="badge badge-warning">${req.status }</span></c:when>
@@ -118,11 +162,24 @@
 			                      	  <c:when test="${req.status eq '수락' }"><span class="badge badge-success">${req.status }</span></c:when>
 			                      	</c:choose>
 			                      </td>
-			                      <td>
-			                      	
-			                      </td>
-			                      <td class="project-actions text-right" style="opacity: .9;">
-			                          <a class="btn btn-primary btn-sm" href="javascript:reqDetail(${req.reqId });">
+			                      <!-- 프로젝트가 생성되지 않았을 때 -->
+			                      	<td>
+			                      		<c:choose>
+				                      		<c:when test="${req.proId eq null}"><span>프로젝트 생성 전 입니다</span></c:when>
+			                      			<c:when test="${req.proId != null }">
+						                        <div class="progress progress-xs progress-striped active">
+								                    <!-- 프로젝트 진행도 -->
+						                            <fmt:parseNumber value="${req.proPercent}" var="NUM"/>
+								                    <c:if test= "${req.proPercent eq '0' or req.proPercent eq null}"><div class="progress-bar bg-danger" style="width: <c:out value="${NUM+1}" />%"></div></c:if>   
+								                    <c:if test= "${req.proPercent+0 >= 30+0 and req.proPercent+0 <= 59+0}"><div class="progress-bar bg-danger" style="width: <c:out value="${NUM+1}" />%"></div></c:if>   
+								                    <c:if test= "${req.proPercent+0 >=60+0 and req.proPercent+0 <= 99+0}"><div class="progress-bar bg-danger" style="width: <c:out value="${NUM+1}" />%"></div></c:if>   
+								                    <c:if test= "${todo.todoPercent eq '100'}"><div class="progress-bar bg-danger" style="width: <c:out value="${NUM+1}" />%"></div></c:if>   
+						                        </div>
+			                      			</c:when>
+			                      		 </c:choose>
+			                      	</td>
+			                        <td class="project-actions text-right" style="opacity: .9;">
+			                          <a class="btn btn-primary btn-sm" href="javascript:reqDetail('<c:out value="${req.reqId }"/>');">
 			                              <i class="fas fa-folder"></i>
 			                              	보기
 			                          </a>
@@ -134,7 +191,7 @@
 			                              <i class="fas fa-trash"></i>
 			                              	삭제
 			                          </a>
-			                      </td>
+			                        </td>
 			                    </tr>
 	                      </c:forEach>
 	                  
@@ -172,17 +229,16 @@
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	      </div>
 	      <div class="modal-body">
-	      	<form:form commandName="memberVo" id="plForm" name="plForm" method="post">
+	      	<form id="plForm" name="plForm" method="post">
 	          <div class="col-md-6" style="float: left">
 	          	<input type="hidden" id="modalReqId" name="reqId" value="">
 	          	<input type="hidden" name="status" value="대기">
 	            <label for="recipient-name" class="control-label">이메일:</label>
 	            <input type="text" class="form-control" id="searchInput" name="memId"> 
 	            <div class="card-title error-page jg" id="memIdCheck" style="width: auto">
-		            
 	            </div>
 	          </div>
-	        </form:form>
+	        </form>
 	        
 	        <div class="col-md-6" style="float: right">
 	          <img alt="" src="/dist/img/addpl.png" style="width: 100%; margin-right: 4%;">
@@ -200,7 +256,9 @@
 	
 <script type="text/javascript">
 	var searchCondition = "${reqVo.searchCondition}";
-	$('#searchCondition').val(""+searchCondition+"").attr("selected","selected");
+	if(searchCondition != ""){
+		$('#searchCondition').val(""+searchCondition+"").attr("selected","selected");
+	}
 	
 	//뒤로가기
 	$("#back").on("click", function() {
@@ -209,6 +267,10 @@
 	
 	
 	$(function() {
+		
+		$('.plDelete').on('mouseenter',function(){
+			
+		})
 		
 		$('.addplModal').on('click',function(){
 			var reqId = $(this).attr("reqId");
@@ -304,27 +366,51 @@
 	}
 
 	/* 요구사항정의서 삭제하기 */
-	function reqDelete(reqId){
+	function reqDelete(id){
 		if(confirm("삭제한 정보는 복구할 수 없습니다. 정말 삭제하시겠습니까?")){
-			document.location = "/req/reqDelete?reqId="+reqId;
+			document.listForm.selectedId.value = id;
+			document.listForm.action = "<c:url value = '/req/reqDelete'/>";
+			document.listForm.submit();
 		}else{
 	
 		}
 	}
 	
-	/* 요구사항정의서 수정하기 */
-	function reqUpdate(reqId){
-	   	document.location = "/req/reqUpdateView?reqId="+reqId;
+	/* 요구사항정의서 삭제하기 */
+	function plDelete(id){
+		if(confirm("pl삭제시 복구 할 수 없으며 재등록을 해야합니다. 삭제하시겠습니까?")){
+			document.listForm.selectedId.value = id;
+			document.listForm.action = "<c:url value = '/req/plDelete'/>";
+			document.listForm.submit();
+		}else{
+	
+		}
+	}
+	
+	/* 요구사항정의서 수정페이지보기 */
+	function reqUpdate(id){
+		document.listForm.selectedId.value = id;
+		document.listForm.action = "<c:url value = '/req/reqUpdateView'/>";
+		document.listForm.submit();
 	}
 	
 	/* 요구사항정의서 상세보기 */
-	function reqDetail(reqId){
-		document.location = "/req/reqDetail?reqId="+reqId;
+	function reqDetail(id){
+		document.listForm.selectedId.value = id;
+		document.listForm.action = "<c:url value ='/req/reqDetail'/>";
+		document.listForm.submit();
 	}
 	
 	/* 글 등록 화면 function */
 	function fn_egov_reqInsert() {
-	   	document.location = "<c:url value='/req/reqInsertView'/>";
+		document.listForm.action = "<c:url value='/req/reqInsertView'/>";
+	   	document.listForm.submit();
+	}
+	
+	/* 글 등록 화면 function */
+	function fn_egov_reqList() {
+		document.listForm.action = "<c:url value='/req/reqList'/>";
+	   	document.listForm.submit();
 	}
 
 	/* pagination 페이지 링크 function */
@@ -339,6 +425,7 @@
 		document.plForm.action = "<c:url value='/req/reqUpdate'/>";
 		document.plForm.submit();
 	}
+	
 
 </script>
 	
