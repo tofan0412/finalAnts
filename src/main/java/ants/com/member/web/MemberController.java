@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -42,7 +44,8 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 @RequestMapping("/member")
 @Controller
 public class MemberController {
-	
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+
 
 	@Resource(name = "memberService")
 	private MemberService memberService;
