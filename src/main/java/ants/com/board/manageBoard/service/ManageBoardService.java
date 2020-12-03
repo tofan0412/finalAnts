@@ -10,6 +10,7 @@ import ants.com.board.manageBoard.mapper.ManageBoardMapper;
 import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectVo;
 import ants.com.member.model.ReqVo;
 
 @Service("manageBoardService")
@@ -30,6 +31,10 @@ public class ManageBoardService{
 		return mapper.todoListCount(todoVo);
 	}
 	
+	public int todoMyListCount(TodoVo todoVo) {
+		return mapper.todoMyListCount(todoVo);
+	}
+	
 	public List<MemberVo> projectMemList(TodoVo todoVo) {
 		return mapper.projectMemList(todoVo);
 	}
@@ -41,6 +46,10 @@ public class ManageBoardService{
 	public int todoupdate(TodoVo todoVo) {
 		return mapper.todoupdate(todoVo);
 	}
+	
+	public int progressChange(TodoVo todoVo) {
+		return mapper.progressChange(todoVo);
+	}
 
 	public int tododelete(TodoVo todoVo) {
 		return mapper.tododelete(todoVo);
@@ -50,4 +59,11 @@ public class ManageBoardService{
 		return mapper.todoChangeMem(todoLogVo);
 	}
 
+	public List<TodoVo> getMyTodoList(TodoVo todoVo) {
+		return mapper.getMyTodoList(todoVo);
+	}
+	
+	public ProjectVo projectList(ProjectVo projectVo){
+		return mapper.projectList(projectVo);
+	}
 }

@@ -15,23 +15,32 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		// 상세일감 보러가기
-		$("#todoList tr").on("click",function(){
-			var todoId = $(this).data("todoid");
-	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/onetodoView?todoId='+todoId);
-			});
-		});
 	
+	// 페이징처리
 	function fn_egov_link_page(pageNo){
 		document.listForm.pageIndex.value = pageNo;
-		document.listForm.action = "<c:url value='/todo/todoList'/>";
+		document.listForm.action = "<c:url value='/todo/MytodoList'/>";
 	   	document.listForm.submit();
 	}
-	 function search(){
-		document.listForm.action = "<c:url value='/todo/todoList'/>";
-		document.listForm.submit();
+	
+	// 상세 보기
+	function todoDetail(todoId){
+	   	document.location = "/todo/onetodoView?todoId="+todoId;
 	}
+	
+	// 이슈 작성
+	function todoInsert(todoId){
+	}
+	
+	// 건의사항 작성
+	function suggestInsert(todoId){
+	}
+	
+// 	 function search(){
+// 		document.listForm.action = "<c:url value='/todo/MytodoList'/>";
+// 		document.listForm.submit();
+// 	}
+
 </script>
 <style type="text/css"> 
 #todoTable{
@@ -52,8 +61,10 @@
 	
 	<form:form commandName="todoVo" id="listForm" name="listForm" method="post">
 	<div style="padding-left: 30px; background-color: white;">
-		<c:if test="${SMEMBER.memId eq projectVo.memId }">
-		<a class="btn btn-default " href="${pageContext.request.contextPath }/todo/todoInsertView"><i class="fas fa-edit"></i>일감 등록</a></c:if>
+		<c:if test="${ empty  todoList}">
+				<p>"등록된 일감이없습니다."</p>
+		</c:if>
+		<c:if test="${ not empty todoList}">
 		<br>
 		    <div class="card-header with-border">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
@@ -84,10 +95,11 @@
 				<th>진행도</th>
 				<th>진행일</th>
 				<th>마감일</th>
+				<th></th>
 			</tr>
 			<tbody id="todoList">
 				<c:forEach items="${todoList }" var="todo" varStatus="sts" >
-				    <tr data-todoid="${todo.todoId}">
+				    <tr>
 					<td><c:out value="${paginationInfo.totalRecordCount - ((todoVo.pageIndex-1) * todoVo.pageUnit + sts.index)}"/>. 
 					<input type="hidden" id="${todo.reqId }" name="${todo.reqId }">
 					</td>			
@@ -140,10 +152,19 @@
                      </c:if>   
 					<td>${todo.todoStart}일</td>
 					<td>${todo.todoEnd}</td>
+					<td class="project-actions text-right" style="opacity: .9;">
+				        <a class="btn btn-primary btn-sm" href="javascript:todoDetail(${todo.todoId });">
+				        	<i class="fas fa-folder"></i>상세보기</a>
+						<a class="btn btn-info btn-sm" href="javascript:todoInsert(${todo.todoId });">
+				        	<i class="fas fa-pencil-alt"></i>이슈 작성</a>
+						<a class="btn btn-danger btn-sm" href="javascript:suggestInsert(${todo.todoId });">
+				        	<i class="fas fa-pencil-alt"></i>건의사항 작성</a>
+			        </td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+	</c:if>
 		
 		<div id="paging" class="card-tools">
 		    <ul class="pagination pagination-sm float-right">

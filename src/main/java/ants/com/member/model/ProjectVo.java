@@ -1,6 +1,5 @@
 package ants.com.member.model;
 
-import java.util.Date;
 
 public class ProjectVo {
 	
@@ -9,7 +8,8 @@ public class ProjectVo {
 	private String memId;
 	private String proName;
 	private String percent;
-	private Date regDt;
+	private String regDt;
+	
 	public String getReqId() {
 		return reqId;
 	}
@@ -34,10 +34,10 @@ public class ProjectVo {
 	public void setPercent(String percent) {
 		this.percent = percent;
 	}
-	public Date getRegDt() {
+	public String getRegDt() {
 		return regDt;
 	}
-	public void setRegDt(Date regDt) {
+	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
 	@Override
@@ -45,4 +45,5 @@ public class ProjectVo {
 		return "ProjectVo [reqId=" + reqId + ", memId=" + memId + ", proName=" + proName + ", percent=" + percent
 				+ ", regDt=" + regDt + "]";
 	}
+
 }

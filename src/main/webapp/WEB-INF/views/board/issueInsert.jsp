@@ -55,26 +55,65 @@
 	     	   
 	        })
 	        
-	         $('#addbtn').on('click', function(){
-	    	 
-				   fileSlotCnt++;
-		    	   console.log("click!!");
-		    	   var html = '<br><input type="file" name="file" id="fileBtn">'
-		    	   				+'<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">'
-									+'<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>'
-								+'</button>';
-		    	   $(this).next().next().append(html);  
-		    	   
-		    	   if(fileSlotCnt >= maxFileSlot){
-		    		   $(this).hide();
-	 	    		   alert("파일은 총 "+maxFileSlot+"개 까지만 첨부가능합니다.");
-		    	   }
+         $('#addbtn').on('click', function(){
+    	 
+			   fileSlotCnt++;
+	    	   console.log("click!!");
+	    	   var html = '<br><input type="file" name="file" id="fileBtn">'
+	    	   				+'<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">'
+								+'<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>'
+							+'</button>';
+	    	   $(this).next().next().append(html);  
 	    	   
-	     })
-
-		      
-		      
- 	});
+	    	   if(fileSlotCnt >= maxFileSlot){
+	    		   $(this).hide();
+ 	    		   alert("파일은 총 "+maxFileSlot+"개 까지만 첨부가능합니다.");
+	    	   }
+    	   
+     	 })
+     	 
+     	 
+     	 $('#kindselect').on('change', function(){
+     		 
+     		kind = $(this).val()
+     		console.log(kind)
+     		if(kind == 'issue'){     			
+	     		mytodolist();
+     		}else{
+     			 $("#todolist").empty();
+     		}
+     	 })
+     	 
+     	 
+     	
+      
+ 	})
+ 	
+ 	
+ 	function mytodolist(){
+	 	$.ajax({url :"${pageContext.request.contextPath}/projectMember/mytodolist",
+	// 			 data :{userid : userid},
+				 method : "get",
+				 success :function(data){	
+					 console.log(data.todolist)
+					
+					 
+					 html  =  '<label for="todoId" class="col-sm-2 control-label">일감 </label>'
+				     html +=  '<select name="todoId" id="todoselect"  class ="col-sm-4" required>'		
+				     html +=  '<option value="">선택</option>'
+// 				     html +=  ' <option value="">'+data.todolist[0].todoTitle+'</option>	'	
+				     for( i = 0 ; i< data.todolist.length; i++){		
+					     html +=  '	 <option value='+data.todolist[i].todoId+'>'+data.todolist[i].todoTitle+'</option>'	
+				     }
+				     html +=  '	</select>'
+				     
+				     
+				    	
+				     
+				     $("#todolist").html(html);
+				 }
+		 	})
+	}
 	
 </script>
 <style>
@@ -91,7 +130,7 @@
  	    width : 30px;
  	    height: 30px;
  	} */
-	input[type=text]{
+	option{
 		hieght : 100px;
 	}
 	#fileBtn{
@@ -123,39 +162,57 @@
 			<h3>협업이슈 작성하기</h3>
 			<br>
 			<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/insertissue" id="todoform"  >	
-				<label for="issueTitle" class="col-sm-2 control-label">이슈제목 </label>
-				<input type="text" name="issueTitle" style="width: 580px;" id="issueTitle"><br><br>
 				
-				<div style="width: 80%;">
-				<label for="issueCont" class="col-sm-2 control-label">이슈 내용</label>
-				<textarea id="summernote" name="issueCont" id="issueCont"></textarea>
+			 <div class="form-group">
+					<label for="issueKind" class="col-sm-2 control-label">이슈종류</label> 
+					<select name="issueKind" id="kindselect" class ="col-sm-3" required>
+					    <option value="">선택</option>
+					    <option value="issue">이슈</option>
+					    <option value="notice">공지사항</option>
+					</select>
 				</div>
-				<br><br>
 				
-				<label for="todoTitle" class="col-sm-2 control-label">일감</label>
-				<select name="todoTitle" id="todoselect">
+				<div class="form-group" id="todolist">
+<!-- 					<label for="todoTitle" class="col-sm-2 control-label">일감</label> -->
+<!-- 					<select name="todoTitle" id="todoselect"> -->
+						
+<!-- 					    <option value="">선택</option> -->
+<%-- 						<c:forEach items="${todolist }" var="todo" begin ="0" varStatus="vs" end="${todolist.size() }" step="1" > --%>
+<%-- 							<option value="${todo.todoId }">${todo.todoTitle }</option>			 --%>
+<%-- 						</c:forEach>			 --%>
+<!-- 					</select> -->
+				</div>
+				
+				<div class="form-group">
+					<label for="issueTitle" class="col-sm-2 control-label">이슈제목</label>
+					<input type="text" name="issueTitle" style="width: 70%;" id="issueTitle" required>
+				</div>
+				
+				<div class="form-group" style="width: 90%;">
+					<label for="issueCont" class="col-sm-2 control-label">이슈 내용</label>
+					<textarea id="summernote" name="issueCont" id="issueCont"></textarea>
+				</div>
+				
+				
+				<div class="form-group">
+					<label for="file" class="col-sm-2 control-label">첨부파일</label>
+					<button type="button" id="addbtn" class="btn btn-light filebtn" style="outline: 0; border: 0;">
+							<i class="fas fa-fw fa-plus" style=" font-size:10px;"></i>
+						</button> <br>
 					
-				    <option value="">선택</option>
-					<c:forEach items="${todolist }" var="todo" begin ="0" varStatus="vs" end="${todolist.size() }" step="1" >
-						<option value="${todo.todoId }">${todo.todoTitle }</option>			
-					</c:forEach>			
-				</select><br><br>
-				
-				<label for="file" class="col-sm-2 control-label">첨부파일</label>
-				<button type="button" id="addbtn" class="btn btn-light filebtn" style="outline: 0; border: 0;">
-						<i class="fas fa-fw fa-plus" style=" font-size:10px;"></i>
-					</button> <br>
-				
-				<div id ="filediv" class="col-sm-10">
-					<input type="file" name="file" id="fileBtn">	
-								
+					<div id ="filediv" class="col-sm-10">
+						<input type="file" name="file" id="fileBtn">	
+									
+					</div>
 				</div>
 		
 				
-				<br><br>
-				<input type="hidden" value="issue" name="issueKind">		
-				<input type="hidden" value="3" name="categoryId">
-				<input type="submit" class="btn btn-default" id="insertbtn" value="작성하기"> 
+				<div class="card-footer clearfix " >
+<!-- 					<input type="hidden" value="issue" name="issueKind">		 -->
+					<input type="hidden" value="3" name="categoryId">
+					<input type="submit" class="btn btn-default float-right" id="insertbtn" value="작성하기"> 
+				</div>
+				
 			</form>
 		</div>
 	   </div>

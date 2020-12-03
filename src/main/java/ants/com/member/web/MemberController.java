@@ -30,6 +30,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,8 +54,6 @@ public class MemberController {
 	@Resource(name = "projectService")
 	private ProjectService projectService;
 	
-	
-
 	@RequestMapping("/mainView")
 	public String mainView() {
 		return "main.tiles/main";
@@ -85,9 +84,9 @@ public class MemberController {
 			if (dbMember.getMemType().equals("PL") || dbMember.getMemType().equals("PM")) {
 				List<ProjectVo> plpmList = projectService.plpmInProjectList(dbMember.getMemId());
 				session.setAttribute("plpmList", plpmList); 
-				return "content/project";
+				return "tiles/layout/contentmenu";
 			} else {
-				return "content/project";
+				return "tiles/layout/contentmenu";
 			}
 
 		} else {
@@ -125,8 +124,8 @@ public class MemberController {
 	// 회원가입 로직
 	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
 
-	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model) {
-		logger.debug("memberVo : {}", memberVo);
+	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model, @RequestParam(value="imgname", required=false)String imgname) {
+		logger.debug("memberVo : {} / imgname : {}", memberVo, imgname);
 		logger.debug("filename : {} / memFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),file.getSize());
 		
 		String Filename = "";
@@ -137,7 +136,7 @@ public class MemberController {
 			logger.debug("br.hasErrors() : {}", br.hasErrors());
 	
 			if (br.hasErrors()) {
-				return "main.tiles/member/memberRegist";
+//				return "main.tiles/member/memberRegist";
 			}
 	
 			String filekey = UUID.randomUUID().toString();
@@ -154,10 +153,21 @@ public class MemberController {
 	
 			logger.debug("---------------------통과-------------------");
 			
-
+			
 		}else {
-			Filepath = "D:\\upload\\users-00";
-			Filename = "users-00.png";
+			
+			// 기본 이미지 중에 선택했을때
+			if(!imgname.equals("") && !imgname.equals(null)) {
+				Filepath = imgname;
+				Filename = imgname.split("/")[4];
+			
+			// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+			}else { 
+				Filepath = "http://localhost/profile/user-0.png";
+				Filename = "user-0.png";
+			}
+			
+		
 		}
 		
 
@@ -285,16 +295,12 @@ public class MemberController {
 	
 	// 인증번호 생성
 	public static String numberGen(int len, int dupCd) {
-
-
 		Random rand = new Random();
 		String numStr = ""; // 난수가 저장될 변수
 
 		for (int i = 0; i < len; i++) {
-
 			// 0~9 까지 난수 생성
 			String ran = Integer.toString(rand.nextInt(10));
-
 			if (dupCd == 1) {
 				// 중복 허용시 numStr에 append
 				numStr += ran;
@@ -311,6 +317,7 @@ public class MemberController {
 		}
 		return numStr;
 	}
+	
 
 	// 비밀번호 수정 - 문자
 	@RequestMapping(path = "/sendSms")
@@ -347,9 +354,32 @@ public class MemberController {
 		return "main.tiles/member/memberPassmodified2";
 	}
 	
+	
+	
+	// 프로필 보기
+	@RequestMapping("/profile")
+	public String profile(HttpSession session, MemberVo memberVo, Model model) {
+		
+		memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
+		MemberVo dbMember = memberService.getMember(memberVo);
+		logger.debug("dbMember : {}", dbMember);
+		
+		model.addAttribute("memberVo",dbMember);
+		return "tiles/member/memberProfile";
+	}
+	
+	
+	
+	
+	
+	
+	
+	// 로그아웃
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return loginView();
 	}
+	
 }

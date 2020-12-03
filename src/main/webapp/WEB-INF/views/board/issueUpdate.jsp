@@ -31,10 +31,10 @@
 		          ['style', ['style']],
 		          ['font', ['bold', 'underline', 'clear']],
 		          ['color', ['color']],
-		          ['para', ['ul', 'ol', 'paragraph']],
+		          ['para', ['ul', 'ol']],
 		          ['table', ['table']],
-		          ['insert', ['link', 'picture', 'video']],
-		          ['view', ['fullscreen', 'codeview', 'help']]
+		          ['insert', ['link', 'picture']],
+		          ['view', [ 'help']]
 		        ]	      
 		 })
 		 
@@ -78,7 +78,7 @@
    				    +'<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">'
 					+'<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>'
 				    +'</button>';
-		    $(this).next().next().append(html); 
+		    $(this).next().append(html); 
 	  	
 			 
 	    	if(fileSlotCnt >= maxFileSlot){
@@ -112,6 +112,10 @@
 		 padding-bottom:  .5em;
 		 padding-top:  .5em;
 	}
+	label{	
+		height: auto;
+		font-size: 1.1em;
+	}
 </style>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
@@ -124,37 +128,44 @@
 			<br>
 			<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/updateissue" id="todoform"  >	
 			
-				<label for="issueTitle" class="col-sm-2 control-label">이슈종류 </label>
-				<select name="issueKind" id="kindselect">
-				    <option value="issue">이슈</option>
-				    <option value="notice">공지사항</option>
-				</select><br><br>
-				<label for="issueTitle" class="col-sm-2 control-label">이슈제목 </label>
-				<input type="text" name="issueTitle" style="width: 580px;" value="${issueVo.issueTitle }" id="issueTitle"><br><br>
+<!-- 				<label for="issueTitle" class="col-sm-2 control-label">이슈종류 </label> -->
+<!-- 				<select name="issueKind" id="kindselect"> -->
+<!-- 				    <option value="issue">이슈</option> -->
+<!-- 				    <option value="notice">공지사항</option> -->
+<!-- 				</select><br><br> -->
+				<div class="form-group" >
 				
-				<div style="width: 80%;">
-					<label for="todoCont" class="col-sm-2 control-label">이슈 내용</label>
-					<textarea id="summernote" name="issueCont" id="issueCont">${issueVo.issueCont }</textarea>
-				</div>
-				<br><br>
-				
-				
-				<label id ="filelabel" for="file" class="col-sm-2 control-label">첨부파일</label>
-				<button type="button" id="addbtn" class="btn btn-light filebtn" style="outline: 0; border: 0;">
-					<i class="fas fa-fw fa-plus" style=" font-size:10px;"></i>
-				</button> <br>
-				<div id ="file" class="col-sm-10">
-				
-					<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
-						<input type="search" name="${files.pubId}" value="${files.pubFilename}" disabled >
-	   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">
-							<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>
-						</button><br>
-					</c:forEach>								
+					<label for="issueTitle" class="col-sm-2 control-label">이슈제목 </label>
+					<input type="text" name="issueTitle" style="width: 450px;" value="${issueVo.issueTitle }" id="issueTitle">
 					
+				</div>
+				
+				<div class="form-group" style="width: 90%;">
+				
+					<label for="todoCont" class="col-sm-2 control-label">이슈 내용</label>
+					<textarea class="control-label"  id="summernote" name="issueCont" id="issueCont">${issueVo.issueCont }</textarea>
+				</div>
+				
+				
+				<div class="form-group">
+					<label id ="filelabel" for="file" class="col-sm-2 control-label">첨부파일</label>
+					<button type="button" id="addbtn" class="btn btn-light filebtn" style="outline: 0; border: 0;">
+						<i class="fas fa-fw fa-plus" style=" font-size:10px;"></i>
+					</button>
+				
+				
+					<div id ="file" class="col-sm-10">
+					
+						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
+							<input type="search" name="${files.pubId}" value="${files.pubFilename}" disabled >
+		   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">
+								<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>
+							</button>
+						</c:forEach>								
+						
+					</div>
 					<input type="hidden" id="delfile" name="delfile" value="">	
 				</div>
-		
 		
 				<br><br>
 				 <input type="hidden" value="${issueVo.issueId }" name="issueId">

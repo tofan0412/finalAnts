@@ -22,5 +22,8 @@
 		    reqlist.req_id = project.req_id
         AND (reqlist.mem_id= #{memId} or reqlist.pl_id= #{memId})
 	</select>
+	
+	
+	
 
 </mapper>
