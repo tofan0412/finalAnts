@@ -124,7 +124,7 @@
 	
 	<!-- 웹소켓 관련 설정 -->
 	<bean id="echoHandler" class="ants.com.chatting.ws.EchoHandler"></bean>
-		
+	
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo"/>
 		<!-- Interceptor는 http통신에서 request, response를 가로채는 역할을 한다. -->
@@ -133,6 +133,16 @@
 		</websocket:handshake-interceptors>
 		
 		<websocket:sockjs />
+	</websocket:handlers>
+	
+	<bean id="alarmHandler" class="ants.com.common.ws.AlarmHandler"></bean>
+	
+	<websocket:handlers>
+		<websocket:mapping handler="alarmHandler" path="/alarm"/>
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs/>
 	</websocket:handlers>
 	
 	<!-- 처리할 수 없는 경우, serlvet 기본 핸들러가 처리한다. -->
