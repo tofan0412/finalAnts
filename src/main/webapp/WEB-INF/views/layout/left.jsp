@@ -123,15 +123,15 @@
 				<br>
 				
 				<!-- memType이 MEM일때  -->
-				 <c:if test="${projectList ne null}">
+				 <c:if test="${not empty memInProjectList}">
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>진행중인 프로젝트<i class="fas fa-angle-left right"></i></p>
+							<p>참여중인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
 							
 					    <ul class="nav nav-treeview" style="display: block;">
-					    	<c:forEach items="${projectList}" var="project">
+					    	<c:forEach items="${memInProjectList}" var="project">
 						    	<li class="nav-item">
 									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
 								 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
@@ -141,15 +141,15 @@
 						</ul>
 					</li>
 				 </c:if>
-				 <!-- memType이 PM,PL일때 -->
-				 <c:if test="${plpmList ne null}">
+				 <!-- memType이 PL일때 -->
+				 <c:if test="${not empty plInProjectList}">
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active">
 				        	<i class="nav-icon fas fa-poll-h"></i>
 							<p>진행중인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
 					    <ul class="nav nav-treeview" >
-					    	<c:forEach items="${plpmList}" var="project">
+					    	<c:forEach items="${plInProjectList}" var="project">
 						    	<li class="nav-item">
 									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
 								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
@@ -159,8 +159,27 @@
 						</ul>
 					</li>
 				 </c:if>
+				 <!-- memType이 PM일때 -->
+				 <c:if test="${not empty pmInProjectList}">
+					<li class="nav-item has-treeview menu-open">
+			            <a href="#" class="nav-link active">
+				        	<i class="nav-icon fas fa-poll-h"></i>
+							<p>요청중인 프로젝트<i class="fas fa-angle-left right"></i></p>
+						</a>
+					    <ul class="nav nav-treeview" >
+					    	<c:forEach items="${pmInProjectList}" var="project">
+						    	<li class="nav-item">
+									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+								 	</a>
+								</li>
+							</c:forEach>
+						</ul>
+					</li>
+				 </c:if>
+				 
 				 <!-- 프로젝트없는 경우 -->
-				 <c:if test="${projectList eq null and plpmList eq null}">
+				 <c:if test="${memInProjectList eq null and plInProjectList eq null and pmInProjectList eq null}">
 					<li class="nav-item has-treeview menu-close">
 			            <a href="#" class="nav-link">
 				        	<i class="nav-icon fas fa-poll-h"></i>

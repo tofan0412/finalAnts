@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +39,7 @@ public class TodoController {
 		projectVo.setReqId(reqId);
 		ProjectVo sessionVo = manageBoardService.projectList(projectVo);
 		session.setAttribute("projectVo", sessionVo);
+		logger.debug("projecttttttttttttttttt:{}",sessionVo);
 		session.setAttribute("projectId", reqId);
 		return "redirect:/todo/todoList";
 	}
@@ -109,7 +109,7 @@ public class TodoController {
 	}
 
 	// 한개의 일감 조회 Ajax
-	@RequestMapping("/onetodo")
+	@RequestMapping("/hissueDetail")
 	public String todoDetailView(Model model, TodoVo todoVo) {
 		TodoVo dbtodoVo = manageBoardService.getTodo(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
@@ -117,9 +117,9 @@ public class TodoController {
 	}
 
 	// 한개의 일감조회 화면 출력
-	@RequestMapping("/onetodoView")
+	@RequestMapping("/hissueDetailView")
 	public String todoView() {
-		return "tiles/manager/Pl_Onetodo";
+		return "tiles/manager/plpm_hissueDetail";
 	}
 
 	// 일감 수정 화면 출력

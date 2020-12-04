@@ -15,7 +15,9 @@ public interface ProjectMapper {
 	public List<ProjectVo> memInProjectList(String memId);
 	
 	//pl,pm메뉴 불러오기
-	public List<ProjectVo> plpmInProjectList(String memId);
+	public List<ProjectVo> plInProjectList(String memId);
+	
+	public List<ProjectVo> pmInProjectList(String memId);
 	
 	// 나에게 요청된 요구사항정의서 리스트 출력하는 메서드
 	public List<ReqVo> readReqList(String plId);

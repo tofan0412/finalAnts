@@ -17,17 +17,8 @@
 		      <div class="container-fluid">
 		        <div class="row mb-2">
 		          <div class="col-sm-6">
-		         <c:if test="${plpmList ne null}">
-					<c:forEach items="${plpmList}" var="project">
-						<c:if test="${projectId eq project.reqId}"><h1 class="jg">${project.proName}</h1><c:set var="projectNAME" value="${project.proName}"></c:set></c:if>
-					</c:forEach>
-		         </c:if>
-		         <c:if test="${projectList ne null}">
-					<c:forEach items="${projectList}" var="project">
-						<c:if test="${projectId eq project.reqId}"><h1 class="jg">${project.proName}</h1><c:set var="projectNAME" value="${project.proName}"></c:set></c:if>
-					</c:forEach>
-		         </c:if>
-		            
+		          <c:set var="projectNAME" value="${projectVo.proName}"></c:set>
+				<h1 class="jg">${projectNAME}</h1>
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right">

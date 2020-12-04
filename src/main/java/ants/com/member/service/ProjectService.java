@@ -21,15 +21,19 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	@Resource(name = "projectMapper")
 	private ProjectMapper mapper;
 
-	// left바 프로젝트명 불러오는 메서드
+	// left바 mem=프로젝트명 불러오는 메서드
 	public List<ProjectVo> memInProjectList(String memId) {
 		return mapper.memInProjectList(memId);
 	}
-	
-	// pm,pl left바 불러오는 메서드
-	public List<ProjectVo> plpmInProjectList(String memId) {
-		return mapper.plpmInProjectList(memId);
+	// left바 pl=프로젝트명 불러오는 메서드
+	public List<ProjectVo> plInProjectList(String memId) {
+		return mapper.plInProjectList(memId);
 	}
+	// left바 pm=프로젝트명 불러오는 메서드
+	public List<ProjectVo> pmInProjectList(String memId) {
+		return mapper.pmInProjectList(memId);
+	}
+	
 	
 	// 나에게 요청된 요구사항정의서 리스트 출력하는 메서드
 	public List<ReqVo> readReqList(String plId){

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ants.com.board.manageBoard.mapper.ManageBoardMapper">
+	
+	
+	
+	<!--리스트 조회 -->
+	<select id="gethissueList"
+		parameterType="ants.com.board.manageBoard.model.HotIssueVo"
+		resultType="ants.com.board.manageBoard.model.HotIssueVo">
+		   SELECT c.*
+			FROM (
+				SELECT
+				ROWNUM rnum, a.*
+				FROM (SELECT * from (SELECT
+					hotissue.hissue_id,
+					hotissue.hissuet_cont,
+					lpad(' ', (level - 1) * 4)|| hissue_title as hissue_title,
+					TO_CHAR(hotissue.reg_dt,'yyyy-mm-dd') as reg_Dt,
+					hotissue.req_id,
+					hotissue.hissue_parentid,
+					hotissue.hissue_level,
+					hotissue.del,
+					member.mem_name as writer
+				FROM( select *
+					from member)member, hotissue hotissue
+				WHERE
+					member.mem_id = hotissue.writer
+				AND
+					hotissue.del = 'N'
+				AND hotissue.req_id = #{reqId} 
+					<if test="searchKeyword != null and searchKeyword != ''">
+						<choose>
+							<when test="searchCondition == 1">
+								AND hotissue.mem_name LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 2">
+								AND hotissue.hissue_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 3">
+								AND hotissue.hissuet_cont LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</if>
+				start with hotissue.hissue_parentid is null
+				CONNECT BY
+				PRIOR HISSUE_ID = HISSUE_PARENTID
+				order siblings by HISSUE_ID desc))a
+				WHERE rownum  <![CDATA[ <= ]]> #{lastIndex}) c
+        		<![CDATA[WHERE rnum > #{firstIndex}]]>
+		</select>
+
+		<!-- 페이지처리위한 요구사항개수 -->
+		<select id="issueListCount" parameterType="String"
+			resultType="java.lang.Integer">
+			<![CDATA[
+				SELECT COUNT(*)
+					FROM hotissue
+					WHERE req_id = #{reqId}
+					AND del = 'N'
+		    ]]>
+		</select>
+		
+		
+		<!-- 한개의 핫이슈 조회 -->
+		<select id="gethissue" parameterType="ants.com.board.manageBoard.model.HotIssueVo"
+			resultType="ants.com.board.manageBoard.model.HotIssueVo">
+			<![CDATA[
+			SELECT
+			    hotissue.HISSUE_ID,
+			    TO_CHAR(hotissue.reg_dt,'yyyy-mm-dd') as reg_dt,
+			    hotissue.HISSUE_TITLE,
+			    hotissue.HISSUET_CONT,
+			    hotissue.REQ_ID,
+                hotissue.CATEGORY_ID,
+			    hotissue.HISSUE_PARENTID,
+			    hotissue.HISSUE_LEVEL,
+			    member.mem_name as WRITER
+			FROM( select * from member)member, hotissue hotissue
+			WHERE
+			    member.mem_id = hotissue.WRITER
+			AND   hotissue.HISSUE_ID =#{hissueId}]]>
+		</select> 
+	
+</mapper>
