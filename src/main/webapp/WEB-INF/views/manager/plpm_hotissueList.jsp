@@ -30,7 +30,7 @@
 	
 	// 답글 작성
 	function hotissueInsertChild(hissueId){
-	   	document.location = "/hotIssue/hissueInsertChild?hissueId="+hissueId;
+	   	document.location = "/hotIssue/hissueInsertView?Parentid="+hissueId;
 	}
 	
 	// 검색

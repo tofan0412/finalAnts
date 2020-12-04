@@ -13,10 +13,11 @@
 		hotDetail("${param.hissueId}");
 		
 // 		// 답글작성
-// 		$(document).on('click','#creatChildBtn', function(){
-// 			var todoId = $("#todoId").val();
-// 	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView?todoParentid='+todoId);
-// 		})
+		$(document).on('click','#creatChildBtn', function(){
+			var hissueId = $("#hissueId").val();
+		   	document.location = "/hotIssue/hissueInsertView?Parentid="+hissueId;
+		})
+		
 		
 		// 뒤로가기
 		$(document).on('click','#back', function(){
@@ -84,11 +85,11 @@
 
 		<div id="btnMenu">
 		<c:if test="${SMEMBER.memId eq hotIssueVo.writer }">
-		<button type="button" class="btn btn-default" id="updateBtn" >수정</button>
+		<button type="button" class="btn btn-default" id="updateBtn">수정</button>
 		<button type="button" class="btn btn-default" id="deleteBtn">삭제</button>
 		</c:if>
 		<c:if test="${SMEMBER.memId ne hotIssueVo.writer }">
-		<button type="button" class="btn btn-default" id="updateBtn">답글 작성</button>
+		<button type="button" class="btn btn-default" id="creatChildBtn">답글 작성</button>
 		</c:if>
 		<button type="button" class="btn btn-default" id="back">뒤로가기</button>	
 		</div>

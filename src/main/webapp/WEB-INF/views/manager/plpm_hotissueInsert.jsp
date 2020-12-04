@@ -22,13 +22,29 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(){	
+	$(document).ready(function(){
+		
 	 	$('#summernote').summernote();
-	 	});
+	 	
+	 	// 등록
+	 	$("#regBtn").on("click", function() {
+			$("#hissueform").submit();
+		});
+	 	
+	 	// 뒤로가기
+		$("#back").on("click", function() {
+			window.history.back();
+		});
+	 	
+	});
 	
 </script>	 		
 </head>
-			<%@include file="../layout/contentmenu.jsp"%>
+
+		<%@include file="../layout/contentmenu.jsp"%>
+			
+		<div style="padding-left: 30px; padding-right: 30px;">
+		<form method="post" action="${pageContext.request.contextPath }/hotIssue/hissueInsert" id="hissueform"  >    
 			<div class="card card-primary card-outline">
               <div class="card-header">
                 <h3 class="card-title"><c:out value="${projectVo.proName}"/></h3>
@@ -37,6 +53,7 @@
                 <div class="form-group">
                   <input class="form-control" placeholder="Subject:" name="hissueTitle">
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
+                  <input type="hidden" name="hissueParentid" value="${hissueP }">
                 </div>
                 <div class="form-group">
                 <textarea id="summernote" name="hissuetCont"></textarea>
@@ -50,10 +67,11 @@
               <div class="card-footer">
                 <div class="float-right">
                   <button type="button" class="btn btn-default" id="back"><i class="fas fa-times"></i> 취소</button>
-                  <button type="button" class="btn btn-primary" id=""><i class="far fa-pencil-alt"></i> 작성</button>
+                  <button type="button" class="btn btn-primary" id="regBtn"><i class="far fa-pencil-alt"></i> 작성</button>
                 </div>
               </div>
             </div>
-
+        </form>
+		</div>
 
 </html>

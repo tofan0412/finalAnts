@@ -71,25 +71,49 @@ public class HotIssueController {
 	
 	// 핫이슈 등록 화면 출력
 	@RequestMapping("/hissueInsertView")
-	public String todoInsertView() {
+	public String todoInsertView(@RequestParam(name = "Parentid", required = false) String Parentid, HttpSession session) {
+		if(Parentid != null) {
+			session.setAttribute("hissueP", Parentid);
+		}
 		return "tiles/manager/plpm_hotissueInsert";
 	}
 	
 	// 핫이슈 등록
-//	@RequestMapping("/hissueInsert")
-//	public String todoInsert(Model model, TodoVo todoVo, HttpSession session) {
-//		String reqId = (String) session.getAttribute("projectId");
-//		todoVo.setReqId(reqId);
-//		int todoInsert = manageBoardService.todoInsert(todoVo);
-//		if (todoInsert > 0) {
-//			return "redirect:/todo/todoList?reqId=" + todoVo.getReqId();
-//		} else {
-//			return "redirect:/todo/todoInsertView?reqId=" + todoVo.getReqId();
-//		}
-//	}
-//	// 핫이슈 답글 등록
-//	@RequestMapping("/hissueInsertChild")
-//	
+	@RequestMapping("/hissueInsert")
+	public String hissueInsert(Model model, HotIssueVo hotIssueVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		hotIssueVo.setReqId(reqId);
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		hotIssueVo.setWriter(memId);
+		int hissueInsert = manageBoardService.hissueInsert(hotIssueVo);
+		if (hissueInsert  > 0) {
+			return "redirect:/hotIssue/hissueList";
+		} else {
+			return "redirect:/hotIssue/hissueInsertView";
+		}
+	}
+	
+	// 핫이슈 답글 등록
+	@RequestMapping("/hissueInsertChild")
+	public String hissueInsertChild(Model model, HotIssueVo hotIssueVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		hotIssueVo.setReqId(reqId);
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		hotIssueVo.setWriter(memId);
+		int hissueInsert = manageBoardService.hissueInsert(hotIssueVo);
+		if (hissueInsert  > 0) {
+			return "redirect:/hotIssue/hissueList";
+		} else {
+			return "redirect:/hotIssue/hissueInsertView";
+		}
+	}
+	
+	
+	
+	
+	
 //	// 핫이슈 수정
 //	@RequestMapping("/hissueInsert")
 //	

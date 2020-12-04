@@ -59,4 +59,7 @@ public interface ManageBoardMapper {
 
 	// 한개의 핫이슈 조회
 	public HotIssueVo gethissue(HotIssueVo hotIssueVo);
+
+	// 핫이슈 등록
+	public int hissueInsert(HotIssueVo hotIssueVo);
 }
