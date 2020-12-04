@@ -16,7 +16,8 @@
 		})
 		
 		$('.mkPjtBtn').click(function(){
-			alert('!!');
+			var plId = '${SMEMBER.memId}';
+			$(location).attr('href', '/project/readReqList?memId='+plId);
 		})
 		
 		

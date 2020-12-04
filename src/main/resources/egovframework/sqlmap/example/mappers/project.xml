@@ -23,7 +23,12 @@
         AND (reqlist.mem_id= #{memId} or reqlist.pl_id= #{memId})
 	</select>
 	
-	
+	<select id="readReqList" resultType="ants.com.member.model.ReqVo" parameterType="java.lang.String">
+SELECT *
+  FROM REQLIST
+ WHERE PL_ID = #{plId}
+   	 AND STATUS = '대기'
+</select>
 	
 
 </mapper>
