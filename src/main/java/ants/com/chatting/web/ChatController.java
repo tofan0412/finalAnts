@@ -23,6 +23,7 @@ public class ChatController {
 	@Resource(name="chatService")
 	ChatService chatService;
 	
+	// 내가 참여하고 있는 모든 채팅방 목록을 불러온다. 
 	@RequestMapping("/readChatList")
 	public String readChatList(String memId, Model model) {
 		
@@ -57,6 +58,7 @@ public class ChatController {
 		else return "error";
 	}
 	
+	// 현재 프로젝트에 참여하고 있는 모든 멤버 목록을 불러온다.
 	@RequestMapping("/readChatMembers")
 	public String readChatMembers(String projectId, Model model) {
 		List<ProjectMemberVo> chatMemList = chatService.readChatMembers(projectId);
@@ -65,6 +67,7 @@ public class ChatController {
 		return "chat/chatMemList";
 	}
 	
+	// 채팅 그룹을 생성한다.
 	@RequestMapping("/insertChatGroup")
 	@ResponseBody	// view를 생성하는 것이 아니라, Object 또는 JSON 을 전송할 수 있다.
 	public String insertChatGroup(ChatGroupVo chatGroupVo, Model model) {
@@ -72,6 +75,7 @@ public class ChatController {
 		return chatGroupVo.getCgroupId();
 	}
 	
+	// 사용자가 생성한 채팅 그룹에 대한 멤버를 DB에 저장한다. 
 	@RequestMapping("/insertChatMembers")
 	@ResponseBody	// view를 생성하는 것이 아니라, Object 또는 JSON 을 전송할 수 있다.
 	public int insertChatMembers(@RequestParam(value="memList[]")String[] memList, 

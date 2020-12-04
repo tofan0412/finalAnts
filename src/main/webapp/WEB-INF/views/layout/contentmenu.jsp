@@ -5,8 +5,6 @@
 <html>
 <head>
 
-<%@include file="fonts.jsp"%>
-
 </head>
 <title>협업관리프로젝트</title>
 <body class="hold-transition sidebar-mini accent-teal">
