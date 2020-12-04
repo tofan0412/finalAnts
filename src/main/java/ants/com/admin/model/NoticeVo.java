@@ -7,12 +7,12 @@ import ants.com.base.model.BaseVo;
 public class NoticeVo extends BaseVo{
 	
 	
-	private String noticeId; //인덱스
-	private String noticeTitle; //글제목
-	private String noticeCont; //글내용
+	private String noticeId; //인덱스 == issueId
+	private String noticeTitle; //글제목 == issueTitle
+	private String noticeCont; //글내용 == issueCont
 	private String regDt; //작성일
-	private String adminId; //작성자
-	private String del; //삭제여부
+	private String adminId; //작성자 == memId
+	private String del; //삭제여부 == 어디갔지?
 	
 	public String getNoticeId() {
 		return noticeId;

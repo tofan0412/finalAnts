@@ -41,9 +41,9 @@ import ants.com.member.service.MemberService;
 import ants.com.member.service.ProjectService;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
+@MultipartConfig
 @RequestMapping("/member")
 @Controller
-@MultipartConfig
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -64,7 +64,7 @@ public class MemberController {
 	public String loginView() {
 		return "member/login";
 	}
-
+	
 	// 로그인 로직
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
@@ -78,23 +78,22 @@ public class MemberController {
 			session.setAttribute("SMEMBER", dbMember);
 			List<ProjectVo> proList = projectService.memInProjectList(dbMember.getMemId());
 			if (proList.size() != 0) {
-				session.setAttribute("projectList", proList);
+				session.setAttribute("memInProjectList", proList);
 			}
-			
-			if (dbMember.getMemType().equals("PL") || dbMember.getMemType().equals("PM")) {
-				List<ProjectVo> plpmList = projectService.plpmInProjectList(dbMember.getMemId());
-				session.setAttribute("plpmList", plpmList); 
-				return "tiles/layout/contentmenu";
-			} else {
-				return "tiles/layout/contentmenu";
+			List<ProjectVo> pro_pL = projectService.plInProjectList(dbMember.getMemId());
+			if(pro_pL != null) {	
+				session.setAttribute("plInProjectList", pro_pL);				
 			}
-
+			List<ProjectVo> prp_pm = projectService.pmInProjectList(dbMember.getMemId());				
+			if(prp_pm != null) {
+				session.setAttribute("pmInProjectList", prp_pm);							
+			}
+				return "tiles/layout/contentmenu";
 		} else {
 			return "redirect:/member/loginView";
 		}
 
 	}
-		
 	
 	// 로그인 체크 ajax
 	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
@@ -112,7 +111,6 @@ public class MemberController {
 		
 		return "member/login";
 	}
-	
 
 	// 회원가입 페이지 이동
 	@RequestMapping(path = "/memberRegistview", method = RequestMethod.GET)
@@ -120,16 +118,20 @@ public class MemberController {
 		return "main.tiles/member/memberRegist";
 	}
 	
-	
 	// 회원가입 로직
 	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
+
 	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model, @RequestParam(value="imgname", required=false)String imgname) {
+		logger.debug("memberVo : {} / imgname : {}", memberVo, imgname);
+		logger.debug("filename : {} / memFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),file.getSize());
 		
 		String Filename = "";
 		String Filepath = "";
 		
 		if(!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
 			
+			logger.debug("br.hasErrors() : {}", br.hasErrors());
+	
 			if (br.hasErrors()) {
 //				return "main.tiles/member/memberRegist";
 			}
@@ -145,6 +147,9 @@ public class MemberController {
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
+	
+			logger.debug("---------------------통과-------------------");
+			
 			
 		}else {
 			
@@ -161,9 +166,14 @@ public class MemberController {
 			
 		
 		}
+		
 
 		memberVo.setMemFilepath(Filepath);
 		memberVo.setMemFilename(Filename);
+		
+		logger.debug("memId : {}", memberVo.getMemId());
+		logger.debug("memberVo : {}", memberVo);
+		
 
 		int insertCnt = 0;
 		try {
@@ -260,8 +270,6 @@ public class MemberController {
 	}
 	
 	
-	
-
 	// 비밀번호 수정 (문자,메일 -> 비밀번호 수정 쿼리로)
 	@RequestMapping(path = "/passupdate", method = RequestMethod.GET)
 	public String passupdate(MemberVo memberVo) {
@@ -332,7 +340,7 @@ public class MemberController {
 		
 		try {
 			JSONObject obj = (JSONObject) coolsms.send(params);
-			//System.out.println(obj.toString());
+			System.out.println(obj.toString());
 		} catch (CoolsmsException e) {
 			System.out.println(e.getMessage());
 			System.out.println(e.getCode());
@@ -348,88 +356,25 @@ public class MemberController {
 	public String profile(HttpSession session, MemberVo memberVo, Model model) {
 		
 		memberVo = (MemberVo) session.getAttribute("SMEMBER");
-		MemberVo dbMember = memberService.getMember(memberVo);
-		
-		model.addAttribute("memberVo",dbMember);
-		return "tiles/member/memberProfile";
-	}
-	
-	
-	// 프로필 업데이트 화면이동
-	@RequestMapping("/profileupdateview")
-	public String profileupdateview(HttpSession session, MemberVo memberVo, Model model) {
-		
-		memberVo = (MemberVo) session.getAttribute("SMEMBER");
 		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
 		MemberVo dbMember = memberService.getMember(memberVo);
 		logger.debug("dbMember : {}", dbMember);
 		
 		model.addAttribute("memberVo",dbMember);
-		return "tiles/member/profileupdateview";
+		return "tiles/member/memberProfile";
 	}
-	
-	
-	// 프로필 업데이트 
-	@RequestMapping(path="/profileupdate", method = RequestMethod.POST)				// VO 객체 바로 뒤에 Binding 와야함... 안그럼 매칭안됨
-	public String profileupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
-																@RequestPart(value="memFilename", required=false) MultipartFile file) {
-		
-		logger.debug("memFilename : {}", file.getOriginalFilename());
-		String Filename = "";
-		String Filepath = "";
-		
-		if(!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
-			
-			if (br.hasErrors()) {
-//				return "main.tiles/member/memberRegist";
-			}
-	
-			String filekey = UUID.randomUUID().toString();
-			 /*filekey + "\\"+*/
-			Filepath = "D:\\upload\\"+ file.getOriginalFilename();
-			Filename = file.getOriginalFilename();
-			File uploadFile = new File(Filepath);
-			
-			try {
-				file.transferTo(uploadFile);
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-			
-		}else {
-			
-			// 기본 이미지 중에 선택했을때
-			if(!imgname.equals("") && !imgname.equals(null)) {
-				Filepath = imgname;
-				Filename = imgname.split("/")[4];
-			
-			// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
-			}else { 
-				Filepath = "http://localhost/profile/user-0.png";
-				Filename = "user-0.png";
-			}
-		}
-		memberVo.setMemFilepath(Filepath);
-		memberVo.setMemFilename(Filename);
-		
-		
-		int updateCnt = memberService.profileupdate(memberVo);
-		
-		if(updateCnt == 1){
-			return "redirect:/member/profile";
-		}else {
-			return "tiles/member/profileupdateview";	
-		}
-
-	}
-	
-	
 	
 	// 로그아웃
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return loginView();
+	}
+	
+	// 화면 상단 로고 클릭 시 메인 페이지로 이동
+	@RequestMapping("/projectMainView")
+	public String projectMainView() {
+		return "tiles/layout/contentmenu";
 	}
 	
 }

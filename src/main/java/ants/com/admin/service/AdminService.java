@@ -8,46 +8,52 @@ import org.springframework.stereotype.Service;
 
 import ants.com.admin.mapper.AdminMapper;
 import ants.com.admin.model.NoticeVo;
+import ants.com.board.memBoard.model.IssueVo;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("adminService")
-public class AdminService {
+public class AdminService extends EgovAbstractServiceImpl{
+	
 	@Resource(name="adminMapper")
 	private AdminMapper mapper;
 	
+	// 공지사항글 리스트
+	public List<NoticeVo> noticelist(NoticeVo noticeVo) {
+		return mapper.noticelist(noticeVo);
+	}
+
+	// 각 공지사항글 내용
+	public NoticeVo geteachnotice(String noticeId) {
+		return mapper.geteachnotice(noticeId);
+	}
+
+	// 공지사항글 작성하기
+	public int insertnotice(NoticeVo noticeVo) {
+		return mapper.insertnotice(noticeVo);
+	}
+
+	// 공지사항글 수정하기
+	public int updatenotice(NoticeVo noticeVo) {
+		
+		return mapper.updatenotice(noticeVo);
+	}
+
+	// 공지사항글 삭제하기
+	public int delnotice(String noticeId) {
+		return mapper.delnotice(noticeId);
+	}
 	
-//	// 공지사항리스트
-//	public List<NoticeVo> noticelist(String adminId){
-//		return mapper.noticelist(adminId);
-//	}
-//	
-////	// 공지사항
-////	public NoticeVo geteachnotice(String noticeVo) {
-////		return mapper.geteachnotice(noticeVo);
-////	}
-//	
-//	// 공지사항 작성
-//	public int insertissue(NoticeVo noticeVo) {
-//		return mapper.insertissue(noticeVo);
-//	}
-//	
-//	// 공지사항 수정
-//	public int updatenotice(NoticeVo noticeVo) {
-//		return mapper.updatenotice(noticeVo);
-//	}
-//	
-//	// 공지사항 삭제
-//	public int delnotice(String noticeId) {
-//		return mapper.delnotice(noticeId);
-//	}
+	//회원이 사용가능한 카테고리 조회
+	public int noticePagingListCnt(NoticeVo noticeVo) {
+		return mapper.noticePagingListCnt(noticeVo);
+	}
 	
-//	public void create(NoticeVo noticeVo) throws Exception;
-//	
-//	NoticeVo read(NoticeVo noticeVo) throws Exception;
-//	
-//	public void update(NoticeVo noticeVo) throws Exception;
-//	
-//	public void delete(NoticeVo noticeVo) throws Exception;
-//	
-//	List<NoticeVo> listAll() throws Exception;
+/////////////////////////////////////////////////////////////////////////////test
+
+	
+	
+	
+	
+	
 	
 }

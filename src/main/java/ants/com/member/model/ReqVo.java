@@ -3,8 +3,6 @@ package ants.com.member.model;
 import ants.com.base.model.BaseVo;
 
 public class ReqVo extends BaseVo{
-	
-	
 	private String reqId;
 	private String reqTitle;
 	private String reqCont;

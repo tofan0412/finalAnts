@@ -11,6 +11,15 @@
 	<!-- jQuery, style -->
 	<%@include file="commonLib.jsp"%>
 	<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
+<script type="text/javascript">
+$(function(){
+	var memId = '${SMEMBER.memId}';
+	if (memId == ''){
+		alert("로그인이 필요합니다.");
+		$(location).attr('href', '/member/loginView');
+	}
+})
+</script>
 </head>
 <title>협업관리프로젝트</title>
 <body class="hold-transition sidebar-mini">
