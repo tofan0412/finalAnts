@@ -1,18 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="notice">
-	<resultMap type="ants.com.admin.model.NoticeVo" id="NoticeVo">
-		<result property="noticeId" column="notice_id"/>
-		<result property="noticeTitle" column="notice_title"/>
-		<result property="noticeCont" column="notice_cont"/>
-		<result property="regDt" column="reg_dt"/>
-		<result property="adminId" column="admin_id"/>
-		<result property="del" column="del"/>
-	</resultMap>
+<mapper namespace="ants.com.admin.mapper.AdminMapper">
+<!-- 	<resultMap type="ants.com.admin.model.NoticeVo" id="NoticeVo"> -->
+<!-- 		<result property="noticeId" column="notice_id"/> -->
+<!-- 		<result property="noticeTitle" column="notice_title"/> -->
+<!-- 		<result property="noticeCont" column="notice_cont"/> -->
+<!-- 		<result property="regDt" column="reg_dt"/> -->
+<!-- 		<result property="adminId" column="admin_id"/> -->
+<!-- 		<result property="del" column="del"/> -->
+<!-- 	</resultMap> -->
+
+	
+	<!-- 공지사항 리스트 -->
+	<select id="noticelist" resultType="ants.com.admin.model.NoticeVo" parameterType="ants.com.admin.model.NoticeVo">
+		
+		SELECT * FROM NOTICE where del = 'N'
+		order by notice_id desc 
+
+					
+	</select>
+	
+	<!-- 각 공지사항게시글 내용 가져오기 -->
+	<select id="geteachnotice"  resultType ="ants.com.admin.model.NoticeVo" parameterType="String">
+			
+			SELECT notice_id, notice_title, notice_cont, TO_CHAR(reg_dt, 'YYYY-MM-DD') as reg_dt,
+					admin_id, del
+			FROM notice
+			WHERE notice_id = #{noticeId} and del = 'N'
+
+	</select>
+	
+	<!-- 공지사항 작성하기 -->
+	<insert id="insertnotice" parameterType="ants.com.admin.model.NoticeVo">
+		
+		INSERT INTO notice (
+		    notice_id, notice_title, notice_cont,  reg_dt,  
+		    admin_id, del
+		) VALUES (
+		    NOTICE_SEQ.nextval, #{noticeTitle}, #{noticeCont}, sysdate, 
+		     #{adminId}, 'N'
+		)
+		
+	</insert>
+	
+	<!-- 공지사항 수정하기 -->
+	<update id="updatenotice" parameterType="ants.com.admin.model.NoticeVo">
+		UPDATE NOTICE
+		SET
+			NOTICE_TITLE = #{noticeTitle},
+			NOTICE_CONT = #{noticeCont}
+	    WHERE 
+	    	NOTICE_ID = #{noticeId}
+	</update>
+	
+	
+	<!-- 공지사항 삭제하기 -->
+	<update id="delnotice" parameterType="ants.com.admin.model.NoticeVo"> 
+		UPDATE notice 
+			set del = 'Y' 
+		where notice_id = #{noticeId}
+	</update>
+	
+	
+<!-- 	<delete id="delnotice" parameterType="string"> -->
+<!-- 	<delete id="delnotice" parameterType="ants.com.admin.model.NoticeVo"> -->
+<!-- 		DELECT  -->
+<!-- 		FROM NOTICE -->
+<!-- 		WHERE notice_id = #{noticeId} -->
+<!-- 	</delete> -->
+
+	<!-- 카테고리 가져오기-->
+<!-- 	<select id="categorylist" resultType ="ants.com.board.memBoard.model.CategoryVo" parameterType="String"> -->
+	
+<!-- 		select a.category_id, a.category_name  -->
+<!-- 		from category a, (select substr(mem_type,1,1) as mem_type from member where mem_id = #{memId}) b -->
+<!-- 		where substr(a.category_auth,1,1) in( b.mem_type, 'm') -->
+<!-- 		order by a.category_id -->
+			
+<!-- 	</select> -->
 
 
-<select id="select" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-SELECT * 
-  FROM notice
-</select>
+	<!-- 공지사항게시글 수 조회하기 -->	
+	<select id="noticePagingListCnt" parameterType="ants.com.admin.model.NoticeVo"  resultType="int">
+		select count(*) as totCnt
+		from notice
+		where del = 'N'
+		
+		<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 1">
+						AND	admin_id LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 2">
+						AND	notice_title LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 3">
+						AND	notice_cont LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>		
+	</select>
+	
+
+
+
+
 </mapper>
