@@ -8,7 +8,7 @@ public class ReplyVo {
 	private String replyId;
 	private String someId;
 	private String replyCont;
-	private Date regDt;
+	private String regDt;
 	private String del;
 	private String categoryId;
 	private String reqId;
@@ -32,10 +32,10 @@ public class ReplyVo {
 	public void setReplyCont(String replyCont) {
 		this.replyCont = replyCont;
 	}
-	public Date getRegDt() {
+	public String getRegDt() {
 		return regDt;
 	}
-	public void setRegDt(Date regDt) {
+	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
 	public String getDel() {

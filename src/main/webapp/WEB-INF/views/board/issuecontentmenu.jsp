@@ -82,19 +82,10 @@ $(function(){
 		
 		    <!-- Main content -->
 		    <section class="content" style="margin-top: 13px;">
-	            <div class="card-teal card-outline col-12 col-sm-9" style="background: white; border-radius : 8px  8px 0px 0px; ">
+	          <div class="card-teal card-outline col-12 col-sm-9" style="background: white; border-radius : 8px  8px 0px 0px; ">
 		      <div class="col-12 col-sm-9">
 	              <div class="card-header p-0 pt-1 border-bottom-0">
 	                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
-	                
-<%-- 	                <c:forEach items = "${categorylist }" var ="category"> --%>
-	               		          
-<!-- 			               <li class="nav-item"> -->
-<%-- 		                    	 <a class="nav-link " id="${category.categoryId }" data-toggle="pill" href="projectMember/issuelist" role="tab" aria-controls="custom-tabs-three" aria-selected="false">${category.categoryName }</a> --%>
-<!-- 		                   </li> -->
-
-<%-- 				 	</c:forEach>  --%>
-
  					<li class="nav-item">
 	                    <a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-work" role="tab" aria-controls="custom-tabs-three-home" aria-selected="false">일감</a>
 	                  </li>
