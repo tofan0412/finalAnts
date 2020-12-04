@@ -499,7 +499,7 @@
 </script>
 </c:if>
 
-<c:if test="${SMEMBER.memType != PM }">
+<c:if test="${SMEMBER.memType != 'PM' }">
 	<h1>권한이 없습니다!</h1>
 </c:if>
 
