@@ -16,13 +16,10 @@
 				from( select issue_id, issue_title, issue_cont, reg_dt, issue_del, mem_id, issue_kind
 				        from issue
 				        where req_id = #{reqId}) a , member b 
-				where a.mem_id = b.mem_id and a.issue_del = 'n' 
+				where a.mem_id = b.mem_id and a.issue_del = 'N' 
 				     
 					<if test="searchKeyword != null and searchKeyword != ''">
 				        <choose>
-<!-- 				         	<when test="searchCondition == 0"> -->
-<!-- 								AND	a.issue_kind LIKE '%' || #{searchKeyword} || '%' -->
-<!-- 							</when> -->
 				         	<when test="searchCondition == 1">
 								AND	a.mem_id LIKE '%' || #{searchKeyword} || '%'
 							</when>
@@ -58,7 +55,7 @@
 		from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id, category_id, issue_kind, todo_id
 		        from issue
 		        where issue_id = #{issueId} ) a , member b 
-		where a.mem_id = b.mem_id and a.issue_del = 'n' 
+		where a.mem_id = b.mem_id and a.issue_del = 'N' 
 			
 	</select>
 	
@@ -81,7 +78,7 @@
 		    issue_kind, issue_del, req_id, mem_id, todo_id
 		) VALUES (
 		    #{issueId}, #{issueTitle}, #{issueCont}, sysdate,  #{categoryId}, 
-		    #{issueKind}, 'n', #{reqId} , #{memId}, #{todoId}
+		    #{issueKind}, 'N', #{reqId} , #{memId}, #{todoId}
 		    
 		   
 		)
@@ -109,7 +106,7 @@
 	<!-- 이슈 삭제하기 -->
 	<update id="delissue" parameterType="String"> 
 		UPDATE issue 
-			set issue_del = 'y' 
+			set issue_del = 'Y' 
 		where issue_id = #{issueId}
 	</update>
 	
@@ -119,7 +116,7 @@
 	
 		select a.category_id, a.category_name 
 		from category a, (select substr(mem_type,1,1) as mem_type from member where mem_id = #{memId}) b
-		where substr(a.category_auth,1,1) in( b.mem_type, 'm')
+		where substr(a.category_auth,1,1) in( b.mem_type, 'M')
 		order by a.category_id
 			
 	</select>
@@ -128,13 +125,10 @@
 	<select id="issuePagingListCnt" parameterType="ants.com.board.memBoard.model.IssueVo"  resultType="int">
 		select count(*) as totCnt
 		from issue
-		where req_id = #{reqId} and issue_del = 'n'
+		where req_id = #{reqId} and issue_del = 'N'
 		
 		<if test="searchKeyword != null and searchKeyword != ''">
 		        <choose>
-<!-- 		        	<when test="searchCondition == 1"> -->
-<!-- 						AND	issue_kind LIKE '%' || #{searchKeyword} || '%' -->
-<!-- 					</when> -->
 		            <when test="searchCondition == 1">
 						AND	mem_id LIKE '%' || #{searchKeyword} || '%'
 					</when>

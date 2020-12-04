@@ -72,7 +72,6 @@
     	   
      	 })
      	 
-     	 
      	 $('#kindselect').on('change', function(){
      		 
      		kind = $(this).val()
@@ -92,7 +91,6 @@
  	
  	function mytodolist(){
 	 	$.ajax({url :"${pageContext.request.contextPath}/projectMember/mytodolist",
-	// 			 data :{userid : userid},
 				 method : "get",
 				 success :function(data){	
 					 console.log(data.todolist)
@@ -101,7 +99,6 @@
 					 html  =  '<label for="todoId" class="col-sm-2 control-label">일감 </label>'
 				     html +=  '<select name="todoId" id="todoselect"  class ="col-sm-4" required>'		
 				     html +=  '<option value="">선택</option>'
-// 				     html +=  ' <option value="">'+data.todolist[0].todoTitle+'</option>	'	
 				     for( i = 0 ; i< data.todolist.length; i++){		
 					     html +=  '	 <option value='+data.todolist[i].todoId+'>'+data.todolist[i].todoTitle+'</option>'	
 				     }
@@ -208,7 +205,6 @@
 		
 				
 				<div class="card-footer clearfix " >
-<!-- 					<input type="hidden" value="issue" name="issueKind">		 -->
 					<input type="hidden" value="3" name="categoryId">
 					<input type="submit" class="btn btn-default float-right" id="insertbtn" value="작성하기"> 
 				</div>
