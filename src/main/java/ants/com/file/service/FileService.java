@@ -1,5 +1,6 @@
 package ants.com.file.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.file.mapper.FileMapper;
+import ants.com.file.model.PrivateFileVo;
 import ants.com.file.model.PublicFileVo;
 
 @Service("fileService")
 public class FileService{
+	
 	@Resource(name="fileMapper")
 	private FileMapper mapper;
 	
@@ -34,5 +37,41 @@ public class FileService{
 	public int defiles(String pubId){
 		return mapper.delfiles(pubId);
 	}
+	
+	
+	/*			개	인	파	일	함				*/
+	
+	// 개인파일 목록
+	public List<PrivateFileVo> privatefileList(PrivateFileVo privatefileVo){
+		return mapper.privatefileList(privatefileVo);
+	}
+	
+	// 파일 갯수
+	public int privatefilelistCount(PrivateFileVo privatefileVo) {
+		return mapper.privatefilelistCount(privatefileVo);
+	}
+	
+	// 파일 등록
+	public int privateInsert(List<PrivateFileVo> list) {
+		return mapper.privateInsert(list);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

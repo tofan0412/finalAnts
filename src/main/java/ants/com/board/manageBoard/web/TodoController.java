@@ -107,7 +107,7 @@ public class TodoController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		return "tiles/manager/Pl_todoList";
 	}
-
+	
 	// 한개의 일감 조회 Ajax
 	@RequestMapping("/onetodo")
 	public String todoDetailView(Model model, TodoVo todoVo) {

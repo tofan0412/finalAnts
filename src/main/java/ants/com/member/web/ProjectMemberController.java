@@ -18,7 +18,7 @@ import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.file.model.PublicFileVo;
-import ants.com.file.web.FileController;
+import ants.com.file.view.FileController;
 import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ReqVo;
 import ants.com.member.service.ProjectmemberService;

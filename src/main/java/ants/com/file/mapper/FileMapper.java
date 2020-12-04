@@ -2,6 +2,7 @@ package ants.com.file.mapper;
 
 import java.util.List;
 
+import ants.com.file.model.PrivateFileVo;
 import ants.com.file.model.PublicFileVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -19,4 +20,14 @@ public interface FileMapper {
 	
 	// 파일 삭제하기
 	public int delfiles(String pubId);
+	
+	
+	/*			개	인	파	일	함				*/
+	
+	// 개인파일 목록
+	public List<PrivateFileVo> privatefileList(PrivateFileVo privatefileVo);
+	
+	public int privatefilelistCount(PrivateFileVo privatefileVo);
+	
+	public int privateInsert(List<PrivateFileVo> list);
 }

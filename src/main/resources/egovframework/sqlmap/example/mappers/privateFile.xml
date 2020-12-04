@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ants.com.file.mapper.FileMapper">
+
+	<!-- 파일목록 리스트 -->
+	<select id="privatefileList" parameterType="ants.com.file.model.PrivateFileVo" resultType="ants.com.file.model.PrivateFileVo">
+		SELECT c.*
+		  FROM (
+		   SELECT ROWNUM rnum, a.* 
+			 FROM (
+			     SELECT *
+			     FROM privatefile
+			     WHERE MEM_ID = #{memId}
+			     ORDER BY PRIV_ID) a
+		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
+	</select>
+	<!-- WHERE rownum <= #{lastIndex}) c WHERE rnum > #{firstIndex} -->
+
+
+	<!-- 파일목록 갯수  -->
+	<select id="privatefilelistCount" parameterType="ants.com.file.model.PrivateFileVo" resultType="int">
+		SELECT COUNT(*)
+		  FROM privatefile
+		 WHERE MEM_ID = #{memId}
+	</select>
+
+
+	
+	<!-- 파일등록  privateInsert -->
+	<insert id="privateInsert" parameterType="ants.com.file.model.PrivateFileVo">
+		<selectKey keyProperty="privId" order="BEFORE" resultType="String">
+   			SELECT 
+			PRIV_SEQ.CURRVAL FROM DUAL;
+   		</selectKey>
+		
+		<foreach collection="list" item="item" index="index" separator="union all"> 
+		INSERT INTO privatefile (PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, REG_DT, PRIV_SIZE, MEM_ID) 
+		VALUES (PRIV_SEQ.NEXTVAL, #{privFilepath}, #{privFilename}, TO_DATE(SYSDATE,'YYYY/MM/DD'), #{privSize}, #{memId})
+		</foreach> 
+	
+	</insert>
+</mapper>

@@ -1,4 +1,4 @@
-package ants.com.file.web;
+package ants.com.file.view;
 
 import java.io.File;
 import java.io.IOException;
@@ -114,8 +114,6 @@ public class FileController {
 		return "";
 	}
 	
-	
-	
-	
+
 	
 }
