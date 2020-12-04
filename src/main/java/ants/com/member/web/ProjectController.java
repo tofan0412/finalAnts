@@ -25,7 +25,7 @@ public class ProjectController {
 		List<ReqVo> reqList = projectService.readReqList(plId);
 		
 		model.addAttribute("reqList", reqList);
-		return "main.tiles/reqList";
+		return "tiles/project/projectList";
 	}
 	
 	

@@ -64,7 +64,7 @@ public class MemberController {
 	public String loginView() {
 		return "member/login";
 	}
-
+	
 	// 로그인 로직
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
@@ -94,7 +94,6 @@ public class MemberController {
 		}
 
 	}
-		
 	
 	// 로그인 체크 ajax
 	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
@@ -112,14 +111,12 @@ public class MemberController {
 		
 		return "member/login";
 	}
-	
 
 	// 회원가입 페이지 이동
 	@RequestMapping(path = "/memberRegistview", method = RequestMethod.GET)
 	public String getView() {
 		return "main.tiles/member/memberRegist";
 	}
-	
 	
 	// 회원가입 로직
 	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
@@ -273,8 +270,6 @@ public class MemberController {
 	}
 	
 	
-	
-
 	// 비밀번호 수정 (문자,메일 -> 비밀번호 수정 쿼리로)
 	@RequestMapping(path = "/passupdate", method = RequestMethod.GET)
 	public String passupdate(MemberVo memberVo) {
@@ -369,17 +364,17 @@ public class MemberController {
 		return "tiles/member/memberProfile";
 	}
 	
-	
-	
-	
-	
-	
-	
 	// 로그아웃
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return loginView();
+	}
+	
+	// 화면 상단 로고 클릭 시 메인 페이지로 이동
+	@RequestMapping("/projectMainView")
+	public String projectMainView() {
+		return "tiles/layout/contentmenu";
 	}
 	
 }
