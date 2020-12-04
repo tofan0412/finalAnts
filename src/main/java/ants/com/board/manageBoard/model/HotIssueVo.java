@@ -1,19 +1,28 @@
 package ants.com.board.manageBoard.model;
 
-import java.util.Date;
+import ants.com.base.model.BaseVo;
 
-public class HotIssueVo {
+public class HotIssueVo extends BaseVo{
 
 	
 	private String hissueId;
 	private String hissueTitle;
 	private String hissuetCont;
-	private Date regDt;
+	private String regDt;
 	private String reqId;
 	private String categoryId;
 	private String hissueParentid;
 	private String hissueLevel;
 	private String del;
+	private String writer;
+	
+	
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
 	public String getHissueId() {
 		return hissueId;
 	}
@@ -32,10 +41,10 @@ public class HotIssueVo {
 	public void setHissuetCont(String hissuetCont) {
 		this.hissuetCont = hissuetCont;
 	}
-	public Date getRegDt() {
+	public String getRegDt() {
 		return regDt;
 	}
-	public void setRegDt(Date regDt) {
+	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
 	public String getReqId() {
@@ -68,12 +77,12 @@ public class HotIssueVo {
 	public void setDel(String del) {
 		this.del = del;
 	}
-	
 	@Override
 	public String toString() {
 		return "HotIssueVo [hissueId=" + hissueId + ", hissueTitle=" + hissueTitle + ", hissuetCont=" + hissuetCont
 				+ ", regDt=" + regDt + ", reqId=" + reqId + ", categoryId=" + categoryId + ", hissueParentid="
-				+ hissueParentid + ", hissueLevel=" + hissueLevel + ", del=" + del + "]";
+				+ hissueParentid + ", hissueLevel=" + hissueLevel + ", del=" + del + ", writer=" + writer + "]";
 	}
+	
 	
 }

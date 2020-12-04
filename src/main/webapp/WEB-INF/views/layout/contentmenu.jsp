@@ -5,8 +5,6 @@
 <html>
 <head>
 
-<%@include file="fonts.jsp"%>
-
 </head>
 <title>협업관리프로젝트</title>
 <body class="hold-transition sidebar-mini accent-teal">
@@ -17,17 +15,8 @@
 		      <div class="container-fluid">
 		        <div class="row mb-2">
 		          <div class="col-sm-6">
-		         <c:if test="${plpmList ne null}">
-					<c:forEach items="${plpmList}" var="project">
-						<c:if test="${projectId eq project.reqId}"><h1 class="jg">${project.proName}</h1><c:set var="projectNAME" value="${project.proName}"></c:set></c:if>
-					</c:forEach>
-		         </c:if>
-		         <c:if test="${projectList ne null}">
-					<c:forEach items="${projectList}" var="project">
-						<c:if test="${projectId eq project.reqId}"><h1 class="jg">${project.proName}</h1><c:set var="projectNAME" value="${project.proName}"></c:set></c:if>
-					</c:forEach>
-		         </c:if>
-		            
+		          <c:set var="projectNAME" value="${projectVo.proName}"></c:set>
+				<h1 class="jg">${projectNAME}</h1>
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right">
@@ -69,6 +58,11 @@
 	                  <li class="nav-item">
 	                    <a class="nav-link" id="custom-tabs-three-files-tab"  href="/publicfile/publicfileview">파일함</a>
 	                  </li>
+	                  <c:if test="${SMEMBER.memId eq projectVo.memId or SMEMBER.memType eq 'PM'}">
+	                  <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-three-files-tab"  href="${pageContext.request.contextPath}/hotIssue/hissueList">PM-PL이슈게시판</a>                      
+	                  </li>
+                      </c:if>
 	                </ul>
 	              </div>
 	             

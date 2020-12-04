@@ -1,6 +1,52 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<script>
+	var socket = null;
+    $(document).ready(function(){
+    	//웹소켓 연결
+    	sock = new SockJS('/alarm');
+    	socket = sock;
+    	
+    	sock.onopen = function(){
+    		console.log('info: connection opened');
+    	};
+    	
+    	//데이터전달 받았을 때
+    	sock.onmessage = onMessage;
+    	//소켓연결 끊겼을 때
+    	sock.onclose = onClose;
+	});
+    
+	function onMessage(evt){
+		var data  = evt.data;
+		console.log("ReceivMessage: " + data + "\n");
+		var memId = '${SMEMBER.memId}';
+		
+		$.ajax({
+			url:'/countAlarm',
+			data:{memId : memId},
+			type:'POST',
+			dataType:'text',
+			success:function(data){
+				if(data == '0'){
+					
+				}else{
+					$('#alarmCount').text(data);
+				}
+			},
+			error:function(err){
+				alert('err');
+			}
+		})
+	}
+	
+	// 서버와 연결을 끊었을 때
+	function onClose(evt) {
+		alert("소켓 연결 끊김....")
+	}
+</script>
    <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -98,7 +144,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <span class="badge badge-warning navbar-badge" id="alarmCount"></span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">15 Notifications</span>

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import ants.com.board.manageBoard.mapper.ManageBoardMapper;
+import ants.com.board.manageBoard.model.HotIssueVo;
 import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.member.model.MemberVo;
@@ -19,6 +20,7 @@ public class ManageBoardService{
 	@Resource(name="manageBoardMapper")
 	private ManageBoardMapper mapper;
 	
+	// 할일기능
 	public int todoInsert(TodoVo todoVo) {
 		return mapper.todoInsert(todoVo);
 	}
@@ -65,5 +67,30 @@ public class ManageBoardService{
 	
 	public ProjectVo projectList(ProjectVo projectVo){
 		return mapper.projectList(projectVo);
+	}
+	
+	
+	// 핫이슈 기능
+	public List<HotIssueVo> gethissueList(HotIssueVo hotIssueVo) {
+		return mapper.gethissueList(hotIssueVo);
+	}
+
+	public int issueListCount(HotIssueVo hotIssueVo) {
+		return mapper.issueListCount(hotIssueVo);
+	}
+	
+	public HotIssueVo gethissue(HotIssueVo hotIssueVo) {
+		return mapper.gethissue(hotIssueVo);
+	}
+	public int hissueInsert(HotIssueVo hotIssueVo) {
+		return mapper.hissueInsert(hotIssueVo);
+	}
+	
+	public int hIssueupdate(HotIssueVo hotIssueVo) {
+		return mapper.hIssueupdate(hotIssueVo);
+	}
+	
+	public int hIssuedelete(HotIssueVo hotIssueVo) {
+		return mapper.hIssuedelete(hotIssueVo);
 	}
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ants.com.board.memBoard.mapper.memBoardMapper">
+
+	<!-- 댓글 등록 -->
+	<insert id="insertreply" parameterType="ants.com.board.memBoard.model.ReplyVo">
+		INSERT INTO reply VALUES(reply_seq.nextval,#{someId}, #{replyCont}, sysdate,'N', #{categoryId}, #{reqId}, #{memId})
+	</insert>
+	
+
+  <!-- 댓글목록 가져오기 -->
+  <select id="replylist" resultType="ants.com.board.memBoard.model.ReplyVo" parameterType="String">
+    SELECT  reply_id,
+		    some_id,
+		    reply_cont,
+		    to_char(reg_dt,'yyyy-mm-dd hh:mm') as reg_dt ,
+		    del,
+		    category_id,
+		    req_id,
+		    mem_id
+    FROM reply
+    WHERE some_id = #{someId}
+      and req_id = #{reqId}
+      and category_id = #{categoryId}
+    order by reg_dt
+  </select>
+  
+  
+   <!-- 댓글 삭제 status 0으로-->
+  <update id="delreply" parameterType="String">
+  	UPDATE reply 
+  	SET del = 'Y' 
+  	WHERE re_id = #{replyId}
+  </update>
+  
+</mapper>

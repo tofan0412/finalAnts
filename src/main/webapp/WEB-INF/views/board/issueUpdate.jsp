@@ -36,13 +36,25 @@
 		          ['insert', ['link', 'picture']],
 		          ['view', [ 'help']]
 		        ]	      
-		 })
+		})
+		
+		if('${issueVo.issueKind }' == 'issue'){
+			$("#kindselect").val('이슈')
+			mytodolist();
+			
+			
+			
+		}else{
+			$("#kindselect").val('공지사항')
+		}
+
 		 
-		$("#kindselect option").each(function() {
-			var $this = $(this);		
-			if($this.val() == '${issueVo.issueKind }')				
-			$this.prop('selected', 'selected');
-		});
+		 
+// 		$("#kindselect").each(function() {
+// 			var $this = $(this);		
+// 			if($this.val() == '${issueVo.issueKind }')				
+// 			$this.prop('selected', 'selected');
+// 		});
 		
 		 
 		
@@ -89,10 +101,46 @@
 		   	}
     	  
 	    	   
-	     })
+	    })
 		 
 		      
  	});
+	
+	
+	
+	function mytodolist(){
+	 	$.ajax({url :"${pageContext.request.contextPath}/projectMember/mytodolist",
+				 method : "get",
+				 success :function(data){	
+					 console.log(data.todolist)
+					
+					
+					 for( i = 0 ; i< data.todolist.length; i++){
+						 if(data.todolist[i].todoId == '${issueVo.todoId}'){
+							 title = data.todolist[i].todoTitle;
+							 id = data.todolist[i].todoId
+						 }
+					  }
+					 
+					 html  =  '<label for="todoId" class="col-sm-2 control-label">일감 </label>'
+				     html +=  '<select name="todoId" id="todoselect"  class ="col-sm-4" required>'		
+				     
+					 for( i = 0 ; i< data.todolist.length; i++){
+							 html +=  '	<option value='+data.todolist[i].todoId+'>'+data.todolist[i].todoTitle+'</option>'	
+				     }
+				     html +=  '	</select>'	
+				     
+				     $("#todolist").html(html);
+				     
+				     $('#todoselect option').each(function(){
+				    		var $this = $(this);	
+				    		if($this.val() ==  '${issueVo.todoId}')
+				    		$this.prop('selected', 'selected');
+				    })
+				    
+				 }
+		 	})
+	}
 	
 </script>
 <style>
@@ -128,11 +176,16 @@
 			<br>
 			<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/updateissue" id="todoform"  >	
 			
-<!-- 				<label for="issueTitle" class="col-sm-2 control-label">이슈종류 </label> -->
-<!-- 				<select name="issueKind" id="kindselect"> -->
-<!-- 				    <option value="issue">이슈</option> -->
-<!-- 				    <option value="notice">공지사항</option> -->
-<!-- 				</select><br><br> -->
+				<div class="form-group" >
+					<label for="issueTitle" class="col-sm-2 control-label">이슈종류 </label>
+					<input type="text" name="issueKind" id="kindselect" disabled>
+				</div>	
+				   
+				<div class="form-group" id="todolist" >
+				
+				</div>
+					
+					
 				<div class="form-group" >
 				
 					<label for="issueTitle" class="col-sm-2 control-label">이슈제목 </label>

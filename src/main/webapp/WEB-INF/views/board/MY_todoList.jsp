@@ -36,10 +36,10 @@
 	function suggestInsert(todoId){
 	}
 	
-// 	 function search(){
-// 		document.listForm.action = "<c:url value='/todo/MytodoList'/>";
-// 		document.listForm.submit();
-// 	}
+	 function search(){
+		document.listForm.action = "<c:url value='/todo/MytodoList'/>";
+		document.listForm.submit();
+	}
 
 </script>
 <style type="text/css"> 
@@ -61,10 +61,6 @@
 	
 	<form:form commandName="todoVo" id="listForm" name="listForm" method="post">
 	<div style="padding-left: 30px; background-color: white;">
-		<c:if test="${ empty  todoList}">
-				<p>"등록된 일감이없습니다."</p>
-		</c:if>
-		<c:if test="${ not empty todoList}">
 		<br>
 		    <div class="card-header with-border">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
@@ -75,12 +71,12 @@
 							<form:option value="3" label="제목"/>
 						</form:select> 
 							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                        <form:input style="width: 200px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
-							<span class="input-group-append">							
-							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
-								<i class="fa fa-fw fa-search"></i>
-							</button>
-						</span>
+	                         <input type="text" class="form-control" name="searchKeyword" value="${todoVo.searchKeyword }">
+		                  <a href="javascript:search();">
+		                  	<button type="button" class="btn-default" style="height: 100%;">
+                               <i class="fa fa-search"></i>
+                          	</button>
+                          </a>
 					</div>
 		        </div>
 		      </div>
@@ -164,7 +160,6 @@
 				</c:forEach>
 			</tbody>
 		</table>
-	</c:if>
 		
 		<div id="paging" class="card-tools">
 		    <ul class="pagination pagination-sm float-right">

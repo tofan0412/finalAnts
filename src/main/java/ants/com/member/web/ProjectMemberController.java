@@ -1,5 +1,7 @@
 package ants.com.member.web;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,6 +19,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.board.memBoard.model.ReplyVo;
+import ants.com.board.memBoard.service.memBoardService;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.view.FileController;
 import ants.com.member.model.ProjectMemberVo;
@@ -33,6 +37,9 @@ public class ProjectMemberController {
 
 	@Resource(name="promemService")
 	ProjectmemberService promemService;
+	
+	@Resource(name="memBoardService")
+	memBoardService memBoardService;
 	
 	@Autowired
 	FileController filecontroller;
@@ -53,28 +60,17 @@ public class ProjectMemberController {
 	@RequestMapping("/eachproject")
 	public String eachproject(HttpSession session) {
 		
-		session.setAttribute("reqId", "1");
+		session.setAttribute("projectId", "1");
+		session.setAttribute("memId", "pl1");
 		
 		return "board/eachproject";
-	}
-	
-	// 카테고리 내역 조회
-	@RequestMapping("/eachproject2")
-	public String eachproject2(HttpSession session, Model model) {
-		
-		session.setAttribute("reqId", "1");
-		String memId = "cony@naver.com";
-		List<CategoryVo> categorylist = promemService.categorylist(memId);
-		String reqId = (String)session.getAttribute("reqId");
-		
-		return "board/mailWrite";
 	}
 	
 	// 이슈리스트 출력
 	@RequestMapping("/issuelist")
 	public String getissuelist(@ModelAttribute("issueVo") IssueVo issueVo, HttpSession session, Model model) throws Exception{
 		
-		String reqId = (String)session.getAttribute("reqId");
+		String reqId = (String)session.getAttribute("projectId");
 		issueVo.setReqId(reqId);
 		
 		/** EgovPropertyService.sample */
@@ -98,22 +94,22 @@ public class ProjectMemberController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
-		String memId = "cony@naver.com";
-		List<CategoryVo> categorylist = promemService.categorylist(memId);
+//		String memId = "cony@naver.com";
+//		List<CategoryVo> categorylist = promemService.categorylist(memId);
 
-		model.addAttribute("categorylist", categorylist);
+//		model.addAttribute("categorylist", categorylist);
 		
 		return "tiles/board/issuelist2";
 	}
 	
 	// 각 이슈 상세보기
 	@RequestMapping("/eachissueDetail")
-	public String geteachissue(String issueId, HttpSession session, Model model) {
+	public String geteachissue(String issueId, HttpSession session, Model model) throws SQLException, IOException {
 		
 		IssueVo issuevo = promemService.geteachissue(issueId);	
 		
 		PublicFileVo pfv = new PublicFileVo();
-		pfv.setReqId((String)session.getAttribute("reqId"));
+		pfv.setReqId((String)session.getAttribute("projectId"));
 		pfv.setCategoryId("3");
 		pfv.setSomeId(issueId);
 		
@@ -121,6 +117,15 @@ public class ProjectMemberController {
 
 		model.addAttribute("issuevo", issuevo);	
 		model.addAttribute("memId", issuevo.getMemId());
+		
+		ReplyVo replyVo = new ReplyVo();
+		replyVo.setReqId("1");
+		replyVo.setSomeId(issueId);
+		replyVo.setMemId("pl1");
+		replyVo.setCategoryId("3");
+		
+		List<ReplyVo> replylist= memBoardService.replylist(replyVo);
+		model.addAttribute("replylist", replylist);
 		 
 		return "tiles/board/issueDetail";
 	}
@@ -137,9 +142,15 @@ public class ProjectMemberController {
 	@RequestMapping("/insertissue")
 	public String insertissue(IssueVo issueVo, MultipartHttpServletRequest multirequest, HttpSession session, Model model) {
 		
-		String reqId = (String)session.getAttribute("reqId");
+		String reqId = (String)session.getAttribute("projectId");
 		issueVo.setReqId(reqId);
-		issueVo.setMemId("cony@naver.com");
+		issueVo.setMemId("pl1");
+		issueVo.setCategoryId("3");
+		
+		if(issueVo.getTodoId() == null) {
+			issueVo.setTodoId("");
+		}
+		 
 		
 		
 		System.out.println(issueVo);
@@ -163,8 +174,8 @@ public class ProjectMemberController {
 	// 이슈 mytodolist
 	@RequestMapping("/mytodolist")
 	public String mytodolist(HttpSession session, Model model) {
-		String memId = "cony@naver.com";
-		String reqId = (String)session.getAttribute("reqId");
+		String memId = "pl1";
+		String reqId = (String)session.getAttribute("projectId");
 		
 		ProjectMemberVo promemVo = new ProjectMemberVo();
 		promemVo.setMemId(memId);
@@ -204,9 +215,9 @@ public class ProjectMemberController {
 	@RequestMapping("/updateissue")
 	public String updateissue(IssueVo issueVo, String delfile, MultipartHttpServletRequest multirequest, HttpSession session, Model model ) {
 		
-		String reqId = (String)session.getAttribute("reqId");
+		String reqId = (String)session.getAttribute("projectId");
 		issueVo.setReqId(reqId);
-		issueVo.setMemId("cony@naver.com");
+		issueVo.setMemId("pl1");
 		
 		int insertCnt = promemService.updateissue(issueVo);
 		
