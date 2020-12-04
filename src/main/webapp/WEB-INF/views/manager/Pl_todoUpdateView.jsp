@@ -104,11 +104,11 @@
 				
 				<label for="todoStart" class="col-sm-1 control-label">시작 일</label>
 				<input type='date' id='todoStart' name="todoStart"/><br><br>
-				<input type="hidden" id='todo_start' value="${todoVo.todoStart}"/><br><br>
+				<input type="hidden" id='todo_start' value="${todoVo.todoStart}"/>
 				
 				<label for="todoEnd" class="col-sm-1 control-label">종료 일</label>
 				<input type='date' id='todoEnd' name="todoEnd"/><br><br>
-				<input type="hidden" id='todo_end' value="${todoVo.todoEnd}"/><br><br>
+				<input type="hidden" id='todo_end' value="${todoVo.todoEnd}"/>
 				</div>
 			</div>
 			<div class="card-footer">
