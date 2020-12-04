@@ -146,7 +146,7 @@
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>진행중인 프로젝트<i class="fas fa-angle-left right"></i></p>
+							<p>내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
 					    <ul class="nav nav-treeview" >
 					    	<c:forEach items="${plInProjectList}" var="project">
@@ -164,12 +164,12 @@
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>요청중인 프로젝트<i class="fas fa-angle-left right"></i></p>
+							<p>프로젝트관리<i class="fas fa-angle-left right"></i></p>
 						</a>
 					    <ul class="nav nav-treeview" >
 					    	<c:forEach items="${pmInProjectList}" var="project">
 						    	<li class="nav-item">
-									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+									<a class="nav-link" href="#">
 								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
 								 	</a>
 								</li>
