@@ -117,6 +117,7 @@ public class HotIssueController {
 //	// 핫이슈 수정
 //	@RequestMapping("/hissueInsert")
 //	
+	
 //	// 핫이슈 삭제
 //	@RequestMapping("/hotissuedel")
 	

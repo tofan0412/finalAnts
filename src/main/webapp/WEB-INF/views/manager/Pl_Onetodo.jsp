@@ -32,8 +32,8 @@
 		
 		//진행도 수정
 		$(document).on('click','#modalBtn', function(){
-				document.proForm.action = "<c:url value='/todo/progressChange'/>";
-				document.proForm.submit();
+			document.proForm.action = "<c:url value='/todo/progressChange'/>";
+			document.proForm.submit();
 		})
 		
 		// 뒤로가기
