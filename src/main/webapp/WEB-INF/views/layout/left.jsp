@@ -2,6 +2,30 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<style>
+
+
+</style>
+<script>
+	$(function(){
+		// 메뉴를 선택하면 배경색이 변한다. 
+		$('.selectable').click(function(){
+// 			alert($(this).text());
+			$('.selectable').parent().removeClass("active");
+			$(this).parent().addClass("active");
+		})
+		
+		$('.mkPjtBtn').click(function(){
+			alert('!!');
+		})
+		
+		
+	})
+
+
+</script>
+
+
 <aside class="main-sidebar sidebar-light-teal elevation-4">
 	<!-- Brand Logo -->
 	<a href="/member/projectMainView" class="brand-link"> 
@@ -15,33 +39,33 @@
 		<nav class="mt-2">
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 				<li class="nav-item has-treeview menu-open">
-		            <a href="#" class="nav-link">
-		              <i class="nav-icon fas fa-newspaper"></i>
+		            <a href="#" class="nav-link active">
+		              <i class="fas fa-newspaper"></i>
 						<p>전체정보<i class="fas fa-angle-left right"></i></p>
 		            </a>
 		            <ul class="nav nav-treeview" style="display: block;">
 		              <li class="nav-item">
 		                <a href="#" class="nav-link">
 		                 <i class="nav-icon fas fa-bullhorn"></i>
-							<p>새로운 소식</p>
+							<p class="selectable">새로운 소식</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="#" class="nav-link">
 						<i class="nav-icon fas fa-bookmark"></i>
-						<p>북마크</p>
+						<p class="selectable">북마크</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="#" class="nav-link">
 						<i class="nav-icon far fa-lightbulb"></i>
-						<p>내가작성한 이슈</p>
+						<p class="selectable">내가작성한 이슈</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="#" class="nav-link">
 		                <i class="nav-icon far fa-calendar-alt"></i>
-						<p>전체캘린더</p>
+						<p class="selectable">전체캘린더</p>
 		                </a>
 		              </li>
 					</ul>
@@ -56,7 +80,7 @@
 			        	<li class="nav-item">
 			                <a href="#" class="nav-link">
 			                	<i class="nav-icon fas fa-folder-open"></i>
-								<p>파일함</p>
+								<p class="selectable">파일함</p>
 			                </a>
 			            </li>
 					</ul>
@@ -83,12 +107,12 @@
 						</c:when>
 						<c:when test="${SMEMBER.memType ne 'PM' }">
 							<a href="#"	class="nav-link active"><i class="nav-icon fa fa-check"></i>
-								<p>협업공간</p>
+								<p>협업공간<i class="fas fa-angle-left right"></i></p>
 							</a>	
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
 									<a href="#" class="nav-link"><i	class="nav-icon fa fa-plus-square"></i>
-										<p>프로젝트  생성하기</p>
+										<p class="selectable mkPjtBtn">프로젝트  생성하기</p>
 									</a>
 								</li>
 							</ul>
@@ -100,7 +124,7 @@
 				<!-- memType이 MEM일때  -->
 				 <c:if test="${projectList ne null}">
 					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link">
+			            <a href="#" class="nav-link active">
 				        	<i class="nav-icon fas fa-poll-h"></i>
 							<p>진행중인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
@@ -109,7 +133,7 @@
 					    	<c:forEach items="${projectList}" var="project">
 						    	<li class="nav-item">
 									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
-								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+								 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
 								 	</a>
 								</li>
 							</c:forEach>
@@ -119,7 +143,7 @@
 				 <!-- memType이 PM,PL일때 -->
 				 <c:if test="${plpmList ne null}">
 					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link">
+			            <a href="#" class="nav-link active">
 				        	<i class="nav-icon fas fa-poll-h"></i>
 							<p>진행중인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>

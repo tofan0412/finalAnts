@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.http.RequestLine;
 import org.springframework.stereotype.Service;
 
 import ants.com.board.memBoard.model.CategoryVo;
@@ -11,6 +12,7 @@ import ants.com.board.memBoard.model.IssueVo;
 import ants.com.member.mapper.ProjectMapper;
 import ants.com.member.mapper.ProjectmemberMapper;
 import ants.com.member.model.ProjectVo;
+import ants.com.member.model.ReqVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("projectService")
@@ -27,5 +29,10 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	// pm,pl left바 불러오는 메서드
 	public List<ProjectVo> plpmInProjectList(String memId) {
 		return mapper.plpmInProjectList(memId);
+	}
+	
+	// 나에게 요청된 요구사항정의서 리스트 출력하는 메서드
+	public List<ReqVo> readReqList(String plId){
+		
 	}
 }

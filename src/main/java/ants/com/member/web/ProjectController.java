@@ -20,7 +20,8 @@ public class ProjectController {
 	@Resource(name = "projectService")
 	private ProjectService projectService;
 
-
+	@RequestMapping("/ProList")
+		
 	
 	
 }
