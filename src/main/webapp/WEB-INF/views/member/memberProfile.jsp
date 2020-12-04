@@ -10,14 +10,48 @@
 <!-- Theme style -->
 <style>
 	body{
-	    min-width: 1000px;
-	    min-height: 1000px;
+	    min-width: 1100px;
+	    min-height: 1100px;
 	}
 	span{
 		margin-left : 150px;
 	}
 	
 </style>
+<script>
+$(document).ready(function(){
+	
+								/* 기본이미지/사진 선택 해서 보여주기 */
+	
+	
+	pict = document.getElementById('pict').src	// display none 에 숨어있는 사진의 src속성값 가져옴
+												// src="/profileImgView?memId=${memberVo.memId}" 
+	imge = document.getElementById('imge').src	// display none 에 숨어있는 기본이미지의 src속성값 가져옴
+												// src="${memberVo.memFilepath}"
+	
+												
+	picval = pict.split('/')[0].indexOf('profileImgView') // 아이디 값으로 memFilepath의 속성을 가져오기 때문에 항상
+								// 값이 동일하다 -> http://localhost/profileImgView?memId=noylit@naver.com
+								// 값이 동일하기 때문에 비교대상에 필요 없음 x
+	imgval= imge.split('/')[0].indexOf('http')	
+	// 파일가져올때 -> file:///D:/upload/james.png	// 기본이미지    -> https://localhost/profile/user-16.png
+	// memFilepath 의 속성값을 바로 가져오기 때문에 웹에 저장된 기본이미지를 불러오는지
+	//								     로컬에 저장된 파일을 가져오는지 경로로 확인이 가능하다. 
+	
+	
+	$('#sp').append(' pict : ' + picval + '//' + pict);	// 경로 확인하려고 (숨김항목)
+	$('#sp').append(' imge : ' + imgval + '//' + imge); // 경로 확인하려고 (숨김항목)
+	
+	
+	if(imgval == -1){		// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온것이 아니면(file) -1
+		$('#pictureViewImg').attr('src', pict);
+	}else if(imgval == 0){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온 거면(img) 0 -> 웹사이트는 기본이미지
+		$('#pictureViewImg').attr('src', imge);
+	}
+	
+	
+})
+</script>
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapperdd">
@@ -35,13 +69,13 @@
 							style="text-align: center; width: 100%;">
 							<div class="mailbox-attachment-icon has-img" id="pictureView"
 								style="border: 1px solid green; height: 200px; width: 140px; margin: 0 auto;">
-								<img style="width: 100%; height: 100%;" src="${memberVo.memFilepath}" />
+								<img id="pictureViewImg" style="width: 100%; height: 100%;"/>
 							</div>
 						</div>
 						<br>
 					</div>
 	
-	
+					
 					<div class="form-group row">
 						<label for="id" class="col-sm-3" style="font-size: 0.9em;">
 							<span style="color: red; font-weight: bold;">*</span>아이디
@@ -93,6 +127,9 @@
 						삭제여부: <input name="del" type="text" id="del" placeholder="삭제여부" value="${memberVo.del}" style="border: none" readonly><br>
 						${memberVo.memFilepath} <br>
 						${memberVo.memFilename}
+						<img id="pict" style="width: 30px; height: 30px;" src="/profileImgView?memId=${memberVo.memId}" />
+						<img id="imge" style="width: 30px; height: 30px;" src="${memberVo.memFilepath}" /><br>
+						<span id="sp">sp : </span>
 					</div>
 					
 					<br><br><br><br> 

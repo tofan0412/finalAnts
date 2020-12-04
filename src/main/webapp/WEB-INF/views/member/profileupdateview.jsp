@@ -11,8 +11,8 @@
 
 <style>
 	body{
-	    min-width: 1000px;
-	    min-height: 1000px;
+	    min-width: 1100px;
+	    min-height: 1100px;
 	}
 	#butt{
 	}
@@ -60,7 +60,7 @@
 			<form id="fmin" role="form" class="form-horizontal" action="/member/profileupdate" method="POST" enctype="multipart/form-data">
 			<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 				<div id="pictureView" style="border: 1px solid green; height: 200px; width: 200px; margin: 0 auto;">
-					<img src="/profileImgView?memId=${memberVo.memFilepath}" id="pictureViewImg" style="width: 100%; height: 100%;" />
+					<img id="pictureViewImg" style="width: 100%; height: 100%;" />
 				</div>
 				<div class="content">
 					<button id="basicimg" type="button">기본이미지</button>
@@ -116,11 +116,13 @@
 				
 				
 				<!-- style="display: none" -->
-				<div class="content">
+				<div class="content" style="display: none">
 					<br>알람 : <input class="form-control" name="memAlert" type="text" id="memAlert" placeholder="알람" value="${memberVo.memAlert}" readonly><br> 
 					삭제여부:   <input class="form-control" name="del" type="text" id="del" placeholder="삭제여부" value="${memberVo.del}" readonly><br> 
 					멤버구분 :  <input class="form-control" name="memType" type="text" id="memType" placeholder="멤버구분" value="${memberVo.memType}" readonly><br>
 					이미지 경로: <input class="form-control" name="imgname" type="text" id="imgname" placeholder="파일경로" value="${memberVo.memFilepath}" readonly>
+					사진 : <img id="pict" style="width: 30px; height: 30px;" src="/profileImgView?memId=${memberVo.memId}" />
+					기본이미지 : <img id="imge" style="width: 30px; height: 30px;" src="${memberVo.memFilepath}" /><br>
 				</div>
 				
 				<div id="row1">
@@ -199,13 +201,43 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
-		// 파일의 경로값을 꺼냄
+		
 		$(document).ready(function(){
 			
-				// 기본이미지 선택하면 파일 값 날리기
-				var picture = document.getElementById('picture');
-				picture.value = null;
+							/* 기본이미지/사진 선택 해서 보여주기 */
+			
+							
+			pict = document.getElementById('pict').src	// display none 에 숨어있는 사진의 src속성값 가져옴
+														// src="/profileImgView?memId=${memberVo.memId}" 
+			imge = document.getElementById('imge').src	// display none 에 숨어있는 기본이미지의 src속성값 가져옴
+														// src="${memberVo.memFilepath}"
+			
+														
+			picval = pict.split('/')[0].indexOf('profileImgView') // 아이디 값으로 memFilepath의 속성을 가져오기 때문에 항상
+										// 값이 동일하다 -> http://localhost/profileImgView?memId=noylit@naver.com
+			imgval= imge.split('/')[0].indexOf('http')	
+			// 파일가져올때 -> file:///D:/upload/james.png	// 기본이미지    -> https://localhost/profile/user-16.png
+			// memFilepath 의 속성값을 바로 가져오기 때문에 웹에 저장된 기본이미지를 불러오는지
+			//								     로컬에 저장된 파일을 가져오는지 경로로 확인이 가능하다. 
+			
+			
+			$('#sp').append(' pict : ' + picval + '//' + pict);	// 경로 확인하려고 (숨김항목)
+			$('#sp').append(' imge : ' + imgval + '//' + imge); // 경로 확인하려고 (숨김항목)
+			
+			
+			if(imgval == -1){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온것이 아니면(file) -1
+				$('#pictureViewImg').attr('src', pict);
+			}else if(imgval == 0){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온 거면 0 -> 웹사이트는 기본이미지
+				$('#pictureViewImg').attr('src', imge);
+			}
+			
+		
+			
+			// 기본이미지 선택하면 파일 값 초기화
+			var picture = document.getElementById('picture');
+			picture.value = null;
 				
+			// 파일의 경로값을 꺼냄
 			// picture input의 파일 변경시 이벤트 
 			$("#picture").change(function(){ 
 				readURL(this);
@@ -225,9 +257,9 @@
 		}
 		
 		
-		var newpass1 = document.getElementById('memPass');
+		// 패스워드 2개 입력한것 값 비교
+		var newpass1 = document.getElementById('memPass');	
 		var newpass2 = document.getElementById('memPass2');
-		
 		
 		// 등록버튼시 미입력 된것 있으면 경고창
 		$(document).ready(function() {
