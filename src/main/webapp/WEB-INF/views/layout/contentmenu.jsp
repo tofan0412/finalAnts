@@ -60,6 +60,11 @@
 	                  <li class="nav-item">
 	                    <a class="nav-link" id="custom-tabs-three-files-tab"  href="#custom-tabs-three-files">파일함</a>
 	                  </li>
+	                  <c:if test="${SMEMBER.memId eq projectVo.memId or SMEMBER.memType eq 'PM'}">
+	                  <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-three-files-tab"  href="${pageContext.request.contextPath}/hotIssue/hissueList">PM-PL이슈게시판</a>                      
+	                  </li>
+                      </c:if>
 	                </ul>
 	              </div>
 	             

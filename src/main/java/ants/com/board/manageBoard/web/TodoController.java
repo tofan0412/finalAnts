@@ -39,7 +39,6 @@ public class TodoController {
 		projectVo.setReqId(reqId);
 		ProjectVo sessionVo = manageBoardService.projectList(projectVo);
 		session.setAttribute("projectVo", sessionVo);
-		logger.debug("projecttttttttttttttttt:{}",sessionVo);
 		session.setAttribute("projectId", reqId);
 		return "redirect:/todo/todoList";
 	}
