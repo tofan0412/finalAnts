@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <aside class="main-sidebar sidebar-light-teal elevation-4">
 	<!-- Brand Logo -->
-	<a href="/index3.html" class="brand-link"> 
+	<a href="/member/projectMainView" class="brand-link"> 
 	<img src="/dist/img/antslogo.png" class="brand-image "style="float: none; margin: 15px 0px 10px 12px;">
 	<img src="/dist/img/ants.png" style="width: 100px;">
 	</a>

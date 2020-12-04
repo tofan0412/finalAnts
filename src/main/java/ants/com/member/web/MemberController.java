@@ -94,6 +94,13 @@ public class MemberController {
 		}
 
 	}
+	
+	
+	//메인 로고 클릭시 메인 페이지로 이동
+	@RequestMapping("/projectMainView")
+	public String projectMainView() {
+		return "tiles/layout/contentmenu";
+	}
 		
 	
 	// 로그인 체크 ajax

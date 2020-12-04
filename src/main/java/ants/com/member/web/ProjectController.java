@@ -22,11 +22,5 @@ public class ProjectController {
 
 
 	
-	@RequestMapping("/project")
-	public String test() {
-		return "content/project";
-	}
-	
-	
 	
 }
