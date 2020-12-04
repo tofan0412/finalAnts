@@ -12,16 +12,25 @@
 	$(document).ready(function() {
 		hotDetail("${param.hissueId}");
 		
-// 		// 답글작성
-// 		$(document).on('click','#creatChildBtn', function(){
-// 			var todoId = $("#todoId").val();
-// 	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView?todoParentid='+todoId);
-// 		})
+ 		// 답글 작성
+		$(document).on('click','#creatChildBtn', function(){
+			var hissueId = $("#hissueId").val();
+		   	document.location = "/hotIssue/hissueInsertView?Parentid="+hissueId;
+		})
+		
+		
+ 		// 이슈 수정
+		$(document).on('click','#updateBtn', function(){
+			var hissueId = $("#hissueId").val();
+		   	document.location = "/hotIssue/updatehissueView?hissueId="+hissueId;
+		})
+		
 		
 		// 뒤로가기
 		$(document).on('click','#back', function(){
 			window.history.back();
 		})
+		
 		
 		// 핫이슈 삭제
 		$(document).on('click','#deleteBtn', function(){
@@ -83,13 +92,9 @@
 		<label class="control-label" id="regDt"></label><br><br>
 
 		<div id="btnMenu">
-		<c:if test="${SMEMBER.memId eq hotIssueVo.writer }">
-		<button type="button" class="btn btn-default" id="updateBtn" >수정</button>
+		<button type="button" class="btn btn-default" id="updateBtn">수정</button>
 		<button type="button" class="btn btn-default" id="deleteBtn">삭제</button>
-		</c:if>
-		<c:if test="${SMEMBER.memId ne hotIssueVo.writer }">
-		<button type="button" class="btn btn-default" id="updateBtn">답글 작성</button>
-		</c:if>
+		<button type="button" class="btn btn-default" id="creatChildBtn">답글 작성</button>
 		<button type="button" class="btn btn-default" id="back">뒤로가기</button>	
 		</div>
 </div>

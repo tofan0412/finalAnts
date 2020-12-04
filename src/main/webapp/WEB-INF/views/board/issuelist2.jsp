@@ -90,8 +90,8 @@ $(function(){
 </script>
 </head>
 
-<%@include file="./issuecontentmenu.jsp"%>
-<%-- <%@include file="./eachproject.jsp"%> --%>
+<%-- <%@include file="./issuecontentmenu.jsp"%> --%>
+<%@include file="../layout/contentmenu.jsp"%>
 
 <body>
 <!-- 	<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->

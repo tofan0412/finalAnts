@@ -7,7 +7,8 @@ public class AlarmVo {
 	private String alarmCont;
 	private String alarmStatus;
 	private String memId;
-
+	private String alarmType;
+	
 	public String getAlarmId() {
 		return alarmId;
 	}
@@ -32,10 +33,20 @@ public class AlarmVo {
 	public void setMemId(String memId) {
 		this.memId = memId;
 	}
+	public String getAlarmType() {
+		return alarmType;
+	}
+	public void setAlarmType(String alarmType) {
+		this.alarmType = alarmType;
+	}
 	@Override
 	public String toString() {
 		return "AlarmVo [alarmId=" + alarmId + ", alarmCont=" + alarmCont + ", alarmStatus=" + alarmStatus + ", memId="
-				+ memId + "]";
+				+ memId + ", alarmType=" + alarmType + "]";
 	}
+	
+	
+
+	
 	
 }

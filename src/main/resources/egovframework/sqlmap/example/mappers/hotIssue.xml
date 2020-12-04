@@ -82,5 +82,62 @@
 			    member.mem_id = hotissue.WRITER
 			AND   hotissue.HISSUE_ID =#{hissueId}]]>
 		</select> 
-	
+	    
+	    <!-- 핫이슈 등록  -->
+	    <insert id="hissueInsert" parameterType="ants.com.board.manageBoard.model.HotIssueVo">
+			INSERT INTO hotissue (
+			    hissue_id,
+			    hissue_title,
+			    hissuet_cont,
+			    reg_dt,
+			    req_id,
+			    category_id,
+			    hissue_parentid,
+			    hissue_level,
+			    del,
+			    writer
+			) VALUES (
+			    HISSUE_SEQ.NEXTVAL,
+			    #{hissueTitle},
+			    #{hissuetCont},
+			    sysdate,
+			    #{reqId},
+			    NULL,
+			    <if test="hissueParentid == null">
+				NULL,
+			    '1',
+			    'N',
+			    #{writer}
+			    )
+			    </if>
+			    <if test="hissueParentid != null">
+			    #{hissueParentid},
+			    '2',
+			    'N',
+			    #{writer}
+			    )
+			    </if>
+<!-- 			<selectKey keyProperty="hissueId" resultType="String"> -->
+<!-- 			select hissue_seq.currval from dual -->
+<!-- 		</selectKey> -->
+		</insert>
+		
+		<!-- 이슈게시글 수정하기 -->
+		<update id="hIssueupdate" parameterType="ants.com.board.manageBoard.model.HotIssueVo">
+			UPDATE hotissue
+	    	SET
+	        	hissue_title = #{hissueTitle},
+	        	hissuet_cont = #{hissuetCont},
+	        	reg_dt = sysdate
+			WHERE
+	    	hissue_id = #{hissueId}
+		</update>
+		
+		<!-- 이슈게시글 삭제하기 -->
+		<update id="hIssuedelete" parameterType="ants.com.board.manageBoard.model.HotIssueVo">
+			UPDATE hotissue
+				SET del='Y'
+				WHERE
+				hissue_id = #{hissueId}
+		</update>
 </mapper>

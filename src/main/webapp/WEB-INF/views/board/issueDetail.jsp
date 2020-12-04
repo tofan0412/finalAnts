@@ -18,6 +18,7 @@ $(function(){
 	$("#modissue").on('click', function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/updateissueView?issueId=${issuevo.issueId}');
 	})
+	
 	$("#delissue").on('click', function(){
         if(confirm("정말 삭제하시겠습니까 ?") == true){
 			$(location).attr('href', '${pageContext.request.contextPath}/projectMember/delissue?issueId=${issuevo.issueId}');
@@ -32,12 +33,7 @@ $(function(){
  			
  			console.log()
 	 		todo();
- 		
- 		
-//  		html = '<label for="todoId" class="col-sm-2 control-label">일감</label>'
-//  		html += '<label id ="todoId" class="control-label"><a href=#"'+${issuevo.todoId}+'"></a></label>'
- 		
-//  		$('#todo').html(html);
+ 			
  	}else if('${issuevo.issueKind}' == 'notice'){
  		$('#issueKind').text('공지사항');	
  	}
@@ -53,6 +49,7 @@ $(function(){
 	$(document).on('click','#todoback', function(){
 		$('#todoDetail').hide();
 		$('#detailDiv').show();
+		window.history.back();
 	})
 	
 	// 일감링크
@@ -148,17 +145,27 @@ function todoDetail(todoId) {
 		float: left;
 	}
 	
-/* 	.col-sm-2{ */
-/* 		font-size: 1.3em; */
-/* 		font-weight: bold; */
-/* 	} */
+	#re_con{
+		resize :none;
+		width: 600px;
+		height: 70px;
+	}
+	
+	.reply_con{
+		width: 600px;
+		height: 70px;
+      	resize: none;
+      	
+      	padding: 1.1em; /* prevents text jump on Enter keypress */
+      	padding-bottom: 0.2em;
+      	line-height: 1.6;
+	}	
 </style>
 
 </head>
 
-<%@include file="./issuecontentmenu.jsp"%>
-<%-- <%@include file="./eachproject.jsp"%> --%>
-
+<%-- <%@include file="./issuecontentmenu.jsp"%> --%>
+<%@include file="../layout/contentmenu.jsp"%>
 
 <body>
 
@@ -201,6 +208,9 @@ function todoDetail(todoId) {
 				<c:if test="${issuevo.issueCont == '<p><br></p>'}">
 					[ 내용이 없습니다. ]
 				</c:if>
+				<c:if test="${issuevo.issueCont == null}">
+					[ 내용이 없습니다. ]
+				</c:if>
 				
 				<label id ="issueCont" class="control-label">${issuevo.issueCont }</label>
 			</div>	
@@ -228,6 +238,40 @@ function todoDetail(todoId) {
 					</c:if>
 				
             </div>
+            
+            
+            <form class="form-horizontal" role="form" id ="frm" method="post" action="${pageContext.request.contextPath}/reply/insertreply">	
+				<div class="form-group">
+				<hr>
+					<label for="pass" class="col-sm-2 control-label">댓글</label>
+					<div class="col-sm-8">					
+						<c:forEach items="${replylist }" var="replylist">
+							<c:if test= "${replylist.del == 'N'}">								
+								<textarea disabled class ="reply_con" >${replylist.replyCont}</textarea>
+								[ ${replylist.memId } / ${replylist.regDt} ] 	
+								
+								<c:if test= "${issueVo.memId == SMEMBER.memId && replylist.del == 'Y'}">								
+									<a href = "${cp}/reply/delreply?replyId=${replylist.replyId}&someId=${replylist.someId}">
+											<input id ="delbtn2" type="button" class="btn btn-default" value ="삭제"/></a>								
+								</c:if>							
+							</c:if>		 														
+							<c:if test= "${replylist.del == 'Y'}">								
+								<textarea disabled class ="reply_con"> [삭제된 댓글입니다.]	</textarea>	<br>						
+							</c:if>		 														
+								
+						</c:forEach>
+						<br>
+						 <input type="hidden" name="someId" value="${issuevo.issueId }">
+						 <input type="hidden" name="categoryId" value="${issuevo.categoryId}">
+						 <input type="hidden" name="reqId" value="${issuevo.reqId }">
+						 <input type="hidden" name="memId" value="${issuevo.memId }">
+							<textarea name = "replyCont" id ="re_con"  ></textarea>&nbsp;<input id="replybtn2" type = "submit" class="btn btn-default" value = "댓글작성"><br>
+							<span id="count"> 0</span> &nbsp;자 / 500 자 
+							
+					</div>
+				</div>
+			</form>
+            
 
 	    </div>
 	    <!-- 이슈 상세보기 끝-->
@@ -241,32 +285,32 @@ function todoDetail(todoId) {
 			<input type="hidden" id="todoId">
 			<div class="form-group">
 				<label for="todoTitle" class="col-sm-2 control-label">제목</label>
-				<label class="control-label" id="todoTitle"></label><br><br>
+				<label class="control-label" id="todoTitle"></label>
 			</div>
 			
 			<div class="form-group">
 				<label for="todoCont" class="col-sm-2 control-label">할일</label>
-				<label class="control-label" id="todoCont"></label><br><br>
+				<label class="control-label" id="todoCont"></label>
 			</div>
 			<div class="form-group">
 				<label for="memId" class="col-sm-2 control-label">담당자</label>
-				<label class="control-label" id="memId"></label><br><br>
+				<label class="control-label" id="memId"></label>
 			</div>
 			
 			<div class="form-group">
 				<label for="todoImportance" class="col-sm-2 control-label">우선순위</label>
 				
-				<label class="control-label" id="todoImportance"></label><br><br>
+				<label class="control-label" id="todoImportance"></label>
 			</div>
 			
 			<div class="form-group">
 				<label for="todoStart" class="col-sm-2 control-label">시작 일</label>
-				<label class="control-label" id="todoStart"></label><br><br>
+				<label class="control-label" id="todoStart"></label>
 			</div>
 			
 			<div class="form-group">
 				<label for="todoEnd" class="col-sm-2 control-label">종료 일</label>
-				<label class="control-label" id="todoEnd"></label><br><br>
+				<label class="control-label" id="todoEnd"></label>
 			</div>
 			
 			<div class="card-footer clearfix" >
@@ -278,6 +322,9 @@ function todoDetail(todoId) {
 	          
 	   </div>
 	   <!-- 일감 상세보기   끝-->
+	   
+	
+	   
 </div>
 
 

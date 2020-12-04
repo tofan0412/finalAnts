@@ -44,19 +44,20 @@
 		<%@include file="../layout/contentmenu.jsp"%>
 			
 		<div style="padding-left: 30px; padding-right: 30px;">
-		<form method="post" action="${pageContext.request.contextPath }/hotIssue/hissueInsert" id="hissueform"  >    
+		<form method="post" action="${pageContext.request.contextPath }/hotIssue/updatehissue" id="hissueform"  >    
 			<div class="card card-primary card-outline">
               <div class="card-header">
                 <h3 class="card-title"><c:out value="${projectVo.proName}"/></h3>
               </div>
               <div class="card-body">
                 <div class="form-group">
-                  <input class="form-control" placeholder="Subject:" name="hissueTitle">
+                  <input class="form-control" name="hissueTitle" value="${hotIssueVo.hissueTitle }">
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
                   <input type="hidden" name="hissueParentid" value="${hissueP }">
+                  <input type="hidden" name="hissueId" value="${hotIssueVo.hissueId }">
                 </div>
                 <div class="form-group">
-                <textarea id="summernote" name="hissuetCont"></textarea>
+                <textarea id="summernote" name="hissuetCont">${hotIssueVo.hissuetCont }</textarea>
                 </div>
                 <div class="form-group">
                   <div class="btn btn-default btn-file">
@@ -67,7 +68,7 @@
               <div class="card-footer">
                 <div class="float-right">
                   <button type="button" class="btn btn-default" id="back"><i class="fas fa-times"></i> 취소</button>
-                  <button type="button" class="btn btn-primary" id="regBtn"><i class="far fa-pencil-alt"></i> 작성</button>
+                  <button type="button" class="btn btn-primary" id="regBtn"><i class="far fa-pencil-alt"></i> 수정</button>
                 </div>
               </div>
             </div>

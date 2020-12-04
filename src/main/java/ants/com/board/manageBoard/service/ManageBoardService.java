@@ -82,4 +82,15 @@ public class ManageBoardService{
 	public HotIssueVo gethissue(HotIssueVo hotIssueVo) {
 		return mapper.gethissue(hotIssueVo);
 	}
+	public int hissueInsert(HotIssueVo hotIssueVo) {
+		return mapper.hissueInsert(hotIssueVo);
+	}
+	
+	public int hIssueupdate(HotIssueVo hotIssueVo) {
+		return mapper.hIssueupdate(hotIssueVo);
+	}
+	
+	public int hIssuedelete(HotIssueVo hotIssueVo) {
+		return mapper.hIssuedelete(hotIssueVo);
+	}
 }
