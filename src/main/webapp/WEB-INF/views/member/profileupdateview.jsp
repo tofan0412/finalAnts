@@ -11,8 +11,8 @@
 
 <style>
 	body{
-	    min-width: 1000px;
-	    min-height: 1000px;
+	    min-width: 1100px;
+	    min-height: 1100px;
 	}
 	#butt{
 	}
@@ -47,24 +47,24 @@
 	}
 
 </style>	
-
 </head>
 
-
-<title>회원 등록</title>
+<title>정보 수정</title>
 <body>
 	<div class="card">
-			<!-- <div id="clickmsg">경로 : </div>	경로 미리보기용
-			<hr>  -->
 			
-			<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
+				<!-- 경로 미리보기용 -->
+			<!-- <div id="clickmsg">경로 : </div> 
+			<hr> 
+			-->
+			<form id="fmin" role="form" class="form-horizontal" action="/member/profileupdate" method="POST" enctype="multipart/form-data">
 			<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 				<div id="pictureView" style="border: 1px solid green; height: 200px; width: 200px; margin: 0 auto;">
-					<img src="http://localhost/profile/user-0.png" id="pictureViewImg" style="width: 100%; height: 100%;" />
+					<img id="pictureViewImg" style="width: 100%; height: 100%;" />
 				</div>
 				<div class="content">
 					<button id="basicimg" type="button">기본이미지</button>
-					<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px;" />
+					<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px;"/>
 				</div>
 				
 				<br><br>
@@ -73,19 +73,18 @@
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>아이디
 					</label>
 					<div id="idcheck">
-						<input class="input" name="memId" type="email" id="memId" placeholder="회원 id"/>
+						<input class="input" name="memId" type="email" id="memId" placeholder="회원 id" value="${memberVo.memId}" readonly/>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="submit" id="checkbtn" class="btn btn-default">중복확인</button>
 						<div class="check_font" id="checkMsg"></div>
 					</div>
 				</div>
-				
+					
 				<div class="content">
 					<label for="name" style="font-size: 0.9em;">
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>이 름
 					</label>
 					<div>
-						<input class="input" name="memName" type="text" id="memName" placeholder="이름"/>
+						<input class="input" name="memName" type="text" id="memName" placeholder="이름" value="${memberVo.memName}"/>
 					</div>
 				</div>
 
@@ -94,38 +93,43 @@
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드1
 					</label>
 					<div>
-						<input class="input" name="memPass" type="password" id="memPass" placeholder="패스워드1"/>
+						<input class="input" name="memPass" type="password" id="memPass" placeholder="패스워드1" value="${memberVo.memPass}"/>
 					</div>
 				</div>
+				
 				
 				<div class="content">
 					<label for="pwd" style="font-size: 0.9em;">
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드2
 					</label>
 					<div>
-						<input class="input" type="password" id="memPass2" placeholder="패스워드2"/>
+						<input class="input" type="password" id="memPass2" placeholder="패스워드2" value="${memberVo.memPass}"/>
 					</div>
 				</div>
 
 				<div class="content">
 						&nbsp;&nbsp;&nbsp;&nbsp;<label for="alias" style="font-size: 0.9em;">전화번호</label>
 					<div>
-						<input class="input" name="memTel" type="tel" id="memTel" placeholder="전화번호( '-' 없이 작성해주세요)"/>
+						<input class="input" name="memTel" type="tel" id="memTel" placeholder="전화번호( '-' 없이 작성해주세요)" value="${memberVo.memTel}"/>
 					</div>
 				</div>
-
+				
+				
+				<!-- style="display: none" -->
 				<div class="content" style="display: none">
-					<br>알람 : <input  name="memAlert" type="text" id="memAlert" placeholder="알람"><br> 
-					삭제여부: <input class="form-control" name="del" type="text" id="del" placeholder="삭제여부"><br> 
-					멤버구분 : <input class="form-control" name="memType" type="text" id="memType" placeholder="멤버구분"><br>
+					<br>알람 : <input class="form-control" name="memAlert" type="text" id="memAlert" placeholder="알람" value="${memberVo.memAlert}" readonly><br> 
+					삭제여부:   <input class="form-control" name="del" type="text" id="del" placeholder="삭제여부" value="${memberVo.del}" readonly><br> 
+					멤버구분 :  <input class="form-control" name="memType" type="text" id="memType" placeholder="멤버구분" value="${memberVo.memType}" readonly><br>
+					이미지 경로: <input class="form-control" name="imgname" type="text" id="imgname" placeholder="파일경로" value="${memberVo.memFilepath}" readonly>
+					사진 : <img id="pict" style="width: 30px; height: 30px;" src="/profileImgView?memId=${memberVo.memId}" />
+					기본이미지 : <img id="imge" style="width: 30px; height: 30px;" src="${memberVo.memFilepath}" /><br>
 				</div>
 				
-				<input type="text" id="imgname" name="imgname" style="display: none">
 				<div id="row1">
 					<br><br><br>
 					<div class="content" id="butt">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="button" id="registBtn" class="btn btn-info" disabled="disabled">등록</button>
+						<button type="button" id="registBtn" class="btn btn-info">등록</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="button" id="cancelBtn" onclick="window.history.back()">&nbsp;&nbsp;&nbsp;취 &nbsp;&nbsp; 소 &nbsp;&nbsp;&nbsp;</button>
 					</div>
@@ -197,20 +201,50 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
-
+		
 		$(document).ready(function(){
 			
-				// 기본이미지 선택하면 파일 값 날리기
-				var picture = document.getElementById('picture');
-				picture.value = null;
-			// picture input의 파일 변경시 이벤트 
-			$("#picture").change(function(){
+							/* 기본이미지/사진 선택 해서 보여주기 */
+			
+							
+			pict = document.getElementById('pict').src	// display none 에 숨어있는 사진의 src속성값 가져옴
+														// src="/profileImgView?memId=${memberVo.memId}" 
+			imge = document.getElementById('imge').src	// display none 에 숨어있는 기본이미지의 src속성값 가져옴
+														// src="${memberVo.memFilepath}"
+			
+														
+			picval = pict.split('/')[0].indexOf('profileImgView') // 아이디 값으로 memFilepath의 속성을 가져오기 때문에 항상
+										// 값이 동일하다 -> http://localhost/profileImgView?memId=noylit@naver.com
+			imgval= imge.split('/')[0].indexOf('http')	
+			// 파일가져올때 -> file:///D:/upload/james.png	// 기본이미지    -> https://localhost/profile/user-16.png
+			// memFilepath 의 속성값을 바로 가져오기 때문에 웹에 저장된 기본이미지를 불러오는지
+			//								     로컬에 저장된 파일을 가져오는지 경로로 확인이 가능하다. 
+			
+			
+			$('#sp').append(' pict : ' + picval + '//' + pict);	// 경로 확인하려고 (숨김항목)
+			$('#sp').append(' imge : ' + imgval + '//' + imge); // 경로 확인하려고 (숨김항목)
+			
+			
+			if(imgval == -1){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온것이 아니면(file) -1
+				$('#pictureViewImg').attr('src', pict);
+			}else if(imgval == 0){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온 거면 0 -> 웹사이트는 기본이미지
+				$('#pictureViewImg').attr('src', imge);
+			}
+			
+		
+			
+			// 기본이미지 선택하면 파일 값 초기화
+			var picture = document.getElementById('picture');
+			picture.value = null;
 				
+			// 파일의 경로값을 꺼냄
+			// picture input의 파일 변경시 이벤트 
+			$("#picture").change(function(){ 
 				readURL(this);
 			});
 		});
-		
-		
+	
+		// 이미지 뷰어 src속성에 등록
 		function readURL(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
@@ -223,20 +257,8 @@
 		}
 		
 		
-		$(document).ready(function(){
-			/* 
-				$('#mem_id').val("hsj2@thousandOfAnts.com");
-				$('#mem_name').val("한상진");
-				$('#mem_pass').val("123");
-				$('#mem_tel').val("010-1111-2222");
-			*/
-				$('#memAlert').val("Y");
-				$('#del').val("N");
-				$('#memType').val("MEM");
-			})
-			
-			
-		var newpass1 = document.getElementById('memPass');
+		// 패스워드 2개 입력한것 값 비교
+		var newpass1 = document.getElementById('memPass');	
 		var newpass2 = document.getElementById('memPass2');
 		
 		// 등록버튼시 미입력 된것 있으면 경고창
@@ -267,28 +289,7 @@
 		})
 		
 		
-		// 중복검사
-		$(document).ready(function(){ 
-			$('#checkbtn').on('click', function(){ 
-				$.ajax({ type: 'POST', 
-					url: '/member/checkSignup', 
-					dataType : 'json',
-					data: { "memId" : $('#memId').val() }, 
-					success: function(data){
-						if($.trim(data) == 0){ 
-							$('#checkMsg').html('<p style="color:blue">사용가능</p>'); 
-							btn = document.getElementById('registBtn')
-							btn.disabled = false;
-						}else{ 
-							$('#checkMsg').html('<p style="color:red">사용불가능</p>'); 
-						} 
-					}
-				}); //end ajax 
-				return false;	/* 페이지 새로고침 막기 */
-			}); //end on 
-		}); 
 		
-	
 		
 		
 		
@@ -658,66 +659,7 @@
 				
 				$("#myModal").modal('hide');					// 모달창 닫기
 			})
-		})
-		
-		
-		
-		/* 
-				realsrc = document.getElementById('img'+1).src
-				src = "/" + realsrc.split('/')[4]
-				
-				$('#clickmsg').append('src : ' + src);
-				$('#memFilename').attr('value', src); 
-				file = $('memFilename').val()
-				file = src;
-				$('#clickmsg').append('file : ' + file);
-				
-				
-				$("#myModal").modal('hide');
-		*/
-		
-		
-		
-		
-		/* 	
-		var imaMap = new Map();
-		
-		// 기본이미지 선택
-	 	$(document).ready(function(){
-			for(i=0; i<31; i++){
-				b = '#img' + i;
-				
-				$(b).on('click', function(){
-					var c = $(b).attr("src");
-					
-					$('#clickmsg').append(b); 
-					$('#clickmsg').append(c); 
-					
-					imaMap.set(b,c);
-					
-				 	btn = document.getElementById('pictureViewImg');
-				 	bt = document.getElementById('picture');
-				 	rf = document.getElementById('real_filename');
-					
-				 	
-				 	btn.src = c;
-				 	
-				 	bt.src = "/" + c.split('/')[1] + "/" + c.split('/')[2]
-				 	rf.value = "/" + c.split('/')[1] + "/" + c.split('/')[2]
-				 	
-				//	$('#clickmsg').append(btn.src); 
-					
-				//	$('#clickmsg').append(btn.src); 
-					
-				//	$("#myModal").modal(imaMap.get('#img30')); 
-					
-					$("#myModal").modal('hide');
-				})
-			} 
-	 	})			
-	 	 */
-	
-		
+		})	
 </script>
 	
 

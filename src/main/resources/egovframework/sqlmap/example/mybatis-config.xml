@@ -44,4 +44,5 @@
 <!--   <mappers> -->
 <!--     <mapper resource="ants/com/config/sqlmap/mappers/member.xml"/> -->
 <!--   </mappers> -->
+<typeAliases></typeAliases>
 </configuration>

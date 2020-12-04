@@ -41,9 +41,9 @@ import ants.com.member.service.MemberService;
 import ants.com.member.service.ProjectService;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
-@MultipartConfig
 @RequestMapping("/member")
 @Controller
+@MultipartConfig
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -130,18 +130,13 @@ public class MemberController {
 	
 	// 회원가입 로직
 	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
-
 	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model, @RequestParam(value="imgname", required=false)String imgname) {
-		logger.debug("memberVo : {} / imgname : {}", memberVo, imgname);
-		logger.debug("filename : {} / memFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),file.getSize());
 		
 		String Filename = "";
 		String Filepath = "";
 		
 		if(!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
 			
-			logger.debug("br.hasErrors() : {}", br.hasErrors());
-	
 			if (br.hasErrors()) {
 //				return "main.tiles/member/memberRegist";
 			}
@@ -157,9 +152,6 @@ public class MemberController {
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-	
-			logger.debug("---------------------통과-------------------");
-			
 			
 		}else {
 			
@@ -176,14 +168,9 @@ public class MemberController {
 			
 		
 		}
-		
 
 		memberVo.setMemFilepath(Filepath);
 		memberVo.setMemFilename(Filename);
-		
-		logger.debug("memId : {}", memberVo.getMemId());
-		logger.debug("memberVo : {}", memberVo);
-		
 
 		int insertCnt = 0;
 		try {
@@ -352,7 +339,7 @@ public class MemberController {
 		
 		try {
 			JSONObject obj = (JSONObject) coolsms.send(params);
-			System.out.println(obj.toString());
+			//System.out.println(obj.toString());
 		} catch (CoolsmsException e) {
 			System.out.println(e.getMessage());
 			System.out.println(e.getCode());
@@ -368,17 +355,80 @@ public class MemberController {
 	public String profile(HttpSession session, MemberVo memberVo, Model model) {
 		
 		memberVo = (MemberVo) session.getAttribute("SMEMBER");
-		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
 		MemberVo dbMember = memberService.getMember(memberVo);
-		logger.debug("dbMember : {}", dbMember);
 		
 		model.addAttribute("memberVo",dbMember);
 		return "tiles/member/memberProfile";
 	}
 	
 	
+	// 프로필 업데이트 화면이동
+	@RequestMapping("/profileupdateview")
+	public String profileupdateview(HttpSession session, MemberVo memberVo, Model model) {
+		
+		memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
+		MemberVo dbMember = memberService.getMember(memberVo);
+		logger.debug("dbMember : {}", dbMember);
+		
+		model.addAttribute("memberVo",dbMember);
+		return "tiles/member/profileupdateview";
+	}
 	
 	
+	// 프로필 업데이트 
+	@RequestMapping(path="/profileupdate", method = RequestMethod.POST)				// VO 객체 바로 뒤에 Binding 와야함... 안그럼 매칭안됨
+	public String profileupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
+																@RequestPart(value="memFilename", required=false) MultipartFile file) {
+		
+		logger.debug("memFilename : {}", file.getOriginalFilename());
+		String Filename = "";
+		String Filepath = "";
+		
+		if(!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
+			
+			if (br.hasErrors()) {
+//				return "main.tiles/member/memberRegist";
+			}
+	
+			String filekey = UUID.randomUUID().toString();
+			 /*filekey + "\\"+*/
+			Filepath = "D:\\upload\\"+ file.getOriginalFilename();
+			Filename = file.getOriginalFilename();
+			File uploadFile = new File(Filepath);
+			
+			try {
+				file.transferTo(uploadFile);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+		}else {
+			
+			// 기본 이미지 중에 선택했을때
+			if(!imgname.equals("") && !imgname.equals(null)) {
+				Filepath = imgname;
+				Filename = imgname.split("/")[4];
+			
+			// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+			}else { 
+				Filepath = "http://localhost/profile/user-0.png";
+				Filename = "user-0.png";
+			}
+		}
+		memberVo.setMemFilepath(Filepath);
+		memberVo.setMemFilename(Filename);
+		
+		
+		int updateCnt = memberService.profileupdate(memberVo);
+		
+		if(updateCnt == 1){
+			return "redirect:/member/profile";
+		}else {
+			return "tiles/member/profileupdateview";	
+		}
+
+	}
 	
 	
 	
