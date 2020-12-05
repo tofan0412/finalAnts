@@ -79,7 +79,7 @@
 			        </a>
 			        <ul class="nav nav-treeview" >
 			        	<li class="nav-item">
-			                <a href="${pageContext.request.contextPath}/privatefile/privatefileList" class="nav-link">
+			                <a href="${pageContext.request.contextPath}/privatefile/privatefileView" class="nav-link">
 			                	<i class="nav-icon fas fa-folder-open"></i>
 								<p class="selectable">파일함</p>
 			                </a>

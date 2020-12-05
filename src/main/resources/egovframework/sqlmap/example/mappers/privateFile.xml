@@ -23,7 +23,7 @@
 		  FROM privatefile
 		 WHERE MEM_ID = #{memId}
 	</select>
-
+	
 	
 	<!-- 파일등록  privateInsert -->
 	<insert id="privateInsert" parameterType="ants.com.file.model.PrivateFileVo">

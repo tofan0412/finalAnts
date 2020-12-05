@@ -43,7 +43,7 @@ public class PrivateFileController {
 	
 	
 	// 개인 파일함리스트
-	@RequestMapping(path ="/privatefileList")
+	@RequestMapping(path ="/privatefileView")
 	public String privatefile(HttpSession session, Model model, @ModelAttribute("privatefileVo") PrivateFileVo privatefileVo)  {
 		
 		
@@ -76,12 +76,12 @@ public class PrivateFileController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		logger.debug("totCnt : {}", totCnt);
 		
-		return "tiles/privatefile/privatefileList";
+		return "tiles/privatefile/privatefileView";
 	}
 	
 	
 	
-	// 파일등록	(파일 버튼 추가 제거 버전)
+	// 파일등록	(파일 버튼 추가/제거 버전)
 	@RequestMapping("/privateInsert0")
 	public String todoView(PrivateFileVo privatefileVo, BindingResult br, @RequestPart(value="privFilepath", required=false)  List<MultipartFile> file, Model model, HttpSession session) {
 		
@@ -134,7 +134,7 @@ public class PrivateFileController {
 		
 	    int todoInsert = fileService.privateInsert(list);
 		
-		return "redirect:/privatefile/privatefileList";
+		return "redirect:/privatefile/privatefileView";
 	}
 	
 	
@@ -181,7 +181,7 @@ public class PrivateFileController {
 		
 		int todoInsert =  fileService.privateInsert(list);	
 		
-		return "redirect:/privatefile/privatefileList";
+		return "redirect:/privatefile/privatefileView";
 	}
 	
 	
@@ -194,8 +194,9 @@ public class PrivateFileController {
 		model.addAttribute("pubFilename" ,privateVo.getPrivFilename());
 		model.addAttribute("pubFilepath" ,privateVo.getPrivFilepath());
 
-		return "redirect:/privatefile/privatefileList";
+		return "FileDownloadView";
 	}
+	
 	
 	
 	
@@ -207,7 +208,7 @@ public class PrivateFileController {
 			fileService.privateDelete(privatefileVo);
 		}
 		
-		return "redirect:/privatefile/privatefileList";
+		return "redirect:/privatefile/privatefileView";
 	}
 	
 }
