@@ -135,7 +135,7 @@ public class ProjectMemberController {
 	@RequestMapping("/insertissueView")
 	public String insertissueView(HttpSession session) {
 
-		return "tiles/board/issueInsert";
+		return "tiles/board/issueInsert2";
 	}
 	
 	// 이슈 작성

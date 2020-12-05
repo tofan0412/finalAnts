@@ -73,13 +73,14 @@ public class FileController {
 				//PublicFileVo(String pubFilepath, String pubFilename, String pubExtension, String categoryId, String someId,
 									//String reqId, String pubSize)
 				
-				count = mapper.insertfile(filevo);	
+				count += mapper.insertfile(filevo);	
 				
 			}
 		
 		}
+		model.addAttribute("count",count);
 		
-		return "";
+		return "jsonView";
 	}
 	
 	
