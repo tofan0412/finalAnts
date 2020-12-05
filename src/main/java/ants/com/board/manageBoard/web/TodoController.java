@@ -110,7 +110,7 @@ public class TodoController {
 	// 한개의 일감 조회 Ajax
 	@RequestMapping("/onetodo")
 	public String todoDetailView(Model model, TodoVo todoVo) {
-		TodoVo dbtodoVo = manageBoardService.getTodo(todoVo);
+		List<TodoVo> dbtodoVo = manageBoardService.getTodo(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
 		return "jsonView";
 	}
@@ -120,6 +120,20 @@ public class TodoController {
 	public String todoView() {
 		return "tiles/manager/Pl_Onetodo";
 	}
+	
+	// 한개의 일감 조회 Ajax
+	@RequestMapping("/myonetodo")
+	public String mytodoDetailView(Model model, TodoVo todoVo) {
+		TodoVo dbtodoVo = manageBoardService.mygetTodo(todoVo);
+		model.addAttribute("todoVo", dbtodoVo);
+		return "jsonView";
+	}
+	
+	// 한개의 일감조회 화면 출력
+	@RequestMapping("/myonetodoView")
+	public String mytodoView() {
+		return "tiles/board/MY_Onetodo";
+	}
 
 	// 일감 수정 화면 출력
 	@RequestMapping("/updatetodoView")
@@ -127,7 +141,7 @@ public class TodoController {
 		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
 		List<MemberVo> promemList = manageBoardService.projectMemList(todoVo);
-		TodoVo dbtodoVo = manageBoardService.getTodo(todoVo);
+		TodoVo dbtodoVo = manageBoardService.mygetTodo(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
 		model.addAttribute("promemList", promemList);
 		return "tiles/manager/Pl_todoUpdateView";

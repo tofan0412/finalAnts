@@ -24,7 +24,10 @@ public interface ManageBoardMapper {
 	public int todoListCount(TodoVo todoVo);
 
 	// 한개의 일감 조회
-	public TodoVo getTodo(TodoVo todoVo);
+	public List<TodoVo> getTodo(TodoVo todoVo);
+	
+	// 한개의 일감 조회
+	public TodoVo mygetTodo(TodoVo todoVo);
 
 	// 팀원 조회
 	public List<MemberVo> projectMemList(TodoVo todoVo);
