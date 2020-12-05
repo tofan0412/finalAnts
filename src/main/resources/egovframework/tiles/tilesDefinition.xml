@@ -46,4 +46,26 @@
 			value="/WEB-INF/views/{1}/{2}.jsp" />
 	</definition>
 	
+	<!-- 관리자 메인 페이지 화면  -->
+	<definition name="admain.layout" template="/WEB-INF/views/layout/admin/admin_layout.jsp">
+	
+		<put-attribute name="header" value="/WEB-INF/views/layout/admin/adheader.jsp" />
+		
+		<put-attribute name="left" value="/WEB-INF/views/layout/admin/adleft.jsp" />
+
+		<put-attribute name="content" value="" />
+
+		<put-attribute name="footer" value="/WEB-INF/views/layout/admin/adfooter.jsp" />
+		
+	</definition>
+	
+	<definition name="main.tiles/*/*" extends="admain.layout">
+		<put-attribute name="content"
+			value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+	<definition name="main.tiles/*/*" extends="admain.layout">
+		<put-attribute name="content"
+			value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+	</definition>
+	
 </tiles-definitions>
