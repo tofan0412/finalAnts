@@ -179,9 +179,11 @@
 		          </div>
 		        </div>
 		        <!-- /.card-body -->
-		        <div class="card-footer">
-			        <a href="/req/reqList" class="btn btn-secondary" id="back">목록</a>
-		        </div>
+		        <c:if test="${SMEMBER.memType == 'PM' }">
+			        <div class="card-footer">
+				        <a href="/req/reqList" class="btn btn-secondary" id="back">목록</a>
+			        </div>
+		        </c:if>
 		      </div>
 		      <!-- /.card -->
 		

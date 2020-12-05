@@ -63,12 +63,16 @@ $(function(){
 	})
 	
 	
+	$('#replybtn2').on('click', function(){
+		replyinsert();
+	})
+	
 	
 })
 
 function todo(){
 
- 	$.ajax({url :"${pageContext.request.contextPath}/todo/onetodo",
+ 	$.ajax({url :"${pageContext.request.contextPath}/todo/hissueDetail",
 		   data :{todoId : "${issuevo.todoId}"},
 		   method : "get",
 		   success :function(data){	
@@ -131,6 +135,33 @@ function todoDetail(todoId) {
 
 
 
+function replyinsert() {
+		someId : '${issuevo.issueId }';
+	$.ajax({
+	
+		url : "${pageContext.request.contextPath}/reply/insertreply",
+		method : "get",
+		data : {
+			someId :  '${issuevo.issueId }',
+			categoryId : '${issuevo.categoryId}',
+			replyCont : $('#re_con').val()
+			
+		},
+		success : function(data) {
+			
+// 				alert(data.issueId);
+				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.issueId);
+		}
+
+	});
+
+}
+
+
+
+
+
+
 </script>
 
 <style type="text/css">
@@ -145,17 +176,19 @@ function todoDetail(todoId) {
 		float: left;
 	}
 	
-	#re_con{
+	#writeCon.autosize { min-height: 50px; }
+	
+	#writeCon{
 		resize :none;
-		width: 600px;
-		height: 70px;
+		background-color:transparent;
+/* 		height: 70px; */
 	}
 	
-	.reply_con{
+	#re_con{
 		width: 600px;
 		height: 70px;
       	resize: none;
-      	
+      	background-color:transparent;
       	padding: 1.1em; /* prevents text jump on Enter keypress */
       	padding-bottom: 0.2em;
       	line-height: 1.6;
@@ -247,13 +280,13 @@ function todoDetail(todoId) {
 					<div class="col-sm-8">					
 						<c:forEach items="${replylist }" var="replylist">
 							<c:if test= "${replylist.del == 'N'}">								
-								<textarea disabled class ="reply_con" >${replylist.replyCont}</textarea>
-								[ ${replylist.memId } / ${replylist.regDt} ] 	
+								<textarea disabled class ="reply_con" id="writeCon">${replylist.replyCont}</textarea>
+								[ ${replylist.memId } / ${replylist.regDt} ] 	<hr>
 								
-								<c:if test= "${issueVo.memId == SMEMBER.memId && replylist.del == 'Y'}">								
-									<a href = "${cp}/reply/delreply?replyId=${replylist.replyId}&someId=${replylist.someId}">
-											<input id ="delbtn2" type="button" class="btn btn-default" value ="삭제"/></a>								
-								</c:if>							
+<%-- 								<c:if test= "${issueVo.memId == 'pl1' && replylist.del == 'N'}">								 --%>
+<%-- 									<a href = "${cp}/reply/delreply?replyId=${replylist.replyId}&someId=${replylist.someId}"> --%>
+<!-- 											<input id ="delbtn2" type="button" class="btn btn-default" value ="삭제"/></a>								 -->
+<%-- 								</c:if>							 --%>
 							</c:if>		 														
 							<c:if test= "${replylist.del == 'Y'}">								
 								<textarea disabled class ="reply_con"> [삭제된 댓글입니다.]	</textarea>	<br>						
@@ -265,7 +298,7 @@ function todoDetail(todoId) {
 						 <input type="hidden" name="categoryId" value="${issuevo.categoryId}">
 						 <input type="hidden" name="reqId" value="${issuevo.reqId }">
 						 <input type="hidden" name="memId" value="${issuevo.memId }">
-							<textarea name = "replyCont" id ="re_con"  ></textarea>&nbsp;<input id="replybtn2" type = "submit" class="btn btn-default" value = "댓글작성"><br>
+							<textarea name = "replyCont" id ="re_con"  ></textarea>&nbsp;<input id="replybtn2" type = "button" class="btn btn-default" value = "댓글작성"><br>
 							<span id="count"> 0</span> &nbsp;자 / 500 자 
 							
 					</div>

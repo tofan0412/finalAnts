@@ -51,10 +51,10 @@ public class ReplyController {
 		
 		memBoardService.insertreply(replyVo);
 		
-		ra.addAttribute("issueId", replyVo.getSomeId());
+		model.addAttribute("issueId", replyVo.getSomeId());
 	
-		
-		return this.controller.geteachissue(replyVo.getSomeId(), session, model);
+		return "jsonView";
+//		return this.controller.geteachissue(replyVo.getSomeId(), session, model);
 //		return "redirect:/promember/eachissueDetail?issueId="+replyVo.getSomeId();
 	}
 	

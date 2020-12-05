@@ -1,4 +1,4 @@
-package ants.com.file.web;
+package ants.com.file.view;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,13 +73,14 @@ public class FileController {
 				//PublicFileVo(String pubFilepath, String pubFilename, String pubExtension, String categoryId, String someId,
 									//String reqId, String pubSize)
 				
-				count = mapper.insertfile(filevo);	
+				count += mapper.insertfile(filevo);	
 				
 			}
 		
 		}
+		model.addAttribute("count",count);
 		
-		return "";
+		return "jsonView";
 	}
 	
 	
@@ -114,8 +115,6 @@ public class FileController {
 		return "";
 	}
 	
-	
-	
-	
+
 	
 }
