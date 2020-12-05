@@ -17,35 +17,66 @@
     	sock.onmessage = onMessage;
     	//소켓연결 끊겼을 때
     	sock.onclose = onClose;
+    	
+    	alarmCount('${SMEMBER.memId}');
+    	
+    	
 	});
     
 	function onMessage(evt){
 		var data  = evt.data;
 		console.log("ReceivMessage: " + data + "\n");
 		var memId = '${SMEMBER.memId}';
+		alarmCount(memId);
 		
-		$.ajax({
-			url:'/countAlarm',
-			data:{memId : memId},
-			type:'POST',
-			dataType:'text',
-			success:function(data){
-				if(data == '0'){
-					
-				}else{
-					$('#alarmCount').text(data);
-				}
-			},
-			error:function(err){
-				alert('err');
-			}
-		})
+		toastr.info(data);
+
+    	toastr.options = {
+    	  "closeButton": false,
+    	  "debug": false,
+    	  "newestOnTop": false,
+    	  "progressBar": false,
+    	  "positionClass": "toast-top-right",
+    	  "preventDuplicates": false,
+    	  "onclick": null,
+    	  "showDuration": "500",
+    	  "hideDuration": "1000",
+    	  "timeOut": "5000",
+    	  "extendedTimeOut": "1000",
+    	  "showEasing": "swing",
+    	  "hideEasing": "linear",
+    	  "showMethod": "fadeIn",
+    	  "hideMethod": "fadeOut"
+    	}
+		
 	}
+	
 	
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {
 		alert("소켓 연결 끊김....")
 	}
+	
+	function alarmCount(memId){
+		$.ajax({
+			url:'/alarmCount',
+			data:{memId : memId},
+			type:'POST',
+			dataType:'json',
+			success:function(count){
+				console.log(count);
+				if(count.cnt == '0'){
+					
+				}else{
+					$('#alarmCount').text(count.cnt);
+				}
+			},
+			error:function(err){
+				alert('err');
+			}
+		});
+	}		
+
 </script>
    <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -55,7 +86,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/index3.html" class="nav-link">Home</a>
+        <a href="#" class="nav-link">Home</a>
       </li>
     </ul>
 
