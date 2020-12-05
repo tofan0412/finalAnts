@@ -106,9 +106,9 @@ public class TodoController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		return "tiles/manager/Pl_todoList";
 	}
-
+	
 	// 한개의 일감 조회 Ajax
-	@RequestMapping("/hissueDetail")
+	@RequestMapping("/onetodo")
 	public String todoDetailView(Model model, TodoVo todoVo) {
 		TodoVo dbtodoVo = manageBoardService.getTodo(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
@@ -116,9 +116,9 @@ public class TodoController {
 	}
 
 	// 한개의 일감조회 화면 출력
-	@RequestMapping("/hissueDetailView")
+	@RequestMapping("/onetodoView")
 	public String todoView() {
-		return "tiles/manager/plpm_hissueDetail";
+		return "tiles/manager/Pl_Onetodo";
 	}
 
 	// 일감 수정 화면 출력

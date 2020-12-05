@@ -21,4 +21,6 @@ public interface ProjectMapper {
 	
 	// 나에게 요청된 요구사항정의서 리스트 출력하는 메서드
 	public List<ReqVo> readReqList(String plId);
+	
+	public String insertProject(ProjectVo projectVo);
 }

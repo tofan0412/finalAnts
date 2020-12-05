@@ -121,4 +121,23 @@
 <!-- 			select hissue_seq.currval from dual -->
 <!-- 		</selectKey> -->
 		</insert>
+		
+		<!-- 이슈게시글 수정하기 -->
+		<update id="hIssueupdate" parameterType="ants.com.board.manageBoard.model.HotIssueVo">
+			UPDATE hotissue
+	    	SET
+	        	hissue_title = #{hissueTitle},
+	        	hissuet_cont = #{hissuetCont},
+	        	reg_dt = sysdate
+			WHERE
+	    	hissue_id = #{hissueId}
+		</update>
+		
+		<!-- 이슈게시글 삭제하기 -->
+		<update id="hIssuedelete" parameterType="ants.com.board.manageBoard.model.HotIssueVo">
+			UPDATE hotissue
+				SET del='Y'
+				WHERE
+				hissue_id = #{hissueId}
+		</update>
 </mapper>

@@ -145,9 +145,13 @@ public class ReqController {
 	 * @return
 	 */
 	@RequestMapping(value = "/reqUpdate", method = RequestMethod.POST)
-	public String reqUpdate(@ModelAttribute("reqVo") ReqVo reqVo, Model model, RedirectAttributes ra) {
+	public String reqUpdate(@ModelAttribute("reqVo") ReqVo reqVo, Model model, RedirectAttributes ra, @RequestParam(name="jsonView",required=false) String jsonView) {
 		
 		int cnt = reqService.reqUpdate(reqVo);
+		//pl수정할때
+		if(jsonView.equals("Y")) {
+			return "jsonView";
+		}
 		
 		if (cnt == 1) {
 			ra.addFlashAttribute("reqVo", reqVo);
@@ -175,10 +179,6 @@ public class ReqController {
 		return "redirect:/req/reqList";
 	}
 
-	@RequestMapping(path = "/addPL")
-	public String addPLView() {
-		return "tiles/member/addPL";
-	}
 	
 	/**
 	 * memId 자동완성기능

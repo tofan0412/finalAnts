@@ -2,7 +2,9 @@ package ants.com.file.model;
 
 import java.util.Date;
 
-public class PrivateFileVo {
+import ants.com.base.model.BaseVo;
+
+public class PrivateFileVo extends BaseVo {
 	
 	
 	private String privId;
@@ -11,6 +13,8 @@ public class PrivateFileVo {
 	private Date regDt;
 	private String privSize;
 	private String memId;
+	
+	
 	public String getPrivId() {
 		return privId;
 	}
@@ -47,6 +51,8 @@ public class PrivateFileVo {
 	public void setMemId(String memId) {
 		this.memId = memId;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "PrivateFileVo [privId=" + privId + ", privFilepath=" + privFilepath + ", privFilename=" + privFilename

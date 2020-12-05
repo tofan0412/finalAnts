@@ -61,6 +61,8 @@
 
 </head>
 <title>협업관리프로젝트</title>
+<c:if test="${SMEMBER.memType == 'PM' }">
+
 <form:form commandName="reqVo" id="listForm" name="listForm"
 	method="post">
 	<form:hidden path="memId" />
@@ -262,6 +264,7 @@
 			<div class="modal-body">
 				<form id="plForm" name="plForm" method="post">
 					<div class="col-md-6" style="float: left">
+						<input type="hidden" name="jsonView" value="Y">
 						<input type="hidden" id="modalReqId" name="reqId" value="">
 						<input type="hidden" name="status" value="대기"> <label
 							for="recipient-name" class="control-label">이메일:</label> <input
@@ -368,16 +371,53 @@
 
 		/* pl요청 전송버튼 클릭 */
 		$('#addplBtn').on('click', function() {
+			//memId를 plId로 바꾸기
 			$('#searchInput').attr('name', 'plId');
-			addpl();
+			
+			// 전송한 정보 db저장
+			$.ajax({
+				url : "/req/reqUpdate",
+				data : $('#plForm').serialize(),
+				method : "POST",
+				success : function(data){
+					//saveMsg();
+					$("#addpl .close").click()
+				}
+				
+			});
 		});
 
 	});
-
+	
+	/* pl요청 알림메세지 db에 저장하기 */
+	function saveMsg(){
+		var AlarmData = {
+							"alarmCont" : "",
+							"memId" : $('#searchInput').val(),
+							"alarmType" : "r-pl"
+		}
+		
+		$.ajax({
+				url : "/alarmInsert",
+				data : JSON.stringify(AlarmData),
+				contentType : "application/json; charset=utf-8",
+				dataType : 'text',
+				success : function(data){
+					console.log(data);
+// 					if(socket){
+// 						let socketMsg = "scrap," + memNickname +","+ memberSeq +","+ receiverEmail +","+ essayboard_seq;
+// 						console.log("msgmsg : " + socketMsg);
+// 						socket.send(socketMsg);
+// 					}
+				},
+				error : function(err){
+					console.log(err);
+				}
+		});
+	}
 	/* 사용자 아이디 체크하기 */
 	function memIdCheck() {
-		$
-				.ajax({
+		$.ajax({
 					url : "/req/memIdCheck",
 					data : $('#plForm').serialize(),
 					method : "POST",
@@ -455,13 +495,13 @@
 		document.listForm.submit();
 	}
 
-	/* pl요청 보내기 */
-	function addpl() {
-		document.plForm.action = "<c:url value='/req/reqUpdate'/>";
-		document.plForm.submit();
-	}
+	
 </script>
+</c:if>
 
+<c:if test="${SMEMBER.memType != 'PM' }">
+	<h1>권한이 없습니다!</h1>
+</c:if>
 
 </body>
 </html>

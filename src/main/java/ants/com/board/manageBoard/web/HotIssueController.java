@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ants.com.board.manageBoard.model.HotIssueVo;
+import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
 import ants.com.member.model.MemberVo;
@@ -111,13 +112,35 @@ public class HotIssueController {
 	}
 	
 	
+	// 핫이슈 수정
+	@RequestMapping("/updatehissue")
+	public String updatehissue(HotIssueVo hotIssueVo, Model model) {
+		int updateCnt = manageBoardService.hIssueupdate(hotIssueVo);
+		if (updateCnt > 0) {
+			return "redirect:/hotIssue/hissueList";
+		} else {
+			return "redirect:/hotIssue/updatehissueView";
+		}
+	}
+	
+    // 핫이슈 수정 화면 출력	
+	@RequestMapping("/updatehissueView")
+	public String updatehissueView(Model model, HotIssueVo hotIssueVo) {
+		hotIssueVo.setHissueId(hotIssueVo.getHissueId());;
+		HotIssueVo dbVo = manageBoardService.gethissue(hotIssueVo);
+		model.addAttribute("hotIssueVo", dbVo);
+		return "tiles/manager/plpm_hotissueUpdate";
+	}
 	
 	
-	
-//	// 핫이슈 수정
-//	@RequestMapping("/hissueInsert")
-//	
-//	// 핫이슈 삭제
-//	@RequestMapping("/hotissuedel")
-	
+	// 핫이슈 삭제
+	@RequestMapping("/hotissuedel")
+	public String hotissuedel(HotIssueVo hotIssueVo, Model model) {
+		int delTodoCnt = manageBoardService.hIssuedelete(hotIssueVo);
+		if (delTodoCnt > 0) {
+			return "redirect:/hotIssue/hissueList";
+		} else {
+			return "redirect:/hotIssue/hissueDetailView?hissueId="+hotIssueVo.getHissueId();
+		}
+	}
 }

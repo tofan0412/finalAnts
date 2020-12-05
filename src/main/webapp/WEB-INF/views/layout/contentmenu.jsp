@@ -5,8 +5,6 @@
 <html>
 <head>
 
-<%@include file="fonts.jsp"%>
-
 </head>
 <title>협업관리프로젝트</title>
 <body class="hold-transition sidebar-mini accent-teal">
@@ -58,7 +56,7 @@
 	                    <a class="nav-link" id="custom-tabs-three-mywork-tab"  href="${pageContext.request.contextPath}/todo/MytodoList" >내 일감</a>
 	                  </li>
 	                  <li class="nav-item">
-	                    <a class="nav-link" id="custom-tabs-three-files-tab"  href="#custom-tabs-three-files">파일함</a>
+	                    <a class="nav-link" id="custom-tabs-three-files-tab"  href="/publicfile/publicfileview">파일함</a>
 	                  </li>
 	                  <c:if test="${SMEMBER.memId eq projectVo.memId or SMEMBER.memType eq 'PM'}">
 	                  <li class="nav-item">

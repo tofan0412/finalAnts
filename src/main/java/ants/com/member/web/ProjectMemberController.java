@@ -22,7 +22,7 @@ import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.service.memBoardService;
 import ants.com.file.model.PublicFileVo;
-import ants.com.file.web.FileController;
+import ants.com.file.view.FileController;
 import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ReqVo;
 import ants.com.member.service.ProjectmemberService;

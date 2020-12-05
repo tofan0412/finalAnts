@@ -79,14 +79,14 @@
 			        </a>
 			        <ul class="nav nav-treeview" >
 			        	<li class="nav-item">
-			                <a href="#" class="nav-link">
+			                <a href="${pageContext.request.contextPath}/privatefile/privatefileList" class="nav-link">
 			                	<i class="nav-icon fas fa-folder-open"></i>
 								<p class="selectable">파일함</p>
 			                </a>
 			            </li>
 					</ul>
 				</li>
-					<br>
+					<br> 
 				<li class="nav-item has-treeview menu-open">
 					<c:choose>
 						<c:when test="${SMEMBER.memType eq 'PM' }">
