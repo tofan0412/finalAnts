@@ -89,6 +89,7 @@
 			</tr>
 			<tbody id="todoList">
 				<c:forEach items="${todoList }" var="todo" varStatus="sts" >
+					<c:if test="${ todo.todoLevel eq '1' }">
 				    <tr data-todoid="${todo.todoId}">
 					<td><c:out value="${paginationInfo.totalRecordCount - ((todoVo.pageIndex-1) * todoVo.pageUnit + sts.index)}"/>. 
 					<input type="hidden" id="${todo.reqId }" name="${todo.reqId }">
@@ -97,12 +98,7 @@
 					<c:if test="${todo.todoImportance eq 'gen'}"><span class="badge badge-success">일반</span></c:if>
 					<c:if test="${todo.todoImportance eq 'emg'}"><span class="badge badge-danger">긴급</span></c:if>
 					</td>
-					<c:if test="${todo.todoLevel ne '1'}">
-					<td style="padding-left: 20px;">➜${todo.todoTitle}</td>
-					</c:if>
-					<c:if test="${todo.todoLevel eq '1'}">
 					<td>${todo.todoTitle}</td>
-					</c:if>
 					<td>${todo.memId}</td>
 					<c:if test= "${todo.todoPercent eq '0'}">
 						<td>
@@ -143,6 +139,7 @@
 					<td>${todo.todoStart}일</td>
 					<td>${todo.todoEnd}</td>
 					</tr>
+					</c:if>
 				</c:forEach>
 			</tbody>
 		</table>

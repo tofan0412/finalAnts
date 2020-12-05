@@ -53,10 +53,10 @@
 			},
 			success : function(data) {
 			
-				$("#hissueTitle").html(data.hotIssueVo.hissueTitle);
+				$("#hissueTitle").val(data.hotIssueVo.hissueTitle);
 				$("#hissuetCont").html(data.hotIssueVo.hissuetCont);
-				$("#regDt").html(data.hotIssueVo.regDt);
-				$("#writer").html(data.hotIssueVo.writer);
+				$("#regDt").val(data.hotIssueVo.regDt);
+				$("#writer").val(data.hotIssueVo.writer);
 				
 				$("#hissueId").val(data.hotIssueVo.hissueId);
 				$("#hissueParentid").val(data.hotIssueVo.hissueParentid);
@@ -69,28 +69,40 @@
 		});
 	}
 </script>
+<style type="text/css">
+.form-control:disabled, .form-control[readonly] {
+   background-color: white;
+   }
+</style>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 <br>
-<div style="padding-left: 30px;"><h3>PM-PL 이슈 상세보기</h3><br>
-		
-		
-		<input type="hidden" id="hissueId">
-		<input type="hidden" id="hissueParentid">
-		<input type="hidden" id="hissueLevel">
-		
-		<label for="hissueTitle" class="col-sm-1 control-label">제목</label>
-		<label class="control-label" id="hissueTitle"></label><br><br>
-		
-		<label for="hissuetCont" class="col-sm-1 control-label">내용</label>
-		<label class="control-label" id="hissuetCont"></label><br><br>
-		
-		<label for="writer" class="col-sm-1 control-label">작성자</label>
-		<label class="control-label" id="writer"></label><br><br>
-		
-		<label for="regDt" class="col-sm-1 control-label">작성일</label>
-		<label class="control-label" id="regDt"></label><br><br>
-
+<div style="padding-left: 30px; padding-right: 410px;">
+	<div class="card card-primary">
+		<div class="card-header">
+        	<h3 class="card-title">PM-PL 이슈 상세보기</h3>
+        </div>
+        <div class="card-body">
+			<input type="hidden" id="hissueId">
+			<input type="hidden" id="hissueParentid">
+			<input type="hidden" id="hissueLevel">
+		 <div class="form-group">
+			<label for="hissueTitle">제목</label>
+			<input type="text" id="hissueTitle" class="form-control" readonly="readonly">
+		</div>
+		 <div class="form-group">
+			<label for="hissuetCont">내용</label>
+			<div id="hissuetCont" class="form-control" style="margin-top: 0px; margin-bottom: 0px; overflow-y :scroll; height: 180px;"></div>
+		</div>
+		 <div class="form-group">
+			<label for="writer">작성자</label>
+			<input type="text" id="writer" class="form-control" readonly="readonly">
+		</div>
+		 <div class="form-group">
+			<label for="regDt">작성일</label>
+			<input type="text" id="regDt" class="form-control" readonly="readonly">
+		</div>
+	</div>
 		<div id="btnMenu">
 		<button type="button" class="btn btn-default" id="updateBtn">수정</button>
 		<button type="button" class="btn btn-default" id="deleteBtn">삭제</button>
@@ -98,4 +110,6 @@
 		<button type="button" class="btn btn-default" id="back">뒤로가기</button>	
 		</div>
 </div>
+</div>
+
 </html>

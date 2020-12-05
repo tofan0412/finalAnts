@@ -60,91 +60,122 @@
 				todoId : todoId
 			},
 			success : function(data) {
+				var i = 0;
+				var html = "";
+				for (var i = 0; i < data.todoVo.length; i++) {
+					var todo = data.todoVo[i];
+					if("${param.todoId}"==todo.todoId){
+						$("#todoTitle").html(todo.todoTitle);
+						$("#todoCont").html(todo.todoCont);
+						$("#memId").html(todo.memId);
+						if(todo.todoImportance =='emg'){
+							document.getElementById("cardTodo").className = "card card-danger";
+							$("#todoImportance").html('긴급');
+						}
+						if(todo.todoImportance =='gen'){
+							document.getElementById("cardTodo").className = "card card-primary";
+							$("#todoImportance").html('일반');
+						}
+						$("#todoStart").html(todo.todoStart);
+						$("#todoEnd").html(todo.todoEnd);
+						$("#todoPercent").html(todo.todoPercent+"%");
+						$("#todoId").val(todo.todoId);
+						$("#todoId_in").val(todo.todoId);
+					}
+					
+					if("${param.todoId}" != todo.todoId && todo.todoParentid != null){
+						
+							html += "<tr>";
+							html += " <td id='intodoId'>" + todo.todoTitle+ "</td>";
+							html += " <td>" + '<a class="btn btn-primary btn-sm" href=${pageContext.request.contextPath}/todo/onetodoView?todoId='+todo.todoId+'>보러가기</a>' + "</td>"							
+							html += "</tr> ";
+
+							
+						$("#childtodo").html(html);
+						}
+						
+					}
+				}
 			
-				$("#todoTitle").val(data.todoVo.todoTitle);
-				$("#todoCont").html(data.todoVo.todoCont);
-				$("#memId").val(data.todoVo.memId);
-				$("#todoImportance").val(data.todoVo.todoImportance);
-				$("#todoStart").val(data.todoVo.todoStart);
-				$("#todoEnd").val(data.todoVo.todoEnd);
-				$("#todoPercent").val(data.todoVo.todoPercent+"%");
-				$("#todoId").val(data.todoVo.todoId);
-				$("#todoId_in").val(data.todoVo.todoId);
-				
-				if(data.todoVo.todoLevel == '2'){
-					$("#creatChildBtn").hide();
-				}	
-				if(data.todoVo.memId == '${SMEMBER.memName}'){
-					$("#progress").show();
-				}	
-			}
-	
+			
 		});
-	
 	}
 
 	
 </script>
-
 <style type="text/css">
-.form-control:disabled, .form-control[readonly] {
-   background-color: white;
-   }
+#intodoId{
+	width: 1000px;
+}
 </style>
+
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 <br>
+
 <div style="padding-left: 30px; padding-right: 410px;">
-		<div class="card card-primary">
+		<div class="card card-primary" id ="cardTodo">
             <div class="card-header">
               <h3 class="card-title">일감 상세보기</h3>
             </div>
             <div class="card-body">
-              <div class="form-group">
-                <label for="todoTitle">제목</label>
-                <input type="hidden" id="todoId">
-                <input type="text" id="todoTitle" class="form-control" readonly="readonly">
-                
-              </div>
-              <div class="form-group">
-                <label for="todoCont">할일</label>
-                <div id="todoCont" class="form-control" style="margin-top: 0px; margin-bottom: 0px;"></div>
-              </div>
-              <div class="form-group">
-                <label for="memId">담당자</label>
-                <input type="text" id="memId" class="form-control" readonly="readonly">
-              </div>
-              <div class="form-group">
-                <label for="todoImportance">상태</label>
-                <input type="text" id="todoImportance" class="form-control" readonly="readonly">
-              </div>
-              <div class="form-group">
-                <label for="todoPercent">진행도</label>
-                <input type="text" id="todoPercent" class="form-control" readonly="readonly">
-              </div>
-              <div class="form-group">
-                <label for="todoStart">시작 일</label>
-                <input type="text" id="todoStart" class="form-control" readonly="readonly">
-              </div>
-              <div class="form-group">
-                <label for="todoEnd">종료 일</label>
-                <input type="text" id="todoEnd" class="form-control" readonly="readonly">
-              </div>
-              	<div id="btnMenu">
-					<c:if test="${SMEMBER.memId eq projectVo.memId }">
-					<button type="button" class="btn btn-default" id="updateBtn" >수정</button>
-					<button type="button" class="btn btn-default" id="deleteBtn">삭제</button>
-					<button type="button" class="btn btn-default" id="creatChildBtn">하위일감 생성</button>
-					<button type="button" class="btn btn-default" id="creattodoBtn">일감 생성</button>
-					</c:if>
-					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">진행도</button>	
-					<button type="button" class="btn btn-default" id="back">뒤로가기</button>	
-				</div>
-              
+             	<input type="hidden" id="todoId">
+        
+				<label for="todoTitle" class="col-sm-1 control-label">제목:</label>
+		        <label class="control-label" id="todoTitle"></label><br><br>
+				        
+				<label for="memId" class="col-sm-1 control-label">담당자:</label>
+				<label class="control-label" id="memId"></label>
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				        
+				<label for="todoPercent" class="col-sm-1 control-label">진행도:</label>
+				<label class="control-label" id="todoPercent"></label>
+				        
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 <label for="todoImportance" class="col-sm-1 control-label">우선순위:</label>
+				 <label class="control-label" id="todoImportance"></label><br><br>
+				
+				 <label for="todoStart" class="col-sm-1 control-label">시작 일:</label>
+				 <label class="control-label" id="todoStart"></label>
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 <label for="todoEnd" class="col-sm-1 control-label">종료 일:</label>
+				 <label class="control-label" id="todoEnd"></label><br><br>
+				 <label for="todoCont" class="col-sm-1 control-label">할일:</label>
+				<label class="control-label" id="todoCont"></label><br>
+		         <div id="btnMenu">
+				 <c:if test="${SMEMBER.memId eq projectVo.memId }">
+					 <button type="button" class="btn btn-default" id="updateBtn" >수정</button>
+					 <button type="button" class="btn btn-default" id="deleteBtn">삭제</button>
+					 <button type="button" class="btn btn-default" id="creatChildBtn">하위일감 생성</button>
+				 </c:if>
+					 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">진행도</button>    
+					 <button type="button" class="btn btn-default" id="back">뒤로가기</button>    
+				 </div>
             </div>
           </div>
-		
-	
+          
+          <div class="card card-primary" id ="childtot">
+            <div class="card-header">
+              <h3 class="card-title">하위일감보기</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body" style="display: block;">
+              <div class="form-group" id ="childtodo">
+               
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
 </div>
 
  
