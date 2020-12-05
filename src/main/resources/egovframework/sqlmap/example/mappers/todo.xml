@@ -17,7 +17,7 @@
 					TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
 					To_date(to_char(todo.todo_end,'yyyymmdd')) as todo_end,
 					todo.todo_cont,
-					lpad(' ', (level - 1) * 4)|| todo_title AS todo_title,
+					todo_title,
 					todo.todo_percent,
 					todo.todo_importance,
 					todo.todo_level,
@@ -46,10 +46,7 @@
 							</when>
 						</choose>
 					</if>
-				start with todo.todo_parentid is null
-				CONNECT BY
-				PRIOR todo_id = TODO_PARENTID
-				order siblings by todo_id desc))a
+				order by todo_id desc))a
 				WHERE rownum  <![CDATA[ <= ]]> #{lastIndex}) c
         		<![CDATA[WHERE rnum > #{firstIndex}]]>
 		
@@ -71,7 +68,7 @@
 					TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
 					To_date(to_char(todo.todo_end,'yyyymmdd')) as todo_end,
 					todo.todo_cont,
-					lpad(' ', (level - 1) * 4)|| todo_title AS todo_title,
+					todo_title,
 					todo.todo_percent,
 					todo.todo_importance,
 					todo.todo_level,
@@ -99,10 +96,7 @@
 							</when>
 						</choose>
 					</if>
-				start with todo.todo_parentid is null
-				CONNECT BY
-				PRIOR todo_id = TODO_PARENTID
-				order siblings by todo_id desc))a
+				order by todo_id desc))a
 				WHERE rownum  <![CDATA[ <= ]]> #{lastIndex}) c
         		<![CDATA[WHERE rnum > #{firstIndex}]]>
 		</select>
@@ -147,11 +141,34 @@
 			    todo.req_id,
 			    todo.todo_parentid,
 			    todo.del,
-			    member.mem_name as mem_id
-			FROM( select * from member)member, todo todo
-			WHERE
-			    member.mem_id = todo.mem_id
-			AND   todo.todo_id = #{todoId}]]>
+			    todo.mem_id
+			FROM todo todo
+			WHERE todo.todo_id = #{todoId}
+            or   todo.todo_parentid = #{todoId} 
+			]]>
+		</select>
+		
+	<!-- 한개의 할일 조회 -->
+		<select id="mygetTodo"
+			parameterType="ants.com.board.manageBoard.model.TodoVo"
+			resultType="ants.com.board.manageBoard.model.TodoVo">
+			<![CDATA[
+			SELECT
+			    todo.todo_id,
+			    TO_CHAR(todo.todo_start,'yyyy/mm/dd') as todo_start,
+			    TO_CHAR(todo.todo_end,'yyyy/mm/dd') as todo_end,
+			    todo.todo_cont,
+			    todo.todo_title,
+			    todo.todo_percent,
+			    todo_importance,
+			    todo_level,
+			    todo.req_id,
+			    todo.todo_parentid,
+			    todo.del,
+			    todo.mem_id
+			FROM todo todo
+			WHERE todo.todo_id = #{todoId}
+			]]>
 		</select>
 
 

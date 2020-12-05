@@ -127,7 +127,8 @@
 			'auto'             : false,
 			'queueID'          : 'queue',
 			'onUploadComplete' : function(file, data) { 
-				
+			
+				$('#frm').submit();
 				console.log(data); 
 			}
 		});
@@ -192,7 +193,7 @@
 		<div style="padding-left: 30px;">
 			<h3>협업이슈 작성하기</h3>
 			<br>
-			<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/insertissue" id="todoform"  >	
+			<form id="frm"method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/insertissue" id="todoform"  >	
 				
 			 <div class="form-group">
 					<label for="issueKind" class="col-sm-2 control-label">이슈종류</label> 
@@ -204,14 +205,7 @@
 				</div>
 				
 				<div class="form-group" id="todolist">
-<!-- 					<label for="todoTitle" class="col-sm-2 control-label">일감</label> -->
-<!-- 					<select name="todoTitle" id="todoselect"> -->
-						
-<!-- 					    <option value="">선택</option> -->
-<%-- 						<c:forEach items="${todolist }" var="todo" begin ="0" varStatus="vs" end="${todolist.size() }" step="1" > --%>
-<%-- 							<option value="${todo.todoId }">${todo.todoTitle }</option>			 --%>
-<%-- 						</c:forEach>			 --%>
-<!-- 					</select> -->
+
 				</div>
 				
 				<div class="form-group">
@@ -228,32 +222,35 @@
 				
 				
 				
-				<div class="form-group">
-					<label for="file" class="col-sm-2 control-label">첨부파일</label>
-					<button type="button" id="addbtn" class="btn btn-light filebtn" style="outline: 0; border: 0;">
-							<i class="fas fa-fw fa-plus" style=" font-size:10px;"></i>
-						</button> <br>
+<!-- 				<div class="form-group"> -->
+<!-- 					<label for="file" class="col-sm-2 control-label">첨부파일</label> -->
+<!-- 					<button type="button" id="addbtn" class="btn btn-light filebtn" style="outline: 0; border: 0;"> -->
+<!-- 							<i class="fas fa-fw fa-plus" style=" font-size:10px;"></i> -->
+<!-- 						</button> <br> -->
 					
-					<div id ="filediv" class="col-sm-10">
-						<input type="file" name="file" id="fileBtn">	
+<!-- 					<div id ="filediv" class="col-sm-10"> -->
+<!-- 						<input type="file" name="file" id="fileBtn">	 -->
 									
-					</div>
-				</div>
+<!-- 					</div> -->
+<!-- 				</div> -->
 						
 			</form>
 			
 			
 			
 			<form>
+				<label for="file" class="col-sm-2 control-label">첨부파일</label>
 				<div id="queue"></div>
 				<input id="file_upload" name="file" type="file" multiple="true"/>
-				<input id="submit" type="button" onClick="javascript:$('#file_upload').uploadifive('upload')" value="제출"/>
-			</form>
+<!-- 				<input id="submit" type="button" onClick="javascript:$('#file_upload').uploadifive('upload')" value="제출"/> -->
 			
-			<div class="card-footer clearfix " >
+			
+				<div class="card-footer clearfix " >
 					<input type="hidden" value="3" name="categoryId">
-					<input type="submit" class="btn btn-default float-right" id="insertbtn" value="작성하기"> 
+					<input type="button" onClick="javascript:$('#file_upload').uploadifive('upload')"  class="btn btn-default float-right" id="insertbtn" value="작성하기"> 
 				</div>
+				
+			</form>
 			
 		</div>
 	   </div>

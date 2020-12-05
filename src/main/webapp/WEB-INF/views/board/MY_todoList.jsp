@@ -25,7 +25,7 @@
 	
 	// 상세 보기
 	function todoDetail(todoId){
-	   	document.location = "/todo/onetodoView?todoId="+todoId;
+	   	document.location = "/todo/myonetodoView?todoId="+todoId;
 	}
 	
 	// 이슈 작성

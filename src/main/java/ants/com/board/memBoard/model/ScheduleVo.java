@@ -1,6 +1,5 @@
 package ants.com.board.memBoard.model;
 
-import java.util.Date;
 
 public class ScheduleVo {
 	
@@ -8,7 +7,7 @@ public class ScheduleVo {
 	private String scheId;
 	private String scheTitle;
 	private String scheCont;
-	private Date regDt;
+	private String regDt;
 	private String xVal;
 	private String yVal;
 	private String categoryId;
@@ -33,12 +32,7 @@ public class ScheduleVo {
 	public void setScheCont(String scheCont) {
 		this.scheCont = scheCont;
 	}
-	public Date getRegDt() {
-		return regDt;
-	}
-	public void setRegDt(Date regDt) {
-		this.regDt = regDt;
-	}
+	
 	public String getxVal() {
 		return xVal;
 	}

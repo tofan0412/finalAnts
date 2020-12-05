@@ -28,24 +28,49 @@ public class AlarmHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessions.add(session);
-		
-		//
+
 		Map<String, Object> httpSession = session.getAttributes();
 		MemberVo SMEMBER = (MemberVo) httpSession.get("SMEMBER");
-		userSessionsMap.put(SMEMBER.getMemId(), session);
+		String senderId = SMEMBER.getMemId();
+		
+		userSessionsMap.put(senderId, session);
 		
 	}
 	
 	/* 클라이언트가 데이터 전송 시*/
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		String msg = message.getPayload();
+		if(msg != null) {
+			String[] strs = msg.split(",");
+			
+			// pl요청
+			if(strs != null && strs[5].equals("r-pl")) {
+				String callerName = strs[0];
+				String reqId = strs[1];
+				String callerId = strs[2];
+				String url = strs[3];
+				String receiverId = strs[4];
+				String type = strs[5];
+				
+				//받는사람이 로그인해서 있다면
+				WebSocketSession boardWriterSession = userSessionsMap.get(receiverId);
+				
+				if("r-pl".equals(type) && boardWriterSession != null) {
+					TextMessage tmpMsg = new TextMessage(callerName + "님이" + "pl요청을 보냈습니다." +
+								"<a type='external' href=" +url+ ">요청서 보기</a>");
+					boardWriterSession.sendMessage(tmpMsg);
+				}
+			}
+		}
 		super.handleTextMessage(session, message);
 	}
 	
 	/* 연결해제 시*/
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		super.afterConnectionClosed(session, status);
+		userSessionsMap.remove(session.getId());
+		sessions.remove(session);
 	}
 	
 	

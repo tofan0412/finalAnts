@@ -41,8 +41,12 @@ public class ManageBoardService{
 		return mapper.projectMemList(todoVo);
 	}
 	
-	public TodoVo getTodo(TodoVo todoVo) {
+	public List<TodoVo> getTodo(TodoVo todoVo) {
 		return mapper.getTodo(todoVo);
+	}
+	
+	public TodoVo mygetTodo(TodoVo todoVo) {
+		return mapper.mygetTodo(todoVo);
 	}
 
 	public int todoupdate(TodoVo todoVo) {

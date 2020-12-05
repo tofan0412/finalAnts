@@ -5,7 +5,24 @@
 	<select id="alarmCount" resultType="int" parameterType="ants.com.common.model.AlarmVo">
 		SELECT COUNT(*)
 		  FROM alarm
-		 WHERE mem_id = ${memId} 
+		 WHERE mem_id = #{memId} 
 	</select>
+	
+	<insert id="alarmInsert" parameterType="ants.com.common.model.AlarmVo">
+		INSERT INTO alarm (
+		    alarm_id,
+		    alarm_cont,
+		    alarm_status,
+		    mem_id,
+		    alarm_type
+		)
+		VALUES (
+		    alarm_seq.nextval,
+		    #{alarmCont},
+		    'N',
+		    #{memId},
+		    #{alarmType}
+		)
+	</insert>
 
 </mapper>

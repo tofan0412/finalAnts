@@ -27,9 +27,9 @@ public class ChatController {
 	@RequestMapping("/readChatList")
 	public String readChatList(String memId, Model model) {
 		
-//		List<ChatGroupVo> chatList = chatService.readChatList(memId);
-//		
-//		model.addAttribute("chatList", chatList);
+		List<ChatGroupVo> chatList = chatService.readChatList(memId);
+		
+		model.addAttribute("chatList", chatList);
 		return "chat/chatList";
 	}
 	
