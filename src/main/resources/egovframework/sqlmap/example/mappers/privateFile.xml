@@ -8,7 +8,7 @@
 		  FROM (
 		   SELECT ROWNUM rnum, a.* 
 			 FROM (
-			     SELECT *
+			     SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, REG_DT, MEM_ID
 			     FROM privatefile
 			     WHERE MEM_ID = #{memId}
 			     ORDER BY PRIV_ID) a
@@ -24,19 +24,37 @@
 		 WHERE MEM_ID = #{memId}
 	</select>
 
-
 	
 	<!-- 파일등록  privateInsert -->
 	<insert id="privateInsert" parameterType="ants.com.file.model.PrivateFileVo">
-		<selectKey keyProperty="privId" order="BEFORE" resultType="String">
-   			SELECT 
-			PRIV_SEQ.CURRVAL FROM DUAL;
-   		</selectKey>
-		
-		<foreach collection="list" item="item" index="index" separator="union all"> 
-		INSERT INTO privatefile (PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, REG_DT, PRIV_SIZE, MEM_ID) 
-		VALUES (PRIV_SEQ.NEXTVAL, #{privFilepath}, #{privFilename}, TO_DATE(SYSDATE,'YYYY/MM/DD'), #{privSize}, #{memId})
-		</foreach> 
-	
+		INSERT INTO PRIVATEFILE ( PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, REG_DT, MEM_ID ) 
+			SELECT PRIV_SEQ.NEXTVAL as PRIV_ID, T.*
+			FROM(
+				<foreach collection="list" item="item" index="index" separator="union all"> 
+					SELECT #{item.privFilepath} as PRIV_FILEPATH
+						 , #{item.privFilename} as PRIV_FILENAME
+						 , #{item.privSize} as PRIV_SIZE
+						 , TO_DATE(SYSDATE,'YYYY/MM/DD') as REG_DT
+						 , #{item.memId} as MEM_ID
+					FROM dual
+				</foreach> 
+				) T
 	</insert>
+
+
+	<!-- 클릭한 파일 정보 -->
+	<select id="privateSelect" parameterType="ants.com.file.model.PublicFileVo" resultType="ants.com.file.model.PrivateFileVo">
+		SELECT *
+		FROM PRIVATEFILE
+		WHERE PRIV_ID = #{privId}
+	</select>
+
+	
+	<!-- 파일 삭제 -->
+	<delete id="privateDelete" parameterType="ants.com.file.model.PublicFileVo">
+		DELETE
+		FROM PRIVATEFILE 
+		WHERE PRIV_ID = #{privId}
+	</delete>
+  
 </mapper>

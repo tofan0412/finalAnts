@@ -27,7 +27,16 @@ public interface FileMapper {
 	// 개인파일 목록
 	public List<PrivateFileVo> privatefileList(PrivateFileVo privatefileVo);
 	
+	// 파일 갯수
 	public int privatefilelistCount(PrivateFileVo privatefileVo);
 	
+	// 파일등록
 	public int privateInsert(List<PrivateFileVo> list);
+	
+	// 파일 삭제하기
+	public int privateDelete(PrivateFileVo privatefileVo);
+	
+	// 해당 파일 가져오기
+	public PrivateFileVo privateSelect(PrivateFileVo privatefileVo);
+	
 }
