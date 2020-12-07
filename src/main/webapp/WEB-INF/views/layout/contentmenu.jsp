@@ -11,6 +11,7 @@ $(function(){
 	SearchListBanner = [];
 	inviteMemListBanner = [];
 	reqId = '${projectId}';
+	memId = "${SMEMBER.memId}";
 	
 	// 회원 초대 버튼을 누르면 모달창이 나온다.
 	$('.inviteBtn').click(function(){
@@ -156,7 +157,8 @@ $(function(){
 	
 	$('.inviteMemBtn').click(function(){
 		var ajaxArr = {"inviteMemList" : inviteMemListBanner, 	// 변수명을 맞춰야 한다. inviteMemList로!
-					   "reqId" 				 : reqId };
+					   "reqId" 		   : reqId,
+					   "memId"		   : memId};
 		$.ajax({
 			url : "/project/insertPjtMember",
 			data : ajaxArr,
@@ -197,6 +199,7 @@ $(function(){
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item san"><a href="#">Home</a></li>&nbsp;&nbsp;
+
 					<c:if test="${projectVo.memId == SMEMBER.memId}">
 						<li><button class="btn btn-success inviteBtn" style="float: right;">멤버
 								초대</button></li>

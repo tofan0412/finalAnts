@@ -73,7 +73,6 @@ th, td {
 					if ("success" == res){
 						// 프로젝트 생성을 완료했으면, 이어서 프로젝트 멤버를 DB에 등록한다. 
 						// 내 아이디가 프로젝트멤버에 등록될 때는, 상태가 승인 상태로 되어야 한다..! 
-						
 						$.ajax({
 							url : "/project/insertPjtMember",
 							data : ajaxArr,
@@ -81,8 +80,6 @@ th, td {
 							success : function(res){
 								if (res == "success"){
 									// 해당 요구사항 정의서의 상태를 변경해야 한다.
-									$.
-
 // 									console.log("프로젝트가 생성되었습니다.");
 									alert("프로젝트를 생성하였습니다.");
 									
