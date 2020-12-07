@@ -94,7 +94,7 @@ public class ScheduleController {
 		
 		return "tiles/schedule/scheduleSelect";
 	}	
-			
+	
 	
 	// 일정장소 수정 페이지로 이동
 	@RequestMapping("/scheduleUpdateView")
@@ -105,7 +105,6 @@ public class ScheduleController {
 			
 		return "tiles/schedule/scheduleUpdate";
 	}	
-	
 	
 	
 	// 일정장소 수정

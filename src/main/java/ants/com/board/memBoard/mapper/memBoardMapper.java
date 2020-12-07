@@ -5,11 +5,8 @@ import java.util.List;
 import ants.com.board.memBoard.model.AllBookMarkVo;
 import ants.com.board.memBoard.model.BookmarkVo;
 import ants.com.board.memBoard.model.ReplyVo;
-<<<<<<< HEAD
 import ants.com.board.memBoard.model.ScheduleVo;
-=======
 import ants.com.member.model.ProjectMemberVo;
->>>>>>> 0a7d5086f711a3d49cb7c77e5b2283a3194544d0
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("memBoardMapper")
