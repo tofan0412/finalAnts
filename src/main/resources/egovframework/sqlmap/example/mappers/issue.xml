@@ -6,50 +6,55 @@
    <!-- 이슈게시글 리스트 가져오기 -->
 	<select id="issuelist" resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="ants.com.board.memBoard.model.IssueVo">
  	
- 		SELECT c.*
+ 		SELECT Z.*
 	      FROM (
 	      	SELECT ROWNUM RNUM , 
 	           	   S.*
 		      FROM (
-				select a.issue_id , a.issue_title , a.issue_cont , to_char(a.reg_dt,'YYYY-MM-DD') as reg_dt ,
-				       a.issue_kind,  b.mem_name as mem_id
-				from( select issue_id, issue_title, issue_cont, reg_dt, issue_del, mem_id, issue_kind
-				        from issue
-				        where req_id = #{reqId}) a , member b 
-				where a.mem_id = b.mem_id and a.issue_del = 'N' 
-				     
+				select c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt ,
+						 c.issue_kind, c.book_id as issue_del , d.mem_name as mem_id
+				  from
+					  (select a.issue_id , a.issue_title , a.issue_cont , a.reg_dt ,
+							  a.issue_kind, b.book_id , a.mem_id , a.issue_del
+						 from issue a 
+						 left outer join bookmark b 
+						 on a.issue_id = b.issue_id
+						 where a.req_id = #{reqId} ) c , member d
+				  where d.mem_id = c.mem_id and c.issue_del = 'N'  
+					     
 					<if test="searchKeyword != null and searchKeyword != ''">
 				        <choose>
 				         	<when test="searchCondition == 1">
-								AND	a.mem_id LIKE '%' || #{searchKeyword} || '%'
+								AND	c.mem_id LIKE '%' || #{searchKeyword} || '%'
 							</when>
 				            <when test="searchCondition == 2">
-								AND	a.issue_title LIKE '%' || #{searchKeyword} || '%'
+								AND	c.issue_title LIKE '%' || #{searchKeyword} || '%'
 							</when>
 				            <when test="searchCondition == 3">
-								AND	a.issue_cont LIKE '%' || #{searchKeyword} || '%'
+								AND	c.issue_cont LIKE '%' || #{searchKeyword} || '%'
 							</when>
 				     
 						</choose>
 					</if>
 					<if test = "issueKind != null and issueKind != ''">
-							AND a.issue_kind = #{issueKind}
+							AND c.issue_kind = #{issueKind}
 					</if>
 					
-					ORDER BY a.reg_dt desc
+					ORDER BY c.reg_dt desc
 			  ) S
 		
 				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 
 				
-	      ) c
-	     <![CDATA[WHERE c.RNUM > #{firstIndex}]]>
+	      ) Z
+	     <![CDATA[WHERE Z.RNUM > #{firstIndex}]]>
 				
 	</select>
+
 
 	
 	<!-- 각 이슈게시글 내용 가져오기 -->
 	<select id="geteachissue"  resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="String">
-		select  a.issue_id ,  a.issue_title , a.issue_cont ,TO_CHAR( a.reg_dt,'YYYY-MM-DD') as reg_dt, 
+		select  a.issue_id ,  a.issue_title , a.issue_cont ,TO_CHAR( a.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt, 
 				a.todo_id , b.mem_name as mem_id,  a.category_id, a.issue_kind
 			
 		from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id, category_id, issue_kind, todo_id
@@ -65,13 +70,17 @@
 		select todo_title, todo_id from todo where mem_id = #{memId} and req_id = #{reqId}
 	</select>
 	
+	<!-- 다음이슈 id조회 -->
+	<select id ="getissueid" resultType="String">
+		SELECT  ISSUE_SEQ.nextval FROM DUAL
+	</select>
 	
 	
+<!-- 		<selectKey keyProperty="issueId" resultType="String" order="BEFORE"> -->
+<!-- 			SELECT  ISSUE_SEQ.nextval FROM DUAL -->
+<!-- 		</selectKey> -->
 	<!-- 이슈 작성하기 -->
 	<insert id="insertissue" parameterType="ants.com.board.memBoard.model.IssueVo">
-		<selectKey keyProperty="issueId" resultType="String" order="BEFORE">
-			SELECT  ISSUE_SEQ.nextval FROM DUAL
-		</selectKey>
 		
 		INSERT INTO issue (
 		    issue_id, issue_title, issue_cont,  reg_dt,  category_id,  
@@ -79,6 +88,12 @@
 		) VALUES (
 		    #{issueId}, #{issueTitle}, #{issueCont}, sysdate,  #{categoryId}, 
 		    #{issueKind}, 'N', #{reqId} , #{memId}, #{todoId}
+<!-- 		    <if test="todoId != null and todoId != '' "> -->
+<!-- 		      #{todoId} -->
+<!-- 		    </if> -->
+<!-- 		    <if test="todoId == null and todoId == '' "> -->
+<!-- 		      '' -->
+<!-- 		    </if> -->
 		    
 		   
 		)
@@ -140,6 +155,12 @@
 					</when>
 				</choose>
 			</if>		
+	</select>
+	
+	
+	<select id="getbookmark" parameterType="ants.com.board.memBoard.model.IssueVo">
+			select * from bookmark where req_id = #{reqId} and mem_id = #{memId}
+		
 	</select>
 
 

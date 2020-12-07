@@ -33,4 +33,89 @@
   	WHERE re_id = #{replyId}
   </update>
   
+  	<!-- 로그인한 사용자의 클릭한 프로젝트의 북마크 조회 -->
+  	<select id="getbookmark" parameterType="ants.com.member.model.ProjectMemberVo"
+				resultType="ants.com.board.memBoard.model.BookmarkVo">
+			select * from bookmark where req_id = #{reqId} and mem_id = #{memId}
+		
+	</select>
+	
+	<!-- 로그인한 사용자의 북마크 추가 -->
+	<insert id="insertbookmark" parameterType="ants.com.board.memBoard.model.BookmarkVo">
+		INSERT INTO bookmark (
+							    book_id,
+							    issue_id,
+							    req_id,
+							    mem_id
+								) VALUES (
+								    BOOK_SEQ.nextval,
+								    #{issueId},
+								    #{reqId},
+								    #{memId}
+								)
+	</insert>
+	
+	<!-- 로그인한 사용자의 북마크 삭제 -->
+	<delete id="removebookmark" parameterType="ants.com.board.memBoard.model.BookmarkVo">
+		DELETE FROM bookmark
+		WHERE issue_id = #{issueId}
+		    AND   req_id = #{reqId}
+		    AND   mem_id = #{memId}
+	</delete>
+	
+	
+	<!-- 로그인한 사용자의 모든 북마크 조회 -->
+  	<select id="getallbookmark" parameterType="nts.com.board.memBoard.model.AllBookMarkVo"
+				resultType="ants.com.board.memBoard.model.AllBookMarkVo">
+		SELECT Z.*
+	      FROM (
+	      	SELECT ROWNUM RNUM , 
+	           	   S.*
+		      FROM (		      
+					select a.book_id, a.issue_id, a.req_id, a.mem_id, b.issue_title, b.issue_kind, b.reg_dt
+					  from bookmark a, issue b 
+					 where a.mem_id = b.mem_id and a.issue_id = b.issue_id
+					      and a.mem_id = #{memId}
+					      
+					    <if test="searchKeyword != null and searchKeyword != ''">
+				        <choose>
+				         	<when test="searchCondition == 1">
+								AND	a.mem_id LIKE '%' || #{searchKeyword} || '%'
+							</when>
+				            <when test="searchCondition == 2">
+								AND	b.issue_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+				     
+						</choose>
+					</if>				
+					
+					ORDER BY b.reg_dt desc
+			  ) S
+		
+				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 
+				
+	      ) Z
+	     <![CDATA[WHERE Z.RNUM > #{firstIndex}]]>		
+	</select>
+	
+	
+	<!-- 북마크 수 조회하기 -->	
+	<select id="bookmarkPagingListCnt" parameterType="ants.com.board.memBoard.model.AllBookMarkVo"  
+				resultType="int">
+		select count(*) as totCnt
+		from bookmark
+		where mem_id = #{memId}
+		
+		<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 1">
+						AND	mem_id LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 2">
+						AND	issue_title LIKE '%' || #{searchKeyword} || '%'
+					</when>	         
+				</choose>
+			</if>		
+	</select>
+  
 </mapper>

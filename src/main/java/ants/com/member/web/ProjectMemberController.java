@@ -7,33 +7,29 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import ants.com.board.manageBoard.model.TodoVo;
-import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.service.memBoardService;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.view.FileController;
+import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectMemberVo;
-import ants.com.member.model.ReqVo;
 import ants.com.member.service.ProjectmemberService;
 import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.psl.dataaccess.mapper.Mapper;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @RequestMapping("/projectMember")
 @Controller
 public class ProjectMemberController {
-	private static final Logger logger = LoggerFactory.getLogger(ProjectMemberController.class);
 
 	@Resource(name="promemService")
 	ProjectmemberService promemService;
@@ -94,11 +90,6 @@ public class ProjectMemberController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
-//		String memId = "cony@naver.com";
-//		List<CategoryVo> categorylist = promemService.categorylist(memId);
-
-//		model.addAttribute("categorylist", categorylist);
-		
 		return "tiles/board/issuelist2";
 	}
 	
@@ -108,21 +99,18 @@ public class ProjectMemberController {
 		
 		IssueVo issuevo = promemService.geteachissue(issueId);	
 		
-		PublicFileVo pfv = new PublicFileVo();
-		pfv.setReqId((String)session.getAttribute("projectId"));
-		pfv.setCategoryId("3");
-		pfv.setSomeId(issueId);
+		String reqId = (String)session.getAttribute("projectId");
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		
+		PublicFileVo pfv = new PublicFileVo("3",issueId , reqId);
 		
 		filecontroller.getfiles(pfv, model);
 
 		model.addAttribute("issuevo", issuevo);	
 		model.addAttribute("memId", issuevo.getMemId());
 		
-		ReplyVo replyVo = new ReplyVo();
-		replyVo.setReqId("1");
-		replyVo.setSomeId(issueId);
-		replyVo.setMemId("pl1");
-		replyVo.setCategoryId("3");
+		ReplyVo replyVo = new ReplyVo(issueId,"3",reqId,memId);
 		
 		List<ReplyVo> replylist= memBoardService.replylist(replyVo);
 		model.addAttribute("replylist", replylist);
@@ -133,8 +121,10 @@ public class ProjectMemberController {
 	
 	// 이슈 작성 View
 	@RequestMapping("/insertissueView")
-	public String insertissueView(HttpSession session) {
-
+	public String insertissueView(HttpSession session, Model model) {
+		
+		String issueSeq = promemService.getissueid();
+		model.addAttribute("issueSeq", issueSeq);
 		return "tiles/board/issueInsert2";
 	}
 	
@@ -143,38 +133,29 @@ public class ProjectMemberController {
 	public String insertissue(IssueVo issueVo, MultipartHttpServletRequest multirequest, HttpSession session, Model model) {
 		
 		String reqId = (String)session.getAttribute("projectId");
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		
 		issueVo.setReqId(reqId);
-		issueVo.setMemId("pl1");
+		issueVo.setMemId(memId);
 		issueVo.setCategoryId("3");
 		
 		if(issueVo.getTodoId() == null) {
 			issueVo.setTodoId("");
 		}
-		 
-		
-		
-		System.out.println(issueVo);
-		String insertseq  = promemService.insertissue(issueVo);
-		
-		System.out.println(insertseq);
-		
-		PublicFileVo pfv = new PublicFileVo();
-		pfv.setCategoryId("3");
-		pfv.setReqId("1");
-		pfv.setSomeId(insertseq);
-		
-		filecontroller.insertfile(pfv, model, multirequest);
 
-		
+		promemService.insertissue(issueVo);
+	
 		return "redirect:/projectMember/issuelist";
 
 	}
 	
 	
-	// 이슈 mytodolist
+	// 이슈 글 작성시 mytodolist ajax호출
 	@RequestMapping("/mytodolist")
 	public String mytodolist(HttpSession session, Model model) {
-		String memId = "pl1";
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
 		String reqId = (String)session.getAttribute("projectId");
 		
 		ProjectMemberVo promemVo = new ProjectMemberVo();
@@ -194,43 +175,35 @@ public class ProjectMemberController {
 	
 	// 이슈 update View
 	@RequestMapping("/updateissueView")
-	public String updateissueView(String issueId, Model model) {
+	public String updateissueView(String issueId, Model model, HttpSession session) {
+		
+		String reqId = (String)session.getAttribute("projectId");
 		
 		IssueVo issuevo = promemService.geteachissue(issueId);
 		
-		PublicFileVo pfv = new PublicFileVo();
-		pfv.setCategoryId("3");
-		pfv.setReqId("1");
-		pfv.setSomeId(issueId);
+		PublicFileVo pfv = new PublicFileVo("3",issueId , reqId);
 		
 		filecontroller.getfiles(pfv, model);
-		
-		
+				
 		model.addAttribute("issueVo", issuevo);
 		
 		return "tiles/board/issueUpdate";
 	}
 	
+	
+
 	// 이슈 update 
 	@RequestMapping("/updateissue")
 	public String updateissue(IssueVo issueVo, String delfile, MultipartHttpServletRequest multirequest, HttpSession session, Model model ) {
 		
 		String reqId = (String)session.getAttribute("projectId");
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		
 		issueVo.setReqId(reqId);
-		issueVo.setMemId("pl1");
+		issueVo.setMemId(memId);
 		
 		int insertCnt = promemService.updateissue(issueVo);
-		
-		PublicFileVo pfv = new PublicFileVo();
-		pfv.setCategoryId("3");
-		pfv.setReqId("1");
-		pfv.setSomeId(issueVo.getIssueId());
-		
-		
-		filecontroller.delfiles(delfile);
-		
-		filecontroller.insertfile(pfv, model, multirequest);
-		
 		
 		
 		if(insertCnt>0) {		
@@ -246,9 +219,7 @@ public class ProjectMemberController {
 	@RequestMapping("/delissue")
 	public String delissue(String issueId, HttpSession session, Model model) {
 		
-		
 		int delCnt = promemService.delissue(issueId);
-		System.out.println(delCnt);
 		
 		if(delCnt>0) {		
 			return "redirect:/projectMember/issuelist";
@@ -257,7 +228,13 @@ public class ProjectMemberController {
 		}
 	}
 	
-	
+	// reqId 이용해서 해당 프로젝트에 참여하고 있는 회원 리스트 뽑아오기
+	@ResponseBody
+	@RequestMapping("/proMemList")
+	public List<ProjectMemberVo> proMemList(String reqId){
+		List<ProjectMemberVo> list = promemService.proMemList(reqId);
+		return promemService.proMemList(reqId);
+	}
 	
 	
 	

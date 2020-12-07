@@ -9,6 +9,6 @@ public interface AlarmMapper {
 
 	public int alarmInsert(AlarmVo alarmData);
 
-	public int alarmCount(MemberVo memberVo);
+	public AlarmVo alarmCount(AlarmVo alarmVo);
 	
 }

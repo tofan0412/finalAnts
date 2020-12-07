@@ -9,15 +9,44 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import ants.com.board.memBoard.mapper.memBoardMapper;
+import ants.com.board.memBoard.model.AllBookMarkVo;
+import ants.com.board.memBoard.model.BookmarkVo;
 import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectMemberVo;
 
 @Service("memBoardService")
 public class memBoardService{
 	
 	@Resource(name="memBoardMapper")
 	private memBoardMapper mapper;
+	
+	// 로그인한 사람의 해당 프로젝트의 북마크한 이력
+	public List<BookmarkVo> getbookmark(ProjectMemberVo promemVo) throws SQLException, IOException{
+		return mapper.getbookmark(promemVo);
+	}
+	
+	// 로그인한 사람의 북마크 등록
+	public int insertbookmark(BookmarkVo bookmarkVo) throws SQLException, IOException{
+		return mapper.insertbookmark(bookmarkVo);
+	}
+	
+	// 로그인한 사람의 북마크 삭제
+	public int removebookmark(BookmarkVo bookmarkVo) throws SQLException, IOException{
+		return mapper.removebookmark(bookmarkVo);
+	}
+	
+	// 로그인한 사람의 모든 북마크한 이력
+	public List<BookmarkVo> getallbookmark(AllBookMarkVo allbookmarkVo) throws SQLException, IOException{
+		return mapper.getallbookmark(allbookmarkVo);
+	}	
+	
+	// 로그인한 사람의 북마크 개수
+	public int bookmarkPagingListCnt(AllBookMarkVo allbookmarkVo) throws SQLException, IOException{
+		return mapper.bookmarkPagingListCnt(allbookmarkVo);
+	}
+	
 	
 	// 댓글 입력
 	public int insertreply(ReplyVo replyVo) throws SQLException, IOException {
@@ -35,6 +64,7 @@ public class memBoardService{
 	}
 	
 	
+
 	// 일정 등록
 	public int scheduleInsert(ScheduleVo scheduleVo) {
 		return mapper.scheduleInsert(scheduleVo);
@@ -54,12 +84,15 @@ public class memBoardService{
 	public ScheduleVo scheduleSelect(ScheduleVo scheduleVo) {
 		return mapper.scheduleSelect(scheduleVo);
 	}
-
+	
+	// 일정 업데이트
 	public int scheduleUpdate(ScheduleVo scheduleVo) {
 		return mapper.scheduleUpdate(scheduleVo);
 	}
-
+	
+	// 일정 삭제
 	public int scheduleDelete(ScheduleVo scheduleVo) {
 		return mapper.scheduleDelete(scheduleVo);
 	}
+
 }

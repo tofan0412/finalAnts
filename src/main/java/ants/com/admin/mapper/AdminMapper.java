@@ -2,6 +2,7 @@ package ants.com.admin.mapper;
 
 import java.util.List;
 
+import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
@@ -28,6 +29,10 @@ public interface AdminMapper {
 	
 	//회원이 사용가능한 카테고리 조회
 	public int noticePagingListCnt(NoticeVo noticeVo);
+
+	public AdminVo getAdmin(AdminVo adminVo);
+
+	public AdminVo adlogincheck(AdminVo adminVo);
 	
 //	// 회원이 사용가능한 카테고리 조회
 //	public List<CategoryVo> categorylist(String memId);

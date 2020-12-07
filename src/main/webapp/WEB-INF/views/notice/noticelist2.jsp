@@ -12,10 +12,10 @@
 
 <style type="text/css">
 
-	ul {
-		display: table; margin: auto; padding:0;
+/*  	ul {  */
+/* 		display: table; margin: auto; padding:0;  */
 
-		}
+/*  		}  */
 	#pagenum a{
 		 display: inline-block;
 		 text-align: center;
@@ -85,7 +85,7 @@ $(function(){
 </script>
 </head>
 
-<%@include file="./noticecontentmenu.jsp"%>
+<%@include file="/WEB-INF/views/layout/admin/adcontentmenu.jsp"%>
 <%-- <%@include file="./eachproject.jsp"%> --%>
 
 <body>
@@ -93,9 +93,9 @@ $(function(){
 <form:form commandName="noticeVo" id="listForm" name="listForm" method="post">
 
 		    <!-- Content Header (Page header) -->
-		    <section class="content-header col-md-10" style="
+		    <section class="content-header" style="
 											border-bottom: 1px solid #dee2e6;
-											background: white;">
+											background: linear-gradient(-10deg, #007bff, lightgoldenrodyellow) fixed;">
 		      <div class="container-fluid">
 		        <div class="row mb-2">
 		          <div class="col-sm-6">
@@ -137,7 +137,7 @@ $(function(){
 						<!-- end : search bar -->
 					</div>
 		        </div>
-		        
+		        </div>
 		      </div><!-- /.container-fluid -->
 		    </section>
 		    
