@@ -1,5 +1,7 @@
 package ants.com.member.model;
 
+import ants.com.base.model.BaseVo;
+
 public class MemberVo {
 	
 	
