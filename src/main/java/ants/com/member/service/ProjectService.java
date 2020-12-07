@@ -11,6 +11,8 @@ import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.member.mapper.ProjectMapper;
 import ants.com.member.mapper.ProjectmemberMapper;
+import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.model.ReqVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -39,8 +41,23 @@ public class ProjectService extends EgovAbstractServiceImpl {
 		return mapper.readReqList(plId);
 	}
 	
-	public String insertProject(ProjectVo projectVo) {
+	public int insertProject(ProjectVo projectVo) {
 		return mapper.insertProject(projectVo);
+	}
+	
+	public List<MemberVo> userSearch(String keyword){
+		keyword = ("%").concat(keyword).concat("%");
+		return mapper.userSearch(keyword);
+	}
+	
+	// 추가할 회원 아이디가 실제로 존재하는 아이디인지 확인한다.
+	public MemberVo chkMemId(String memId) {
+		return mapper.chkMemId(memId);
+	}
+	
+	// 프로젝트에 참여하는 회원 DB에 저장하기
+	public int insertPjtMember(ProjectMemberVo pjtMem) {
+		return mapper.insertPjtMember(pjtMem);
 	}
 	
 }

@@ -29,8 +29,8 @@
 
 <aside class="main-sidebar sidebar-light-teal elevation-4">
 	<!-- Brand Logo -->
-	<a href="/member/projectMainView" class="brand-link"> 
-	<img src="/dist/img/antslogo.png" class="brand-image "style="float: none; margin: 15px 0px 10px 12px;">
+	<a href="/member/projectMainView" class="brand-link" style="border-bottom: none"> 
+	<img src="/dist/img/antslogo.png" class="brand-image" style="float: none;width: 46px;margin: 15px 8px 10px 7px;height: 50px;">
 	<img src="/dist/img/ants.png" style="width: 100px;">
 	</a>
 
@@ -41,12 +41,12 @@
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 				<li class="nav-item has-treeview menu-open">
 		            <a href="#" class="nav-link active">
-		              <i class="fas fa-newspaper"></i>
+		              <i class="nav-icon fas fa-newspaper"></i>
 						<p>전체정보<i class="fas fa-angle-left right"></i></p>
 		            </a>
 		            <ul class="nav nav-treeview" style="display: block;">
 		              <li class="nav-item">
-		                <a href="#" class="nav-link">
+		                <a href="/alarmList" class="nav-link">
 		                 <i class="nav-icon fas fa-bullhorn"></i>
 							<p class="selectable">새로운 소식</p>
 		                </a>
@@ -64,9 +64,9 @@
 		                </a>
 		              </li>
 		              <li class="nav-item">
-		                <a href="#" class="nav-link">
+		                <a href="${pageContext.request.contextPath}/schedule/clendarView" class="nav-link">
 		                <i class="nav-icon far fa-calendar-alt"></i>
-						<p class="selectable">전체캘린더</p>
+						<p class="selectable">캘린더</p>
 		                </a>
 		              </li>
 					</ul>
@@ -79,7 +79,7 @@
 			        </a>
 			        <ul class="nav nav-treeview" >
 			        	<li class="nav-item">
-			                <a href="${pageContext.request.contextPath}/privatefile/privatefileList" class="nav-link">
+			                <a href="${pageContext.request.contextPath}/privatefile/privatefileView" class="nav-link">
 			                	<i class="nav-icon fas fa-folder-open"></i>
 								<p class="selectable">파일함</p>
 			                </a>

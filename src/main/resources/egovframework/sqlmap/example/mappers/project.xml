@@ -53,8 +53,26 @@
 		'대기'
 	</select>
 
-	<insert id="insertProject" parameterType="ants.com.member.model.ProjectVo">
-		INSERT INTO PROJECT (REQ_ID,MEM_ID,PRO_NAME,REG_DT) 
+	<insert id="insertProject"
+		parameterType="ants.com.member.model.ProjectVo">
+		INSERT INTO PROJECT (REQ_ID,MEM_ID,PRO_NAME,REG_DT)
 		VALUES (#{reqId},#{memId},#{proName},SYSDATE)
 	</insert>
+	
+	<select id="userSearch" parameterType="java.lang.String"
+		resultType="ants.com.member.model.MemberVo">
+		SELECT * FROM MEMBER WHERE MEM_ID LIKE #{keyword}
+	</select>
+	
+	<select id="chkMemId" parameterType="java.lang.String" resultType="ants.com.member.model.MemberVo">
+SELECT *
+		  FROM MEMBER
+		 WHERE MEM_ID = #{memId}
+</select>
+	
+<insert id="insertPjtMember" parameterType="ants.com.member.model.ProjectMemberVo">
+	INSERT INTO PROJECTMEMBER (req_id, promem_id, mem_id, promem_status) 
+	VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL, #{memId},#{promemStatus})
+	
+</insert>
 </mapper>

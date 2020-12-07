@@ -7,4 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ScheduleController {
 	
+	// 캘린더 화면 출력
+	@RequestMapping("/clendarView")
+	public String clendarView() {
+		return "member/calendar";
+	}
+	
 }

@@ -58,9 +58,15 @@ public class FileService{
 		return mapper.privateInsert(list);
 	}
 	
+	// 파일 삭제하기
+	public int privateDelete(PrivateFileVo privatefileVo){
+		return mapper.privateDelete(privatefileVo);
+	}
 	
-	
-	
+	// 해당 파일 가져오기
+	public PrivateFileVo privateSelect(PrivateFileVo privatefileVo) {
+		return mapper.privateSelect(privatefileVo);
+	}
 	
 	
 	

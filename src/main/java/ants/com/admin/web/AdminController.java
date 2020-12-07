@@ -3,6 +3,7 @@ package ants.com.admin.web;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ants.com.admin.model.AdminVo;
+import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
 import egovframework.rte.fdl.property.EgovPropertyService;
@@ -33,8 +36,68 @@ public class AdminController {
 	public String projectmain(HttpSession session) {
 		
 		session.setAttribute("noticeId", "1");
-		return "tiles/notice/noticecontentmenu";
+		return "admain.tiles/layout/admin/adcontentmenu";
 	}
+	
+	////////////////////////////////////////////////admin-login
+	
+	//관리자 로그인 페이지
+	@RequestMapping("/adloginView")
+	public String adloginView() {
+		return "/layout/admin/adlogin";
+	}
+	
+	// 로그인 로직
+	@RequestMapping(path = "/adloginFunc")
+	public String adloginFunc(AdminVo adminVo, HttpSession session, Model model) {
+
+
+		AdminVo dbAdmin = adminService.getAdmin(adminVo);
+		logger.debug("dbAdmin : {}", dbAdmin);
+		
+		if (dbAdmin != (null) && adminVo.getAdminPass().equals(dbAdmin.getAdminPass())) {
+			session.setAttribute("SADMIN", dbAdmin);
+				return "admain.tiles/layout/admin/adcontentmenu";
+		} else {
+			return "redirect:/member/loginView";
+		}
+
+	}
+	
+	// 로그인 체크 ajax
+	@RequestMapping(path = "/adlogincheck", method = RequestMethod.GET)
+	public String adlogincheck(AdminVo adminVo, Model model) {
+		
+		logger.debug("LoginController - logincheck : {} ", adminVo);
+		
+		AdminVo dbAdmin = adminService.adlogincheck(adminVo);
+		
+		logger.debug("logincheck rowcount : {}", dbAdmin);
+		
+		
+		model.addAttribute("adminId", dbAdmin.getAdminId());
+		model.addAttribute("adminPass", dbAdmin.getAdminPass());
+		
+		return "/layout/admin/adlogin";
+	}
+	
+	//관리자 로그아웃
+	@RequestMapping("/adlogout")
+	public String adlogout(HttpSession session) {
+		session.invalidate();
+		return adloginView();
+	}
+	
+	// 화면 상단 로고 클릭 시 메인 페이지로 이동
+	@RequestMapping("/adMainView")
+	public String adMainView() {
+		return "admain.tiles/layout/admin/adcontentmenu";
+	}
+	////////////////////////////////////////////////
+	
+	
+	
+	
 	
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
@@ -104,7 +167,7 @@ public class AdminController {
 //		List<CategoryVo> categorylist = promemService.categorylist(memId);
 //		model.addAttribute("categorylist", categorylist);
 		
-		return "tiles/notice/noticelist2";
+		return "admain.tiles/notice/noticelist2";
 	}
 	
 	// 각 공지사항 상세보기
@@ -118,14 +181,14 @@ public class AdminController {
 		
 		model.addAttribute("adminId", "admin");
 		 
-		return "tiles/notice/noticeDetail";
+		return "admain.tiles/notice/noticeDetail";
 	}
 	
 	// 공지사항 작성 View
 	@RequestMapping("/insertnoticeView")
 	public String insertnoticeView(HttpSession session) {
 
-		return "tiles/notice/noticeInsert";
+		return "admain.tiles/notice/noticeInsert";
 	}
 	
 	// 공지사항 작성
@@ -157,7 +220,7 @@ public class AdminController {
 		NoticeVo noticevo = adminService.geteachnotice(noticeId);
 		model.addAttribute("noticeVo", noticevo);
 		
-		return "tiles/notice/noticeUpdate";
+		return "admain.tiles/notice/noticeUpdate";
 	}
 	
 	// 공지사항 update 
@@ -192,10 +255,94 @@ public class AdminController {
 	
 	
 	
-	
-	
-	/////////////////////////////////////////////////////////////////////////test
+	/////////////////////////////////////////////////////////////////////////ip
+//	// IP리스트 출력
+//	@RequestMapping("/iplist")
+//	public String getiplist(@ModelAttribute("ipVo") IpVo ipVo, HttpSession session, Model model) throws Exception{
+//		
+//		String ipId = (String)session.getAttribute("ipId");
+//	
+//		ipVo.setIpId(ipId);
+//		
+//		/** EgovPropertyService.sample */
+//		ipVo.setPageUnit(propertiesService.getInt("pageUnit"));
+//		ipVo.setPageSize(propertiesService.getInt("pageSize"));
+//	
+//		/** pageing setting */
+//		PaginationInfo paginationInfo = new PaginationInfo();
+//		paginationInfo.setCurrentPageNo(ipVo.getPageIndex());
+//		paginationInfo.setRecordCountPerPage(ipVo.getPageUnit());
+//		paginationInfo.setPageSize(ipVo.getPageSize());
+//	
+//		ipVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+//		ipVo.setLastIndex(paginationInfo.getLastRecordIndex());
+//		ipVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+//	
+//		List<IpVo> resultList = adminService.iplist(ipVo);
+//		model.addAttribute("noticelist", resultList);
+//	
+//		int totCnt = adminService.ipPagingListCnt(ipVo);
+//		paginationInfo.setTotalRecordCount(totCnt);
+//		model.addAttribute("paginationInfo", paginationInfo);
+//		
+//		
+//		return "tiles/admin/iplist";
+//	}
+//	@RequestMapping("/iplist")
+//	 public String getClientIP(HttpServletRequest request) {
+//
+//	     String ip = request.getHeader("X-FORWARDED-FOR"); 
+//	     
+//	     if (ip == null || ip.length() == 0) {
+//	         ip = request.getHeader("Proxy-Client-IP");
+//	     }
+//
+//	     if (ip == null || ip.length() == 0) {
+//	         ip = request.getHeader("WL-Proxy-Client-IP");  // 웹로직
+//	     }
+//
+//	     if (ip == null || ip.length() == 0) {
+//	         ip = request.getRemoteAddr() ;
+//	     }
+//	     
+////	     return ip;
+//	     return "tiles/admin/testip";
 
+//	 }
+	
+	
+	/////////////////////////////////////////////////////////////////////////memberlist	
+	// 회원리스트 출력
+	@RequestMapping("/admemberlist")
+	public String getnoticelist2(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model) throws Exception{
+		
+		String noticeId = (String)session.getAttribute("noticeId");
+	
+		noticeVo.setNoticeId(noticeId);
+		
+		/** EgovPropertyService.sample */
+		noticeVo.setPageUnit(propertiesService.getInt("pageUnit"));
+		noticeVo.setPageSize(propertiesService.getInt("pageSize"));
+	
+		/** pageing setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(noticeVo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(noticeVo.getPageUnit());
+		paginationInfo.setPageSize(noticeVo.getPageSize());
+	
+		noticeVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		noticeVo.setLastIndex(paginationInfo.getLastRecordIndex());
+		noticeVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+	
+		List<NoticeVo> resultList = adminService.noticelist(noticeVo);
+		model.addAttribute("noticelist", resultList);
+	
+		int totCnt = adminService.noticePagingListCnt(noticeVo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
+		
+		return "admain.tiles/admin/admemberlist";
+	}
 
 
 

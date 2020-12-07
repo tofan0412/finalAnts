@@ -307,7 +307,7 @@
 		$('.plDelete').on('mouseenter', function() {
 
 		})
-
+		/* pl등록버튼 클릭*/
 		$('.addplModal').on('click', function() {
 			var reqId = $(this).attr("reqId");
 			console.log(reqId);
@@ -380,8 +380,9 @@
 				data : $('#plForm').serialize(),
 				method : "POST",
 				success : function(data){
-					//saveMsg();
-					$("#addpl .close").click()
+					saveMsg();
+					$("#addpl .close").click();
+					fn_egov_reqList();
 				}
 				
 			});
@@ -391,24 +392,25 @@
 	
 	/* pl요청 알림메세지 db에 저장하기 */
 	function saveMsg(){
-		var AlarmData = {
-							"alarmCont" : "",
+		var alarmData = {
+							"alarmCont" : "${SMEMBER.memName}"+ $('#modalReqId').val() + ",${SMEMBER.memId},/req/reqDetail?reqId="+$('#modalReqId').val(),
 							"memId" : $('#searchInput').val(),
-							"alarmType" : "r-pl"
+							"alarmType" : "req-pl"
 		}
+		console.log(alarmData);
 		
 		$.ajax({
 				url : "/alarmInsert",
-				data : JSON.stringify(AlarmData),
+				data : JSON.stringify(alarmData),
+				type : 'POST',
 				contentType : "application/json; charset=utf-8",
 				dataType : 'text',
 				success : function(data){
-					console.log(data);
-// 					if(socket){
-// 						let socketMsg = "scrap," + memNickname +","+ memberSeq +","+ receiverEmail +","+ essayboard_seq;
-// 						console.log("msgmsg : " + socketMsg);
-// 						socket.send(socketMsg);
-// 					}
+					
+					let socketMsg = "${SMEMBER.memName}," + alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+					console.log("msgmsg : " + socketMsg);
+					socket.send(socketMsg);
+					
 				},
 				error : function(err){
 					console.log(err);
@@ -451,7 +453,7 @@
 		}
 	}
 
-	/* 요구사항정의서 삭제하기 */
+	/* pl 삭제하기 */
 	function plDelete(id) {
 		if (confirm("pl삭제시 복구 할 수 없으며 재등록을 해야합니다. 삭제하시겠습니까?")) {
 			document.listForm.selectedId.value = id;
@@ -482,7 +484,7 @@
 		document.listForm.submit();
 	}
 
-	/* 글 등록 화면 function */
+	/* 글 목록 화면 function */
 	function fn_egov_reqList() {
 		document.listForm.action = "<c:url value='/req/reqList'/>";
 		document.listForm.submit();

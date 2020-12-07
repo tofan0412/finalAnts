@@ -3,49 +3,86 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
+ 	
 	var socket = null;
     $(document).ready(function(){
-    	//웹소켓 연결
-    	sock = new SockJS('/alarm');
-    	socket = sock;
+    	//알림을 받을때만 웹소켓 연결
+    	if("${SMEMBER.memAlert == 'Y'}"){
+	    	sock = new SockJS('/alarm');
+	    	socket = sock;
+	    	
+	    	sock.onopen = function(){
+	    		console.log('info: connection opened');
+	    	};
+	    	
+	    	//데이터전달 받았을 때
+	    	sock.onmessage = onMessage;
+	    	//소켓연결 끊겼을 때
+	    	sock.onclose = onClose;
+    	}
     	
-    	sock.onopen = function(){
-    		console.log('info: connection opened');
-    	};
+    	alarmCount('${SMEMBER.memId}');
     	
-    	//데이터전달 받았을 때
-    	sock.onmessage = onMessage;
-    	//소켓연결 끊겼을 때
-    	sock.onclose = onClose;
+    	
 	});
     
 	function onMessage(evt){
 		var data  = evt.data;
 		console.log("ReceivMessage: " + data + "\n");
 		var memId = '${SMEMBER.memId}';
+		alarmCount(memId);
 		
-		$.ajax({
-			url:'/countAlarm',
-			data:{memId : memId},
-			type:'POST',
-			dataType:'text',
-			success:function(data){
-				if(data == '0'){
-					
-				}else{
-					$('#alarmCount').text(data);
-				}
-			},
-			error:function(err){
-				alert('err');
-			}
-		})
+		toastr.info(data,"PL 요청");
+
+    	toastr.options = {
+    	  "closeButton": true,
+    	  "debug": false,
+    	  "newestOnTop": false,
+    	  "progressBar": true,
+    	  "positionClass": "toast-top-right",
+    	  "preventDuplicates": false,
+    	  "showDuration": "500",
+    	  "hideDuration": "1000",
+    	  "timeOut": "7000",
+    	  "extendedTimeOut": "1000",
+    	  "showEasing": "swing",
+    	  "hideEasing": "linear",
+    	  "showMethod": "fadeIn",
+    	  "hideMethod": "fadeOut"
+    	}
+		
 	}
 	
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {
 		alert("소켓 연결 끊김....")
 	}
+	
+	/* 알림 총 개수*/
+	function alarmCount(memId){
+		$.ajax({
+			url:'/alarmCount',
+			data:{memId : memId},
+			type:'POST',
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+				var alarmVo = data.alarmVo;
+				if(alarmVo.totalCnt == '0'){
+				}else{
+					$('#alarmCount').text(alarmVo.totalCnt);
+				}
+				$('.alarmCount').prepend(alarmVo.totalCnt);
+				$('#resCnt').append(parseInt(alarmVo.reqPl + alarmVo.resPl)+ " 새로운 요청");
+				$('#replyCnt').append(alarmVo.reply + " 새로운 댓글");
+				$('#postsCnt').append(alarmVo.posts + " 새로운 게시물");
+			},
+			error:function(err){
+				alert(err);
+			}
+		});
+	}		
+
 </script>
    <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -55,7 +92,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/index3.html" class="nav-link">Home</a>
+        <a href="#" class="nav-link">Home</a>
       </li>
     </ul>
 
@@ -147,24 +184,21 @@
           <span class="badge badge-warning navbar-badge" id="alarmCount"></span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <span class="dropdown-item dropdown-header alarmCount">개의 알림이 있습니다.</span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
+          <a href="#" class="dropdown-item" id="resCnt" style="font-size: 0.9em">
+            <i class="fas fa-envelope mr-2 " ></i>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
+          <a href="#" class="dropdown-item" id="replyCnt" style="font-size: 0.9em">
+            <i class="fas fa-users mr-2" ></i> 
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
+          <a href="#" class="dropdown-item" id="postsCnt" style="font-size: 0.9em">
+            <i class="fas fa-file mr-2" ></i> 
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          <a href="#" class="dropdown-item dropdown-footer">모든 알림 보기</a>
         </div>
       </li>
       

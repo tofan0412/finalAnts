@@ -5,6 +5,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import ants.com.common.mapper.AlarmMapper;
+import ants.com.common.model.AlarmVo;
+import ants.com.member.model.MemberVo;
 
 @Service("alarmService")
 public class AlarmService {
@@ -12,7 +14,12 @@ public class AlarmService {
 	@Resource(name="alarmMapper")
 	private AlarmMapper alarmMapper;
 	
-	public String alarmMapper() {
-		return alarmMapper.alarmCount();
+
+	public int alarmInsert(AlarmVo alarmData) {
+		return alarmMapper.alarmInsert(alarmData);
+	}
+
+	public AlarmVo alarmCount(AlarmVo alarmVo) {
+		return alarmMapper.alarmCount(alarmVo);
 	}
 }

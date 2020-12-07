@@ -30,11 +30,6 @@
 	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView?todoParentid='+todoId);
 		})
 		
-		//진행도 수정
-		$(document).on('click','#modalBtn', function(){
-			document.proForm.action = "<c:url value='/todo/progressChange'/>";
-			document.proForm.submit();
-		})
 		
 		// 뒤로가기
 		$(document).on('click','#back', function(){
@@ -154,7 +149,6 @@
 					 <button type="button" class="btn btn-default" id="deleteBtn">삭제</button>
 					 <button type="button" class="btn btn-default" id="creatChildBtn">하위일감 생성</button>
 				 </c:if>
-					 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">진행도</button>    
 					 <button type="button" class="btn btn-default" id="back">뒤로가기</button>    
 				 </div>
             </div>
@@ -177,31 +171,4 @@
             <!-- /.card-body -->
           </div>
 </div>
-
- 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">진행도 수정</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-      <div class="modal-body">
-       	진행도를 입력해주세요!
-       	<form id="proForm" name="proForm" method="post">
-       	<input type="hidden" name="todoId" id="todoId_in">
-       	<input type="text" name="todoPercent">
-       	</form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="modalBtn">등록</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-		
 </html>

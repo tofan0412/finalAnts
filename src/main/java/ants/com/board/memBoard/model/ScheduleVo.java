@@ -1,6 +1,5 @@
 package ants.com.board.memBoard.model;
 
-import java.util.Date;
 
 public class ScheduleVo {
 	
@@ -8,13 +7,17 @@ public class ScheduleVo {
 	private String scheId;
 	private String scheTitle;
 	private String scheCont;
-	private Date regDt;
+	private String regDt;
 	private String xVal;
 	private String yVal;
 	private String categoryId;
 	private String reqId;
 	private String memId;
 	private String del;
+	private String startDt;
+	private String endDt;
+	
+	
 	public String getScheId() {
 		return scheId;
 	}
@@ -33,10 +36,10 @@ public class ScheduleVo {
 	public void setScheCont(String scheCont) {
 		this.scheCont = scheCont;
 	}
-	public Date getRegDt() {
+	public String getRegDt() {
 		return regDt;
 	}
-	public void setRegDt(Date regDt) {
+	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
 	public String getxVal() {
@@ -75,12 +78,29 @@ public class ScheduleVo {
 	public void setDel(String del) {
 		this.del = del;
 	}
+	public String getStartDt() {
+		return startDt;
+	}
+	public void setStartDt(String startDt) {
+		this.startDt = startDt;
+	}
+	public String getEndDt() {
+		return endDt;
+	}
+	public void setEndDt(String endDt) {
+		this.endDt = endDt;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "ScheduleVo [scheId=" + scheId + ", scheTitle=" + scheTitle + ", scheCont=" + scheCont + ", regDt="
 				+ regDt + ", xVal=" + xVal + ", yVal=" + yVal + ", categoryId=" + categoryId + ", reqId=" + reqId
-				+ ", memId=" + memId + ", del=" + del + "]";
+				+ ", memId=" + memId + ", del=" + del + ", startDt=" + startDt + ", endDt=" + endDt + "]";
 	}
+	
+	
+	
 	
 	
 }
