@@ -244,7 +244,7 @@ th, td {
 			</c:if>
 		</tbody>
 	</table>
-	<span class="jg" style="float: right;">'승인'을 누르는 경우, 프로젝트 생성창으로
+	<span class="jg" style="float: right; padding-right : 60px;">'승인'을 누르는 경우, 프로젝트 생성창으로
 		이동합니다.</span>
 
 
@@ -252,6 +252,7 @@ th, td {
 	<div class="modal fade" id="mkProject" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel">
 		<div class="modal-dialog modal-lg" role="document">
+			
 			<div class="modal-content" style="height: 500px;">
 				<div class="modal-header">
 					<h3 class="modal-title jg" id="addplLable">새 프로젝트 생성하기</h3>
