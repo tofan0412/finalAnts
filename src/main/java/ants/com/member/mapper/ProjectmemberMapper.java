@@ -21,6 +21,9 @@ public interface ProjectmemberMapper {
 	// 해당 이슈
 	public IssueVo geteachissue(String issueId);
 	
+	// 이슈게시글 다음 index값 추출
+	public String getissueid();
+	
 	// 이슈게시글 작성
 	public int insertissue(IssueVo issueVo);
 	

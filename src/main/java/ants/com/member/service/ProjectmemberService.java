@@ -34,11 +34,14 @@ public class ProjectmemberService extends EgovAbstractServiceImpl {
 	public IssueVo geteachissue(String issueId) {
 		return mapper.geteachissue(issueId);
 	}
-
+	// 이슈글 다음 index가져오기
+	public String getissueid() {
+		return mapper.getissueid();
+	}
+	
 	// 이슈글 작성하기
-	public String insertissue(IssueVo issueVo) {
-		mapper.insertissue(issueVo);
-		return issueVo.getIssueId();
+	public int insertissue(IssueVo issueVo) {
+		return mapper.insertissue(issueVo);
 	}
 
 	// 이슈글 수정하기
