@@ -393,9 +393,9 @@
 	/* pl요청 알림메세지 db에 저장하기 */
 	function saveMsg(){
 		var alarmData = {
-							"alarmCont" : $('#modalReqId').val() + ",${SMEMBER.memId},/req/reqDetail?reqId="+$('#modalReqId').val(),
+							"alarmCont" : "${SMEMBER.memName}"+ $('#modalReqId').val() + ",${SMEMBER.memId},/req/reqDetail?reqId="+$('#modalReqId').val(),
 							"memId" : $('#searchInput').val(),
-							"alarmType" : "r-pl"
+							"alarmType" : "req-pl"
 		}
 		console.log(alarmData);
 		

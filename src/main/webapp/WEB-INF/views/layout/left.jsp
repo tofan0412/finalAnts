@@ -29,8 +29,8 @@
 
 <aside class="main-sidebar sidebar-light-teal elevation-4">
 	<!-- Brand Logo -->
-	<a href="/member/projectMainView" class="brand-link"> 
-	<img src="/dist/img/antslogo.png" class="brand-image "style="float: none; margin: 15px 0px 10px 12px;">
+	<a href="/member/projectMainView" class="brand-link" style="border-bottom: none"> 
+	<img src="/dist/img/antslogo.png" class="brand-image" style="float: none;width: 46px;margin: 15px 8px 10px 7px;height: 50px;">
 	<img src="/dist/img/ants.png" style="width: 100px;">
 	</a>
 
@@ -46,7 +46,7 @@
 		            </a>
 		            <ul class="nav nav-treeview" style="display: block;">
 		              <li class="nav-item">
-		                <a href="#" class="nav-link">
+		                <a href="/alarmList" class="nav-link">
 		                 <i class="nav-icon fas fa-bullhorn"></i>
 							<p class="selectable">새로운 소식</p>
 		                </a>

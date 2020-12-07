@@ -3,20 +3,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
+ 	
 	var socket = null;
     $(document).ready(function(){
-    	//웹소켓 연결
-    	sock = new SockJS('/alarm');
-    	socket = sock;
-    	
-    	sock.onopen = function(){
-    		console.log('info: connection opened');
-    	};
-    	
-    	//데이터전달 받았을 때
-    	sock.onmessage = onMessage;
-    	//소켓연결 끊겼을 때
-    	sock.onclose = onClose;
+    	//알림을 받을때만 웹소켓 연결
+    	if("${SMEMBER.memAlert == 'Y'}"){
+	    	sock = new SockJS('/alarm');
+	    	socket = sock;
+	    	
+	    	sock.onopen = function(){
+	    		console.log('info: connection opened');
+	    	};
+	    	
+	    	//데이터전달 받았을 때
+	    	sock.onmessage = onMessage;
+	    	//소켓연결 끊겼을 때
+	    	sock.onclose = onClose;
+    	}
     	
     	alarmCount('${SMEMBER.memId}');
     	
@@ -50,28 +53,32 @@
 		
 	}
 	
-	
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {
 		alert("소켓 연결 끊김....")
 	}
 	
+	/* 알림 총 개수*/
 	function alarmCount(memId){
 		$.ajax({
 			url:'/alarmCount',
 			data:{memId : memId},
 			type:'POST',
 			dataType:'json',
-			success:function(count){
-				console.log(count);
-				if(count.cnt == '0'){
-					
+			success:function(data){
+				console.log(data);
+				var alarmVo = data.alarmVo;
+				if(alarmVo.totalCnt == '0'){
 				}else{
-					$('#alarmCount').text(count.cnt);
+					$('#alarmCount').text(alarmVo.totalCnt);
 				}
+				$('.alarmCount').prepend(alarmVo.totalCnt);
+				$('#resCnt').append(parseInt(alarmVo.reqPl + alarmVo.resPl)+ " 새로운 요청");
+				$('#replyCnt').append(alarmVo.reply + " 새로운 댓글");
+				$('#postsCnt').append(alarmVo.posts + " 새로운 게시물");
 			},
 			error:function(err){
-				alert('err');
+				alert(err);
 			}
 		});
 	}		
@@ -177,24 +184,21 @@
           <span class="badge badge-warning navbar-badge" id="alarmCount"></span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <span class="dropdown-item dropdown-header alarmCount">개의 알림이 있습니다.</span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
+          <a href="#" class="dropdown-item" id="resCnt" style="font-size: 0.9em">
+            <i class="fas fa-envelope mr-2 " ></i>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
+          <a href="#" class="dropdown-item" id="replyCnt" style="font-size: 0.9em">
+            <i class="fas fa-users mr-2" ></i> 
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
+          <a href="#" class="dropdown-item" id="postsCnt" style="font-size: 0.9em">
+            <i class="fas fa-file mr-2" ></i> 
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          <a href="#" class="dropdown-item dropdown-footer">모든 알림 보기</a>
         </div>
       </li>
       
