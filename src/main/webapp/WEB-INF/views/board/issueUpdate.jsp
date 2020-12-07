@@ -19,6 +19,9 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	
+<script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -40,28 +43,17 @@
 		
 		if('${issueVo.issueKind }' == 'issue'){
 			$("#kindselect").val('이슈')
-			mytodolist();
-			
-			
-			
+			mytodolist();		
 		}else{
 			$("#kindselect").val('공지사항')
 		}
-
-		 
-		 
-// 		$("#kindselect").each(function() {
-// 			var $this = $(this);		
-// 			if($this.val() == '${issueVo.issueKind }')				
-// 			$this.prop('selected', 'selected');
-// 		});
 		
 		 
 		
 		fileSlotCnt = "${filelist.size() }";
 		console.log(fileSlotCnt)
 		maxFileSlot =5;
-		 
+		// 파일 삭제 버튼클릭
 		$(document).on("click", "#btnMinus", function(){
 				var id = $(this).prev().attr('name')
 				$('#delfile').append(id + ",");
@@ -83,7 +75,6 @@
 	     });
         
 	    $('#addbtn').on('click', function(){
-
    	  	    fileSlotCnt++;
      		console.log(fileSlotCnt);
     	    var html = '<br><input type="file" name="file" id="fileBtn">'
@@ -98,16 +89,83 @@
 				 alert("파일은 총 "+maxFileSlot+"개 까지만 첨부가능합니다.");
 		   	}else{
 		   		$('#addbtn').show()
-		   	}
-    	  
-	    	   
+		   	} 	   
 	    })
-		 
-		      
+	    
+	    
+	    var uploadCnt = 0;
+     	//파일 업로드
+     	$('#file_upload').uploadifive({
+			'uploadScript'     : '/file/insertfile',
+			'fileObjName'     : 'file',    
+			'formData'         : {
+								   'categoryId' : "3",
+								   'someId'     : '${issueVo.issueId }'
+			                     },
+			'auto'             : false,
+			'queueID'          : 'queue',
+			"fileType": '.gif, .jpg, .png, .jpeg, .bmp, .doc, .ppt, .xls, .xlsx, .docx, .pptx, .zip, .rar, .pdf',
+			 "multi": true,
+             "height": 30,
+             "width": 100,
+             "buttonText": "파일찾기",
+             "fileSizeLimit": "20MB",
+             "uploadLimit": 10,
+			 'onUploadComplete' : function(file, data) { 
+			
+				uploadCnt +=1;
+				insertcheck(); 
+			},
+			'onCancel': function (file) {
+				alert('실패')
+			} // 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
+		});
+     	
+     	
+     	// 업데이트 버튼 클릭시 파일 삭제 호출
+     	$('#updatebtn').on('click', function(){
+     		 delfiles();	     	
+     	})
+     	
+     	// 업로드된 파일의 수와 사용자가 올린 파일의 수가 같을 시 from 전송
+     	function insertcheck(){
+     		if(uploadCnt == $('.uploadifive-queue-item').length){
+     			$('#updateform').submit();     		
+
+        	}
+
+    	}
+	      
  	});
 	
 	
 	
+	// 삭제할 파일 
+	function delfiles(){
+		console.log($('#delfile').val());
+	 	$.ajax({url :"${pageContext.request.contextPath}/file/delfiles",
+	 			 data : {delfile : $('#delfile').val() },
+				 method : "post",
+				 success :function(data){	
+					 console.log(data);
+					 
+					// 업로드할 파일이 존재하지 않을시 update전송
+		     		if($('.uploadifive-queue-item').length ==0){    			
+		     			 $('#updateform').submit();	    					    					     			
+		     		// 업로드할 파일이 존재시 파일 등록 호출
+		     		}else{
+		     			$('#file_upload').uploadifive('upload');
+		     		}
+		     		
+				 }
+		 	})
+	}
+	
+	
+	
+	
+	
+	// 내 일감 리스트
 	function mytodolist(){
 	 	$.ajax({url :"${pageContext.request.contextPath}/projectMember/mytodolist",
 				 method : "get",
@@ -164,6 +222,31 @@
 		height: auto;
 		font-size: 1.1em;
 	}
+	#fileBtn{
+		 display: inline-block;
+		 padding-bottom:  .5em;
+		 padding-top:  .5em;
+	}
+	
+	.uploadifive-button {
+		float: left;
+		margin-right: 10px;
+		
+	}
+	
+	#queue {
+		border: 1px solid #E5E5E5;
+		height: 177px;
+		width : 450px;
+		overflow: auto;
+		margin-bottom: 10px;
+		padding: 0 3px 3px;
+	
+	}
+	#uploadifive-file_upload{
+		width : 200px;
+		height: 30px;
+	}
 </style>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
@@ -174,7 +257,7 @@
 		<div style="padding-left: 30px;">
 			<h3>협업이슈 수정하기</h3>
 			<br>
-			<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/updateissue" id="todoform"  >	
+			<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/updateissue" id="updateform"  >	
 			
 				<div class="form-group" >
 					<label for="issueTitle" class="col-sm-2 control-label">이슈종류 </label>
@@ -201,30 +284,39 @@
 				
 				
 				<div class="form-group">
-					<label id ="filelabel" for="file" class="col-sm-2 control-label">첨부파일</label>
-					<button type="button" id="addbtn" class="btn btn-light filebtn" style="outline: 0; border: 0;">
-						<i class="fas fa-fw fa-plus" style=" font-size:10px;"></i>
-					</button>
-				
-				
+					<label id ="filelabel" for="files" class="col-sm-2 control-label">첨부파일</label>		
 					<div id ="file" class="col-sm-10">
 					
 						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
 							<input type="search" name="${files.pubId}" value="${files.pubFilename}" disabled >
 		   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">
-								<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>
-							</button>
+								<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i> 
+							</button><br>
 						</c:forEach>								
 						
 					</div>
 					<input type="hidden" id="delfile" name="delfile" value="">	
+					<input type="hidden" value="${issueVo.issueId }" name="issueId">
+					<input type="hidden" value="3" name="categoryId" value="${issueVo.categoryId }">
 				</div>
 		
-				<br><br>
-				 <input type="hidden" value="${issueVo.issueId }" name="issueId">
-				<input type="hidden" name="categoryId" value="${issueVo.categoryId }">
-				<input type="submit" class="btn btn-default" id="updateBtn" value="수정하기">
 			</form>
+			
+			<form>
+<!-- 				<label for="file" class="col-sm-2 control-label">첨부파일</label> -->
+				<div id="queue"></div>
+				<input id="file_upload" name="file" type="file" multiple="true"/>
+<!-- 				<input id="submit" type="button" onClick="javascript:$('#file_upload').uploadifive('upload')" value="제출"/> -->
+			
+				<br><br>
+				<div class="card-footer clearfix " >
+					
+					<input type="button" class="btn btn-default float-right" id="updatebtn" value="수정하기">
+				</div>
+				
+			</form>
+			
+			
 		</div>
 	   </div>
 	 </div>      

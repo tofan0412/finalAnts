@@ -33,4 +33,42 @@
   	WHERE re_id = #{replyId}
   </update>
   
+  	<!-- 로그인한 사용자의 클릭한 프로젝트의 북마크 조회 -->
+  	<select id="getbookmark" parameterType="ants.com.member.model.ProjectMemberVo"
+				resultType="ants.com.board.memBoard.model.BookmarkVo">
+			select * from bookmark where req_id = #{reqId} and mem_id = #{memId}
+		
+	</select>
+	
+	<!-- 로그인한 사용자의 북마크 추가 -->
+	<insert id="insertbookmark" parameterType="ants.com.board.memBoard.model.BookmarkVo">
+		INSERT INTO bookmark (
+							    book_id,
+							    issue_id,
+							    req_id,
+							    mem_id
+								) VALUES (
+								    BOOK_SEQ.nextval,
+								    #{issueId},
+								    #{reqId},
+								    #{memId}
+								)
+	</insert>
+	
+	<!-- 로그인한 사용자의 북마크 삭제 -->
+	<delete id="removebookmark" parameterType="ants.com.board.memBoard.model.BookmarkVo">
+		DELETE FROM bookmark
+		WHERE issue_id = #{issueId}
+		    AND   req_id = #{reqId}
+		    AND   mem_id = #{memId}
+	</delete>
+	
+	
+	<!-- 로그인한 사용자의 모든 북마크 조회 -->
+  	<select id="getallbookmark" parameterType="ants.com.member.model.ProjectMemberVo"
+				resultType="ants.com.board.memBoard.model.BookmarkVo">
+			select * from bookmark where mem_id = #{memId}
+		
+	</select>
+  
 </mapper>

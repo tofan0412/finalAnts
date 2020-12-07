@@ -7,12 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 
 <script type="text/javascript">
 $(function(){
 	
+// 	resizeIt();	
+    
 	$('#todoDetail').hide();
 	
 	$("#modissue").on('click', function(){
@@ -27,11 +29,10 @@ $(function(){
         }
 	})
 	
+	// 글씨 변환
  	if('${issuevo.issueKind}' == 'issue'){ 		
- 	
  		$('#issueKind').text('이슈');	
- 			
- 			console.log()
+ 			console.log('${issuevo.issueKind}')
 	 		todo();
  			
  	}else if('${issuevo.issueKind}' == 'notice'){
@@ -42,6 +43,7 @@ $(function(){
 	
 	// issue에서 뒤로가기
 	$(document).on('click','#back', function(){
+		
 		window.history.back();
 	})
 	
@@ -59,20 +61,33 @@ $(function(){
 		 $('#todoDetail').show();
 		 $('#detailDiv').hide();
 			
-// 		 todoDetail(todoId)
+		 todoDetail(todoId)
 	})
 	
-	
+	// 댓글 작성
 	$('#replybtn2').on('click', function(){
 		replyinsert();
 	})
 	
-	
 })
 
+
+
+
+function resizeIt() {
+// 	 $('.writeCon').on( 'keyup', 'textarea', function (e){
+	        $('.writeCon').css('height', 'auto' );
+	        $('.writeCon').height(  $('.writeCon').scrollHeight );
+// 	     });
+
+
+
+};
+	
+//일감 상세보기
 function todo(){
 
- 	$.ajax({url :"${pageContext.request.contextPath}/todo/hissueDetail",
+ 	$.ajax({url :"/todo/myonetodo",
 		   data :{todoId : "${issuevo.todoId}"},
 		   method : "get",
 		   success :function(data){	
@@ -100,14 +115,16 @@ function todo(){
 	})
 }
 
+// 일감 상세보기
 function todoDetail(todoId) {
 	$.ajax({
-		url : "/todo/onetodo",
+		url : "/todo/myonetodo",
 		method : "get",
 		data : {
 			todoId : todoId
 		},
 		success : function(data) {
+			console.log(data)
 			
 			$('#todoDetail').show();
 			$('#detailDiv').hide();
@@ -121,7 +138,6 @@ function todoDetail(todoId) {
 				$("#todoImportance").html('긴급');
 			}
 			
-			$("#todoImportance").html(data.todoVo.todoImportance);
 			$("#todoStart").html(data.todoVo.todoStart);
 			$("#todoEnd").html(data.todoVo.todoEnd);
 			$("#todoId").val(data.todoVo.todoId);
@@ -134,7 +150,7 @@ function todoDetail(todoId) {
 }
 
 
-
+// 댓글 작성
 function replyinsert() {
 		someId : '${issuevo.issueId }';
 	$.ajax({
@@ -176,23 +192,36 @@ function replyinsert() {
 		float: left;
 	}
 	
-	#writeCon.autosize { min-height: 50px; }
+/*  	.writeCon.autosize { min-height: 50px; }  */
 	
-	#writeCon{
-		resize :none;
-		background-color:transparent;
-/* 		height: 70px; */
+	.writeCon{
+ 		resize :none;
+/* 		background-color:transparent; */
+		width: 500px  ;
+  		height: 100px; 
+/* 		min-height: 50px; */  
+/*   		overflow: visible;  */
+/*   		overflow-y:hidden; */
+
 	}
 	
 	#re_con{
-		width: 600px;
-		height: 70px;
+		width: 500px;
+		height: 100px;
       	resize: none;
-      	background-color:transparent;
+/*       	background-color:transparent; */
       	padding: 1.1em; /* prevents text jump on Enter keypress */
       	padding-bottom: 0.2em;
       	line-height: 1.6;
 	}	
+	
+	#filediv{
+		display: inline-block;
+		
+	}
+	#filelabel{
+		float: left;
+	}
 </style>
 
 </head>
@@ -250,18 +279,22 @@ function replyinsert() {
 			
 
 			<div class="form-group">
-				<label for="File" class="col-sm-2 control-label">첨부파일</label>
-				<c:if test="${filelist.size() == 0}">
-					[ 첨부파일이 없습니다. ]
-				</c:if>
-				
-				<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
-								
-					<a href="${cp }/file/publicfileDown?pubId=${files.pubId}"><input id ="files${vs.index}"  type="button" class="btn btn-default" name="${files.pubId}" value="${files.pubFilename} 다운로드" ></a>
-				</c:forEach>
+				<label id="filelabel" for="File" class="col-sm-2 control-label">첨부파일</label>
+				<div id = "filediv">
+					<c:if test="${filelist.size() == 0}">
+						[ 첨부파일이 없습니다. ]
+					</c:if>
+					
+					<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
+									
+						<a href="${cp }/file/publicfileDown?pubId=${files.pubId}"><input id ="files${vs.index}"  type="button" class="btn btn-default" name="${files.pubId}" value="${files.pubFilename} 다운로드" ></a>
+						<br>
+					</c:forEach>
+				</div>
 			</div>
-		
-				
+			
+			
+			<br>	
 			<div class="card-footer clearfix" >
 				
 		 			<c:if test="${issuevo.memId == memId}">
@@ -277,10 +310,10 @@ function replyinsert() {
 				<div class="form-group">
 				<hr>
 					<label for="pass" class="col-sm-2 control-label">댓글</label>
-					<div class="col-sm-8">					
+					<div class="col-sm-12">					
 						<c:forEach items="${replylist }" var="replylist">
 							<c:if test= "${replylist.del == 'N'}">								
-								<textarea disabled class ="reply_con" id="writeCon">${replylist.replyCont}</textarea>
+								<textarea disabled class ="writeCon">${replylist.replyCont}</textarea>
 								[ ${replylist.memId } / ${replylist.regDt} ] 	<hr>
 								
 <%-- 								<c:if test= "${issueVo.memId == 'pl1' && replylist.del == 'N'}">								 --%>
