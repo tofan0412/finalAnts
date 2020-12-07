@@ -55,6 +55,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 				
 				//받는사람이 로그인해서 있다면
 				WebSocketSession boardWriterSession = userSessionsMap.get(receiverId);
+				logger.debug("receiverId:{}",boardWriterSession);
 				
 				if("r-pl".equals(type) && boardWriterSession != null) {
 					TextMessage tmpMsg = new TextMessage(callerName + "님이" + "pl요청을 보냈습니다." +
