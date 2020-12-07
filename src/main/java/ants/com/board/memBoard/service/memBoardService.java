@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import ants.com.board.memBoard.mapper.memBoardMapper;
+import ants.com.board.memBoard.model.AllBookMarkVo;
 import ants.com.board.memBoard.model.BookmarkVo;
 import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.member.model.MemberVo;
@@ -36,9 +37,15 @@ public class memBoardService{
 	}
 	
 	// 로그인한 사람의 모든 북마크한 이력
-	public List<BookmarkVo> getallbookmark(ProjectMemberVo promemVo) throws SQLException, IOException{
-		return mapper.getallbookmark(promemVo);
+	public List<BookmarkVo> getallbookmark(AllBookMarkVo allbookmarkVo) throws SQLException, IOException{
+		return mapper.getallbookmark(allbookmarkVo);
 	}	
+	
+	// 로그인한 사람의 북마크 개수
+	public int bookmarkPagingListCnt(AllBookMarkVo allbookmarkVo) throws SQLException, IOException{
+		return mapper.bookmarkPagingListCnt(allbookmarkVo);
+	}
+	
 	
 	// 댓글 입력
 	public int insertreply(ReplyVo replyVo) throws SQLException, IOException {

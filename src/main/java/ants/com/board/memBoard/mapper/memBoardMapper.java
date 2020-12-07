@@ -2,6 +2,7 @@ package ants.com.board.memBoard.mapper;
 
 import java.util.List;
 
+import ants.com.board.memBoard.model.AllBookMarkVo;
 import ants.com.board.memBoard.model.BookmarkVo;
 import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.member.model.ProjectMemberVo;
@@ -20,7 +21,10 @@ public interface memBoardMapper {
 	public int removebookmark(BookmarkVo bookmarkVo);
 	
 	// 로그인한 사람의 모든 북마크한 이력
-	public List<BookmarkVo> getallbookmark(ProjectMemberVo promemVo);
+	public List<BookmarkVo> getallbookmark(AllBookMarkVo allbookmarkVo);
+	
+	// 로그이한 사람의 북마크 수
+	public int bookmarkPagingListCnt(AllBookMarkVo allbookmarkVo);
 	
 	// 댓글 입력
 	public int insertreply(ReplyVo replyVo);
