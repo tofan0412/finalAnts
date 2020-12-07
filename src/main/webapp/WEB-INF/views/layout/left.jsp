@@ -41,7 +41,7 @@
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 				<li class="nav-item has-treeview menu-open">
 		            <a href="#" class="nav-link active">
-		              <i class="fas fa-newspaper"></i>
+		              <i class="nav-icon fas fa-newspaper"></i>
 						<p>전체정보<i class="fas fa-angle-left right"></i></p>
 		            </a>
 		            <ul class="nav nav-treeview" style="display: block;">
