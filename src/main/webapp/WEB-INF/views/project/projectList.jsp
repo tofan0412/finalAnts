@@ -60,7 +60,7 @@ th, td {
 			
 			//생성 직전, 자기 자신 아이디를 추가한다. 
 			inviteMemList.push(me);
-			var ajaxArr = {"inviteMemList" : inviteMemList, "reqId" : reqId};
+			var ajaxArr = {"inviteMemList" : inviteMemList, "reqId" : reqId, "memId" : me};
 			
 			// 프로젝트를 먼저 생성한다.
 			$.ajax({
@@ -72,6 +72,8 @@ th, td {
 				success : function(res){
 					if ("success" == res){
 						// 프로젝트 생성을 완료했으면, 이어서 프로젝트 멤버를 DB에 등록한다. 
+						// 내 아이디가 프로젝트멤버에 등록될 때는, 상태가 승인 상태로 되어야 한다..! 
+						
 						$.ajax({
 							url : "/project/insertPjtMember",
 							data : ajaxArr,
@@ -250,7 +252,7 @@ th, td {
 
 	<!-- 프로젝트 생성 modal 창 -->
 	<div class="modal fade" id="mkProject" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel">
+		aria-labelledby="createPjtModal">
 		<div class="modal-dialog modal-lg" role="document">
 			
 			<div class="modal-content" style="height: 500px;">

@@ -81,7 +81,7 @@ public class ProjectController {
 	@ResponseBody
 	@RequestMapping("/insertPjtMember")
 	public String insertPjtMember(@RequestParam(value="inviteMemList[]")String[] inviteMemList, 
-								  @RequestParam(value="reqId") String reqId) {
+								  @RequestParam(value="reqId") String reqId, String memId) {
 		
 		int cnt = 0; 
 		// 프로젝트 초대 회원수만큼, DB에 입력한다. 
@@ -89,7 +89,15 @@ public class ProjectController {
 			ProjectMemberVo pjtMem = new ProjectMemberVo();
 			pjtMem.setReqId(reqId);
 			pjtMem.setMemId(inviteMemList[i]);
-			pjtMem.setPromemStatus("wait");
+			
+			// 내가 아닌 다른 회원인 경우에는 상태를 'WAIT'으로 설정하지만, 
+			// 나 자신은 PL이면서 프로젝트 멤버이므로, 'IN'으로 설정한다.
+			if (inviteMemList[i] != memId) {	// 만약 memId가 null이면 무조건 true..
+				pjtMem.setPromemStatus("WAIT");
+			}else {
+				pjtMem.setPromemStatus("IN");
+			}
+			
 			pjtMem.setPromemId("trashValue");
 			int result = projectService.insertPjtMember(pjtMem);
 			cnt += result;

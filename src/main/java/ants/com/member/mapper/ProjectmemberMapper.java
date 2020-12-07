@@ -33,10 +33,12 @@ public interface ProjectmemberMapper {
 	// 회원이 사용가능한 카테고리 조회
 	public List<CategoryVo> categorylist(String memId);
 	
-	
 	// 회원이 사용가능한 카테고리 조회
 	public int issuePagingListCnt(IssueVo issueVo);
 	
 	//프로젝트명 불러오기
 	public List<ProjectVo> memInProjectList(String memId);
+	
+	//reqId 이용해서 해당 프로젝트에 참여하고 있는 회원 조회하기
+	public List<ProjectMemberVo> proMemList(String reqId); 
 }
