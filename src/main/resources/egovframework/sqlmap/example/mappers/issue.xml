@@ -18,7 +18,8 @@
 							  a.issue_kind, b.book_id , a.mem_id , a.issue_del
 						 from issue a 
 						 left outer join bookmark b 
-						 on a.issue_id = b.issue_id) c , member d
+						 on a.issue_id = b.issue_id
+						 where a.req_id = #{reqId} ) c , member d
 				  where d.mem_id = c.mem_id and c.issue_del = 'N'  
 					     
 					<if test="searchKeyword != null and searchKeyword != ''">

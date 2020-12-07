@@ -20,7 +20,7 @@ public class memBoardService{
 	@Resource(name="memBoardMapper")
 	private memBoardMapper mapper;
 	
-	// 로그인한 사람의 북마크한 이력
+	// 로그인한 사람의 해당 프로젝트의 북마크한 이력
 	public List<BookmarkVo> getbookmark(ProjectMemberVo promemVo) throws SQLException, IOException{
 		return mapper.getbookmark(promemVo);
 	}
@@ -34,6 +34,11 @@ public class memBoardService{
 	public int removebookmark(BookmarkVo bookmarkVo) throws SQLException, IOException{
 		return mapper.removebookmark(bookmarkVo);
 	}
+	
+	// 로그인한 사람의 모든 북마크한 이력
+	public List<BookmarkVo> getallbookmark(ProjectMemberVo promemVo) throws SQLException, IOException{
+		return mapper.getallbookmark(promemVo);
+	}	
 	
 	// 댓글 입력
 	public int insertreply(ReplyVo replyVo) throws SQLException, IOException {

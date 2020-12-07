@@ -33,7 +33,7 @@
   	WHERE re_id = #{replyId}
   </update>
   
-  	<!-- 로그인한 사용자의 북마크 조회 -->
+  	<!-- 로그인한 사용자의 클릭한 프로젝트의 북마크 조회 -->
   	<select id="getbookmark" parameterType="ants.com.member.model.ProjectMemberVo"
 				resultType="ants.com.board.memBoard.model.BookmarkVo">
 			select * from bookmark where req_id = #{reqId} and mem_id = #{memId}
@@ -62,5 +62,13 @@
 		    AND   req_id = #{reqId}
 		    AND   mem_id = #{memId}
 	</delete>
+	
+	
+	<!-- 로그인한 사용자의 모든 북마크 조회 -->
+  	<select id="getallbookmark" parameterType="ants.com.member.model.ProjectMemberVo"
+				resultType="ants.com.board.memBoard.model.BookmarkVo">
+			select * from bookmark where mem_id = #{memId}
+		
+	</select>
   
 </mapper>

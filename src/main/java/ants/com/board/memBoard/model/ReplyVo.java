@@ -1,7 +1,5 @@
 package ants.com.board.memBoard.model;
 
-import java.util.Date;
-
 public class ReplyVo {
 	
 	
@@ -13,6 +11,18 @@ public class ReplyVo {
 	private String categoryId;
 	private String reqId;
 	private String memId;
+	
+	public ReplyVo() {
+		// TODO Auto-generated constructor stub
+	}	
+	
+	public ReplyVo(String someId, String categoryId, String reqId, String memId) {
+		super();
+		this.someId = someId;
+		this.categoryId = categoryId;
+		this.reqId = reqId;
+		this.memId = memId;
+	}
 	
 	public String getReplyId() {
 		return replyId;

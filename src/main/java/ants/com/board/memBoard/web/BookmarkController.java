@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ants.com.board.memBoard.model.BookmarkVo;
 import ants.com.board.memBoard.service.memBoardService;
+import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectMemberVo;
 
 @RequestMapping("/bookmark")
@@ -26,8 +27,12 @@ public class BookmarkController {
 	@RequestMapping(path ="/getbookmark")
 	public String getbookmark(ProjectMemberVo promemVo, Model model, HttpSession session) throws SQLException, IOException {
 		
-		promemVo.setMemId("pl1");
-		promemVo.setReqId("1");
+		String reqId = (String)session.getAttribute("projectId");
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		
+		promemVo.setMemId(memId);
+		promemVo.setReqId(reqId);
 		
 		List<BookmarkVo> booklist = memBoardService.getbookmark(promemVo);
 		model.addAttribute("bookmarklist", booklist);
@@ -40,8 +45,12 @@ public class BookmarkController {
 	@RequestMapping(path ="/addbookmark")
 	public String addbookmark(BookmarkVo bookmarkVo, Model model, HttpSession session) throws SQLException, IOException {
 		
-		bookmarkVo.setMemId("pl1");
-		bookmarkVo.setReqId("1");		
+		String reqId = (String)session.getAttribute("projectId");
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		
+		bookmarkVo.setMemId(memId);
+		bookmarkVo.setReqId(reqId);		
 		
 		memBoardService.insertbookmark(bookmarkVo);
 		
@@ -52,13 +61,32 @@ public class BookmarkController {
 	@RequestMapping(path ="/removebookmark")
 	public String removebookmark(BookmarkVo bookmarkVo, Model model, HttpSession session) throws SQLException, IOException {
 		
-		bookmarkVo.setMemId("pl1");
-		bookmarkVo.setReqId("1");		
+		String reqId = (String)session.getAttribute("projectId");
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		
+		bookmarkVo.setMemId(memId);
+		bookmarkVo.setReqId(reqId);		
 		
 		memBoardService.removebookmark(bookmarkVo);
 		
 		return "jsonView";
 	}
 	
+	// 북마크 조회
+	@RequestMapping(path ="/getallbookmark")
+	public String getallbookmark(ProjectMemberVo promemVo, Model model, HttpSession session) throws SQLException, IOException {
+		
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		
+		promemVo.setMemId(memId);
+		
+		List<BookmarkVo> booklist = memBoardService.getallbookmark(promemVo);
+		model.addAttribute("bookmarklist", booklist);
+		System.out.println("booklist :" + booklist);
+		
+		return "tiles/board/bookmarklist";
+	}
 	
 }

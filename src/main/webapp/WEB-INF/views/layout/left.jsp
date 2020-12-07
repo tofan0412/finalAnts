@@ -52,7 +52,7 @@
 		                </a>
 		              </li>
 		              <li class="nav-item">
-		                <a href="#" class="nav-link">
+		                <a href="${pageContext.request.contextPath}/bookmark/getallbookmark" class="nav-link">
 						<i class="nav-icon fas fa-bookmark"></i>
 						<p class="selectable">북마크</p>
 		                </a>

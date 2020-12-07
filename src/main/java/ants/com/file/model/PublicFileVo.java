@@ -16,9 +16,13 @@ public class PublicFileVo {
 	public PublicFileVo() {
 		
 	}
-	
-	
-	
+	public PublicFileVo(String categoryId, String someId, String reqId) {
+		super();
+		this.categoryId = categoryId;
+		this.someId = someId;
+		this.reqId = reqId;
+	}
+
 	public PublicFileVo(String pubFilepath, String pubFilename, String pubExtension, String categoryId, String someId,
 			String reqId, String pubSize) {
 		super();
@@ -30,8 +34,6 @@ public class PublicFileVo {
 		this.reqId = reqId;
 		this.pubSize = pubSize;
 	}
-
-
 
 	public String getPubId() {
 		return pubId;
