@@ -12,4 +12,5 @@ public class ScheduleController {
 	public String clendarView() {
 		return "member/calendar";
 	}
+	
 }
