@@ -81,7 +81,8 @@ public class ProjectController {
 	@ResponseBody
 	@RequestMapping("/insertPjtMember")
 	public String insertPjtMember(@RequestParam(value="inviteMemList[]")String[] inviteMemList, 
-								  @RequestParam(value="reqId") String reqId, String memId) {
+								  @RequestParam(value="reqId") String reqId, 
+								  @RequestParam(value="memId") String memId) {
 		
 		int cnt = 0; 
 		// 프로젝트 초대 회원수만큼, DB에 입력한다. 

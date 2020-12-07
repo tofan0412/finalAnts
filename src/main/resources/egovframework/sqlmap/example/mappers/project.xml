@@ -49,8 +49,7 @@
 		SELECT *
 		FROM REQLIST
 		WHERE PL_ID = #{plId}
-		AND STATUS =
-		'대기'
+		AND STATUS = 'WAIT'
 	</select>
 
 	<insert id="insertProject"
