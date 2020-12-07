@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ants.com.admin.mapper.AdminMapper">
+
+	<select id="getAdmin" parameterType="ants.com.admin.model.AdminVo" resultType="ants.com.admin.model.AdminVo">
+		SELECT  admin_id,
+				admin_pass
+		FROM ADMIN
+		WHERE ADMIN_ID = #{adminId}
+	</select>
+	
+	<select id="adlogincheck" parameterType="ants.com.admin.model.AdminVo" resultType="ants.com.admin.model.AdminVo">
+		SELECT * FROM ADMIN
+		WHERE ADMIN_ID = #{adminId}
+		AND ADMIN_PASS = #{adminPass}
+	</select>
+
+
+</mapper>

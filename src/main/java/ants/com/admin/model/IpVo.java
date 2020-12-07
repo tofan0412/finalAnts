@@ -1,6 +1,8 @@
 package ants.com.admin.model;
 
-public class IpVo {
+import ants.com.base.model.BaseVo;
+
+public class IpVo extends BaseVo{
 	private String ipId;
 	private String ipAddr;
 	private String ipStatus;
