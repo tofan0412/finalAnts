@@ -51,6 +51,9 @@
 
 <script type="text/javascript">
 $(function(){
+	
+// 	getbookmark();
+	
 	$("#insertissue").on('click', function(){
 		
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/insertissueView');
@@ -58,9 +61,66 @@ $(function(){
 	
 	$("#pagenum a").addClass("page-link");  
 	
+	
+	
+	
+	
+	// 북마크 클릭시
+	$(".area-desc").click(function() { 
+		var arrowImage = $(this).children("span").children("img"); 
+		
+		arrowImage.attr("src", function(index, attr){ 
+			issueid = arrowImage.attr('name')
+			if (attr.match('white')) { 			
+						
+				$.ajax({url :"${pageContext.request.contextPath}/bookmark/addbookmark",
+					 method : "get",
+					 data : {issueId : issueid},
+					 success :function(data){	
+						
+						alert('등록성공') 	
+					 }
+				})				
+				return attr.replace("white", "black"); 
+			} else if(attr.match('black')){ 
+						
+				$.ajax({url :"${pageContext.request.contextPath}/bookmark/removebookmark",
+					 method : "get",
+					 data : {issueId : issueid},
+					 success :function(data){	
+						
+						alert('삭제성공') 	
+					 }
+				})	
+				return attr.replace("black", "white"); 
+				
+			} 
+		}); 
+	});
+	
+	
+	
+
 
 
 })
+
+// 북마크한 리스트
+// function getbookmark(){
+//  	$.ajax({url :"${pageContext.request.contextPath}/bookmark/addbookmark",
+// 			 method : "get",
+// // 			 data : {issueId : issueId},
+// 			 success :function(data){	
+				
+				 		 
+// 			 }
+				 
+				
+				 
+// 			 }
+// 	 	})
+// }
+
 
 
 /* pagination 페이지 링크 function */
@@ -82,7 +142,6 @@ $(function(){
 	 	document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
 	    document.listForm.submit();
 }
- 
  
  
  
@@ -171,6 +230,7 @@ $(function(){
 							<th>   작성자 </th>
 							<th>   날짜   </th>
 							<th>   종류   </th>
+							<th> 즐겨찾기 </th>
 <!-- 	                      <th style="text-align: center;">응답 상태</th> -->
 	                      <th></th>
 	                    </tr>
@@ -191,6 +251,21 @@ $(function(){
 									<c:if test="${issue.issueKind == 'notice'}">
 										<td> 공지사항</td>										
 									</c:if>
+<%-- 									<c:forEach items = "${bookmarklist }" var ="book" > --%>
+			
+	<!-- 									<td><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name="bookmark_toggle_01" -->
+	<!-- 													OnClick="toggle_img_src( 'bookmark_toggle_01', '/resources/dist/img/bookmark-white.png', '/resources/dist/img/bookmark-black.png');" style="cursor:pointer"></td> -->
+										<c:choose>
+											<c:when test="${issue.issueDel == '' || issue.issueDel == null }">
+												<td class = "area-desc"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
+											</c:when>
+											<c:otherwise>
+												<td class = "area-desc"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
+											</c:otherwise>
+										</c:choose>
+										
+								
+<%-- 									</c:forEach>  --%>
 			                      <td style="text-align: center;">
 									 
 								</tr>

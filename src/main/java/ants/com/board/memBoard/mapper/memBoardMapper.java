@@ -2,12 +2,23 @@ package ants.com.board.memBoard.mapper;
 
 import java.util.List;
 
+import ants.com.board.memBoard.model.BookmarkVo;
 import ants.com.board.memBoard.model.ReplyVo;
+import ants.com.member.model.ProjectMemberVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("memBoardMapper")
 public interface memBoardMapper {
 
+	// 로그인한 사람의 북마크한 이력
+	public List<BookmarkVo> getbookmark(ProjectMemberVo promemVo);
+	
+	// 로그인한 사람의 북마크 등록
+	public int insertbookmark(BookmarkVo bookmarkVo);
+	
+	// 로그인한 사람의 북마크 삭제
+	public int removebookmark(BookmarkVo bookmarkVo);
+	
 	// 댓글 입력
 	public int insertreply(ReplyVo replyVo);
 	

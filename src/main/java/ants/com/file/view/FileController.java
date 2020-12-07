@@ -10,7 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -18,21 +20,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.file.mapper.FileMapper;
 import ants.com.file.model.PublicFileVo;
+import ants.com.file.service.FileService;
 
 @RequestMapping("/file")
 @Controller
 public class FileController {
 	
 	
-	@Resource(name ="fileMapper")
-	private FileMapper mapper;
+	@Resource(name ="fileService")
+	private FileService fileService;
 	
 	
 	// 해당 게시글 파일 다운로드
 	@RequestMapping(path ="/publicfileDown")
 	public String getfileDown(String pubId, HttpSession session, Model model)  {
 
-		PublicFileVo filevo = mapper.getfileDetail(pubId);
+		PublicFileVo filevo = fileService.getfile(pubId);
 		
 		model.addAttribute("pubFilename" ,filevo.getPubFilename());
 		model.addAttribute("pubFilepath" ,filevo.getPubFilepath());
@@ -49,6 +52,7 @@ public class FileController {
 		
 		
 		int count= 0;
+		String fileId = "";
 		List<MultipartFile> files = multirequest.getFiles("file");
 		for(int i=0 ; i < files.size() ; i++) {
 		
@@ -73,12 +77,15 @@ public class FileController {
 				//PublicFileVo(String pubFilepath, String pubFilename, String pubExtension, String categoryId, String someId,
 									//String reqId, String pubSize)
 				
-				count += mapper.insertfile(filevo);	
+				fileId +=  fileService.insertFile(filevo);
 				
 			}
 		
 		}
-		model.addAttribute("count",count);
+		pfv.setPubId(fileId);
+//		model.addAttribute("count",count);
+//		model.addAttribute("fileId",fileId);
+
 		
 		return "jsonView";
 	}
@@ -88,7 +95,7 @@ public class FileController {
 	@RequestMapping(path ="/getfiles")
 	public String getfiles(PublicFileVo pfv, Model model)  {
 	
-		List<PublicFileVo> filelist =  mapper.getfiles(pfv);
+		List<PublicFileVo> filelist =  fileService.filelist(pfv);
 		
 		model.addAttribute("filelist" , filelist);
 		
@@ -97,7 +104,7 @@ public class FileController {
 	
 	
 	// 게시글의 파일 삭제하기
-	@RequestMapping(path ="/defiles")
+	@RequestMapping(path ="/delfiles",   method=RequestMethod.POST)
 	public String delfiles(String delfile)  {
 		
 		System.out.println("defile : " + delfile);
@@ -106,13 +113,13 @@ public class FileController {
 			String[] pubId = delfile.split(",");
 			for(int i=0; i<pubId.length;i++) {
 				
-				mapper.delfiles(pubId[i]);
+				fileService.defiles(pubId[i]);
 			}		
 		}
 		
 //		ra.addAttribute("PublicFileVo", pfv);
 		
-		return "";
+		return "jsonView";
 	}
 	
 

@@ -89,6 +89,7 @@
  	})
  	
  	
+ 	// 나에게 주어진 일감 목록
  	function mytodolist(){
 	 	$.ajax({url :"${pageContext.request.contextPath}/projectMember/mytodolist",
 				 method : "get",

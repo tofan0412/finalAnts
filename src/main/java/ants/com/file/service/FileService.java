@@ -24,8 +24,10 @@ public class FileService{
 	}
 	
 	// 파일 넣기
-	public int insertFile(PublicFileVo filevo) {
-		return mapper.insertfile(filevo);
+	public String insertFile(PublicFileVo filevo) {
+		mapper.insertfile(filevo);
+		System.out.println("id : " +filevo.getPubId());
+		return filevo.getPubId();
 	}
 	
 	// 해당 게시글 파일들 가져오기
