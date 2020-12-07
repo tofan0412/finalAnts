@@ -34,7 +34,8 @@ public class AlarmHandler extends TextWebSocketHandler {
 		String senderId = SMEMBER.getMemId();
 		
 		userSessionsMap.put(senderId, session);
-		
+		logger.debug("sessions:{}",sessions);
+		logger.debug("userSessionMap:{}",userSessionsMap);
 	}
 	
 	/* 클라이언트가 데이터 전송 시*/
@@ -58,13 +59,12 @@ public class AlarmHandler extends TextWebSocketHandler {
 				logger.debug("receiverId:{}",boardWriterSession);
 				
 				if("r-pl".equals(type) && boardWriterSession != null) {
-					TextMessage tmpMsg = new TextMessage(callerName + "님이" + "pl요청을 보냈습니다." +
+					TextMessage tmpMsg = new TextMessage(callerName + "님이" + " pl요청을 보냈습니다. " +
 								"<a type='external' href=" +url+ ">요청서 보기</a>");
 					boardWriterSession.sendMessage(tmpMsg);
 				}
 			}
 		}
-		super.handleTextMessage(session, message);
 	}
 	
 	/* 연결해제 시*/

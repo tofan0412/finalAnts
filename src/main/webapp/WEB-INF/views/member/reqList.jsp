@@ -382,7 +382,7 @@
 				success : function(data){
 					saveMsg();
 					$("#addpl .close").click();
-					//fn_egov_reqList();
+					fn_egov_reqList();
 				}
 				
 			});
