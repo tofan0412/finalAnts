@@ -13,14 +13,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.support.MultipartFilter;
+
 import java.util.UUID;
 
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.file.model.PrivateFileVo;
+import ants.com.file.model.PublicFileVo;
 import ants.com.file.service.FileService;
 import ants.com.member.model.MemberVo;
 import ants.com.member.web.MemberController;
@@ -38,7 +43,7 @@ public class PrivateFileController {
 	
 	
 	// 개인 파일함리스트
-	@RequestMapping(path ="/privatefileList")
+	@RequestMapping(path ="/privatefileView")
 	public String privatefile(HttpSession session, Model model, @ModelAttribute("privatefileVo") PrivateFileVo privatefileVo)  {
 		
 		
@@ -71,71 +76,139 @@ public class PrivateFileController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		logger.debug("totCnt : {}", totCnt);
 		
-		return "tiles/privatefile/privatefileList";
+		return "tiles/privatefile/privatefileView";
 	}
 	
 	
 	
-	// 파일등록
-	@RequestMapping("/privateInsert")
-	public String todoView(Model model, PrivateFileVo privatefileVo, HttpSession session, MultipartHttpServletRequest mhsq) {
+	// 파일등록	(파일 버튼 추가/제거 버전)
+	@RequestMapping("/privateInsert0")
+	public String todoView(PrivateFileVo privatefileVo, BindingResult br, @RequestPart(value="privFilepath", required=false)  List<MultipartFile> file, Model model, HttpSession session) {
 		
 		List<PrivateFileVo> list = new ArrayList<>();   
 		
-		logger.debug("privatefileVo : {}", privatefileVo);
-		logger.debug("MultipartHttpServletRequest : {}", mhsq);
+		for(int i=0; i<file.size(); i++) {
+			
+			PrivateFileVo privateVo = new PrivateFileVo();
+			
+			MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+			privateVo.setMemId(memberVo.getMemId());
+			
+			
+			String Filepath = "";
+			String Filename = "";
+			String Filesize = "";
+			
+			if(!file.get(i).getOriginalFilename().equals("") && !file.get(i).getOriginalFilename().equals(null)) {
+					
 		
-		String memId = (String) session.getAttribute("memId");
-		privatefileVo.setMemId(memId);
+				if (br.hasErrors()) {
+	//				return "main.tiles/member/memberRegist";
+				}
+				
+				String filekey = UUID.randomUUID().toString();
+				
+				/*+ filekey + "\\"*/
+				Filepath = "D:\\upload\\" + file.get(i).getOriginalFilename();
+				Filename = file.get(i).getOriginalFilename();
+				File uploadFile = new File(Filepath);
+				Filesize = String.valueOf(file.get(i).getSize());
+				
+				
+				try {
+					file.get(i).transferTo(uploadFile);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+				
+				logger.debug("---------------------통과-------------------");
+				
+				
+				privateVo.setPrivFilepath(Filepath);
+				privateVo.setPrivFilename(Filename);
+				privateVo.setPrivSize(Filesize);
+				
+				list.add(privateVo);
+			}
+		}
 		
-		 String realFolder = "D:\\upload\\";
-	        File dir = new File(realFolder);
-	        if (!dir.isDirectory()) {
-	            dir.mkdirs();
-	        }
-	        
-	        // 넘어온 파일을 리스트로 저장
-	        List<MultipartFile> mf = mhsq.getFiles("uploadFile");
-	        if (mf.size() == 1 && mf.get(0).getOriginalFilename().equals("")) {
-	             
-	        } else {
-	            for (int i = 0; i < mf.size(); i++) {
-	                // 파일 중복명 처리
-	                String genId = UUID.randomUUID().toString();
-	                // 본래 파일명
-	                String originalfileName = mf.get(i).getOriginalFilename();
-	                 
-	                String saveFileName = genId + "." + originalfileName.split(".")[1];
-	                // 저장되는 파일 이름
-	                
-	                String savePath = realFolder + saveFileName; // 저장 될 파일 경로
-	 
-	                long fileSize = mf.get(i).getSize(); // 파일 사이즈
-	 
-	                
-	                try {
-						mf.get(i).transferTo(new File(savePath));
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					} 
-	                
-	                // 파일 저장
-	                privatefileVo.setPrivFilename(originalfileName);
-	                privatefileVo.setPrivFilepath(savePath);
-	                privatefileVo.setPrivSize(String.valueOf(fileSize));
-	                
-	                list.set(i, privatefileVo);
-	            }
-	        }
-	    
-	        
 	    int todoInsert = fileService.privateInsert(list);
 		
-		return "tiles/privatefile/privatefileList";
+		return "redirect:/privatefile/privatefileView";
 	}
 	
 	
+	
+	// 파일 업로드
+	@RequestMapping(path ="/privateInsert")
+	public String insertfile(PrivateFileVo privatefileVo, Model model, HttpSession session, MultipartHttpServletRequest multirequest)  {
+		
+		List<PrivateFileVo> list = new ArrayList<>(); 
+		
+		int count= 0;
+		List<MultipartFile> files = multirequest.getFiles("file");
+		for(int i=0 ; i < files.size() ; i++) {
+			
+			PrivateFileVo privateVo = new PrivateFileVo();
+			
+			MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+			privateVo.setMemId(memberVo.getMemId());
+		
+			if(files.get(i).getSize()>0) {
+				
+				double size = ((double) files.get(i).getSize()/1024);				
+				double filesize = Math.round(size *100)/100.0;
+				
+				String Filepath = "D:\\upload\\" + files.get(i).getOriginalFilename();
+				String Filename = files.get(i).getOriginalFilename();
+				
+				File uploadFile = new File(Filepath);
+				try {
+					files.get(i).transferTo(uploadFile);
+				} catch (IllegalStateException | IOException e) {
+				}
+				
+				privateVo.setPrivFilepath(Filepath);
+				privateVo.setPrivFilename(Filename);
+				privateVo.setPrivSize(String.valueOf(filesize));
+				
+				list.add(privateVo);
+				
+				
+			}
+		
+		}
+		
+		int todoInsert =  fileService.privateInsert(list);	
+		
+		return "redirect:/privatefile/privatefileView";
+	}
+	
+	
+	// 해당 게시글 파일 다운로드
+	@RequestMapping(path ="/privatefileDown")
+	public String getfileDown(PrivateFileVo privatefileVo, HttpSession session, Model model)  {
+
+		PrivateFileVo privateVo = fileService.privateSelect(privatefileVo);
+		
+		model.addAttribute("pubFilename" ,privateVo.getPrivFilename());
+		model.addAttribute("pubFilepath" ,privateVo.getPrivFilepath());
+
+		return "FileDownloadView";
+	}
+	
+	
+	
+	
+	// 게시글의 파일 삭제하기
+	@RequestMapping(path ="/privatefileDelete")
+	public String delfiles(PrivateFileVo privatefileVo)  {
+		
+		if(!privatefileVo.equals("null") || privatefileVo !=null || !privatefileVo.equals("")) {
+			fileService.privateDelete(privatefileVo);
+		}
+		
+		return "redirect:/privatefile/privatefileView";
+	}
 	
 }
