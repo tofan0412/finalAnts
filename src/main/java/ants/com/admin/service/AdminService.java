@@ -11,6 +11,7 @@ import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.member.model.MemberVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("adminService")
@@ -57,35 +58,6 @@ public class AdminService extends EgovAbstractServiceImpl{
 	
 	public AdminVo adlogincheck(AdminVo adminVo) {
 		return mapper.adlogincheck(adminVo);
-	}
-	///////////////////////////////////////////////////////////////////////ip
-	
-	//IP리스트글 
-	public List<IpVo> iplist(IpVo ipVo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	//카테고리 조회
-	public int ipPagingListCnt(IpVo ipVo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	
-	//test iplist
-	public int selectClientIpCnt(IpVo ipVo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public void insertClientIp(IpVo ipVo) {
-		
-	}
-
-	public void updateBoardReadCnt(IpVo ipVo) {
-		// TODO Auto-generated method stub
-		
 	}
 
 

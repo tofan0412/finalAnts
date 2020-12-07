@@ -12,13 +12,13 @@
 	<%@include file="../commonLib.jsp"%>
 	<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 <script type="text/javascript">
-$(function(){
-	var adminId = '${SADMIN.adminId}';
-	if (adminId == ''){
-		alert("로그인이 필요합니다.");
-		$(location).attr('href', '/admin/adloginView');
-	}
-})
+// $(function(){
+// 	var adminId = '${SADMIN.adminId}';
+// 	if (adminId == ''){
+// 		alert("로그인이 필요합니다.");
+// 		$(location).attr('href', '/admin/adloginView');
+// 	}
+// })
 </script>
 </head>
 <title>관리자 협업관리</title>

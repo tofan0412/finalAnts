@@ -37,7 +37,7 @@
 
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-memberlist"
-						href="#custom-tabs-three-memberlist1">회원 리스트</a></li>
+						href="${pageContext.request.contextPath}/admin/admemberlist">회원 리스트</a></li>
 
 				</ul>
 			</div>

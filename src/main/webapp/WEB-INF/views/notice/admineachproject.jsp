@@ -16,7 +16,7 @@ $(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/admin/iplist');
 	})
 	$("#memberlistbtn").on('click', function(){
-		$(location).attr('href', '${pageContext.request.contextPath}/admin/memberlist');
+		$(location).attr('href', '${pageContext.request.contextPath}/admin/admemberlist');
 	})
 })
 </script>

@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.eclipse.jdt.internal.compiler.apt.model.ModuleElementImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
+import ants.com.member.model.MemberVo;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -39,7 +41,7 @@ public class AdminController {
 		return "admain.tiles/layout/admin/adcontentmenu";
 	}
 	
-	////////////////////////////////////////////////admin-login
+	////////////////////////////////////////////////관리자 로그인
 	
 	//관리자 로그인 페이지
 	@RequestMapping("/adloginView")
@@ -93,12 +95,10 @@ public class AdminController {
 	public String adMainView() {
 		return "admain.tiles/layout/admin/adcontentmenu";
 	}
-	////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////관리자 로그인 끝	
 	
 	
-	
-	
-	
+//////////////////////////////////////////////////////////////////////////////////////////////관리자 공지사항	
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
@@ -132,8 +132,8 @@ public class AdminController {
 //	}
 	
 	// 공지사항리스트 출력
-		@RequestMapping("/noticelist")
-		public String getnoticelist(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model) throws Exception{
+	@RequestMapping("/noticelist")
+	public String getnoticelist(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model) throws Exception{
 			
 //		String reqId = (String)session.getAttribute("reqId"); //프로젝트Id를 안쓰는데 어찌하지..
 		String noticeId = (String)session.getAttribute("noticeId");
@@ -252,104 +252,7 @@ public class AdminController {
 			return "redirect:/admin/eachnoticeDetail?noticeId="+noticeId;
 		}
 	}
-	
-	
-	
-	/////////////////////////////////////////////////////////////////////////ip
-//	// IP리스트 출력
-//	@RequestMapping("/iplist")
-//	public String getiplist(@ModelAttribute("ipVo") IpVo ipVo, HttpSession session, Model model) throws Exception{
-//		
-//		String ipId = (String)session.getAttribute("ipId");
-//	
-//		ipVo.setIpId(ipId);
-//		
-//		/** EgovPropertyService.sample */
-//		ipVo.setPageUnit(propertiesService.getInt("pageUnit"));
-//		ipVo.setPageSize(propertiesService.getInt("pageSize"));
-//	
-//		/** pageing setting */
-//		PaginationInfo paginationInfo = new PaginationInfo();
-//		paginationInfo.setCurrentPageNo(ipVo.getPageIndex());
-//		paginationInfo.setRecordCountPerPage(ipVo.getPageUnit());
-//		paginationInfo.setPageSize(ipVo.getPageSize());
-//	
-//		ipVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
-//		ipVo.setLastIndex(paginationInfo.getLastRecordIndex());
-//		ipVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-//	
-//		List<IpVo> resultList = adminService.iplist(ipVo);
-//		model.addAttribute("noticelist", resultList);
-//	
-//		int totCnt = adminService.ipPagingListCnt(ipVo);
-//		paginationInfo.setTotalRecordCount(totCnt);
-//		model.addAttribute("paginationInfo", paginationInfo);
-//		
-//		
-//		return "tiles/admin/iplist";
-//	}
-//	@RequestMapping("/iplist")
-//	 public String getClientIP(HttpServletRequest request) {
-//
-//	     String ip = request.getHeader("X-FORWARDED-FOR"); 
-//	     
-//	     if (ip == null || ip.length() == 0) {
-//	         ip = request.getHeader("Proxy-Client-IP");
-//	     }
-//
-//	     if (ip == null || ip.length() == 0) {
-//	         ip = request.getHeader("WL-Proxy-Client-IP");  // 웹로직
-//	     }
-//
-//	     if (ip == null || ip.length() == 0) {
-//	         ip = request.getRemoteAddr() ;
-//	     }
-//	     
-////	     return ip;
-//	     return "tiles/admin/testip";
-
-//	 }
-	
-	
-	/////////////////////////////////////////////////////////////////////////memberlist	
-	// 회원리스트 출력
-	@RequestMapping("/admemberlist")
-	public String getnoticelist2(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model) throws Exception{
-		
-		String noticeId = (String)session.getAttribute("noticeId");
-	
-		noticeVo.setNoticeId(noticeId);
-		
-		/** EgovPropertyService.sample */
-		noticeVo.setPageUnit(propertiesService.getInt("pageUnit"));
-		noticeVo.setPageSize(propertiesService.getInt("pageSize"));
-	
-		/** pageing setting */
-		PaginationInfo paginationInfo = new PaginationInfo();
-		paginationInfo.setCurrentPageNo(noticeVo.getPageIndex());
-		paginationInfo.setRecordCountPerPage(noticeVo.getPageUnit());
-		paginationInfo.setPageSize(noticeVo.getPageSize());
-	
-		noticeVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
-		noticeVo.setLastIndex(paginationInfo.getLastRecordIndex());
-		noticeVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-	
-		List<NoticeVo> resultList = adminService.noticelist(noticeVo);
-		model.addAttribute("noticelist", resultList);
-	
-		int totCnt = adminService.noticePagingListCnt(noticeVo);
-		paginationInfo.setTotalRecordCount(totCnt);
-		model.addAttribute("paginationInfo", paginationInfo);
-		
-		return "admain.tiles/admin/admemberlist";
-	}
-
-
-
-
-
-
-	
+//////////////////////////////////////////////////////////////////////////////////////////////관리자 공지사항 끝	
 	
 	
 	

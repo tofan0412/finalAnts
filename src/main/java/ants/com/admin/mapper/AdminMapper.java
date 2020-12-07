@@ -6,6 +6,7 @@ import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -33,14 +34,8 @@ public interface AdminMapper {
 	public AdminVo getAdmin(AdminVo adminVo);
 
 	public AdminVo adlogincheck(AdminVo adminVo);
+
 	
-//	// 회원이 사용가능한 카테고리 조회
-//	public List<CategoryVo> categorylist(String memId);
-//	
-//	//프로젝트명 불러오기
-//	public List<ProjectVo> memInProjectList(String memId);
-	
-	/////////////////////////////////////////////////test
 
 
 	
