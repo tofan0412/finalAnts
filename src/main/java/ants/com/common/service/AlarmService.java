@@ -19,7 +19,7 @@ public class AlarmService {
 		return alarmMapper.alarmInsert(alarmData);
 	}
 
-	public int alarmCount(MemberVo memberVo) {
-		return alarmMapper.alarmCount(memberVo);
+	public AlarmVo alarmCount(AlarmVo alarmVo) {
+		return alarmMapper.alarmCount(alarmVo);
 	}
 }

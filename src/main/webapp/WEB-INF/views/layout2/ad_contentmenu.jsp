@@ -38,15 +38,15 @@
 	                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
 	                
 	                  <li class="nav-item">
-	                    <a class="nav-link active" id="custom-tabs-three-notice-tab" data-toggle="pill" href="#custom-tabs-three-notice" role="tab" aria-controls="custom-tabs-three-notice" aria-selected="true">공지사항</a>
+	                    <a class="nav-link active" id="custom-tabs-three-notice-tab" data-toggle="pill" href="#custom-tabs-three-notice" role="tab" aria-controls="custom-tabs-three-notice" aria-selected="true">공지사항3</a>
 	                  </li>
 	                  
 	                  <li class="nav-item">
-	                    <a class="nav-link" id="custom-tabs-three-iplist-tab" data-toggle="pill" href="#custom-tabs-three-iplist" role="tab" aria-controls="custom-tabs-three-iplist" aria-selected="false">IP 리스트</a>
+	                    <a class="nav-link" id="custom-tabs-three-iplist-tab" data-toggle="pill" href="#custom-tabs-three-iplist" role="tab" aria-controls="custom-tabs-three-iplist" aria-selected="false">IP 리스트3</a>
 	                  </li>
 	                  
 	                  <li class="nav-item">
-	                    <a class="nav-link" id="custom-tabs-three-memberlist-tab" data-toggle="pill" href="#custom-tabs-three-memberlist" role="tab" aria-controls="custom-tabs-three-memberlist" aria-selected="false">회원 리스트</a>
+	                    <a class="nav-link" id="custom-tabs-three-memberlist-tab" data-toggle="pill" href="#custom-tabs-three-memberlist" role="tab" aria-controls="custom-tabs-three-memberlist" aria-selected="false">회원 리스트3</a>
 	                  </li>
 	                  
 	                </ul>

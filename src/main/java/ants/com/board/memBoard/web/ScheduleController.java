@@ -10,6 +10,7 @@ public class ScheduleController {
 	// 캘린더 화면 출력
 	@RequestMapping("/clendarView")
 	public String clendarView() {
-		return "tiles/member/calendar";
+		return "member/calendar";
 	}
+	
 }

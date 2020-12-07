@@ -12,10 +12,10 @@
 
 <style type="text/css">
 
-/*  	ul {  */
-/* 		display: table; margin: auto; padding:0;  */
+	ul {
+		display: table; margin: auto; padding:0;
 
-/*  		}  */
+		}
 	#pagenum a{
 		 display: inline-block;
 		 text-align: center;
@@ -85,7 +85,7 @@ $(function(){
 </script>
 </head>
 
-<%@include file="/WEB-INF/views/layout/admin/adcontentmenu.jsp"%>
+<%@include file="../notice/noticecontentmenu.jsp"%>
 <%-- <%@include file="./eachproject.jsp"%> --%>
 
 <body>
@@ -93,18 +93,18 @@ $(function(){
 <form:form commandName="noticeVo" id="listForm" name="listForm" method="post">
 
 		    <!-- Content Header (Page header) -->
-		    <section class="content-header" style="
+		    <section class="content-header col-md-10" style="
 											border-bottom: 1px solid #dee2e6;
-											background: linear-gradient(-10deg, #007bff, lightgoldenrodyellow) fixed;">
+											background: white;">
 		      <div class="container-fluid">
 		        <div class="row mb-2">
 		          <div class="col-sm-6">
-		            <h1 class="jg">공지사항 리스트</h1>
+		            <h1 class="jg">회원리스트 관리하는곳</h1>
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right">
 		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active">공지사항</li>
+		              <li class="breadcrumb-item active">회원리스트</li>
 		            </ol>
 		          </div>
 		        </div>
@@ -137,7 +137,7 @@ $(function(){
 						<!-- end : search bar -->
 					</div>
 		        </div>
-		        </div>
+		        
 		      </div><!-- /.container-fluid -->
 		    </section>
 		    
@@ -150,19 +150,6 @@ $(function(){
 			<section class="content">
 		      <div class="col-md-10">
 			      <div class="card" style="border-radius: inherit;">
-<!-- 	              <div class="card-header"> -->
-<!-- 	                <h3 class="card-title">현업이슈 리스트 등록</h3> -->
-	
-<!-- 	                <div class="card-tools"> -->
-<!-- 	                  <ul class="pagination pagination-sm float-right"> -->
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">«</a></li> -->
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">1</a></li> -->
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">2</a></li> -->
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-<!-- 	                    <li class="page-item"><a class="page-link" href="#">»</a></li> -->
-<!-- 	                  </ul> -->
-<!-- 	                </div> -->
-<!-- 	              </div> -->
 	              <!-- /.card-header -->
 	              <div class="card-body p-0">
 	                <table class="table">

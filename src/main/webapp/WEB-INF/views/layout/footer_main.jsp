@@ -3,7 +3,7 @@
     
 <footer>
 		<div class="footer_container">
-			<div class="footA">Ant's</div>
+			<div class="footA" style=" cursor: pointer;" onclick="location.href='/admin/adloginView';">Ant's</div>
 			<div class="footB">© 2020-2020 Ants Lab, Inc. (주)개미랩 | 대전광역시 중구 중앙로 76 | 대덕인재개발원 | 404호</div>
 			<div class="social clear-fix">
 				<a class="footer-facebook ng-scope" ng-if="isShowFacebookFooter(language)" ng-href="https://www.facebook.com/JANDI.SKorea" button-tracker="facebook" button-position="footer" target="_blank" href="https://www.facebook.com/JANDI.SKorea"><span>Facebook</span></a>
