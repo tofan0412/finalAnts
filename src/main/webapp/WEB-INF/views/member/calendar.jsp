@@ -5,17 +5,23 @@
 <html>
 <head>
 <%@include file="../layout/fullcalendarLib.jsp"%>
+
+   
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() { 
+document.addEventListener('DOMContentLoaded', function() {
+	
 	var calendarEl = document.getElementById('calendar');
 	var calendar = new FullCalendar.Calendar(calendarEl, { 
 		plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], 
 		defaultView: 'dayGridMonth', 
 		defaultDate: new Date(),
 		header: { left: 'prev,next today', center: 'title',  right : 'dayGridMonth,timeGridWeek,timeGridDay' },
-		locale :"ko",
 		editable:true,
 		eventLimit : true,
+		droppable : true,
+		dateClick: function(){
+			 calendar.addEvent( {'title':'f', 'start':'2020-12-23', 'end':'2020-12-23'});
+		},
 		themeSystem: 'bootstrap',
 		eventClick: function(info) {
 		    alert('Event: ' + info.event.title);
@@ -24,18 +30,18 @@ document.addEventListener('DOMContentLoaded', function() {
 		    alert('start day: ' + info.event.start);
 		    alert('end day: ' + info.event.end);
 		  },
-		  eventDrop: function(info) {
-			    alert(info.event.title + " 를 " + info.event.start +" 로 이동 ");
+		 eventDrop: function(info) {
+				alert(info.event.title + " 를 " + info.event.start +" 로 이동 ");
 			    if (!confirm("일정 변경을 저장하시겠습니까??")) {
 			      info.revert();
 			    }
 			  },
-	 	  eventResize: function(info) {
+	 	 eventResize: function(info) {
 			alert(info.event.title + "를" + info.event.end+" 로 이동");
 
 			if (!confirm("일정 변경을 저장하시겠습니까??")) {
 			info.revert();
-				}
+			}
 	 	  },
 		events: [
 		        {
@@ -60,7 +66,45 @@ document.addEventListener('DOMContentLoaded', function() {
 		
 	});
 	calendar.render();
-	});
+	
+	var currColor = '#3c8dbc';
+	$("#color-chooser > li > a").on("click", function () {
+		currColor = $(this).css('color')
+	      // Add color effect to button
+	      $('#add-new-event').css({
+	        'background-color': currColor,
+	        'border-color'    : currColor
+	      })
+	    })
+		
+	$("#add-new-event").on("click", function() {
+		var addcalendar = $("#new-event").val();
+		if (addcalendar.length == 0) {
+	        return
+	      }
+		var event = $('<div />')
+		event.css({
+        'background-color': currColor,
+        'border-color'    : currColor,
+        'color'           : '#fff'
+      }).addClass('external-event')
+      event.text(addcalendar)
+      $('#external-events').prepend(event)
+	  $('#new-event').val('')
+      $(".external-event").draggable({stop: function(){
+    	  var x = $(".external-event").position().top;
+    	  var y = $(".external-event").position().left;
+    	  if(x!=null && y!=null){
+    		  alert(x);
+        	  alert(y);
+        	  $(".external-event").remove();
+    	  }
+      }});
+	})
+	
+	
+	
+});
 
 </script>
 
@@ -98,11 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="card-body">
                   <!-- the events -->
                   <div id="external-events">
-                    <div class="external-event bg-success ui-draggable ui-draggable-handle" style="position: relative;">Lunch</div>
-                    <div class="external-event bg-warning ui-draggable ui-draggable-handle" style="position: relative;">Go home</div>
-                    <div class="external-event bg-info ui-draggable ui-draggable-handle" style="position: relative;">Do homework</div>
-                    <div class="external-event bg-primary ui-draggable ui-draggable-handle" style="position: relative;">Work on UI design</div>
-                    <div class="external-event bg-danger ui-draggable ui-draggable-handle" style="position: relative;">Sleep tight</div>
+                    
                     <div class="checkbox">
                       <label for="drop-remove">
                         <input type="checkbox" id="drop-remove">
@@ -125,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
                       <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
                       <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
                       <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                      <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
                     </ul>
                   </div>
                   <!-- /btn-group -->
