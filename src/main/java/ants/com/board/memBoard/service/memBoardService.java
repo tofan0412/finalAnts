@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ants.com.board.memBoard.mapper.memBoardMapper;
 import ants.com.board.memBoard.model.ReplyVo;
+import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.member.model.MemberVo;
 
 @Service("memBoardService")
@@ -31,5 +32,34 @@ public class memBoardService{
 	// 댓글 목록 출력
 	public List<ReplyVo> replylist (ReplyVo replyVo) throws SQLException, IOException {
 		return mapper.replylist(replyVo);
+	}
+	
+	
+	// 일정 등록
+	public int scheduleInsert(ScheduleVo scheduleVo) {
+		return mapper.scheduleInsert(scheduleVo);
+	}
+	
+	// 일정 리스트
+	public List<ScheduleVo> schedulelist(ScheduleVo scheduleVo){
+		return mapper.schedulelist(scheduleVo);
+	}
+
+	// 일정 리스트 갯수
+	public int schedulelistCount(ScheduleVo scheduleVo) {
+		return mapper.schedulelistCount(scheduleVo);
+	}
+
+	// 일정 상세페이지
+	public ScheduleVo scheduleSelect(ScheduleVo scheduleVo) {
+		return mapper.scheduleSelect(scheduleVo);
+	}
+
+	public int scheduleUpdate(ScheduleVo scheduleVo) {
+		return mapper.scheduleUpdate(scheduleVo);
+	}
+
+	public int scheduleDelete(ScheduleVo scheduleVo) {
+		return mapper.scheduleDelete(scheduleVo);
 	}
 }

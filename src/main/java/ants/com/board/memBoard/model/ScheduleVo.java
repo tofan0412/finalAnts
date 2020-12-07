@@ -1,7 +1,8 @@
 package ants.com.board.memBoard.model;
 
+import ants.com.base.model.BaseVo;
 
-public class ScheduleVo {
+public class ScheduleVo extends BaseVo {
 	
 	
 	private String scheId;
@@ -16,6 +17,7 @@ public class ScheduleVo {
 	private String del;
 	private String startDt;
 	private String endDt;
+	private String juso;
 	
 	
 	public String getScheId() {
@@ -90,14 +92,23 @@ public class ScheduleVo {
 	public void setEndDt(String endDt) {
 		this.endDt = endDt;
 	}
+	public String getJuso() {
+		return juso;
+	}
+	public void setJuso(String juso) {
+		this.juso = juso;
+	}
 	
 	
 	@Override
 	public String toString() {
 		return "ScheduleVo [scheId=" + scheId + ", scheTitle=" + scheTitle + ", scheCont=" + scheCont + ", regDt="
 				+ regDt + ", xVal=" + xVal + ", yVal=" + yVal + ", categoryId=" + categoryId + ", reqId=" + reqId
-				+ ", memId=" + memId + ", del=" + del + ", startDt=" + startDt + ", endDt=" + endDt + "]";
+				+ ", memId=" + memId + ", del=" + del + ", startDt=" + startDt + ", endDt=" + endDt + ", juso=" + juso
+				+ "]";
 	}
+	
+	
 	
 	
 	
