@@ -5,7 +5,7 @@
 	<!-- 일정 등록 -->
 	<insert id="scheduleInsert" parameterType="ants.com.board.memBoard.model.ScheduleVo">
 		INSERT INTO SCHEDULE VALUES(SCHE_SEQ.NEXTVAL, #{scheTitle}, #{scheCont}, TO_DATE(SYSDATE,'YYYY/MM/DD'), #{xVal}, #{yVal}, #{categoryId}, #{reqId}, 
-									#{memId}, #{del}, #{startDt}, #{endDt}, #{juso})
+									#{memId}, #{del}, #{startDt}, #{endDt}, #{juso}, null)
 	</insert>
 	
 	
@@ -15,7 +15,7 @@
 		  FROM (
 		   SELECT ROWNUM rnum, a.* 
 			 FROM (
-			     SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, START_DT, END_DT, JUSO
+			     SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, START_DT, END_DT, JUSO, CALENDARCSS
 			     FROM SCHEDULE
 			     WHERE category_id = #{categoryId} AND
 				 req_id = #{reqId} AND
@@ -37,7 +37,7 @@
 	
 	<!-- 일정 상세페이지 -->
 	<select id="scheduleSelect" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">
-		SELECT *
+		SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, to_char(START_DT,'YYYY-MM-DD') as START_DT, to_char(END_DT,'YYYY-MM-DD') as END_DT, JUSO, CALENDARCSS
 		  FROM SCHEDULE
 		 WHERE sche_id = #{scheId}
 	</select>

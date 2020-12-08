@@ -33,10 +33,8 @@
 	<%@include file="../layout/contentmenu.jsp"%>
 	
 	<!-- style="display:none" -->
-	<div class="form-group">
+	<div class="form-group" style="display:none">
 		<input id="juso" name="juso" type="text" value="${scheduleVo.juso }"> <br>
-		<input type='text' id="start" name="start" value="${scheduleVo.startDt}">${scheduleVo.startDt}<br>
-		<input type='date' id="end" name="end" value="${scheduleVo.endDt}">${scheduleVo.endDt}<br>
 	</div>
 	
 	
@@ -49,17 +47,6 @@
  
 <script type="text/javascript">
 	$(document).ready(function(){
-		  
-		s = document.getElementById('start').value;
-		document.getElementById('gg').append = 'dfsdfsdf';
-		colsole.log(s)
-		d = new Date().toISOString().substring(0, 10);
-		document.getElementById('gg').append = d
-		
-		document.getElementById('endDt').value = new Date().toISOString().substring(0, 10);
-		
-		
-		
 		
 	  	$('#summernote').summernote({
 			  height: 250,                 // 에디터 높이
@@ -343,9 +330,9 @@ naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
                 
                 <div class="form-group">
 					시작일 &nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp; 
-	                <input type='date' id='startDt' name="startDt" value=""/>${scheduleVo.startDt}<br>
+	                <input type='date' id='startDt' name="startDt" value="${scheduleVo.startDt}"/><br>
 					종료일 &nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp;
-	                <input type='date' id='endDt' name="endDt" value=""/>${scheduleVo.endDt}<br>
+	                <input type='date' id='endDt' name="endDt" value="${scheduleVo.endDt}"/><br>
                 </div>
   				
                  
