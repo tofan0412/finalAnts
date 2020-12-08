@@ -91,7 +91,12 @@ function calendarDetail(id) {
 			scheId : id
 		},
 		success : function(data) {
-			console.log(data);
+			$("#scheTitle").val(data.scheduleVo.scheTitle);
+			$("#scheCont").val(data.scheduleVo.scheCont);
+			$("#xVal").val(data.scheduleVo.xVal);
+			$("#yVal").val(data.scheduleVo.yVal);
+			
+		
 		}
 
 	});
@@ -358,14 +363,18 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">상세보기</h4>
+        <h4 class="modal-title" id="myModalLabel">일정 상세보기</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
       </div>
       <div class="modal-body">
-       	상세보기할거임!!!!!
-       	<form id="calForm" name="calForm" method="post">
-       	<input type="text" name="scheId" id="scheId">
-       	</form>
+       	<label>제목</label>
+       	<input type="text" name="scheTitle" id="scheTitle">
+       	<label>내용</label>
+       	<input type="text" name="scheCont" id="scheCont">
+       	<label>x좌표</label>
+       	<input type="text" name="xVal" id="xVal">
+       	<label>y좌표</label>
+       	<input type="text" name="yVal" id="yVal">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

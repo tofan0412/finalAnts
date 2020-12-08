@@ -174,7 +174,7 @@ public class ScheduleController {
 	@RequestMapping("/calendarDetail")
 	public String calendarDetail(ScheduleVo scheduleVo, Model model) {
 		ScheduleVo dbVo = memBoardService.calendarDetail(scheduleVo);
-		model.addAttribute("dbVo", dbVo);
+		model.addAttribute("scheduleVo", dbVo);
 		return "jsonView";
 	}
 
