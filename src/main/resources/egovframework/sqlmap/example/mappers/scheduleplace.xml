@@ -15,7 +15,7 @@
 		  FROM (
 		   SELECT ROWNUM rnum, a.* 
 			 FROM (
-			     SELECT *
+			     SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, START_DT, END_DT, JUSO
 			     FROM SCHEDULE
 			     WHERE category_id = #{categoryId} AND
 				 req_id = #{reqId} AND
@@ -23,7 +23,7 @@
 			     ORDER BY SCHE_ID) a
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
 	</select>
-		
+	
 
 	<!-- 일정 갯수  -->
 	<select id="schedulelistCount" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="int">
