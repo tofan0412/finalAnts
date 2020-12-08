@@ -35,8 +35,8 @@ $(document).ready(function(){
 	<%@include file="../layout/contentmenu.jsp"%>
 	
 	<br>
-	<a href="/schedule/scheduleInsertview"><input type="button" value="일정등록"></a>
 	<form:form commandName="scheduleVo" id="listForm" name="listForm" method="post">
+	<a href="/schedule/scheduleInsertview"><input type="button" value="일정등록"></a>
 	<div style="padding-left: 30px; background-color: white;">
 		<table id="todoTable">
 			<tr>
@@ -45,24 +45,23 @@ $(document).ready(function(){
 				<th id="3">작성자</th>
 				<th id="4">등록일</th>
 			</tr>
-
+ 
 			<tbody id="schedulelist">
 				<c:forEach items="${schedulelist}" var="schedule" varStatus="sts" >
 				    <tr data-scheid="${schedule.scheId}">
-					<td><c:out value="${paginationInfo.totalRecordCount - ((scheduleVo.pageIndex-1) * scheduleVo.pageUnit + sts.index)}"/>. 
-						<input type="hidden" id="${schedule.scheId }" name="${schedule.scheId }">
-					</td>	
-					<td>
-						${schedule.scheTitle}
-					</td>
-					<td>
-						${schedule.memId }
-					</td>
-					<td>
-						${schedule.regDt }
-					</td>
+						<td><c:out value="${paginationInfo.totalRecordCount - ((scheduleVo.pageIndex-1) * scheduleVo.pageUnit + sts.index)}"/>. 
+							<input type="hidden" id="${schedule.scheId }" name="${schedule.scheId }">
+						</td>	
+						<td>
+							${schedule.scheTitle}
+						</td>
+						<td>
+							${schedule.memId }
+						</td>
+						<td>
+							${schedule.regDt }
+						</td>
 					</tr>
-					
 				</c:forEach> 
 			</tbody>
 		</table>

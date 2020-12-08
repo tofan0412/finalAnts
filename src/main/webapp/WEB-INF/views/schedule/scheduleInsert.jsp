@@ -36,7 +36,16 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-	 	$('#summernote').summernote();
+		document.getElementById('startDt').value = new Date().toISOString().substring(0, 10);
+		document.getElementById('endDt').value = new Date().toISOString().substring(0, 10);
+		
+		$('#summernote').summernote({
+			  height: 250,                 // 에디터 높이
+			  minHeight: 250,             // 최소 높이
+			  maxHeight: 500,             // 최대 높이
+			  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+			  lang: "ko-KR",					// 한글 설정
+		});  
 	 	
 	 	// 등록
 	 	$("#regBtn").on("click", function() {
@@ -295,7 +304,7 @@ naver.maps.onJSContentLoaded = initGeocoder;
 naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
 </script>
 			
-		<div style="padding-left: 30px; padding-right: 30px;">
+		<div style="padding-left: 30px; padding-right: 30px;"><h3>일정 등록</h3>
 		<form method="post" action="${pageContext.request.contextPath }/schedule/scheduleInsert" id="sform">    
 			<div class="card card-primary card-outline">
               <div class="card-header">
@@ -315,9 +324,9 @@ naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
                 
                 <div class="form-group">
 					시작일
-	                <input type='date' name="startDt"/><br>
+	                <input type='date' id="startDt" name="startDt"/><br>
 					종료일
-	                <input type='date' name="endDt"/><br>
+	                <input type='date' id="endDt" name="endDt"/><br>
 					
 	                
                 </div>

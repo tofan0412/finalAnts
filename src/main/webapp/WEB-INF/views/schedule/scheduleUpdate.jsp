@@ -20,32 +20,54 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"	rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<style> 
+	#summernote{
+		width : 100%;
+		height : 250px;
+	}
+</style>
 </head>
-
-
+ 
 <body>
-
+	
 	<%@include file="../layout/contentmenu.jsp"%>
 	
+	<!-- style="display:none" -->
 	<div class="form-group">
-		<input id="xVal" name="xVal" type="text" value="${scheduleVo.xVal }"> <br>
-		<input id="yVal" name="yVal" type="text" value="${scheduleVo.yVal }"> <br>
 		<input id="juso" name="juso" type="text" value="${scheduleVo.juso }"> <br>
+		<input type='text' id="start" name="start" value="${scheduleVo.startDt}">${scheduleVo.startDt}<br>
+		<input type='date' id="end" name="end" value="${scheduleVo.endDt}">${scheduleVo.endDt}<br>
 	</div>
 	
 	
 <input type="text" id="address" value="">
 <button type="button" id="submit">주소검색</button>
-<div id="map" style="width:100%;height:400px; display:none;"></div>
+<div id="map" style="width:100%;height:400px;"></div>
 
 <br><br>
-  
-
+     
+ 
 <script type="text/javascript">
 	$(document).ready(function(){
+		  
+		s = document.getElementById('start').value;
+		document.getElementById('gg').append = 'dfsdfsdf';
+		colsole.log(s)
+		d = new Date().toISOString().substring(0, 10);
+		document.getElementById('gg').append = d
 		
-	 	$('#summernote').summernote();
-	 	
+		document.getElementById('endDt').value = new Date().toISOString().substring(0, 10);
+		
+		
+		
+		
+	  	$('#summernote').summernote({
+			  height: 250,                 // 에디터 높이
+			  minHeight: 250,             // 최소 높이
+			  maxHeight: 500,             // 최대 높이
+			  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+			  lang: "ko-KR",					// 한글 설정
+		});  
 	 	// 등록
 	 	$("#regBtn").on("click", function() {
 			$("#sform").submit();
@@ -56,9 +78,9 @@
 			window.history.back();
 		});
 	 	
-		$("#map1").on("click", function() {
+/* 		$("#map1").on("click", function() {
 			document.getElementById('map').style.display="block";
-		});
+		}); */
 	 	
 	 	
 	});
@@ -301,9 +323,10 @@ function hasAddition (addition) {
 
 naver.maps.onJSContentLoaded = initGeocoder;
 naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
+
 </script>
 			
-		<div style="padding-left: 30px; padding-right: 30px;">
+	<div style="padding-left: 30px; padding-right: 30px;"><h3>일정 수정</h3>
 		<form method="post" action="${pageContext.request.contextPath }/schedule/scheduleUpdate" id="sform">    
 			<div class="card card-primary card-outline">
               <div class="card-header">
@@ -319,19 +342,17 @@ naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
                 </div>
                 
                 <div class="form-group">
-					시작일
-	                <input type='date' name="startDt" value="${scheduleVo.startDt}"/>${scheduleVo.startDt}<br>
-					종료일
-	                <input type='date' name="endDt" value="${scheduleVo.endDt}"/>${scheduleVo.endDt}<br>
-					
-	                <input type='button' id="map1" value="지도+"/><br>
+					시작일 &nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp; 
+	                <input type='date' id='startDt' name="startDt" value=""/>${scheduleVo.startDt}<br>
+					종료일 &nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp;
+	                <input type='date' id='endDt' name="endDt" value=""/>${scheduleVo.endDt}<br>
                 </div>
   				
-                
+                 
                 <br> 
                  
                 <!-- style="display:none" -->
-                <div class="form-group">
+                <div class="form-group" style="display:none">
                 	scheId : 
                 	<input type='text' name="scheId" value="${scheduleVo.scheId}"/><br>
 	                x : 
@@ -349,7 +370,7 @@ naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
 					주소 :
 					<input type='text' id="juso7" name="juso" value="${scheduleVo.juso}"/><br>
                 </div>
-               
+               <div id="gg">fff</div>
               </div>
               <div class="card-footer">
                 <div class="float-right">
