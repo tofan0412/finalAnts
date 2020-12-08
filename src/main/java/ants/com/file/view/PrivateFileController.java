@@ -46,6 +46,9 @@ public class PrivateFileController {
 	@RequestMapping(path ="/privatefileView")
 	public String privatefile(HttpSession session, Model model, @ModelAttribute("privatefileVo") PrivateFileVo privatefileVo)  {
 		
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		privatefileVo.setMemId(memberVo.getMemId());
+		
 		/** pageing setting */
 		PaginationInfo paginationInfo = new PaginationInfo();			// 스프링 지원 태그
 		paginationInfo.setCurrentPageNo(privatefileVo.getPageIndex());	// privatefileVo에 BaseVo 상속
