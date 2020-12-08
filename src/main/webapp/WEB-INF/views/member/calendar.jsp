@@ -91,6 +91,7 @@ function calendarDetail(id) {
 			scheId : id
 		},
 		success : function(data) {
+			console.log(data);
 		}
 
 	});
@@ -104,7 +105,6 @@ function calendarDelete(id) {
 			scheId : id
 		},
 		success : function(data) {
-			
 		}
 
 	});
@@ -137,7 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		eventClick: function(info) {
 			var scheIdz = info.event.id;
 			$("#modalbtn").trigger("click");
-			$("#scheId").val(scheIdz);
+			$("#scheId").append(scheIdz);
+			calendarDetail(scheIdz);
 		  },
 		eventDrop: function(info) {
 			    if (!confirm("일정 변경을 저장하시겠습니까??")) {

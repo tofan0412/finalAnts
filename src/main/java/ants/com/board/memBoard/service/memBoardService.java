@@ -116,8 +116,8 @@ public class memBoardService{
 	}
 	
 	// 일정 상세(캘린더용)
-	public ScheduleVo getscheduleDetail(ScheduleVo scheduleVo) {
-		return mapper.getscheduleDetail(scheduleVo);
+	public ScheduleVo calendarDetail(ScheduleVo scheduleVo) {
+		return mapper.calendarDetail(scheduleVo);
 	}
 	
 

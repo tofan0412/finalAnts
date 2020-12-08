@@ -173,7 +173,7 @@ public class ScheduleController {
 	// 캘린더에서 일정 보기
 	@RequestMapping("/calendarDetail")
 	public String calendarDetail(ScheduleVo scheduleVo, Model model) {
-		ScheduleVo dbVo = memBoardService.getscheduleDetail(scheduleVo);
+		ScheduleVo dbVo = memBoardService.calendarDetail(scheduleVo);
 		model.addAttribute("dbVo", dbVo);
 		return "jsonView";
 	}

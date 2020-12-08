@@ -70,7 +70,7 @@ public interface memBoardMapper {
 	public int calendarDelete(ScheduleVo scheduleVo);
 
 	// 일정 상세페이지(캘린더용)
-	public ScheduleVo getscheduleDetail(ScheduleVo scheduleVo);
+	public ScheduleVo calendarDetail(ScheduleVo scheduleVo);
 	
 }
 
