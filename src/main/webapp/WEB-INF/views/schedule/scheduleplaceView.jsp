@@ -9,13 +9,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+#todoTable{
+	width : 1300px;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+  }
+  
+</style>
 <script  type="text/javascript">
 $(document).ready(function(){
 	$("#schedulelist tr").on("click",function(){
 		var scheId = $(this).data("scheid");
 			$(location).attr('href', '${pageContext.request.contextPath}/schedule/scheduleSelect?scheId='+scheId);
 	});
-})  
+})   
 </script>
 <body>
 
@@ -28,19 +40,10 @@ $(document).ready(function(){
 	<div style="padding-left: 30px; background-color: white;">
 		<table id="todoTable">
 			<tr>
-				<th>No.</th>
-				<th>제목</th>
-				<th>내용</th>
-				<th>날짜</th>
-				<th>X_VAL</th>
-				<th>Y_VAL</th>
-				<th>CATEGORY_ID</th>
-				<th>REQ_ID</th>
-				<th>MEM_ID</th>
-				<th>DEL</th>
-				<th>START_DT</th>
-				<th>END_DT</th>
-				<th>주소</th>
+				<th id="1">No.</th>
+				<th id="2">제목</th>
+				<th id="3">작성자</th>
+				<th id="4">등록일</th>
 			</tr>
 
 			<tbody id="schedulelist">
@@ -53,37 +56,10 @@ $(document).ready(function(){
 						${schedule.scheTitle}
 					</td>
 					<td>
-						${schedule.scheCont }
-					</td>
-					<td>
-						${schedule.regDt }
-					</td>
-					<td>
-						${schedule.xVal }
-					</td>
-					<td>
-						${schedule.yVal }
-					</td>
-					<td>
-						${schedule.categoryId }
-					</td>
-					<td>
-						${schedule.reqId }
-					</td>
-					<td>
 						${schedule.memId }
 					</td>
 					<td>
-						${schedule.del }
-					</td>
-					<td>
-						${schedule.startDt }
-					</td>
-					<td>
-						${schedule.endDt }
-					</td>
-					<td>
-						${schedule.juso }
+						${schedule.regDt }
 					</td>
 					</tr>
 					

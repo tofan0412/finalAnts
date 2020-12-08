@@ -94,5 +94,11 @@ public class memBoardService{
 	public int scheduleDelete(ScheduleVo scheduleVo) {
 		return mapper.scheduleDelete(scheduleVo);
 	}
+	
+	// 일정 리스트(캘린더용)
+	public List<ScheduleVo> showCalendar(ScheduleVo scheduleVo){
+		return mapper.showCalendar(scheduleVo);
+	}
+	
 
 }

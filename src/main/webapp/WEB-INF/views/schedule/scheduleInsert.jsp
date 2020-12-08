@@ -22,7 +22,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
 
-
 <body>
 
 	<%@include file="../layout/contentmenu.jsp"%>
@@ -304,7 +303,8 @@ naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
               </div>
               <div class="card-body">
                 <div class="form-group">
-                  <input class="form-control" name="scheTitle" placeholder="제목">
+                  <input class="form-control" id="til" name="scheTitle" placeholder="제목">
+                  <input type='button' id="map1" value="지도+"/><br>
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
                   <input type="hidden" name="hissueParentid" value="${hissueP }">
                 </div>
@@ -319,7 +319,7 @@ naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
 					종료일
 	                <input type='date' name="endDt"/><br>
 					
-	                <input type='button' id="map1" value="지도+"/><br>
+	                
                 </div>
                 
                 

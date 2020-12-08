@@ -18,8 +18,15 @@ public class ScheduleVo extends BaseVo {
 	private String startDt;
 	private String endDt;
 	private String juso;
+	private String calendarcss;
 	
 	
+	public String getCalendarcss() {
+		return calendarcss;
+	}
+	public void setCalendarcss(String calendarcss) {
+		this.calendarcss = calendarcss;
+	}
 	public String getScheId() {
 		return scheId;
 	}
@@ -98,15 +105,15 @@ public class ScheduleVo extends BaseVo {
 	public void setJuso(String juso) {
 		this.juso = juso;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "ScheduleVo [scheId=" + scheId + ", scheTitle=" + scheTitle + ", scheCont=" + scheCont + ", regDt="
 				+ regDt + ", xVal=" + xVal + ", yVal=" + yVal + ", categoryId=" + categoryId + ", reqId=" + reqId
 				+ ", memId=" + memId + ", del=" + del + ", startDt=" + startDt + ", endDt=" + endDt + ", juso=" + juso
-				+ "]";
+				+ ", calendarcss=" + calendarcss + "]";
 	}
+	
+	
 	
 	
 	
