@@ -96,11 +96,26 @@ function calendarDetail(id) {
 	});
 
 }
+function calendarDelete(id) {
+	$.ajax({
+		url : "/schedule/calendarDelete",
+		method : "get",
+		data : {
+			scheId : id
+		},
+		success : function(data) {
+			
+		}
+
+	});
+
+}
 
 
 
   ini_events($('#external-events div.external-event'))
 document.addEventListener('DOMContentLoaded', function() {
+	$("#modalbtn").hide();
 	var Calendar = FullCalendar.Calendar;
 	var Draggable = FullCalendar.Draggable;
 	var containerEl = document.getElementById('external-events');
@@ -120,7 +135,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		themeSystem: 'bootstrap',
 		displayEventTime: false,
 		eventClick: function(info) {
-		    calendarDetail(info.event.id);
+			var scheIdz = info.event.id;
+			$("#modalbtn").trigger("click");
+			$("#scheId").val(scheIdz);
 		  },
 		eventDrop: function(info) {
 			    if (!confirm("일정 변경을 저장하시겠습니까??")) {
@@ -137,11 +154,21 @@ document.addEventListener('DOMContentLoaded', function() {
 					 	}
 			    }
 			  },
-			  eventDragStop: function(event, jsEvent, ui, view) { 
-				  if (isElemOverDiv(ui, $('div#delete-events'))) {
-					  calendar.fullCalendar('removeEvents', event.id); 
-					  }
-				  },
+			  eventDragStop: function (info) {
+				    var trashEl = jQuery('.calendarTrash');
+				    var ofs = trashEl.offset();
+				    var x1 = ofs.left;
+				    var x2 = ofs.left + trashEl.outerWidth(true);
+				    var y1 = ofs.top;
+				    var y2 = ofs.top + trashEl.outerHeight(true);
+				    var x = info.jsEvent.pageX;
+		 	    	var y = info.jsEvent.pageY;
+				    if (x >= x1 && x <= x2 &&
+				        y >= y1 && y <= y2) {
+				    	info.event.remove();
+				    	calendarDelete(info.event.id);
+				    }
+				},
 		events: [
 		        <%
 		         for(int i =0; i<list.size(); i++){
@@ -165,10 +192,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	calendar.render();
 	
-	var currColor = '#3c8dbc';
+	var currColor = '#0073b7';
 	$("#color-chooser > li > a").on("click", function () {
 		currColor = $(this).css('color')
-	      // Add color effect to button
 	      $('#add-new-event').css({
 	        'background-color': currColor,
 	        'border-color'    : currColor
@@ -207,26 +233,6 @@ document.addEventListener('DOMContentLoaded', function() {
     	  }
       }});
 	})
-	
-		$(".fc-content").draggable(
-				{stop: function(){
-			var x = $(this).offset().left;
-	    	var y = $(this).offset().top;
-	    	var trashEl = jQuery('.calendarTrash'); 
-	    	var ofs = trashEl.offset(); 
-	    	var x1 = ofs.left; 
-	    	var x2 = ofs.left + trashEl.outerWidth(true); 
-	    	var y1 = ofs.top; 
-	    	var y2 = ofs.top + trashEl.outerHeight(true);
-	    	
-	    	if (x >= x1 && x <= x2 && y >= y1 && y <= y2) {
-	    		alert("들어왔다");
-	    		return true;
-	    	}
-	    	return false;
-		} 
-		})
-		
 });
   
   
@@ -345,5 +351,27 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" id ="modalbtn"></button>	
+    <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">상세보기</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+       	상세보기할거임!!!!!
+       	<form id="calForm" name="calForm" method="post">
+       	<input type="text" name="scheId" id="scheId">
+       	</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="modalBtn">수정</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

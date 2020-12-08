@@ -15,7 +15,7 @@
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
 	</select>
 	<!-- WHERE rownum <= #{lastIndex}) c WHERE rnum > #{firstIndex} -->
-
+	
 
 	<!-- 파일목록 갯수  -->
 	<select id="privatefilelistCount" parameterType="ants.com.file.model.PrivateFileVo" resultType="int">

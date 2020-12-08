@@ -24,7 +24,7 @@
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
 	</select>
 	
-
+	
 	<!-- 일정 갯수  -->
 	<select id="schedulelistCount" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="int">
 		SELECT COUNT(*)
