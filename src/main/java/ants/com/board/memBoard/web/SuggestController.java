@@ -5,20 +5,26 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.model.SuggestVo;
 import ants.com.board.memBoard.service.SuggestService;
+import ants.com.member.model.MemberVo;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @RequestMapping("/suggest")
 @Controller
 public class SuggestController {
-	
+
 	@Resource(name ="suggestService")
 	private SuggestService suggestService;
 	
@@ -53,6 +59,43 @@ public class SuggestController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		
 		return "tiles/suggest/suggestList";
+	}
+	
+	@RequestMapping("/searchTodo")
+	@ResponseBody
+	public List<TodoVo> searchTodo(TodoVo todoVo, String keyword, HttpSession session){
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER"); 
+		
+		// 검색할 일감은 로그인한 유저의 일감이어야 하고, 키워드를 통해 제목을 검색해야 한다.
+		todoVo.setMemId(memberVo.getMemId());
+		if (("@").equals(keyword)) {
+			todoVo.setTodoTitle("%%");
+		}else {
+			todoVo.setTodoTitle(("%").concat(keyword).concat("%"));
+		}
+		
+		return suggestService.searchTodo(todoVo);
+		
+	}
+	
+	@RequestMapping("/suggestInsert")
+	public String suggestInsert(@ModelAttribute("suggestVo") SuggestVo suggestVo, 
+			RedirectAttributes ra) {
+		
+		// todoId를 먼저 가공해야 한다.
+		String[] todoArr = suggestVo.getTodoId().split(":");
+		todoArr[0] = todoArr[0].replace("@", "");
+		todoArr[0] = todoArr[0].replace("[", "");
+		todoArr[0] = todoArr[0].replace("]", "");
+		suggestVo.setTodoId(todoArr[0]);
+		suggestVo.setCategoryId("4");
+		suggestVo.setDel("N");
+		suggestVo.setSgtStatus("WAIT");
+		
+		suggestService.suggestInsert(suggestVo);
+		
+		ra.addFlashAttribute("msg","건의사항을 작성하였습니다.");
+		return "redirect:/suggest/readSuggestList";
 	}
 	
 }

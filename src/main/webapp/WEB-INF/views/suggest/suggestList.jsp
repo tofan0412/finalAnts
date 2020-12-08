@@ -46,66 +46,91 @@ th,td{
 	text-align : center;
 }
 </style>
-
 <script type="text/javascript">
 $(function(){
-	$("#insertissue").on('click', function(){
+	todoSearchList = [];
+	
+	$('#insertSuggestBtn').click(function(){
+		$('#todoId').val('');
+		$('#sgtTitle').val('');
+		$('#sgtCont').val('');
+		$('.warningTodo').empty();
+		$('.warningTitle').empty();
 		
-		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/insertissueView');
+		$('#suggestInsert').modal();
 	})
 	
-	$("#pagenum a").addClass("page-link");  
-	
-	// 북마크 클릭시
-	$(".area-desc").click(function() { 
-		var arrowImage = $(this).children("span").children("img"); 
+	$('#todoId').keyup(function(){
+		var keyword = $(this).val();
+		$('.warningTodo').empty();
 		
-		arrowImage.attr("src", function(index, attr){ 
-			issueid = arrowImage.attr('name')
-			if (attr.match('white')) { 			
-						
-				$.ajax({url :"${pageContext.request.contextPath}/bookmark/addbookmark",
-					 method : "get",
-					 data : {issueId : issueid},
-					 success :function(data){	
-						
-						alert('등록성공') 	
-					 }
-				})				
-				return attr.replace("white", "black"); 
-			} else if(attr.match('black')){ 
-				$.ajax({url :"${pageContext.request.contextPath}/bookmark/removebookmark",
-					 method : "get",
-					 data : {issueId : issueid},
-					 success :function(data){	
-						alert('삭제성공'); 	
-					 }
-				})	
-				return attr.replace("black", "white"); 
-			} 
-		}); 
-	});
-
+		// 사용자가 입력을 한 경우, 키워드를 통해 일감을 검색한다.
+		if (keyword != ''){
+			$.ajax({
+				url : "/suggest/searchTodo",
+				data : {keyword : keyword},
+				method : "GET",
+				success : function(res){
+					todoSearchList = [];
+					for (var i = 0 ; i < res.length; i++){
+						if (keyword == '@'){
+							todoSearchList.push("@["+res[i].todoId+"]"+":"+res[i].todoTitle);
+						}else{
+							todoSearchList.push("["+res[i].todoId+"]"+":"+res[i].todoTitle);	
+						}
+					}
+					autoComplete(todoSearchList);
+				}
+			})
+		}
+	})
+	
+	$('#sgtTitle').keyup(function(){
+		$('.warningTitle').empty();
+	})
+	
+	// 자동 완성 부분 ..
+	function autoComplete(todoSearchList){
+		$('#todoId').autocomplete({
+			source : todoSearchList,
+			select : function(event, ui){
+				console.log(ui.item);
+			},
+			minLength : 1,
+			// 모달 창 위로 떠야 한다..
+			appendTo : $('#suggestInsert'),
+			focus: function(event, ui) {
+	            return false;
+	        }
+		})
+	}
+	
+	$('#regBtn').click(function(){
+		cnt = 0;
+		// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
+		if ($('#todoId').val().length == 0){
+			$('.warningTodo').text("일감을 지정해 주세요.");
+			cnt++;
+		}
+		if ($('#sgtTitle').val().length == 0){
+			$('.warningTitle').text("건의사항 제목을 지정해 주세요.");
+			cnt++;
+		}
+		if (cnt == 0){
+			$('#sgtForm').submit();
+		}
+	})
+	
 })
 
 /* pagination 페이지 링크 function */
- function fn_egov_link_page(pageNo){
- 	document.listForm.pageIndex.value = pageNo;
- 	document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
-    document.listForm.submit();
- }
- 
- function issueInsert(){
- 	document.listForm.action = "<c:url value='${pageContext.request.contextPath}/projectMember/insertissueView'/>";
-    document.listForm.submit();
- }
- 
- function search(){
- 	document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
-    document.listForm.submit();
-}
-	 
+	function fn_egov_link_page(pageNo){
+		document.listForm.pageIndex.value = pageNo;
+		document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
+	    document.listForm.submit();
+	}
 </script>
+
 <%@include file="/WEB-INF/views/layout/contentmenu.jsp"%>
 
 <form:form commandName="suggestVo" id="listForm" name="listForm" method="post">
@@ -215,8 +240,8 @@ $(function(){
 				</div>
 				<br>
 				<div class="card-footer clearfix">
-					<button id="insertissue" type="button"
-						class="btn btn-default float-right" onclick="issueInsert()">
+					<button id="insertSuggestBtn" type="button"
+						class="btn btn-default float-right">
 						<i class="fas fa-plus"></i>등 록
 					</button>
 				</div>
@@ -229,3 +254,50 @@ $(function(){
 	</section>
 	<br>
 </form:form>
+
+<!-- Modal to invite new Members . . . -->
+<div class="modal fade" id="suggestInsert" tabindex="-1" role="dialog"
+	aria-labelledby="inviteMemberModal">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content" style="height: 600px; width : 400px;">
+			
+			<div class="modal-header">
+				<h3 class="modal-title jg" id="addplLable" style="text-align : center;">건의사항 작성</h3>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			
+			<div class="modal-body" style="width: 100%; height: 100%;">
+				<form:form commandName="suggestVo" id="sgtForm" name="sgtForm" 
+							action="/suggest/suggestInsert">
+					
+					<label class="jg" style="float : left;">일감 검색</label>
+					<div class="jg"><span class="jg warningTodo" style="color : red;"></span></div>
+					
+					<form:input id="todoId" path="todoId" style="width : 90%;"/>
+					<!-- 사용자가 일감을 선택하지 않은 경우 .. -->
+					
+					<br><br>
+					
+					<label class="jg" style="float : left;">건의 사항 제목</label>
+					<div class="jg"><span class="jg warningTitle" style="color : red;"></span></div>
+					<form:input id="sgtTitle" path="sgtTitle" style="width : 90%;"/>
+					<!-- 사용자가 제목을 입력하지 않은 경우 .. -->
+					
+					<br><br>
+					
+					<label class="jg">건의 사항 내용</label><br>
+					<form:textarea id="sgtCont" path="sgtCont" rows="3" cols="30" 
+									style="resize: none; width : 90%;"/>
+				</form:form>
+			</div>
+			
+			<div class="modal-footer">
+				<button class="btn btn-success" id="regBtn">등록</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--  /Modal -->

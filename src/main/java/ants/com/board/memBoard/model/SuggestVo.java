@@ -6,7 +6,6 @@ import ants.com.base.model.BaseVo;
 
 public class SuggestVo extends BaseVo{
 
-	
 	private String sgtId;
 	private String sgtTitle;
 	private String sgtCont;
