@@ -16,21 +16,109 @@
 /* pagination 페이지 링크 function */
  function fn_egov_link_page(pageNo){
  	document.listForm.pageIndex.value = pageNo;
- 	document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
+ 	document.listForm.action = "<c:url value='/bookmark/getallbookmark'/>";
     document.listForm.submit();
  }
+ 
+ 
+ function search(){
+	 	document.listForm.action = "<c:url value='/bookmark/getallbookmark'/>";
+	    document.listForm.submit();
+}
+ 
+ $(function(){
+	 
+	//북마크 클릭시
+	$(".area-desc").click(function() { 
+		var arrowImage = $(this).children("span").children("img"); 
+		
+		arrowImage.attr("src", function(index, attr){ 
+			issueid = arrowImage.attr('name')
+			if(attr.match('black')){ 
+						
+// 				$(location).attr('href', '${pageContext.request.contextPath}/bookmark/removebookmark');
+				
+				$.ajax({url :"${pageContext.request.contextPath}/bookmark/removebookmark",
+					 method : "get",
+					 data : {issueId : issueid},
+					 success :function(data){	
+						alert('삭제성공') 	
+						$(location).attr('href', '${pageContext.request.contextPath}/bookmark/getallbookmark');
+					 }
+				})	
+				return attr.replace("black", "white"); 
+				
+			} 
+		}); 
+	});
+ })
+	
+ 
  </script>
 
+<style type="text/css">
+
+
+	#pagenum a{
+		 display: inline-block;
+		 text-align: center;
+		 width : auto;	 
+		 border: none; 
+		background: transparent;
+	}
+	
+	li strong{
+		display: inline-block;
+		text-align: center;
+		width: 30px;
+	}
+	
+	.pagingui{
+		 display: inline-block;
+		 text-align: center;
+		 width: 30px;
+		 
+	}
+	#paging{
+		 display: inline-block;
+/* 		 text-align: center; */
+		 width:auto; float:left; margin:0 auto; text-align:center;"
+		 
+	}
+	#searchBtn {
+	    color: #fff;
+	    background-color: #007bffab;
+	    border-color: #007bff;
+	    box-shadow: none;
+	}	
+	
+</style>
 
 </head>
 <body>
-<form:form commandName="issueVo" id="listForm" name="listForm" method="post">
+<form:form commandName="AllBookMarkVo" id="listForm" name="listForm" method="post">
 
 		    <!-- Content Header (Page header) -->
 			<section class="content" >
-		      <div class="col-12 col-sm-9">
-			    <div class="card" style="border-radius: inherit; padding : 2px;">
-   				<h3>북마크 내역</h3>
+		      <div class="col-12 col-sm-12">
+			      <div class="card" style="border-radius: inherit; padding : 2px;">
+			      
+			    <div class="container-fluid">
+		        <div class="row mb-2">
+		         <br>
+		          <div class="col-sm-6">
+		          <br>
+		            <h1 class="jg" style=" padding-left : 10px;"><img src="/resources/dist/img/bookmark-black.png" width="30" height="30" name ="${bookmark.issueId}"/>&nbsp;북마크</h1>
+		          </div>
+		          <div class="col-sm-6">
+		            <ol class="breadcrumb float-sm-right"  style="background : white">
+		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
+		              <li class="breadcrumb-item active">북마크</li>
+		            </ol>
+		          </div>
+		        </div>
+		        </div>
+   				
 		        
 		        <div class="card-header  ">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
@@ -45,9 +133,7 @@
 						
 						
         				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
-							<form:option value="1" label="작성자"/>
-							<form:option value="2" label="제목"/>
-							<form:option value="3" label="내용"/>
+							<form:option value="1" label="제목"/>
 						</form:select> 
 						
 						
@@ -72,43 +158,31 @@
 	                <table class="table">
 	                  <thead>
 	                    <tr>
-	                        <th style="width: 150px; padding-left: 50px;">No.</th>
-	                     	<th  style="padding-left: 30px;">  이슈 제목</th> 
-							<th>   작성자 </th>
-							<th>   날짜   </th>
-							<th>   종류   </th>
-							<th> 즐겨찾기 </th>
+	                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
+	                     	<th  style="padding-left: 30px; text-align: center;">  이슈 제목</th> 
+							<th style="text-align: center;">   날짜   </th>
+							<th style="text-align: center;">   종류   </th>
+							<th style="text-align: center;"> 즐겨찾기 </th>
 	                      <th></th>
 	                    </tr>
 	                  </thead>
 	                  <tbody>
 	                      
 	                       <c:forEach items = "${bookmarklist }" var ="bookmark" varStatus="status">
-								<tr>
-				                 
-				                    <td  style="width: 150px; padding-left: 50px;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
+								<tr>			                 
+				                    <td  style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((AllBookMarkVo.pageIndex-1) * AllBookMarkVo.pageUnit + (status.index+1))}"/>.</td>
 								
-									<td  style="padding-left: 30px;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> ${issue.issueTitle }</a> </td>
-									<td> ${bookmark.memId }</td>
-									<td> ${bookmark.regDt }</td>
+									<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${bookmark.issueId}"> ${bookmark.issueTitle }</a> </td>
+									<td style="text-align: center;"> ${bookmark.regDt }</td>
 									<c:if test="${bookmark.issueKind == 'issue'}">
-										<td> 이슈</td>										
+										<td style="text-align: center;"> 이슈</td>										
 									</c:if>
 									<c:if test="${bookmark.issueKind == 'notice'}">
-										<td> 공지사항</td>										
+										<td style="text-align: center;"> 공지사항</td>										
 									</c:if>
-										<c:choose>
-											<c:when test="${bookmark.issueDel == '' || bookmark.issueDel == null }">
-												<td class = "area-desc"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
-											</c:when>
-											<c:otherwise>
-												<td class = "area-desc"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
-											</c:otherwise>
-										</c:choose>
-										
-								
+									<td style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${bookmark.issueId}"/></span></td>											
 <%-- 									</c:forEach>  --%>
-			                      <td style="text-align: center;">
+			                      	<td style="text-align: center;">
 									 
 								</tr>
 							 </c:forEach> 
@@ -130,7 +204,7 @@
         		  </div>
         		  <br>
         		  <div class="card-footer clearfix">
-	                <button id="insertissue" type="button" class="btn btn-default float-right" onclick="issueInsert()"><i class="fas fa-plus"></i>등 록</button>
+<!-- 	                <button id="insertissue" type="button" class="btn btn-default float-right" onclick="issueInsert()"><i class="fas fa-plus"></i>등 록</button> -->
 	              </div>
         		 
         		  

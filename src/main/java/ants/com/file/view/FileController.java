@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,9 @@ import ants.com.board.memBoard.model.IssueVo;
 import ants.com.file.mapper.FileMapper;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.service.FileService;
+import ants.com.member.model.MemberVo;
+import egovframework.rte.fdl.property.EgovPropertyService;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @RequestMapping("/file")
 @Controller
@@ -29,6 +33,10 @@ public class FileController {
 	
 	@Resource(name ="fileService")
 	private FileService fileService;
+	
+	/** EgovPropertyService */
+	@Resource(name = "propertiesService")
+	protected EgovPropertyService propertiesService;
 	
 	
 	// 해당 게시글 파일 다운로드
@@ -43,15 +51,48 @@ public class FileController {
 		return "FileDownloadView";
 	}
 		
+	// 프로젝트 파일함 View
+	@RequestMapping(path ="/publicfileview")
+	public String publicfileview(@ModelAttribute("publicFileVo") PublicFileVo publicFileVo, HttpSession session, Model model)  {
+
+		String reqId = (String)session.getAttribute("projectId");
+		publicFileVo.setReqId(reqId);
+		
+		/** EgovPropertyService.sample */
+		publicFileVo.setPageUnit(propertiesService.getInt("pageUnit"));
+		publicFileVo.setPageSize(propertiesService.getInt("pageSize"));
+
+		/** pageing setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(publicFileVo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(publicFileVo.getPageUnit());
+		paginationInfo.setPageSize(publicFileVo.getPageSize());
+
+		publicFileVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		publicFileVo.setLastIndex(paginationInfo.getLastRecordIndex());
+		publicFileVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		List<PublicFileVo> pubfilelist = fileService.pubfilelist(publicFileVo);
+		model.addAttribute("pubfilelist", pubfilelist);
+		
+		
+		int totCnt = fileService.pubfilePagingListCnt(publicFileVo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
+				
+		return "tiles/board/pubfilelist";
+	}
 	
 	
 	
 	// 파일 업로드
 	@RequestMapping(path ="/insertfile")
-	public String insertfile(PublicFileVo pfv, Model model, MultipartHttpServletRequest multirequest)  {
+	public String insertfile(PublicFileVo pfv, Model model, MultipartHttpServletRequest multirequest, HttpSession session)  {
 		
+		String reqId = (String)session.getAttribute("projectId");
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
 		
-		int count= 0;
 		String fileId = "";
 		List<MultipartFile> files = multirequest.getFiles("file");
 		for(int i=0 ; i < files.size() ; i++) {
@@ -72,19 +113,14 @@ public class FileController {
 				}
 				
 				PublicFileVo filevo = new PublicFileVo(filepath, files.get(i).getOriginalFilename(), extension,
-														pfv.getCategoryId(), pfv.getSomeId(), "1",String.valueOf(filesize));
+														pfv.getCategoryId(), pfv.getSomeId(), reqId, String.valueOf(filesize), memId);
 				System.out.println(filevo);
-				//PublicFileVo(String pubFilepath, String pubFilename, String pubExtension, String categoryId, String someId,
-									//String reqId, String pubSize)
-				
 				fileId +=  fileService.insertFile(filevo);
 				
 			}
 		
 		}
 		pfv.setPubId(fileId);
-//		model.addAttribute("count",count);
-//		model.addAttribute("fileId",fileId);
 
 		
 		return "jsonView";
@@ -116,8 +152,6 @@ public class FileController {
 				fileService.defiles(pubId[i]);
 			}		
 		}
-		
-//		ra.addAttribute("PublicFileVo", pfv);
 		
 		return "jsonView";
 	}

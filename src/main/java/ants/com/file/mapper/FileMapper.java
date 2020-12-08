@@ -21,6 +21,12 @@ public interface FileMapper {
 	// 파일 삭제하기
 	public int delfiles(String pubId);
 	
+	// 프로젝트별 파일 수
+	public int pubfilePagingListCnt(PublicFileVo publicFileVo);
+	
+	// 프로젝트별 파일목록
+	public List<PublicFileVo> pubfilelist(PublicFileVo publicFileVo);
+	
 	
 	/*			개	인	파	일	함				*/
 	

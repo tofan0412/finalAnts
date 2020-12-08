@@ -40,18 +40,103 @@
      WHERE some_id = #{someId} and category_id = #{categoryId} and req_id = #{reqId}
   </select>
   
+  
+  <!-- 파일 삭제 -->
   <delete id="delfiles">
   	DELETE FROM publicfile where pub_id= #{pubId}
   
   </delete>
-  
-  
-  
+
+
   <!-- 클릭한 파일 정보 -->
   <select id="getfileDetail" parameterType="String" resultType="ants.com.file.model.PublicFileVo">
   	 SELECT * 
      FROM publicfile 
      WHERE pub_id = #{pubId}
   </select>
+  
+  
+   <!-- 해당 프로젝트 파일 조회 -->
+  <select id="pubfilelist" parameterType="ants.com.file.model.PublicFileVo" resultType="ants.com.file.model.PublicFileVo">
+  	SELECT Z.*
+	      FROM (
+	      	SELECT ROWNUM RNUM , 
+	           	   S.*
+		      FROM (				  	
+					SELECT a.PUB_ID, a.PUB_EXTENSION ,a.pub_filename, to_char(a.reg_dt,'yyyy-mm-dd hh:mm') as reg_dt ,
+						   a.pub_size , b.mem_name as mem_id
+					  FROM publicfile a, member b
+					 WHERE req_id = #{reqId}
+					   AND a.mem_id = b.mem_id
+				     
+			        <if test="searchKeyword != null and searchKeyword != ''">
+				        <choose>				         	
+				            <when test="searchCondition == 1">
+								AND	a.pub_filename LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 2">
+								AND b.mem_name LIKE '%' || #{searchKeyword} || '%'
+							</when>			     
+						</choose>
+					</if>
+				    <if test = "pubExtension != null and pubExtension != ''">
+				    	<choose>				         	
+				            <when test="pubExtension == 'all'">
+								AND 1 = 1
+							</when>
+							<when test="pubExtension == 'other'">
+								AND  pub_extension not in('png', 'jpg','gif', 'xlsx', 'pptx', 'txt')
+							</when>	
+							<otherwise>
+								AND pub_extension = #{pubExtension}
+							</otherwise>		     
+						</choose>
+							
+					</if>
+				     
+				     ORDER BY reg_dt desc
+			     ) S
+	
+			 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 
+			
+      ) Z
+     <![CDATA[WHERE Z.RNUM > #{firstIndex}]]>	
+     
+  </select>
+  
+  
+  <!-- 프로젝트에 해당하는 파일 수 조회하기 -->	
+	<select id="pubfilePagingListCnt" parameterType="ants.com.file.model.PublicFileVo"  
+				resultType="int">
+		select count(*) as totCnt
+		from publicfile a, member b
+		where req_id = #{reqId}
+		and a.mem_id = b.mem_id
+		
+		<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 1">
+						AND	pub_filename LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 2">
+						AND b.mem_name LIKE '%' || #{searchKeyword} || '%'
+					</when>	         
+				</choose>
+		</if>		
+		<if test = "pubExtension != null and pubExtension != ''">
+		    	<choose>				         	
+		            <when test="pubExtension == 'all'">
+						AND 1 = 1
+					</when>
+					<when test="searchCondition == 'other'">
+						AND  pub_extension not in('png', 'jpg','gif', 'xlsx', 'pptx', 'txt')
+					</when>	
+					<otherwise>
+						AND pub_extension = #{pubExtension}
+					</otherwise>		     
+				</choose>
+		</if>
+	</select>
+  
   
 </mapper>

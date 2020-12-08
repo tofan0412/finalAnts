@@ -17,7 +17,6 @@ import ants.com.board.memBoard.model.BookmarkVo;
 import ants.com.board.memBoard.service.memBoardService;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectMemberVo;
-import ants.com.member.service.ProjectmemberService;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 

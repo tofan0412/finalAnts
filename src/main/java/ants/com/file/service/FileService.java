@@ -40,6 +40,16 @@ public class FileService{
 		return mapper.delfiles(pubId);
 	}
 	
+	// 프로젝트별 파일 수
+	public int pubfilePagingListCnt(PublicFileVo publicFileVo){
+		return mapper.pubfilePagingListCnt(publicFileVo);
+	}
+	
+	// 프로젝트별 파일목록
+	public List<PublicFileVo> pubfilelist(PublicFileVo publicFileVo){
+		return mapper.pubfilelist(publicFileVo);
+	}
+	
 	
 	/*			개	인	파	일	함				*/
 	
