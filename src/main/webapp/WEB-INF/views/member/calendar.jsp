@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		eventClick: function(info) {
 		    calendarDetail(info.event.id);
 		  },
-		 eventDrop: function(info) {
+		eventDrop: function(info) {
 			    if (!confirm("일정 변경을 저장하시겠습니까??")) {
 			      info.revert();
 			    }else{
@@ -137,6 +137,11 @@ document.addEventListener('DOMContentLoaded', function() {
 					 	}
 			    }
 			  },
+			  eventDragStop: function(event, jsEvent, ui, view) { 
+				  if (isElemOverDiv(ui, $('div#delete-events'))) {
+					  calendar.fullCalendar('removeEvents', event.id); 
+					  }
+				  },
 		events: [
 		        <%
 		         for(int i =0; i<list.size(); i++){
@@ -169,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	        'border-color'    : currColor
 	      })
 	    })
+
 		
 	$("#add-new-event").on("click", function() {
 		var addcalendar = $("#new-event").val();
@@ -201,7 +207,29 @@ document.addEventListener('DOMContentLoaded', function() {
     	  }
       }});
 	})
+	
+		$(".fc-content").draggable(
+				{stop: function(){
+			var x = $(this).offset().left;
+	    	var y = $(this).offset().top;
+	    	var trashEl = jQuery('.calendarTrash'); 
+	    	var ofs = trashEl.offset(); 
+	    	var x1 = ofs.left; 
+	    	var x2 = ofs.left + trashEl.outerWidth(true); 
+	    	var y1 = ofs.top; 
+	    	var y2 = ofs.top + trashEl.outerHeight(true);
+	    	
+	    	if (x >= x1 && x <= x2 && y >= y1 && y <= y2) {
+	    		alert("들어왔다");
+	    		return true;
+	    	}
+	    	return false;
+		} 
+		})
+		
 });
+  
+  
 
 </script>
 
@@ -292,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="card-body">
                   <!-- the events -->
                   <div id="external-events">                   
-                    <div class="drggdel">
+                    <div class="calendarTrash" id="calendarTrash">
                  <br><br>
                     </div>
                   </div>
