@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="ants.com.board.memBoard.model.ScheduleVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -6,7 +9,9 @@
 <head>
 <%@include file="../layout/fullcalendarLib.jsp"%>
 <%@include file="/WEB-INF/views/layout/fonts.jsp"%>
-   
+<%
+	List<ScheduleVo> list = (ArrayList<ScheduleVo>)request.getAttribute("showSchedule");
+%>   
 <script type="text/javascript">
 function ini_events(ele) {
     ele.each(function () {
@@ -48,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		droppable: true, 
 	    selectable: true,
 		themeSystem: 'bootstrap',
+		displayEventTime: false,
 		eventClick: function(info) {
 		    alert('Event: ' + info.event.title);
 		    alert('id: ' + info.event.id);
@@ -69,25 +75,23 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 	 	  },
 		events: [
-		        {
-		          id :'1',
-		          navLinks: true,
-		          backgroundColor: '#f56954', //red
-		          borderColor    : '#f56954', //red
-		          allDay         : true,
-		          title          : '달력끝내기',
-		          start          : "2020-12-07",
-		          end          : "2020-12-10"
-		        },
-		        {
-		          id :'2',
-		          navLinks: true,
-		          backgroundColor: '#28a745', //red
-		          borderColor    : '#28a745', //red
-		          title          : '집',
-		          start          : "2020-12-07"
-		        },
-		      ],
+		        <%
+		         for(int i =0; i<list.size(); i++){
+		        	 ScheduleVo dto = (ScheduleVo)list.get(i);
+		         
+		        %>
+				{
+					id : '<%= dto.getScheId()%>',
+					title : '<%= dto.getScheTitle()%>',
+					backgroundColor: '<%= dto.getCalendarcss()%>',
+					start: '<%= dto.getStartDt()%>',
+					end: '<%= dto.getEndDt()%>'
+				},
+				<%
+		         }
+				%>
+					
+		      ]
 		
 	});
 	calendar.render();

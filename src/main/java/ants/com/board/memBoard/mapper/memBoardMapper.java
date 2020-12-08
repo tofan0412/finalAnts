@@ -55,4 +55,8 @@ public interface memBoardMapper {
 
 	// 일정 삭제
 	public int scheduleDelete(ScheduleVo scheduleVo);
+
+	
+	// 일정 리스트(캘린더용)
+	public List<ScheduleVo> showCalendar(ScheduleVo scheduleVo);
 }

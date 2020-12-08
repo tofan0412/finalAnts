@@ -27,7 +27,11 @@ public class ScheduleController {
 	
 	// 캘린더 화면 출력
 	@RequestMapping("/clendarView")
-	public String clendarView() {
+	public String clendarView(@ModelAttribute("scheduleVo")ScheduleVo scheduleVo, HttpSession session, Model model) {
+		String projectId = (String) session.getAttribute("projectId");
+		scheduleVo.setReqId(projectId);
+		List<ScheduleVo> showCalendar = memBoardService.showCalendar(scheduleVo);
+		model.addAttribute("showSchedule", showCalendar);
 		return "member/calendar";
 	}
 	
