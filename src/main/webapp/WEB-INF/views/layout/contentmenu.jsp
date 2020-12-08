@@ -28,54 +28,7 @@ $(function(){
 	
 	$('#userSearchBanner').keyup(function(){
 		var keyword = $(this).val();
-		
-<<<<<<< HEAD
-		    <!-- Main content -->
-		    <section class="content" style="margin-top: 13px;">
-		      <div class="col-12 col-sm-9">
-	            <div class="card card-teal card-outline card-tabs">
-	              <div class="card-header p-0 pt-1 border-bottom-0">
-	                <ul class="nav nav-tabs" id="custom-tabs-three-tab" >
-	                  <li class="nav-item">
-	                    <a class="nav-link active" id="custom-tabs-three-home-tab" href="${pageContext.request.contextPath}/todo/todoList" >일감</a>
-	                  </li>
-	                  <li class="nav-item">
-	                    <a class="nav-link" id="custom-tabs-three-gantt-tab"  href="#custom-tabs-three-gantt" >간트</a>
-	                  </li>
-	                  <li class="nav-item">
-	                    <a class="nav-link" id="custom-tabs-three-messages-issue" href="#custom-tabs-three-issue" >이슈</a>
-	                  </li>
-	                  <li class="nav-item">
-	                    <a class="nav-link" id="custom-tabs-three-settings-suggest"  href="#custom-tabs-three-suggest" >건의사항</a>
-	                  </li>
-	                  <li class="nav-item">
-	                    <a class="nav-link" id="custom-tabs-three-calendar-tab"  href="#custom-tabs-three-calendar" >캘린더</a>
-	                  </li>
-	                  <li class="nav-item">
-	                    <a class="nav-link" id="custom-tabs-three-mywork-tab"  href="${pageContext.request.contextPath}/todo/MytodoList" >내 일감</a>
-	                  </li>
-	                  <li class="nav-item">
-	                    <a class="nav-link" id="custom-tabs-three-files-tab"  href="/publicfile/publicfileview">파일함</a>
-	                  </li>
-	                  <li class="nav-item">
-	                    <a class="nav-link" id="custom-tabs-three-mywork-tab"  href="/schedule/scheduleplaceView" >일정</a>
-	                  </li>
-	                  <c:if test="${SMEMBER.memId eq projectVo.memId or SMEMBER.memType eq 'PM'}">
-	                  <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-files-tab"  href="${pageContext.request.contextPath}/hotIssue/hissueList">PM-PL이슈게시판</a>                      
-	                  </li>
-                      </c:if>
-	                </ul>
-	              </div>
-	             
-	            </div>
-          	</div>
-		      
-		      
-		      
-		    </section>
-		    <!-- /.content -->
-=======
+
 		if (keyword != ''){
 			$.ajax({
 				url : "/project/userSearch",
@@ -187,7 +140,6 @@ $(function(){
 			.append("<div class=\'addedMemIdBanner jg\' memId='"+inviteMemListBanner[i]+"'>"+inviteMemListBanner[i]+"</div>");	
 		}	
 	}
->>>>>>> 0a7d5086f711a3d49cb7c77e5b2283a3194544d0
 	
 	function delMember(memId){
 		$('.warningBanner').text('');
