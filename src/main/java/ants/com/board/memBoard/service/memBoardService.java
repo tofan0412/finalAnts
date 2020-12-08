@@ -100,5 +100,19 @@ public class memBoardService{
 		return mapper.showCalendar(scheduleVo);
 	}
 	
+	// 일정 등록(캘린더용)
+	public int calendarInsert(ScheduleVo scheduleVo) {
+		return mapper.calendarInsert(scheduleVo);
+	}
+
+	// 일정 수정(캘린더용)
+	public int calendarUpdate(ScheduleVo scheduleVo) {
+		return mapper.calendarUpdate(scheduleVo);
+	}
+	
+	// 일정 수정(캘린더용)
+	public int calendarUpdateSize(ScheduleVo scheduleVo) {
+		return mapper.calendarUpdateSize(scheduleVo);
+	}
 
 }

@@ -59,4 +59,13 @@ public interface memBoardMapper {
 	
 	// 일정 리스트(캘린더용)
 	public List<ScheduleVo> showCalendar(ScheduleVo scheduleVo);
+
+	// 일정 등록(캘린더용)
+	public int calendarInsert(ScheduleVo scheduleVo);
+
+	// 일정 수정(캘린더용)
+	public int calendarUpdate(ScheduleVo scheduleVo);
+
+	// 일정 수정(캘린더 드래그용)
+	public int calendarUpdateSize(ScheduleVo scheduleVo);
 }

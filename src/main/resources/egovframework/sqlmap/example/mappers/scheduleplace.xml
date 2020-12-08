@@ -73,4 +73,47 @@
 			AND	 del = 'N'
 	</select>
 	
+	<!-- 일정 등록 (캘린더용)-->
+	<insert id="calendarInsert" parameterType="ants.com.board.memBoard.model.ScheduleVo">
+		INSERT INTO SCHEDULE 
+			VALUES(
+				SCHE_SEQ.NEXTVAL, 
+				#{scheTitle}, 
+				#{scheCont}, 
+				TO_DATE(SYSDATE,'YYYY/MM/DD'), 
+				NULL, NULL, 
+				'6', 
+				#{reqId}, 
+				#{memId},
+				'N', 
+				#{startDt},
+				<if test="endDt != null">
+				#{endDt}, 
+				NULL,
+				#{calendarcss})
+				</if>
+				<if test="endDt == null">
+				NULL, 
+				NULL,
+				#{calendarcss})
+				</if>
+	</insert>
+	
+	<!-- 일정 수정하기 (캘린더용)-->
+	<update id="calendarUpdate" parameterType="ants.com.board.memBoard.model.ScheduleVo">
+		UPDATE SCHEDULE
+		SET SCHE_TITLE = #{scheTitle},
+			SCHE_CONT = #{scheCont},
+			START_DT = #{startDt},
+			<if test="endDt != null">
+			END_DT = #{endDt}
+			</if>
+			<if test="endDt == null">
+			END_DT = NULL
+			</if>
+		WHERE 
+	    	sche_id = #{scheId}
+	</update>
+	
+	
 </mapper>
