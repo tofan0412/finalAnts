@@ -8,15 +8,15 @@
 		  FROM (
 		   SELECT ROWNUM rnum, a.* 
 			 FROM (
-			     SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, REG_DT, MEM_ID
+			     SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, to_char(REG_DT,'YYYY-MM-DD hh:mm') as REG_DT, PRIV_SIZE, MEM_ID
 			     FROM privatefile
 			     WHERE MEM_ID = #{memId}
-			     ORDER BY PRIV_ID) a
+			     ORDER BY REG_DT DESC) a
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
 	</select>
 	<!-- WHERE rownum <= #{lastIndex}) c WHERE rnum > #{firstIndex} -->
 	
-
+	
 	<!-- 파일목록 갯수  -->
 	<select id="privatefilelistCount" parameterType="ants.com.file.model.PrivateFileVo" resultType="int">
 		SELECT COUNT(*)
@@ -34,7 +34,7 @@
 					SELECT #{item.privFilepath} as PRIV_FILEPATH
 						 , #{item.privFilename} as PRIV_FILENAME
 						 , #{item.privSize} as PRIV_SIZE
-						 , TO_DATE(SYSDATE,'YYYY/MM/DD') as REG_DT
+						 , SYSDATE as REG_DT
 						 , #{item.memId} as MEM_ID
 					FROM dual
 				</foreach> 
@@ -44,7 +44,7 @@
 
 	<!-- 클릭한 파일 정보 -->
 	<select id="privateSelect" parameterType="ants.com.file.model.PublicFileVo" resultType="ants.com.file.model.PrivateFileVo">
-		SELECT *
+		SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, to_char(REG_DT,'YYYY-MM-DD hh:mm') as REG_DT, MEM_ID
 		FROM PRIVATEFILE
 		WHERE PRIV_ID = #{privId}
 	</select>
