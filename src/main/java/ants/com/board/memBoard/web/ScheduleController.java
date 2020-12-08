@@ -20,13 +20,13 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 @RequestMapping("/schedule")
 @Controller
 public class ScheduleController {
 
 	@Resource(name = "memBoardService")
 	private memBoardService memBoardService;
-	
 
 	// 일정장소 게시판 이동
 	@RequestMapping("/scheduleplaceView")
@@ -145,13 +145,13 @@ public class ScheduleController {
 		String projectId = (String) session.getAttribute("projectId");
 		scheduleVo.setReqId(projectId);
 		int insertCnt = memBoardService.calendarInsert(scheduleVo);
-		if(insertCnt >= 1) {
-			return "redirect:/schedule/clendarView";			
-		}else {
-			return "redirect:/schedule/clendarView";						
+		if (insertCnt >= 1) {
+			return "redirect:/schedule/clendarView";
+		} else {
+			return "redirect:/schedule/clendarView";
 		}
 	}
-	
+
 	// 캘린더에서 일정수정
 	@RequestMapping("/calendarUpdate")
 	public String calendarUpdate(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session,
@@ -162,18 +162,29 @@ public class ScheduleController {
 		String projectId = (String) session.getAttribute("projectId");
 		scheduleVo.setReqId(projectId);
 		int updateCnt = memBoardService.calendarUpdate(scheduleVo);
-		if(updateCnt>=1) {			
+		if (updateCnt >= 1) {
 			return "redirect:/schedule/clendarView";
-		}else {
-			return "redirect:/schedule/clendarView";			
+		} else {
+			return "redirect:/schedule/clendarView";
 		}
 	}
-	
-	
-	
+
 	// 캘린더에서 일정 보기
 	@RequestMapping("/calendarDetail")
 	public String calendarDetail(ScheduleVo scheduleVo, Model model) {
 		return "redirect:/schedule/scheduleSelect?scheId=" + scheduleVo.getScheId();
+	}
+
+	// 캘린더에서 일정 삭제
+	@RequestMapping("/calendarDelete")
+	public String calendarDelete(ScheduleVo scheduleVo, Model model) {
+
+		int deleteCnt = memBoardService.calendarDelete(scheduleVo);
+
+		if (deleteCnt >= 1) {
+			return "redirect:/schedule/clendarView";
+		} else {
+			return "redirect:/schedule/clendarView";
+		}
 	}
 }

@@ -96,6 +96,19 @@ function calendarDetail(id) {
 	});
 
 }
+function calendarDelete(id) {
+	$.ajax({
+		url : "/schedule/calendarDelete",
+		method : "get",
+		data : {
+			scheId : id
+		},
+		success : function(data) {
+		}
+
+	});
+
+}
 
 
 
@@ -137,11 +150,21 @@ document.addEventListener('DOMContentLoaded', function() {
 					 	}
 			    }
 			  },
-			  eventDragStop: function(event, jsEvent, ui, view) { 
-				  if (isElemOverDiv(ui, $('div#delete-events'))) {
-					  calendar.fullCalendar('removeEvents', event.id); 
-					  }
-				  },
+			  eventDragStop: function (info) {
+				    var trashEl = jQuery('.calendarTrash');
+				    var ofs = trashEl.offset();
+				    var x1 = ofs.left;
+				    var x2 = ofs.left + trashEl.outerWidth(true);
+				    var y1 = ofs.top;
+				    var y2 = ofs.top + trashEl.outerHeight(true);
+				    var x = info.jsEvent.pageX;
+		 	    	var y = info.jsEvent.pageY;
+				    if (x >= x1 && x <= x2 &&
+				        y >= y1 && y <= y2) {
+				    	info.event.remove();
+				    	calendarDelete(info.event.id);
+				    }
+				},
 		events: [
 		        <%
 		         for(int i =0; i<list.size(); i++){
@@ -207,26 +230,6 @@ document.addEventListener('DOMContentLoaded', function() {
     	  }
       }});
 	})
-	
-		$(".fc-content").draggable(
-				{stop: function(){
-			var x = $(this).offset().left;
-	    	var y = $(this).offset().top;
-	    	var trashEl = jQuery('.calendarTrash'); 
-	    	var ofs = trashEl.offset(); 
-	    	var x1 = ofs.left; 
-	    	var x2 = ofs.left + trashEl.outerWidth(true); 
-	    	var y1 = ofs.top; 
-	    	var y2 = ofs.top + trashEl.outerHeight(true);
-	    	
-	    	if (x >= x1 && x <= x2 && y >= y1 && y <= y2) {
-	    		alert("들어왔다");
-	    		return true;
-	    	}
-	    	return false;
-		} 
-		})
-		
 });
   
   

@@ -115,5 +115,11 @@
 	    	sche_id = #{scheId}
 	</update>
 	
+	<!-- 일정 삭제하기 (캘린더용)-->
+	<update id="calendarDelete" parameterType="ants.com.board.memBoard.model.ScheduleVo"> 
+		UPDATE SCHEDULE 
+			set del = 'Y' 
+		WHERE sche_id = #{scheId}
+	</update>
 	
 </mapper>
