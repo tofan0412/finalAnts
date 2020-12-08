@@ -131,7 +131,9 @@ public class ReqController {
 	public String reqUpdateView(@ModelAttribute("reqVo") ReqVo reqVo, Model model, HttpSession session, @RequestParam(name="selectedId", required= false) String id) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
 		reqVo.setMemId(memberVo.getMemId());
-		reqVo.setReqId(id);
+		if(id != null) {
+			reqVo.setReqId(id);
+		}
 		reqVo = reqService.getReq(reqVo);
 		model.addAttribute("reqVo", reqVo);
 		
@@ -160,6 +162,14 @@ public class ReqController {
 			model.addAttribute("reqVo",reqVo);
 			return "tiles/member/reqInsert";
 		}
+	}
+	
+	@RequestMapping(value="/reqStsUpdate")
+	public String reqStsUpdate(@ModelAttribute("reqVo") ReqVo reqVo, @RequestParam(name="selectedId", required= false) String id ) {
+		reqVo.setReqId(id);
+		reqVo.setStatus("ACCEPT");
+		reqService.reqUpdate(reqVo);
+		return "redirect:/alarmList";
 	}
 	
 	/**

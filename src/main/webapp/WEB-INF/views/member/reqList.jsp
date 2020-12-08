@@ -149,7 +149,7 @@
 									<c:when test="${req.plId eq null }">
 										<td style="text-align: center;"><a
 											class="btn btn-default btn-sm addplModal" data-toggle="modal"
-											data-target="#addpl" reqId="${req.reqId}"> <i
+											data-target="#addpl" reqId="${req.reqId}" reqName="${req.reqTitle }"> <i
 												class="fas fa-envelope"></i> PL등록
 										</a></td>
 									</c:when>
@@ -266,6 +266,7 @@
 					<div class="col-md-6" style="float: left">
 						<input type="hidden" name="jsonView" value="Y">
 						<input type="hidden" id="modalReqId" name="reqId" value="">
+						<input type="hidden" id="modalReqName" name="reqName" value="">
 						<input type="hidden" name="status" value="대기"> <label
 							for="recipient-name" class="control-label">이메일:</label> <input
 							type="text" class="form-control" id="searchInput" name="memId">
@@ -310,8 +311,10 @@
 		/* pl등록버튼 클릭*/
 		$('.addplModal').on('click', function() {
 			var reqId = $(this).attr("reqId");
+			var reqName = $(this).attr("reqName");
 			console.log(reqId);
 			$('#modalReqId').val(reqId);
+			$('#modalReqName').val(reqName);
 
 		});
 
@@ -365,27 +368,30 @@
 				at : "right bottom"
 			},
 			close : function(event, ui) { //자동완성창 닫아질때 호출
-
+				memIdCheck();
 			}
 		});
 
 		/* pl요청 전송버튼 클릭 */
 		$('#addplBtn').on('click', function() {
-			//memId를 plId로 바꾸기
-			$('#searchInput').attr('name', 'plId');
+			var memIdCheck = $('#memIdCheck').attr('memIdCheckFlag');
 			
-			// 전송한 정보 db저장
-			$.ajax({
-				url : "/req/reqUpdate",
-				data : $('#plForm').serialize(),
-				method : "POST",
-				success : function(data){
-					saveMsg();
-					$("#addpl .close").click();
-					fn_egov_reqList();
-				}
+			if(memIdCheck == 'true'){
+				//memId를 plId로 바꾸기
+				$('#searchInput').attr('name', 'plId');
 				
-			});
+				// 전송한 정보 db저장
+				$.ajax({
+					url : "/req/reqUpdate",
+					data : $('#plForm').serialize(),
+					method : "POST",
+					success : function(data){
+						saveMsg();
+						$("#addpl .close").click();
+						fn_egov_reqList();
+					}
+				});
+			}
 		});
 
 	});
@@ -393,8 +399,8 @@
 	/* pl요청 알림메세지 db에 저장하기 */
 	function saveMsg(){
 		var alarmData = {
-							"alarmCont" : "${SMEMBER.memName}"+ $('#modalReqId').val() + ",${SMEMBER.memId},/req/reqDetail?reqId="+$('#modalReqId').val(),
-							"memId" : $('#searchInput').val(),
+							"alarmCont" : $('#modalReqId').val() + ",${SMEMBER.memName},${SMEMBER.memId},/req/reqDetail?reqId="+$('#modalReqId').val()+","+ $('#modalReqName').val(),
+							"memId" 	: $('#searchInput').val(),
 							"alarmType" : "req-pl"
 		}
 		console.log(alarmData);
@@ -408,7 +414,6 @@
 				success : function(data){
 					
 					let socketMsg = "${SMEMBER.memName}," + alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
-					console.log("msgmsg : " + socketMsg);
 					socket.send(socketMsg);
 					
 				},
@@ -424,8 +429,6 @@
 					data : $('#plForm').serialize(),
 					method : "POST",
 					success : function(data) {
-						console.log(data);
-						console.log(data.memberVo);
 						// 메세지 추가
 						if (data.memberVo == null) {
 							$('#memIdCheck')
