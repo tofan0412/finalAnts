@@ -12,7 +12,31 @@
 	 WHERE A.TODO_ID = B.TODO_ID
 </select>
 
+<select id="searchTodo" parameterType="ants.com.board.manageBoard.model.TodoVo" resultType="ants.com.board.manageBoard.model.TodoVo">
+SELECT * 
+  FROM TODO
+	<if test="todoTitle =='%%'">
+ WHERE MEM_ID = #{memId}
+	</if>
+	<if test="todoTitle != '%%'">
+ WHERE MEM_ID = #{memId}
+   AND TODO_TITLE LIKE #{todoTitle}	
+	</if>
+</select>
 
+
+
+
+
+
+
+<insert id="suggestInsert" parameterType="ants.com.board.memBoard.model.SuggestVo">
+	INSERT INTO suggest (sgt_id,sgt_title,sgt_cont,
+    					reg_dt,sgt_status,category_id,todo_id, del) 
+				VALUES (
+			    SGT_SEQ.NEXTVAL,#{sgtTitle},#{sgtCont},SYSDATE,
+			    #{sgtStatus},#{categoryId},#{todoId},#{del})
+</insert>
 
 
 </mapper>

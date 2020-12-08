@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.board.memBoard.service.memBoardService;
 import ants.com.file.model.PrivateFileVo;
@@ -172,7 +173,9 @@ public class ScheduleController {
 	// 캘린더에서 일정 보기
 	@RequestMapping("/calendarDetail")
 	public String calendarDetail(ScheduleVo scheduleVo, Model model) {
-		return "redirect:/schedule/scheduleSelect?scheId=" + scheduleVo.getScheId();
+		ScheduleVo dbVo = memBoardService.calendarDetail(scheduleVo);
+		model.addAttribute("scheduleVo", dbVo);
+		return "jsonView";
 	}
 
 	// 캘린더에서 일정 삭제
