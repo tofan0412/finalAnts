@@ -65,7 +65,7 @@
 	
 	
 	<!-- 로그인한 사용자의 모든 북마크 조회 -->
-  	<select id="getallbookmark" parameterType="nts.com.board.memBoard.model.AllBookMarkVo"
+  	<select id="getallbookmark" parameterType="ants.com.board.memBoard.model.AllBookMarkVo"
 				resultType="ants.com.board.memBoard.model.AllBookMarkVo">
 		SELECT Z.*
 	      FROM (
