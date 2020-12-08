@@ -357,7 +357,6 @@ naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
 					주소 :
 					<input type='text' id="juso7" name="juso" value="${scheduleVo.juso}"/><br>
                 </div>
-               <div id="gg">fff</div>
               </div>
               <div class="card-footer">
                 <div class="float-right">

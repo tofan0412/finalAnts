@@ -11,7 +11,7 @@
 			     SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, REG_DT, MEM_ID
 			     FROM privatefile
 			     WHERE MEM_ID = #{memId}
-			     ORDER BY PRIV_ID) a
+			     ORDER BY PRIV_ID DESC) a
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
 	</select>
 	<!-- WHERE rownum <= #{lastIndex}) c WHERE rnum > #{firstIndex} -->
@@ -28,7 +28,7 @@
 	<!-- 파일등록  privateInsert -->
 	<insert id="privateInsert" parameterType="ants.com.file.model.PrivateFileVo">
 		INSERT INTO PRIVATEFILE ( PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, REG_DT, MEM_ID ) 
-			SELECT PRIV_SEQ.NEXTVAL as PRIV_ID, T.*
+			SELECT (LPAD(PRIV_SEQ.NEXTVAL,6,0) as PRIV_ID, T.*
 			FROM(
 				<foreach collection="list" item="item" index="index" separator="union all"> 
 					SELECT #{item.privFilepath} as PRIV_FILEPATH

@@ -4,7 +4,7 @@
 	
 	<!-- 일정 등록 -->
 	<insert id="scheduleInsert" parameterType="ants.com.board.memBoard.model.ScheduleVo">
-		INSERT INTO SCHEDULE VALUES(SCHE_SEQ.NEXTVAL, #{scheTitle}, #{scheCont}, TO_DATE(SYSDATE,'YYYY/MM/DD'), #{xVal}, #{yVal}, #{categoryId}, #{reqId}, 
+		INSERT INTO SCHEDULE VALUES(LPAD(SCHE_SEQ.NEXTVAL,6,0), #{scheTitle}, #{scheCont}, TO_DATE(SYSDATE,'YYYY/MM/DD'), #{xVal}, #{yVal}, #{categoryId}, #{reqId}, 
 									#{memId}, #{del}, #{startDt}, #{endDt}, #{juso}, null)
 	</insert>
 	
@@ -20,11 +20,11 @@
 			     WHERE category_id = #{categoryId} AND
 				 req_id = #{reqId} AND
 				 del = 'N'
-			     ORDER BY SCHE_ID) a
+			     ORDER BY SCHE_ID DESC) a
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
 	</select>
 	
-
+	
 	<!-- 일정 갯수  -->
 	<select id="schedulelistCount" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="int">
 		SELECT COUNT(*)
@@ -77,7 +77,7 @@
 	<insert id="calendarInsert" parameterType="ants.com.board.memBoard.model.ScheduleVo">
 		INSERT INTO SCHEDULE 
 			VALUES(
-				SCHE_SEQ.NEXTVAL, 
+				LPAD(SCHE_SEQ.NEXTVAL,6,0), 
 				#{scheTitle}, 
 				#{scheCont}, 
 				TO_DATE(SYSDATE,'YYYY/MM/DD'), 

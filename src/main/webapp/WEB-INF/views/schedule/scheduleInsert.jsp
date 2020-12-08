@@ -28,7 +28,8 @@
 	
 <input type="text" id="address" value="">
 <button type="button" id="submit">주소검색</button>
-<div id="map" style="width:100%;height:400px; display:none;"></div>
+<!-- display:none; -->
+<div id="map" style="width:100%;height:400px;"></div>
 
 <br><br>
   
@@ -313,7 +314,6 @@ naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
               <div class="card-body">
                 <div class="form-group">
                   <input class="form-control" id="til" name="scheTitle" placeholder="제목">
-                  <input type='button' id="map1" value="지도+"/><br>
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
                   <input type="hidden" name="hissueParentid" value="${hissueP }">
                 </div>
@@ -327,15 +327,17 @@ naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
 	                <input type='date' id="startDt" name="startDt"/><br>
 					종료일
 	                <input type='date' id="endDt" name="endDt"/><br>
-					
-	                
                 </div>
-                
-                
-                <br> 
+                <br>
+ 
+
+					<br> 
                  
                 <!-- style="display:none" -->
                 <div class="form-group" style="display:none">
+				<div class="float-left">
+					<input type='button' id="map1" value="지도+" /><br>
+				</div>
 	                x
 	                <input type='text' id='x' name="xVal" value="36.3621643"/><br>
 					y
