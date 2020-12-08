@@ -1,7 +1,8 @@
 package ants.com.file.model;
 
+import ants.com.base.model.BaseVo;
 
-public class PublicFileVo {
+public class PublicFileVo extends BaseVo {
 	
 	private String pubId;
 	private String pubFilepath;
@@ -12,6 +13,7 @@ public class PublicFileVo {
 	private String someId;
 	private String reqId;
 	private String pubSize;
+	private String memId;
 	
 	public PublicFileVo() {
 		
@@ -24,7 +26,7 @@ public class PublicFileVo {
 	}
 
 	public PublicFileVo(String pubFilepath, String pubFilename, String pubExtension, String categoryId, String someId,
-			String reqId, String pubSize) {
+			String reqId, String pubSize, String memId) {
 		super();
 		this.pubFilepath = pubFilepath;
 		this.pubFilename = pubFilename;
@@ -33,8 +35,8 @@ public class PublicFileVo {
 		this.someId = someId;
 		this.reqId = reqId;
 		this.pubSize = pubSize;
+		this.memId = memId;
 	}
-
 	public String getPubId() {
 		return pubId;
 	}
@@ -89,12 +91,21 @@ public class PublicFileVo {
 	public void setPubSize(String pubSize) {
 		this.pubSize = pubSize;
 	}
+	public String getMemId() {
+		return memId;
+	}
+	public void setMemId(String memId) {
+		this.memId = memId;
+	}
+	
 	@Override
 	public String toString() {
 		return "PublicFileVo [pubId=" + pubId + ", pubFilepath=" + pubFilepath + ", pubFilename=" + pubFilename
 				+ ", pubExtension=" + pubExtension + ", regDt=" + regDt + ", categoryId=" + categoryId + ", someId="
-				+ someId + ", reqId=" + reqId + ", pubSize=" + pubSize + "]";
+				+ someId + ", reqId=" + reqId + ", pubSize=" + pubSize + ", memId=" + memId + "]";
 	}
+	
+	
 	
 	
 	

@@ -11,7 +11,7 @@
 	      	SELECT ROWNUM RNUM , 
 	           	   S.*
 		      FROM (
-				select c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt ,
+				 select c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt ,
 						 c.issue_kind, c.book_id as issue_del , d.mem_name as mem_id
 				  from
 					  (select a.issue_id , a.issue_title , a.issue_cont , a.reg_dt ,

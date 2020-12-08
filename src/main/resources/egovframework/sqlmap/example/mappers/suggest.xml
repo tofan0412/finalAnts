@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ants.com.board.memBoard.mapper.SuggestMapper">
+
+<select id="readSuggestList" parameterType="ants.com.board.memBoard.model.SuggestVo" resultType="ants.com.board.memBoard.model.SuggestVo">
+	SELECT A.SGT_ID, A.SGT_TITLE, A.SGT_CONT, 
+           A.REG_DT, A.SGT_STATUS, A.CATEGORY_ID,
+           A.DEL, A.TODO_ID,  B.MEM_ID, B.REQ_ID
+	  FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+	                     FROM TODO 
+	                    WHERE REQ_ID = #{reqId}) B
+	 WHERE A.TODO_ID = B.TODO_ID
+</select>
+
+
+
+
+</mapper>

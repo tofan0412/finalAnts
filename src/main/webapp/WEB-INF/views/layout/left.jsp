@@ -58,7 +58,7 @@
 		                </a>
 		              </li>
 		              <li class="nav-item">
-		                <a href="#" class="nav-link">
+		                <a href="${pageContext.request.contextPath}/projectMember/myissuelist" class="nav-link">
 						<i class="nav-icon far fa-lightbulb"></i>
 						<p class="selectable">내가작성한 이슈</p>
 		                </a>

@@ -1,5 +1,7 @@
 package ants.com.common.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -21,5 +23,17 @@ public class AlarmService {
 
 	public AlarmVo alarmCount(AlarmVo alarmVo) {
 		return alarmMapper.alarmCount(alarmVo);
+	}
+
+	public List<?> alarmList(AlarmVo alarmVo) {
+		return alarmMapper.alarmList(alarmVo);
+	}
+
+	public int alarmListCount(AlarmVo alarmVo) {
+		return alarmMapper.alarmListCount(alarmVo);
+	}
+
+	public int alarmUpdate(AlarmVo alarmVo) {
+		return alarmMapper.alarmUpdate(alarmVo);
 	}
 }
