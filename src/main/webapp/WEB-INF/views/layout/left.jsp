@@ -58,13 +58,13 @@
 		                </a>
 		              </li>
 		              <li class="nav-item">
-		                <a href="#" class="nav-link">
+		                <a href="${pageContext.request.contextPath}/projectMember/myissuelist" class="nav-link">
 						<i class="nav-icon far fa-lightbulb"></i>
 						<p class="selectable">내가작성한 이슈</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
-		                <a href="${pageContext.request.contextPath}/schedule/clendarView" class="nav-link">
+		                <a href="#" class="nav-link">
 		                <i class="nav-icon far fa-calendar-alt"></i>
 						<p class="selectable">캘린더</p>
 		                </a>

@@ -1,6 +1,8 @@
 package ants.com.common.model;
 
-public class AlarmVo {
+import ants.com.base.model.BaseVo;
+
+public class AlarmVo extends BaseVo{
 
 	
 	private String alarmId;
@@ -13,6 +15,7 @@ public class AlarmVo {
 	private int reply;
 	private int posts;
 	private int totalCnt;
+	private String reqStatus;
 	
 	public AlarmVo() {
 		
@@ -77,20 +80,21 @@ public class AlarmVo {
 	public void setTotalCnt(int totalCnt) {
 		this.totalCnt = totalCnt;
 	}
-	public AlarmVo(String alarmId, String alarmCont, String alarmStatus, String memId, String alarmType, int reqPl,
-			int resPl, int reply, int posts, int totalCnt) {
-		super();
-		this.alarmId = alarmId;
-		this.alarmCont = alarmCont;
-		this.alarmStatus = alarmStatus;
-		this.memId = memId;
-		this.alarmType = alarmType;
-		this.reqPl = reqPl;
-		this.resPl = resPl;
-		this.reply = reply;
-		this.posts = posts;
-		this.totalCnt = totalCnt;
+	
+	public String getReqStatus() {
+		return reqStatus;
 	}
+	public void setReqStatus(String reqStatus) {
+		this.reqStatus = reqStatus;
+	}
+	@Override
+	public String toString() {
+		return "AlarmVo [alarmId=" + alarmId + ", alarmCont=" + alarmCont + ", alarmStatus=" + alarmStatus + ", memId="
+				+ memId + ", alarmType=" + alarmType + ", reqPl=" + reqPl + ", resPl=" + resPl + ", reply=" + reply
+				+ ", posts=" + posts + ", totalCnt=" + totalCnt + ", reqStatus=" + reqStatus + "]";
+	}
+	
+	
 	
 	
 	

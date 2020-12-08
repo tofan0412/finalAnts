@@ -32,14 +32,14 @@
 		var memId = '${SMEMBER.memId}';
 		alarmCount(memId);
 		
-		toastr.info(data,"PL 요청");
+		toastr.info(data);
 
     	toastr.options = {
     	  "closeButton": true,
     	  "debug": false,
     	  "newestOnTop": false,
     	  "progressBar": true,
-    	  "positionClass": "toast-top-right",
+    	  "positionClass": "toast-top-right",                                     
     	  "preventDuplicates": false,
     	  "showDuration": "500",
     	  "hideDuration": "1000",

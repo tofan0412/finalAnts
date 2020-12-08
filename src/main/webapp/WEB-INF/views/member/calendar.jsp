@@ -34,9 +34,88 @@ function ini_events(ele) {
 
     })
   }
+  
+function calendarInsert(title, start, calcss) {
+	$.ajax({
+		url : "/schedule/calendarInsert",
+		method : "get",
+		data : {
+			scheTitle : title,
+			startDt : start,
+			calendarcss : calcss
+		},
+		success : function(data) {
+		}
+
+	});
+
+}
+
+function calendarUpdate(id, title, start, end) {
+	$.ajax({
+		url : "/schedule/calendarUpdate",
+		method : "get",
+		data : {
+			scheId : id,
+			scheTitle : title,
+			startDt : start,
+			endDt : end
+		},
+		success : function(data) {
+		}
+
+	});
+
+}
+function calendarUpdate2(id, title, start) {
+	$.ajax({
+		url : "/schedule/calendarUpdate",
+		method : "get",
+		data : {
+			scheId : id,
+			scheTitle : title,
+			startDt : start
+		},
+		success : function(data) {
+		}
+
+	});
+
+}
+
+function calendarDetail(id) {
+	$.ajax({
+		url : "/schedule/calendarDetail",
+		method : "get",
+		data : {
+			scheId : id
+		},
+		success : function(data) {
+			console.log(data);
+		}
+
+	});
+
+}
+function calendarDelete(id) {
+	$.ajax({
+		url : "/schedule/calendarDelete",
+		method : "get",
+		data : {
+			scheId : id
+		},
+		success : function(data) {
+		}
+
+	});
+
+}
+
+
 
   ini_events($('#external-events div.external-event'))
 document.addEventListener('DOMContentLoaded', function() {
+	$("#modalbtn").hide();
 	var Calendar = FullCalendar.Calendar;
 	var Draggable = FullCalendar.Draggable;
 	var containerEl = document.getElementById('external-events');
@@ -48,32 +127,49 @@ document.addEventListener('DOMContentLoaded', function() {
 		defaultView: 'dayGridMonth', 
 		defaultDate: new Date(),
 		header: { left: 'prev,next today', center: 'title',  right : 'dayGridMonth,timeGridWeek,timeGridDay' },
-		editable:true,
+		editable: true,
 		eventLimit : true,
 		droppable: true, 
 	    selectable: true,
+	    draggable :true,
 		themeSystem: 'bootstrap',
 		displayEventTime: false,
 		eventClick: function(info) {
-		    alert('Event: ' + info.event.title);
-		    alert('id: ' + info.event.id);
-		    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-		    alert('start day: ' + info.event.start);
-		    alert('end day: ' + info.event.end);
+			var scheIdz = info.event.id;
+			$("#modalbtn").trigger("click");
+			$("#scheId").append(scheIdz);
+			calendarDetail(scheIdz);
 		  },
-		 eventDrop: function(info) {
-				alert(info.event.title + " 를 " + info.event.start +" 로 이동 ");
+		eventDrop: function(info) {
 			    if (!confirm("일정 변경을 저장하시겠습니까??")) {
 			      info.revert();
+			    }else{
+			    	if(info.event.end!=null){
+			    		var start = moment(info.event.start).format('YYYY-MM-DD');
+			    		var end = moment(info.event.end).format('YYYY-MM-DD');
+					      calendarUpdate(info.event.id, info.event.title, start, end);			    	
+					    }
+					if(info.event.end==null){
+			    		var start = moment(info.event.start).format('YYYY-MM-DD');
+					      calendarUpdate2(info.event.id, info.event.title, start);			    				 		
+					 	}
 			    }
 			  },
-	 	 eventResize: function(info) {
-			alert(info.event.title + "를" + info.event.end+" 로 이동");
-
-			if (!confirm("일정 변경을 저장하시겠습니까??")) {
-			info.revert();
-			}
-	 	  },
+			  eventDragStop: function (info) {
+				    var trashEl = jQuery('.calendarTrash');
+				    var ofs = trashEl.offset();
+				    var x1 = ofs.left;
+				    var x2 = ofs.left + trashEl.outerWidth(true);
+				    var y1 = ofs.top;
+				    var y2 = ofs.top + trashEl.outerHeight(true);
+				    var x = info.jsEvent.pageX;
+		 	    	var y = info.jsEvent.pageY;
+				    if (x >= x1 && x <= x2 &&
+				        y >= y1 && y <= y2) {
+				    	info.event.remove();
+				    	calendarDelete(info.event.id);
+				    }
+				},
 		events: [
 		        <%
 		         for(int i =0; i<list.size(); i++){
@@ -82,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		        %>
 				{
 					id : '<%= dto.getScheId()%>',
+					navLinks: true,
 					title : '<%= dto.getScheTitle()%>',
 					backgroundColor: '<%= dto.getCalendarcss()%>',
 					start: '<%= dto.getStartDt()%>',
@@ -96,15 +193,15 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	calendar.render();
 	
-	var currColor = '#3c8dbc';
+	var currColor = '#0073b7';
 	$("#color-chooser > li > a").on("click", function () {
 		currColor = $(this).css('color')
-	      // Add color effect to button
 	      $('#add-new-event').css({
 	        'background-color': currColor,
 	        'border-color'    : currColor
 	      })
 	    })
+
 		
 	$("#add-new-event").on("click", function() {
 		var addcalendar = $("#new-event").val();
@@ -129,7 +226,8 @@ document.addEventListener('DOMContentLoaded', function() {
         	  $('.fc-day').mouseover( function () {
         	       var sel = $(this).closest('.fc-day');
         	       var strDate_yyyy_mm_dd = sel.data('date');
-        	       calendar.addEvent( {'title':addcalendar, 'start':strDate_yyyy_mm_dd, 'backgroundColor':currColor});
+        	       calendar.addEvent( {'title':addcalendar, 'start':strDate_yyyy_mm_dd, 'backgroundColor':currColor}); 
+        	  		calendarInsert(addcalendar, strDate_yyyy_mm_dd, currColor);
         	     }).mouseout(function(){
         	    	 $(".fc-day").unbind("mouseover");
         	     });
@@ -137,6 +235,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }});
 	})
 });
+  
+  
 
 </script>
 
@@ -155,7 +255,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 </head>
 <body class="ns">
- <div class="content-wrapper" style="min-height: 1230.88px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -221,6 +320,20 @@ document.addEventListener('DOMContentLoaded', function() {
                   <!-- /input-group -->
                 </div>
               </div>
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">delete<i class="far fa-trash-alt"></i></h4>
+                </div>
+                <div class="card-body">
+                  <!-- the events -->
+                  <div id="external-events">                   
+                    <div class="calendarTrash" id="calendarTrash">
+                 <br><br>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
             </div>
           </div>
           <!-- /.col -->
@@ -239,5 +352,27 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" id ="modalbtn"></button>	
+    <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">상세보기</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+       	상세보기할거임!!!!!
+       	<form id="calForm" name="calForm" method="post">
+       	<input type="text" name="scheId" id="scheId">
+       	</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="modalBtn">수정</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

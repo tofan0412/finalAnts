@@ -69,9 +69,24 @@ $(function(){
 		replyinsert();
 	})
 	
+	$('#replydiv').on('click','#replydelbtn', function(){
+		var someid = $(this).prev().val();
+		var replyid = $(this).prev().prev().val();
+		issueid = '${issuevo.issueId }'
+		console.log(replyid)
+		console.log(someid)
+		$.ajax({url :"/reply/delreply",
+			   data :{replyId: replyid,
+				       someId: someid },
+			   method : "get",
+			   success :function(data){	
+				   console.log(data)
+				   $(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+issueid);				
+			 }
+		})
+	})
+	
 })
-
-
 
 
 function resizeIt() {
@@ -166,11 +181,39 @@ function replyinsert() {
 		success : function(data) {
 			
 // 				alert(data.issueId);
-				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.issueId);
+				saveMsg();
+				//$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.issueId);
 		}
 
 	});
 
+}
+
+function saveMsg(){
+	var alarmData = {
+						"alarmCont" : "${issuevo.issueId},${SMEMBER.memName},${SMEMBER.memId},/projectMember/eachissueDetail?issueId=${issuevo.issueId},${issuevo.issueTitle}"+ $('#re_con').val(),
+						"memId" 	: "${issuevo.memId}",
+						"alarmType" : "reply"
+	}
+	console.log(alarmData);
+	
+	$.ajax({
+			url : "/alarmInsert",
+			data : JSON.stringify(alarmData),
+			type : 'POST',
+			contentType : "application/json; charset=utf-8",
+			dataType : 'text',
+			success : function(data){
+				
+				let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+				socket.send(socketMsg);
+				
+				
+			},
+			error : function(err){
+				console.log(err);
+			}
+	});
 }
 
 
@@ -250,8 +293,7 @@ function replyinsert() {
 
 			<div class="form-group">
 				<label for="memid" class="col-sm-2 control-label">작성자</label>
-				<label id ="memid" class="control-label">${issuevo.memId }</label> 
-			</div>
+				<label id ="memid" class="control-label">${issuevo.memName }</label> 
 
 
 			<div class="form-group">
@@ -310,21 +352,23 @@ function replyinsert() {
 				<div class="form-group">
 				<hr>
 					<label for="pass" class="col-sm-2 control-label">댓글</label>
-					<div class="col-sm-12">					
+					<div class="col-sm-12" id="replydiv">					
 						<c:forEach items="${replylist }" var="replylist">
 							<c:if test= "${replylist.del == 'N'}">								
 								<textarea disabled class ="writeCon">${replylist.replyCont}</textarea>
-								[ ${replylist.memId } / ${replylist.regDt} ] 	<hr>
+								[ ${replylist.memId } / ${replylist.regDt} ] 	
 								
-<%-- 								<c:if test= "${issueVo.memId == 'pl1' && replylist.del == 'N'}">								 --%>
-<%-- 									<a href = "${cp}/reply/delreply?replyId=${replylist.replyId}&someId=${replylist.someId}"> --%>
-<!-- 											<input id ="delbtn2" type="button" class="btn btn-default" value ="삭제"/></a>								 -->
-<%-- 								</c:if>							 --%>
+								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">		
+									<input type="hidden" value="${replylist.replyId}">
+									<input type="hidden" value="${replylist.someId}">																							
+									<input id ="replydelbtn" type="button" class="btn btn-default" value ="삭제"/>						
+								</c:if>		
+												
 							</c:if>		 														
 							<c:if test= "${replylist.del == 'Y'}">								
-								<textarea disabled class ="reply_con"> [삭제된 댓글입니다.]	</textarea>	<br>						
+								<textarea disabled class ="writeCon"> [삭제된 댓글입니다.]	</textarea>					
 							</c:if>		 														
-								
+							<hr>	
 						</c:forEach>
 						<br>
 						 <input type="hidden" name="someId" value="${issuevo.issueId }">

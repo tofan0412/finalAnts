@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import org.jaxen.function.SubstringFunction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
@@ -42,11 +42,12 @@ public class AlarmHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String msg = message.getPayload();
+		
 		if(msg != null) {
 			String[] strs = msg.split(",");
 			
 			// pl요청
-			if(strs != null && strs[5].equals("r-pl")) {
+			if(strs != null && strs.length == 6) {
 				String callerName = strs[0];
 				String reqId = strs[1];
 				String callerId = strs[2];
@@ -55,14 +56,35 @@ public class AlarmHandler extends TextWebSocketHandler {
 				String type = strs[5];
 				
 				//받는사람이 로그인해서 있다면
-				WebSocketSession boardWriterSession = userSessionsMap.get(receiverId);
-				logger.debug("receiverId:{}",boardWriterSession);
+				WebSocketSession requestSession = userSessionsMap.get(receiverId);
+				logger.debug("receiverId:{}",requestSession);
 				
-				if("r-pl".equals(type) && boardWriterSession != null) {
+				if("req-pl".equals(type) && requestSession != null) {
 					TextMessage tmpMsg = new TextMessage(callerName + "님이" + " pl요청을 보냈습니다. " +
 								"<a type='external' href=" +url+ ">요청서 보기</a>");
+					requestSession.sendMessage(tmpMsg);
+				}
+			}
+			
+			// 댓글이 달렸을 때
+			if(strs != null && strs.length == 8) {
+				String issueId = strs[0];
+				String callerName = strs[1];
+				String callerId = strs[2];
+				String url = strs[3];
+				String issueTitle = strs[4];
+				String replyCont = strs[5];
+				String receiverId = strs[6];
+				String type = strs[7];
+				
+				//게시물작성자가 로그인해 있다면
+				WebSocketSession boardWriterSession = userSessionsMap.get(receiverId);
+				
+				if(type.equals("reply") && boardWriterSession != null) {
+					TextMessage tmpMsg = new TextMessage(issueTitle.substring(0, 6) + "... 에 댓글이 달렸습니다." + "<a type='external' href="+url+">요청서 보기</a>");
 					boardWriterSession.sendMessage(tmpMsg);
 				}
+				
 			}
 		}
 	}

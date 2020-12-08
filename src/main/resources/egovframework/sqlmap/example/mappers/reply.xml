@@ -26,18 +26,17 @@
   </select>
   
   
-   <!-- 댓글 삭제 status 0으로-->
-  <update id="delreply" parameterType="String">
+   <!-- 댓글 삭제 status Y으로-->
+  <update id="delreply" parameterType="ants.com.board.memBoard.model.ReplyVo">
   	UPDATE reply 
   	SET del = 'Y' 
-  	WHERE re_id = #{replyId}
+  	WHERE reply_id = #{replyId} 
   </update>
   
   	<!-- 로그인한 사용자의 클릭한 프로젝트의 북마크 조회 -->
   	<select id="getbookmark" parameterType="ants.com.member.model.ProjectMemberVo"
 				resultType="ants.com.board.memBoard.model.BookmarkVo">
-			select * from bookmark where req_id = #{reqId} and mem_id = #{memId}
-		
+			select * from bookmark where req_id = #{reqId} and mem_id = #{memId}	
 	</select>
 	
 	<!-- 로그인한 사용자의 북마크 추가 -->
@@ -51,7 +50,11 @@
 								    BOOK_SEQ.nextval,
 								    #{issueId},
 								    #{reqId},
-								    #{memId}
+								    (select b.mem_name as mem_id
+									from
+									issue a, member b
+									where a.mem_id = b.mem_id 
+									and issue_id = #{issueId})
 								)
 	</insert>
 	
@@ -72,7 +75,8 @@
 	      	SELECT ROWNUM RNUM , 
 	           	   S.*
 		      FROM (		      
-					select a.book_id, a.issue_id, a.req_id, a.mem_id, b.issue_title, b.issue_kind, to_char(b.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt
+					select a.book_id, a.issue_id, a.req_id, a.mem_id, b.issue_title, b.issue_kind, 
+					       to_char(b.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt
 					  from bookmark a, issue b 
 					 where a.mem_id = b.mem_id and a.issue_id = b.issue_id
 					      and a.mem_id = #{memId}

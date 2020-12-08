@@ -40,14 +40,6 @@ public class ProjectMemberController {
 	@Autowired
 	FileController filecontroller;
 
-	@RequestMapping("/project")
-	public String projectmain(HttpSession session) {
-		
-		session.setAttribute("reqId", "1");
-		return "tiles/board/issuecontentmenu";
-	}
-	
-	
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
@@ -62,7 +54,43 @@ public class ProjectMemberController {
 		return "board/eachproject";
 	}
 	
-	// 이슈리스트 출력
+	// 나의 이슈리스트 출력
+	@RequestMapping("/myissuelist")
+	public String getMyissuelist(@ModelAttribute("issueVo") IssueVo issueVo, HttpSession session, Model model) throws Exception{
+		
+		
+		
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		issueVo.setMemId(memId);
+		
+		/** EgovPropertyService.sample */
+		issueVo.setPageUnit(propertiesService.getInt("pageUnit"));
+		issueVo.setPageSize(propertiesService.getInt("pageSize"));
+
+		/** pageing setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
+		paginationInfo.setPageSize(issueVo.getPageSize());
+
+		issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
+		issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		List<IssueVo> myresultList = promemService.myissuelist(issueVo);
+		model.addAttribute("myissuelist", myresultList);
+
+		int totCnt = promemService.myissuePagingListCnt(issueVo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
+		
+		return "tiles/board/MY_issueList";
+	}
+	
+	
+	
+	// 해당 프로젝트 이슈리스트 출력
 	@RequestMapping("/issuelist")
 	public String getissuelist(@ModelAttribute("issueVo") IssueVo issueVo, HttpSession session, Model model) throws Exception{
 		
@@ -95,11 +123,13 @@ public class ProjectMemberController {
 	
 	// 각 이슈 상세보기
 	@RequestMapping("/eachissueDetail")
-	public String geteachissue(String issueId, HttpSession session, Model model) throws SQLException, IOException {
+	public String geteachissue(String issueId, String reqId, HttpSession session, Model model) throws SQLException, IOException {
 		
 		IssueVo issuevo = promemService.geteachissue(issueId);	
 		
-		String reqId = (String)session.getAttribute("projectId");
+		if(session.getAttribute("projectId") !=  null) {
+			reqId = (String)session.getAttribute("projectId");
+		}
 		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
 		String memId = memberVo.getMemId();
 		

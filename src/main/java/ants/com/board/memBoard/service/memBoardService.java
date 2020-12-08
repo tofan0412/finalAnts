@@ -54,8 +54,8 @@ public class memBoardService{
 	}
 	
 	// 댓글 삭제
-	public int delreply(String replyId) throws SQLException, IOException {
-		return mapper.delreply(replyId);
+	public int delreply(ReplyVo replyVo) throws SQLException, IOException {
+		return mapper.delreply(replyVo);
 	}
 	
 	// 댓글 목록 출력
@@ -98,6 +98,26 @@ public class memBoardService{
 	// 일정 리스트(캘린더용)
 	public List<ScheduleVo> showCalendar(ScheduleVo scheduleVo){
 		return mapper.showCalendar(scheduleVo);
+	}
+	
+	// 일정 등록(캘린더용)
+	public int calendarInsert(ScheduleVo scheduleVo) {
+		return mapper.calendarInsert(scheduleVo);
+	}
+
+	// 일정 수정(캘린더용_드래그)
+	public int calendarUpdate(ScheduleVo scheduleVo) {
+		return mapper.calendarUpdate(scheduleVo);
+	}
+	
+	// 일정 삭제(캘린더용)
+	public int calendarDelete(ScheduleVo scheduleVo) {
+		return mapper.calendarDelete(scheduleVo);
+	}
+	
+	// 일정 상세(캘린더용)
+	public ScheduleVo calendarDetail(ScheduleVo scheduleVo) {
+		return mapper.calendarDetail(scheduleVo);
 	}
 	
 

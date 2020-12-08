@@ -31,7 +31,7 @@ public interface memBoardMapper {
 	public int insertreply(ReplyVo replyVo);
 	
 	// 댓글 삭제
-	public int delreply(String replyId);
+	public int delreply(ReplyVo replyVo);
 	
 	// 댓글 목록 조회
 	public List<ReplyVo> replylist(ReplyVo replyVo);
@@ -59,4 +59,18 @@ public interface memBoardMapper {
 	
 	// 일정 리스트(캘린더용)
 	public List<ScheduleVo> showCalendar(ScheduleVo scheduleVo);
+
+	// 일정 등록(캘린더용)
+	public int calendarInsert(ScheduleVo scheduleVo);
+
+	// 일정 수정(캘린더용)
+	public int calendarUpdate(ScheduleVo scheduleVo);
+	
+	// 일정 수정(캘린더용)
+	public int calendarDelete(ScheduleVo scheduleVo);
+
+	// 일정 상세페이지(캘린더용)
+	public ScheduleVo calendarDetail(ScheduleVo scheduleVo);
+	
 }
+

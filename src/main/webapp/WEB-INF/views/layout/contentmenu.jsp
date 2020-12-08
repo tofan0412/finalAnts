@@ -235,13 +235,13 @@ $(function(){
 						href="${pageContext.request.contextPath}/suggest/readSuggestList">건의사항</a></li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-calendar-tab"
-						href="#custom-tabs-three-calendar">캘린더</a></li>
+						href="${pageContext.request.contextPath}/schedule/clendarView" >캘린더</a></li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-mywork-tab"
 						href="${pageContext.request.contextPath}/todo/MytodoList">내
 							일감</a></li>
 					<li class="nav-item"><a class="nav-link"
-						id="custom-tabs-three-files-tab" href="/publicfile/publicfileview">파일함</a>
+						id="custom-tabs-three-files-tab" href="/file/publicfileview">파일함</a>
 					</li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-mywork-tab" href="/schedule/scheduleplaceView">일정</a></li>
@@ -255,7 +255,7 @@ $(function(){
 				</ul>
 			</div>
 
-		</div> 
+		</div>
 	</div>
 	</section>
 	<!-- /.content -->
