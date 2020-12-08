@@ -166,11 +166,39 @@ function replyinsert() {
 		success : function(data) {
 			
 // 				alert(data.issueId);
-				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.issueId);
+				saveMsg();
+				//$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.issueId);
 		}
 
 	});
 
+}
+
+function saveMsg(){
+	var alarmData = {
+						"alarmCont" : "${issuevo.issueId},${SMEMBER.memName},${SMEMBER.memId},/projectMember/eachissueDetail?issueId=${issuevo.issueId},${issuevo.issueTitle}"+ $('#re_con').val(),
+						"memId" 	: "${issuevo.memId}",
+						"alarmType" : "reply"
+	}
+	console.log(alarmData);
+	
+	$.ajax({
+			url : "/alarmInsert",
+			data : JSON.stringify(alarmData),
+			type : 'POST',
+			contentType : "application/json; charset=utf-8",
+			dataType : 'text',
+			success : function(data){
+				
+				let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+				socket.send(socketMsg);
+				
+				
+			},
+			error : function(err){
+				console.log(err);
+			}
+	});
 }
 
 
