@@ -166,14 +166,14 @@
 									</c:otherwise>
 								</c:choose>
 								<td style="text-align: center;"><c:choose>
-										<c:when test="${req.status eq '대기' }">
-											<span class="badge badge-warning">${req.status }</span>
+										<c:when test="${req.status eq 'WAIT' }">
+											<span class="badge badge-warning">대기</span>
 										</c:when>
-										<c:when test="${req.status eq '반려' }">
-											<span class="badge badge-danger">${req.status }</span>
+										<c:when test="${req.status eq 'REJECT' }">
+											<span class="badge badge-danger">거절</span>
 										</c:when>
-										<c:when test="${req.status eq '수락' }">
-											<span class="badge badge-success">${req.status }</span>
+										<c:when test="${req.status eq 'ACCEPT' }">
+											<span class="badge badge-success">수락</span>
 										</c:when>
 									</c:choose></td>
 								<!-- 프로젝트가 생성되지 않았을 때 -->
@@ -267,7 +267,7 @@
 						<input type="hidden" name="jsonView" value="Y">
 						<input type="hidden" id="modalReqId" name="reqId" value="">
 						<input type="hidden" id="modalReqName" name="reqName" value="">
-						<input type="hidden" name="status" value="대기"> <label
+						<input type="hidden" name="status" value="WAIT"> <label
 							for="recipient-name" class="control-label">이메일:</label> <input
 							type="text" class="form-control" id="searchInput" name="memId">
 						<div class="card-title error-page jg" id="memIdCheck"

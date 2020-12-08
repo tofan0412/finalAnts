@@ -65,7 +65,9 @@ public interface memBoardMapper {
 
 	// 일정 수정(캘린더용)
 	public int calendarUpdate(ScheduleVo scheduleVo);
+	
+	// 일정 수정(캘린더용)
+	public int calendarDelete(ScheduleVo scheduleVo);
 
-	// 일정 수정(캘린더 드래그용)
-	public int calendarUpdateSize(ScheduleVo scheduleVo);
+	
 }
