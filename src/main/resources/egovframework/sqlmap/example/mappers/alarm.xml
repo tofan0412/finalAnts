@@ -30,5 +30,49 @@
 		    #{alarmType}
 		)
 	</insert>
+	
+	<select id="alarmList" resultType="ants.com.common.model.AlarmVo" parameterType="ants.com.common.model.AlarmVo">
+		SELECT  *
+		    FROM(
+		    	SELECT ROWNUM rnum, a.*
+				FROM (SELECT b.*
+                        FROM alarm b
+                        WHERE mem_id = #{memId}
+                        <if test="searchCondition != null and searchCondition != ''">
+							    <choose>
+							        <when test="searchCondition == 1">
+										AND	alarm_type = 'req-pl'
+										 OR alarm_type = 'res-pl'
+									</when>
+							        <when test="searchCondition == 2">
+										AND	alarm_type = 'reply'
+									</when>
+							        <when test="searchCondition == 3">
+										AND	alarm_type = 'posts'
+									</when>
+								</choose>
+						</if>
+                        ORDER BY to_number(b.alarm_id)desc) a
+                <![CDATA[
+                WHERE rownum <= #{lastIndex})
+            WHERE rnum > #{firstIndex} 
+            ]]>
+	</select>
+	
+	<select id="alarmListCount" parameterType="ants.com.common.model.AlarmVo"
+		resultType="java.lang.Integer">
+	
+		    	SELECT COUNT(*)
+				  FROM alarm
+				 WHERE mem_id = #{memId}
+	
+	</select>
+	
+	<update id="alarmUpdate" parameterType="ants.com.common.model.AlarmVo">
+		UPDATE alarm
+		   SET alarm_status = 'Y'
+		 WHERE alarm_Id = #{alarmId}
+		
+	</update>
 
 </mapper>
