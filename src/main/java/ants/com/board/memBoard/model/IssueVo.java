@@ -4,7 +4,6 @@ import ants.com.base.model.BaseVo;
 
 public class IssueVo extends BaseVo{
 
-	
 	private String issueId;
 	private String issueTitle;
 	private String issueCont;
@@ -15,6 +14,9 @@ public class IssueVo extends BaseVo{
 	private String todoId;
 	private String reqId;
 	private String memId;
+	private String memName;
+	private String bookmark;
+	
 	public String getIssueId() {
 		return issueId;
 	}
@@ -54,7 +56,7 @@ public class IssueVo extends BaseVo{
 	public String getIssueDel() {
 		return issueDel;
 	}
-	public void setIssuDel(String issueDel) {
+	public void setIssueDel(String issueDel) {
 		this.issueDel = issueDel;
 	}
 	public String getTodoId() {
@@ -75,11 +77,25 @@ public class IssueVo extends BaseVo{
 	public void setMemId(String memId) {
 		this.memId = memId;
 	}
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
+	public String getBookmark() {
+		return bookmark;
+	}
+	public void setBookmark(String bookmark) {
+		this.bookmark = bookmark;
+	}
+	
 	@Override
 	public String toString() {
-		return "IssueVo [issueId=" + issueId + ", issueTitle=" + issueTitle + ", issueCont=" + issueCont + ", regDt="
-				+ regDt + ", categoryId=" + categoryId + ", issueKind=" + issueKind + ", issueDel=" + issueDel
-				+ ", todoId=" + todoId + ", reqId=" + reqId + ", memId=" + memId + "]";
+		return "IssueListVo [issueId=" + issueId + ", issueTitle=" + issueTitle + ", issueCont=" + issueCont
+				+ ", regDt=" + regDt + ", categoryId=" + categoryId + ", issueKind=" + issueKind + ", issueDel="
+				+ issueDel + ", todoId=" + todoId + ", reqId=" + reqId + ", memId=" + memId + ", memName=" + memName
+				+ ", bookmark=" + bookmark + "]";
 	}
 	
 	

@@ -141,13 +141,7 @@
      		// 업드로할 파일이 존재할 시
      		}else{
      			$('#file_upload').uploadifive('upload');
-     		}
-     		
-     		
-     		
-				
-			
-	     	
+     		}	
      	})     	
      	// 업로드된 파일의 수와 사용자가 올린 파일의 수가 같을 시 from 전송
      	function insert(){
@@ -159,15 +153,10 @@
         	}
 
     	}
-     	
-     	
       
  	})
  	
- 
- 
- 	
- 	
+
  	
  	// 로그인한 사람의 todolist출력
  	function mytodolist(){
@@ -264,22 +253,6 @@
 					<label for="issueCont" class="col-sm-2 control-label">이슈 내용</label>
 					<textarea id="summernote" name="issueCont" id="issueCont"></textarea>
 				</div>
-				
-				
-				
-				
-				
-<!-- 				<div class="form-group"> -->
-<!-- 					<label for="file" class="col-sm-2 control-label">첨부파일</label> -->
-<!-- 					<button type="button" id="addbtn" class="btn btn-light filebtn" style="outline: 0; border: 0;"> -->
-<!-- 							<i class="fas fa-fw fa-plus" style=" font-size:10px;"></i> -->
-<!-- 						</button> <br> -->
-					
-<!-- 					<div id ="filediv" class="col-sm-10"> -->
-<!-- 						<input type="file" name="file" id="fileBtn">	 -->
-									
-<!-- 					</div> -->
-<!-- 				</div> -->
 						
 			</form>
 			

@@ -25,7 +25,12 @@ public class ProjectmemberService extends EgovAbstractServiceImpl {
 		return mapper.mytodolist(promemVo);
 	}
 
-	// 이슈글 리스트
+	// 나의 이슈글 리스트
+	public List<IssueVo> myissuelist(IssueVo issueVo) {
+		return mapper.myissuelist(issueVo);
+	}
+	
+	// 해당 프로젝트 이슈글 리스트
 	public List<IssueVo> issuelist(IssueVo issueVo) {
 		return mapper.issuelist(issueVo);
 	}
@@ -54,15 +59,20 @@ public class ProjectmemberService extends EgovAbstractServiceImpl {
 	public int delissue(String issueId) {
 		return mapper.delissue(issueId);
 	}
+	
+	// 해당 프로젝트의 이슈글 개수
+	public int issuePagingListCnt(IssueVo issueVo) {
+		return mapper.issuePagingListCnt(issueVo);
+	}
+	
+	// 내가 작성한 이슈글 개수
+	public int myissuePagingListCnt(IssueVo issueVo) {
+		return mapper.myissuePagingListCnt(issueVo);
+	}
 
 	// 회원이 사용가능한 카테고리 조회
 	public List<CategoryVo> categorylist(String memId) {
 		return mapper.categorylist(memId);
-	}
-
-	// 회원이 사용가능한 카테고리 조회
-	public int issuePagingListCnt(IssueVo issueVo) {
-		return mapper.issuePagingListCnt(issueVo);
 	}
 
 	// left바 프로젝트명 불러오는 메서드

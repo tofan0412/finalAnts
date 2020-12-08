@@ -57,9 +57,11 @@ public class ReplyController {
 	@RequestMapping(path ="/delreply")
 	public String deleteapply(ReplyVo replyVo, Model model, HttpSession session) throws SQLException, IOException {
 		
-		memBoardService.delreply(replyVo.getReplyId());
+		System.out.println(replyVo.getReplyId());
+		System.out.println(replyVo.getSomeId());
+		memBoardService.delreply(replyVo);
 		
-		return "redirect:/board/boardDetail?someId="+replyVo.getSomeId();
+		return "jsonView";
 	}
 	
 	
