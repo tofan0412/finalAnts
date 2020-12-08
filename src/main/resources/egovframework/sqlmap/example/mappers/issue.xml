@@ -12,7 +12,7 @@
 	           	   S.*
 		      FROM (
 				 select c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt ,
-						 c.issue_kind, c.book_id as issue_del , d.mem_name as mem_id
+						 c.issue_kind, c.book_id as issue_del , d.mem_name , c.mem_id
 				  from
 					  (select a.issue_id , a.issue_title , a.issue_cont , a.reg_dt ,
 							  a.issue_kind, b.book_id , a.mem_id , a.issue_del
@@ -55,7 +55,7 @@
 	<!-- 각 이슈게시글 내용 가져오기 -->
 	<select id="geteachissue"  resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="String">
 		select  a.issue_id ,  a.issue_title , a.issue_cont ,TO_CHAR( a.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt, 
-				a.todo_id , b.mem_name as mem_id,  a.category_id, a.issue_kind
+				a.todo_id , b.mem_name ,  a.category_id, a.issue_kind , a.mem_id
 			
 		from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id, category_id, issue_kind, todo_id
 		        from issue
@@ -64,21 +64,11 @@
 			
 	</select>
 	
-	
-	<!-- 본인이 가지고 있는 일감(todo)내역 -->
-	<select id="mytodolist" resultType ="ants.com.board.manageBoard.model.TodoVo" parameterType="ants.com.member.model.ProjectMemberVo">		
-		select todo_title, todo_id from todo where mem_id = #{memId} and req_id = #{reqId}
-	</select>
-	
 	<!-- 다음이슈 id조회 -->
 	<select id ="getissueid" resultType="String">
 		SELECT  ISSUE_SEQ.nextval FROM DUAL
 	</select>
 	
-	
-<!-- 		<selectKey keyProperty="issueId" resultType="String" order="BEFORE"> -->
-<!-- 			SELECT  ISSUE_SEQ.nextval FROM DUAL -->
-<!-- 		</selectKey> -->
 	<!-- 이슈 작성하기 -->
 	<insert id="insertissue" parameterType="ants.com.board.memBoard.model.IssueVo">
 		
@@ -87,15 +77,7 @@
 		    issue_kind, issue_del, req_id, mem_id, todo_id
 		) VALUES (
 		    #{issueId}, #{issueTitle}, #{issueCont}, sysdate,  #{categoryId}, 
-		    #{issueKind}, 'N', #{reqId} , #{memId}, #{todoId}
-<!-- 		    <if test="todoId != null and todoId != '' "> -->
-<!-- 		      #{todoId} -->
-<!-- 		    </if> -->
-<!-- 		    <if test="todoId == null and todoId == '' "> -->
-<!-- 		      '' -->
-<!-- 		    </if> -->
-		    
-		   
+		    #{issueKind}, 'N', #{reqId} , #{memId}, #{todoId}   
 		)
 		
 	</insert>
@@ -124,19 +106,8 @@
 			set issue_del = 'Y' 
 		where issue_id = #{issueId}
 	</update>
-	
-	
-	 <!-- 카테고리 가져오기-->
-	<select id="categorylist" resultType ="ants.com.board.memBoard.model.CategoryVo" parameterType="String">
-	
-		select a.category_id, a.category_name 
-		from category a, (select substr(mem_type,1,1) as mem_type from member where mem_id = #{memId}) b
-		where substr(a.category_auth,1,1) in( b.mem_type, 'M')
-		order by a.category_id
-			
-	</select>
 
- 	<!-- 이슈게시글 수 조회하기 -->	
+ 	<!-- 프로젝트에 따른 이슈게시글 수 조회하기 -->	
 	<select id="issuePagingListCnt" parameterType="ants.com.board.memBoard.model.IssueVo"  resultType="int">
 		select count(*) as totCnt
 		from issue
@@ -155,14 +126,87 @@
 					</when>
 				</choose>
 			</if>		
-	</select>
-	
-	
-	<select id="getbookmark" parameterType="ants.com.board.memBoard.model.IssueVo">
-			select * from bookmark where req_id = #{reqId} and mem_id = #{memId}
+	</select>	
+
+	<!-- 내가 작성한 이슈 리스트 -->
+	<select id="myissuelist" resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="ants.com.board.memBoard.model.IssueVo">
+		SELECT Z.*
+	      FROM (
+	      	SELECT ROWNUM RNUM , 
+	           	   S.*
+		      FROM (
+				 SELECT c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt ,
+						 c.issue_kind, c.book_id as issue_del , d.mem_name as mem_id , a.req_id
+				  FROM
+					  (select a.issue_id , a.issue_title , a.issue_cont , a.reg_dt ,
+							  a.issue_kind, b.book_id , a.mem_id , a.issue_del , a.req_id
+						 from issue a 
+						 left outer join bookmark b 
+						 on a.issue_id = b.issue_id ) c , member d
+				  WHERE d.mem_id = c.mem_id AND c.issue_del = 'N'  
+					    AND d.mem_id = #{memId}
+					<if test="searchKeyword != null and searchKeyword != ''">
+				        <choose>
+				         	<when test="searchCondition == 1">
+								AND	c.mem_id LIKE '%' || #{searchKeyword} || '%'
+							</when>
+				            <when test="searchCondition == 2">
+								AND	c.issue_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+				            <when test="searchCondition == 3">
+								AND	c.issue_cont LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</if>
+					<if test = "issueKind != null and issueKind != ''">
+							AND c.issue_kind = #{issueKind}
+					</if>
+					
+					ORDER BY c.reg_dt desc
+			  ) S
+		
+				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 
+				
+	      ) Z
+	     <![CDATA[WHERE Z.RNUM > #{firstIndex}]]>
 		
 	</select>
 
+	<!-- 내가작성한 이슈게시글 수 조회하기 -->	
+	<select id="myissuePagingListCnt" parameterType="ants.com.board.memBoard.model.IssueVo"  resultType="int">
+		select count(*) as totCnt
+		from issue
+		where mem_id = #{memId} and issue_del = 'N'
+		
+		<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 1">
+						AND	mem_id LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 2">
+						AND	issue_title LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 3">
+						AND	issue_cont LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>		
+	</select>	
 
+
+	<!-- 본인이 가지고 있는 일감(todo)내역 -->
+	<select id="mytodolist" resultType ="ants.com.board.manageBoard.model.TodoVo" parameterType="ants.com.member.model.ProjectMemberVo">		
+		select todo_title, todo_id from todo where mem_id = #{memId} and req_id = #{reqId}
+	</select>
+
+	 <!-- 카테고리 가져오기-->
+	<select id="categorylist" resultType ="ants.com.board.memBoard.model.CategoryVo" parameterType="String">
+	
+		select a.category_id, a.category_name 
+		from category a, (select substr(mem_type,1,1) as mem_type from member where mem_id = #{memId}) b
+		where substr(a.category_auth,1,1) in( b.mem_type, 'M')
+		order by a.category_id
+			
+	</select>
 
 </mapper>

@@ -15,8 +15,11 @@ public interface ProjectmemberMapper {
 	// 해당 프로젝트에 본인이 참여하고 있는 일감조회
 	public List<TodoVo> mytodolist(ProjectMemberVo promemVo);
 	
-	// 이슈리스트
+	// 해당 프로젝트 이슈리스트
 	public List<IssueVo> issuelist(IssueVo issueVo);
+	
+	// 나의 이슈리스트
+	public List<IssueVo> myissuelist(IssueVo issueVo);
 	
 	// 해당 이슈
 	public IssueVo geteachissue(String issueId);
@@ -33,11 +36,15 @@ public interface ProjectmemberMapper {
 	// 이슈게시글 삭제
 	public int delissue(String issueId);
 	
+	// 해당 프로젝트의 이슈 개수
+	public int issuePagingListCnt(IssueVo issueVo);
+	
+	// 내가 작성한 이슈 개수
+	public int myissuePagingListCnt(IssueVo issueVo);
+	
 	// 회원이 사용가능한 카테고리 조회
 	public List<CategoryVo> categorylist(String memId);
 	
-	// 회원이 사용가능한 카테고리 조회
-	public int issuePagingListCnt(IssueVo issueVo);
 	
 	//프로젝트명 불러오기
 	public List<ProjectVo> memInProjectList(String memId);

@@ -54,8 +54,8 @@ public class memBoardService{
 	}
 	
 	// 댓글 삭제
-	public int delreply(String replyId) throws SQLException, IOException {
-		return mapper.delreply(replyId);
+	public int delreply(ReplyVo replyVo) throws SQLException, IOException {
+		return mapper.delreply(replyVo);
 	}
 	
 	// 댓글 목록 출력

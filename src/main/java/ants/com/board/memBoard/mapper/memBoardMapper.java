@@ -31,7 +31,7 @@ public interface memBoardMapper {
 	public int insertreply(ReplyVo replyVo);
 	
 	// 댓글 삭제
-	public int delreply(String replyId);
+	public int delreply(ReplyVo replyVo);
 	
 	// 댓글 목록 조회
 	public List<ReplyVo> replylist(ReplyVo replyVo);
