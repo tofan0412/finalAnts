@@ -24,7 +24,7 @@
 	</definition>
 	
 
-<!-- 사이트 소개시 사용되는 메인 화면 (홍보용 메인 화면 -->
+<!-- 사이트 소개시 사용되는 메인 화면 (홍보용 메인 화면) -->
 	<!-- main page에 대한 tiles definition 설정 ... -->
 	<definition name="main.layout"
 		template="/WEB-INF/views/layout/layout_main.jsp">

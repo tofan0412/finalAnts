@@ -2,7 +2,9 @@ package ants.com.board.memBoard.model;
 
 import java.util.Date;
 
-public class SuggestVo {
+import ants.com.base.model.BaseVo;
+
+public class SuggestVo extends BaseVo{
 
 	
 	private String sgtId;
@@ -11,8 +13,23 @@ public class SuggestVo {
 	private Date regDt;
 	private String sgtStatus;
 	private String categoryId;
-	private String todoId;
 	private String del;
+	private String todoId;
+	private String memId;
+	private String reqId;
+	
+	public String getReqId() {
+		return reqId;
+	}
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
+	}
+	public String getMemId() {
+		return memId;
+	}
+	public void setMemId(String memId) {
+		this.memId = memId;
+	}
 	public String getSgtId() {
 		return sgtId;
 	}
@@ -61,11 +78,11 @@ public class SuggestVo {
 	public void setDel(String del) {
 		this.del = del;
 	}
+
 	@Override
 	public String toString() {
 		return "SuggestVo [sgtId=" + sgtId + ", sgtTitle=" + sgtTitle + ", sgtCont=" + sgtCont + ", regDt=" + regDt
 				+ ", sgtStatus=" + sgtStatus + ", categoryId=" + categoryId + ", todoId=" + todoId + ", del=" + del
-				+ "]";
+				+ ", memId=" + memId + ", reqId=" + reqId + "]";
 	}
-	
 }
