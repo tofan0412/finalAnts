@@ -6,16 +6,17 @@
 	<select id="privatefileList" parameterType="ants.com.file.model.PrivateFileVo" resultType="ants.com.file.model.PrivateFileVo">
 		SELECT c.*
 		  FROM (
-		   SELECT ROWNUM rnum, a.* 
+		   SELECT ROWNUM RNUM, a.* 
 			 FROM (
-			     SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, to_char(REG_DT,'YYYY-MM-DD hh:mm') as REG_DT, PRIV_SIZE, MEM_ID
-			     FROM privatefile
+			     SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, PRIV_SIZE, MEM_ID
+			     FROM PRIVATEFILE
 			     WHERE MEM_ID = #{memId}
-			     ORDER BY REG_DT DESC) a
+			     ORDER BY REG_DT DESC) a 
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
 	</select>
 	<!-- WHERE rownum <= #{lastIndex}) c WHERE rnum > #{firstIndex} -->
-	
+	 
+	    
 	
 	<!-- 파일목록 갯수  -->
 	<select id="privatefilelistCount" parameterType="ants.com.file.model.PrivateFileVo" resultType="int">
