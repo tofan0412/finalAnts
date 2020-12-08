@@ -69,12 +69,12 @@
 			<div class="form-group">
 			</div> 
 			<div class="form-group">
-				시작일 : <input id="startDt" name="startDt" type="text" value="${scheduleVo.startDt }" style="border:none;" readonly> <span style = " font-size:1.5em;  color: green;"> - </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				시작일 : <input id="startDt" name="startDt" type="text" value="${scheduleVo.startDt }" style="border:none;" readonly> <br>
 				종료일 : <input id="endDt" name="endDt" type="text" value="${scheduleVo.endDt }" style="border:none;" readonly> <br><br>
 				장소 : <input id="juso" name="juso" type="text" value="${scheduleVo.juso }" style="border:none;" readonly>
-			</div>
+			</div> 
 			<br>  
-			<div class="form-group">
+			<div class="form-group"> 
 				<h4>내용</h4><br>
 				<textarea id="scheCont" name="scheCont" value="${scheduleVo.scheCont }" style="border:1px solid;" readonly>${scheduleVo.scheCont }</textarea>
 			</div>
