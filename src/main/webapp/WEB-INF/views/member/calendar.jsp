@@ -5,12 +5,39 @@
 <html>
 <head>
 <%@include file="../layout/fullcalendarLib.jsp"%>
-
+<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
    
 <script type="text/javascript">
+function ini_events(ele) {
+    ele.each(function () {
+
+      // create an Event Object (https://fullcalendar.io/docs/event-object)
+      // it doesn't need to have a start or end
+      var eventObject = {
+        title: $.trim($(this).text()) // use the element's text as the event title
+      }
+
+      // store the Event Object in the DOM element so we can get to it later
+      $(this).data('eventObject', eventObject)
+
+      // make the event draggable using jQuery UI
+      $(this).draggable({
+        zIndex        : 1070,
+        revert        : true, // will cause the event to go back to its
+        revertDuration: 0  //  original position after the drag
+      })
+
+    })
+  }
+
+  ini_events($('#external-events div.external-event'))
 document.addEventListener('DOMContentLoaded', function() {
-	
+	var Calendar = FullCalendar.Calendar;
+	var Draggable = FullCalendar.Draggable;
+	var containerEl = document.getElementById('external-events');
+	var checkbox = document.getElementById('drop-remove');
 	var calendarEl = document.getElementById('calendar');
+	
 	var calendar = new FullCalendar.Calendar(calendarEl, { 
 		plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], 
 		defaultView: 'dayGridMonth', 
@@ -18,10 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		header: { left: 'prev,next today', center: 'title',  right : 'dayGridMonth,timeGridWeek,timeGridDay' },
 		editable:true,
 		eventLimit : true,
-		droppable : true,
-		dateClick: function(){
-			 calendar.addEvent( {'title':'f', 'start':'2020-12-23', 'end':'2020-12-23'});
-		},
+		droppable: true, 
+	    selectable: true,
 		themeSystem: 'bootstrap',
 		eventClick: function(info) {
 		    alert('Event: ' + info.event.title);
@@ -90,28 +115,42 @@ document.addEventListener('DOMContentLoaded', function() {
       }).addClass('external-event')
       event.text(addcalendar)
       $('#external-events').prepend(event)
+      
 	  $('#new-event').val('')
       $(".external-event").draggable({stop: function(){
     	  var x = $(".external-event").position().top;
     	  var y = $(".external-event").position().left;
     	  if(x!=null && y!=null){
-    		  alert(x);
-        	  alert(y);
         	  $(".external-event").remove();
+        	  $('.fc-day').mouseover( function () {
+        	       var sel = $(this).closest('.fc-day');
+        	       var strDate_yyyy_mm_dd = sel.data('date');
+        	       calendar.addEvent( {'title':addcalendar, 'start':strDate_yyyy_mm_dd, 'backgroundColor':currColor});
+        	     }).mouseout(function(){
+        	    	 $(".fc-day").unbind("mouseover");
+        	     });
     	  }
       }});
 	})
-	
-	
-	
 });
 
 </script>
 
+<style type="text/css">
 
-<title>Insert title here</title>
+.fc-title {
+    color: white;
+}
+.fc-event {
+    border: none;
+}
+
+
+
+
+</style>
 </head>
-<body>
+<body class="ns">
  <div class="content-wrapper" style="min-height: 1230.88px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -137,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="sticky-top mb-3">
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title">Draggable Events</h4>
+                  <h4 class="card-title">Drag Calendar</h4>
                 </div>
                 <div class="card-body">
                   <!-- the events -->
@@ -145,8 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     <div class="checkbox">
                       <label for="drop-remove">
-                        <input type="checkbox" id="drop-remove">
-                        remove after drop
+                        
                       </label>
                     </div>
                   </div>
@@ -156,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <!-- /.card -->
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Create Event</h3>
+                  <h3 class="card-title">Create Calendar</h3>
                 </div>
                 <div class="card-body">
                   <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
