@@ -26,7 +26,6 @@ public class ScheduleController {
 
 	@Resource(name = "memBoardService")
 	private memBoardService memBoardService;
-    private static final Logger logger = LoggerFactory.getLogger(ScheduleController.class);
 	
 
 	// 일정장소 게시판 이동
