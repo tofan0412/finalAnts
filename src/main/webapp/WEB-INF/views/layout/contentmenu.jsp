@@ -265,7 +265,7 @@ $(function(){
 
 	<!-- Main content -->
 	<section class="content" style="margin-top: 13px;">
-	<div class="col-12 col-sm-9">
+	<div class="col-12 col-sm-12">
 		<div class="card card-teal card-outline card-tabs">
 			<div class="card-header p-0 pt-1 border-bottom-0">
 				<ul class="nav nav-tabs" id="custom-tabs-three-tab">
@@ -277,7 +277,7 @@ $(function(){
 					</li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-messages-issue"
-						href="#custom-tabs-three-issue">이슈</a></li>
+						href="${pageContext.request.contextPath}/projectMember/issuelist">이슈</a></li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-settings-suggest"
 						href="#custom-tabs-three-suggest">건의사항</a></li>

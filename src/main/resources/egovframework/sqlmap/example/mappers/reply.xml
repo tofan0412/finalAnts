@@ -72,23 +72,22 @@
 	      	SELECT ROWNUM RNUM , 
 	           	   S.*
 		      FROM (		      
-					select a.book_id, a.issue_id, a.req_id, a.mem_id, b.issue_title, b.issue_kind, b.reg_dt
+					select a.book_id, a.issue_id, a.req_id, a.mem_id, b.issue_title, b.issue_kind, to_char(b.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt
 					  from bookmark a, issue b 
 					 where a.mem_id = b.mem_id and a.issue_id = b.issue_id
 					      and a.mem_id = #{memId}
 					      
 					    <if test="searchKeyword != null and searchKeyword != ''">
-				        <choose>
-				         	<when test="searchCondition == 1">
-								AND	a.mem_id LIKE '%' || #{searchKeyword} || '%'
-							</when>
-				            <when test="searchCondition == 2">
+				        <choose>				         	
+				            <when test="searchCondition == 1">
 								AND	b.issue_title LIKE '%' || #{searchKeyword} || '%'
 							</when>
 				     
 						</choose>
 					</if>				
-					
+					<if test = "issueKind != null and issueKind != ''">
+							AND b.issue_kind = #{issueKind}
+					</if>
 					ORDER BY b.reg_dt desc
 			  ) S
 		
