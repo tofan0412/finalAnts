@@ -55,8 +55,10 @@
 				todoId : todoId
 			},
 			success : function(data) {
+				console.log(data);
 				var i = 0;
 				var html = "";
+				var res ="";
 				for (var i = 0; i < data.todoVo.length; i++) {
 					var todo = data.todoVo[i];
 					if("${param.todoId}"==todo.todoId){
@@ -84,18 +86,25 @@
 							html += " <td id='intodoId'>" + todo.todoTitle+ "</td>";
 							html += " <td>" + '<a class="btn btn-primary btn-sm" href=${pageContext.request.contextPath}/todo/onetodoView?todoId='+todo.todoId+'>보러가기</a>' + "</td>"							
 							html += "</tr> ";
-
-							
 						$("#childtodo").html(html);
 						}
 						
 					}
+				
+				if(data.filelist.length == 0){
+					res += '<p>[ 첨부파일이 없습니다. ]</p>';
+					$("#filediv").html(res);
 				}
-			
-			
+				if(data.filelist.length != 0) {
+					for( i = 0 ; i< data.filelist.length; i++){	
+ 						res += '<a href="${pageContext.request.contextPath}/file/publicfileDown?pubId='+data.filelist[i].pubId+'"><input id ="files"  type="button" class="btn btn-default" name="'+ data.filelist[i].pubId+'" value="'+data.filelist[i].pubFilename+'" ></a>  ';
+						
+ 						$("#filediv").html(res);
+					}	
+				}
+			}
 		});
 	}
-
 	
 </script>
 <style type="text/css">
@@ -143,6 +152,13 @@
 				 <label class="control-label" id="todoEnd"></label><br><br>
 				 <label for="todoCont" class="col-sm-1 control-label">할일:</label>
 				<label class="control-label" id="todoCont"></label><br>
+				
+				<div class="form-group">
+				<label id="filelabel" for="File" class="col-sm-2 control-label">첨부파일 다운로드</label>
+				<div id = "filediv">
+					
+				</div>
+			</div>
 		         <div id="btnMenu">
 				 <c:if test="${SMEMBER.memId eq projectVo.memId }">
 					 <button type="button" class="btn btn-default" id="updateBtn" >수정</button>

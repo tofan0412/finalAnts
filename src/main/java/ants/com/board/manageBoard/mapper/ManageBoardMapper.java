@@ -25,7 +25,7 @@ public interface ManageBoardMapper {
 
 	// 한개의 일감 조회
 	public List<TodoVo> getTodo(TodoVo todoVo);
-	
+
 	// 한개의 일감 조회
 	public TodoVo mygetTodo(TodoVo todoVo);
 
@@ -53,10 +53,9 @@ public interface ManageBoardMapper {
 	// PL.프로젝트 리스트
 	public ProjectVo projectList(ProjectVo projectVo);
 
-	
-	
-	
-	
+	// 다음 index값 추출
+	public String gettodoId();
+
 	// 핫이슈 기능
 	// 핫이슈 리스트 조회
 	public List<HotIssueVo> gethissueList(HotIssueVo hotIssueVo);
@@ -69,10 +68,10 @@ public interface ManageBoardMapper {
 
 	// 핫이슈 등록
 	public int hissueInsert(HotIssueVo hotIssueVo);
-	
+
 	// 핫이슈 수정
 	public int hIssueupdate(HotIssueVo hotIssueVo);
-	
+
 	// 핫이슈 삭제
 	public int hIssuedelete(HotIssueVo hotIssueVo);
 }

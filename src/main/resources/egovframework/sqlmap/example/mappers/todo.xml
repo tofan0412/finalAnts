@@ -190,6 +190,10 @@
 			AND projectmember.promem_status = 'IN'
 		</select>
 
+	<!-- todoId 조회 (파일 ajax로 등록하기위함) -->
+	<select id ="gettodoId" resultType="String">
+		SELECT todo_seq.nextval FROM DUAL
+	</select>
 
 	<!-- 일감 생성 -->
 		<insert id="todoInsert"
@@ -208,7 +212,7 @@
 				todo_parentid,
 				del
 			) VALUES (
-				todo_seq.nextval,
+				#{todoId},
 				TO_DATE(#{todoStart},'YYYY/MM/DD'),
 				TO_DATE(#{todoEnd},'YYYY/MM/DD'),
 				#{todoCont},
