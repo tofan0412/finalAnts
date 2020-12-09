@@ -44,14 +44,7 @@
 		document.alarmForm.submit();
 	}
   
-    /* 요구사항정의서 수정 */
-	function reqUpdate(id) {
-	  	document.reqForm.selectedId.value = id;
-		document.reqForm.action = "<c:url value = '/req/reqStsUpdate'/>";
-		document.reqForm.submit();
-		
-	}
-  
+   
 	/* 글 목록 화면 function */
 	function alarmList() {
 		document.alarmForm.action = "<c:url value='/alarmList'/>";
@@ -78,14 +71,14 @@
 </script>
 
 <title>협업관리프로젝트</title>
-
+	<form:form commandName="alarmVo" id="alarmForm" name="alarmForm" method="post">
 		    <!-- Content Header (Page header) -->
 		    <section class="content-header" style="
 											background: white;">
 		      <div class="container-fluid">
 		        <div class="row mb-2">
 		          <div class="col-sm-6">
-		            <h1 class="jg">새로운 소식</h1>
+		            <h1 class="jg"><i class="nav-icon fas fa-bullhorn"></i>&nbsp;&nbsp;새로운 소식</h1>
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right">
@@ -139,11 +132,11 @@
 							      </div>
 		                  	</c:if>
 		                <table class="table table-hover">
-		                  <form:form commandName="reqVo" id="reqForm" name="reqForm" method="POST">
-		                  <input type = "hidden" name="selectedId">
 		                  <tbody>
 		                    <c:forEach items="${alarmList }" var="a" >
-			                  <tr class="alarm-row">
+		                      <c:if test="${a.alarmStatus eq 'N' }"><tr class="alarm-row" ></c:if>
+		                      <c:if test="${a.alarmStatus eq 'Y' }"><tr class="alarm-row" style="background-color: rgba(0,0,0,.075)"></c:if>
+			                  
 			                    <td>
 			                      <div class="icheck-primary">
 			                        <input type="checkbox" value="" class="check1">
@@ -155,10 +148,15 @@
 				                    	<c:when test="${a.alarmType eq 'req-pl' or 'res-pl' }">
 				                    		<c:if test="${a.alarmStatus eq 'N' }"><i class="far fa-envelope text-default"></i></c:if>
 				                    		<c:if test="${a.alarmStatus eq 'Y' }"><i class="far fa-envelope-open text-default"></i></c:if>
-				                    		
 				                    	</c:when>
-				                    	<c:when test="${a.alarmType eq 'reply'}"><i class="far fa-comment-dots"></i></c:when>
-				                    	<c:when test="${a.alarmType eq 'posts'}"><i class="fab fa-replyd"></i></c:when>
+				                    	<c:when test="${a.alarmType eq 'reply'}">
+				                    		<c:if test="${a.alarmStatus eq 'N' }"><i class="far fa-comment-dots"></i></c:if>
+				                    		<c:if test="${a.alarmStatus eq 'Y' }"><i class="far fa-comment-dots"></i></c:if>
+				                    	</c:when>
+				                    	<c:when test="${a.alarmType eq 'posts'}">
+				                    		<c:if test="${a.alarmStatus eq 'N' }"><i class="fab fa-replyd"></i></c:if>
+				                    		<c:if test="${a.alarmStatus eq 'Y' }"><i class="fab fa-replyd"></i></c:if>
+				                    	</c:when>
 				                    </c:choose>
 			                    </td>
 			                    <td class="mailbox-name"><a href="read-mail.html">${fn:split(a.alarmCont,',')[2]}(${fn:split(a.alarmCont,',')[1]})</a></td>
@@ -178,21 +176,18 @@
 			                    </td>
 			                    <td class="project-actions text-right" style="opacity: .9;">
 			                      <c:if test="${a.alarmType eq 'req-pl' }">
-									<a class="btn btn-success btn-sm" href="javascript:reqUpdate('${fn:split(a.alarmCont,',')[0] }');"> 수락 </a>
-									<a class="btn btn-default btn-sm" href="javascript:reqDelete(${fn:split(a.alarmCont,',')[2] });"> 거부</a>
+									<a class="btn btn-default btn-sm" href="/project/readReqList"><i class="fas fa-sign-in-alt"></i> 응답 </a>
 			                      </c:if>
 								</td>
 			                  </tr>
 		                    </c:forEach>
 		                  </tbody>
-			             </form:form>
 		                </table>
 		                <!-- /.table -->
 		              </div>
 		              <!-- /.mail-box-messages -->
 		            </div>
 		            <!-- /.card-body -->
-		          <form:form commandName="alarmVo" id="alarmForm" name="alarmForm" method="post">
 		          	<input type="hidden" name="alarmId" value=""> 
 		            <div class="card-footer p-0">
 		              <div class="mailbox-controls">
@@ -246,10 +241,10 @@
 							</ul>
 						  </div>
 		            </div>
-				</form:form>
 		          </div>
           <!-- /.card -->
         	</div>
 		    </section>
+	</form:form>
 </body>
 </html>

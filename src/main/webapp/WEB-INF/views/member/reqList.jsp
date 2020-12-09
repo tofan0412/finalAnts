@@ -413,7 +413,7 @@
 				dataType : 'text',
 				success : function(data){
 					
-					let socketMsg = "${SMEMBER.memName}," + alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+					let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
 					socket.send(socketMsg);
 					
 				},

@@ -30,6 +30,7 @@
 		var data  = evt.data.split('&&');
 		var memId = '${SMEMBER.memId}';
 		alarmCount(memId);
+		// 답글
 		if(data[0] == 'posts'){
 			$(document).Toasts('create', {
 			     body: data[2],
@@ -37,13 +38,15 @@
 			     subtitle: data[1],
 			     icon: 'fas fa-envelope fa-lg',
 			});
-		}else if(data[0] == 'req-pl'){
+		// pl요청
+		}else if(data[0] == 'req-pl' || data[0] == 'req-pro'){
 			$(document).Toasts('create', {
-			     body: data[1],
-			     title: 'PL 요청',
-			     subtitle: "",
+			     body: data[3],
+			     title: data[2],
+			     subtitle: data[1],
 			     icon: 'fas fa-envelope fa-lg',
 			});
+		// 댓글
 		}else if(data[0] == 'reply'){
 			$(document).Toasts('create', {
 			     body: data[2],
@@ -51,9 +54,16 @@
 			     subtitle: data[1],
 			     icon: 'fas fa-envelope fa-lg',
 			});
+		// pl응답
+		}else if(data[0] == 'res-pl'){
+			$(document).Toasts('create', {
+			     body: data[3],
+			     title: data[2],
+			     subtitle: data[1],
+			     icon: 'fas fa-envelope fa-lg',
+			});
+			
 		}
-		
-		
 		
 	}
 	
@@ -116,7 +126,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="jg" style="padding-top : 5px;">
       	<c:if test="${SMEMBER.memId ne null }">
-    	  환영합니다, ${SMEMBER.memId }님!
+    	  환영합니다, ${SMEMBER.memName }님!
    		</c:if>
    		<c:if test="${projectId ne null }">
     	  현재 프로젝트 번호 : ${projectId}
