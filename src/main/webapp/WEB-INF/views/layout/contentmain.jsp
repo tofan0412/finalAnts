@@ -23,18 +23,18 @@
 		
 		
 	})
-
-
 </script>
 <style>
-body{
-	 background-color:white;
-}
 .top{
+	border: 1px solid lightgray; 
 	font-size: 0.8em; 
 	background-color:white; 
-	min-height:300px;
-	height:30%; 
+	min-height:500px;
+	height:550px; 
+	width:48%;
+	float:left; 
+	overflow: auto;
+	
 	padding-top:2%;
 	padding-bottom:2%;
 	padding-left:4%;
@@ -42,76 +42,141 @@ body{
 }
 th{
 	width:300px; 
+} 
+.bottom{
+	border: 1px solid lightgray; 
+	width:48%; 
+	height:550px; 
+	float:left; 
+	background-color:white;
+	
+	padding-top:2%;
+	padding-bottom:2%;
+	padding-left:4%;
+	padding-right:4%;
+} 
+.todoTable {
+	width: 98%;
+	border-collapse: collapse;
 }
 </style>
 </head> 
-  
+
 <body>
-	<div class="top">
+<div>
+	<div class="top" style="margin-left:1.5%;"><h4>프로젝트 현황</h4>
 		<nav class="mt-2">
-			<table>
-				<tr>
-					<th>프로젝트명</th>
-					<th>상태</th>
-					<th>완료율</th>
-					<th>시작일</th>
-					<th>종료일</th>
-				</tr>
-			</table>
-		
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 	<!-- memType이 MEM일때  -->
 				 <c:if test="${not empty memInProjectList}">
 					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link active">
-				        	<i class="nav-icon fas fa-poll-h"></i>
+			            <a href="#" class="nav-link active" style="background-color:#6495ED;">
+				        	<i class="nav-icon fas fa-poll-h"></i> 
 							<p>참여중인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
-							
 					    <ul class="nav nav-treeview" style="display: none;">
-					    	<c:forEach items="${memInProjectList}" var="project">
-						    	<li class="nav-item">
-									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
-								 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
-								 	</a>
-								</li> 
-							</c:forEach>
+							<table class="todoTable" style="margin-left:3%">
+								<tr>
+									<th style="padding-left:47px;">프로젝트명</th>
+									<th>상태(일단 프로젝트번호)</th>
+									<th>완료율</th>
+									<th>생성일</th>
+									   
+								</tr> 
+								<tbody id=memInProjectList> 
+									<c:forEach items="${memInProjectList}" var="project" varStatus="sts" >
+									    <tr "data-privid="${project.reqId}">
+											<td><li class="nav-item">
+												<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+											 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
+											 	</a>
+											</li> 
+											</td>
+											<td>${project.reqId}</td>
+											<td>${project.percent}</td>
+											<td>${project.regDt}</td>
+										</tr>
+									</c:forEach> 
+								</tbody>
+							</table>
 						</ul>
 					</li>
 				 </c:if>
 				 <!-- memType이 PL일때 -->
 				 <c:if test="${not empty plInProjectList}">
 					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link active">
+			            <a href="#" class="nav-link active" style="background-color:#6495ED;">
 				        	<i class="nav-icon fas fa-poll-h"></i>
 							<p>내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
 					    <ul class="nav nav-treeview" >
-					    	<c:forEach items="${plInProjectList}" var="project">
-						    	<li class="nav-item">
-									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
-								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
-								 	</a>
-								</li>
-							</c:forEach>
+							
+							
+							<table class="todoTable" style="margin-left:3%">
+								<tr>
+									<th style="padding-left:47px;">프로젝트명</th>
+									<th>상태(일단 프로젝트번호)</th>
+									<th>완료율</th>
+									<th>생성일</th>
+									  
+								</tr> 
+								<tbody id=plInProjectList> 
+									<c:forEach items="${plInProjectList}" var="project" varStatus="sts" >
+									    <tr "data-privid="${project.reqId}">
+											<td>
+											<li class="nav-item">
+												<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+											 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+											 	</a>
+											</li>
+											</td>
+											<td>${project.reqId}</td>
+											<td>${project.percent}</td>
+											<td>${project.regDt}</td>
+										</tr>
+									</c:forEach> 
+								</tbody>
+							</table>
+							
+							
 						</ul>
 					</li>
 				 </c:if>
 				 <!-- memType이 PM일때 -->
 				 <c:if test="${not empty pmInProjectList}">
 					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link active">
+			            <a href="#" class="nav-link active" style="background-color:#6495ED;">
 				        	<i class="nav-icon fas fa-poll-h"></i>
 							<p>프로젝트관리<i class="fas fa-angle-left right"></i></p>
 						</a>
-					    <ul class="nav nav-treeview" >
-					    	<c:forEach items="${pmInProjectList}" var="project">
-						    	<li class="nav-item">
-									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
-								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
-								 	</a>
-								</li>
-							</c:forEach>
+					    <ul class="nav nav-treeview" > 
+							
+							<table class="todoTable" style="margin-left:3%">
+								<tr>
+									<th style="padding-left:47px;">프로젝트명</th>
+									<th>상태(일단 프로젝트번호)</th>
+									<th>완료율</th>
+									<th>생성일</th>
+									   
+								</tr> 
+								<tbody id=pmInProjectList> 
+									<c:forEach items="${pmInProjectList}" var="project" varStatus="sts" >
+									    <tr "data-privid="${project.reqId}">
+											<td>
+											<li class="nav-item">
+												<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+											 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+											 	</a>
+											</li>
+											</td>
+											<td>${project.reqId}</td>
+											<td>${project.percent}</td>
+											<td>${project.regDt}</td>
+										</tr>
+									</c:forEach> 
+								</tbody>
+							</table>
+							
 						</ul>
 					</li>
 				 </c:if>
@@ -127,18 +192,23 @@ th{
 			</ul>
 		</nav>
 	</div>
-	<hr>
 	
 	
-	<div>
-		<div style="border: 1px solid lightgray; width:48%; height:500px; float:left; margin-left:1.5%; background-color:white;">1. 프로젝트별 통계<br>
+	<!-- 위 오른쪽 공지사항 -->
+	<div class="top" style="margin-left:1%;"><h4>공지사항</h4><br>
+	</div>
+
+	
+	<!-- 아래  -->
+		<!-- 왼쪽 통계 -->
+		<div class="bottom" style="margin-left:1.5%;"><h4>프로젝트별 통계</h4><br>
 			<img src="/dist/img/통계.gif" style="height: 100%; width: 100%; ">
 		</div>
-		<div style="border: 1px solid lightgray; width:48%; height:500px; float:left; margin-left:1%; background-color:white;">2. 프로젝트 일정<br>
+		
+		<!-- 오른쪽 캘린더 -->
+		<div class="bottom" style="margin-left:1%;"><h4>프로젝트 일정</h4><br>
 			<img src="/dist/img/캘린.jpg" style="height: 100%; width: 100%; ">
 		</div>
-	</div>
-	
-	
+</div>
 </body>
 </html>
