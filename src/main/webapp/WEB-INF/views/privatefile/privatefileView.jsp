@@ -10,8 +10,13 @@
 <script src="/resources/upload/jquery.min.js" type="text/javascript"></script>
 <script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
+ 
 <title>Insert title here</title>
 <style>
+body{
+	min-width: 1000px;
+	min-height: 1000px;
+}
 .uploadifive-button {
 	float: left;
 	margin-right: 10px;
@@ -27,29 +32,64 @@
 	color: lightgray;
 	line-height: 170px;
 }
-#todoTable{
-	width : 1300px;
-    border-top: 1px solid #444444;
-    border-collapse: collapse;
-  }
-  th, td {
-    border-bottom: 1px solid #444444;
-    padding: 10px;
-  }
-  
-
+#todoTable {
+	width: 98%;
+	border-top: 1px solid #444444;
+	border-collapse: collapse;
+	border-bottom: 1px solid #444444;
+}
+th, td {
+	padding: 10px;
+	style="border:none;"
+}
+th{
+	border-bottom: 1px solid #444444;
+}
+.delbtn{
+	background-color: white;
+	border-radius: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: center;
+	border: 1px solid lightblue;
+} 
 </style>
+
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-	/* 	
-		$("#privatefileList tr").on("click",function(){
-			var privId = $(this).data("privid");
-	 		$(location).attr('href', '${pageContext.request.contextPath}/privatefile/privateSelect?privId='+privId);
-			});
-	 	
-		  */
-     	 
+		// 툴팁에 html 적용시키기
+		$(document).tooltip({
+		       content: function() {
+		        return $(this).prop('title');
+		       }
+		    });
+
+		// 마우스 올려놨을때
+		$("#privatefileList tr").on("mouseenter",function(){
+			$(this).css("backgroundColor","#F0F8FF");
+			
+			$(document).tooltip();	
+			
+		/* 	$.ajax({ type: 'GET', 
+				url: '/privatefile/privatefileSelect', 
+				dataType : 'json',
+				data: { "privId" : $(this).data("privid") }, 
+				success: function(data){
+					alert(data);
+					$(this).attr('title', data.privateVo); 
+				}
+				
+			}); //end ajax  */
+			 
+		});
+
+		// 마우스가 벗어났을때
+		$("#privatefileList tr").on("mouseleave",function(){
+			$(this).css("backgroundColor","white");
+		});  
+     	  
      	// 드래그앤 드랍 파일등록 
  		$(function() {
 			$('#file_upload').uploadifive({
@@ -77,8 +117,7 @@
 		document.listForm.action = "<c:url value='/privatefile/privatefileView'/>";
 		document.listForm.submit();
 	}
-	 		
-			
+	 	
 	 
 </script>
 
@@ -87,7 +126,8 @@
 	개인 파일함
 <%@include file="../layout/contentmenu.jsp"%>
 
-	<form:form commandName="privatefileVo" id="listForm" name="listForm" method="post">
+<form:form commandName="privatefileVo" id="listForm" name="listForm" method="post">
+<div class="col-12 col-sm-12">
 	<div style="padding-left: 30px; background-color: white;">
 		<c:if test="${SMEMBER.memId ne null}"></c:if>
 	
@@ -100,13 +140,14 @@
 		</form>
 		
 		<br>
+		<div class="float-left">
 		    <div class="card-header with-border">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
-					<div class="input-group row">						
-        				<select name="searchCondition" class="form-control col-md-3" style="width: 100px;">
-							<option value="1" label="파일명"/>
-							<option value="2" label="날짜"/>
-						</select> 
+					<div class="input-group row">		
+						<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">				
+							<form:option value="1" label="날짜"/>
+							<form:option value="2" label="파일명"/>
+						</form:select> 
 							 <label for="searchKeyword" style="visibility:hidden; display:none;"></label>
 	                         <input type="text" class="form-control" name="searchKeyword" value="${privatefileVo.searchKeyword }">
 		                  <a href="javascript:search();">
@@ -116,47 +157,76 @@
                           </a>
 					</div>
 		        </div>
-		      </div>
+		    </div>
+		</div>
+		<div class="card-body p-0">
 		<table id="todoTable">
 			<tr>
-				<th>No.</th>
-				<th>파일경로</th>
-				<th>파일이름</th>
-				<th>수정한 날짜</th>
-				<th>파일사이즈</th>
-				<th>작성자</th>
-				<th>다운로드</th>
-				<th>삭제</th>
-			</tr>
-			<tbody id="privatefileList">
+				<th width="80px">No.</th>
+				<th>파일명</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th width="200px">수정한 날짜</th>
+				<th width="200px">파일사이즈</th>
+				<th width="110px" style="padding-left:20px;">삭제</th>
+				  
+			</tr> 
+			<tbody id="privatefileList"> 
 				<c:forEach items="${privatefileList}" var="privatefile" varStatus="sts" >
-				    <tr data-privid="${privatefile.privId}">
+				    <tr "data-privid="${privatefile.privId}" title="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				    												----- &nbsp;&nbsp;
+				    												파일정보 
+				    												&nbsp;&nbsp;
+				    												-----&nbsp;&nbsp;&nbsp;&nbsp;<br>
+				    												시퀸스 : ${privatefile.privId} <br>
+																	파일경로 : ${privatefile.privFilepath} <br>
+																	파일이름 : ${privatefile.privFilename } <br>
+																	수정한 날짜: ${privatefile.regDt } <br>
+																	파일사이즈 : ${privatefile.privSize } KB<br>
+																	작성자 : ${privatefile.memId} <br>">
 					<td><c:out value="${paginationInfo.totalRecordCount - ((privatefileVo.pageIndex-1) * privatefileVo.pageUnit + sts.index)}"/>. 
 						<input type="hidden" id="${privatefile.privId }" name="${privatefile.privId }">
 					</td>	
 					<td>
-						${privatefile.privFilepath}
+						<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">${privatefile.privFilename }</a>
 					</td>
-					<td>
-						${privatefile.privFilename }
-					</td>
-					<td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					
+					<td > 
 						${privatefile.regDt }
 					</td>
-					<td>
-						${privatefile.privSize }
+					<td style="padding-left:23px;"> 
+						${privatefile.privSize } KB
 					</td>
-					<td>
-						${privatefile.memId }
-					</td>
-					<td>
+					<%-- <td>
 						<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
 						<input type="button" value="다운로드"/>
 						</a>
-					</td>
+					</td> --%>
 					<td>
 						<a href="/privatefile/privatefileDelete?privId=${privatefile.privId}">
-						<input type="button" value="삭제"/>
+						<input type="button" class="delbtn" value="삭제"/>
 						</a>
 					</td>
 					</tr>
@@ -164,8 +234,9 @@
 				</c:forEach> 
 			</tbody>
 		</table>
-		 
-		<div id="paging" class="card-tools">
+		</div>  
+		  
+		<div id="paging" class="card-tools" style="padding-right:2%">
 		    <ul class="pagination pagination-sm float-right">
 		   		<li class="page-item"><a class="page-link" href="#">«</a></li>
 				<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page"  />
@@ -174,6 +245,7 @@
 		    </ul>
         </div>
 	</div>
-	</form:form>	
+</div>
+</form:form>	
 </body>
 </html>

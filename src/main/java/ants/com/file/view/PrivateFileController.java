@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,7 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.support.MultipartFilter;
@@ -61,7 +64,7 @@ public class PrivateFileController {
 		logger.debug("paginationInfo : {}", paginationInfo);
 		logger.debug("privatefileVo : {}", privatefileVo);
 		
-			
+		
 		// 리스트 목록
 		List<PrivateFileVo> privatefileList = fileService.privatefileList(privatefileVo);
 		model.addAttribute("privatefileList", privatefileList);
@@ -182,7 +185,7 @@ public class PrivateFileController {
 	}
 	
 	
-	// 해당 게시글 파일 다운로드
+	// 해당 파일 다운로드
 	@RequestMapping(path ="/privatefileDown")
 	public String getfileDown(PrivateFileVo privatefileVo, HttpSession session, Model model)  {
 
@@ -207,5 +210,16 @@ public class PrivateFileController {
 		
 		return "redirect:/privatefile/privatefileView";
 	}
+	
+	
+/*	// 해당 파일 상세보기
+	@RequestMapping(value ="/privatefileSelect",  method = RequestMethod.GET)
+	public String privatefileSelect(PrivateFileVo privatefileVo, BindingResult br, HttpSession session, Model model, HttpServletRequest request)  {
+		
+		PrivateFileVo privateVo = fileService.privateSelect(privatefileVo);
+		request.setAttribute("privateVo", privateVo);
+		
+		return "privatefile/privatefileView";
+	}*/
 	
 }

@@ -10,15 +10,19 @@
 <title>Insert title here</title>
 </head>
 <style>
+body{
+	min-width: 1000px;
+	min-height: 1000px;
+}
 #todoTable{
-	width : 1300px;
+	width: 98%;
     border-top: 1px solid #444444;
     border-collapse: collapse;
   }
   th, td {
     border-bottom: 1px solid #444444;
     padding: 10px;
-  }
+  } 
 #bt{
 	margin-top : 10px;
 	margin-bottom : 20px;
