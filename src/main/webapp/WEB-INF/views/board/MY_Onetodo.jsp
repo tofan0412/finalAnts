@@ -33,7 +33,7 @@
 				todoId : todoId
 			},
 			success : function(data) {
-			
+				var res ="";
 				$("#todoTitle").html(data.todoVo.todoTitle);
 				$("#todoCont").html(data.todoVo.todoCont);
 				$("#memId").html(data.todoVo.memId);
@@ -50,6 +50,19 @@
 				$("#todoPercent").html(data.todoVo.todoPercent+"%");
 				$("#todoId").val(data.todoVo.todoId);
 				$("#todoId_in").val(data.todoVo.todoId);
+				
+				
+				if(data.filelist.length == 0){
+					res += '<p>[ 첨부파일이 없습니다. ]</p>';
+					$("#filediv").html(res);
+				}
+				if(data.filelist.length != 0) {
+					for( i = 0 ; i< data.filelist.length; i++){	
+ 						res += '<a href="${pageContext.request.contextPath}/file/publicfileDown?pubId='+data.filelist[i].pubId+'"><input id ="files"  type="button" class="btn btn-default" name="'+ data.filelist[i].pubId+'" value="'+data.filelist[i].pubFilename+'" ></a>  ';
+						
+ 						$("#filediv").html(res);
+					}	
+				}
 			}
 		});
 	}
@@ -100,10 +113,18 @@
 					 <label class="control-label" id="todoEnd"></label><br><br>
 					 <label for="todoCont" class="col-sm-1 control-label">할일:</label>
 					<label class="control-label" id="todoCont"></label><br>
-              	<div id="btnMenu">
-					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">진행도</button>	
-					<button type="button" class="btn btn-default" id="back">뒤로가기</button>	
-				</div>
+	              	<div class="form-group">
+					<label id="filelabel" for="File" class="col-sm-2 control-label">첨부파일 다운로드</label>
+					<div id = "filediv">
+						
+					</div>
+					</div>
+	              	
+	              	
+	              	<div id="btnMenu">
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">진행도</button>	
+						<button type="button" class="btn btn-default" id="back">뒤로가기</button>	
+					</div>
               
             </div>
           </div>

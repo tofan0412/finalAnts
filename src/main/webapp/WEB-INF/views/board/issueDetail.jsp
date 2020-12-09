@@ -191,7 +191,7 @@ function replyinsert() {
 
 function saveMsg(){
 	var alarmData = {
-						"alarmCont" : "${issuevo.issueId},${SMEMBER.memName},${SMEMBER.memId},/projectMember/eachissueDetail?issueId=${issuevo.issueId},${issuevo.issueTitle}"+ $('#re_con').val(),
+						"alarmCont" : "${issuevo.issueId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail?issueId=${issuevo.issueId}&&${issuevo.issueTitle}"+ $('#re_con').val(),
 						"memId" 	: "${issuevo.memId}",
 						"alarmType" : "reply"
 	}
@@ -205,7 +205,7 @@ function saveMsg(){
 			dataType : 'text',
 			success : function(data){
 				
-				let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+				let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 				socket.send(socketMsg);
 				
 				

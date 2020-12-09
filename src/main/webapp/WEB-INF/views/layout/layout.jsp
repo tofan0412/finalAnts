@@ -15,7 +15,7 @@
 	<%@include file="commonLib.jsp"%>
 	<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 </head>
-<title>협업관리프로젝트</title>
+<title>Ants - 프로젝트 메인 화면</title>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
 

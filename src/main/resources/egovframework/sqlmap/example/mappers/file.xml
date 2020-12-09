@@ -19,7 +19,8 @@
 							    category_id,
 							    some_id,
 							    req_id,
-							    pub_size
+							    pub_size,
+							    mem_id
 							) VALUES (
 							    #{pubId},
 							    #{pubFilepath},
@@ -29,7 +30,8 @@
 							    #{categoryId},
 							    #{someId},
 							    #{reqId},
-							    #{pubSize}
+							    #{pubSize},
+							    #{memId}
 							)
   </insert>
   

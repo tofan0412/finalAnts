@@ -43,7 +43,7 @@
 	//답글 알림 db저장, 소켓에 메세지보내기
 	function saveMsg(){
 		var alarmData = {
-							"alarmCont" : "${hotIssueVo.hissueId},${SMEMBER.memName},${SMEMBER.memId},/hotIssue/hissueList?reqId=${projectId},${hotIssueVo.hissueTitle},"+ $('#hissueTitle').val(),
+							"alarmCont" : "${hotIssueVo.hissueId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/hotIssue/hissueList?reqId=${projectId}&&${hotIssueVo.hissueTitle}&&"+ $('#hissueTitle').val(),
 							"memId" 	: "${hotIssueVo.memId}",
 							"alarmType" : "posts"
 		}
@@ -57,7 +57,7 @@
 				dataType : 'text',
 				success : function(data){
 					
-					let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 					socket.send(socketMsg);
 					
 					

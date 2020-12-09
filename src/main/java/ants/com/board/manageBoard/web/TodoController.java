@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
+import ants.com.file.model.PublicFileVo;
+import ants.com.file.view.FileController;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
@@ -28,6 +31,9 @@ public class TodoController {
 
 	@Resource(name = "manageBoardService")
 	private ManageBoardService manageBoardService;
+
+	@Autowired
+	FileController filecontroller;
 
 	// 프로젝트명 클릭시 세션저장
 	@RequestMapping("/projectgetReq")
@@ -50,7 +56,9 @@ public class TodoController {
 		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
 		List<MemberVo> promemList = manageBoardService.projectMemList(todoVo);
+		String todoId = manageBoardService.gettodoId();
 		model.addAttribute("promemList", promemList);
+		model.addAttribute("todoSeq", todoId);
 		if(todoParentid != null) {
 			model.addAttribute("todoVo", todoVo);			
 		}
@@ -62,6 +70,7 @@ public class TodoController {
 	public String todoInsert(Model model, TodoVo todoVo, HttpSession session) {
 		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
+
 		int todoInsert = manageBoardService.todoInsert(todoVo);
 		if (todoInsert > 0) {
 			return "redirect:/todo/todoList?reqId=" + todoVo.getReqId();
@@ -75,6 +84,7 @@ public class TodoController {
 	public String todoChildInsert(Model model, TodoVo todoVo, HttpSession session) {
 		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
+		
 		int todoInsert = manageBoardService.todoInsert(todoVo);
 		String todoId = todoVo.getTodoId();
 		if (todoInsert > 0) {
@@ -109,9 +119,15 @@ public class TodoController {
 	
 	// 한개의 일감 조회 Ajax
 	@RequestMapping("/onetodo")
-	public String todoDetailView(Model model, TodoVo todoVo) {
+	public String todoDetailView(Model model, TodoVo todoVo, HttpSession session) {
+	
 		List<TodoVo> dbtodoVo = manageBoardService.getTodo(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
+		String todoId = todoVo.getTodoId();
+		String reqId = (String) session.getAttribute("projectId");
+		todoVo.setReqId(reqId);
+		PublicFileVo pfv = new PublicFileVo("1", todoId , reqId);
+		filecontroller.getfiles(pfv, model);
 		return "jsonView";
 	}
 
@@ -126,6 +142,10 @@ public class TodoController {
 	public String mytodoDetailView(Model model, TodoVo todoVo) {
 		TodoVo dbtodoVo = manageBoardService.mygetTodo(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
+		String todoId = dbtodoVo.getTodoId();
+		String reqId = dbtodoVo.getReqId();
+		PublicFileVo pfv = new PublicFileVo("1",todoId , reqId);
+		filecontroller.getfiles(pfv, model);
 		return "jsonView";
 	}
 	
