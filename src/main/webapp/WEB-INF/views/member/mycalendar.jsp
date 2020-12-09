@@ -431,9 +431,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	  	</div>
 	  	<div id="dateupdate">
       	<label for="startDt" class="col-sm-2 control-label">시작 일</label>
-	  		<input type="date" id="startDt" name="startDt"/>
+	  		<input type="date" id="startDtmodal" name="startDt"/>
       	<label for="endDt" class="col-sm-2 control-label">종료 일</label>
-	  		<input type="date" id= endDt name="endDt"/>
+	  		<input type="date" id= endDtmodal name="endDt"/>
 	  	</div>
       	<label for="scheCont" class="col-sm-2 control-label" style="position: relative; top: -165px;" >내용 : </label>
       	<textarea id="scheCont" class="bani_contol" readonly="readonly" style="height: 180px; resize: none;" name="scheCont"></textarea><br><br>
