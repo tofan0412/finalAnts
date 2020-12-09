@@ -34,7 +34,8 @@ public class AlarmController {
 	}
 	
 	@RequestMapping("/alarmInsert")
-	public String alarmInsert(@RequestBody AlarmVo alarmData, Model model) {
+	public String alarmInsert(@RequestBody AlarmVo alarmData,@RequestBody String[] Arr, Model model) {
+		
 		
 		int cnt = alarmService.alarmInsert(alarmData);
 		model.addAttribute("cnt",cnt);

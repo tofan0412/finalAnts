@@ -96,9 +96,9 @@ th, td {
 			
 			var alarmData = {
 					"alarmCont" : reqId + ",${SMEMBER.memName},${SMEMBER.memId},/req/reqDetail?reqId=" + reqId + "," + projectName ,
-					"memId" 	: inviteMemList,
 					"alarmType" : "req-pro"
 			}
+			var Arr = inviteMemList;
 			
 			// 프로젝트를 먼저 생성한다.
 			$.ajax({
@@ -121,7 +121,7 @@ th, td {
 // 									console.log("프로젝트가 생성되었습니다.");
 									
 									//프로젝트 초대알림 db저장
-									saveReqMsg(alarmData);
+									saveReqMsg(alarmData, Arr);
 									alert("프로젝트를 생성하였습니다.");
 								}else{
 // 									console.log("프로젝트 생성에 실패하였습니다..");
@@ -273,27 +273,25 @@ th, td {
 		});
 	}
 	/* 프로젝트초대 알림메세지 db에 저장하기 */
-	function saveReqMsg(alarmData){
-		
+	function saveReqMsg(alarmData, Arr){
+		$.ajax({
+			url : "/alarmInsert",
+			data : JSON.stringify(alarmData,Arr),
+			type : 'POST',
+			contentType : "application/json; charset=utf-8",
+			dataType : 'text',
+			success : function(data){
+				let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+				socket.send(socketMsg);
+			},
+			error : function(err){
+				console.log(err);
+			}
+		});
 		console.log(alarmData);
 		
 		
-		$.ajax({
-				url : "/alarmInsert",
-				data : JSON.stringify(alarmData),
-				type : 'POST',
-				contentType : "application/json; charset=utf-8",
-				dataType : 'text',
-				success : function(data){
-					
-					let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
-					socket.send(socketMsg);
-					
-				},
-				error : function(err){
-					console.log(err);
-				}
-		});
+
 	}
 	
 </script>
