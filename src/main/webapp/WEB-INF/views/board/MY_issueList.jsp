@@ -164,9 +164,9 @@ $(function(){
 						
 						
         				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
-							<form:option value="1" label="작성자"/>
-							<form:option value="2" label="제목"/>
-							<form:option value="3" label="내용"/>
+							<form:option value="1" label="제목"/>
+							<form:option value="2" label="내용"/>
+							<form:option value="3" label="프로젝트명"/>
 						</form:select> 
 						
 						
@@ -193,7 +193,7 @@ $(function(){
 	                    <tr>
 	                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
 	                     	<th  style="padding-left: 30px; text-align: center;">  이슈 제목</th> 
-							<th style="text-align: center;">   작성자 </th>
+							<th style="text-align: center;"> 프로젝트명 </th>
 							<th style="text-align: center;">   날짜   </th>
 							<th style="text-align: center;">   종류   </th>
 							<th style="text-align: center;"> 즐겨찾기 </th>
@@ -202,7 +202,6 @@ $(function(){
 	                    </tr>
 	                  </thead>
 	                  <tbody>
-	                      
 	                       <c:forEach items = "${myissuelist }" var ="issue" varStatus="status">
 								<tr>
 				                 
@@ -236,7 +235,12 @@ $(function(){
 									 
 								</tr>
 							 </c:forEach> 
-
+						<c:if test="${myissuelist.size() == 0}">
+							
+						 	<tr>
+								<td colspan="7" style="text-align: center;"><br><strong> [ 결과가 없습니다. ] </strong></td>
+							</tr>
+						</c:if>
 	                  </tbody>
 	                </table>
 	              </div>

@@ -58,8 +58,6 @@ public class ProjectMemberController {
 	@RequestMapping("/myissuelist")
 	public String getMyissuelist(@ModelAttribute("issueVo") IssueVo issueVo, HttpSession session, Model model) throws Exception{
 		
-		
-		
 		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
 		String memId = memberVo.getMemId();
 		issueVo.setMemId(memId);
@@ -95,6 +93,9 @@ public class ProjectMemberController {
 	public String getissuelist(@ModelAttribute("issueVo") IssueVo issueVo, HttpSession session, Model model) throws Exception{
 		
 		String reqId = (String)session.getAttribute("projectId");
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		issueVo.setMemId(memId);
 		issueVo.setReqId(reqId);
 		
 		/** EgovPropertyService.sample */

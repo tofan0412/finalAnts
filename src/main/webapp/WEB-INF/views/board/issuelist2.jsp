@@ -216,35 +216,35 @@ $(function(){
 	                  </thead>
 	                  <tbody>
 	                      
-	                       <c:forEach items = "${issuelist }" var ="issue" varStatus="status">
-								<tr>
-				                 
-				                    <td  style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
-								
-									<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> ${issue.issueTitle }</a> </td>
-									<td style="text-align: center;"> ${issue.memId }</td>
-									<td style="text-align: center;"> ${issue.regDt }</td>
-									<c:if test="${issue.issueKind == 'issue'}">
-										<td style="text-align: center;"> 이슈</td>										
-									</c:if>
-									<c:if test="${issue.issueKind == 'notice'}">
-										<td style="text-align: center;"> 공지사항</td>										
-									</c:if>
-										<c:choose>
-											<c:when test="${issue.issueDel == '' || issue.issueDel == null }">
-												<td style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
-											</c:when>
-											<c:otherwise>
-												<td style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
-											</c:otherwise>
-										</c:choose>
-										
-								
-<%-- 									</c:forEach>  --%>
-			                      <td style="text-align: center;">
-									 
-								</tr>
-							 </c:forEach> 
+                       <c:forEach items = "${issuelist }" var ="issue" varStatus="status">
+							<tr>
+			                 
+			                    <td  style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
+							
+								<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> ${issue.issueTitle }</a> </td>
+								<td style="text-align: center;"> ${issue.memId }</td>
+								<td style="text-align: center;"> ${issue.regDt }</td>
+								<c:if test="${issue.issueKind == 'issue'}">
+									<td style="text-align: center;"> 이슈</td>										
+								</c:if>
+								<c:if test="${issue.issueKind == 'notice'}">
+									<td style="text-align: center;"> 공지사항</td>										
+								</c:if>
+									<c:choose>
+										<c:when test="${issue.issueDel == '' || issue.issueDel == null }">
+											<td style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
+										</c:when>
+										<c:otherwise>
+											<td style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
+										</c:otherwise>
+									</c:choose>
+		                      <td style="text-align: center;">
+								 
+							</tr>
+						 </c:forEach> 
+						 <c:if test="${issuelist.size() == 0}">
+							<td colspan="7" style="text-align: center;"><br><strong> [ 결과가 없습니다. ] </strong></td>
+						 </c:if>
 
 	                  </tbody>
 	                </table>

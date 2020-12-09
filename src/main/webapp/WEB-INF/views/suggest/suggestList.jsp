@@ -205,7 +205,7 @@ $(function(){
 											value="${  ((suggest.pageIndex-1) * suggest.pageUnit + (status.index+1))}" />.</td>
 
 									<td style="padding-left: 30px;">
-										<a href="#">${suggest.sgtTitle }</a>
+										<a href="/suggest/suggestDetail?sgtId=${suggest.sgtId }&memId=${suggest.memId }">${suggest.sgtTitle }</a>
 									</td>
 											
 									<td>${suggest.memId }</td>
@@ -274,18 +274,15 @@ $(function(){
 							action="/suggest/suggestInsert">
 					
 					<label class="jg" style="float : left;">일감 검색</label>
-					<div class="jg"><span class="jg warningTodo" style="color : red;"></span></div>
-					
-					<form:input id="todoId" path="todoId" style="width : 90%;"/>
 					<!-- 사용자가 일감을 선택하지 않은 경우 .. -->
-					
+					<div class="jg"><span class="jg warningTodo" style="color : red;"></span></div>
+					<form:input id="todoId" path="todoId" style="width : 90%;"/>
 					<br><br>
 					
 					<label class="jg" style="float : left;">건의 사항 제목</label>
+					<!-- 사용자가 제목을 입력하지 않은 경우 .. -->
 					<div class="jg"><span class="jg warningTitle" style="color : red;"></span></div>
 					<form:input id="sgtTitle" path="sgtTitle" style="width : 90%;"/>
-					<!-- 사용자가 제목을 입력하지 않은 경우 .. -->
-					
 					<br><br>
 					
 					<label class="jg">건의 사항 내용</label><br>

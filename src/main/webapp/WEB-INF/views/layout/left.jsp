@@ -64,7 +64,7 @@
 		                </a>
 		              </li>
 		              <li class="nav-item">
-		                <a href="#" class="nav-link">
+		                <a href="${pageContext.request.contextPath}/schedule/MyclendarView" class="nav-link">
 		                <i class="nav-icon far fa-calendar-alt"></i>
 						<p class="selectable">캘린더</p>
 		                </a>
@@ -169,7 +169,7 @@
 					    <ul class="nav nav-treeview" >
 					    	<c:forEach items="${pmInProjectList}" var="project">
 						    	<li class="nav-item">
-									<a class="nav-link" href="#">
+									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
 								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
 								 	</a>
 								</li>

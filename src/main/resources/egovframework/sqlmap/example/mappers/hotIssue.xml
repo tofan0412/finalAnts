@@ -76,7 +76,8 @@
                 hotissue.CATEGORY_ID,
 			    hotissue.HISSUE_PARENTID,
 			    hotissue.HISSUE_LEVEL,
-			    member.mem_name as WRITER
+			    member.mem_name as WRITER,
+			    hotissue.writer as memId
 			FROM( select * from member)member, hotissue hotissue
 			WHERE
 			    member.mem_id = hotissue.WRITER

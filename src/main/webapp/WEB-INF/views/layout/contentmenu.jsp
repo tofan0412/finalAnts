@@ -221,7 +221,7 @@ $(function(){
 		<div class="card card-teal card-outline card-tabs">
 			<div class="card-header p-0 pt-1 border-bottom-0">
 				<ul class="nav nav-tabs" id="custom-tabs-three-tab">
-					<li class="nav-item"><a class="nav-link active"
+					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-home-tab"
 						href="${pageContext.request.contextPath}/todo/todoList">일감</a></li>
 					<li class="nav-item"><a class="nav-link"
@@ -235,16 +235,18 @@ $(function(){
 						href="${pageContext.request.contextPath}/suggest/readSuggestList">건의사항</a></li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-calendar-tab"
-						href="${pageContext.request.contextPath}/schedule/clendarView" >캘린더</a></li>
+						href="${pageContext.request.contextPath}/schedule/clendarView">캘린더</a></li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-mywork-tab"
-						href="${pageContext.request.contextPath}/todo/MytodoList">내
-							일감</a></li>
+						href="${pageContext.request.contextPath}/todo/MytodoList">내	일감</a></li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-files-tab" href="/file/publicfileview">파일함</a>
 					</li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-mywork-tab" href="/schedule/scheduleplaceView">일정</a></li>
+					<li class="nav-item"><a class="nav-link"
+						id="custom-tabs-three-vote-tab" href="/vote/votelist">투표</a>
+					</li>
 					<c:if
 						test="${SMEMBER.memId eq projectVo.memId or SMEMBER.memType eq 'PM'}">
 						<li class="nav-item"><a class="nav-link"

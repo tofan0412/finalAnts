@@ -34,7 +34,7 @@
 		<!-- Main content -->
 		<div class="wrapper">
 			<div class="content-wrapper">
-				<tiles:insertAttribute name="content" />
+				<tiles:insertAttribute name="adcontent" />
 			</div>
 		</div>
 		<!-- Control Sidebar -->

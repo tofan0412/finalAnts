@@ -53,7 +53,7 @@ $(function(){
 	<div class="card card-teal ">
 	  <div class="card-body">
 <!-- 		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
-			<h3>공지사항  상세내역, noticeDetail</h3>
+			<h3>공지사항  상세내역</h3>
 			<br>
 			
 			<label for="noticeTitle" class="col-sm-2 control-label">제목</label>

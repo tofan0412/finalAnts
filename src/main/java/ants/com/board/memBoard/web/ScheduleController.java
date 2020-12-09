@@ -126,6 +126,7 @@ public class ScheduleController {
 		}
 	}
 
+	// 프로젝트용 캘린더
 	// 캘린더 화면 출력
 	@RequestMapping("/clendarView")
 	public String clendarView(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session, Model model) {
@@ -169,7 +170,7 @@ public class ScheduleController {
 			return "redirect:/schedule/clendarView";
 		}
 	}
-
+	
 	// 캘린더에서 일정 보기
 	@RequestMapping("/calendarDetail")
 	public String calendarDetail(ScheduleVo scheduleVo, Model model) {
@@ -188,6 +189,83 @@ public class ScheduleController {
 			return "redirect:/schedule/clendarView";
 		} else {
 			return "redirect:/schedule/clendarView";
+		}
+	}
+
+	// 개인 캘린더
+
+	// 캘린더 화면 출력
+	@RequestMapping("/MyclendarView")
+	public String myclendarView(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session, Model model) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		scheduleVo.setMemId(memberVo.getMemId());
+		List<ScheduleVo> showCalendar = memBoardService.showMyCalendar(scheduleVo);
+		model.addAttribute("showSchedule", showCalendar);
+		return "tiles/member/mycalendar";
+	}
+
+	// 캘린더에서 일정추가
+	@RequestMapping("/MycalendarInsert")
+	public String mycalendarInsert(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session,
+			Model model) {
+		scheduleVo.setScheCont(scheduleVo.getScheTitle());
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		scheduleVo.setMemId(memberVo.getMemId());
+		int insertCnt = memBoardService.mycalendarInsert(scheduleVo);
+		if (insertCnt >= 1) {
+			return "redirect:/schedule/MyclendarView";
+		} else {
+			return "redirect:/schedule/MyclendarView";
+		}
+	}
+
+	// 캘린더에서 일정수정(드래그)
+	@RequestMapping("/MycalendarUpdate")
+	public String mycalendarUpdate(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session,
+			Model model) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		scheduleVo.setMemId(memberVo.getMemId());
+		int updateCnt = memBoardService.mycalendarUpdate(scheduleVo);
+		if (updateCnt >= 1) {
+			return "redirect:/schedule/MyclendarView";
+		} else {
+			return "redirect:/schedule/MyclendarView";
+		}
+	}
+
+	
+	// 캘린더에서 일정수정(상세)
+	@RequestMapping("/MycalendarUpdateDetail")
+	public String MycalendarUpdateDetail(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session,
+			Model model) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		scheduleVo.setMemId(memberVo.getMemId());
+		int updateCnt = memBoardService.calendarUpdateDetail(scheduleVo);
+		if (updateCnt >= 1) {
+			return "redirect:/schedule/MyclendarView";
+		} else {
+			return "redirect:/schedule/MyclendarView";
+		}
+	}
+
+	// 캘린더에서 일정 보기
+	@RequestMapping("/MycalendarDetail")
+	public String mycalendarDetail(ScheduleVo scheduleVo, Model model) {
+		ScheduleVo dbVo = memBoardService.mycalendarDetail(scheduleVo);
+		model.addAttribute("scheduleVo", dbVo);
+		return "jsonView";
+	}
+
+	// 캘린더에서 일정 삭제
+	@RequestMapping("/MycalendarDelete")
+	public String mycalendarDelete(ScheduleVo scheduleVo, Model model) {
+
+		int deleteCnt = memBoardService.calendarDelete(scheduleVo);
+
+		if (deleteCnt >= 1) {
+			return "redirect:/schedule/MyclendarView";
+		} else {
+			return "redirect:/schedule/MyclendarView";
 		}
 	}
 }

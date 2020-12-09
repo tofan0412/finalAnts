@@ -56,21 +56,21 @@ public interface memBoardMapper {
 	// 일정 삭제
 	public int scheduleDelete(ScheduleVo scheduleVo);
 
-	
-	// 일정 리스트(캘린더용)
+
+	//프로젝트 캘린더용
 	public List<ScheduleVo> showCalendar(ScheduleVo scheduleVo);
-
-	// 일정 등록(캘린더용)
 	public int calendarInsert(ScheduleVo scheduleVo);
-
-	// 일정 수정(캘린더용)
 	public int calendarUpdate(ScheduleVo scheduleVo);
-	
-	// 일정 수정(캘린더용)
 	public int calendarDelete(ScheduleVo scheduleVo);
-
-	// 일정 상세페이지(캘린더용)
 	public ScheduleVo calendarDetail(ScheduleVo scheduleVo);
+	
+	
+	// 개인 캘린더용
+	public List<ScheduleVo> showMyCalendar(ScheduleVo scheduleVo);	
+	public int mycalendarInsert(ScheduleVo scheduleVo);
+	public ScheduleVo mycalendarDetail(ScheduleVo scheduleVo);
+	public int calendarUpdateDetail(ScheduleVo scheduleVo);
+	public int mycalendarUpdate(ScheduleVo scheduleVo);
 	
 }
 

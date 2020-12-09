@@ -28,5 +28,13 @@ public class SuggestService {
 		return mapper.suggestInsert(suggestVo);
 	}
 	
+	// 하나의 건의사항 읽기
+	public SuggestVo suggestDetail(SuggestVo suggestVo) {
+		return mapper.suggestDetail(suggestVo);
+	}
 	
+	// 건의사항 수정하기
+	public int suggestMod(SuggestVo suggestVo) {
+		return mapper.suggestMod(suggestVo);
+	}
 }

@@ -53,22 +53,22 @@
 		
 		<put-attribute name="adleft" value="/WEB-INF/views/layout/admin/adleft.jsp" />
 
-		<put-attribute name="content" value="" />
+		<put-attribute name="adcontent" value="" />
 
 		<put-attribute name="adfooter" value="/WEB-INF/views/layout/admin/adfooter.jsp" />
 		
 	</definition>
 	
 	<definition name="admain.tiles/*" extends="admain.layout">
-		<put-attribute name="content"
+		<put-attribute name="adcontent"
 			value="/WEB-INF/views/{1}.jsp" />
 	</definition>
 	<definition name="admain.tiles/*/*" extends="admain.layout">
-		<put-attribute name="content"
+		<put-attribute name="adcontent"
 			value="/WEB-INF/views/{1}/{2}.jsp" />
 	</definition>
 	<definition name="admain.tiles/*/*/*" extends="admain.layout">
-		<put-attribute name="content"
+		<put-attribute name="adcontent"
 			value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
 	</definition>
 	

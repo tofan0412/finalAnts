@@ -35,8 +35,24 @@ public interface AdminMapper {
 
 	public AdminVo adlogincheck(AdminVo adminVo);
 
+	///////////////////////////////////////
 	
+//	//멤버 리스트 목록 테스트
+//	public List<MemberVo> memberlist(MemberVo memberVo);
+//	
+//	//각 멤버리스트 상세보기
+//	public MemberVo geteachmember(String memId);
+//
+//	// 멤버리스트 작성
+//	public int insertmember(MemberVo memberVo);
+//
+//	// 멤버리스트 update 
+//	public int updatemember(MemberVo memberVo);
+//
+//	// 멤버리스트 update 
+//	public int delmember(String memId);
 
+	
 
 	
 	

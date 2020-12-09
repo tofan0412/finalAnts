@@ -107,10 +107,11 @@
 		        <div class="row mb-2">
 		         <br>
 		          <div class="col-sm-6">
-		          <br>
+		          <br><br>
 		            <h1 class="jg" style=" padding-left : 10px;"><img src="/resources/dist/img/bookmark-black.png" width="30" height="30" name ="${bookmark.issueId}"/>&nbsp;북마크</h1>
 		          </div>
 		          <div class="col-sm-6">
+		          <br>
 		            <ol class="breadcrumb float-sm-right"  style="background : white">
 		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
 		              <li class="breadcrumb-item active">북마크</li>
@@ -134,6 +135,7 @@
 						
         				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
 							<form:option value="1" label="제목"/>
+							<form:option value="2" label="작성자"/>
 						</form:select> 
 						
 						
@@ -160,6 +162,7 @@
 	                    <tr>
 	                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
 	                     	<th  style="padding-left: 30px; text-align: center;">  이슈 제목</th> 
+							<th style="text-align: center;">   작성자  </th>
 							<th style="text-align: center;">   날짜   </th>
 							<th style="text-align: center;">   종류   </th>
 							<th style="text-align: center;"> 즐겨찾기 </th>
@@ -172,7 +175,8 @@
 								<tr>			                 
 				                    <td  style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((AllBookMarkVo.pageIndex-1) * AllBookMarkVo.pageUnit + (status.index+1))}"/>.</td>
 								
-									<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${bookmark.issueId}"> ${bookmark.issueTitle }</a> </td>
+									<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${bookmark.issueId}&reqId=${bookmark.reqId}"> ${bookmark.issueTitle }</a> </td>
+									<td style="text-align: center;"> ${bookmark.memName }</td>
 									<td style="text-align: center;"> ${bookmark.regDt }</td>
 									<c:if test="${bookmark.issueKind == 'issue'}">
 										<td style="text-align: center;"> 이슈</td>										
@@ -186,7 +190,10 @@
 									 
 								</tr>
 							 </c:forEach> 
-
+						<c:if test="${bookmarklist.size() == 0}">
+							<td colspan="7" style="text-align: center;"><br><strong> [ 결과가 없습니다. ] </strong></td>
+						</c:if>
+						
 	                  </tbody>
 	                </table>
 	              </div>

@@ -10,22 +10,24 @@
 	      FROM (
 	      	SELECT ROWNUM RNUM , 
 	           	   S.*
-		      FROM (
-				 select c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt ,
-						 c.issue_kind, c.book_id as issue_del , d.mem_name , c.mem_id
+		      FROM (				
+                
+                 select c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt ,
+                        c.issue_kind,  case when c.bookmem = #{memId} then c.book_id else null end issue_del , d.mem_name as mem_id
 				  from
 					  (select a.issue_id , a.issue_title , a.issue_cont , a.reg_dt ,
-							  a.issue_kind, b.book_id , a.mem_id , a.issue_del
+							  a.issue_kind, b.book_id , a.mem_id as issuemem, b.mem_id as bookmem , a.issue_del
 						 from issue a 
 						 left outer join bookmark b 
-						 on a.issue_id = b.issue_id
-						 where a.req_id = #{reqId} ) c , member d
-				  where d.mem_id = c.mem_id and c.issue_del = 'N'  
+						 on a.issue_id = b.issue_id     
+                         where a.req_id = #{reqId}
+						) c , member d         
+				  where d.mem_id = c.issuemem and c.issue_del = 'N'  
 					     
 					<if test="searchKeyword != null and searchKeyword != ''">
 				        <choose>
 				         	<when test="searchCondition == 1">
-								AND	c.mem_id LIKE '%' || #{searchKeyword} || '%'
+								AND	c.issuemem LIKE '%' || #{searchKeyword} || '%'
 							</when>
 				            <when test="searchCondition == 2">
 								AND	c.issue_title LIKE '%' || #{searchKeyword} || '%'
@@ -51,6 +53,27 @@
 	</select>
 
 
+	<!-- 프로젝트에 따른 이슈게시글 수 조회하기 -->	
+	<select id="issuePagingListCnt" parameterType="ants.com.board.memBoard.model.IssueVo"  resultType="int">
+		select count(*) as totCnt
+		from issue
+		where req_id = #{reqId} and issue_del = 'N'
+		
+		<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 1">
+						AND	mem_id LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 2">
+						AND	issue_title LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 3">
+						AND	issue_cont LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>		
+	</select>	
+
 	
 	<!-- 각 이슈게시글 내용 가져오기 -->
 	<select id="geteachissue"  resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="String">
@@ -64,7 +87,7 @@
 			
 	</select>
 	
-	<!-- 다음이슈 id조회 -->
+	<!-- 다음이슈 id조회 (파일 ajax로 등록하기위함) -->
 	<select id ="getissueid" resultType="String">
 		SELECT  ISSUE_SEQ.nextval FROM DUAL
 	</select>
@@ -106,27 +129,10 @@
 			set issue_del = 'Y' 
 		where issue_id = #{issueId}
 	</update>
-
- 	<!-- 프로젝트에 따른 이슈게시글 수 조회하기 -->	
-	<select id="issuePagingListCnt" parameterType="ants.com.board.memBoard.model.IssueVo"  resultType="int">
-		select count(*) as totCnt
-		from issue
-		where req_id = #{reqId} and issue_del = 'N'
-		
-		<if test="searchKeyword != null and searchKeyword != ''">
-		        <choose>
-		            <when test="searchCondition == 1">
-						AND	mem_id LIKE '%' || #{searchKeyword} || '%'
-					</when>
-		            <when test="searchCondition == 2">
-						AND	issue_title LIKE '%' || #{searchKeyword} || '%'
-					</when>
-		            <when test="searchCondition == 3">
-						AND	issue_cont LIKE '%' || #{searchKeyword} || '%'
-					</when>
-				</choose>
-			</if>		
-	</select>	
+	
+	
+	
+	
 
 	<!-- 내가 작성한 이슈 리스트 -->
 	<select id="myissuelist" resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="ants.com.board.memBoard.model.IssueVo">
@@ -136,25 +142,26 @@
 	           	   S.*
 		      FROM (
 				 SELECT c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt ,
-						 c.issue_kind, c.book_id as issue_del , d.mem_name as mem_id , a.req_id
+						 c.issue_kind, c.book_id as issue_del , e.req_title as mem_id
 				  FROM
 					  (select a.issue_id , a.issue_title , a.issue_cont , a.reg_dt ,
-							  a.issue_kind, b.book_id , a.mem_id , a.issue_del , a.req_id
+							  a.issue_kind, b.book_id , a.issue_del , a.req_id , a.mem_id
 						 from issue a 
 						 left outer join bookmark b 
-						 on a.issue_id = b.issue_id ) c , member d
+						 on a.issue_id = b.issue_id ) c , member d, reqlist e
 				  WHERE d.mem_id = c.mem_id AND c.issue_del = 'N'  
+				  		AND c.req_id = e.req_id
 					    AND d.mem_id = #{memId}
 					<if test="searchKeyword != null and searchKeyword != ''">
 				        <choose>
 				         	<when test="searchCondition == 1">
-								AND	c.mem_id LIKE '%' || #{searchKeyword} || '%'
+								AND c.issue_title LIKE '%' || #{searchKeyword} || '%'
 							</when>
 				            <when test="searchCondition == 2">
-								AND	c.issue_title LIKE '%' || #{searchKeyword} || '%'
+								AND	c.issue_cont LIKE '%' || #{searchKeyword} || '%'
 							</when>
 				            <when test="searchCondition == 3">
-								AND	c.issue_cont LIKE '%' || #{searchKeyword} || '%'
+								AND	e.req_title LIKE '%' || #{searchKeyword} || '%'
 							</when>
 						</choose>
 					</if>
@@ -175,19 +182,20 @@
 	<!-- 내가작성한 이슈게시글 수 조회하기 -->	
 	<select id="myissuePagingListCnt" parameterType="ants.com.board.memBoard.model.IssueVo"  resultType="int">
 		select count(*) as totCnt
-		from issue
-		where mem_id = #{memId} and issue_del = 'N'
-		
+		from issue a, reqlist b 
+		where a.mem_id = #{memId} and a.issue_del = 'N'
+            AND a.req_id = b.req_id
+            	
 		<if test="searchKeyword != null and searchKeyword != ''">
 		        <choose>
 		            <when test="searchCondition == 1">
-						AND	mem_id LIKE '%' || #{searchKeyword} || '%'
+						AND a.issue_title LIKE '%' || #{searchKeyword} || '%'
 					</when>
 		            <when test="searchCondition == 2">
-						AND	issue_title LIKE '%' || #{searchKeyword} || '%'
+						AND	a.issue_cont LIKE '%' || #{searchKeyword} || '%'
 					</when>
 		            <when test="searchCondition == 3">
-						AND	issue_cont LIKE '%' || #{searchKeyword} || '%'
+						AND	b.req_title LIKE '%' || #{searchKeyword} || '%'
 					</when>
 				</choose>
 			</if>		
