@@ -27,7 +27,7 @@
 	<!-- <bean class="egovframework.example.cmmn.web.EgovBindingInitializer"/> -->
 	<!-- </property> -->
 	<!-- </bean> -->
-
+	
 	<bean id="profileImgView" class="ants.com.member.web.ProfileImgView"/>
 	<bean id ="FileDownloadView" class="ants.com.file.view.FileDownloadView"/>
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>

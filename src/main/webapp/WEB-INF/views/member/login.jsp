@@ -223,6 +223,12 @@
 	
 	<script>
  	$(document).ready(function(){
+ 		$("body").keyup(function(e){
+ 			if(e.keyCode == 13){
+ 				$('#loginBtn').trigger("click");
+ 			}
+ 		})
+ 		
  		
  		// 모달창 열기
 		$("#myBtn").click(function(){
@@ -253,7 +259,7 @@
 				}
 			})
 		})
-		
+		// 엔터키 인식
 		
 		function getCookieValues(cookieName){
 			
