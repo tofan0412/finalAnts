@@ -133,7 +133,7 @@
 	
 	
 	<!-- 개인캘린더 리스트-->
-	<select id="showCalendar" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">
+	<select id="showMyCalendar" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">
 		SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD hh:mm') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, START_DT, END_DT, JUSO, CALENDARCSS
 			FROM SCHEDULE
 			WHERE req_id = NULL
