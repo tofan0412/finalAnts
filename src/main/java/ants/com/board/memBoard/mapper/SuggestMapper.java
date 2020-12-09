@@ -23,4 +23,7 @@ public interface SuggestMapper {
 	
 	// 건의사항 수정하기
 	public int suggestMod(SuggestVo suggestVo);
+	
+	// 건의사항 삭제하기
+	public int delSuggest(SuggestVo suggestVo);
 }

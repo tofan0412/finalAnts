@@ -37,4 +37,9 @@ public class SuggestService {
 	public int suggestMod(SuggestVo suggestVo) {
 		return mapper.suggestMod(suggestVo);
 	}
+	
+	// 건의사항 삭제하기
+	public int delSuggest(SuggestVo suggestVo) {
+		return mapper.delSuggest(suggestVo);
+	}
 }

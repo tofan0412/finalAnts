@@ -19,6 +19,15 @@ $(function(){
 		$('#modSuggestModal').modal();
 	})
 	
+	$('#delSuggest').click(function(){
+		var factor = confirm("삭제하시겠습니까?");
+		if (factor){
+			var sgtId = "${suggestVo.sgtId}";
+			$(location).attr("href", "/suggest/delSuggest?sgtId="+sgtId);
+		}
+		
+	})
+	
 	// 일감 검색을 위해 키워드를 작성한 경우 자동완성
 	$('#todoIdModal').keyup(function(){
 		var keyword = $(this).val();
@@ -309,6 +318,7 @@ function saveMsg(){
 				<div class="card-footer clearfix">
 					<c:if test="${suggestVo.memId == SMEMBER.memId}">
 						<input type="button" value="삭제하기" id="delSuggest"
+							
 							class="btn btn-default float-right">
 						<input type="button" value="수정하기" id="modSuggest"
 							class="btn btn-default float-right" style="margin-right: 5px;">
@@ -398,10 +408,7 @@ function saveMsg(){
 				<div class="card-footer clearfix">
 					<button type="button" class="btn btn-default" id="todoback">뒤로가기</button>
 				</div>
-
 			</div>
-
-
 		</div>
 		<!-- 일감 상세보기   끝-->
 	</div>

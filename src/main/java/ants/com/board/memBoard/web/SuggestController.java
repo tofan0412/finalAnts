@@ -125,4 +125,18 @@ public class SuggestController {
 		return suggestDetail(suggestVo, model);
 	}
 	
+	@RequestMapping("/delSuggest")
+	public String delSuggest(SuggestVo suggestVo, HttpSession session, Model model) {
+		int result = suggestService.delSuggest(suggestVo);
+		if (result > 0) {
+			return "redirect:/suggest/readSuggestList";
+		
+		// 삭제에 실패한 경우 해당 글로 돌아간다..
+		}else{
+			MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+			suggestVo.setMemId(memberVo.getMemId());
+			return suggestDetail(suggestVo, model);
+		}
+	}
+	
 }

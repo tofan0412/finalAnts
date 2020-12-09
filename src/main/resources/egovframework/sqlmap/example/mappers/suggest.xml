@@ -10,6 +10,7 @@
 	                     FROM TODO 
 	                    WHERE REQ_ID = #{reqId}) B
 	 WHERE A.TODO_ID = B.TODO_ID
+	   AND A.DEL = 'N'
 </select>
 
 <select id="searchTodo" parameterType="ants.com.board.manageBoard.model.TodoVo" resultType="ants.com.board.manageBoard.model.TodoVo">
@@ -32,16 +33,11 @@
 			    #{sgtStatus},#{categoryId},#{todoId},#{del})
 </insert>
 
-
 <select id="suggestDetail" parameterType="ants.com.board.memBoard.model.SuggestVo" resultType="ants.com.board.memBoard.model.SuggestVo">
 	SELECT * 
 	  FROM SUGGEST
 	 WHERE SGT_ID = #{sgtId}
 </select>
-
-
-
-
 
 <update id="suggestMod" parameterType="ants.com.board.memBoard.model.SuggestVo">
 	UPDATE SUGGEST
@@ -50,4 +46,16 @@
 	       SGT_CONT = #{sgtCont}
 	 WHERE SGT_ID = #{sgtId} 
 </update>
+
+<update id="delSuggest" parameterType="ants.com.board.memBoard.model.SuggestVo">
+UPDATE SUGGEST
+       SET DEL = 'Y'
+  WHERE SGT_ID = #{sgtId}
+</update>
+
+
+
+
+
+
 </mapper>
