@@ -164,12 +164,17 @@
 			                    <td class="mailbox-name"><a href="read-mail.html">${fn:split(a.alarmCont,',')[2]}(${fn:split(a.alarmCont,',')[1]})</a></td>
 			                    <td class="mailbox-subject" style="width: 70%;">
 				                    <c:choose>
-				                    	<c:when test="${a.alarmType eq 'req-pl' or 'res-pl' }"><b>PL 요청</b></c:when>
+				                    	<c:when test="${a.alarmType eq 'req-pl' or 'res-pl' }"><b>PL 요청</b>
+					                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} (제목을 누르면 상세페이지로 이동합니다.)</a>
+				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'res-pl' }"><b>PL 응답</b></c:when>
-				                    	<c:when test="${a.alarmType eq 'reply'}"><b>댓글</b></c:when>
-				                    	<c:when test="${a.alarmType eq 'posts'}"><b>게시물</b></c:when>
+				                    	<c:when test="${a.alarmType eq 'reply'}"><b>댓글</b>
+					                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} : ${fn:split(a.alarmCont,',')[5] } </a>
+				                    	</c:when>
+				                    	<c:when test="${a.alarmType eq 'posts'}"><b>게시물</b>
+					                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} : ${fn:split(a.alarmCont,',')[5] } </a>
+				                    	</c:when>
 				                    </c:choose>
-			                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} (제목을 누르면 상세페이지로 이동합니다.)</a>
 			                    </td>
 			                    <td class="project-actions text-right" style="opacity: .9;">
 			                      <c:if test="${a.alarmType eq 'req-pl' }">

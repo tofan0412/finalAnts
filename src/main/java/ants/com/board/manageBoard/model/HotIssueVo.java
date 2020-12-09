@@ -15,6 +15,7 @@ public class HotIssueVo extends BaseVo{
 	private String hissueLevel;
 	private String del;
 	private String writer;
+	private String memId;
 	
 	
 	public String getWriter() {
@@ -77,12 +78,23 @@ public class HotIssueVo extends BaseVo{
 	public void setDel(String del) {
 		this.del = del;
 	}
+	
+	public String getMemId() {
+		return memId;
+	}
+	public void setMemId(String memId) {
+		this.memId = memId;
+	}
 	@Override
 	public String toString() {
 		return "HotIssueVo [hissueId=" + hissueId + ", hissueTitle=" + hissueTitle + ", hissuetCont=" + hissuetCont
 				+ ", regDt=" + regDt + ", reqId=" + reqId + ", categoryId=" + categoryId + ", hissueParentid="
-				+ hissueParentid + ", hissueLevel=" + hissueLevel + ", del=" + del + ", writer=" + writer + "]";
+				+ hissueParentid + ", hissueLevel=" + hissueLevel + ", del=" + del + ", writer=" + writer + ", memId="
+				+ memId + "]";
 	}
+	
+	
+	
 	
 	
 }
