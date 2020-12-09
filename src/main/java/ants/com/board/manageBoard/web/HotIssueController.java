@@ -35,7 +35,9 @@ public class HotIssueController {
 	@RequestMapping("/hissueList")
 	public String hissueList(@ModelAttribute("hotIssueVo") HotIssueVo hotIssueVo, ModelMap model, HttpSession session) {
 		String reqId = (String) session.getAttribute("projectId");
-		hotIssueVo.setReqId(reqId);
+		if(reqId != null) {
+			hotIssueVo.setReqId(reqId);
+		}
 		/** pageing setting */
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(hotIssueVo.getPageIndex());
@@ -72,10 +74,14 @@ public class HotIssueController {
 	
 	// 핫이슈 등록 화면 출력
 	@RequestMapping("/hissueInsertView")
-	public String todoInsertView(@RequestParam(name = "Parentid", required = false) String Parentid, HttpSession session) {
-		if(Parentid != null) {
-			session.setAttribute("hissueP", Parentid);
-		}
+	public String todoInsertView(@ModelAttribute("hotIssueVo") HotIssueVo hotIssueVo, Model model) {
+		// 부모 게시글정보
+		String hissueParentid = hotIssueVo.getHissueParentid();
+		hotIssueVo.setHissueId(hissueParentid);
+		hotIssueVo = manageBoardService.gethissue(hotIssueVo);
+		
+		model.addAttribute("hotIssueVo", hotIssueVo);
+		model.addAttribute("hissueParentid", hissueParentid);
 		return "tiles/manager/plpm_hotissueInsert";
 	}
 	

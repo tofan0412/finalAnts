@@ -28,20 +28,46 @@
 	 	
 	 	// 등록
 	 	$("#regBtn").on("click", function() {
-	 		
-	 		if(${hissueP } !=null){
-	 		alert("답글일때");	
+	 		if("${hissueParentid}" != null){
+	 			saveMsg();
 	 		}
-	 		
-			//$("#hissueform").submit();
+			$("#hissueform").submit();
 		});
 	 	
 	 	// 뒤로가기
 		$("#back").on("click", function() {
 			window.history.back();
 		});
-	 	
 	});
+	
+	//답글 알림 db저장, 소켓에 메세지보내기
+	function saveMsg(){
+		var alarmData = {
+							"alarmCont" : "${hotIssueVo.hissueId},${SMEMBER.memName},${SMEMBER.memId},/hotIssue/hissueList?reqId=${projectId},${hotIsuueVo.hissueTitle}"+ $('#hissueTitle').val(),
+							"memId" 	: "${hotIssueVo.memId}",
+							"alarmType" : "posts"
+		}
+		console.log(alarmData);
+		
+		$.ajax({
+				url : "/alarmInsert",
+				data : JSON.stringify(alarmData),
+				type : 'POST',
+				contentType : "application/json; charset=utf-8",
+				dataType : 'text',
+				success : function(data){
+					
+					let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+					socket.send(socketMsg);
+					
+					
+				},
+				error : function(err){
+					console.log(err);
+				}
+		});
+	}
+
 	
 </script>	 		
 </head>
@@ -56,9 +82,9 @@
               </div>
               <div class="card-body">
                 <div class="form-group">
-                  <input class="form-control" placeholder="Subject:" name="hissueTitle">
+                  <input class="form-control" placeholder="Subject:" name="hissueTitle" id="hissueTitle">
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
-                  <input type="hidden" name="hissueParentid" value="${hissueP }">
+                  <input type="hidden" name="hissueParentid" value="${hissueParentid}">
                 </div>
                 <div class="form-group">
                 <textarea id="summernote" name="hissuetCont"></textarea>
@@ -77,6 +103,6 @@
               </div>
             </div>
         </form>
-		</div>
+	</div>
 
 </html>

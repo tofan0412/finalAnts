@@ -30,7 +30,9 @@
 	
 	// 답글 작성
 	function hotissueInsertChild(hissueId){
-	   	document.location = "/hotIssue/hissueInsertView?Parentid="+hissueId;
+		document.listForm.hissueParentid.value = hissueId;
+	   	document.listForm.action = "/hotIssue/hissueInsertView";
+	   	document.listForm.submit();
 	}
 	
 	// 검색
@@ -58,6 +60,7 @@
 	<div style="background-color: white;">
 	<a class="btn btn-default " href="${pageContext.request.contextPath }/hotIssue/hissueInsertView"><i class="fas fa-edit"></i>이슈 작성</a>
 	<form:form commandName="hotIssueVo" id="listForm" name="listForm" method="post">
+	<form:hidden path="hissueParentid" ></form:hidden>
 	<div style="padding-left: 30px; background-color: white;">
 		<br>
 		    <div class="card-header with-border">
