@@ -37,7 +37,7 @@
 		      <!-- Default box -->
 		      <div class="card">
 		        <div class="card-header">
-		          <a class="jg" href="/todo/projectgetReq?proId=${reqVo.reqId }" style="color: #0BB783;">프로젝트 공간으로 가시겠습니까?</a>
+		          <a class="jg" href="/todo/projectgetReq?reqId=${reqVo.reqId }" style="color: #0BB783;">프로젝트 공간으로 가시겠습니까?</a>
 		
 		          <div class="card-tools">
 		            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
