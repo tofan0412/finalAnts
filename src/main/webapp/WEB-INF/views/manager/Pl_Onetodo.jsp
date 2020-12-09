@@ -158,7 +158,7 @@
 				<div id = "filediv">
 					
 				</div>
-			</div>
+				</div>
 		         <div id="btnMenu">
 				 <c:if test="${SMEMBER.memId eq projectVo.memId }">
 					 <button type="button" class="btn btn-default" id="updateBtn" >수정</button>

@@ -70,7 +70,7 @@
 			'uploadScript'     : '/file/insertfile',
 			'fileObjName'     : 'file',    
 			'formData'         : {
-								   'categoryId' : "1",//수정해야할 부분
+								   'categoryId' : "1",
 								   'someId'     : '${todoSeq}'
 			                     },
 			'auto'             : false,

@@ -127,7 +127,6 @@ public class TodoController {
 		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
 		PublicFileVo pfv = new PublicFileVo("1", todoId , reqId);
-		
 		filecontroller.getfiles(pfv, model);
 		return "jsonView";
 	}
