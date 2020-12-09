@@ -28,7 +28,12 @@
 	 	
 	 	// 등록
 	 	$("#regBtn").on("click", function() {
-			$("#hissueform").submit();
+	 		
+	 		if(${hissueP } !=null){
+	 		alert("답글일때");	
+	 		}
+	 		
+			//$("#hissueform").submit();
 		});
 	 	
 	 	// 뒤로가기

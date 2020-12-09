@@ -235,7 +235,7 @@ $(function(){
 						href="${pageContext.request.contextPath}/suggest/readSuggestList">건의사항</a></li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-calendar-tab"
-						href="#custom-tabs-three-calendar">캘린더</a></li>
+						href="${pageContext.request.contextPath}/schedule/clendarView" >캘린더</a></li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-mywork-tab"
 						href="${pageContext.request.contextPath}/todo/MytodoList">내

@@ -169,7 +169,7 @@
 				                    	<c:when test="${a.alarmType eq 'reply'}"><b>댓글</b></c:when>
 				                    	<c:when test="${a.alarmType eq 'posts'}"><b>게시물</b></c:when>
 				                    </c:choose>
-			                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]}</a>
+			                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} (제목을 누르면 상세페이지로 이동합니다.)</a>
 			                    </td>
 			                    <td class="project-actions text-right" style="opacity: .9;">
 			                      <c:if test="${a.alarmType eq 'req-pl' }">

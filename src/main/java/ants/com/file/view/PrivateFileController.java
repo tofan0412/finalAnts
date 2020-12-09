@@ -61,7 +61,7 @@ public class PrivateFileController {
 		logger.debug("paginationInfo : {}", paginationInfo);
 		logger.debug("privatefileVo : {}", privatefileVo);
 		
-		
+			
 		// 리스트 목록
 		List<PrivateFileVo> privatefileList = fileService.privatefileList(privatefileVo);
 		model.addAttribute("privatefileList", privatefileList);

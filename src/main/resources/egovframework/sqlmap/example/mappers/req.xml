@@ -121,9 +121,9 @@
 	</update>
 	
 	<update id="plDelete" parameterType="ants.com.member.model.ReqVo">
-UPDATE   reqlist
-		   SET   pl_id = null  ,
-		           status = null
+		UPDATE   reqlist
+		   SET   pl_id  = null  ,
+		         status = null
 		 WHERE   req_id = #{reqId}
 </update>
 

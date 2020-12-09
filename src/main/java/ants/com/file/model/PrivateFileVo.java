@@ -10,7 +10,7 @@ public class PrivateFileVo extends BaseVo {
 	private String privId;
 	private String privFilepath;
 	private String privFilename;
-	private Date regDt;
+	private String regDt;
 	private String privSize;
 	private String memId;
 	
@@ -33,10 +33,10 @@ public class PrivateFileVo extends BaseVo {
 	public void setPrivFilename(String privFilename) {
 		this.privFilename = privFilename;
 	}
-	public Date getRegDt() {
+	public String getRegDt() {
 		return regDt;
 	}
-	public void setRegDt(Date regDt) {
+	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
 	public String getPrivSize() {
