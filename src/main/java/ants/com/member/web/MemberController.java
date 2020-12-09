@@ -88,7 +88,7 @@ public class MemberController {
 			if(prp_pm != null) {
 				session.setAttribute("pmInProjectList", prp_pm);							
 			}
-				return "tiles/layout/contentmenu";
+				return "tiles/layout/contentmain";
 		} else {
 			return "redirect:/member/loginView";
 		}
