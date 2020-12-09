@@ -67,7 +67,7 @@ th{
 	<div class="top" style="margin-left:1.5%;"><h4>프로젝트 현황</h4>
 		<nav class="mt-2">
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-	<!-- memType이 MEM일때  -->
+				<!-- memType이 MEM일때  -->
 				 <c:if test="${not empty memInProjectList}">
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active" style="background-color:#6495ED;">
@@ -107,11 +107,9 @@ th{
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active" style="background-color:#6495ED;">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
+							<p>프로젝트 관리(PL)<i class="fas fa-angle-left right"></i></p>
 						</a>
 					    <ul class="nav nav-treeview" >
-							
-							
 							<table class="todoTable" style="margin-left:3%">
 								<tr>
 									<th style="padding-left:47px;">프로젝트명</th>
@@ -137,8 +135,6 @@ th{
 									</c:forEach> 
 								</tbody>
 							</table>
-							
-							
 						</ul>
 					</li>
 				 </c:if>
@@ -147,10 +143,9 @@ th{
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active" style="background-color:#6495ED;">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>프로젝트관리<i class="fas fa-angle-left right"></i></p>
+							<p>프로젝트 관리(PM)<i class="fas fa-angle-left right"></i></p>
 						</a>
 					    <ul class="nav nav-treeview" > 
-							
 							<table class="todoTable" style="margin-left:3%">
 								<tr>
 									<th style="padding-left:47px;">프로젝트명</th>
@@ -176,7 +171,6 @@ th{
 									</c:forEach> 
 								</tbody>
 							</table>
-							
 						</ul>
 					</li>
 				 </c:if>
@@ -189,6 +183,7 @@ th{
 							<p>참여중인 프로젝트가 없습니다</p>
 						</a>
 				 </c:if>
+				 
 			</ul>
 		</nav>
 	</div>
