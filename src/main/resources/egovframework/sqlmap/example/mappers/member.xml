@@ -14,7 +14,7 @@
 			    UPPER(del) as del,
 			    UPPER(mem_type) as mem_type
 		FROM 	MEMBER
-		WHERE 	MEM_ID = #{memId}
+		WHERE     MEM_ID = #{memId}
 	</select>
 	
 	<select id="getAllMember" resultType="ants.com.member.model.MemberVo">
