@@ -234,46 +234,41 @@ function saveMsg(){
 </script>
 
 <style type="text/css">
-	label{
-		width : auto;
-/* 		height : 30px; */
-		font-size: 1.2em;
-	}
-	#issuecont{
-		display: inline-block;
-		float: left;
-	}
-	
-/*  	.writeCon.autosize { min-height: 50px; }  */
-	
-	.writeCon{
- 		resize :none;
-/* 		background-color:transparent; */
-		width: 500px  ;
-  		height: 100px; 
-/* 		min-height: 50px; */  
-/*   		overflow: visible;  */
-/*   		overflow-y:hidden; */
-
-	}
-	
-	#re_con{
-		width: 500px;
-		height: 100px;
-      	resize: none;
-/*       	background-color:transparent; */
-      	padding: 1.1em; /* prevents text jump on Enter keypress */
-      	padding-bottom: 0.2em;
-      	line-height: 1.6;
-	}	
-	
-	#filediv{
-		display: inline-block;
-		
-	}
-	#filelabel{
-		float: left;
-	}
+label{
+	width : auto;
+	font-size: 1.2em;
+}
+#issuecont{
+	display: inline-block;
+	float: left;
+}
+.writeCon{
+	resize :none;
+	width: 500px  ;
+	height: 100px; 
+}
+#re_con{
+	width: 500px;
+	height: 100px;
+   	resize: none;
+   	padding: 1.1em; /* prevents text jump on Enter keypress */
+   	padding-bottom: 0.2em;
+   	line-height: 1.6;
+}	
+#filediv{
+	display: inline-block;
+}
+#filelabel{
+	float: left;
+}
+#queue {
+	border: 1px solid #E5E5E5;
+	height: 177px;
+	width : 90%;
+	overflow: auto;
+	margin-bottom: 10px;
+	padding: 0 3px 3px;
+}
 </style>
 <%@include file="/WEB-INF/views/layout/contentmenu.jsp"%>
 <div class="col-12 col-sm-9">
@@ -418,7 +413,7 @@ function saveMsg(){
 <div class="modal fade" id="modSuggestModal" tabindex="-1" role="dialog"
 	aria-labelledby="inviteMemberModal">
 	<div class="modal-dialog modal-sm" role="document">
-		<div class="modal-content" style="height: 600px; width : 400px;">
+		<div class="modal-content" style="height: 800px; width : 400px;">
 			
 			<div class="modal-header">
 				<h3 class="modal-title jg" id="addplLable" style="text-align : center;">건의사항 수정</h3>

@@ -45,6 +45,15 @@ li strong {
 th,td{
 	text-align : center;
 }
+#queue {
+	border: 1px solid #E5E5E5;
+	height: 177px;
+	width : 90%;
+	overflow: auto;
+	margin-bottom: 10px;
+	padding: 0 3px 3px;
+}
+
 </style>
 <script type="text/javascript">
 $(function(){
@@ -120,7 +129,6 @@ $(function(){
 			$('#sgtForm').submit();
 		}
 	})
-	
 })
 
 /* pagination 페이지 링크 function */
@@ -259,7 +267,7 @@ $(function(){
 <div class="modal fade" id="suggestInsert" tabindex="-1" role="dialog"
 	aria-labelledby="inviteMemberModal">
 	<div class="modal-dialog modal-sm" role="document">
-		<div class="modal-content" style="height: 600px; width : 400px;">
+		<div class="modal-content" style="height: 800px; width : 400px;">
 			
 			<div class="modal-header">
 				<h3 class="modal-title jg" id="addplLable" style="text-align : center;">건의사항 작성</h3>
