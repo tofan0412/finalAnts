@@ -198,8 +198,9 @@ public class ScheduleController {
 	// 캘린더 화면 출력
 		@RequestMapping("/MyclendarView")
 		public String MyclendarView(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session, Model model) {
-			scheduleVo.setScheCont(scheduleVo.getScheTitle());
 			MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+			scheduleVo.setMemId(memberVo.getMemId());
+			
 			List<ScheduleVo> showCalendar = memBoardService.showMyCalendar(scheduleVo);
 			model.addAttribute("showSchedule", showCalendar);
 			return "tiles/member/mycalendar";
