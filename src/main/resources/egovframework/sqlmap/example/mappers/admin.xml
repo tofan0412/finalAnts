@@ -16,4 +16,34 @@
 	</select>
 
 
+
+	<!-- 회원 목록 -->
+	<!-- 
+	<select id="memberlist" parameterType="ants.com.member.model.MemberVo" resultType="ants.com.member.model.MemberVo">
+		SELECT *
+		FROM 	MEMBER
+		ORDER BY mem_id desc
+	</select>
+	-->
+	<!-- 멤버 등록 -->
+	<!-- 
+	<insert id="insertMember" parameterType="ants.com.member.model.MemberVo">
+		INSERT INTO MEMBER 
+			(mem_id, mem_name, mem_tel,mem_type)
+		VALUES
+			(${memId},${memName},${memTel},${memType})
+	</insert>
+	 -->
+	<!-- 멤버 정보 상세보기 -->
+	<!-- 
+	<select id="viewMember" parameterType="ants.com.member.model.MemberVo" resultType="ants.com.member.model.MemberVo">
+		SELECT
+			mem_id as memId,
+			mem_name as memName,
+			mem_tel as memTel,
+			mem_type as memType
+		FROM MEMBER
+		WHERE mem_id = #{memId}
+	</select>
+	 -->
 </mapper>

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
+import ants.com.member.model.MemberVo;
+import ants.com.member.service.MemberService;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -27,6 +29,8 @@ public class AdminController {
 	@Resource(name="adminService")
 	AdminService adminService;
 	
+	@Resource(name="memberService")
+	MemberService memberService;
 	
 	@RequestMapping("/adminproject")
 	public String projectmain(HttpSession session) {
@@ -106,24 +110,6 @@ public class AdminController {
 		return "notice/admineachproject";
 	}
 	
-//	// 카테고리 내역 조회
-//	@RequestMapping("/adeachproject2")
-//	public String adeachproject2(HttpSession session, Model model) {
-//		
-//		session.setAttribute("noticeId", "1");
-//		String adminId = "admin";
-//		List<CategoryVo> categorylist = adminService.categorylist(adminId);
-//		String noticeId = (String)session.getAttribute("noticeId");
-//		
-////			List<NoticeVo> noticelist = adminService.noticelist(noticeId);		
-//		
-//		
-////			model.addAttribute("noticelist", noticelist);
-////			model.addAttribute("categorylist", categorylist);
-////			System.out.println(categorylist);
-//		
-//		return "tiles/notice/noticelist";
-//	}
 	
 	// 공지사항리스트 출력
 	@RequestMapping("/noticelist")
@@ -246,13 +232,97 @@ public class AdminController {
 			return "redirect:/admin/eachnoticeDetail?noticeId="+noticeId;
 		}
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////관리자 공지사항 끝	
+//////////////////////////////////////////////////////////////////////////////////////////////관리자 공지사항 끝
 	
+//////////////////////////////////////////////////////////////////////////////////////////////멤버 리스트 시작
 	
-	
-	
-	
-	
+//	//멤버 목록
+//	@RequestMapping("/memberlist")
+//	public String memberList(@ModelAttribute("memberVo") MemberVo memberVo, HttpSession session, Model model) throws Exception {
+//		String memId = (String)session.getAttribute("memId");
+//		memberVo.setMemId(memId);
+//		List<MemberVo> resultList = adminService.memberlist(memberVo);
+//		model.addAttribute("memberlist", resultList);
+//		return "admain.tiles/admin/memberlist";
+//		
+//	}
+//	// 각 멤버리스트 상세보기
+//	@RequestMapping("/eachmemberDetail")
+//	public String geteachmember(String memId, HttpSession session, Model model) {
+//		
+//		MemberVo membervo = adminService.geteachmember(memId);
+//		
+//		model.addAttribute("membervo", membervo);
+//		
+////		model.addAttribute("adminId", "admin");
+//		 
+//		return "admain.tiles/admin/memberDetail";
+//	}
+//	
+//	// 멤버리스트 작성 View
+//	@RequestMapping("/insertmemberView")
+//	public String insertmemberView(HttpSession session) {
+//
+//		return "admain.tiles/admin/memberInsert";
+//	}
+//	
+//	// 멤버리스트 작성
+//	@RequestMapping("/insertmember")
+//	public String insertmember(MemberVo memberVo, HttpSession session, Model model) {
+//		
+//		String memId = (String)session.getAttribute("memId");
+//		
+////		memberVo.setAdminId("admin");
+//		
+//		int insertCnt = adminService.insertmember(memberVo);
+//
+//		if(insertCnt>0) {		
+//			return "redirect:/admin/memberlist";
+//		}else {
+//			return "redirect:/admin/insertmemberView";
+//			
+//		}	
+//	}
+//	
+//	// 멤버리스트 update View
+//	@RequestMapping("/updatememberView")
+//	public String updatememberView(String memId, HttpSession session, Model model) {
+//		
+//		MemberVo membervo = adminService.geteachmember(memId);
+//		model.addAttribute("memberVo", membervo);
+//		
+//		return "admain.tiles/admin/memberUpdate";
+//	}
+//	
+//	// 멤버리스트 update 
+//	@RequestMapping("/updatemember")
+//	public String updatemember(MemberVo memberVo, HttpSession session, Model model) {
+//		
+////			String reqId = (String)session.getAttribute("reqId");
+//		String memId = (String)session.getAttribute("memId");
+////			noticeVo.setNoticeId(noticeId);
+////		noticeVo.setAdminId("admin");
+//		
+//		int insertCnt = adminService.updatemember(memberVo);
+//		
+//		if(insertCnt>0) {		
+//			return "redirect:/admin/memberlist";
+//		}else {
+//			return "redirect:/admin/updatememberView";
+//			
+//		}
+//	}
+//	
+//	// 멤버리스트 delete 
+//	@RequestMapping("/delmember")
+//	public String delmember(String memId, HttpSession session, Model model) {		
+//		int delCnt = adminService.delmember(memId);
+//		if(delCnt>0) {		
+//			return "redirect:/admin/memberlist";
+//		}else {
+//			return "redirect:/admin/eachmemberDetail?memId="+memId;
+//		}
+//	}
 	
 	
 	

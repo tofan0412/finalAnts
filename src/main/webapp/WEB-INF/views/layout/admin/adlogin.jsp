@@ -11,6 +11,20 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/dist/js/js.cookie-2.2.1.min.js"></script>
 
+<!-- <script type="text/javascript">
+	function onEnterLogin() {
+
+		var keyCode = window.event.keyCode;
+
+		if (keyCode == 13) { //엔테키 이면
+
+			loginForm.submit();
+
+		}
+
+	} //onEnterLogin()
+</script> -->
+
 <style>
 .ff {
 	width: 100vw;
@@ -65,6 +79,7 @@
 		</div>
 		
 		
+<!-- 	<form action="admain.tiles/layout/admin/adlogin.jsp" method="post" name="loginForm"> -->
 
 		<div class="col-sm-6" style="background-color: white;">
 			<div class="center">
@@ -109,6 +124,7 @@
 							<div style="float: right;">
 								<span id="sp" style="color:red"></span>
 								<button type="button" id="loginBtn" class="jg loginBtn" style="width: 100px;">로그인</button>
+<!-- 								<input type="submit" id="loginBtn" class="jg loginBtn" value="로그인"> -->
 							</div>
 						</div>
 						<!-- /.col -->
@@ -116,7 +132,9 @@
 				</form>
 			</div>
 		</div>
-
+		
+	</form>
+	
 	</div>
 
 	

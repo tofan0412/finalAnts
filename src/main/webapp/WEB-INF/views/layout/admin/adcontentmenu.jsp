@@ -29,15 +29,16 @@
 					<!-- 	                  </li> -->
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-notice"
-						href="${pageContext.request.contextPath}/admin/noticelist">공지사항</a>
+						href="${pageContext.request.contextPath}/admin/noticelist">공지사항1</a>
 					</li>
 
 					<li class="nav-item"><a class="nav-link"
+						id="custom-tabs-three-memberlist"
+						href="${pageContext.request.contextPath}/admin/memberlist">회원 리스트2</a></li>
+						
+					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-iplist" href="#custom-tabs-three-iplist1">IP리스트</a></li>
 
-					<li class="nav-item"><a class="nav-link"
-						id="custom-tabs-three-memberlist"
-						href="${pageContext.request.contextPath}/admin/admemberlist">회원 리스트</a></li>
 
 				</ul>
 			</div>

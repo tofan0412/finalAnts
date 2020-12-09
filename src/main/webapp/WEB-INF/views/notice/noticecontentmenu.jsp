@@ -12,29 +12,29 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-$(function(){ 
+// $(function(){ 
 	
-	$('#1').attr('aria-selected', true);
-	$('#1').addClass("active");
-	$('#2').attr('aria-selected', true);
-	$('#2').addClass("active");
-	$('#3').attr('aria-selected', true);
-	$('#3').addClass("active");
+// 	$('#1').attr('aria-selected', true);
+// 	$('#1').addClass("active");
+// 	$('#2').attr('aria-selected', true);
+// 	$('#2').addClass("active");
+// 	$('#3').attr('aria-selected', true);
+// 	$('#3').addClass("active");
 	
 // 	$("a nav-link ").on('click', function(){
 // 		$(location).attr('href', '${pageContext.request.contextPath}/admin/insertnoticeView');
 // 	})
 	
-	$("#noticebtn").on('click', function(){
-		$(location).attr('href', '${pageContext.request.contextPath}/admin/noticelist');
-	})
-	$("#ipbtn").on('click', function(){
-		$(location).attr('href', '${pageContext.request.contextPath}/admin/iplist');
-	})
-	$("#memberlistbtn").on('click', function(){
-		$(location).attr('href', '${pageContext.request.contextPath}/admin/admemberlist');
-	})
-})
+// 	$("#noticebtn").on('click', function(){
+// 		$(location).attr('href', '${pageContext.request.contextPath}/admin/noticelist');
+// 	})
+// 	$("#ipbtn").on('click', function(){
+// 		$(location).attr('href', '${pageContext.request.contextPath}/admin/iplist');
+// 	})
+// 	$("#memberlistbtn").on('click', function(){
+// 		$(location).attr('href', '${pageContext.request.contextPath}/admin/memberlist');
+// 	})
+// })
 </script>
 
 
