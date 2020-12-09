@@ -4,13 +4,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@XmlRootElement(name="projectVo")
 public class ProjectVo {
-	
-	
 	private String reqId;
 	private String memId;
-	@NotBlank
 	private String proName;
 	private String percent;
 	private String regDt;

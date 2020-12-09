@@ -22,6 +22,7 @@ import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.model.ReqVo;
 import ants.com.member.service.ProjectService;
+import ants.com.member.service.ReqService;
 
 @RequestMapping("/project")
 @Controller
@@ -29,10 +30,17 @@ public class ProjectController {
 	
 	@Resource(name = "projectService")
 	private ProjectService projectService;
+	
+	@Resource(name = "reqService")
+	private ReqService reqService;
 
 	@RequestMapping("/readReqList")
 	// 나에게 요청된 요구사항정의서 목록을 살펴본다. 
-	public String readReqList(String plId, Model model) {
+	public String readReqList(HttpSession session, Model model) {
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		String plId = memberVo.getMemId();
+		
 		List<ReqVo> reqList = projectService.readReqList(plId);
 		
 		model.addAttribute("reqList", reqList);
@@ -42,12 +50,8 @@ public class ProjectController {
 	// 요구사항 정의서에 대한 프로젝트를 생성한다 in DB
 	@RequestMapping(value="/insertProject")
 	@ResponseBody
-	public String insertProject(@Valid ProjectVo projectVo, BindingResult br, Model model, HttpSession session) {
-		// 프로젝트 명을 입력하지 않은 경우..
-		if (br.hasErrors()) {
-			MemberVo smember = (MemberVo) session.getAttribute("SMEMBER");
-			return readReqList(smember.getMemId(), model);
-		}
+	public String insertProject(ProjectVo projectVo, Model model, HttpSession session) {
+		
 		int result = projectService.insertProject(projectVo);
 		if (result > 0) {
 			return "success";
@@ -109,6 +113,24 @@ public class ProjectController {
 		}else {
 			return "fail";
 		}
+	}
+	
+	@RequestMapping("/acceptOrReject")
+	public String acceptOrReject(ReqVo reqVo, HttpSession session) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		
+		if ("ACCEPT".equals(reqVo.getStatus())) {
+			// PL이 요청 사항에 대해 승인 처리한 경우 -> STATUS, plId를 업데이트한다. 
+			reqVo.setPlId(memberVo.getMemId());
+			
+			reqService.reqUpdate(reqVo);
+			
+		}else {
+			// PL이 요청 사항에 대해 반려 처리한 경우 -> STATUS만 REJECT로 수정한다.
+			reqService.reqUpdate(reqVo);
+		}
+		
+		return "redirect:/project/readReqList";
 	}
 	
 	

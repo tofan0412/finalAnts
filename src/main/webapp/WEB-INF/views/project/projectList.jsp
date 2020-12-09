@@ -34,8 +34,22 @@ th, td {
 		inviteMemList = [];	// 프로젝트에 초대할 회원 리스트..
 		me = "${SMEMBER.memId}"; 	
 		
-		// 사용자가 승인 버튼을 누르는 경우 프로젝트를 생성하는 모달창을 띄운다. 
-		$('#reqTableList').on('click', '.accept', function() {
+		// 사용자가 승인 버튼을 누르는 경우 버튼 내용이 프로젝트 생성으로 변경되며, 
+		// reqList 테이블에서 status 가 accept로 변경된다.
+		$('.accept').click(function(){
+			var reqId = $(this).attr("reqId");
+			alert(reqId + ": 승인 처리되었습니다.");
+			$(location).attr("href", "/project/acceptOrReject?reqId="+reqId+"&status=ACCEPT");
+		})
+		
+		$('.reject').click(function(){
+			var reqId = $(this).attr("reqId");
+			alert(reqId + ": 반려 처리되었습니다.");
+			$(location).attr("href", "/project/acceptOrReject?reqId="+reqId+"&status=REJECT");
+		})
+		
+		// 프로젝트 생성 버튼을 누르면 모달창이 나온다.
+		$('#reqTableList').on('click', '.newPjtModal', function() {
 			var reqId = $(this).attr('reqId');
 			var reqTitle = $(this).attr("reqTitle");
 
@@ -57,6 +71,13 @@ th, td {
 		$('#mkProjectBtn').click(function(){
 			var reqId = $('.reqId').val();
 			var projectName = $('.projectName').val();
+			cnt = 0;
+			
+			// 사용자가 프로젝트 명을 작성하지 않으면 반환 ..
+			if ( $(".projectName").val() == ''){
+				alert("프로젝트 명을 입력해 주세요.");
+				return;
+			}
 			
 			//생성 직전, 자기 자신 아이디를 추가한다. 
 			inviteMemList.push(me);
@@ -82,8 +103,6 @@ th, td {
 									// 해당 요구사항 정의서의 상태를 변경해야 한다.
 // 									console.log("프로젝트가 생성되었습니다.");
 									alert("프로젝트를 생성하였습니다.");
-								
-									
 								}else{
 // 									console.log("프로젝트 생성에 실패하였습니다..");
 								}
@@ -257,9 +276,14 @@ th, td {
 					<td>${req.reqPeriod }일</td>
 					<td>${req.status }</td>
 					<td>
-						<button reqId="${req.reqId }" reqTitle="${req.reqTitle }"
-							class="btn btn-success accept">승인</button>
-						<button class="btn btn-danger reject">반려</button>
+						<c:if test="${req.status == 'WAIT' }">
+							<button reqId="${req.reqId }" class="btn btn-success accept">승인</button>
+							<button reqId="${req.reqId }" class="btn btn-danger reject">반려</button>
+						</c:if>
+						<c:if test="${req.status == 'ACCEPT' }">
+							<button reqId="${req.reqId }" reqTitle="${req.reqTitle }"
+							class="btn btn-success newPjtModal">프로젝트 생성</button>
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>

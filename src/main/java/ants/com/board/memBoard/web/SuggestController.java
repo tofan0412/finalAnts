@@ -5,8 +5,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -96,6 +94,30 @@ public class SuggestController {
 		
 		ra.addFlashAttribute("msg","건의사항을 작성하였습니다.");
 		return "redirect:/suggest/readSuggestList";
+	}
+	
+	@RequestMapping("/suggestDetail")
+	public String suggestDetail(SuggestVo suggestVo, Model model) {
+		SuggestVo result = suggestService.suggestDetail(suggestVo);
+		result.setMemId(suggestVo.getMemId());
+		
+		model.addAttribute("suggestVo",result);
+		return "tiles/suggest/suggestDetail";
+	}
+	
+	@RequestMapping("/suggestMod")
+	public String suggestMod(@ModelAttribute("suggestVo") SuggestVo suggestVo, Model model) {
+		// todoId를 먼저 가공해야 한다.
+		String[] todoArr = suggestVo.getTodoId().split(":");
+		todoArr[0] = todoArr[0].replace("@", "");
+		todoArr[0] = todoArr[0].replace("[", "");
+		todoArr[0] = todoArr[0].replace("]", "");
+		suggestVo.setTodoId(todoArr[0]);
+		
+		int result = suggestService.suggestMod(suggestVo);
+		
+		// 수정한 내용이 포함되어 있는 애를 다시 redirect
+		return suggestDetail(suggestVo, model);
 	}
 	
 }

@@ -17,4 +17,10 @@ public interface SuggestMapper {
 	
 	// 건의 사항 등록하기
 	public int suggestInsert(SuggestVo suggestVo);
+	
+	// 하나의 건의사항 읽기
+	public SuggestVo suggestDetail(SuggestVo suggestVo);
+	
+	// 건의사항 수정하기
+	public int suggestMod(SuggestVo suggestVo);
 }
