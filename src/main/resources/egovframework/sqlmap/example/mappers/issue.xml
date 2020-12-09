@@ -204,7 +204,10 @@
 
 	<!-- 본인이 가지고 있는 일감(todo)내역 -->
 	<select id="mytodolist" resultType ="ants.com.board.manageBoard.model.TodoVo" parameterType="ants.com.member.model.ProjectMemberVo">		
-		select todo_title, todo_id from todo where mem_id = #{memId} and req_id = #{reqId}
+		select todo_title, todo_id 
+		from todo 
+		where mem_id = #{memId} and req_id = #{reqId} 
+			  and todo_percent between 0 and 100		
 	</select>
 
 	 <!-- 카테고리 가져오기-->

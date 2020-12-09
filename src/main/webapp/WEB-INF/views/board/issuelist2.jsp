@@ -92,11 +92,6 @@ $(function(){
 			} 
 		}); 
 	});
-	
-	
-	
-
-
 
 })
 
@@ -115,9 +110,6 @@ $(function(){
  }
  
  function search(){
-// 	    var issuekind =  $("#issueKind option").val();
-// 	    alert(issuekind);
-// 	    document.listForm.issueKind = issuekind;
 	 	document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
 	    document.listForm.submit();
 }
@@ -134,15 +126,6 @@ $(function(){
 <body>
 <!-- 	<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 <form:form commandName="issueVo" id="listForm" name="listForm" method="post">
-
-		    <!-- Content Header (Page header) -->
-		    
-		    
-		  
-		    
-		    
-<!-- 		 	<h3>협업이슈 리스트</h3> -->
-<!-- 				<input type= "button" value="작성하기" id="insertissue"> -->
 	
 			<section class="content" >
 		      <div class="col-12 col-sm-12">
