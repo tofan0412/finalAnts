@@ -10,7 +10,7 @@
 <script src="/resources/upload/jquery.min.js" type="text/javascript"></script>
 <script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
- 
+
 <title>Insert title here</title>
 <style>
 body{
@@ -53,6 +53,16 @@ th{
 	text-align: center;
 	border: 1px solid lightblue;
 } 
+
+/* .delbtn{
+	background-color: red;
+	border-radius: 100%;
+	text-align: center;
+	font-size: 10px;
+	font-weight: 900;
+	color: white;
+	border: 1px solid red;
+}  */
 </style>
 
 
