@@ -106,7 +106,8 @@ public class SuggestController {
 	}
 	
 	@RequestMapping("/suggestMod")
-	public String suggestMod(@ModelAttribute("suggestVo") SuggestVo suggestVo, Model model) {
+	public String suggestMod(@ModelAttribute("suggestVo") SuggestVo suggestVo, 
+							Model model, HttpSession session) {
 		// todoId를 먼저 가공해야 한다.
 		String[] todoArr = suggestVo.getTodoId().split(":");
 		todoArr[0] = todoArr[0].replace("@", "");
@@ -116,8 +117,26 @@ public class SuggestController {
 		
 		int result = suggestService.suggestMod(suggestVo);
 		
+		// 수정하기, 삭제하기 버튼 표시 위해 memId를 세션에서 가져온다.
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		suggestVo.setMemId(memberVo.getMemId());
+		
 		// 수정한 내용이 포함되어 있는 애를 다시 redirect
 		return suggestDetail(suggestVo, model);
+	}
+	
+	@RequestMapping("/delSuggest")
+	public String delSuggest(SuggestVo suggestVo, HttpSession session, Model model) {
+		int result = suggestService.delSuggest(suggestVo);
+		if (result > 0) {
+			return "redirect:/suggest/readSuggestList";
+		
+		// 삭제에 실패한 경우 해당 글로 돌아간다..
+		}else{
+			MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+			suggestVo.setMemId(memberVo.getMemId());
+			return suggestDetail(suggestVo, model);
+		}
 	}
 	
 }
