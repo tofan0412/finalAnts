@@ -396,8 +396,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	  		<input type="hidden" id="scheId" class="form-control">
       	<label for="scheTitle" class="col-sm-2 control-label">제목  </label>
 	  		<input type="text" id="scheTitle" class="bani_contol" readonly="readonly" ><br><br>
-      	<label for="memId" class="col-sm-2 control-label">작성자  </label>
-	  		<input type="text" id="memId" class="bani_contol" readonly="readonly"><br><br>
       	<label for="startDt" class="col-sm-2 control-label">기간  </label>
 	  		<input type="text" id="startDt" class="bani_contol" readonly="readonly"><br><br>
       	<label for="scheCont" class="col-sm-2 control-label" style="position: relative; top: -165px;" >내용 : </label>
