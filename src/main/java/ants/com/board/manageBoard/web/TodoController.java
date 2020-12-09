@@ -162,6 +162,8 @@ public class TodoController {
 		todoVo.setReqId(reqId);
 		List<MemberVo> promemList = manageBoardService.projectMemList(todoVo);
 		TodoVo dbtodoVo = manageBoardService.mygetTodo(todoVo);
+		PublicFileVo pfv = new PublicFileVo("1", todoVo.getTodoId() , reqId);
+		filecontroller.getfiles(pfv, model);
 		model.addAttribute("todoVo", dbtodoVo);
 		model.addAttribute("promemList", promemList);
 		return "tiles/manager/Pl_todoUpdateView";

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ants.com.board.vote.mapper.VoteMapper">
+
+   <!-- 해당 프로젝트 투표리스트 가져오기 -->
+	<select id="votelist" resultType ="ants.com.board.vote.model.VoteVo" parameterType="ants.com.board.vote.model.VoteVo">
+ 	
+ 		SELECT Z.*
+	      FROM (
+	      	SELECT ROWNUM RNUM , 
+	           	   S.*
+		      FROM (			
+                
+	                 select vote_title, vote_id, vote_totalno, to_char(vote_deadline, 'YYYY-MM-DD') as vote_deadline,
+	                 		vote_status, category_id, req_id, mem_id
+	                 from vote 
+	                 where req_id = #{reqId} 
+	                   and del = 'N'
+					     
+					<if test="searchKeyword != null and searchKeyword != ''">
+				        <choose>
+				         	<when test="searchCondition == 1">
+								AND	vote_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+				            <when test="searchCondition == 2">
+								AND	mem_id LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</if>
+				
+					ORDER BY vote_deadline desc
+			  ) S
+		
+				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 
+				
+	      ) Z
+	     <![CDATA[WHERE Z.RNUM > #{firstIndex}]]>
+				
+	</select>
+
+
+	<!-- 프로젝트에 따른 이슈게시글 수 조회하기 -->	
+	<select id="votePagingListCnt" parameterType="ants.com.board.vote.model.VoteVo"  resultType="int">
+		select count(*) as totCnt
+		 from vote 
+        where req_id = #{reqId} 
+          and del = 'N'
+		
+		<if test="searchKeyword != null and searchKeyword != ''">
+	        <choose>
+	         	<when test="searchCondition == 1">
+					AND	vote_title LIKE '%' || #{searchKeyword} || '%'
+				</when>
+	            <when test="searchCondition == 2">
+					AND	mem_id LIKE '%' || #{searchKeyword} || '%'
+				</when>
+			</choose>
+		</if>		
+	</select>	
+	
+	<!-- 다음 투표id조회 (ajax로 등록하기위함) -->
+	<select id ="getvoteid" resultType="String">
+		SELECT VOTE_SEQ.nextval FROM DUAL
+	</select>
+	
+	<!-- 투표테이블 작성 -->
+	<insert id="insertvote" parameterType="ants.com.board.vote.model.VoteVo">
+		INSERT INTO vote (
+		    vote_id,
+		    vote_totalno,
+		    vote_title,
+		    vote_deadline,
+		    vote_status,
+		    category_id,
+		    req_id,
+		    mem_id,
+		    del
+		) VALUES (
+		    #{voteId},
+		    0,
+		    #{voteTitle},
+		    TO_DATE(#{voteDeadline},'YYYY/MM/DD'),
+		    'ing',
+		    '2',
+		    #{reqId},
+		    #{memId},
+		    'N'
+		)
+	</insert>
+	
+	<!-- 투표아이템 테이블 작성 -->
+	<insert id="insertvoteitem" parameterType="ants.com.board.vote.model.VoteItemVo">
+		INSERT INTO voteitem (
+				    voteitem_id,
+				    voteitem_name,
+				    vote_id
+				) VALUES (
+				    vote_seq.nextval,
+				    #{voteitemName},
+				    #{voteId}
+				)
+	</insert>
+	
+	<select id="voteDetail"  parameterType="ants.com.board.vote.model.VoteVo"
+							resultType="ants.com.board.vote.model.VoteItemVo">
+		SELECT
+		    voteitem_id,
+		    voteitem_name,
+		    vote_id
+		FROM
+		    voteitem
+		WHERE
+		    vote_id = ${voteId}
+	</select>
+	
+
+</mapper>
