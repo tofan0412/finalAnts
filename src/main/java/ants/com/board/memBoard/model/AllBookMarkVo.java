@@ -11,7 +11,7 @@ public class AllBookMarkVo extends BaseVo{
 	private String issueTitle;
 	private String issueKind;
 	private String regDt;
-	
+	private String memName;
 	public String getBookId() {
 		return bookId;
 	}
@@ -54,6 +54,20 @@ public class AllBookMarkVo extends BaseVo{
 	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
+	@Override
+	public String toString() {
+		return "AllBookMarkVo [bookId=" + bookId + ", issueId=" + issueId + ", reqId=" + reqId + ", memId=" + memId
+				+ ", issueTitle=" + issueTitle + ", issueKind=" + issueKind + ", regDt=" + regDt + ", memName="
+				+ memName + "]";
+	}
+	
+	
 	
 	
 	

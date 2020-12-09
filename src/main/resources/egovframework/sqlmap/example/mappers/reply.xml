@@ -33,6 +33,12 @@
   	WHERE reply_id = #{replyId} 
   </update>
   
+  
+  
+  
+  <!-- 북마크 -->
+  
+  
   	<!-- 로그인한 사용자의 클릭한 프로젝트의 북마크 조회 -->
   	<select id="getbookmark" parameterType="ants.com.member.model.ProjectMemberVo"
 				resultType="ants.com.board.memBoard.model.BookmarkVo">
@@ -50,11 +56,7 @@
 								    BOOK_SEQ.nextval,
 								    #{issueId},
 								    #{reqId},
-								    (select b.mem_name as mem_id
-									from
-									issue a, member b
-									where a.mem_id = b.mem_id 
-									and issue_id = #{issueId})
+								    #{memId}
 								)
 	</insert>
 	
@@ -75,24 +77,33 @@
 	      	SELECT ROWNUM RNUM , 
 	           	   S.*
 		      FROM (		      
-					select a.book_id, a.issue_id, a.req_id, a.mem_id, b.issue_title, b.issue_kind, 
-					       to_char(b.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt
-					  from bookmark a, issue b 
-					 where a.mem_id = b.mem_id and a.issue_id = b.issue_id
-					      and a.mem_id = #{memId}
-					      
+					 select c.issue_id , c.issue_title , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt ,
+						 c.issue_kind, c.book_id , d.mem_name , c.mem_id
+				  from
+					  (select a.issue_id , a.issue_title , a.issue_cont , a.reg_dt ,
+							  a.issue_kind, b.book_id , a.mem_id , a.issue_del
+						 from issue a 
+						 left outer join bookmark b 
+						 on a.issue_id = b.issue_id
+						 where b.mem_id = #{memId}
+                         and a.issue_id = b.issue_id) c , member d
+				  where d.mem_id = c.mem_id and c.issue_del = 'N'  
+				  
 					    <if test="searchKeyword != null and searchKeyword != ''">
 				        <choose>				         	
 				            <when test="searchCondition == 1">
-								AND	b.issue_title LIKE '%' || #{searchKeyword} || '%'
+								AND	c.issue_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 2">
+								AND	d.mem_name LIKE '%' || #{searchKeyword} || '%'
 							</when>
 				     
 						</choose>
 					</if>				
 					<if test = "issueKind != null and issueKind != ''">
-							AND b.issue_kind = #{issueKind}
+							AND c.issue_kind = #{issueKind}
 					</if>
-					ORDER BY b.reg_dt desc
+					ORDER BY c.reg_dt desc
 			  ) S
 		
 				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 
@@ -105,18 +116,24 @@
 	<!-- 북마크 수 조회하기 -->	
 	<select id="bookmarkPagingListCnt" parameterType="ants.com.board.memBoard.model.AllBookMarkVo"  
 				resultType="int">
-		select count(*) as totCnt
-		from bookmark
-		where mem_id = #{memId}
-		
+            select  count(*) as totCnt
+              from
+                   (select a.issue_title , a.issue_del, a.mem_id
+					 from issue a 
+					 left outer join bookmark b 
+					 on a.issue_id = b.issue_id
+					 where b.mem_id = #{memId}
+                        and a.issue_id = b.issue_id) c , member d
+			  where d.mem_id = c.mem_id and c.issue_del = 'N'  
+                      
 		<if test="searchKeyword != null and searchKeyword != ''">
 		        <choose>
 		            <when test="searchCondition == 1">
-						AND	mem_id LIKE '%' || #{searchKeyword} || '%'
-					</when>
-		            <when test="searchCondition == 2">
-						AND	issue_title LIKE '%' || #{searchKeyword} || '%'
+						AND	c.issue_title LIKE '%' || #{searchKeyword} || '%'
 					</when>	         
+		            <when test="searchCondition == 2">
+						AND	d.mem_name LIKE '%' || #{searchKeyword} || '%'
+					</when>
 				</choose>
 			</if>		
 	</select>
