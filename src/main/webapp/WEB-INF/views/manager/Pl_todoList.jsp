@@ -29,8 +29,8 @@
 		document.listForm.action = "<c:url value='/todo/todoList'/>";
 		document.listForm.submit();
 	}
-	
-	 
+		
+
 </script>
 <style type="text/css"> 
 #todoTable{

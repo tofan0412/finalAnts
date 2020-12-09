@@ -11,7 +11,16 @@
 			     SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, PRIV_SIZE, MEM_ID
 			     FROM PRIVATEFILE
 			     WHERE MEM_ID = #{memId}
-			     ORDER BY REG_DT DESC) a 
+			     <if test="searchKeyword != null and searchKeyword != ''">
+					<choose>	
+						<when test="searchCondition == 1">
+						</when>
+						<when test="searchCondition == 2">
+							AND PRIV_FILENAME LIKE '%' || #{searchKeyword} || '%'
+						</when>
+					</choose>
+				</if>
+			     ORDER BY REG_DT DESC) a
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
 	</select>
 	<!-- WHERE rownum <= #{lastIndex}) c WHERE rnum > #{firstIndex} -->
@@ -41,11 +50,11 @@
 				</foreach> 
 				) T
 	</insert>
-
-
+	
+	
 	<!-- 클릭한 파일 정보 -->
 	<select id="privateSelect" parameterType="ants.com.file.model.PublicFileVo" resultType="ants.com.file.model.PrivateFileVo">
-		SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, to_char(REG_DT,'YYYY-MM-DD hh:mm') as REG_DT, MEM_ID
+		SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, MEM_ID
 		FROM PRIVATEFILE
 		WHERE PRIV_ID = #{privId}
 	</select>
