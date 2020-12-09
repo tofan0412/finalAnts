@@ -227,7 +227,7 @@
 		<div style="padding-left: 30px;">
 			<h3>협업이슈 작성하기</h3>
 			<br>
-			<form id="frm"method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/insertissue" id="todoform"  >	
+			<form id="frm" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/insertissue"   >	
 				
 			<input type="hidden" name="issueId" value="${issueSeq }">
 			
