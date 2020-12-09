@@ -37,7 +37,7 @@ function ini_events(ele) {
   
 function calendarInsert(title, start, calcss) {
 	$.ajax({
-		url : "/schedule/calendarInsert",
+		url : "/schedule/MycalendarInsert",
 		method : "get",
 		data : {
 			scheTitle : title,
@@ -45,6 +45,7 @@ function calendarInsert(title, start, calcss) {
 			calendarcss : calcss
 		},
 		success : function(data) {
+			window.location.reload()
 		}
 
 	});
@@ -53,7 +54,7 @@ function calendarInsert(title, start, calcss) {
 
 function calendarUpdate(id, title, start, end) {
 	$.ajax({
-		url : "/schedule/calendarUpdate",
+		url : "/schedule/MycalendarUpdate",
 		method : "get",
 		data : {
 			scheId : id,
@@ -62,6 +63,7 @@ function calendarUpdate(id, title, start, end) {
 			endDt : end
 		},
 		success : function(data) {
+			window.location.reload()
 		}
 
 	});
@@ -69,7 +71,7 @@ function calendarUpdate(id, title, start, end) {
 }
 function calendarUpdate2(id, title, start) {
 	$.ajax({
-		url : "/schedule/calendarUpdate",
+		url : "/schedule/MycalendarUpdate",
 		method : "get",
 		data : {
 			scheId : id,
@@ -77,6 +79,7 @@ function calendarUpdate2(id, title, start) {
 			startDt : start
 		},
 		success : function(data) {
+			window.location.reload()
 		}
 
 	});
@@ -85,31 +88,28 @@ function calendarUpdate2(id, title, start) {
 
 function calendarDetail(id) {
 	$.ajax({
-		url : "/schedule/calendarDetail",
+		url : "/schedule/MycalendarDetail",
 		method : "get",
 		data : {
 			scheId : id
 		},
 		success : function(data) {
 			$("#scheId").val(data.scheduleVo.scheId);
-			$("#memId").val(data.scheduleVo.memId);
 			$("#scheTitle").val(data.scheduleVo.scheTitle);
-			$("#scheCont").html(data.scheduleVo.scheCont);
+			$("#scheCont").val(data.scheduleVo.scheCont);
 			
 			if(data.scheduleVo.endDt != null){
 				$("#startDt").val(data.scheduleVo.startDt +" ~ "+ data.scheduleVo.endDt);
+				$("#startDtmodal").val(data.scheduleVo.startDt);
+				$("#endDtmodal").val(data.scheduleVo.endDt);
 			}
 			
 			if(data.scheduleVo.endDt == null){
 				$("#startDt").val(data.scheduleVo.startDt +" ~ "+ data.scheduleVo.startDt);
+				$("#startDtmodal").val(data.scheduleVo.startDt);
+				$("#endDtmodal").val(data.scheduleVo.startDt);
 			}
 			
-			if(data.scheduleVo.juso ==null){
-				$("#injuso").hide();
-			}
-			if(data.scheduleVo.juso !=null){
-				$("#juso").val(data.scheduleVo.juso);
-			}
 		}
 
 	});
@@ -117,12 +117,13 @@ function calendarDetail(id) {
 }
 function calendarDelete(id) {
 	$.ajax({
-		url : "/schedule/calendarDelete",
+		url : "/schedule/MycalendarDelete",
 		method : "get",
 		data : {
 			scheId : id
 		},
 		success : function(data) {
+			window.location.reload()
 		}
 
 	});
@@ -133,7 +134,9 @@ function calendarDelete(id) {
 
   ini_events($('#external-events div.external-event'))
 document.addEventListener('DOMContentLoaded', function() {
+	$('#aftUpdate').hide();
 	$("#modalbtn").hide();
+	$('#dateupdate').hide();
 	var Calendar = FullCalendar.Calendar;
 	var Draggable = FullCalendar.Draggable;
 	var containerEl = document.getElementById('external-events');
@@ -219,7 +222,32 @@ document.addEventListener('DOMContentLoaded', function() {
 	        'border-color'    : currColor
 	      })
 	    })
-
+	    
+	$("#updateBtn").on("click", function () {
+		 $('#befUpdate').hide();
+		 $('#aftUpdate').show();
+		 $('#dateupdate').show();		 
+		 $('#datehide').hide();
+		 $('#scheTitle').attr('readonly', false);
+		 $('#scheCont').attr('readonly', false);
+	    })
+	    
+	$("#updateBtnfinal").on("click", function () {
+		 $('#scheTitle').attr('readonly', true);
+		 $('#scheCont').attr('readonly', true);
+		$("#sheForm").submit();
+	    })
+	    
+	$("#rollbackbtn").on("click", function () {
+		 $('#befUpdate').show();
+		 $('#aftUpdate').hide();
+		 $('#dateupdate').hide();
+		 $('#datehide').show();
+		 $('#scheTitle').attr('readonly', true);
+		 $('#scheCont').attr('readonly', true);
+	    })
+	    
+	    
 		
 	$("#add-new-event").on("click", function() {
 		var addcalendar = $("#new-event").val();
@@ -393,21 +421,33 @@ document.addEventListener('DOMContentLoaded', function() {
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
       </div>
       <div class="modal-body">
-	  		<input type="hidden" id="scheId" class="form-control">
+      <form id="sheForm" name="sheForm" method="post" action="${pageContext.request.contextPath}/schedule/MycalendarUpdateDetail">
+	  	<input type="hidden" id="scheId" class="form-control" name ="scheId">
       	<label for="scheTitle" class="col-sm-2 control-label">제목  </label>
-	  		<input type="text" id="scheTitle" class="bani_contol" readonly="readonly" ><br><br>
+	  		<input type="text" id="scheTitle" class="bani_contol" readonly="readonly" name="scheTitle"><br><br>
+      	<div id="datehide">
       	<label for="startDt" class="col-sm-2 control-label">기간  </label>
-	  		<input type="text" id="startDt" class="bani_contol" readonly="readonly"><br><br>
+	  		<input type="text" id="startDt" class="bani_contol" readonly="readonly" ><br><br>
+	  	</div>
+	  	<div id="dateupdate">
+      	<label for="startDt" class="col-sm-2 control-label">시작 일</label>
+	  		<input type="date" id="startDt" name="startDt"/>
+      	<label for="endDt" class="col-sm-2 control-label">종료 일</label>
+	  		<input type="date" id= endDt name="endDt"/>
+	  	</div>
       	<label for="scheCont" class="col-sm-2 control-label" style="position: relative; top: -165px;" >내용 : </label>
-      	<div id="scheCont" class="bani_contol" style="margin-top: 0px; margin-bottom: 0px; overflow-y :scroll; height: 180px; display: inline-block;"></div>
-      	<div id="injuso">
-      	<label for="juso" class="col-sm-2 control-label">주소  </label>
-	  		<input type="text" id="juso" class="bani_contol" readonly="readonly"><br><br>
-       	</div>
+      	<textarea id="scheCont" class="bani_contol" readonly="readonly" style="height: 180px; resize: none;" name="scheCont"></textarea><br><br>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      	<div id="befUpdate">
+        <button type="button" class="btn btn-default" id="updateBtn">수정</button>
+        </div>
+      	<div id="aftUpdate">
+        <button type="button" class="btn btn-default" id="updateBtnfinal">등록</button>
+        </div>
+        <button type="button" class="btn btn-default" data-dismiss="modal" id ="rollbackbtn">Close</button>
       </div>
+      </form>
     </div>
   </div>
 </div>

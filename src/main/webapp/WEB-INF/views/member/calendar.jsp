@@ -45,6 +45,7 @@ function calendarInsert(title, start, calcss) {
 			calendarcss : calcss
 		},
 		success : function(data) {
+			window.location.reload()
 		}
 
 	});
@@ -98,10 +99,14 @@ function calendarDetail(id) {
 			
 			if(data.scheduleVo.endDt != null){
 				$("#startDt").val(data.scheduleVo.startDt +" ~ "+ data.scheduleVo.endDt);
+				$("#startDtmodal").val(data.scheduleVo.startDt);
+				$("#endDtmodal").val(data.scheduleVo.endDt);	
 			}
 			
 			if(data.scheduleVo.endDt == null){
 				$("#startDt").val(data.scheduleVo.startDt +" ~ "+ data.scheduleVo.startDt);
+				$("#startDtmodal").val(data.scheduleVo.startDt);
+				$("#endDtmodal").val(data.scheduleVo.startDt);
 			}
 			
 			if(data.scheduleVo.juso ==null){
@@ -129,9 +134,7 @@ function calendarDelete(id) {
 
 }
 
-
-
-  ini_events($('#external-events div.external-event'))
+ini_events($('#external-events div.external-event'))
 document.addEventListener('DOMContentLoaded', function() {
 	$("#modalbtn").hide();
 	var Calendar = FullCalendar.Calendar;
@@ -219,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	        'border-color'    : currColor
 	      })
 	    })
+
 
 		
 	$("#add-new-event").on("click", function() {
@@ -399,17 +403,16 @@ document.addEventListener('DOMContentLoaded', function() {
       	<label for="memId" class="col-sm-2 control-label">작성자  </label>
 	  		<input type="text" id="memId" class="bani_contol" readonly="readonly"><br><br>
       	<label for="startDt" class="col-sm-2 control-label">기간  </label>
-	  		<input type="text" id="startDt" class="bani_contol" readonly="readonly"><br><br>
+	  		<input type="text" id="startDt" class="bani_contol" readonly="readonly" ><br><br>
       	<label for="scheCont" class="col-sm-2 control-label" style="position: relative; top: -165px;" >내용 : </label>
-      	<div id="scheCont" class="bani_contol" style="margin-top: 0px; margin-bottom: 0px; overflow-y :scroll; height: 180px; display: inline-block;"></div>
+          <div id="scheCont" class="bani_contol" style="margin-top: 0px; margin-bottom: 0px; overflow-y :scroll; height: 180px; display: inline-block;"></div>
       	<div id="injuso">
       	<label for="juso" class="col-sm-2 control-label">주소  </label>
 	  		<input type="text" id="juso" class="bani_contol" readonly="readonly"><br><br>
        	</div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+        <button type="button" class="btn btn-default" data-dismiss="modal" id ="rollbackbtn">Close</button>
     </div>
   </div>
 </div>
