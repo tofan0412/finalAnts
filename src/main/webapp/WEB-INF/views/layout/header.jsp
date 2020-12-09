@@ -55,7 +55,7 @@
 			     icon: 'fas fa-envelope fa-lg',
 			});
 		// pl응답
-		}else if(data[0] == 'res-pl'){
+		}else if(data[0] == 'res-pl' || data[0] == 'res-pro'){
 			$(document).Toasts('create', {
 			     body: data[3],
 			     title: data[2],

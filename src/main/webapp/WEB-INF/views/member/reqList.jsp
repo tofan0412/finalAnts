@@ -399,7 +399,7 @@
 	/* pl요청 알림메세지 db에 저장하기 */
 	function saveMsg(){
 		var alarmData = {
-							"alarmCont" : $('#modalReqId').val() + ",${SMEMBER.memName},${SMEMBER.memId},/req/reqDetail?reqId="+$('#modalReqId').val()+","+ $('#modalReqName').val(),
+							"alarmCont" : $('#modalReqId').val() + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId="+$('#modalReqId').val()+"&&"+ $('#modalReqName').val(),
 							"memId" 	: $('#searchInput').val(),
 							"alarmType" : "req-pl"
 		}
@@ -413,7 +413,7 @@
 				dataType : 'text',
 				success : function(data){
 					
-					let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 					socket.send(socketMsg);
 					
 				},

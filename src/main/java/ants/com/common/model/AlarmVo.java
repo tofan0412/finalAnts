@@ -1,5 +1,7 @@
 package ants.com.common.model;
 
+import java.util.Arrays;
+
 import ants.com.base.model.BaseVo;
 
 public class AlarmVo extends BaseVo{
@@ -16,6 +18,7 @@ public class AlarmVo extends BaseVo{
 	private int posts;
 	private int totalCnt;
 	private String reqStatus;
+	private String[] memIds;
 	
 	public AlarmVo() {
 		
@@ -87,12 +90,21 @@ public class AlarmVo extends BaseVo{
 	public void setReqStatus(String reqStatus) {
 		this.reqStatus = reqStatus;
 	}
+	
+	public String[] getMemIds() {
+		return memIds;
+	}
+	public void setMemIds(String[] memIds) {
+		this.memIds = memIds;
+	}
 	@Override
 	public String toString() {
 		return "AlarmVo [alarmId=" + alarmId + ", alarmCont=" + alarmCont + ", alarmStatus=" + alarmStatus + ", memId="
 				+ memId + ", alarmType=" + alarmType + ", reqPl=" + reqPl + ", resPl=" + resPl + ", reply=" + reply
-				+ ", posts=" + posts + ", totalCnt=" + totalCnt + ", reqStatus=" + reqStatus + "]";
+				+ ", posts=" + posts + ", totalCnt=" + totalCnt + ", reqStatus=" + reqStatus + ", memIds="
+				+ Arrays.toString(memIds) + "]";
 	}
+	
 	
 	
 	

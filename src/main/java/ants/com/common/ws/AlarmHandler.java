@@ -44,10 +44,10 @@ public class AlarmHandler extends TextWebSocketHandler {
 		String msg = message.getPayload();
 		
 		if(msg != null) {
-			String[] strs = msg.split(",");
+			String[] strs = msg.split("&&");
 			
 			// pl요청, 프로젝트 초대
-			if(strs != null && strs.length == 7) {
+			if(strs != null && strs.length == 7 && strs[6] != "req-pro") {
 				String id = strs[0];         	//요구사항정의서아이디
 				String callerName = strs[1];	//보낸사람이름
 				String callerId = strs[2];      //보낸사람아이디
@@ -66,12 +66,32 @@ public class AlarmHandler extends TextWebSocketHandler {
 								"<a type='external' href=" +url+ ">상세보기</a>");
 					requestSession.sendMessage(tmpMsg);
 				}
-				//프로젝트 초대
-				else if(type.equals("req-pro") && requestSession != null) {
-					TextMessage tmpMsg = new TextMessage(type + "&&"  + callerName + "&&" + title + "&&" + callerName + "님이" + " 프로젝트에 초대했습니다. " +
-							"<a type='external' href=" +url+ ">응답</a>");
-					requestSession.sendMessage(tmpMsg);
+				
+			}
+			// pl요청, 프로젝트 초대
+			if(strs != null && strs.length == 7) {
+				String id = strs[0];         	//요구사항정의서아이디
+				String callerName = strs[1];	//보낸사람이름
+				String callerId = strs[2];      //보낸사람아이디
+				String url = strs[3];           //요구사항정의서 reqDetail
+				String title = strs[4];			//제목
+				String receiverIds = strs[5];    //받는사람
+				String type = strs[6];          //타입
+				
+				String[] arrIds = receiverIds.split(",");
+				//받는사람이 로그인해서 있다면
+				for(String receiverId : arrIds) {
+					WebSocketSession projectSession = userSessionsMap.get(receiverId);
+					//프로젝트 초대
+					if(type.equals("req-pro") && projectSession != null) {
+						TextMessage tmpMsg = new TextMessage(type + "&&"  + callerName + "&&" + title + "&&" + callerName + "님이" + " 프로젝트에 초대했습니다. " +
+								"<a type='external' href=" +url+ ">응답</a>");
+						projectSession.sendMessage(tmpMsg);
+					}
+					
 				}
+				
+				
 			}
 			
 			// 댓글,답글이 달렸을 때

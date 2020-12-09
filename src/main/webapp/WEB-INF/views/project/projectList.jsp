@@ -43,7 +43,7 @@ th, td {
 			var memId = $(this).attr("memId");
 			
 			var alarmData = {
-					"alarmCont" : reqId + ",${SMEMBER.memName},${SMEMBER.memId},/req/reqDetail?reqId=" + reqId + "," + reqTitle + ",ACCEPT, ",
+					"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId=" + reqId + "&&" + reqTitle + "&&ACCEPT&& ",
 					"memId" 	: memId,
 					"alarmType" : "res-pl"
 			}
@@ -95,10 +95,10 @@ th, td {
 			var ajaxArr = {"inviteMemList" : inviteMemList, "reqId" : reqId, "memId" : me};
 			
 			var alarmData = {
-					"alarmCont" : reqId + ",${SMEMBER.memName},${SMEMBER.memId},/req/reqDetail?reqId=" + reqId + "," + projectName ,
+					"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId=" + reqId + "&&" + projectName ,
+					"memIds"	: inviteMemList,
 					"alarmType" : "req-pro"
 			}
-			var Arr = inviteMemList;
 			
 			// 프로젝트를 먼저 생성한다.
 			$.ajax({
@@ -121,7 +121,7 @@ th, td {
 // 									console.log("프로젝트가 생성되었습니다.");
 									
 									//프로젝트 초대알림 db저장
-									saveReqMsg(alarmData, Arr);
+									saveReqMsg(alarmData);
 									alert("프로젝트를 생성하였습니다.");
 								}else{
 // 									console.log("프로젝트 생성에 실패하였습니다..");
@@ -263,7 +263,7 @@ th, td {
 				dataType : 'text',
 				success : function(data){
 					
-					let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 					socket.send(socketMsg);
 					
 				},
@@ -272,16 +272,18 @@ th, td {
 				}
 		});
 	}
+	
+	
 	/* 프로젝트초대 알림메세지 db에 저장하기 */
-	function saveReqMsg(alarmData, Arr){
+	function saveReqMsg(alarmData){
 		$.ajax({
 			url : "/alarmInsert",
-			data : JSON.stringify(alarmData,Arr),
+			data : JSON.stringify(alarmData),
 			type : 'POST',
 			contentType : "application/json; charset=utf-8",
 			dataType : 'text',
 			success : function(data){
-				let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+				let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memIds +"&&"+ alarmData.alarmType;
 				socket.send(socketMsg);
 			},
 			error : function(err){
