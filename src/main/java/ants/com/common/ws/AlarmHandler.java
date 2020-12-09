@@ -60,7 +60,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 				logger.debug("receiverId:{}",requestSession);
 				
 				if("req-pl".equals(type) && requestSession != null) {
-					TextMessage tmpMsg = new TextMessage(callerName + "님이" + " pl요청을 보냈습니다. " +
+					TextMessage tmpMsg = new TextMessage(type + "&&" +callerName + "님이" + " pl요청을 보냈습니다. " +
 								"<a type='external' href=" +url+ ">요청서 보기</a>");
 					requestSession.sendMessage(tmpMsg);
 				}
@@ -68,24 +68,31 @@ public class AlarmHandler extends TextWebSocketHandler {
 			
 			// 댓글,답글이 달렸을 때
 			if(strs != null && strs.length == 8) {
-				String issueId = strs[0];  		//이슈아이디, 핫이슈 아이디
-				String callerName = strs[1];	//댓글 			,답글 작성자 이름
-				String callerId = strs[2];		//댓글 			,답글 작성자 아이디
-				String url = strs[3];			//댓글달린 게시물 	,해당 핫이슈 게시판
-				String issueTitle = strs[4];	//댓글달린 이슈제목 	,답글달린 게시물 제목
-				String replyCont = strs[5];		//댓글내용,		,답글 제목		 
-				String receiverId = strs[6];	//알림 받는사람 아이디
-				String type = strs[7];			//알림 타입
+				String issueId = strs[0];  						//이슈아이디, 핫이슈 아이디
+				String callerName = strs[1];					//댓글 			,답글 작성자 이름
+				String callerId = strs[2];						//댓글 			,답글 작성자 아이디
+				String url = strs[3];							//댓글달린 게시물 	,해당 핫이슈 게시판
+				String issueTitle = strs[4];					//댓글달린 이슈제목 	,답글달린 게시물 제목
+				String replyCont = strs[5];						//댓글내용,		,답글 제목		 
+				String receiverId = strs[6];					//알림 받는사람 아이디
+				String type = strs[7];							//알림 타입
+				
+				if(issueTitle.length()>6) {
+					issueTitle = issueTitle.substring(0,6) + "..";
+				}
+				if(replyCont.length()>6) {
+					replyCont = replyCont.substring(0, 6) + "..";
+				}
 				
 				//게시물작성자가 로그인해 있다면
 				WebSocketSession boardWriterSession = userSessionsMap.get(receiverId);
 				//댓글
 				if(type.equals("reply") && boardWriterSession != null) {
-					TextMessage tmpMsg = new TextMessage(issueTitle.substring(0, 6) + "... 에 댓글이 달렸습니다." + "<a type='external' href="+url+">요청서 보기</a>");
+					TextMessage tmpMsg = new TextMessage(type + "&&" + callerName + "&&" + issueTitle + " : " + replyCont + "<a type='external' href="+url+">댓글 보기</a>");
 					boardWriterSession.sendMessage(tmpMsg);
 				}
 				else if(type.equals("posts") && boardWriterSession != null) {
-					TextMessage tmpMsg = new TextMessage(issueTitle.substring(0,6)+ "... 게시물에 답글이 달렸습니다." + "<a type='external' href="+url+">게시판으로 가기</a>");
+					TextMessage tmpMsg = new TextMessage(type +"&&" + callerName +"&&" + issueTitle + " : " + replyCont + "<a type='external' href="+url+">게시판으로 가기</a>");
 					boardWriterSession.sendMessage(tmpMsg);
 				}
 				

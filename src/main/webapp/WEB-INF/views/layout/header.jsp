@@ -27,29 +27,33 @@
 	});
     
 	function onMessage(evt){
-		var data  = evt.data;
-		console.log("ReceivMessage: " + data + "\n");
+		var data  = evt.data.split('&&');
 		var memId = '${SMEMBER.memId}';
 		alarmCount(memId);
+		if(data[0] == 'posts'){
+			$(document).Toasts('create', {
+			     body: data[2],
+			     title: '답글이 달렸습니다.',
+			     subtitle: data[1],
+			     icon: 'fas fa-envelope fa-lg',
+			});
+		}else if(data[0] == 'req-pl'){
+			$(document).Toasts('create', {
+			     body: data[1],
+			     title: 'PL 요청',
+			     subtitle: "",
+			     icon: 'fas fa-envelope fa-lg',
+			});
+		}else if(data[0] == 'reply'){
+			$(document).Toasts('create', {
+			     body: data[2],
+			     title: '댓글이 달렸습니다.',
+			     subtitle: data[1],
+			     icon: 'fas fa-envelope fa-lg',
+			});
+		}
 		
-		toastr.info(data);
-
-    	toastr.options = {
-    	  "closeButton": true,
-    	  "debug": false,
-    	  "newestOnTop": false,
-    	  "progressBar": true,
-    	  "positionClass": "toast-top-right",                                     
-    	  "preventDuplicates": false,
-    	  "showDuration": "500",
-    	  "hideDuration": "1000",
-    	  "timeOut": "7000",
-    	  "extendedTimeOut": "1000",
-    	  "showEasing": "swing",
-    	  "hideEasing": "linear",
-    	  "showMethod": "fadeIn",
-    	  "hideMethod": "fadeOut"
-    	}
+		
 		
 	}
 	
@@ -186,19 +190,19 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header alarmCount">개의 알림이 있습니다.</span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item" id="resCnt" style="font-size: 0.9em">
+          <a href="/alarmList?searchCondition='1'" class="dropdown-item" id="resCnt" style="font-size: 0.9em">
             <i class="fas fa-envelope mr-2 " ></i>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item" id="replyCnt" style="font-size: 0.9em">
-            <i class="fas fa-users mr-2" ></i> 
+          <a href="/alarmList?searchCondition='2'" class="dropdown-item" id="replyCnt" style="font-size: 0.9em">
+            <i class="fas fa-comment-dots mr-2" ></i> 
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item" id="postsCnt" style="font-size: 0.9em">
-            <i class="fas fa-file mr-2" ></i> 
+          <a href="/alarmList?searchCondition='3'" class="dropdown-item" id="postsCnt" style="font-size: 0.9em">
+            <i class="fas fa-replyd mr-2" ></i> 
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">모든 알림 보기</a>
+          <a href="/alarmList" class="dropdown-item dropdown-footer">모든 알림 보기</a>
         </div>
       </li>
       

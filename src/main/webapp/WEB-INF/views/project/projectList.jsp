@@ -82,7 +82,7 @@ th, td {
 									// 해당 요구사항 정의서의 상태를 변경해야 한다.
 // 									console.log("프로젝트가 생성되었습니다.");
 									alert("프로젝트를 생성하였습니다.");
-									
+								
 									
 								}else{
 // 									console.log("프로젝트 생성에 실패하였습니다..");
@@ -210,6 +210,34 @@ th, td {
 		}
 		
 	})
+	
+	/* pl요청 알림메세지 db에 저장하기 */
+	function saveMsg(){
+		var alarmData = {
+							"alarmCont" : $('#modalReqId').val() + ",${SMEMBER.memName},${SMEMBER.memId},/req/reqDetail?reqId="+$('#modalReqId').val()+","+ $('#modalReqName').val(),
+							"memId" 	: $('#searchInput').val(),
+							"alarmType" : "req-pl"
+		}
+		console.log(alarmData);
+		
+		$.ajax({
+				url : "/alarmInsert",
+				data : JSON.stringify(alarmData),
+				type : 'POST',
+				contentType : "application/json; charset=utf-8",
+				dataType : 'text',
+				success : function(data){
+					
+					let socketMsg = "${SMEMBER.memName}," + alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
+					socket.send(socketMsg);
+					
+				},
+				error : function(err){
+					console.log(err);
+				}
+		});
+	}
+	
 </script>
 <%@include file="/WEB-INF/views/layout/contentmenu.jsp"%>
 
