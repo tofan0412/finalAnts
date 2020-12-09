@@ -120,5 +120,31 @@ public class memBoardService{
 		return mapper.calendarDetail(scheduleVo);
 	}
 	
+	
+	// 개인 캘린더 
+	// 리스트
+	public List<ScheduleVo> showMyCalendar(ScheduleVo scheduleVo){
+		return mapper.showMyCalendar(scheduleVo);
+	}
+	
+//	//등록
+//	public int mycalendarInsert(ScheduleVo scheduleVo) {
+//		return mapper.mycalendarInsert(scheduleVo);
+//	}
+//	
+//	// 수정
+//	public int mycalendarUpdate(ScheduleVo scheduleVo) {
+//		return mapper.mycalendarUpdate(scheduleVo);
+//	}
+//	
+//	// 삭제
+//	public int mycalendarDelete(ScheduleVo scheduleVo) {
+//		return mapper.mycalendarDelete(scheduleVo);
+//	}
+//	
+//	// 상세
+//	public ScheduleVo mycalendarDetail(ScheduleVo scheduleVo) {
+//		return mapper.mycalendarDetail(scheduleVo);
+//	}
 
 }

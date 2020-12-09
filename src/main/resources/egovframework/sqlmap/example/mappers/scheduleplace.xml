@@ -65,9 +65,10 @@
 		WHERE sche_id = #{scheId}
 	</update>
 	
+	
 	<!-- 일정 리스트(캘린더용) -->
 	<select id="showCalendar" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">
-		SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, START_DT, END_DT, JUSO, CALENDARCSS
+		SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD hh:mm') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, START_DT, END_DT, JUSO, CALENDARCSS
 			FROM SCHEDULE
 			WHERE req_id = #{reqId} 
 			AND	 del = 'N'
@@ -80,7 +81,7 @@
 				SCHE_SEQ.NEXTVAL, 
 				#{scheTitle}, 
 				#{scheCont}, 
-				SYSDATE, 
+				TO_DATE(SYSDATE,'YYYY/MM/DD'), 
 				NULL, NULL, 
 				'6', 
 				#{reqId}, 
@@ -115,5 +116,29 @@
 	    	sche_id = #{scheId}
 	</update>
 	
+	
+	<!-- 일정 상세페이지 (캘린더용)-->
+	<select id="calendarDetail" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">
+		SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD hh:mm') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, to_char(START_DT,'YYYY-MM-DD') as START_DT, to_char(END_DT,'YYYY-MM-DD') as END_DT, JUSO, CALENDARCSS
+		  FROM SCHEDULE
+		 WHERE sche_id = #{scheId}
+	</select>
+	 
+	<!-- 일정 삭제하기(캘린더용) -->
+	<update id="calendarDelete" parameterType="ants.com.board.memBoard.model.ScheduleVo"> 
+		UPDATE SCHEDULE 
+			set del = 'Y' 
+		WHERE sche_id = #{scheId}
+	</update>
+	
+	
+	<!-- 개인캘린더 리스트-->
+	<select id="showCalendar" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">
+		SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD hh:mm') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, START_DT, END_DT, JUSO, CALENDARCSS
+			FROM SCHEDULE
+			WHERE req_id = NULL
+			AND	del = 'N'
+			AND mem_id =#{memId} 
+	</select>
 	
 </mapper>

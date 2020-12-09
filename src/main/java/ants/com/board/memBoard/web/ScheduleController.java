@@ -126,6 +126,8 @@ public class ScheduleController {
 		}
 	}
 
+	
+	// 프로젝트용 캘린더
 	// 캘린더 화면 출력
 	@RequestMapping("/clendarView")
 	public String clendarView(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session, Model model) {
@@ -190,4 +192,16 @@ public class ScheduleController {
 			return "redirect:/schedule/clendarView";
 		}
 	}
+	
+	
+	// 개인 캘린더
+	// 캘린더 화면 출력
+		@RequestMapping("/MyclendarView")
+		public String MyclendarView(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session, Model model) {
+			scheduleVo.setScheCont(scheduleVo.getScheTitle());
+			MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+			List<ScheduleVo> showCalendar = memBoardService.showMyCalendar(scheduleVo);
+			model.addAttribute("showSchedule", showCalendar);
+			return "tiles/member/mycalendar";
+		}
 }
