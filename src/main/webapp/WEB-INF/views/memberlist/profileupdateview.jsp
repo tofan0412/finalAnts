@@ -8,7 +8,22 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+<script type="text/javascript">
+	$(function() {
+		$(document).ready(function() {
+			$('select[name=memTypeSelect]').change(function() {
+				if ($(this).val() == "1") {
+					$('#memType').val("");
+				} else {
+					$('#memType').val($(this).val());
+					$("#memType").attr("readonly", true);
+				}
+			});
+		});
+	});
+	
+	
+</script>
 <style>
 	body{
 	    min-width: 1100px;
@@ -25,13 +40,16 @@
 	}
 	.content{
 		margin-left:43%;
+		padding-top: 10px;
 	}
 	.input{ 
 		padding : 10px;
 		padding-left : 20px;
 		width: 330px;
 		height : 50px;
-		border-radius: 80px
+		border-radius: 80px;
+		outline: none;
+/* 		border: none; */
 	}
 	#basicimg{
 		height : 30px;
@@ -45,6 +63,7 @@
 	#checkbtn{
 		height : 42px;
 	}
+	
 
 </style>	
 </head>
@@ -67,10 +86,10 @@
 					<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px;"/>
 				</div>
 				
-				<br><br>
+				<br>
 				<div class="content"> 
 					<label for="id" style="font-size: 0.9em;">
-						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>아이디
+						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;"></span>아이디
 					</label>
 					<div id="idcheck">
 						<input class="input" name="memId" type="email" id="memId" placeholder="회원 id" value="${memberVo.memId}" readonly/>
@@ -81,44 +100,54 @@
 					
 				<div class="content">
 					<label for="name" style="font-size: 0.9em;">
-						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>이 름
+						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;"></span>이 름
 					</label>
 					<div>
-						<input class="input" name="memName" type="text" id="memName" placeholder="이름" value="${memberVo.memName}"/>
+						<input class="input" name="memName" type="text" id="memName" placeholder="이름" value="${memberVo.memName}" />
 					</div>
 				</div>
 
 				<div class="content">
 					<label for="pwd" style="font-size: 0.9em;">
-						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드1
+						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;"></span>패스워드1
 					</label>
 					<div>
-						<input class="input" name="memPass" type="password" id="memPass" placeholder="패스워드1" value="${memberVo.memPass}"/>
+						<input class="input" name="memPass" type="password" id="memPass" placeholder="패스워드1" value="${memberVo.memPass}" readonly/>
 					</div>
 				</div>
 				
 				
 				<div class="content">
 					<label for="pwd" style="font-size: 0.9em;">
-						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드2
+						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;"></span>패스워드2
 					</label>
 					<div>
-						<input class="input" type="password" id="memPass2" placeholder="패스워드2" value="${memberVo.memPass}"/>
+						<input class="input" type="password" id="memPass2" placeholder="패스워드2" value="${memberVo.memPass}" readonly/>
 					</div>
 				</div>
 
 				<div class="content">
 						&nbsp;&nbsp;&nbsp;&nbsp;<label for="alias" style="font-size: 0.9em;">전화번호</label>
 					<div>
-						<input class="input" name="memTel" type="tel" id="memTel" placeholder="전화번호( '-' 없이 작성해주세요)" value="${memberVo.memTel}"/>
+						<input class="input" name="memTel" type="tel" id="memTel" placeholder="전화번호( '-' 없이 작성해주세요)" maxlength="13" value="${memberVo.memTel}" />
+						
 					</div>
 				</div>
 				
 				<div class="content">
-						&nbsp;&nbsp;&nbsp;&nbsp;<label for="alias" style="font-size: 0.9em;">타입</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;<label for="alias" style="font-size: 0.9em;">타입</label><br>
+						<input class="input" id="memType" type="text" name="memType" value="${memberVo.memType }" readonly>
+						<select id="memTypeSelect" name="memTypeSelect">
+							<option value="1" selected="selected">타입</option>
+							<option value="PM">PM</option>
+							<option value="PL">PL</option>
+							<option value="MEM">MEM</option>
+						</select>	
+					<%--
 					<div>
 						<input class="input" name="memType" type="text" id="memType" placeholder="멤버구분" value="${memberVo.memType}" ><br>
 					</div>
+					 --%>
 				</div>
 				
 				
@@ -132,12 +161,12 @@
 				</div>
 				
 				<div id="row1">
-					<br><br><br>
+					<br>
 					<div class="content" id="butt">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="button" id="registBtn" class="btn btn-info">등록</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" id="registBtn" class="btn btn-info">완료</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="button" id="cancelBtn" onclick="window.history.back()">&nbsp;&nbsp;&nbsp;취 &nbsp;&nbsp; 소 &nbsp;&nbsp;&nbsp;</button>
+						<button type="button" id="cancelBtn" class="btn btn-info" onclick="window.history.back()">취소</button>
 					</div>
 				</div>
 			</form>

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,6 +19,9 @@ import ants.com.board.manageBoard.model.HotIssueVo;
 import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
+import ants.com.file.model.HotIssueFileVo;
+import ants.com.file.view.FileController;
+import ants.com.file.view.HotIssueFileController;
 import ants.com.member.model.MemberVo;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -29,6 +33,9 @@ public class HotIssueController {
 	
 	@Resource(name = "manageBoardService")
 	private ManageBoardService manageBoardService;
+
+	@Autowired
+	HotIssueFileController hotIssueFileController ;
 
 	
 	// 핫이슈 조회
@@ -67,6 +74,8 @@ public class HotIssueController {
 	@RequestMapping("/hissueDetail")
 	public String hissueDetail(Model model, HotIssueVo hotIssueVo) {
 		HotIssueVo dbVo = manageBoardService.gethissue(hotIssueVo);
+		HotIssueFileVo pfv = new HotIssueFileVo(dbVo.getHissueId());
+		hotIssueFileController.getfiles(pfv, model);
 		model.addAttribute("hotIssueVo", dbVo);
 		return "jsonView";
 	}
@@ -75,6 +84,8 @@ public class HotIssueController {
 	// 핫이슈 등록 화면 출력
 	@RequestMapping("/hissueInsertView")
 	public String todoInsertView(@ModelAttribute("hotIssueVo") HotIssueVo hotIssueVo, Model model) {
+		String hissueId = manageBoardService.gethissueId();
+		model.addAttribute("hissueSeq", hissueId);
 		// 부모 게시글정보
 		if(hotIssueVo.getHissueParentid() != null) {
 			String hissueParentid = hotIssueVo.getHissueParentid();

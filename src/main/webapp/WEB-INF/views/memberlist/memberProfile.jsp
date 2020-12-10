@@ -51,6 +51,12 @@ $(document).ready(function(){
 	
 	
 })
+
+
+
+
+
+
 </script>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -77,16 +83,24 @@ $(document).ready(function(){
 					
 					<div class="form-group row">
 						<label for="id" class="col-sm-3" style="font-size: 0.9em;">
-							<span style="color: red; font-weight: bold;">*</span>아이디
+							<span style="color: red; font-weight: bold;"></span>아이디
 						</label>
 						<div class="col-sm-6 input-group-sm">
 							<input class="form-control" name="memId" type="text" class="form-control" id="memId" placeholder="(아이디)" value="${memberVo.memId}" style="border: none" readonly>
 						</div>
 					</div>
+					<div class="form-group row">
+						<label for="id" class="col-sm-3" style="font-size: 0.9em;">
+							<span style="color: red; font-weight: bold;"></span>비밀번호
+						</label>
+						<div class="col-sm-6 input-group-sm">
+							<input class="form-control" name="memPass" type="password" class="form-control" id="memPass" placeholder="(비밀번호)" value="${memberVo.memPass}" style="border: none" readonly>
+						</div>
+					</div>
 
 					<div class="form-group row">
 						<label for="pwd" class="col-sm-3" style="font-size: 0.9em;">
-							<span style="color: red; font-weight: bold;">*</span>이름
+							<span style="color: red; font-weight: bold;"></span>이름
 						</label>
 						<div class="col-sm-6 input-group-sm">
 							<input class="form-control" name="memName" type="text" class="form-control" id="memName" placeholder="(이름)" value="${memberVo.memName}" style="border: none" readonly />
@@ -95,7 +109,7 @@ $(document).ready(function(){
 
 					<div class="form-group row">
 						<label for="name" class="col-sm-3" style="font-size: 0.9em;">
-							<span style="color: red; font-weight: bold;">*</span>전화번호
+							<span style="color: red; font-weight: bold;"></span>전화번호
 						</label>
 						<div class="col-sm-6 input-group-sm">
 							<input class="form-control" name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border: none" readonly />
@@ -136,14 +150,18 @@ $(document).ready(function(){
 						<div class="row">
 							<div class="col-sm-6">
 								<a href="/admin/memlistprofileupdate?memId=${memberVo.memId}"><button type="button" id="registBtn" class="btn btn-info">수정</button></a>
+								<a href="/admin/memberlist"><button type="button" id="registBtn" class="btn btn-success">목록</button></a>
+								<a href="/admin/delmemlist?memId=${memberVo.memId }"><button type="button" id="registBtn" class="btn btn-danger">삭제</button></a>
 							</div>
 
+							<%--
 							<div class="col-sm-6">
 								<button type="button" id="cancelBtn"
 									onclick="window.history.back()"
 									class="btn btn-default float-right">&nbsp;뒤&nbsp;&nbsp;로&nbsp;&nbsp;가&nbsp;&nbsp;기&nbsp;</button>
 							</div>
-							
+							 --%>
+							 
 						</div>
 					</div>
 			</div>

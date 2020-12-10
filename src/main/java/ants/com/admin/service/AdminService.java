@@ -81,6 +81,11 @@ public class AdminService extends EgovAbstractServiceImpl{
 		return mapper.memlistproupdate(memberVo);
 	}
 	
+	//회원삭제
+	public int delmemlist(String memId) {
+		return mapper.delmemlist(memId);
+	}
+	
 
 	
 	

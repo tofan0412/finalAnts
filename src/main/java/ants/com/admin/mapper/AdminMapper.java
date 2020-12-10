@@ -48,6 +48,9 @@ public interface AdminMapper {
 	public MemberVo getMember(MemberVo memberVo);
 	
 	public int memlistproupdate(MemberVo memberVo);
+
+	//회원삭제
+	public int delmemlist(String memId);
 	
 
 	

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ants.com.file.mapper.FileMapper">
+
+ <!-- 파일 등록하기 -->
+  <insert id="insertHotissueFile" parameterType="ants.com.file.model.HotIssueFileVo">
+	   <selectKey resultType="String" keyProperty="hissuefId" order="BEFORE"> 
+	  		select HISSUEF_SEQ.nextval FROM dual
+	  </selectKey>
+	  
+	  INSERT INTO hotissuefile (
+							    hissuef_id,
+							    hissue_id,
+							    hiussef_filepath,
+							    hissuef_filename,
+							    reg_dt,
+							    hissuef_size,
+							    hissuef_extension
+							) VALUES (
+							    #{hissuefId},
+							    #{hissueId},
+							    #{hiussefFilepath},
+							    #{hissuefFilename},
+							    sysdate,
+							    #{hissuefSize},
+							    #{hissuefExtension}
+							)
+  </insert>
+  
+   <!-- 해당 게시글 파일들 조회 -->
+  <select id="gethotfiles" parameterType="ants.com.file.model.HotIssueFileVo" resultType="ants.com.file.model.HotIssueFileVo">
+  	 SELECT * 
+     FROM hotissuefile
+     WHERE HISSUE_ID = #{hissueId} 
+  </select>
+  
+   <!-- 클릭한 파일 정보다운로드용 -->
+  <select id="gethotfile" parameterType="String" resultType="ants.com.file.model.HotIssueFileVo">
+  	 SELECT * 
+     FROM hotissuefile 
+     WHERE HISSUEF_ID = #{hissuefId}
+  </select>
+  
+  
+</mapper>

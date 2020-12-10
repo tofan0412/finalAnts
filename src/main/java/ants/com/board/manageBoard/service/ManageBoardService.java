@@ -101,4 +101,7 @@ public class ManageBoardService {
 	public int hIssuedelete(HotIssueVo hotIssueVo) {
 		return mapper.hIssuedelete(hotIssueVo);
 	}
+	public String gethissueId() {
+		return mapper.gethissueId();
+	}
 }

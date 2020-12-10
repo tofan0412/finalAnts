@@ -208,8 +208,8 @@ $(function(){
 	                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
 	                     	<th  style="padding-left: 30px; text-align: center;">  이메일</th> 
 							<th style="text-align: center;">   이름 </th>
-							<th style="text-align: center;">   비번   </th>
-							<th style="text-align: center;">   전번   </th>
+<!-- 							<th style="text-align: center;">   비번   </th> -->
+							<th style="text-align: center;">   전화번호   </th>
 							<th style="text-align: center;"> 타입 </th>
 							<th style="text-align: center;"> 알람 </th>
 <!-- 	                      <th style="text-align: center;">응답 상태</th> -->
@@ -225,7 +225,7 @@ $(function(){
 							
 								<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/admin/memlistprofile?memId=${member.memId}"> ${member.memId }</a> </td>
 								<td style="text-align: center;"> ${member.memName }</td>
-								<td style="text-align: center;"> ${member.memPass }</td>
+<%-- 								<td style="text-align: center;"> ${member.memPass }</td> --%>
 								<td style="text-align: center;"> ${member.memTel }</td>
 								<td style="text-align: center;"> ${member.memType }</td>
 								<td style="text-align: center;"> ${member.memAlert }</td>
@@ -252,10 +252,11 @@ $(function(){
 	                 </ul>
         		  </div>
         		  <br>
+        		  <%--
         		  <div class="card-footer clearfix">
 	                <button id="insertmemlist" type="button" class="btn btn-default float-right" onclick="memlistInsert()"><i class="fas fa-plus"></i>등 록</button>
 	              </div>
-        		 
+        		  --%>
         		  
         		  
 	              <!-- /.card-body -->

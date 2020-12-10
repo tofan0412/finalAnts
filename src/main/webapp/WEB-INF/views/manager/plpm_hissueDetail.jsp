@@ -52,6 +52,7 @@
 				hissueId : hissueId
 			},
 			success : function(data) {
+				var res ="";
 			
 				$("#hissueTitle").val(data.hotIssueVo.hissueTitle);
 				$("#hissuetCont").html(data.hotIssueVo.hissuetCont);
@@ -62,8 +63,17 @@
 				$("#hissueParentid").val(data.hotIssueVo.hissueParentid);
 				$("#hissueLevel").val(data.hotIssueVo.hissueLevel);
 				
-				if(data.todoVo.todoLevel == '1'){
-					$("#creatChildBtn").hide();
+
+				if(data.filelist.length == 0){
+					res += '<p>[ 첨부파일이 없습니다. ]</p>';
+					$("#filediv").html(res);
+				}
+				if(data.filelist.length != 0) {
+					for( i = 0 ; i< data.filelist.length; i++){	
+ 						res += '<a href="${pageContext.request.contextPath}/hotissueFile/hotfileDown?hissuefId='+data.filelist[i].hissuefId+'"><input id ="files"  type="button" class="btn btn-default" name="'+ data.filelist[i].hissuefId+'" value="'+data.filelist[i].hissuefFilename+'" ></a>  ';
+						
+ 						$("#filediv").html(res);
+					}	
 				}
 			}
 		});
@@ -101,6 +111,12 @@
 		 <div class="form-group">
 			<label for="regDt">작성일</label>
 			<input type="text" id="regDt" class="form-control" readonly="readonly">
+		</div>
+		<div class="form-group">
+				<label id="filelabel" for="File" class="col-sm-2 control-label">첨부파일 다운로드</label>
+				<div id = "filediv">
+					
+				</div>
 		</div>
 	</div>
 		<div id="btnMenu">
