@@ -74,4 +74,6 @@ public interface ManageBoardMapper {
 
 	// 핫이슈 삭제
 	public int hIssuedelete(HotIssueVo hotIssueVo);
+	// 다음 index값 추출
+	public String gethissueId();
 }

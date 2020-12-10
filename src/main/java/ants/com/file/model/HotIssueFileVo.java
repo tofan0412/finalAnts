@@ -1,20 +1,51 @@
 package ants.com.file.model;
 
-import java.util.Date;
 
-public class HotIssueFileVo {
-	
+import ants.com.base.model.BaseVo;
+
+public class HotIssueFileVo extends BaseVo{
 	
 	private String hissuefId;
 	private String hissueId;
 	private String hiussefFilepath;
 	private String hissuefFilename;
-	private Date regDt;
+	private String hissuefExtension;
+	private String regDt;
 	private String hissuefSize;
 	
+	
+	public HotIssueFileVo() {
+	}
+	
+	// 파일 검색시
+	public HotIssueFileVo(String hissuefId, String hissueId) {
+		super();
+		this.hissuefId = hissuefId;
+		this.hissueId = hissueId;
+	}
+
+	
+	public HotIssueFileVo(String hissueId, String hiussefFilepath, String hissuefFilename, String hissuefExtension,
+			String hissuefSize) {
+		super();
+		this.hissueId = hissueId;
+		this.hiussefFilepath = hiussefFilepath;
+		this.hissuefFilename = hissuefFilename;
+		this.hissuefExtension = hissuefExtension;
+		this.hissuefSize = hissuefSize;
+	}
+
 	public String getHissuefId() {
 		return hissuefId;
 	}
+	public String getHissuefExtension() {
+		return hissuefExtension;
+	}
+
+	public void setHissuefExtension(String hissuefExtension) {
+		this.hissuefExtension = hissuefExtension;
+	}
+
 	public void setHissuefId(String hissuefId) {
 		this.hissuefId = hissuefId;
 	}
@@ -36,10 +67,10 @@ public class HotIssueFileVo {
 	public void setHissuefFilename(String hissuefFilename) {
 		this.hissuefFilename = hissuefFilename;
 	}
-	public Date getRegDt() {
+	public String getRegDt() {
 		return regDt;
 	}
-	public void setRegDt(Date regDt) {
+	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
 	public String getHissuefSize() {

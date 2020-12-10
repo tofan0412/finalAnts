@@ -98,7 +98,7 @@
 			    del,
 			    writer
 			) VALUES (
-			    HISSUE_SEQ.NEXTVAL,
+			    #{hissueId},
 			    #{hissueTitle},
 			    #{hissuetCont},
 			    sysdate,
@@ -118,10 +118,15 @@
 			    #{writer}
 			    )
 			    </if>
-<!-- 			<selectKey keyProperty="hissueId" resultType="String"> -->
-<!-- 			select hissue_seq.currval from dual -->
-<!-- 		</selectKey> -->
+			<selectKey keyProperty="hissueId" resultType="String">
+			select hissue_seq.currval from dual
+		</selectKey>
 		</insert>
+		
+		<!-- Id 조회 (파일 ajax로 등록하기위함) -->
+	<select id ="gethissueId" resultType="String">
+		SELECT HISSUE_SEQ.NEXTVAL FROM DUAL
+	</select>
 		
 		<!-- 이슈게시글 수정하기 -->
 		<update id="hIssueupdate" parameterType="ants.com.board.manageBoard.model.HotIssueVo">
