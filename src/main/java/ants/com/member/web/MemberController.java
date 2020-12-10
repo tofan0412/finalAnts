@@ -120,7 +120,6 @@ public class MemberController {
 	
 	// 회원가입 로직
 	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
-
 	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model, @RequestParam(value="imgname", required=false)String imgname) {
 		logger.debug("memberVo : {} / imgname : {}", memberVo, imgname);
 		logger.debug("filename : {} / memFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),file.getSize());
@@ -137,7 +136,6 @@ public class MemberController {
 			}
 	
 			String filekey = UUID.randomUUID().toString();
-			
 			Filepath = "D:\\upload\\"+ filekey + "\\"+ file.getOriginalFilename();
 			Filename = file.getOriginalFilename();
 			File uploadFile = new File(Filepath);
@@ -149,24 +147,17 @@ public class MemberController {
 			}
 	
 			logger.debug("---------------------통과-------------------");
-			
-			
 		}else {
-			
 			// 기본 이미지 중에 선택했을때
 			if(!imgname.equals("") && !imgname.equals(null)) {
 				Filepath = imgname;
 				Filename = imgname.split("/")[4];
-			
 			// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
 			}else { 
 				Filepath = "http://localhost/profile/user-0.png";
 				Filename = "user-0.png";
 			}
-			
-		
 		}
-		
 
 		memberVo.setMemFilepath(Filepath);
 		memberVo.setMemFilename(Filename);
@@ -349,7 +340,68 @@ public class MemberController {
 		return "main.tiles/member/memberPassmodified2";
 	}
 	
+	// 프로필 수정 페이지
+	@RequestMapping("/profileupdateview")
+	public String profileupdateview(MemberVo memberVo, Model model) {
+		MemberVo dbMember = memberService.getMember(memberVo);
+		model.addAttribute("memberVo", dbMember);
+		return "tiles/member/profileupdateview";
+	}
 	
+	
+    @RequestMapping(path="/profileupdate", method = RequestMethod.POST)                // VO 객체 바로 뒤에 Binding 와야함... 안그럼 매칭안됨
+    public String profileupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
+                                                                @RequestPart(value="memFilename", required=false) MultipartFile file) {
+        
+        logger.debug("memFilename : {}", file.getOriginalFilename());
+        String Filename = "";
+        String Filepath = "";
+        
+        if(!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
+            
+            if (br.hasErrors()) {
+//                return "main.tiles/member/memberRegist";
+            }
+    
+            String filekey = UUID.randomUUID().toString();
+            
+             /*filekey + "\\"+*/
+            Filepath = "D:\\upload\\"+ file.getOriginalFilename();
+            Filename = file.getOriginalFilename();
+            File uploadFile = new File(Filepath);
+            
+            try {
+                file.transferTo(uploadFile);
+            } catch (IllegalStateException | IOException e) {
+                e.printStackTrace();
+            }
+            
+        }else {
+            
+            // 기본 이미지 중에 선택했을때
+            if(!imgname.equals("") && !imgname.equals(null)) {
+                Filepath = imgname;
+                Filename = imgname.split("/")[4];
+            
+            // 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+            }else { 
+                Filepath = "http://localhost/profile/user-0.png";
+                Filename = "user-0.png";
+            }
+        }
+        memberVo.setMemFilepath(Filepath);
+        memberVo.setMemFilename(Filename);
+        
+        
+        int updateCnt = memberService.profileupdate(memberVo);
+        
+        if(updateCnt == 1){
+            return "redirect:/member/profile";
+        }else {
+            return "tiles/member/profileupdateview";    
+        }
+
+    }
 	
 	// 프로필 보기
 	@RequestMapping("/profile")
