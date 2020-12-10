@@ -1,6 +1,9 @@
 package ants.com.admin.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -9,14 +12,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ReqVo;
 import ants.com.member.service.MemberService;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
@@ -36,7 +45,7 @@ public class AdminController {
 	public String projectmain(HttpSession session) {
 		
 		session.setAttribute("noticeId", "1");
-		return "admain.tiles/layout/admin/adcontentmenu";
+		return "admin.tiles/layout/admin/adcontentmenu";
 	}
 	
 	////////////////////////////////////////////////관리자 로그인
@@ -57,7 +66,7 @@ public class AdminController {
 		
 		if (dbAdmin != (null) && adminVo.getAdminPass().equals(dbAdmin.getAdminPass())) {
 			session.setAttribute("SADMIN", dbAdmin);
-				return "admain.tiles/layout/admin/adcontentmenu";
+				return "admin.tiles/layout/admin/adcontentmenu";
 		} else {
 			return "redirect:/member/loginView";
 		}
@@ -91,7 +100,7 @@ public class AdminController {
 	// 화면 상단 로고 클릭 시 메인 페이지로 이동
 	@RequestMapping("/adMainView")
 	public String adMainView() {
-		return "admain.tiles/layout/admin/adcontentmenu";
+		return "admin.tiles/layout/admin/adcontentmenu";
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////관리자 로그인 끝	
 	
@@ -147,7 +156,7 @@ public class AdminController {
 //		List<CategoryVo> categorylist = promemService.categorylist(memId);
 //		model.addAttribute("categorylist", categorylist);
 		
-		return "admain.tiles/notice/noticelist2";
+		return "admin.tiles/notice/noticelist2";
 	}
 	
 	// 각 공지사항 상세보기
@@ -161,14 +170,14 @@ public class AdminController {
 		
 		model.addAttribute("adminId", "admin");
 		 
-		return "admain.tiles/notice/noticeDetail";
+		return "admin.tiles/notice/noticeDetail";
 	}
 	
 	// 공지사항 작성 View
 	@RequestMapping("/insertnoticeView")
 	public String insertnoticeView(HttpSession session) {
 
-		return "admain.tiles/notice/noticeInsert";
+		return "admin.tiles/notice/noticeInsert";
 	}
 	
 	// 공지사항 작성
@@ -200,7 +209,7 @@ public class AdminController {
 		NoticeVo noticevo = adminService.geteachnotice(noticeId);
 		model.addAttribute("noticeVo", noticevo);
 		
-		return "admain.tiles/notice/noticeUpdate";
+		return "admin.tiles/notice/noticeUpdate";
 	}
 	
 	// 공지사항 update 
@@ -236,101 +245,129 @@ public class AdminController {
 	
 //////////////////////////////////////////////////////////////////////////////////////////////멤버 리스트 시작
 	
-//	//멤버 목록
-//	@RequestMapping("/memberlist")
-//	public String memberList(@ModelAttribute("memberVo") MemberVo memberVo, HttpSession session, Model model) throws Exception {
-//		String memId = (String)session.getAttribute("memId");
-//		memberVo.setMemId(memId);
-//		List<MemberVo> resultList = adminService.memberlist(memberVo);
-//		model.addAttribute("memberlist", resultList);
-//		return "admain.tiles/admin/memberlist";
-//		
-//	}
-//	// 각 멤버리스트 상세보기
-//	@RequestMapping("/eachmemberDetail")
-//	public String geteachmember(String memId, HttpSession session, Model model) {
-//		
-//		MemberVo membervo = adminService.geteachmember(memId);
-//		
-//		model.addAttribute("membervo", membervo);
-//		
-////		model.addAttribute("adminId", "admin");
-//		 
-//		return "admain.tiles/admin/memberDetail";
-//	}
-//	
-//	// 멤버리스트 작성 View
-//	@RequestMapping("/insertmemberView")
-//	public String insertmemberView(HttpSession session) {
-//
-//		return "admain.tiles/admin/memberInsert";
-//	}
-//	
-//	// 멤버리스트 작성
-//	@RequestMapping("/insertmember")
-//	public String insertmember(MemberVo memberVo, HttpSession session, Model model) {
-//		
-//		String memId = (String)session.getAttribute("memId");
-//		
-////		memberVo.setAdminId("admin");
-//		
-//		int insertCnt = adminService.insertmember(memberVo);
-//
-//		if(insertCnt>0) {		
-//			return "redirect:/admin/memberlist";
-//		}else {
-//			return "redirect:/admin/insertmemberView";
-//			
-//		}	
-//	}
-//	
-//	// 멤버리스트 update View
-//	@RequestMapping("/updatememberView")
-//	public String updatememberView(String memId, HttpSession session, Model model) {
-//		
-//		MemberVo membervo = adminService.geteachmember(memId);
-//		model.addAttribute("memberVo", membervo);
-//		
-//		return "admain.tiles/admin/memberUpdate";
-//	}
-//	
-//	// 멤버리스트 update 
-//	@RequestMapping("/updatemember")
-//	public String updatemember(MemberVo memberVo, HttpSession session, Model model) {
-//		
-////			String reqId = (String)session.getAttribute("reqId");
-//		String memId = (String)session.getAttribute("memId");
-////			noticeVo.setNoticeId(noticeId);
-////		noticeVo.setAdminId("admin");
-//		
-//		int insertCnt = adminService.updatemember(memberVo);
-//		
-//		if(insertCnt>0) {		
-//			return "redirect:/admin/memberlist";
-//		}else {
-//			return "redirect:/admin/updatememberView";
-//			
-//		}
-//	}
-//	
-//	// 멤버리스트 delete 
-//	@RequestMapping("/delmember")
-//	public String delmember(String memId, HttpSession session, Model model) {		
-//		int delCnt = adminService.delmember(memId);
-//		if(delCnt>0) {		
-//			return "redirect:/admin/memberlist";
-//		}else {
-//			return "redirect:/admin/eachmemberDetail?memId="+memId;
-//		}
-//	}
+	//회원 리스트 목록 조회
+	@RequestMapping("/memberlist")
+	public String getmemberlist(@ModelAttribute("memberVo") MemberVo memberVo,
+									Model model, HttpSession session)throws Exception {
+		String memId = (String)session.getAttribute("memId");
+	
+		memberVo.setMemId(memId);
+		
+		/** EgovPropertyService.sample */
+		memberVo.setPageUnit(propertiesService.getInt("pageUnit"));
+		memberVo.setPageSize(propertiesService.getInt("pageSize"));
+
+		/** pageing setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(memberVo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(memberVo.getPageUnit());
+		paginationInfo.setPageSize(memberVo.getPageSize());
+
+		memberVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		memberVo.setLastIndex(paginationInfo.getLastRecordIndex());
+		memberVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		List<MemberVo> resultList = adminService.memberlist(memberVo);
+		model.addAttribute("memberlist", resultList);
+		logger.debug("memberlist", resultList);
+
+		int totCnt = adminService.memberlistPagingListCnt(memberVo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
+		logger.debug("paginationInfo", paginationInfo);
+
+		return "admin.tiles/memberlist/memberList2";
+	}
+	
+	// 각 공지사항 상세보기
+	@RequestMapping("/eachmemlistDetail")
+	public String geteachmemlist(String memId, HttpSession session, Model model) {
+		
+		MemberVo membervo = adminService.geteachmemlist(memId);
+		
+		model.addAttribute("membervo", membervo);
+		
+		
+//		model.addAttribute("adminId", "admin");
+		 
+		return "admin.tiles/memberlist/memlistDetail";
+	}
 	
 	
 	
+	// 프로필 보기
+	@RequestMapping("/memlistprofile")
+	public String memlistprofile(HttpSession session, MemberVo memberVo, Model model) {
+		
+		MemberVo dbMember = adminService.getMember(memberVo);
+		logger.debug("dbMember : {}", dbMember);
+		
+		model.addAttribute("memberVo",dbMember);
+		return "admin.tiles/memberlist/memberProfile";
+	}
 	
 	
+	// 프로필 수정 페이지
+	@RequestMapping("/memlistprofileupdate")
+	public String memlistprofileupdate(MemberVo memberVo, Model model) {
+		MemberVo dbMember = adminService.getMember(memberVo);
+		model.addAttribute("memberVo", dbMember);
+		return "admin.tiles/memberlist/profileupdateview";
+	}
 	
 	
-	
+	 @RequestMapping(path="/memlistproupdate", method = RequestMethod.POST)                // VO 객체 바로 뒤에 Binding 와야함... 안그럼 매칭안됨
+	public String memlistproupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
+			@RequestPart(value = "memFilename", required = false) MultipartFile file) {
+
+		logger.debug("memFilename : {}", file.getOriginalFilename());
+		String Filename = "";
+		String Filepath = "";
+
+		if (!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
+
+			if (br.hasErrors()) {
+				// return "main.tiles/member/memberRegist";
+			}
+
+			String filekey = UUID.randomUUID().toString();
+
+			/* filekey + "\\"+ */
+			Filepath = "D:\\upload\\" + file.getOriginalFilename();
+			Filename = file.getOriginalFilename();
+			File uploadFile = new File(Filepath);
+
+			try {
+				file.transferTo(uploadFile);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+
+		} else {
+
+			// 기본 이미지 중에 선택했을때
+			if (!imgname.equals("") && !imgname.equals(null)) {
+				Filepath = imgname;
+				Filename = imgname.split("/")[4];
+
+				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+			} else {
+				Filepath = "http://localhost/profile/user-0.png";
+				Filename = "user-0.png";
+			}
+		}
+		memberVo.setMemFilepath(Filepath);
+		memberVo.setMemFilename(Filename);
+
+		int updateCnt = adminService.memlistproupdate(memberVo);
+
+		if (updateCnt == 1) {
+			return "redirect:/admin/memlistprofile?memId=" + memberVo.getMemId();
+		} else {
+			return "admin.tiles/memberlist/profileupdateview";
+		}
+
+	}
 	
 	
 	

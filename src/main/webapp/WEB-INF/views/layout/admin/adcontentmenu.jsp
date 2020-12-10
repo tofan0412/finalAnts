@@ -24,9 +24,6 @@
 			<div class="card-header p-0 pt-1 border-bottom-0">
 				<ul class="nav nav-tabs" id="custom-tabs-three-tab">
 
-					<!-- 	                  <li class="nav-item" id="noticebtn"> -->
-					<!-- 	                    <a class="nav-link" id="1" data-toggle="pill" href="#custom-tabs-three-notice" role="tab" aria-controls="custom-tabs-three-notice" aria-selected="false" >공지사항</a> -->
-					<!-- 	                  </li> -->
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-notice"
 						href="${pageContext.request.contextPath}/admin/noticelist">공지사항1</a>

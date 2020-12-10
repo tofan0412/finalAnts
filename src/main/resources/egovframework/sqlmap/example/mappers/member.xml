@@ -53,4 +53,5 @@
 		WHERE MEM_ID = #{memId}
 	</update>
 	
+	
 </mapper>
