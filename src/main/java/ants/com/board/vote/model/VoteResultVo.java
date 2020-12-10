@@ -6,6 +6,8 @@ public class VoteResultVo {
 	private String voteresId;
 	private String voteitemId;
 	private String memId;
+	private String voteId;
+	
 	public String getVoteresId() {
 		return voteresId;
 	}
@@ -24,9 +26,19 @@ public class VoteResultVo {
 	public void setMemId(String memId) {
 		this.memId = memId;
 	}
+	
+	public String getVoteId() {
+		return voteId;
+	}
+	public void setVoteId(String voteId) {
+		this.voteId = voteId;
+	}
 	@Override
 	public String toString() {
-		return "VoteResultVo [voteresId=" + voteresId + ", voteitemId=" + voteitemId + ", memId=" + memId + "]";
+		return "VoteResultVo [voteresId=" + voteresId + ", voteitemId=" + voteitemId + ", memId=" + memId + ", voteId="
+				+ voteId + "]";
 	}
+	
+	
 	
 }

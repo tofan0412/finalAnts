@@ -141,7 +141,9 @@ $(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/vote/voteDetail?voteId='+voteid);
 		
 	})
-
+	
+	
+	
 })
 
 
@@ -205,7 +207,7 @@ function itemdetail(voteid){
 			 res ='';
 // 			 console.log(data)
 			 for(i=0;i<data.itemlist.length;i++){
-				 res += '<input type="radio" name="voteitem" value='+data.itemlist[i].voteitemName+'>'
+				 res += '<input type="radio" name="voteitem" value='+data.itemlist[i].voteitemName+'>';
 				 console.log(data.itemlist[i])
 			 }
 			
@@ -302,7 +304,8 @@ function itemdetail(voteid){
 	                     	<th  style="padding-left: 30px; text-align: center;"> 투표제목</th> 
 							<th style="text-align: center;"> 작성자 </th>
 							<th style="text-align: center;"> 마감일  </th>
-							<th style="text-align: center;"> 투표인원   </th>
+							<th style="text-align: center;"> 투표정원   </th>
+							<th style="text-align: center;">  상태   </th>
 <!-- 	                      <th style="text-align: center;">응답 상태</th> -->
 	                      <th></th>
 	                    </tr>
@@ -310,15 +313,16 @@ function itemdetail(voteid){
 	                  <tbody>
 	                      
                        <c:forEach items = "${votelist }" var ="vote" varStatus="status">
-							<tr>
-			                 
+                       			<input type="text" value="${vote.votedNo }" name="votedNo">
+                       		
 			                    <td  style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((voteVo.pageIndex-1) * voteVo.pageUnit + (status.index+1))}"/>.</td>
 							
-								<td  style="padding-left: 30px; text-align: center;">${vote.voteTitle}</td>
+								<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/vote/voteDetail?voteId=${vote.voteId }">${vote.voteTitle}</a></td>
 								<td style="text-align: center;"> ${vote.memId }</td>
 								<td style="text-align: center;"> ${vote.voteDeadline }</td>
 								<td style="text-align: center;"> ${vote.voteTotalno }</td>
-								<td style="text-align: center;"><button class="votebtn">투표하기</button><input type="hidden" value="${vote.voteId }"></td>
+								<td style="text-align: center;" class="votestatus"> </td>
+<%-- 								<td style="text-align: center;"><button class="votebtn">투표하기</button><input type="hidden" value="${vote.voteId }"></td> --%>
 		                     	<td style="text-align: center;">
 								 
 							</tr>
@@ -364,7 +368,7 @@ function itemdetail(voteid){
 <!-- 투표 등록 모달 -->
 <!-- Modal to invite new Members . . . -->
 <div class="modal fade" id="voteInsert" tabindex="-1" role="dialog"
-	aria-labelledby="inviteMemberModal">
+	aria-labelledby="inviteMemberModal" style=" padding-top: 100px;">
 	<div class="modal-dialog modal-sm" role="document">
 		<div class="modal-content" style="height: 600px auto; width : 400px;">
 			

@@ -15,6 +15,7 @@ public class VoteVo extends BaseVo {
 	private String memId;
 	private String del;
 	private String voteTitle;
+	private String votedNo;
 	
 	
 	
@@ -124,14 +125,30 @@ public class VoteVo extends BaseVo {
 		this.voteTitle = voteTitle;
 	}
 
+	
+
+	public String getVotedNo() {
+		return votedNo;
+	}
+
+
+
+	public void setVotedNo(String votedNo) {
+		this.votedNo = votedNo;
+	}
+
 
 
 	@Override
 	public String toString() {
 		return "VoteVo [voteId=" + voteId + ", voteTotalno=" + voteTotalno + ", voteDeadline=" + voteDeadline
 				+ ", voteStatus=" + voteStatus + ", categoryId=" + categoryId + ", reqId=" + reqId + ", memId=" + memId
-				+ ", del=" + del + ", voteTitle=" + voteTitle + "]";
+				+ ", del=" + del + ", voteTitle=" + voteTitle + ", votedNo=" + votedNo + "]";
 	}
+
+
+
+	
 
 	
 	

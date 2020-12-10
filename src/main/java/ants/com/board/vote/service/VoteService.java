@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ants.com.board.vote.mapper.VoteMapper;
 import ants.com.board.vote.model.VoteItemVo;
+import ants.com.board.vote.model.VoteResultVo;
 import ants.com.board.vote.model.VoteVo;
 
 @Service("voteService")
@@ -40,8 +41,29 @@ public class VoteService{
 		return mapper.insertvoteitem(voteitemVo);
 	}
 	
-	// 투표 상세보기
-	public List<VoteItemVo> voteDetail(VoteVo voteVo){
+	// 투표아이템 상세보기
+	public List<VoteItemVo> voteitemDetail(VoteVo voteVo){
+		return mapper.voteitemDetail(voteVo);
+	}
+	
+	// 해당 투표 상세
+	public VoteVo voteDetail(VoteVo voteVo) {
 		return mapper.voteDetail(voteVo);
 	}
+	
+	// 해당 투표 상세
+	public VoteResultVo voteresDetail(VoteVo voteVo) {
+		return mapper.voteresDetail(voteVo);
+	}
+	
+	// 멤버 투표
+	public int voteMember(VoteResultVo voteresultvo) {
+		return mapper.voteMember(voteresultvo);
+	}
+	
+	// 투표 카운트 update
+	public int cntupdate(VoteResultVo voteresultvo) {
+		return mapper.cntupdate(voteresultvo);
+	}
+		
 }

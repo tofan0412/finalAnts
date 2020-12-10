@@ -6,6 +6,7 @@ public class VoteItemVo {
 	private String voteitemId;
 	private String voteitemName;
 	private String voteId;
+	private String voteCount;
 	
 	public String getVoteitemId() {
 		return voteitemId;
@@ -25,10 +26,19 @@ public class VoteItemVo {
 	public void setVoteId(String voteId) {
 		this.voteId = voteId;
 	}
+	
+	public String getVoteCount() {
+		return voteCount;
+	}
+	public void setVoteCount(String voteCount) {
+		this.voteCount = voteCount;
+	}
 	@Override
 	public String toString() {
-		return "VoteItemVo [voteitemId=" + voteitemId + ", voteitemName=" + voteitemName + ", voteId=" + voteId + "]";
+		return "VoteItemVo [voteitemId=" + voteitemId + ", voteitemName=" + voteitemName + ", voteId=" + voteId
+				+ ", voteCount=" + voteCount + "]";
 	}
+
 	
 	
 	

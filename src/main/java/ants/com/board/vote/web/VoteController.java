@@ -9,9 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.vote.model.VoteItemVo;
+import ants.com.board.vote.model.VoteResultVo;
 import ants.com.board.vote.model.VoteVo;
 import ants.com.board.vote.service.VoteService;
 import ants.com.member.model.MemberVo;
@@ -96,17 +98,41 @@ public class VoteController{
 		return "jsonView";
 	}
 	
-	// 투표아이템 조회(상세보기)
+	// 해당 투표조회(상세보기)
 	@RequestMapping("/voteDetail")
-	public String voteDetail(VoteVo voteVo, Model model){
+	public String voteDetail(VoteVo voteVo, Model model, HttpSession session){
 		
-		System.out.println("VoteId : " + voteVo.getVoteId());
-		List<VoteItemVo> itemlist = voteService.voteDetail(voteVo);
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		voteVo.setMemId(memId);
+		
+		List<VoteItemVo> itemlist = voteService.voteitemDetail(voteVo);
+		VoteVo dbvoteVo = voteService.voteDetail(voteVo);
+		VoteResultVo voteres = voteService.voteresDetail(voteVo);
+		
 		model.addAttribute("itemlist", itemlist);
+		model.addAttribute("voteVo", dbvoteVo);
+		model.addAttribute("voteres", voteres);
 		
-		System.out.println("itemlist : " + itemlist);
 		return "tiles/vote/voteDetail";
 	}
+	
+	// 멤버 투표
+	@RequestMapping("/voteMember")
+	public String voteMember(VoteResultVo voteresultVo, Model model, HttpSession session, RedirectAttributes ra){
+		
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		voteresultVo.setMemId(memId);
+		
+		voteService.voteMember(voteresultVo);
+		voteService.cntupdate(voteresultVo);
+		
+		ra.addAttribute("voteId", voteresultVo.getVoteId());
+		
+		return "redirect:/vote/voteDetail";
+	}
+	
 	
 	
 }

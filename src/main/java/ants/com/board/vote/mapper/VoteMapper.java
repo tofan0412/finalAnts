@@ -3,6 +3,7 @@ package ants.com.board.vote.mapper;
 import java.util.List;
 
 import ants.com.board.vote.model.VoteItemVo;
+import ants.com.board.vote.model.VoteResultVo;
 import ants.com.board.vote.model.VoteVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -24,8 +25,22 @@ public interface VoteMapper {
 	// 투표아이템 테이블 등록
 	public int insertvoteitem(VoteItemVo voteitemVo);
 	
-	// 투표 상세보기
-	public List<VoteItemVo> voteDetail(VoteVo voteVo);
+	// 투표아이템 상세보기
+	public List<VoteItemVo> voteitemDetail(VoteVo voteVo);
+	
+	// 해당 투표 상세
+	public VoteVo voteDetail(VoteVo voteVo);
+	
+	// 해당 투표결과 상세
+	public VoteResultVo voteresDetail(VoteVo voteVo);
+	
+	// 멤버 투표
+	public int voteMember(VoteResultVo voteresultvo);
+	
+	// 투표 카운트 update
+	public int cntupdate(VoteResultVo voteresultvo);
+	
+	
 	
 	
 }

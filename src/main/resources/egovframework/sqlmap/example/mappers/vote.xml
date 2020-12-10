@@ -13,7 +13,10 @@
 		      FROM (			
                 
 	                 select vote_title, vote_id, vote_totalno, to_char(vote_deadline, 'YYYY-MM-DD') as vote_deadline,
-	                 		vote_status, category_id, req_id, mem_id
+	                 		vote_status, category_id, req_id, mem_id,
+	                 	  (select count(*) 
+		                     from voteresult a, voteitem b, vote c 
+						    where c.vote_id = b.vote_id and b.voteitem_id = a.voteitem_id and  b.vote_id = #{voteId}) as voted_no
 	                 from vote 
 	                 where req_id = #{reqId} 
 	                   and del = 'N'
@@ -77,8 +80,10 @@
 		    mem_id,
 		    del
 		) VALUES (
-		    #{voteId},
-		    0,
+		    #{voteId},		    
+			(select count(*)
+			from projectmember
+			where req_id =#{reqId}),		
 		    #{voteTitle},
 		    TO_DATE(#{voteDeadline},'YYYY/MM/DD'),
 		    'ing',
@@ -94,25 +99,84 @@
 		INSERT INTO voteitem (
 				    voteitem_id,
 				    voteitem_name,
-				    vote_id
+				    vote_id,
+				    vote_count
+				    
 				) VALUES (
 				    vote_seq.nextval,
 				    #{voteitemName},
-				    #{voteId}
+				    #{voteId},
+				    0
 				)
 	</insert>
 	
-	<select id="voteDetail"  parameterType="ants.com.board.vote.model.VoteVo"
+	<!-- 투표아이템 상세 -->
+	<select id="voteitemDetail"  parameterType="ants.com.board.vote.model.VoteVo"
 							resultType="ants.com.board.vote.model.VoteItemVo">
 		SELECT
 		    voteitem_id,
 		    voteitem_name,
-		    vote_id
+		    vote_id,
+		    vote_count
 		FROM
 		    voteitem
 		WHERE
 		    vote_id = ${voteId}
+		ORDER BY voteitem_id
 	</select>
 	
+	<!-- 투표 상세 -->
+	<select id="voteDetail" parameterType="ants.com.board.vote.model.VoteVo"
+				resultType="ants.com.board.vote.model.VoteVo">
+		select vote_title, vote_id, vote_totalno, to_char(vote_deadline, 'YYYY-MM-DD') as vote_deadline,
+                 vote_status, req_id, mem_id, 
+                ( select count(*) 
+                    from voteresult a, voteitem b, vote c 
+				   where c.vote_id = b.vote_id and b.voteitem_id = a.voteitem_id and  b.vote_id = #{voteId}) as voted_no
+          from vote 
+          where vote_id = #{voteId}	
+          order by vote_deadline 		
+	</select>
+	
+	<!-- 투표결과 상세 -->
+	<select id="voteresDetail" parameterType="ants.com.board.vote.model.VoteVo"
+				resultType="ants.com.board.vote.model.VoteResultVo">
+		SELECT
+		    a.voteres_id,
+		    a.voteitem_id,
+		    a.mem_id	
+		FROM
+		    voteresult a, voteitem b
+		WHERE a.voteitem_id = b.voteitem_id
+		and b.vote_id = #{voteId}	
+		and a.mem_id =#{memId}
+	</select>
+	
+	
+	
+	
+	<!-- 멤버 투표 -->
+	<insert id="voteMember" parameterType="ants.com.board.vote.model.VoteResultVo">
+		INSERT INTO voteresult (
+							    voteres_id,
+							    voteitem_id,
+							    mem_id
+								) VALUES (
+								    VOTERES_SEQ.nextval,
+								    #{voteitemId},
+								    #{memId}
+								)
+	</insert>
+	
+	<!-- 투표 카운트 증가 -->
+	<update id="cntupdate" parameterType="ants.com.board.vote.model.VoteResultVo">
+			UPDATE voteitem 
+			SET vote_count = 
+					(SELECT count(*) 
+					   FROM voteresult 
+					  WHERE voteitem_id =  #{voteitemId})
+			WHERE voteitem_id =  #{voteitemId}
+		
+	</update>
 
 </mapper>
