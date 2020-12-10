@@ -25,8 +25,9 @@
 				FROM (
 					SELECT *
 					FROM MEMBER
+					WHERE DEL = 'N'
 				) a
-		WHERE ROWNUM <![CDATA[ <= ]]> 10 ) c <![CDATA[ WHERE RNUM > 1]]>
+		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE RNUM > #{firstIndex}]]>
 <!-- 		SELECT * -->
 <!-- 					FROM MEMBER -->
 	</select>
@@ -66,7 +67,16 @@
 		WHERE MEM_ID = #{memId}
 	</update>
 	
-	
+	<!-- 회원 삭제하기 -->
+	<update id="delmemlist" parameterType="ants.com.member.model.MemberVo"> 
+		UPDATE member 
+			set del = 'Y' 
+		where mem_id = #{memId}
+	</update>
+<!-- 	<delete id="delmemlist" parameterType="ants.com.member.model.MemberVo"> -->
+<!-- 		DELETE member -->
+<!-- 		where mem_id= #{mem_id} -->
+<!-- 	</delete> -->
 	
 	
 	

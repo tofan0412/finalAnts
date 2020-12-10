@@ -369,7 +369,16 @@ public class AdminController {
 
 	}
 	
-	
+	 //회원 삭제
+	@RequestMapping("/delmemlist")
+	public String delmemlist(String memId, HttpSession session, Model model) {		
+		int delCnt = adminService.delmemlist(memId);
+		if(delCnt>0) {		
+			return "redirect:/admin/memberlist";
+		}else {
+			return "redirect:/admin/eachmemlistDetail?memId="+memId;
+		}
+	}
 	
 	
 }
