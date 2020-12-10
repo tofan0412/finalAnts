@@ -18,9 +18,8 @@ public class HotIssueFileVo extends BaseVo{
 	}
 	
 	// 파일 검색시
-	public HotIssueFileVo(String hissuefId, String hissueId) {
+	public HotIssueFileVo(String hissueId) {
 		super();
-		this.hissuefId = hissuefId;
 		this.hissueId = hissueId;
 	}
 

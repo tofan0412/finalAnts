@@ -50,4 +50,12 @@ public interface FileMapper {
 	/*			PL-PM	파	일	함				*/
 	// 파일저장
 	public int insertHotissueFile(HotIssueFileVo hotIssueFileVo);
+	
+	// 해당 게시글 파일 가져오기
+	public List<HotIssueFileVo> gethotfiles(HotIssueFileVo pfv);
+	
+	// 해당 파일 가져오기
+	public HotIssueFileVo gethotfile(String hissuefId);
 }
+
+

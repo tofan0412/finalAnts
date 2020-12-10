@@ -19,6 +19,7 @@ import ants.com.board.manageBoard.model.HotIssueVo;
 import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
+import ants.com.file.model.HotIssueFileVo;
 import ants.com.file.view.FileController;
 import ants.com.file.view.HotIssueFileController;
 import ants.com.member.model.MemberVo;
@@ -73,6 +74,8 @@ public class HotIssueController {
 	@RequestMapping("/hissueDetail")
 	public String hissueDetail(Model model, HotIssueVo hotIssueVo) {
 		HotIssueVo dbVo = manageBoardService.gethissue(hotIssueVo);
+		HotIssueFileVo pfv = new HotIssueFileVo(dbVo.getHissueId());
+		hotIssueFileController.getfiles(pfv, model);
 		model.addAttribute("hotIssueVo", dbVo);
 		return "jsonView";
 	}

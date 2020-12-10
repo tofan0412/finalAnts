@@ -156,7 +156,7 @@
 				<div class="form-group">
 				<label id="filelabel" for="File" class="col-sm-2 control-label">첨부파일 다운로드</label>
 				<div id = "filediv">
-					
+					<br><br>
 				</div>
 				</div>
 		         <div id="btnMenu">

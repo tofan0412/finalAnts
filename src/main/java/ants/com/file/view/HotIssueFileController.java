@@ -37,18 +37,17 @@ public class HotIssueFileController {@Resource(name = "fileService")
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
 
-	//
-	// // 파일 다운로드
-	// @RequestMapping(path ="/publicfileDown")
-	// public String getfileDown(String pubId, HttpSession session, Model model) {
-	//
-	// PublicFileVo filevo = fileService.getfile(pubId);
-	//
-	// model.addAttribute("pubFilename" ,filevo.getPubFilename());
-	// model.addAttribute("pubFilepath" ,filevo.getPubFilepath());
-	//
-	// return "FileDownloadView";
-	// }
+	
+	 // 파일 다운로드
+	 @RequestMapping(path ="/hotfileDown")
+	 public String getfileDown(String hissuefId, HttpSession session, Model model) {
+	
+		 HotIssueFileVo filevo = fileService.gethotfile(hissuefId);	
+	 model.addAttribute("pubFilename" ,filevo.getHissuefFilename());
+	 model.addAttribute("pubFilepath" ,filevo.getHiussefFilepath());
+	
+	 return "FileDownloadView";
+	 }
 
 	// // 핫이슈 파일함 View
 	// @RequestMapping(path ="/publicfileview")
@@ -114,17 +113,18 @@ public class HotIssueFileController {@Resource(name = "fileService")
 		 pfv.setHissuefId(fileId);
 		return "jsonView";
 	}
+	
 	// // 게시글에 해당하는 파일 가져오기
-	// @RequestMapping(path ="/getfiles")
-	// public String getfiles(PublicFileVo pfv, Model model) {
-	//
-	// List<PublicFileVo> filelist = fileService.filelist(pfv);
-	//
-	// model.addAttribute("filelist" , filelist);
-	//
-	// return "";
-	// }
-	//
+	 @RequestMapping(path ="/gethotfiles")
+	 public String getfiles(HotIssueFileVo pfv, Model model) {
+	
+	 List<HotIssueFileVo> filelist = fileService.gethotfiles(pfv);
+	
+	 model.addAttribute("filelist" , filelist);
+	
+	 return "";
+	 }
+	
 
 	// // 게시글의 파일 삭제하기
 	// @RequestMapping(path ="/delfiles", method=RequestMethod.POST)

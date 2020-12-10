@@ -27,7 +27,21 @@
 							    #{hissuefSize},
 							    #{hissuefExtension}
 							)
-							
   </insert>
+  
+   <!-- 해당 게시글 파일들 조회 -->
+  <select id="gethotfiles" parameterType="ants.com.file.model.HotIssueFileVo" resultType="ants.com.file.model.HotIssueFileVo">
+  	 SELECT * 
+     FROM hotissuefile
+     WHERE HISSUE_ID = #{hissueId} 
+  </select>
+  
+   <!-- 클릭한 파일 정보다운로드용 -->
+  <select id="gethotfile" parameterType="String" resultType="ants.com.file.model.HotIssueFileVo">
+  	 SELECT * 
+     FROM hotissuefile 
+     WHERE HISSUEF_ID = #{hissuefId}
+  </select>
+  
   
 </mapper>

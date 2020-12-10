@@ -79,36 +79,35 @@ public class FileService {
 	}
 
 	/* PL-PM 파 일 함 */
-	// // 해당 파일 가져오기
-	// public PublicFileVo getfile(String pubId) {
-	// return mapper.getfileDetail(pubId);
-	// }
-	//
+	 // 해당 파일 가져오기
+	 public HotIssueFileVo gethotfile(String hissuefId) {
+	 return mapper.gethotfile(hissuefId);
+	 }
+	
 	// 파일 넣기
 	public String insertHotissueFile(HotIssueFileVo hotIssueFileVo) {
 		mapper.insertHotissueFile(hotIssueFileVo);
 		return hotIssueFileVo.getHissuefId();
 	}
 	
-	//
-	// // 해당 게시글 파일들 가져오기
-	// public List<PublicFileVo> filelist(PublicFileVo pfv){
-	// return mapper.getfiles(pfv);
-	// }
-	//
-	// // 파일 삭제하기
-	// public int defiles(String pubId){
-	// return mapper.delfiles(pubId);
-	// }
-	//
-	// // 프로젝트별 파일 수
-	// public int pubfilePagingListCnt(PublicFileVo publicFileVo){
-	// return mapper.pubfilePagingListCnt(publicFileVo);
-	// }
-	//
-	// // 프로젝트별 파일목록
-	// public List<PublicFileVo> pubfilelist(PublicFileVo publicFileVo){
-	// return mapper.pubfilelist(publicFileVo);
-	// }
+	 // 해당 게시글 파일들 가져오기
+	 public List<HotIssueFileVo> gethotfiles(HotIssueFileVo pfv){
+	 return mapper.gethotfiles(pfv);
+	 }
+	
+//	 // 파일 삭제하기
+//	 public int defiles(String pubId){
+//	 return mapper.delfiles(pubId);
+//	 }
+//	
+//	 // 프로젝트별 파일 수
+//	 public int pubfilePagingListCnt(PublicFileVo publicFileVo){
+//	 return mapper.pubfilePagingListCnt(publicFileVo);
+//	 }
+//	
+//	 // 프로젝트별 파일목록
+//	 public List<PublicFileVo> pubfilelist(PublicFileVo publicFileVo){
+//	 return mapper.pubfilelist(publicFileVo);
+//	 }
 
 }
