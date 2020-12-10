@@ -76,12 +76,14 @@ public class HotIssueController {
 	@RequestMapping("/hissueInsertView")
 	public String todoInsertView(@ModelAttribute("hotIssueVo") HotIssueVo hotIssueVo, Model model) {
 		// 부모 게시글정보
-		String hissueParentid = hotIssueVo.getHissueParentid();
-		hotIssueVo.setHissueId(hissueParentid);
-		hotIssueVo = manageBoardService.gethissue(hotIssueVo);
+		if(hotIssueVo.getHissueParentid() != null) {
+			String hissueParentid = hotIssueVo.getHissueParentid();
+			hotIssueVo.setHissueId(hissueParentid);
+			hotIssueVo = manageBoardService.gethissue(hotIssueVo);
+			model.addAttribute("hissueParentid", hissueParentid);
+		}
 		
 		model.addAttribute("hotIssueVo", hotIssueVo);
-		model.addAttribute("hissueParentid", hissueParentid);
 		return "tiles/manager/plpm_hotissueInsert";
 	}
 	
