@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 
@@ -53,6 +54,11 @@ th{
 	text-align: center;
 	border: 1px solid lightblue;
 } 
+.tooltip-inner {
+   min-width: 650px;
+    /* If max-width does not work, try using width instead */
+   max-width: 650px; 
+}
 
 /* .delbtn{
 	background-color: red;
@@ -69,19 +75,19 @@ th{
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		// 툴팁에 html 적용시키기
+		
 		$(document).tooltip({
-		       content: function() {
-		        return $(this).prop('title');
-		       }
-		    });
-
+			// 툴팁에 title 속성에 html 적용시키기
+			content: function() {
+		    	return $(this).prop('title');
+		    }
+		});
+     
 		// 마우스 올려놨을때
 		$("#privatefileList tr").on("mouseenter",function(){
 			$(this).css("backgroundColor","#F0F8FF");
 			
-			$(document).tooltip();	
-			
+			  
 		/* 	$.ajax({ type: 'GET', 
 				url: '/privatefile/privatefileSelect', 
 				dataType : 'json',
@@ -189,26 +195,269 @@ th{
 				<th width="200px">수정한 날짜</th>
 				<th width="200px">파일사이즈</th>
 				<th width="110px" style="padding-left:20px;">삭제</th>
-				  
+			
 			</tr> 
 			<tbody id="privatefileList"> 
 				<c:forEach items="${privatefileList}" var="privatefile" varStatus="sts" >
-				    <tr "data-privid="${privatefile.privId}" title="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				    												----- &nbsp;&nbsp;
-				    												파일정보 
-				    												&nbsp;&nbsp;
-				    												-----&nbsp;&nbsp;&nbsp;&nbsp;<br>
-				    												시퀸스 : ${privatefile.privId} <br>
-																	파일경로 : ${privatefile.privFilepath} <br>
-																	파일이름 : ${privatefile.privFilename } <br>
+						
+						<c:set var="orginalName" value="${privatefile.privFilename}"/>
+						<c:set var="nameLength" value="${fn:length(orginalName)}"/>
+						<c:set var="cutName" value="${fn:substring(orginalName, nameLength-5, nameLength)}"/>
+						<c:set var="filename" value="${fn:substringAfter(cutName,'.')}"/>
+						
+				    <tr "data-privid="${privatefile.privId}" title="시퀸스 : ${privatefile.privId} <br>
 																	수정한 날짜: ${privatefile.regDt } <br>
+																	파일이름 : ${privatefile.privFilename } <br>
+																	파일경로 : ${privatefile.privFilepath} <br>
 																	파일사이즈 : ${privatefile.privSize } KB<br>
-																	작성자 : ${privatefile.memId} <br>">
+																	확장자: ${filename} <br>
+																	작성자 : ${privatefile.memId} <br>
+																	">
 					<td><c:out value="${paginationInfo.totalRecordCount - ((privatefileVo.pageIndex-1) * privatefileVo.pageUnit + sts.index)}"/>. 
 						<input type="hidden" id="${privatefile.privId }" name="${privatefile.privId }">
 					</td>	
 					<td>
-						<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">${privatefile.privFilename }</a>
+						
+						<c:choose>
+							 
+							
+							<c:when test="${filename eq '3ds'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/3ds.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'aac'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/aac.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'ai'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/ai.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'avi'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/avi.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'bmp'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/bmp.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							
+							
+							<c:when test="${filename eq 'cad'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/cad.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'cdr'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/cdr.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'css'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/css.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'dat'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/dat.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'dll'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/dll.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							
+							<c:when test="${filename eq 'dmg'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/dmg.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'doc'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/doc.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'eps'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/eps.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'fla'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/fla.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'flv'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/flv.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							
+							
+							<c:when test="${filename eq 'gif'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/gif.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'html'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/html.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'hwp'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/hwp.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'indd'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/indd.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'iso'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/iso.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							
+							
+							<c:when test="${filename eq 'jpg'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/jpg.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'js'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/js.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'midi'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/midi.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'mov'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/mov.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'mp3'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/mp3.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							
+							
+							<c:when test="${filename eq 'mpg'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/mpg.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'pdf'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/pdf.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'php'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/php.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'png'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/png.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'ppt'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/ppt.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'pptx'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/ppt.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							
+							
+							<c:when test="${filename eq 'ps'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/ps.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'psd'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/psd.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'raw'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/raw.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'sql'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/sql.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'svg'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/svg.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							
+							
+							<c:when test="${filename eq 'tif'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/tif.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'txt'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/txt.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'wmv'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/wmv.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'xls'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/xls.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'xlsx'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/xls.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							<c:when test="${filename eq 'xml'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/xml.png" style="width:30px; height:30px;">
+								</a>
+							</c:when> 
+							
+							<c:when test="${filename eq 'zip'}">
+								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
+									<img src="/fileFormat/zip.png" style="width:30px; height:30px;">
+								</a>
+							</c:when>
+							
+							
+							<c:otherwise>
+								<img src="/fileFormat/not.png" style="width:30px; height:30px;">
+							</c:otherwise>
+						</c:choose>
+						 
+						<a>${privatefile.privFilename }</a>
 					</td>
 					<td></td>
 					<td></td>

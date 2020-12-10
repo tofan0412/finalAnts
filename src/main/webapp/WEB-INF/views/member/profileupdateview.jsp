@@ -31,7 +31,8 @@
 		padding-left : 20px;
 		width: 330px;
 		height : 50px;
-		border-radius: 80px
+		border-radius: 80px;
+		outline: none;
 	}
 	#basicimg{
 		height : 30px;
@@ -131,7 +132,7 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="button" id="registBtn" class="btn btn-info">등록</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="button" id="cancelBtn" onclick="window.history.back()">&nbsp;&nbsp;&nbsp;취 &nbsp;&nbsp; 소 &nbsp;&nbsp;&nbsp;</button>
+						<button type="button" id="cancelBtn" class="btn btn-info" onclick="window.history.back()">&nbsp;&nbsp;&nbsp;취 &nbsp;&nbsp; 소 &nbsp;&nbsp;&nbsp;</button>
 					</div>
 				</div>
 			</form>

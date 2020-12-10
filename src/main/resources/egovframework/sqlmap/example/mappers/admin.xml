@@ -18,32 +18,67 @@
 
 
 	<!-- 회원 목록 -->
-	<!-- 
 	<select id="memberlist" parameterType="ants.com.member.model.MemberVo" resultType="ants.com.member.model.MemberVo">
+		SELECT c.*
+			FROM (
+				SELECT ROWNUM RNUM, a.*
+				FROM (
+					SELECT *
+					FROM MEMBER
+					WHERE DEL = 'N'
+				) a
+		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE RNUM > #{firstIndex}]]>
+<!-- 		SELECT * -->
+<!-- 					FROM MEMBER -->
+	</select>
+	
+	<!-- 목록 갯수  -->
+	<select id="memberlistPagingListCnt" parameterType="ants.com.member.model.MemberVo" resultType="int">
+		SELECT COUNT(*)
+		  FROM MEMBER
+	</select>
+	
+	<!-- 회원 상세보기 -->
+	<select id="">
 		SELECT *
-		FROM 	MEMBER
-		ORDER BY mem_id desc
-	</select>
-	-->
-	<!-- 멤버 등록 -->
-	<!-- 
-	<insert id="insertMember" parameterType="ants.com.member.model.MemberVo">
-		INSERT INTO MEMBER 
-			(mem_id, mem_name, mem_tel,mem_type)
-		VALUES
-			(${memId},${memName},${memTel},${memType})
-	</insert>
-	 -->
-	<!-- 멤버 정보 상세보기 -->
-	<!-- 
-	<select id="viewMember" parameterType="ants.com.member.model.MemberVo" resultType="ants.com.member.model.MemberVo">
-		SELECT
-			mem_id as memId,
-			mem_name as memName,
-			mem_tel as memTel,
-			mem_type as memType
 		FROM MEMBER
-		WHERE mem_id = #{memId}
+		WHERE MEM_ID = #{memId}
 	</select>
-	 -->
+	
+	
+	
+	<select id="getMember" parameterType="ants.com.member.model.MemberVo"
+		resultType="ants.com.member.model.MemberVo">
+		SELECT  mem_id,
+			    mem_name,
+			    mem_pass,
+			    mem_tel,
+			    mem_filepath,
+			    mem_filename,
+			    UPPER(mem_alert) as mem_alert,
+			    UPPER(del) as del,
+			    UPPER(mem_type) as mem_type
+		FROM 	MEMBER
+		WHERE     MEM_ID = #{memId}
+	</select>
+	
+	<update id="memlistproupdate" parameterType="ants.com.member.model.MemberVo">
+		UPDATE MEMBER SET mem_name = #{memName}, mem_pass = #{memPass}, mem_tel = #{memTel}, mem_filepath = #{memFilepath}, mem_filename = #{memFilename}, mem_type = #{memType}
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	<!-- 회원 삭제하기 -->
+	<update id="delmemlist" parameterType="ants.com.member.model.MemberVo"> 
+		UPDATE member 
+			set del = 'Y' 
+		where mem_id = #{memId}
+	</update>
+<!-- 	<delete id="delmemlist" parameterType="ants.com.member.model.MemberVo"> -->
+<!-- 		DELETE member -->
+<!-- 		where mem_id= #{mem_id} -->
+<!-- 	</delete> -->
+	
+	
+	
+	
 </mapper>

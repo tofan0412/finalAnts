@@ -59,35 +59,32 @@ public class AdminService extends EgovAbstractServiceImpl{
 	public AdminVo adlogincheck(AdminVo adminVo) {
 		return mapper.adlogincheck(adminVo);
 	}
-
-	////////////////////////////////////////////////////////////////테스트지만 이게 맞는듯??
-//	//멤버 리스트 목록 테스트
-//	public List<MemberVo> memberlist(MemberVo memberVo) {
-//		return mapper.memberlist(memberVo);
-//	}
-//	
-//	//각 멤버리스트 상세보기
-//	public MemberVo geteachmember(String memId) {
-//		return mapper.geteachmember(memId);
-//	}
-//
-//	// 멤버리스트 작성
-//	public int insertmember(MemberVo memberVo) {
-//		return mapper.insertmember(memberVo);
-//	}
-//
-//	// 멤버리스트 update
-//	public int updatemember(MemberVo memberVo) {
-//		return mapper.updatemember(memberVo);
-//	}
-//
-//	// 멤버리스트 delete
-//	public int delmember(String memId) {
-//		return mapper.delmember(memId);
-//	}
-
-	/////////////////////////////////////////
 	
+	//////////멤버 리스트 
+	public List<MemberVo> memberlist(MemberVo memberVo) {
+		return mapper.memberlist(memberVo);
+	}
+
+	public int memberlistPagingListCnt(MemberVo memberVo) {
+		return mapper.memberlistPagingListCnt(memberVo);
+	}
+
+	public MemberVo geteachmemlist(String memId) {
+		return mapper.geteachmemlist(memId);
+	}
+
+	public MemberVo getMember(MemberVo memberVo) {
+		return mapper.getMember(memberVo);
+	}
+	
+	public int memlistproupdate(MemberVo memberVo) {
+		return mapper.memlistproupdate(memberVo);
+	}
+	
+	//회원삭제
+	public int delmemlist(String memId) {
+		return mapper.delmemlist(memId);
+	}
 	
 
 	

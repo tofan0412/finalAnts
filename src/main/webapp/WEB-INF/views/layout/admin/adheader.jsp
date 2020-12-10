@@ -75,7 +75,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="jg" style="padding-top : 5px;">
       	<c:if test="${SADMIN.adminId ne null }">
-    	  환영합니다, ${SADMIN.adminId }님!
+    	  환영합니다, 관리자님!
    		</c:if>
 <%--    		<c:if test="${projectId ne null }"> --%>
 <%--     	  현재 프로젝트 번호 : ${projectId} --%>

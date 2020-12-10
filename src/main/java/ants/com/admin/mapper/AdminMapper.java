@@ -31,27 +31,26 @@ public interface AdminMapper {
 	//회원이 사용가능한 카테고리 조회
 	public int noticePagingListCnt(NoticeVo noticeVo);
 
+	//관리자 로그인
 	public AdminVo getAdmin(AdminVo adminVo);
 
 	public AdminVo adlogincheck(AdminVo adminVo);
 
-	///////////////////////////////////////
-	
-//	//멤버 리스트 목록 테스트
-//	public List<MemberVo> memberlist(MemberVo memberVo);
-//	
-//	//각 멤버리스트 상세보기
-//	public MemberVo geteachmember(String memId);
-//
-//	// 멤버리스트 작성
-//	public int insertmember(MemberVo memberVo);
-//
-//	// 멤버리스트 update 
-//	public int updatemember(MemberVo memberVo);
-//
-//	// 멤버리스트 update 
-//	public int delmember(String memId);
+	//멤버 리스트
+	public List<MemberVo> memberlist(MemberVo memberVo);
 
+	public int memberlistPagingListCnt(MemberVo memberVo);
+
+	//멤버 리스트 상세보기
+	public MemberVo geteachmemlist(String memId);
+
+	
+	public MemberVo getMember(MemberVo memberVo);
+	
+	public int memlistproupdate(MemberVo memberVo);
+
+	//회원삭제
+	public int delmemlist(String memId);
 	
 
 	

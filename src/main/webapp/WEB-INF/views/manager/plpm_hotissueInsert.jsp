@@ -21,19 +21,103 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	
+<script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
+	
 <script type="text/javascript">
 	$(document).ready(function(){
-		
 	 	$('#summernote').summernote();
 	 	
-	 	// 등록
-	 	$("#regBtn").on("click", function() {
-	 		if("${hissueParentid}" != null){
+	 	//파일
+ 		fileSlotCnt = 1;
+ 		
+ 		maxFileSlot = 5;
+ 	    $('#filediv').on('click', '#btnMinus', function(){
+ 	     	   if(fileSlotCnt > 1){
+ 	     		   fileSlotCnt--;
+ 	     		   console.log(fileSlotCnt);
+ 	     	   }
+ 	     	   console.log("minus clicked!!");
+ 	     	   $(this).prev().prev().remove();
+ 	     	   $(this).prev().remove();
+ 	     	   $(this).remove();
+ 	     	   $('#addbtn').show();
+ 	     	   
+ 	        })
+ 	        
+ 	        $('#addbtn').on('click', function(){
+	 
+		   fileSlotCnt++;
+    	   console.log("click!!");
+    	   var html = '<br><input type="file" name="file" id="fileBtn">'
+    	   				+'<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">'
+							+'<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>'
+						+'</button>';
+    	   $(this).next().next().append(html);  
+    	   
+    	   if(fileSlotCnt >= maxFileSlot){
+    		   $(this).hide();
+	    		   alert("파일은 총 "+maxFileSlot+"개 까지만 첨부가능합니다.");
+    	   }
+	   
+ 	 })
+ 	
+ 	 var uploadCnt = 0;
+ 	//파일 업로드
+ 	$('#file_upload').uploadifive({
+		'uploadScript'     : '/hotissueFile/insertHotissueFile',
+		'fileObjName'     : 'file',    
+		'formData'         : {
+							   'hissueId'     : '${hissueSeq}'
+		                     },
+		'auto'             : false,
+		'queueID'          : 'queue',
+		"fileType": '.gif, .jpg, .png, .jpeg, .bmp, .doc, .ppt, .xls, .xlsx, .docx, .pptx, .zip, .rar, .pdf',
+		 "multi": true,
+         "height": 30,
+         "width": 100,
+         "buttonText": "파일찾기",
+         "fileSizeLimit": "20MB",
+         "uploadLimit": 10,
+		 'onUploadComplete' : function(file, data) { 
+		
+			uploadCnt +=1;
+			
+			console.log(data); 
+			console.log(data.publicFileVo); 
+			console.log(data.count); 
+			insert();
+		},
+		'onCancel': function (file) {
+		} 
+	});
+ 		
+ 	// 작성 버튼 클릭시 파일 업로드 호출
+ 	$('#regBtn').on('click', function(){
+ 		// 업로드할 파일이 존재하지 않을시
+ 		if($('.uploadifive-queue-item').length ==0){    			
+ 			if("${hissueParentid}" != null){
 	 			saveMsg();
 	 		}
 			$("#hissueform").submit();
-		});
+ 		// 업드로할 파일이 존재할 시
+ 		}else{
+ 			$('#file_upload').uploadifive('upload');
+ 		}	
+ 	})
+ 	
+ 	function insert(){
+ 		if(uploadCnt == $('.uploadifive-queue-item').length){
+ 			if("${hissueParentid}" != null){
+	 			saveMsg();
+	 		}
+			$("#hissueform").submit();    		
+    	}else{}
+	}
+ 	//파일끝
 	 	
+ 		
 	 	// 뒤로가기
 		$("#back").on("click", function() {
 			window.history.back();
@@ -69,7 +153,34 @@
 	}
 
 	
-</script>	 		
+</script>
+<style type="text/css">
+#fileBtn{
+		 display: inline-block;
+		 padding-bottom:  .5em;
+		 padding-top:  .5em;
+	}
+	
+	.uploadifive-button {
+		float: left;
+		margin-right: 10px;
+		
+	}
+	
+	#queue {
+		border: 1px solid #E5E5E5;
+		height: 177px;
+		width : 450px;
+		overflow: auto;
+		margin-bottom: 10px;
+		padding: 0 3px 3px;
+	
+	}
+	#uploadifive-file_upload{
+		width : 200px;
+		height: 30px;
+	}
+</style>	 		
 </head>
 
 		<%@include file="../layout/contentmenu.jsp"%>
@@ -82,6 +193,7 @@
               </div>
               <div class="card-body">
                 <div class="form-group">
+                <input type="hidden" name="hissueId" value="${hissueSeq }">
                   <input class="form-control" placeholder="Subject:" name="hissueTitle" id="hissueTitle">
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
                   <input type="hidden" name="hissueParentid" value="${hissueParentid}">
@@ -89,20 +201,22 @@
                 <div class="form-group">
                 <textarea id="summernote" name="hissuetCont"></textarea>
                 </div>
-                <div class="form-group">
-                  <div class="btn btn-default btn-file">
-                    <input type="file">
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="float-right">
-                  <button type="button" class="btn btn-default" id="back"><i class="fas fa-times"></i> 취소</button>
-                  <button type="button" class="btn btn-primary" id="regBtn"><i class="far fa-pencil-alt"></i> 작성</button>
-                </div>
-              </div>
-            </div>
+         
+              
         </form>
-	</div>
-
+             
+		<form>
+		    <label for="file" class="col-sm-2 control-label">첨부파일</label>
+			<div id="queue"></div>
+			<input id="file_upload" name="file" type="file" multiple="true"/>
+						<br><br>
+		        <div class="card-footer">
+		        	<div class="float-center">
+		        	
+				        <button type="button" class="btn btn-default" id="regBtn">등록</button>
+				        <button type="button" class="btn btn-default" id="back">뒤로가기</button>
+		        	</div>
+		        </div>
+			</form>
+</div>
 </html>

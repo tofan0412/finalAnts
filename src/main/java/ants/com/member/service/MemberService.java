@@ -61,4 +61,7 @@ public class MemberService{
 		return mapper.profileupdate(memberVo);
 	}
 	
+	
+
+	
 }
