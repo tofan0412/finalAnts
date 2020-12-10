@@ -117,14 +117,9 @@
      		if(uploadCnt == $('.uploadifive-queue-item').length){
      			$("#mem-select").remove();
      			$('#todoform').submit(); 
-     			
-
         	}
-
     	}
 	      
- 	
-	
 	
 	// 삭제할 파일 
 	function delfiles(){
@@ -143,15 +138,12 @@
 		     		}else{
 		     			$('#file_upload').uploadifive('upload');
 		     		}
-		     		
 				 }
 		 	})
-	}
-
+		}
  		
  		
  		//파일끝
- 		
  		
  		// 뒤로가기
 		$("#back").on("click", function() {
