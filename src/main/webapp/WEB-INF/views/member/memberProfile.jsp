@@ -63,7 +63,6 @@ $(document).ready(function(){
 			<div class="register-card-body">
 
 				<br><br><br><br><br>
-				<form role="form" class="form-horizontal" action="/memberUpdate/process" method="POST" enctype="multipart/form-data">
 					<div class="input-group mb-3">
 						<div class="mailbox-attachments clearfix"
 							style="text-align: center; width: 100%;">
@@ -99,7 +98,7 @@ $(document).ready(function(){
 							<span style="color: red; font-weight: bold;">*</span>전화번호
 						</label>
 						<div class="col-sm-6 input-group-sm">
-							<input class="form-control" name="usernm" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border: none" readonly />
+							<input class="form-control" name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border: none" readonly />
 						</div>
 					</div>
 
@@ -108,7 +107,7 @@ $(document).ready(function(){
 							<span style="color: red; font-weight: bold;"></span>알람
 						</label>
 						<div class="col-sm-6 input-group-sm">
-							<input class="form-control" name="alias" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border: none" readonly>
+							<input class="form-control" name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border: none" readonly>
 						</div>
 					</div>
 
@@ -117,7 +116,7 @@ $(document).ready(function(){
 							<span style="color: red; font-weight: bold;"></span>타입
 						</label>
 						<div class="col-sm-6 input-group-sm">
-							<input name="addr1" type="text" class="form-control" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border: none" readonly>
+							<input name="memType" type="text" class="form-control" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border: none" readonly>
 						</div>
 					</div>
 					
@@ -136,7 +135,7 @@ $(document).ready(function(){
 					<div class="card-footer">
 						<div class="row">
 							<div class="col-sm-6">
-								<a href="/member/profileupdateview"><button type="button" id="registBtn" class="btn btn-info">수정</button></a>
+								<a href="/member/profileupdateview?memId=${memberVo.memId}"><button type="button" id="registBtn" class="btn btn-info">수정</button></a>
 							</div>
 
 							<div class="col-sm-6">
@@ -147,7 +146,6 @@ $(document).ready(function(){
 							
 						</div>
 					</div>
-				</form>
 			</div>
 		</div>
 	</div>
