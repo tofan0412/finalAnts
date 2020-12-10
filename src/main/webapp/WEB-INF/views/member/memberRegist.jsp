@@ -45,7 +45,9 @@
 	#checkbtn{
 		height : 42px;
 	}
-
+	.indiv{
+		margin-left: 20px;
+	} 
 </style>	
 
 </head>
@@ -76,10 +78,10 @@
 						<input class="input" name="memId" type="email" id="memId" placeholder="회원 id"/>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="submit" id="checkbtn" class="btn btn-default">중복확인</button>
-						<div class="check_font" id="checkMsg"></div>
+						<div id="checkMsg" class="indiv"></div>
 					</div>
 				</div>
-				
+				  
 				<div class="content">
 					<label for="name" style="font-size: 0.9em;">
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>이 름
@@ -94,7 +96,8 @@
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드1
 					</label>
 					<div>
-						<input class="input" name="memPass" type="password" id="memPass" placeholder="패스워드1"/>
+						<input class="input" name="memPass" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합"/>
+						<div id="checkPass1" class="indiv">비밀번호1</div>
 					</div>
 				</div>
 				
@@ -103,17 +106,19 @@
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드2
 					</label>
 					<div>
-						<input class="input" type="password" id="memPass2" placeholder="패스워드2"/>
+						<input class="input" type="password" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" />
+						<div id="checkPass2" class="indiv">비밀번호2</div>
 					</div>
 				</div>
 
 				<div class="content">
 						&nbsp;&nbsp;&nbsp;&nbsp;<label for="alias" style="font-size: 0.9em;">전화번호</label>
 					<div>
-						<input class="input" name="memTel" type="tel" id="memTel" placeholder="전화번호( '-' 없이 작성해주세요)"/>
+						<input class="input" name="memTel" type="tel" id="memTel" placeholder="ex)010-1234-5678" onkeyup="isMobile()"/>
+						<div id="checkTel" class="indiv">전화번호</div>
 					</div>
 				</div>
-
+ 
 				<div class="content" style="display: none">
 					<br>알람 : <input  name="memAlert" type="text" id="memAlert" placeholder="알람"><br> 
 					삭제여부: <input class="form-control" name="del" type="text" id="del" placeholder="삭제여부"><br> 
@@ -197,7 +202,67 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
+// 실시간 입력된 문자 띄우기
+/* function printName()  {
+	  var name = document.getElementById('memTel').value;
+	  document.getElementById("checkTel").innerText = name;
+} */
+ 
+// 핸드폰 번호 정규식
+function isMobile() { 
+	var name = document.getElementById('memTel').value;
+	document.getElementById("checkTel").innerText = name;
+	
+	var regExp =/(01[016789])-([1-9]{1}[0-9]{2,3})-([0-9]{4})$/; 
+		
+	if(!regExp.exec(name)){ 
+		$('#checkTel').html('<p style="color:red">사용불가능</p>'); 
+	} else { 
+		$('#checkTel').html('<p style="color:blue">사용가능</p>'); 
+	}
+}  
 
+// 비밀번호 정규식
+function chkPW(){
+	
+	 var pw = document.getElementById('memPass').value;
+	 var num = pw.search(/[0-9]/g);
+	 var eng = pw.search(/[a-z]/ig);
+	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+ 	
+	 if(pw.length < 8 || pw.length > 20){
+	  $('#checkPass1').html('<p style="color:red">8자리 ~ 20자리 이내로 입력해주세요.</p>');
+	  return false;
+	 } 
+	 else if(pw.search(/\s/) != -1){
+	  $('#checkPass1').html('<p style="color:red">비밀번호는 공백 없이 입력해주세요.</p>');
+	  return false;
+	 }
+	 else if(num < 0 || eng < 0 || spe < 0 ){
+	  $('#checkPass1').html('<p style="color:red">영문,숫자, 특수문자를 혼합하여 입력해주세요.</p>');
+	  return false;
+	 }
+	 else {
+	  $('#checkPass1').html('<p style="color:blue">사용 가능한 비밀번호 입니다.</p>');
+	    return true;
+	 }
+
+}
+
+// 비밀번호 일치 확인
+function unityPW(){
+	var pw1 = document.getElementById('memPass').value;
+	var pw2 = document.getElementById('memPass2').value;
+	
+	if(pw1 != pw2){ 
+		$('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
+	} else { 
+		$('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
+	}
+	
+} 
+ 
+  
 		$(document).ready(function(){
 			
 				// 기본이미지 선택하면 파일 값 날리기
@@ -248,11 +313,15 @@
 				
 				// 누락있을때
 				if (memId.value == "" || memName.value == "" || memPass.value == "") {
-					alert("필수입력 사항을 입력해주세요")
+					alert("필수입력 사항을 입력해주세요.")
 				}
-				
+					
+				else if(!chkPW()){
+					alert("다시 확인해주세요.")
+				}
+				  
 				// 누락없을때
-				else {
+				else if(chkPW()) {
 					
 					// 비밀번호 일치시 
 					if(newpass1.value == newpass2.value){
@@ -265,8 +334,8 @@
 		         
 			})
 		})
-		
-		
+		 
+		 
 		// 중복검사
 		$(document).ready(function(){ 
 			$('#checkbtn').on('click', function(){ 
@@ -275,7 +344,7 @@
 					dataType : 'json',
 					data: { "memId" : $('#memId').val() }, 
 					success: function(data){
-						if($.trim(data) == 0){ 
+						if($.trim(data) == 0 && $('#memId').val() != "" ){ 
 							$('#checkMsg').html('<p style="color:blue">사용가능</p>'); 
 							btn = document.getElementById('registBtn')
 							btn.disabled = false;
@@ -289,8 +358,7 @@
 		}); 
 		
 	
-		
-		
+
 		
 												/* 기본이미지 선택  */
 		
