@@ -87,7 +87,8 @@ th{
 								<tbody id=memInProjectList> 
 									<c:forEach items="${memInProjectList}" var="project" varStatus="sts" >
 									    <tr "data-privid="${project.reqId}">
-											<td><li class="nav-item">
+											<td>
+											<li class="nav-item">
 												<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
 											 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
 											 	</a>
@@ -129,14 +130,19 @@ th{
 									    <tr "data-privid="${project.reqId}">
 											<td>
 											<li class="nav-item">
-												<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
-											 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+												<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
+											 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
 											 	</a>
 											</li>
 											</td>
 											<td>${project.reqId}</td>
 											<td>${project.percent}</td>
 											<td>${project.regDt}</td>
+											<td>
+												<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+											 		<input type="button" value="들어가기">
+											 	</a>
+											</td>	
 										</tr>
 									</c:forEach> 
 								</tbody>
@@ -165,14 +171,19 @@ th{
 									    <tr "data-privid="${project.reqId}">
 											<td>
 											<li class="nav-item">
-												<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
-											 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+												<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
+											 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
 											 	</a>
 											</li>
 											</td>
 											<td>${project.reqId}</td>
 											<td>${project.percent}</td>
 											<td>${project.regDt}</td>
+											<td>
+												<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+											 		<input type="button" value="들어가기">
+											 	</a>
+											</td>	
 										</tr>
 									</c:forEach> 
 								</tbody>
