@@ -43,5 +43,9 @@
      WHERE HISSUEF_ID = #{hissuefId}
   </select>
   
+   <!-- 파일 삭제 -->
+  <delete id="delhotfiles">
+  	DELETE FROM hotissuefile where HISSUEF_ID= #{hissuefId}
   
+  </delete>
 </mapper>

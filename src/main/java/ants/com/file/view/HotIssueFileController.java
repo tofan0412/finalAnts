@@ -42,7 +42,7 @@ public class HotIssueFileController {@Resource(name = "fileService")
 	 @RequestMapping(path ="/hotfileDown")
 	 public String getfileDown(String hissuefId, HttpSession session, Model model) {
 	
-		 HotIssueFileVo filevo = fileService.gethotfile(hissuefId);	
+	 HotIssueFileVo filevo = fileService.gethotfile(hissuefId);	
 	 model.addAttribute("pubFilename" ,filevo.getHissuefFilename());
 	 model.addAttribute("pubFilepath" ,filevo.getHiussefFilepath());
 	
@@ -127,20 +127,19 @@ public class HotIssueFileController {@Resource(name = "fileService")
 	
 
 	// // 게시글의 파일 삭제하기
-	// @RequestMapping(path ="/delfiles", method=RequestMethod.POST)
-	// public String delfiles(String delfile) {
-	//
-	// System.out.println("defile : " + delfile);
-	//
-	// if(!delfile.equals("null") || delfile !=null || !delfile.equals("")) {
-	// String[] pubId = delfile.split(",");
-	// for(int i=0; i<pubId.length;i++) {
-	//
-	// fileService.defiles(pubId[i]);
-	// }
-	// }
-	//
-	// return "jsonView";
-	// }
+	 @RequestMapping(path ="/delhotfiles", method=RequestMethod.POST)
+	 public String delhotfiles(String delfile) {
+	
+	
+	 if(!delfile.equals("null") || delfile !=null || !delfile.equals("")) {
+	 String[] hissuefId = delfile.split(",");
+	 for(int i=0; i<hissuefId.length;i++) {
+	
+	 fileService.delhotfiles(hissuefId[i]);
+	 }
+	 }
+	
+	 return "jsonView";
+	 }
 
 }

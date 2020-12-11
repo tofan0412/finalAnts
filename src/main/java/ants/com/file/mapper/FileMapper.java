@@ -56,6 +56,9 @@ public interface FileMapper {
 	
 	// 해당 파일 가져오기
 	public HotIssueFileVo gethotfile(String hissuefId);
+	
+	// 파일 삭제하기
+	public int delhotfiles(String hissuefId);
 }
 
 
