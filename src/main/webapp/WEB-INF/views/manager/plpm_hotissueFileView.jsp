@@ -112,7 +112,7 @@ var id;
 
 </style>
 </head>
-<body>
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 <%@include file="../layout/contentmenu.jsp"%>
 <div style="padding-left: 30px; background-color: white;">
 <a class="btn btn-default " href="${pageContext.request.contextPath}/hotIssue/hissueList"><i class="fas fa-edit"></i>PM-PL 이슈게시판</a>
