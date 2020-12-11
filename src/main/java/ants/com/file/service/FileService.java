@@ -99,15 +99,16 @@ public class FileService {
 	 public int delhotfiles(String hissuefId){
 	 return mapper.delhotfiles(hissuefId);
 	 }
-//	
-//	 // 프로젝트별 파일 수
-//	 public int pubfilePagingListCnt(PublicFileVo publicFileVo){
-//	 return mapper.pubfilePagingListCnt(publicFileVo);
-//	 }
-//	
-//	 // 프로젝트별 파일목록
-//	 public List<PublicFileVo> pubfilelist(PublicFileVo publicFileVo){
-//	 return mapper.pubfilelist(publicFileVo);
-//	 }
+	 
+	
+	 // plpm이슈게시판 파일 수
+	 public int hotissuefilePagingListCnt(String reqId){
+	 return mapper.hotissuefilePagingListCnt(reqId);
+	 }
+	
+	 // plpm이슈게시판 파일목록
+	 public List<HotIssueFileVo> hotissuefileList(HotIssueFileVo pfv){
+	 return mapper.hotissuefileList(pfv);
+	 }
 
 }

@@ -46,6 +46,65 @@
    <!-- 파일 삭제 -->
   <delete id="delhotfiles">
   	DELETE FROM hotissuefile where HISSUEF_ID= #{hissuefId}
-  
   </delete>
+  
+  <!-- 파일 목록가져오기 -->
+  <select id="hotissuefileList" parameterType="ants.com.file.model.HotIssueFileVo" resultType="ants.com.file.model.HotIssueFileVo">
+	SELECT
+	    z.*
+	FROM ( SELECT
+	    ROWNUM rnum,
+	    s.*
+	FROM ( SELECT
+	    f.hissuef_id,
+	    f.hissue_id,
+	    f.hiussef_filepath,
+	    f.hissuef_filename,
+	    to_char(f.reg_dt,'yyyy-mm-dd hh:mm') as reg_dt,
+	   concat(f.hissuef_size,' KB') as hissuef_size,
+	    f.hissuef_extension
+	      FROM
+	    (
+	        SELECT
+	            *
+	        FROM
+	            hotissue
+	    ) h,
+	    hotissuefile f
+	      WHERE
+	    f.hissue_id = h.hissue_id
+	    AND   h.req_id = #{hissueId}
+        <if test="searchKeyword != null and searchKeyword != ''">
+	        <choose>				         	
+	            <when test="searchCondition == 1">
+					AND	f.hissuef_filename LIKE '%' || #{searchKeyword} || '%'
+				</when>			     
+			</choose>
+		</if>				   
+		     ORDER BY reg_dt desc
+			     ) S
+			 WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} 
+	      ) Z
+     <![CDATA[WHERE Z.RNUM > #{firstIndex}]]>	  
+  </select>
+  
+  <!-- 파일 수 -->
+  <select id="hotissuefilePagingListCnt" parameterType="String" resultType="int">
+     SELECT
+    COUNT(*)
+      FROM
+		    (
+		        SELECT
+		            *
+		        FROM
+		            hotissue
+		    ) h,
+		    hotissuefile f
+      WHERE
+    	f.hissue_id = h.hissue_id
+      AND   h.req_id = #{reqId}
+  </select>
+  
+  
+  
 </mapper>
