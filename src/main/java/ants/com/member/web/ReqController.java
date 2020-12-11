@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 
+import ants.com.file.model.PublicFileVo;
+import ants.com.file.view.FileController;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ReqVo;
 import ants.com.member.service.MemberService;
@@ -36,6 +39,9 @@ public class ReqController {
 	
 	@Resource(name = "memberService")
 	private MemberService memberService;
+	
+	@Autowired
+	FileController filecontroller;
 
 	/**
 	 * 요구사항정의서 목록을 조회한다
@@ -77,9 +83,12 @@ public class ReqController {
 	public String reqDetail(@RequestParam(name="selectedId", required= false) String id,@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
 		if(id != null) {
 			reqVo.setReqId(id);
-		}
+		} 
 		reqVo = reqService.getReq(reqVo);
 		model.addAttribute("reqVo", reqVo);
+		
+		PublicFileVo pfv = new PublicFileVo("7",reqVo.getReqId() , reqVo.getReqId());
+		filecontroller.getfiles(pfv, model);
 		
 		return "tiles/member/reqDetail";
 	}
@@ -92,9 +101,7 @@ public class ReqController {
 	 * @return
 	 */
 	@RequestMapping(value = "/reqInsertView")
-	public String insertReqView(@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
-		reqVo.setReqId(null);
-		model.addAttribute("reqVo", reqVo);
+	public String insertReqView(@ModelAttribute("reqVo") ReqVo reqVo) {
 
 		return "tiles/member/reqInsert";
 	}
@@ -106,18 +113,13 @@ public class ReqController {
 	 * @return 성공: 요구사항리스트  실패:등록화면
 	 */
 	@RequestMapping(value = "/reqInsert", method = RequestMethod.POST)
-	public String reqInsert(@ModelAttribute("reqVo") ReqVo reqVo, Model model, HttpSession session) {
+	public String reqInsert(@ModelAttribute("reqVo") ReqVo reqVo, HttpSession session) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
 		reqVo.setMemId(memberVo.getMemId());
 		
-		int cnt = reqService.reqInsert(reqVo);
+		reqService.reqInsert(reqVo);
 
-		if (cnt == 1) {
-			return "redirect:/req/reqList";
-		} else {
-			model.addAttribute(reqVo);
-			return "tiles/member/reqInsert";
-		}
+		return "jsonView";
 	}
 	
 	/**

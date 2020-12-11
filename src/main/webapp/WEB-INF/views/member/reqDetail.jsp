@@ -155,21 +155,36 @@
 					<!-- 파일 목록 -->
 		              <h5 class="mt-5 text-muted">요구사항 정의서 파일</h5>
 		              <ul class="list-unstyled">
-		                <li>
-		                  <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
-		                </li>
-		                <li>
-		                  <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
-		                </li>
-		                <li>
-		                  <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
-		                </li>
-		                <li>
-		                  <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>
-		                </li>
-		                <li>
-		                  <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
-		                </li>
+		              	<c:if test="${filelist.size() == 0}">
+							[ 첨부파일이 없습니다. ]
+						</c:if>
+						
+						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
+						  <li>
+							<c:choose>
+								<c:when test="${files.pubExtension eq 'png' or files.pubExtension eq 'jsp' or files.pubExtension eq 'PNG' or files.pubExtension eq 'JSP'  }">
+									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
+										<i class="far fa-fw fa-image "></i>&nbsp;${files.pubFilename }
+									</a>
+								</c:when>
+								<c:when test="${files.pubExtension eq 'pdf' or files.pubExtension eq 'PDF'}">
+									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
+										<i class="far fa-fw fa-image "></i>&nbsp;${files.pubFilename }
+									</a>
+								</c:when>
+								<c:when test="${files.pubExtension eq 'docx' or files.pubExtension eq 'DOCX' }">
+									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
+										<i class="far fa-fw fa-image "></i>&nbsp;${files.pubFilename }
+									</a>
+								</c:when>
+								<c:when test="${files.pubExtension eq 'png' or files.pubExtension eq 'jsp' or files.pubExtension eq 'PNG' or files.pubExtension eq 'JSP'  }">
+									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
+										<i class="far fa-fw fa-image "></i>&nbsp;${files.pubFilename }
+									</a>
+								</c:when>
+							</c:choose>
+						  </li>
+		                </c:forEach>
 		              </ul>
 		              <div class="text-center mt-5 mb-3">
 		                <a href="#" class="btn btn-sm btn-primary">Add files</a>

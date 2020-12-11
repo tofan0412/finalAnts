@@ -27,4 +27,6 @@ public interface ReqMapper {
 
 	public int plDelete(ReqVo reqVo);
 
+	public String getReqId();
+
 }

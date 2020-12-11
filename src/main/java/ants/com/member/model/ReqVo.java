@@ -15,6 +15,8 @@ public class ReqVo extends BaseVo{
 	private String plName;
 	private String proPercent;
 	private String proId;
+	private String categoryId;
+	
 	public String getReqId() {
 		return reqId;
 	}
@@ -87,102 +89,22 @@ public class ReqVo extends BaseVo{
 	public void setProId(String proId) {
 		this.proId = proId;
 	}
+	
+	public String getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
 	@Override
 	public String toString() {
 		return "ReqVo [reqId=" + reqId + ", reqTitle=" + reqTitle + ", reqCont=" + reqCont + ", reqPeriod=" + reqPeriod
 				+ ", reqFilepath=" + reqFilepath + ", reqFilename=" + reqFilename + ", memId=" + memId + ", plId="
 				+ plId + ", status=" + status + ", plName=" + plName + ", proPercent=" + proPercent + ", proId=" + proId
-				+ "]";
+				+ ", categoryId=" + categoryId + "]";
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((memId == null) ? 0 : memId.hashCode());
-		result = prime * result + ((plId == null) ? 0 : plId.hashCode());
-		result = prime * result + ((plName == null) ? 0 : plName.hashCode());
-		result = prime * result + ((proId == null) ? 0 : proId.hashCode());
-		result = prime * result + ((proPercent == null) ? 0 : proPercent.hashCode());
-		result = prime * result + ((reqCont == null) ? 0 : reqCont.hashCode());
-		result = prime * result + ((reqFilename == null) ? 0 : reqFilename.hashCode());
-		result = prime * result + ((reqFilepath == null) ? 0 : reqFilepath.hashCode());
-		result = prime * result + ((reqId == null) ? 0 : reqId.hashCode());
-		result = prime * result + ((reqPeriod == null) ? 0 : reqPeriod.hashCode());
-		result = prime * result + ((reqTitle == null) ? 0 : reqTitle.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ReqVo other = (ReqVo) obj;
-		if (memId == null) {
-			if (other.memId != null)
-				return false;
-		} else if (!memId.equals(other.memId))
-			return false;
-		if (plId == null) {
-			if (other.plId != null)
-				return false;
-		} else if (!plId.equals(other.plId))
-			return false;
-		if (plName == null) {
-			if (other.plName != null)
-				return false;
-		} else if (!plName.equals(other.plName))
-			return false;
-		if (proId == null) {
-			if (other.proId != null)
-				return false;
-		} else if (!proId.equals(other.proId))
-			return false;
-		if (proPercent == null) {
-			if (other.proPercent != null)
-				return false;
-		} else if (!proPercent.equals(other.proPercent))
-			return false;
-		if (reqCont == null) {
-			if (other.reqCont != null)
-				return false;
-		} else if (!reqCont.equals(other.reqCont))
-			return false;
-		if (reqFilename == null) {
-			if (other.reqFilename != null)
-				return false;
-		} else if (!reqFilename.equals(other.reqFilename))
-			return false;
-		if (reqFilepath == null) {
-			if (other.reqFilepath != null)
-				return false;
-		} else if (!reqFilepath.equals(other.reqFilepath))
-			return false;
-		if (reqId == null) {
-			if (other.reqId != null)
-				return false;
-		} else if (!reqId.equals(other.reqId))
-			return false;
-		if (reqPeriod == null) {
-			if (other.reqPeriod != null)
-				return false;
-		} else if (!reqPeriod.equals(other.reqPeriod))
-			return false;
-		if (reqTitle == null) {
-			if (other.reqTitle != null)
-				return false;
-		} else if (!reqTitle.equals(other.reqTitle))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		return true;
-	}
+	
+	
 	
 	
 	

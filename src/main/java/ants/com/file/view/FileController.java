@@ -88,8 +88,14 @@ public class FileController {
 	// 파일 업로드
 	@RequestMapping(path ="/insertfile")
 	public String insertfile(PublicFileVo pfv, Model model, MultipartHttpServletRequest multirequest, HttpSession session)  {
+		String reqId = "";
 		
-		String reqId = (String)session.getAttribute("projectId");
+		if(pfv.getReqId() == null) {
+			reqId = (String)session.getAttribute("projectId");
+		}else {
+			reqId = pfv.getReqId();
+		}
+		
 		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
 		String memId = memberVo.getMemId();
 		
@@ -105,7 +111,7 @@ public class FileController {
 
 				String filename = UUID.randomUUID().toString();
 				String extension = files.get(i).getOriginalFilename().split("\\.")[1];
-				String filepath = "E:\\profile\\" + filename +"."+ extension;
+				String filepath = "C:\\profile\\" + filename +"."+ extension;
 				File uploadFile = new File(filepath);
 				try {
 					files.get(i).transferTo(uploadFile);

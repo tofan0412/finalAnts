@@ -78,31 +78,38 @@
 			 , MEM_ID
 			 , STATUS
 			 , PL_ID
+			 , CATEGORY_ID
 		  FROM reqlist
 		 WHERE req_id = #{reqId} 
 	</select>
 
-	<insert id="reqInsert"
-		parameterType="ants.com.member.model.ReqVo">
+	<insert id="reqInsert" parameterType="ants.com.member.model.ReqVo">
+		<selectKey keyProperty="reqId" resultType="String" order="BEFORE">
+			select REQ_SEQ.nextval FROM DUAL
+		</selectKey>
+		
 		INSERT INTO REQLIST
-			(REQ_ID
-			 ,REQ_TITLE
-			 ,REQ_CONT
-			 ,REQ_PERIOD
-			 ,REQ_FILEPATH
-			 ,REQ_FILENAME
-			 ,MEM_ID
-			 ,STATUS
-			 ,PL_ID)
-		VALUES(REQ_SEQ.nextval
-			 ,#{reqTitle}
-			 ,#{reqCont}
-			 ,#{reqPeriod}
-			 ,#{reqFilepath, jdbcType=VARCHAR}
-			 ,#{reqFilename, jdbcType=VARCHAR}
-			 ,#{memId}
-			 ,#{status, jdbcType=VARCHAR}
-			 ,#{plId, jdbcType=VARCHAR})
+					(REQ_ID
+					 ,REQ_TITLE
+					 ,REQ_CONT
+					 ,REQ_PERIOD
+					 ,REQ_FILEPATH
+					 ,REQ_FILENAME
+					 ,MEM_ID
+					 ,STATUS
+					 ,PL_ID
+					 ,CATEGORY_ID)
+				VALUES
+				     (#{reqId}
+					 ,#{reqTitle}
+					 ,#{reqCont}
+					 ,#{reqPeriod,   jdbcType=VARCHAR}
+					 ,#{reqFilepath, jdbcType=VARCHAR}
+					 ,#{reqFilename, jdbcType=VARCHAR}
+					 ,#{memId}
+					 ,#{status, jdbcType=VARCHAR}
+					 ,#{plId, jdbcType=VARCHAR}
+					 ,'7')
 	</insert>
 	
 	<update id="reqUpdate" parameterType="ants.com.member.model.ReqVo">
@@ -136,4 +143,8 @@
 	
 	
 	
+<select id="getReqId" resultType="String">
+SELECT REQ_SEQ.nextval 
+  FROM DUAL
+</select>
 </mapper>
