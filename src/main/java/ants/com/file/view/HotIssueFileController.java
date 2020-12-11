@@ -125,19 +125,30 @@ public class HotIssueFileController {@Resource(name = "fileService")
 	
 
 	// // 게시글의 파일 삭제하기
+	 @RequestMapping(path ="/delhotfilesT")
+	 public String delhotfilesT(String hissuefId) {
+		 int res = fileService.delhotfiles(hissuefId);
+		 if (res > 0) {
+			 return "redirect:/hotissueFile/hotissuefileview";
+			} else {
+				return "redirect:/hotissueFile/hotissuefileview";
+			}
+	 }
+	 
+	 // // 게시글의 파일 삭제하기
 	 @RequestMapping(path ="/delhotfiles", method=RequestMethod.POST)
 	 public String delhotfiles(String delfile) {
-	
-	
-	 if(!delfile.equals("null") || delfile !=null || !delfile.equals("")) {
-	 String[] hissuefId = delfile.split(",");
-	 for(int i=0; i<hissuefId.length;i++) {
-	
-	 fileService.delhotfiles(hissuefId[i]);
-	 }
-	 }
-	
-	 return "jsonView";
+		 
+		 
+		 if(!delfile.equals("null") || delfile !=null || !delfile.equals("")) {
+			 String[] hissuefId = delfile.split(",");
+			 for(int i=0; i<hissuefId.length;i++) {
+				 
+				 fileService.delhotfiles(hissuefId[i]);
+			 }
+		 }
+		 
+		 return "jsonView";
 	 }
 
 }
