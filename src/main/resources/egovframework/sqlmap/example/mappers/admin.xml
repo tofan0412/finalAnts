@@ -38,13 +38,6 @@
 		  FROM MEMBER
 	</select>
 	
-	<!-- 회원 상세보기 -->
-	<select id="">
-		SELECT *
-		FROM MEMBER
-		WHERE MEM_ID = #{memId}
-	</select>
-	
 	
 	
 	<select id="getMember" parameterType="ants.com.member.model.MemberVo"
@@ -73,10 +66,6 @@
 			set del = 'Y' 
 		where mem_id = #{memId}
 	</update>
-<!-- 	<delete id="delmemlist" parameterType="ants.com.member.model.MemberVo"> -->
-<!-- 		DELETE member -->
-<!-- 		where mem_id= #{mem_id} -->
-<!-- 	</delete> -->
 	
 	
 	

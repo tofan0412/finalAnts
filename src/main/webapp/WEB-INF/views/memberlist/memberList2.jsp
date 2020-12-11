@@ -252,11 +252,11 @@ $(function(){
 	                 </ul>
         		  </div>
         		  <br>
-        		  <%--
+        		  <%-- 
         		  <div class="card-footer clearfix">
 	                <button id="insertmemlist" type="button" class="btn btn-default float-right" onclick="memlistInsert()"><i class="fas fa-plus"></i>등 록</button>
 	              </div>
-        		  --%>
+        		 --%>
         		  
         		  
 	              <!-- /.card-body -->
