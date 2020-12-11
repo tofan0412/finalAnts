@@ -54,7 +54,7 @@
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/admin/memberlist" class="nav-link">
 						<i class="nav-icon far fa-lightbulb"></i>
-						<p class="selectable">회원 리스트1</p>
+						<p class="selectable">회원 리스트</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
@@ -75,11 +75,6 @@
 								<p>게시판<i class="fas fa-angle-left right"></i></p>
 							</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item">
-									<a href="/admin/memberlist" class="nav-link"><i class=" nav-icon fas fa-clipboard-list"></i>
-										<p>회원리스트2</p>
-									</a>
-								</li>
 								<li class="nav-item">
 									<a href="/admin/memlistInsertView" class="nav-link"><i	class="nav-icon fa fa-plus-square"></i>
 										<p>게시판  생성하기</p>

@@ -11,19 +11,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/dist/js/js.cookie-2.2.1.min.js"></script>
 
-<!-- <script type="text/javascript">
-	function onEnterLogin() {
-
-		var keyCode = window.event.keyCode;
-
-		if (keyCode == 13) { //엔테키 이면
-
-			loginForm.submit();
-
-		}
-
-	} //onEnterLogin()
-</script> -->
 
 <style>
 .ff {
@@ -65,7 +52,13 @@
 	border-radius: 0.85rem !important;
 }
 </style>
-
+<script type="text/javascript">
+$(function(){
+	$("#mainBtn").on('click', function(){
+		$(location).attr('href', '${pageContext.request.contextPath}/member/mainView');
+	})
+})
+</script>
 </head>
 
 <title>Ants - 관리자로그인</title>
@@ -74,7 +67,7 @@
 	<div class="ff">
 
 		<div class="col-sm-4" style="background-color: lavender;">
-			<img src="../dist/img/AdminLoginImage.png" height="100%" width="100%"
+			<img src="../dist/img/adminimage1.png" height="100%" width="100%"
 				alt="Avatar">
 		</div>
 		
@@ -123,7 +116,8 @@
 							<br> <br>
 							<div style="float: right;">
 								<span id="sp" style="color:red"></span>
-								<button type="button" id="loginBtn" class="jg loginBtn" style="width: 100px;">로그인</button>
+								<button type="button" id="mainBtn" class="jg loginBtn" style="width: 100px;">MAIN</button>
+								<button type="button" id="loginBtn" class="jg loginBtn" style="width: 100px;">LOGIN</button>
 <!-- 								<input type="submit" id="loginBtn" class="jg loginBtn" value="로그인"> -->
 							</div>
 						</div>
