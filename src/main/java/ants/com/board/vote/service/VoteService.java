@@ -65,5 +65,14 @@ public class VoteService{
 	public int cntupdate(VoteResultVo voteresultvo) {
 		return mapper.cntupdate(voteresultvo);
 	}
-		
+			
+	// 투표기간 지난 투표상태 변경
+	public int paststatusupdate() {
+		return mapper.paststatusupdate();
+	}
+	
+	// 투표기간 지난 투표상태 변경
+	public int fullstatusupdate(VoteResultVo voteresultvo) {
+		return mapper.fullstatusupdate(voteresultvo);
+	}
 }

@@ -38,6 +38,8 @@ public class VoteController{
 		String reqId = (String)session.getAttribute("projectId");
 		voteVo.setReqId(reqId);
 		
+		voteService.paststatusupdate();//시간 지난 투표 finish로
+		
 		/** EgovPropertyService.sample */
 		voteVo.setPageUnit(propertiesService.getInt("pageUnit"));
 		voteVo.setPageSize(propertiesService.getInt("pageSize"));
@@ -58,6 +60,8 @@ public class VoteController{
 		int totCnt = voteService.votePagingListCnt(voteVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
+		
+		
 		
 		return "tiles/vote/votelist";
 	}
@@ -83,6 +87,8 @@ public class VoteController{
 		String memId = memberVo.getMemId();
 		voteVo.setMemId(memId);
 		voteVo.setReqId(reqId);	
+		
+		System.out.println("마감 :" + voteVo.getVoteDeadline());
 		
 		voteService.insertvote(voteVo);
 		
@@ -127,6 +133,7 @@ public class VoteController{
 		
 		voteService.voteMember(voteresultVo);
 		voteService.cntupdate(voteresultVo);
+		voteService.fullstatusupdate(voteresultVo);
 		
 		ra.addAttribute("voteId", voteresultVo.getVoteId());
 		

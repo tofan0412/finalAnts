@@ -56,9 +56,11 @@
 
 </style>
 </head>
+<body class="jg">
 	<%@include file="../layout/contentmenu.jsp"%>
 	<div style="background-color: white;">
 	<a class="btn btn-default " href="${pageContext.request.contextPath }/hotIssue/hissueInsertView"><i class="fas fa-edit"></i>이슈 작성</a>
+	<a class="btn btn-default " href="${pageContext.request.contextPath }/hotissueFile/hotissuefileview"><i class="fas fa-edit"></i>파일함</a>
 	<form:form commandName="hotIssueVo" id="listForm" name="listForm" method="post">
 	<form:hidden path="hissueParentid" ></form:hidden>
 	<div style="padding-left: 30px; background-color: white;">
@@ -126,4 +128,5 @@
 	</div>
 		</form:form>		
 </div>
+</body>
 </html>

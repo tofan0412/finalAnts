@@ -50,37 +50,35 @@ public class HotIssueFileController {@Resource(name = "fileService")
 	 }
 
 	// // 핫이슈 파일함 View
-	// @RequestMapping(path ="/publicfileview")
-	// public String publicfileview(@ModelAttribute("publicFileVo") PublicFileVo
-	// publicFileVo, HttpSession session, Model model) {
-	//
-	// String reqId = (String)session.getAttribute("projectId");
-	// publicFileVo.setReqId(reqId);
-	//
-	// /** EgovPropertyService.sample */
-	// publicFileVo.setPageUnit(propertiesService.getInt("pageUnit"));
-	// publicFileVo.setPageSize(propertiesService.getInt("pageSize"));
-	//
-	// /** pageing setting */
-	// PaginationInfo paginationInfo = new PaginationInfo();
-	// paginationInfo.setCurrentPageNo(publicFileVo.getPageIndex());
-	// paginationInfo.setRecordCountPerPage(publicFileVo.getPageUnit());
-	// paginationInfo.setPageSize(publicFileVo.getPageSize());
-	//
-	// publicFileVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
-	// publicFileVo.setLastIndex(paginationInfo.getLastRecordIndex());
-	// publicFileVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-	//
-	// List<PublicFileVo> pubfilelist = fileService.pubfilelist(publicFileVo);
-	// model.addAttribute("pubfilelist", pubfilelist);
-	//
-	//
-	// int totCnt = fileService.pubfilePagingListCnt(publicFileVo);
-	// paginationInfo.setTotalRecordCount(totCnt);
-	// model.addAttribute("paginationInfo", paginationInfo);
-	//
-	// return "tiles/board/pubfilelist";
-	// }
+	 @RequestMapping(path ="/hotissuefileview")
+	 public String publicfileview(@ModelAttribute("hotIssueFileVo") HotIssueFileVo
+	 hotIssueFileVo, HttpSession session, Model model) {
+	
+	 String reqId = (String)session.getAttribute("projectId");
+	 hotIssueFileVo.setHissueId(reqId);
+	 /** EgovPropertyService.sample */
+	 hotIssueFileVo.setPageUnit(propertiesService.getInt("pageUnit"));
+	 hotIssueFileVo.setPageSize(propertiesService.getInt("pageSize"));
+	
+	 /** pageing setting */
+	 PaginationInfo paginationInfo = new PaginationInfo();
+	 paginationInfo.setCurrentPageNo(hotIssueFileVo.getPageIndex());
+	 paginationInfo.setRecordCountPerPage(hotIssueFileVo.getPageUnit());
+	 paginationInfo.setPageSize(hotIssueFileVo.getPageSize());
+	
+	 hotIssueFileVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+	 hotIssueFileVo.setLastIndex(paginationInfo.getLastRecordIndex());
+	 hotIssueFileVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+	
+	 List<HotIssueFileVo> hotissuefileList = fileService.hotissuefileList(hotIssueFileVo);
+	 model.addAttribute("hotissuefileList", hotissuefileList);
+	
+	 int totCnt = fileService.hotissuefilePagingListCnt(reqId);
+	 paginationInfo.setTotalRecordCount(totCnt);
+	 model.addAttribute("paginationInfo", paginationInfo);
+	
+	 return "tiles/manager/plpm_hotissueFileView";
+	 }
 
 	// 파일 업로드
 	@RequestMapping(path = "/insertHotissueFile")
@@ -127,19 +125,30 @@ public class HotIssueFileController {@Resource(name = "fileService")
 	
 
 	// // 게시글의 파일 삭제하기
+	 @RequestMapping(path ="/delhotfilesT")
+	 public String delhotfilesT(String hissuefId) {
+		 int res = fileService.delhotfiles(hissuefId);
+		 if (res > 0) {
+			 return "redirect:/hotissueFile/hotissuefileview";
+			} else {
+				return "redirect:/hotissueFile/hotissuefileview";
+			}
+	 }
+	 
+	 // // 게시글의 파일 삭제하기
 	 @RequestMapping(path ="/delhotfiles", method=RequestMethod.POST)
 	 public String delhotfiles(String delfile) {
-	
-	
-	 if(!delfile.equals("null") || delfile !=null || !delfile.equals("")) {
-	 String[] hissuefId = delfile.split(",");
-	 for(int i=0; i<hissuefId.length;i++) {
-	
-	 fileService.delhotfiles(hissuefId[i]);
-	 }
-	 }
-	
-	 return "jsonView";
+		 
+		 
+		 if(!delfile.equals("null") || delfile !=null || !delfile.equals("")) {
+			 String[] hissuefId = delfile.split(",");
+			 for(int i=0; i<hissuefId.length;i++) {
+				 
+				 fileService.delhotfiles(hissuefId[i]);
+			 }
+		 }
+		 
+		 return "jsonView";
 	 }
 
 }
