@@ -26,10 +26,10 @@
 </select>
 
 <insert id="suggestInsert" parameterType="ants.com.board.memBoard.model.SuggestVo">
-	INSERT INTO suggest (sgt_id,sgt_title,sgt_cont,
+INSERT INTO suggest (sgt_id,sgt_title,sgt_cont,
     					reg_dt,sgt_status,category_id,todo_id, del) 
 				VALUES (
-			    SGT_SEQ.NEXTVAL,#{sgtTitle},#{sgtCont},SYSDATE,
+			    #{sgtId},#{sgtTitle},#{sgtCont},SYSDATE,
 			    #{sgtStatus},#{categoryId},#{todoId},#{del})
 </insert>
 
@@ -53,6 +53,18 @@ UPDATE SUGGEST
   WHERE SGT_ID = #{sgtId}
 </update>
 
+<select id="getSgtSeq" resultType="java.lang.String">
+SELECT SGT_SEQ.NEXTVAL
+  FROM DUAL
+</select>
+
+
+<select id="suggestFileList" parameterType="ants.com.board.memBoard.model.SuggestVo" resultType="ants.com.file.model.PublicFileVo">
+SELECT * 
+  FROM PUBLICFILE
+ WHERE CATEGORY_ID = '4'
+     AND SOME_ID = #{sgtId}
+</select>
 
 
 

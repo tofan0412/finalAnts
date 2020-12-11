@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.mapper.SuggestMapper;
 import ants.com.board.memBoard.model.SuggestVo;
+import ants.com.file.model.PublicFileVo;
 
 @Service("suggestService")
 public class SuggestService {
@@ -41,5 +42,20 @@ public class SuggestService {
 	// 건의사항 삭제하기
 	public int delSuggest(SuggestVo suggestVo) {
 		return mapper.delSuggest(suggestVo);
+	}
+	
+	// 파일 업로드 위해 시퀀스 값 가져오기
+	public String getSgtSeq() {
+		return mapper.getSgtSeq();
+	}
+	
+	// 건의사항 글에서 올린 파일 목록 불러오기
+	public List<PublicFileVo> suggestFileList(SuggestVo suggestVo){
+		return mapper.suggestFileList(suggestVo);
+	}
+	
+	// 건의사항 첨부 파일 다운로드
+	public String suggestFileDownload(PublicFileVo publicFileVo) {
+		return mapper.suggestFileDownload(publicFileVo);
 	}
 }

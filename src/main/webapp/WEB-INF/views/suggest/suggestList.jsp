@@ -53,18 +53,24 @@ th,td{
 	margin-bottom: 10px;
 	padding: 0 3px 3px;
 }
-
 </style>
+
 <script type="text/javascript">
 $(function(){
 	todoSearchList = [];
+	fileCnt = 0;
 	
 	$('#insertSuggestBtn').click(function(){
+		// 사용자 입력란 비우기
 		$('#todoId').val('');
 		$('#sgtTitle').val('');
 		$('#sgtCont').val('');
+		// 경고 관련 div 비우기
 		$('.warningTodo').empty();
 		$('.warningTitle').empty();
+		// 파일 관련 div 비우기
+		$('.sgtFileList').empty();
+		$('.file').val('');
 		
 		$('#suggestInsert').modal();
 	})
@@ -126,16 +132,60 @@ $(function(){
 			cnt++;
 		}
 		if (cnt == 0){
-			$('#sgtForm').submit();
+			// Insert 하면 된다.
+			// 파일부터 먼저 넣자.
+			// formData는 전역변수로 선언하였다..
+			formData = new FormData($('#suggestFileForm')[0]);
+			//지정해주는 경우, 자동으로 데이터가 저장된다.
+			
+// 			for(var i = 0 ; i < fileCnt ; i++){
+// 				formData.append("files", $('.file')[0].files[i]);	
+// 			}
+			$.ajax({
+				url : "/suggest/suggestFileInsert",
+				type : "POST",
+				data : formData,
+				contentType : false,
+				processData : false,
+				success : function(res){
+					alert("작성하였습니다.");
+					var sgtSeq = res.sgtSeq;
+					$('#sgtId').val(sgtSeq);
+					$('#sgtForm').submit();
+				}
+			})
 		}
 	})
-})
+})// $(function(){}) 종료..
 
 /* pagination 페이지 링크 function */
 	function fn_egov_link_page(pageNo){
 		document.listForm.pageIndex.value = pageNo;
 		document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
 	    document.listForm.submit();
+	}
+	
+	// 파일 갯수 제한, 파일 용량 제한..
+	function fileRestrict(fileNum){
+		$('.sgtFileList').empty();
+		if (fileNum > 5){
+			alert("파일은 최대 5개까지 첨부할 수 있습니다.");
+			$('.file').val('');
+		}
+		else{
+			fileCnt = fileNum;
+			for(var i = 0 ; i < fileNum ; i++){
+				if ( $('.file')[0].files[i].size/1024/1024 >= 20 ){
+					alert("20MB 이상의 파일은 업로드할 수 없습니다.("+$('.file')[0].files[i].name+")");
+					$('.sgtFileList').empty();
+					$('.file').val('');
+					fileCnt = 0;
+					return;
+				}else{
+					$('.sgtFileList').append($('.file')[0].files[i].name+"<br>");
+				}
+			}
+		}
 	}
 </script>
 
@@ -280,7 +330,7 @@ $(function(){
 			<div class="modal-body" style="width: 100%; height: 100%;">
 				<form:form commandName="suggestVo" id="sgtForm" name="sgtForm" 
 							action="/suggest/suggestInsert">
-					
+					<form:input path="sgtId" id="sgtId" type="text" hidden="hidden" />
 					<label class="jg" style="float : left;">일감 검색</label>
 					<!-- 사용자가 일감을 선택하지 않은 경우 .. -->
 					<div class="jg"><span class="jg warningTodo" style="color : red;"></span></div>
@@ -297,6 +347,16 @@ $(function(){
 					<form:textarea id="sgtCont" path="sgtCont" rows="3" cols="30" 
 									style="resize: none; width : 90%;"/>
 				</form:form>
+				<br>
+				
+				<form id="suggestFileForm">
+					<!-- 파일 첨부하기.. -->			
+					<label class="jg">파일 첨부</label>&nbsp;&nbsp;
+					<span>파일은 최대 5개까지 첨부 가능합니다.</span>
+					<input name="file" type="file" class="file" 
+						onchange="fileRestrict($('.file')[0].files.length)" multiple="multiple" />
+					<div class="sgtFileList"></div>
+				</form>
 			</div>
 			
 			<div class="modal-footer">

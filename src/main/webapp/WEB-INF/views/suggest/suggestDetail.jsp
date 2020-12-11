@@ -7,6 +7,11 @@
 $(function(){
 	todoSearchList = [];
 	$('#todoDetail').hide();
+	suggestFileList = $('.sgtFile');	// 배열 갯수는 첨부파일 개수이다.
+	// arr[0].textContent : 텍스트 내용 ..
+	// arr[0].attributes.pubid.value 속성값중 pubid란 이름의 값
+	
+	// 
 	
 	// 건의사항 수정하기
 	$('#modSuggest').click(function(){
@@ -109,6 +114,14 @@ $(function(){
 			$('#sgtForm').submit();
 		}
 	})
+	
+	// 수정 창에서 파일 제목 누를 시 해당 파일 제거
+	$('.sgtFile').click(function(){
+		$(this).css('font-color', 'red');
+		
+	})
+	
+	
 }) // $(function(){}) END
 
 // 자동 완성 부분 ..
@@ -310,6 +323,19 @@ label{
 				</div>
 				<br>
 				
+				<!-- 파일 목록 출력하기  -->
+				<label class="col-sm-2 control-label" >첨부 파일 목록</label>
+				<div class="form-group">
+					<ul>
+					<c:forEach items="${suggestFileList }" var="file" >
+						<li><a href="/suggest/suggestFileDownload?pubId=${file.pubId }">${file.pubFilename } (${file.pubSize }KB)</a></li>						
+					</c:forEach>
+					</ul>
+					<c:if test="${suggestFileList eq null }">
+						<span class="jg">첨부한 파일이 없습니다.</span>
+					</c:if>
+				</div>
+				
 				<div class="card-footer clearfix">
 					<c:if test="${suggestVo.memId == SMEMBER.memId}">
 						<input type="button" value="삭제하기" id="delSuggest"
@@ -425,7 +451,7 @@ label{
 			
 			<div class="modal-body" style="width: 100%; height: 100%;">
 				<form:form commandName="suggestVo" id="sgtForm" name="sgtForm" 
-							action="/suggest/suggestMod">
+							action="/suggest/suggestMod" enctype="multipart/form-data">
 					
 					<label class="jg" style="float : left;">일감 수정</label>
 					<form:input id="sgtIdModal" path="sgtId" value="${suggestVo.sgtId}" readonly="readonly" hidden="hidden" />
@@ -444,6 +470,20 @@ label{
 					<form:textarea id="sgtContModal" path="sgtCont" rows="3" cols="30" 
 									style="resize: none; width : 90%;" value="${suggestVo.sgtCont}" />
 				</form:form>
+				<br>
+				
+				<form id="suggestFileForm">
+					<!-- 파일 첨부하기.. -->			
+					<label class="jg">파일 첨부</label>&nbsp;&nbsp;
+					<span>파일은 최대 5개까지 첨부 가능합니다.</span>
+					<div class="sgtFileList">
+						<ul>
+						<c:forEach items="${suggestFileList }" var="file" >
+							<li class="jg sgtFile" pubId="${file.pubId }"><a href="#">${file.pubFilename }</a></li><br>
+						</c:forEach>
+						</ul>
+					</div>
+				</form>
 			</div>
 			
 			<div class="modal-footer">
