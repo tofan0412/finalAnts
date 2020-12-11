@@ -3,6 +3,7 @@
 
 <mapper namespace="ants.com.board.vote.mapper.VoteMapper">
 
+	
    <!-- 해당 프로젝트 투표리스트 가져오기 -->
 	<select id="votelist" resultType ="ants.com.board.vote.model.VoteVo" parameterType="ants.com.board.vote.model.VoteVo">
  	
@@ -12,11 +13,8 @@
 	           	   S.*
 		      FROM (			
                 
-	                 select vote_title, vote_id, vote_totalno, to_char(vote_deadline, 'YYYY-MM-DD') as vote_deadline,
-	                 		vote_status, category_id, req_id, mem_id,
-	                 	  (select count(*) 
-		                     from voteresult a, voteitem b, vote c 
-						    where c.vote_id = b.vote_id and b.voteitem_id = a.voteitem_id and  b.vote_id = #{voteId}) as voted_no
+	                 select vote_title, vote_id, vote_totalno, to_char(vote_deadline, 'YYYY/MM/DD hh:mm') as vote_deadline,
+	                 		vote_status, category_id, req_id, mem_id,  ROUND((vote_deadline - sysdate),5) as remain
 	                 from vote 
 	                 where req_id = #{reqId} 
 	                   and del = 'N'
@@ -32,7 +30,7 @@
 						</choose>
 					</if>
 				
-					ORDER BY vote_deadline desc
+					ORDER BY vote_status desc, remain
 			  ) S
 		
 				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 
@@ -81,11 +79,12 @@
 		    del
 		) VALUES (
 		    #{voteId},		    
-			(select count(*)
-			from projectmember
-			where req_id =#{reqId}),		
+			(SELECT count(*)
+			   FROM projectmember
+			  WHERE req_id =#{reqId}
+			    AND mem_id in (SELECT mem_id FROM projectmember WHERE promem_status = 'IN' )),		
 		    #{voteTitle},
-		    TO_DATE(#{voteDeadline},'YYYY/MM/DD'),
+		    TO_DATE(#{voteDeadline},'YYYYMMDDHH24MI'),
 		    'ing',
 		    '2',
 		    #{reqId},
@@ -178,5 +177,21 @@
 			WHERE voteitem_id =  #{voteitemId}
 		
 	</update>
+
+	<!-- 투표기간이 지났을때 finish로 변경 처리 -->
+	<update id="paststatusupdate">	
+		<![CDATA[
+		UPDATE vote SET vote_status = 'finish' where vote_deadline < sysdate
+	  	]]>
+	</update>
+	
+	<!-- 투표할 인원이 모두 투표를 완료했을 경우 finish로 변경처리-->
+	<update id="fullstatusupdate" parameterType="ants.com.board.vote.model.VoteResultVo">			
+		UPDATE vote SET vote_status = 'finish' 
+		WHERE vote_totalno = 
+				(SELECT count(*) FROM voteresult a, voteitem b, vote c 
+				WHERE c.vote_id = b.vote_id AND b.voteitem_id = a.voteitem_id AND  b.vote_id = #{voteId}) 
+		 AND vote_id = #{voteId}
+ 	</update>
 
 </mapper>

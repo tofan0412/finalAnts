@@ -41,6 +41,10 @@
 	    box-shadow: none;
 	}	
 	
+	.badge{
+		height: 20px;
+	}
+	
 	
 </style>
 
@@ -105,11 +109,18 @@ $(function(){
 	// 투표 등록 버튼 클릭
 	$('#regBtn').click(function(){
 		voteitems = []
-		votetitle = $('#voteTitle').val();
+		const date = new Date()
+		
+		console.log(date)
+		votetitle = date;
 		votedeadline = $('#voteDeadline').val();
+		
 
-		for(i=0; i<$('.voteItemName').length;i++){			
-			voteitems.push( $('.voteItemName').eq(i).val());
+		for(i=0; i<$('.voteItemName').length;i++){	
+			console.log($('.voteItemName').eq(i).val()) 
+			if($('.voteItemName').eq(i).val() != '' ){			
+				voteitems.push( $('.voteItemName').eq(i).val());
+			}
 		}
 
 		cnt = 0;
@@ -127,19 +138,9 @@ $(function(){
 			$('.warningDate').text("마감일을 작성해 주세요.");
 			cnt++;
 		}
-		if (cnt == 0){
-			 insertvote(voteitems);
-			
+		if (cnt == 0){				
+			insertvote(voteitems);			
 		}
-	})
-	
-	// 투표하기 버튼 
-	$(document).on('click','.votebtn', function(){		
-		voteid = $(this).next().val();
-		console.log(voteid)
-// 		itemdetail(voteid);
-		$(location).attr('href', '${pageContext.request.contextPath}/vote/voteDetail?voteId='+voteid);
-		
 	})
 	
 	
@@ -147,14 +148,36 @@ $(function(){
 })
 
 
+// 날짜 형식 변환
+function changedateType(){
+	a = $('#voteDeadline').val()
+	Y = a.substring(0,4) // 년
+	M = a.substring(5,7) //월
+	D = a.substring(8,10) //일
+	H = a.substring(11,13) //시
+	m = a.substring(14) //분
+
+	votedeadline = Y+M+D+H+m
+	console.log(votedeadline)
+}
+
+const date = new Date()
+console.log(date)
+
 // 다음 투표 id
 function nextSeq(){	
+	
 	$.ajax({url :"${pageContext.request.contextPath}/vote/voteinsertView",
 		 method : "get",
 		 success :function(data){	
 			 console.log(data)
 			 $('#nextSeq').val(data.nextSeq);
 			 $('#voteInsert').modal();
+			 
+			
+			 // 현재 날짜로 날짜 설정
+// 			 document.getElementById('voteDeadline').value= date.toISOString().slice(0, -1);
+			 $('#voteDeadline').attr('min', date.toISOString().slice(0, 16));
 		 }
 	})
 }
@@ -163,7 +186,15 @@ function nextSeq(){
 // 투표테이블 작성
 function insertvote(voteitems){
 	votetitle = $('#voteTitle').val();
-	votedeadline = $('#voteDeadline').val();
+
+	a = $('#voteDeadline').val()
+	Y = a.substring(0,4) // 년
+	M = a.substring(5,7) //월
+	D = a.substring(8,10) //일
+	H = a.substring(11,13) //시
+	m = a.substring(14) //분
+
+	votedeadline = Y+M+D+H+m
 	
 	$.ajax({url :"${pageContext.request.contextPath}/vote/voteinsert",
 		 method : "post",
@@ -190,7 +221,7 @@ function insertvoteItem(voteitems){
 			 	 voteId :  $('#nextSeq').val()},
 		 success :function(data){	
 			 
-		    alert('투표아이템 테이블 등록');
+// 		    alert('투표아이템 테이블 등록');
 		   
 			$(location).attr('href', '${pageCContext.request.contextPath}/vote/votelist');
 		 }
@@ -275,7 +306,6 @@ function itemdetail(voteid){
         				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
 							<form:option value="1" label="작성자"/>
 							<form:option value="2" label="제목"/>
-							<form:option value="3" label="내용"/>
 						</form:select> 
 						
 						
@@ -313,15 +343,22 @@ function itemdetail(voteid){
 	                  <tbody>
 	                      
                        <c:forEach items = "${votelist }" var ="vote" varStatus="status">
-                       			<input type="text" value="${vote.votedNo }" name="votedNo">
-                       		
 			                    <td  style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((voteVo.pageIndex-1) * voteVo.pageUnit + (status.index+1))}"/>.</td>
 							
 								<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/vote/voteDetail?voteId=${vote.voteId }">${vote.voteTitle}</a></td>
 								<td style="text-align: center;"> ${vote.memId }</td>
 								<td style="text-align: center;"> ${vote.voteDeadline }</td>
 								<td style="text-align: center;"> ${vote.voteTotalno }</td>
-								<td style="text-align: center;" class="votestatus"> </td>
+								<c:if test="${vote.voteStatus =='ing'}">
+									<td style="text-align: center;"> 
+									 	<span class="badge badge-success">진행중</span>
+									</td>
+								</c:if>
+								<c:if test="${vote.voteStatus =='finish'}">
+									<td style="text-align: center;" >
+										<span class="badge badge-danger"> 완료 </span>
+									</td>
+								</c:if>
 <%-- 								<td style="text-align: center;"><button class="votebtn">투표하기</button><input type="hidden" value="${vote.voteId }"></td> --%>
 		                     	<td style="text-align: center;">
 								 
@@ -403,7 +440,7 @@ function itemdetail(voteid){
 					<div class="jg"><span class="jg warningItem" style="color : red;"></span></div>
 					
 					<label class="jg">마감일</label><br>
-					<input type="date" class="form-control" id="voteDeadline" name="voteDeadline" style="width : 50%;" >
+					<input type="datetime-local" class="form-control" id="voteDeadline" name="voteDeadline" style="width : 70%;" >
 					<div class="jg"><span class="jg warningDate" style="color : red;"></span></div>				
 			</div>
 			
@@ -414,41 +451,3 @@ function itemdetail(voteid){
 	</div>
 </div>
 
-
-
-
-<!-- 투표 상세보기 모달 -->
-<!-- Modal to invite new Members . . . -->
-<div class="modal fade" id="voteDetail" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-sm" role="document">
-		<div class="modal-content" style="height: 600px auto; width : 400px;">
-			
-			<div class="modal-header">
-				<h3 class="modal-title jg" id="addplLable" style="text-align : center;">투표 상세보기</h3>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			
-			<div id="itemdiv" class="modal-body" style="width: 100%; height: 100%;">
-									
-					<input type="hidden" id="nextSeq">
-					<label class="jg" style="float : left;">투표 제목</label>
-					<input type="text" class="form-control" id="voteTitle" name="voteTitle" style="width : 90%;"/>
-					<div class="jg"><span class="jg warningTitle" style="color : red;"></span></div>
-					<!-- 사용자가 제목을 입력하지 않은 경우 .. -->
-					
-					<br>
-					
-					<label class="jg col-sm-3 control-label" style="float : left; display: inline-block;" >투표 항목</label>
-					
-		
-			</div>
-			
-<!-- 			<div class="modal-footer"> -->
-<!-- 				<button class="btn btn-success" id="regBtn">등록</button> -->
-<!-- 			</div> -->
-		</div>
-	</div>
-</div>

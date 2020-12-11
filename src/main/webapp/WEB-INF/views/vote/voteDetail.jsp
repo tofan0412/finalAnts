@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript">
 $(function(){
 
@@ -12,6 +12,22 @@ $(function(){
 	// 투표하기 버튼
 	$(document).on('click', '#votejoinbtn', function(){	
 		$('input[type=radio]').prop('checked',false);
+		
+		
+		// 이미 투표를 참여했을 경우
+		$(":radio[name='voteItem']").each(function() {
+			var $this = $(this);		
+			
+			if($this.val() == '${voteres.voteitemId}')		{
+				$(":radio[name='voteItem']").attr('disabled',true);
+				$this.prop('checked', true);
+				$('.warningVoted').text("이미 투표에 참여하셨습니다.");
+				$('#regBtn').hide();
+			}		
+		});
+		
+		
+		
 		$('#voteDetail').modal();
 	})
 	
@@ -20,7 +36,13 @@ $(function(){
 		var vote = $("input[type=radio]:checked").val();
 		var voteid =  '${voteVo.voteId}';
 		console.log(voteid)
-		$(location).attr('href', '${pageContext.request.contextPath}/vote/voteMember?voteitemId='+vote+'&voteId='+voteid);
+		
+		if('${voteres.memId}' == '${SMEMBER.memId}' ){
+			alert('이미 투표에 참여하셨습니다.')
+		}else{
+			$(location).attr('href', '${pageContext.request.contextPath}/vote/voteMember?voteitemId='+vote+'&voteId='+voteid);			
+		}
+		
 	})
 	
 	// 뒤로가기
@@ -29,23 +51,60 @@ $(function(){
 		window.history.back();
 	})
 	
-
-	// 투표율 구하기
-	a = Math.round(${voteVo.votedNo}/${voteVo.voteTotalno} * 100)
-	a += '%'
-	$('#votePercent').html(a)
-	
-		
 })
 </script>
 
 
 <style type="text/css">
 	label{
-	
-		width : auto;
-/* 		height : 30px; */
+		width : 100px auto;
 		font-size: 1.2em;
+		padding: 2px;
+	}
+	.labels{
+		width : 200px;
+		padding: 5px;
+	}
+	
+	 /* For Chrome or Safari */ 
+     progress::-webkit-progress-bar { 
+         background-color: #eeeeee; 
+     } 
+
+     progress::-webkit-progress-value { 
+         background-color: #ffc711 !important; 
+     } 
+
+
+     /* For Firefox */ 
+     progress { 
+         background-color: #eee; 
+     } 
+
+     progress::-moz-progress-bar { 
+         background-color: #ffc711 !important; 
+     } 
+
+     /* For IE10 */ 
+     progress { 
+         background-color: #eee; 
+     } 
+
+     progress { 
+         background-color: #ffc711; 
+     } 
+	
+	.div{
+		display: inline-block;
+		height:auto;
+		width: auto;
+	}
+	#votesort{
+		height: 200px auto;
+	}
+	
+	h3{
+		display: inline-block;
 	}
 	
 </style>
@@ -58,69 +117,92 @@ $(function(){
 	    <!-- 일감 상세보기 -->
 	    <div id="todoDetail" class="card-body">
 	    
-	    	<h3>투표 상세보기</h3><br>
+	    	<h3 class="jg">투표 상세보기</h3>
+	    	<c:if test="${voteVo.voteStatus =='ing'}">				
+			 	<span class="badge badge-success">진행중</span>				
+			</c:if>
+			<c:if test="${voteVo.voteStatus =='finish'}">				
+				<span class="badge badge-danger"> 완료 </span>				
+			</c:if>
+	    	<hr> <br>
 		
 			<input type="hidden" id="todoId">
 			
-			<div class="form-group ">
-				<label for="voteTitle" class="col-sm-2 control-label">제목</label>
-				<label class="control-label" id="voteTitle">${voteVo.voteTitle }</label>
+			<div class="div">
+				<label for="voteTitle" class="control-label labels jg">제목</label>
+				<label class="control-label jg" id="voteTitle">${voteVo.voteTitle }</label>
 			</div>
-			
-			<div class="form-group " >
-				<label for="voteitemName" class="control-label col-sm-2" style=" float : left;">투표항목</label>				
-				<c:forEach items="${itemlist }" var="item" varStatus="status">				
-						<label class="control-label col-sm-10 float-right">${status.index+1 } . &nbsp; ${item.voteitemName } 
-												&nbsp; ${item.voteCount }명</label><br>					
+			<br>
+			<div class="div">
+<!-- 				<label for="voteitemName" class="control-label labels" id="votesort"  style=" float : left;">투표항목</label>				 -->
+				<c:forEach items="${itemlist }" var="item" varStatus="status">
+						
+						<label for="voteitemName" class="control-label labels jg" id="votesort"  style=" float : left;">
+							<c:if test="${status.index == 0}">				
+								투표항목	
+							</c:if>
+						</label>
+						
+						
+						<div class="control-label float-left">		
+							<label class="control-label jg float-left">${status.index+1 } . &nbsp; ${item.voteitemName }</label><br>
+						
+                      		<label class="control-label jg float-left per"  style=" float : left;">
+	                         	<progress   value="${item.voteCount }" max="${voteVo.voteTotalno}"></progress>                        
+								&nbsp; ${item.voteCount }명 	
+								<c:if test="${item.voteCount == 0}">
+										( 0% )
+					
+								</c:if>
+								<c:if test="${item.voteCount > 0}">
+									( <fmt:formatNumber value="${item.voteCount/voteVo.votedNo }" type="percent"></fmt:formatNumber> )
+								</c:if>
+							</label>		
+						</div>
+						<br>	
 				</c:forEach>
 			</div>
 			<br>
-			<div class="form-group">
-				<label for="memId" class="control-label col-sm-2">개시자</label>
-				<label class="control-label" id="memId">${voteVo.memId }</label>
+			<div class="div">
+				<label for="memId" class="control-label labels jg">개시자</label>
+				<label class="control-label jg" id="memId">${voteVo.memId }</label>
 			</div>
-			
-			<div class="form-group">
-				<label for="voteTotalno" class="col-sm-2 control-label">투표인원</label>
+			<br>
+			<div class="div">
+				<label for="voteTotalno" class="control-label labels jg">투표인원</label>
 				
-				<label class="control-label " id="voteTotalno">${voteVo.votedNo}명 / ${voteVo.voteTotalno}명  </label> 
+				<label class="control-label jg" id="voteTotalno">${voteVo.votedNo}명 / ${voteVo.voteTotalno}명  </label> 
 				
 			</div>
-			<div class="form-group">
-				<label for="voteTotalno" class="col-sm-2 control-label">투표율</label>
+			<br>
+			<div class="div">
+				<label for="voteTotalno" class="control-label labels jg">투표율</label>
 		
-				<label class="control-label " id="votePercent"> </label>
+				<label class="control-label jg" id="votePercent">	
+					<fmt:formatNumber value="${voteVo.votedNo/voteVo.voteTotalno}" type="percent"></fmt:formatNumber> 		
+				</label>
 				
 			</div>
-			
-			<div class="form-group">
-				<label for="voteDeadline" class="col-sm-2 control-label">종료일</label>
-				<label class="control-label" id="voteDeadline">${voteVo.voteDeadline}</label>
+			<br>
+			<div class="div">
+				<label for="voteDeadline" class="control-label labels jg">종료일</label>
+				<label class="control-label jg" id="voteDeadline">${voteVo.voteDeadline}</label>
 			</div>
-			
+			<hr><br>
 			
 			<div class="card-footer clearfix" id="btndiv" >
-				<button type="button" class="btn btn-default" id="back">뒤로가기</button>		
-				${voteres.memId} / ${SMEMBER.memId }				
-				<c:if test="${voteres.memId ne SMEMBER.memId }">
-					<button type="button" class="btn btn-default float-right" id="votejoinbtn">투표참여하기</button>
-				</c:if>
-				
-				<c:if test="${voteres.memId ne SMEMBER.memId }">
-					<button type="button" class="btn btn-default float-right" id="votejoinbtn">투표참여하기</button>
-				</c:if>
-				
-							
+				<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>		
+				투표자 : ${voteres.memId} / 로그인한 사람 : ${SMEMBER.memId }		
+				<c:if test="${voteVo.voteStatus =='ing'}">		
+					<button type="button" class="btn btn-default float-right jg" id="votejoinbtn">투표참여하기</button>
+				</c:if>			
 			</div>
 		
 		</div>
 	    
 	          
 	   </div>
-	   <!-- 일감 상세보기   끝-->
-	   
-	
-	   
+	   <!-- 일감 상세보기   끝-->	   
 </div>
 
 
@@ -136,7 +218,7 @@ $(function(){
 
 <!-- 투표 상세보기 모달 -->
 <!-- Modal to invite new Members . . . -->
-<div class="modal fade" id="voteDetail" tabindex="-1 " role="dialog" style="  padding-top: 150px;">
+<div class="modal fade" id="voteDetail" tabindex="-1 " role="dialog" style="  padding-top: 200px;">
 	<div class="modal-dialog modal-sm" role="document"  >
 		<div class="modal-content" style="height: 600px auto; width : 400px;">
 			
@@ -164,14 +246,12 @@ $(function(){
 						<input type="radio" name="voteItem" value="${item.voteitemId }" style=" width : 20px; height: 20px; float : left; display: inline-block; "  >
 	   				    <label class="jg" for="huey"> &nbsp;${item.voteitemName }</label>  <br>
 					</c:forEach>
-<!-- 					<input type="radio" name="voteItem" style=" width : 20px; height: 20px; float : left; display: inline-block; "  >   -->
-<!-- 					  <label class="jg" for="huey"> &nbsp;Huey2</label><br> -->
-<!-- 					<input type="radio" name="voteItem" style=" width : 20px; height: 20px; float : left; display: inline-block; " > -->
-<!-- 					  <label class="jg" for="huey"> &nbsp;Huey3</label><br> -->
+					<br>
+					<div class="jg"><span class="jg warningVoted" style="color : red;"></span></div>
 					</div>
 			</div>
 			
-			<div class="modal-footer">
+			<div class="modal-footer" >
 				<button class="btn btn-success" id="regBtn">투표하기</button>
 			</div>
 		</div>

@@ -40,6 +40,12 @@ public interface VoteMapper {
 	// 투표 카운트 update
 	public int cntupdate(VoteResultVo voteresultvo);
 	
+	// 투표기간 지난 투표상태 변경
+	public int paststatusupdate();
+	
+	// 투표기간 지난 투표상태 변경
+	public int fullstatusupdate(VoteResultVo voteresultvo);
+	
 	
 	
 	
