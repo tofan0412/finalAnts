@@ -65,6 +65,8 @@ th{
 <body>
 <div>
 	<div class="top" style="margin-left:1.5%;"><h4>프로젝트 현황</h4>
+	(이름 클릭하면 해당 프로젝트 정보 가져오게 할것임..예정.. <br>
+	 프로젝트는 들어가기 버튼으로..)
 		<nav class="mt-2">
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 				<!-- memType이 MEM일때  -->
@@ -81,20 +83,24 @@ th{
 									<th>상태(일단 프로젝트번호)</th>
 									<th>완료율</th>
 									<th>생성일</th>
-									   
 								</tr> 
 								<tbody id=memInProjectList> 
 									<c:forEach items="${memInProjectList}" var="project" varStatus="sts" >
 									    <tr "data-privid="${project.reqId}">
 											<td><li class="nav-item">
-												<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+												<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
 											 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
 											 	</a>
-											</li> 
-											</td>
+											</li>
+											</td> 
 											<td>${project.reqId}</td>
 											<td>${project.percent}</td>
 											<td>${project.regDt}</td>
+											<td>
+												<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+											 		<input type="button" value="들어가기">
+											 	</a>
+											</td>	
 										</tr>
 									</c:forEach> 
 								</tbody>

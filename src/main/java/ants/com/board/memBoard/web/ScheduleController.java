@@ -268,4 +268,15 @@ public class ScheduleController {
 			return "redirect:/schedule/MyclendarView";
 		}
 	}
+	
+	
+	// 메인캘린더
+	@RequestMapping("/mainClendar")
+	public String mainClendar(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session, Model model, String reqId) {
+		scheduleVo.setReqId(reqId);
+		List<ScheduleVo> showCalendar = memBoardService.showCalendar(scheduleVo);
+		model.addAttribute("showSchedule", showCalendar);
+		return "tiles/layout/contentmain";
+	}
+	
 }

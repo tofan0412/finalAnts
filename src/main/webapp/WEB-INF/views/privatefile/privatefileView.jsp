@@ -178,9 +178,9 @@ th{
 		<div class="card-body p-0">
 		<table id="todoTable">
 			<tr>
-				<th width="80px">No.</th>
-				<th>파일명</th>
-				<th></th>
+				<th width="80px">No.</th> 
+				<th style="padding-left:45px;">파일명</th>
+				<th></th>  
 				<th></th>
 				<th></th>
 				<th></th>
@@ -273,6 +273,7 @@ th{
 									<img src="/fileFormat/dll.png" style="width:30px; height:30px;">
 								</a>
 							</c:when>
+							
 							
 							<c:when test="${filename eq 'dmg'}">
 								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
@@ -439,12 +440,13 @@ th{
 									<img src="/fileFormat/xls.png" style="width:30px; height:30px;">
 								</a>
 							</c:when>
+							
+							
 							<c:when test="${filename eq 'xml'}">
 								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
 									<img src="/fileFormat/xml.png" style="width:30px; height:30px;">
 								</a>
 							</c:when> 
-							
 							<c:when test="${filename eq 'zip'}">
 								<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
 									<img src="/fileFormat/zip.png" style="width:30px; height:30px;">
