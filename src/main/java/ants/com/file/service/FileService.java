@@ -95,10 +95,10 @@ public class FileService {
 	 return mapper.gethotfiles(pfv);
 	 }
 	
-//	 // 파일 삭제하기
-//	 public int defiles(String pubId){
-//	 return mapper.delfiles(pubId);
-//	 }
+	 // 파일 삭제하기
+	 public int delhotfiles(String hissuefId){
+	 return mapper.delhotfiles(hissuefId);
+	 }
 //	
 //	 // 프로젝트별 파일 수
 //	 public int pubfilePagingListCnt(PublicFileVo publicFileVo){

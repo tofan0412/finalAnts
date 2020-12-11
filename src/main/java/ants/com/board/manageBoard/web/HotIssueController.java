@@ -147,6 +147,8 @@ public class HotIssueController {
 	public String updatehissueView(Model model, HotIssueVo hotIssueVo) {
 		hotIssueVo.setHissueId(hotIssueVo.getHissueId());;
 		HotIssueVo dbVo = manageBoardService.gethissue(hotIssueVo);
+		HotIssueFileVo pfv = new HotIssueFileVo(hotIssueVo.getHissueId());
+		hotIssueFileController.getfiles(pfv, model);
 		model.addAttribute("hotIssueVo", dbVo);
 		return "tiles/manager/plpm_hotissueUpdate";
 	}
