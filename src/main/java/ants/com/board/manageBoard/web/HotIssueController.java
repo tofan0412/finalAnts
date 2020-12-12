@@ -13,14 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import ants.com.board.manageBoard.model.HotIssueVo;
-import ants.com.board.manageBoard.model.TodoLogVo;
-import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
 import ants.com.file.model.HotIssueFileVo;
-import ants.com.file.view.FileController;
 import ants.com.file.view.HotIssueFileController;
 import ants.com.member.model.MemberVo;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;

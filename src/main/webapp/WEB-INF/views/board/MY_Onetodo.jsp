@@ -50,6 +50,7 @@
 				$("#todoPercent").html(data.todoVo.todoPercent+"%");
 				$("#todoId").val(data.todoVo.todoId);
 				$("#todoId_in").val(data.todoVo.todoId);
+				$("#reqId").val(data.todoVo.reqId);
 				
 				
 				if(data.filelist.length == 0){
@@ -145,6 +146,7 @@
        	진행도를 입력해주세요!
        	<form id="proForm" name="proForm" method="post">
        	<input type="hidden" name="todoId" id="todoId_in">
+       	<input type="hidden" name="reqId" id="reqId">
        	<input type="text" name="todoPercent">
        	</form>
       </div>

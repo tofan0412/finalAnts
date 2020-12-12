@@ -76,7 +76,13 @@ public class ManageBoardService {
 	public String gettodoId() {
 		return mapper.gettodoId();
 	}
+	
+	public String proPerChangebytodo(TodoVo todoVo) {
+		return mapper.proPerChangebytodo(todoVo);
+	}
 
+	
+	
 	// 핫이슈 기능
 	public List<HotIssueVo> gethissueList(HotIssueVo hotIssueVo) {
 		return mapper.gethissueList(hotIssueVo);

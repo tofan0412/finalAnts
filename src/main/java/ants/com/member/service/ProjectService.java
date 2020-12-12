@@ -60,4 +60,8 @@ public class ProjectService extends EgovAbstractServiceImpl {
 		return mapper.insertPjtMember(pjtMem);
 	}
 	
+	// 프로젝트 진행도 update
+	public int propercentChange(ProjectVo projectVo) {
+		return mapper.propercentChange(projectVo);
+	}
 }

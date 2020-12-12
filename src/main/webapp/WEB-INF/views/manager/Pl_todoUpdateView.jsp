@@ -247,7 +247,7 @@
 				</select><br><br>
 				
 				<label for="todoPercent" class="col-sm-1 control-label">진행도</label>
-				<input type="text" id="todoPercent" name="todoPercent" value="${todoVo.todoPercent }"/><br><br>
+				<input type="text" id="todoPercent" name="todoPercent" value="${todoVo.todoPercent }" readonly="readonly"/><br><br>
 				
 				<label for="todoStart" class="col-sm-1 control-label">시작 일</label>
 				<input type='date' id='todoStart' name="todoStart"/><br><br>

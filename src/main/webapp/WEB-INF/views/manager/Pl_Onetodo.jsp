@@ -39,8 +39,9 @@
 		// 일감 삭제
 		$(document).on('click','#deleteBtn', function(){
 			var todoId = $("#todoId").val();
+			var reqId = $("#reqId").val();
 			 if(confirm("정말 삭제하시겠습니까 ?") == true){
-				$(location).attr('href', '${pageContext.request.contextPath}/todo/deletetodo?todoId='+todoId);
+				$(location).attr('href', '${pageContext.request.contextPath}/todo/deletetodo?todoId='+todoId+'&reqId='+reqId);
 			    }
 			    else{
 			        return ;
@@ -77,6 +78,7 @@
 						$("#todoEnd").html(todo.todoEnd);
 						$("#todoPercent").html(todo.todoPercent+"%");
 						$("#todoId").val(todo.todoId);
+						$("#reqId").val(todo.reqId);
 						$("#todoId_in").val(todo.todoId);
 					}
 					
@@ -124,6 +126,7 @@
             </div>
             <div class="card-body">
              	<input type="hidden" id="todoId">
+             	<input type="hidden" id="reqId">
         
 				<label for="todoTitle" class="col-sm-1 control-label">제목:</label>
 		        <label class="control-label" id="todoTitle"></label><br><br>
