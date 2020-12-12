@@ -26,7 +26,7 @@
 		 $('#summernote').summernote({
 		        placeholder: 'Hello stand alone ui',
 		        tabsize: 2,
-		        height: 300,
+		        height: 500,
 		        toolbar: [
 		          ['style', ['style']],
 		          ['font', ['bold', 'underline', 'clear']],
@@ -50,7 +50,6 @@
 	
 </script>
 </head>
-<%@include file="../layout2/ad_contentmenu.jsp"%>
 
 <div class="col-12 col-sm-9">
 	<div class="card card-teal ">
@@ -66,7 +65,7 @@
 <!-- 				    <option value="notice">공지사항</option> -->
 <!-- 				</select><br><br> -->
 				<label for="noticeTitle" class="col-sm-2 control-label">제목 </label>
-				<input type="text" name="noticeTitle" style="width: 580px;" value="${noticeVo.noticeTitle }" id="noticeTitle"><br><br>
+				<input type="text" name="noticeTitle" style="width: 400px;" value="${noticeVo.noticeTitle }" id="noticeTitle"><br><br>
 				
 				<div style="width: 80%;">
 				<label for="noticeCont" class="col-sm-2 control-label">내용</label>

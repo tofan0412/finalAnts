@@ -124,11 +124,8 @@ public class AdminController {
 	@RequestMapping("/noticelist")
 	public String getnoticelist(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model) throws Exception{
 			
-//		String reqId = (String)session.getAttribute("reqId"); //프로젝트Id를 안쓰는데 어찌하지..
 		String noticeId = (String)session.getAttribute("noticeId");
 	
-//			IssueVo issueVo = new IssueVo();
-//		issueVo.setReqId(reqId);
 		noticeVo.setNoticeId(noticeId);
 		
 		/** EgovPropertyService.sample */
@@ -151,10 +148,6 @@ public class AdminController {
 		int totCnt = adminService.noticePagingListCnt(noticeVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-		
-//		String memId = "cony@naver.com";
-//		List<CategoryVo> categorylist = promemService.categorylist(memId);
-//		model.addAttribute("categorylist", categorylist);
 		
 		return "admin.tiles/notice/noticelist2";
 	}

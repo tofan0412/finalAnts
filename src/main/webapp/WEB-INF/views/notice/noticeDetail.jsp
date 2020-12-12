@@ -30,15 +30,19 @@ $(function(){
 
 <style type="text/css">
 	label{
-	
-		width : auto;
-		height : 30px;
+		width : 76%;
+/* 		height : 30px; */
 		font-size: 1.2em;
 	}
-/* 	.col-sm-2{ */
-/* 		font-size: 1.3em; */
-/* 		font-weight: bold; */
-/* 	} */
+	/*
+ 	.col-sm-2{ 
+ 		font-size: 1.3em; 
+ 		font-weight: bold; 
+ 	} 
+ 	*/
+ 	noticeCont{
+ 		
+ 	}
 </style>
 
 </head>
@@ -62,12 +66,14 @@ $(function(){
 			
 			<br>
 			<label for="noticeCont" class="col-sm-2 control-label">내용</label>
+			<div>
 			<label id ="noticeCont" class="control-label">${noticevo.noticeCont }</label>
-			
-			<br><br><br>
+			</div>
+			<br><br>
+			<div>
 			<label for="adminId" class="col-sm-2 control-label">작성자</label>
 			<label id ="adminId" class="control-label">${noticevo.adminId }</label>
-			
+			</div>
 			<br>
 			<label for="regDt" class="col-sm-2 control-label">작성일</label>
 			<label id ="regDt" class="control-label">${noticevo.regDt }</label>

@@ -29,7 +29,8 @@
 }
 
 .center {
-	padding: 30%;
+	padding: 13%;
+	color: white;
 }
 
 .login {
@@ -66,25 +67,45 @@ $(function(){
 
 	<div class="ff">
 
-		<div class="col-sm-4" style="background-color: lavender;">
-			<img src="../dist/img/adminimage1.png" height="100%" width="100%"
-				alt="Avatar">
+		<div class="col-sm-4">
+			<img src="../dist/img/ants.png"  height="60%" width="100%"
+				>
 		</div>
 		
 		
 <!-- 	<form action="admain.tiles/layout/admin/adlogin.jsp" method="post" name="loginForm"> -->
 
-		<div class="col-sm-6" style="background-color: white;">
+		<div class="col-sm-6" style="background-color: rgb(39, 9, 73);">
 			<div class="center">
 				<div>
-					<h2 class="jg" style="line-height: 25px;">어서 오세요 관리자님!</h2>
+					<h1 class="jg" style="line-height: 25px;">Welcome!</h1>
+					<br>
+					<h4>
+					Since our opening, we have become masters of<br> 
+					our craft. our commitment to quality products,<br>
+					exceptional services and incomparable customer<br>
+					care keep our community coming back again<br>
+					and again.
+					
+					<br><br>
+					
+					ants1000@ants.com<br>
+					010-1000-1000<br>
+					</h4>
 				</div>
+				
+				
+				
+				
+				
+				
+				
 				<br>
 							<!-- onsubmit="return false;"  페이지 새로고침 막기 -->
 				<form id="lform" action="/admin/adloginFunc" method="POST" >
 					<div class="form-group has-feedback">
 						<header class="jg" style="font-size: 1.2em;">
-							ID<br>
+							Please enter admin ID<br>
 						</header>
 						<input type="email" class="form-control login" id="adminId" name="adminId" value="" style="border: 0; outline: 0;">
 					</div>
@@ -95,11 +116,6 @@ $(function(){
 								Password<br>
 							</header>
 						</div>
-<!-- 						<div> -->
-<!-- 							<header class="jg" style="font-size: 1.0em; float: right; color: #0BB783;"> -->
-<!-- 								<a id="myBtn">비밀번호를 잊으셨나요?</a><br> -->
-<!-- 							</header> -->
-<!-- 						</div> -->
 						<input type="password" class="form-control login" id="adminPass" name="adminPass" value="" style="border: 0; outline: 0;">
 					</div>
 
@@ -107,7 +123,7 @@ $(function(){
 						<div class="col-sm-8">
 							<div class="checkbox icheck">
 								<label> <input type="checkbox" id="rememberMe"
-									name="rememberMe" value=""> 아이디 기억하기
+									name="rememberMe" value=""> RememberMe
 								</label>
 							</div>
 						</div>
@@ -135,10 +151,6 @@ $(function(){
 	<script>
  	$(document).ready(function(){
  		
- 		// 모달창 열기
-		$("#myBtn").click(function(){
-	    	$("#myModal").modal();
-	    });
 		
 		
 		$(function(){ 
@@ -245,7 +257,7 @@ $(function(){
 		        	$('#sp').html('일치하는 관리자정보가 없습니다.'); 
 		        }
 			}) 
-			//return false;
+// 			return false;
 		});
 		
 		

@@ -13,11 +13,21 @@
 	
 	<!-- 공지사항 리스트 -->
 	<select id="noticelist" resultType="ants.com.admin.model.NoticeVo" parameterType="ants.com.admin.model.NoticeVo">
-		
+		<!-- 
 		SELECT * FROM NOTICE where del = 'N'
 		order by notice_id desc 
-
-					
+		 -->
+		 
+		SELECT c.*
+			FROM (
+				SELECT ROWNUM RNUM, a.*
+				FROM (
+					SELECT *
+					FROM NOTICE
+					WHERE DEL = 'N'
+					ORDER BY notice_id desc
+				) a
+		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE RNUM > #{firstIndex}]]>
 	</select>
 	
 	<!-- 각 공지사항게시글 내용 가져오기 -->
@@ -60,28 +70,10 @@
 			set del = 'Y' 
 		where notice_id = #{noticeId}
 	</update>
-	
-	
-<!-- 	<delete id="delnotice" parameterType="string"> -->
-<!-- 	<delete id="delnotice" parameterType="ants.com.admin.model.NoticeVo"> -->
-<!-- 		DELECT  -->
-<!-- 		FROM NOTICE -->
-<!-- 		WHERE notice_id = #{noticeId} -->
-<!-- 	</delete> -->
-
-	<!-- 카테고리 가져오기-->
-<!-- 	<select id="categorylist" resultType ="ants.com.board.memBoard.model.CategoryVo" parameterType="String"> -->
-	
-<!-- 		select a.category_id, a.category_name  -->
-<!-- 		from category a, (select substr(mem_type,1,1) as mem_type from member where mem_id = #{memId}) b -->
-<!-- 		where substr(a.category_auth,1,1) in( b.mem_type, 'm') -->
-<!-- 		order by a.category_id -->
-			
-<!-- 	</select> -->
-
 
 	<!-- 공지사항게시글 수 조회하기 -->	
 	<select id="noticePagingListCnt" parameterType="ants.com.admin.model.NoticeVo"  resultType="int">
+		<!-- 
 		select count(*) as totCnt
 		from notice
 		where del = 'N'
@@ -98,7 +90,11 @@
 						AND	notice_cont LIKE '%' || #{searchKeyword} || '%'
 					</when>
 				</choose>
-			</if>		
+			</if>
+		 -->	
+		 
+		SELECT COUNT(*)
+		  FROM NOTICE
 	</select>
 	
 
