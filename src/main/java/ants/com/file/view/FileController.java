@@ -10,16 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import ants.com.board.memBoard.model.IssueVo;
-import ants.com.file.mapper.FileMapper;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.service.FileService;
 import ants.com.member.model.MemberVo;
