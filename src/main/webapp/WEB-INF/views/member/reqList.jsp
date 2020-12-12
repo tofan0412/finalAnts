@@ -200,7 +200,7 @@
 													<div class="progress-bar bg-danger"
 														style="width: <c:out value="${NUM+1}" />%"></div>
 												</c:if>
-												<c:if test="${todo.todoPercent eq '100'}">
+												<c:if test="${req.proPercent eq '100'}">
 													<div class="progress-bar bg-danger"
 														style="width: <c:out value="${NUM+1}" />%"></div>
 												</c:if>
@@ -208,16 +208,15 @@
 										</c:when>
 									</c:choose></td>
 								<td class="project-actions text-right" style="opacity: .9;">
-									<a class="btn btn-primary btn-sm"
-									href="javascript:reqDetail('<c:out value="${req.reqId }"/>');">
-										<i class="fas fa-folder"></i> 보기
-								</a> <a class="btn btn-info btn-sm"
-									href="javascript:reqUpdate(${req.reqId });"> <i
-										class="fas fa-pencil-alt"></i> 수정
-								</a> <a class="btn btn-danger btn-sm"
-									href="javascript:reqDelete(${req.reqId });"> <i
-										class="fas fa-trash"></i> 삭제
-								</a>
+									<a class="btn btn-primary btn-sm" href="javascript:reqDetail('<c:out value="${req.reqId }"/>');">
+										<i class="fas fa-folder"></i> 보기 
+									</a> 
+									<a class="btn btn-info btn-sm" href="javascript:reqUpdate(${req.reqId });"> 
+										 <i class="fas fa-pencil-alt"></i> 수정
+									</a>
+									<a class="btn btn-danger btn-sm" href="javascript:reqDelete(${req.reqId });"> 
+										<i class="fas fa-trash"></i> 삭제
+									</a>
 								</td>
 							</tr>
 						</c:forEach>

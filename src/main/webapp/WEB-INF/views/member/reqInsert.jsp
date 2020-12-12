@@ -7,7 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<c:set var="registerFlag" value="${empty reqVo.categoryId ? 'create' : 'modify'}"/>
+<c:set var="registerFlag" value="${empty reqVo.reqId ? 'create' : 'modify'}"/>
 
 <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
 <script src="/plugins/summernote/summernote-bs4.min.js"></script>
@@ -83,13 +83,11 @@
 	         "fileSizeLimit": "20MB",
 	         "uploadLimit": 10,
 			 'onUploadComplete' : function(file, data) { 
-			
-				uploadCnt +=1;
-				
-				console.log(data); 
-				console.log(data.publicFileVo); 
-				console.log(data.count); 
-				insert();
+				 if($('#delfile').val()==""){
+					insert();
+				 }else{
+					delfiles();
+				 }
 			},
 			'onCancel': function (file) {
 				alert('실패')
@@ -144,8 +142,16 @@
 					method : "post",
 					data : $('#saveForm').serialize(),
 					success : function(data){
-						console.log(data);
-						projectInsert(data.reqVo);
+						if(${registerFlag eq 'create'}){
+							projectInsert(data.reqVo);
+						}
+						else{
+							if($('.uploadifive-queue-item').length>0){
+								fileUpload(data.reqVo);
+							}else{
+								delfiles();
+							}
+						}
 					}
 			 });
 	    }
@@ -154,13 +160,15 @@
 	  	function projectInsert(reqVo){
 	  		$.ajax({
 				url : "/project/insertProject",
-				data : {	reqId : reqVo.reqId, 
-							memId : reqVo.memId, 
-							proName : reqVo.reqTitle },
+				data : {reqId : reqVo.reqId},
 				method : "POST",
 				success : function(res){
 					if ("success" == res){
-						fileUpload(reqVo);
+						if($('.uploadifive-queue-item').length > 0){
+							fileUpload(reqVo);
+			     		}else{
+			     			insert();
+			     		}
 					}
 				}
 			});
@@ -174,8 +182,32 @@
 	 		$('#file_upload').data('uploadifive').settings.formData = { 'reqId' : reqId , 'someId' : someId , 'categoryId' : '7' };
 	 		$('#file_upload').uploadifive('upload');
 	 	}
-  	
- 	
+	  	
+	 	/* 파일 삭제버튼 클릭 */
+		$(document).on("click", "#btnMinus", function(){
+				var id = $(this).prev().attr('name')
+				$('#delfile').append(id + ",");
+				
+				var a = $('#delfile').text();
+				$('#delfile').val(a);
+				
+				$(this).prev().prev().remove();
+	     	    $(this).prev().remove();
+	     	    $(this).remove();
+	       	    
+	     });
+
+		/* 파일삭제 */ 
+		function delfiles(){
+			console.log($('#delfile').val());
+		 	$.ajax({url :"${pageContext.request.contextPath}/file/delfiles",
+		 			 data : {delfile : $('#delfile').val() },
+					 method : "post",
+					 success :function(data){
+						 insert();
+					 }
+			 });
+		}
 	
 }); //document.ready
 	
@@ -245,6 +277,27 @@
 		              <!-- 파일첨부 -->
 					</div>
 				</form:form>
+				<c:if test="${registerFlag == 'modify' }">
+					<div class="form-group">
+						<label id ="filelabel" for="files" class="col-sm-2 control-label">첨부파일</label>		
+						<div id ="file" class="col-sm-10">
+						
+							<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
+								<input type="search" name="${files.pubId}" value="${files.pubFilename}" disabled >
+			   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">
+									<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i> 
+								</button><br>
+							</c:forEach>								
+							
+						</div>
+						<input type="hidden" id="delfile" name="delfile" value="">	
+						<input type="hidden" value="${issueVo.issueId }" name="issueId">
+						<input type="hidden" value="3" name="categoryId" value="${issueVo.categoryId }">
+					</div>
+				</c:if>
+				
+				
+				
 				<form>
 					<label for="file" class="col-sm-2 control-label">첨부파일</label>
 					<div id="queue"></div>

@@ -102,7 +102,7 @@ public class ReqController {
 	 */
 	@RequestMapping(value = "/reqInsertView")
 	public String insertReqView(@ModelAttribute("reqVo") ReqVo reqVo) {
-
+		reqVo.setReqId(null);
 		return "tiles/member/reqInsert";
 	}
 
@@ -139,6 +139,9 @@ public class ReqController {
 		reqVo = reqService.getReq(reqVo);
 		model.addAttribute("reqVo", reqVo);
 		
+		PublicFileVo pfv = new PublicFileVo("7",reqVo.getReqId() , reqVo.getReqId());
+		filecontroller.getfiles(pfv, model);
+		
 		return "tiles/member/reqInsert";
 	}
 	
@@ -149,21 +152,11 @@ public class ReqController {
 	 * @return
 	 */
 	@RequestMapping(value = "/reqUpdate", method = RequestMethod.POST)
-	public String reqUpdate(@ModelAttribute("reqVo") ReqVo reqVo, Model model, RedirectAttributes ra, @RequestParam(name="jsonView",required=false) String jsonView) {
+	public String reqUpdate(@ModelAttribute("reqVo") ReqVo reqVo, Model model, RedirectAttributes ra) {
 		
-		int cnt = reqService.reqUpdate(reqVo);
-		//pl수정할때
-		if(jsonView.equals("Y")) {
-			return "jsonView";
-		}
+		reqService.reqUpdate(reqVo);
 		
-		if (cnt == 1) {
-			ra.addFlashAttribute("reqVo", reqVo);
-			return "redirect:/req/reqDetail";
-		} else {
-			model.addAttribute("reqVo",reqVo);
-			return "tiles/member/reqInsert";
-		}
+		return "jsonView";
 	}
 	
 	@RequestMapping(value="/reqStsUpdate")

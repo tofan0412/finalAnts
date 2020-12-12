@@ -1,5 +1,6 @@
 package ants.com.common.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ants.com.common.model.AlarmVo;
 import ants.com.common.service.AlarmService;
@@ -81,6 +83,15 @@ public class AlarmController {
 	public String alarmUpdate(@ModelAttribute("alarmVo") AlarmVo alarmVo) {
 		alarmService.alarmUpdate(alarmVo);
 		return "tiles/alarm/alarm";
+	}
+	
+	@RequestMapping("/alarmDelete")
+	public String alarmDelete(@RequestBody ArrayList<String> deleteData, Model model) {
+		logger.debug("알림삭제알림삭제알림삭제:{}", deleteData);
+		
+		int cnt = alarmService.alarmDelete(deleteData);
+		model.addAttribute("cnt", cnt);
+		return "jsonView";
 	}
 
 }
