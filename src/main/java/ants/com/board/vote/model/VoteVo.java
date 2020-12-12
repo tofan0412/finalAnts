@@ -13,10 +13,11 @@ public class VoteVo extends BaseVo {
 	private String categoryId;
 	private String reqId;
 	private String memId;
+	private String memName;
 	private String del;
 	private String voteTitle;
 	private String votedNo;
-	
+	private String remain;
 	
 	
 	public String getVoteId() {
@@ -139,15 +140,41 @@ public class VoteVo extends BaseVo {
 
 
 
-	@Override
-	public String toString() {
-		return "VoteVo [voteId=" + voteId + ", voteTotalno=" + voteTotalno + ", voteDeadline=" + voteDeadline
-				+ ", voteStatus=" + voteStatus + ", categoryId=" + categoryId + ", reqId=" + reqId + ", memId=" + memId
-				+ ", del=" + del + ", voteTitle=" + voteTitle + ", votedNo=" + votedNo + "]";
+	public String getRemain() {
+		return remain;
 	}
 
 
 
+	public void setRemain(String remain) {
+		this.remain = remain;
+	}
+
+	
+
+	public String getMemName() {
+		return memName;
+	}
+
+
+
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "VoteVo [voteId=" + voteId + ", voteTotalno=" + voteTotalno + ", voteDeadline=" + voteDeadline
+				+ ", voteStatus=" + voteStatus + ", categoryId=" + categoryId + ", reqId=" + reqId + ", memId=" + memId
+				+ ", memName=" + memName + ", del=" + del + ", voteTitle=" + voteTitle + ", votedNo=" + votedNo
+				+ ", remain=" + remain + "]";
+	}
+
+
+
+	
 	
 
 	

@@ -45,6 +45,17 @@ $(function(){
 		
 	})
 	
+	// 삭제하기 버튼
+	$('#votedelbtn').on('click', function(){	
+		if(confirm("정말 삭제하시겠습니까 ?") == true){
+			var voteid =  '${voteVo.voteId}';
+			$(location).attr('href', '${pageContext.request.contextPath}/vote/delVote?&voteId='+voteid);
+        }else{
+        	return;
+        }
+		
+	})
+	
 	// 뒤로가기
 	$(document).on('click','#back', function(){
 		
@@ -118,11 +129,20 @@ $(function(){
 	    <div id="todoDetail" class="card-body">
 	    
 	    	<h3 class="jg">투표 상세보기</h3>
-	    	<c:if test="${voteVo.voteStatus =='ing'}">				
-			 	<span class="badge badge-success">진행중</span>				
+	    	<c:if test="${voteVo.remain > 1000 and voteVo.voteStatus=='ing'}">
+				<td style="text-align: center;"> 
+				 	<span class="badge badge-success">진행중</span>
+				</td>
 			</c:if>
-			<c:if test="${voteVo.voteStatus =='finish'}">				
-				<span class="badge badge-danger"> 완료 </span>				
+			<c:if test="${(voteVo.remain <= 1000 and voteVo.remain > 0) and voteVo.voteStatus == 'ing'}">
+				<td style="text-align: center;"> 
+				 	<span class="badge badge-warning">임박</span>
+				</td>
+			</c:if>
+			<c:if test="${voteVo.remain <= 0 or voteVo.voteStatus== 'finish'}">
+				<td style="text-align: center;" >
+					<span class="badge badge-danger"> 완료 </span>
+				</td>
 			</c:if>
 	    	<hr> <br>
 		
@@ -163,10 +183,7 @@ $(function(){
 				</c:forEach>
 			</div>
 			<br>
-			<div class="div">
-				<label for="memId" class="control-label labels jg">개시자</label>
-				<label class="control-label jg" id="memId">${voteVo.memId }</label>
-			</div>
+			
 			<br>
 			<div class="div">
 				<label for="voteTotalno" class="control-label labels jg">투표인원</label>
@@ -188,14 +205,23 @@ $(function(){
 				<label for="voteDeadline" class="control-label labels jg">종료일</label>
 				<label class="control-label jg" id="voteDeadline">${voteVo.voteDeadline}</label>
 			</div>
-			<hr><br>
+			<br>
+			<div class="div">
+				<label for="memId" class="control-label labels jg">개시자</label>
+				<label class="control-label jg" id="memId">${voteVo.memName }</label>
+			</div>
+			<hr>
 			
 			<div class="card-footer clearfix" id="btndiv" >
 				<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>		
-				투표자 : ${voteres.memId} / 로그인한 사람 : ${SMEMBER.memId }		
-				<c:if test="${voteVo.voteStatus =='ing'}">		
-					<button type="button" class="btn btn-default float-right jg" id="votejoinbtn">투표참여하기</button>
+				투표자 : ${voteres.memId} / 로그인한 사람 : ${SMEMBER.memId }	
+				<c:if test="${voteVo.memId == SMEMBER.memId }">		
+					<button type="button" class="btn btn-default float-right jg" id="votedelbtn">삭제하기</button>
 				</c:if>			
+				<c:if test="${voteVo.voteStatus =='ing'}">		
+					<button type="button" style="margin-right: 5px;"  class="btn btn-default float-right jg" id="votejoinbtn">투표참여하기</button>
+				</c:if>			
+				
 			</div>
 		
 		</div>

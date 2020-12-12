@@ -11,26 +11,43 @@
 	      FROM (
 	      	SELECT ROWNUM RNUM , 
 	           	   S.*
-		      FROM (			
-                
-	                 select vote_title, vote_id, vote_totalno, to_char(vote_deadline, 'YYYY/MM/DD hh:mm') as vote_deadline,
-	                 		vote_status, category_id, req_id, mem_id,  ROUND((vote_deadline - sysdate),5) as remain
-	                 from vote 
-	                 where req_id = #{reqId} 
-	                   and del = 'N'
+		      FROM (			               
+	              
+					select *
+					  from (
+						    select *
+						    from 
+						     (select vote_title, vote_id, vote_totalno, to_char(vote_deadline, 'YYYY/MM/DD HH24:MI') as vote_deadline, voted_no,
+						                                vote_status, category_id, req_id, b.mem_name, a.mem_id, (to_char(vote_deadline, 'YYYYMMDDHH24MI') - to_char(sysdate, 'YYYYMMDDHH24MI')) as  remain
+						                         from vote a, member b
+						                         where a.mem_id = b.mem_id
+						                           and a.req_id = 1
+						                           and a.del = 'N'
+						                           and a.vote_status ='ing'
+						                          order by remain)             
+						    union all
+						    select *
+						    from
+						    (select vote_title, vote_id, vote_totalno, to_char(vote_deadline, 'YYYY/MM/DD HH24:MI') as vote_deadline, voted_no,
+						                                vote_status, category_id, req_id, b.mem_name, a.mem_id, (to_char(vote_deadline, 'YYYYMMDDHH24MI') - to_char(sysdate, 'YYYYMMDDHH24MI')) as  remain
+						                         from vote a, member b
+						                         where a.mem_id = b.mem_id
+						                           and a.req_id = 1
+						                           and a.del = 'N'
+						                           and a.vote_status ='finish'
+						                           order by remain desc)) 
 					     
 					<if test="searchKeyword != null and searchKeyword != ''">
 				        <choose>
 				         	<when test="searchCondition == 1">
-								AND	vote_title LIKE '%' || #{searchKeyword} || '%'
+								where vote_title LIKE '%' || #{searchKeyword} || '%'
 							</when>
 				            <when test="searchCondition == 2">
-								AND	mem_id LIKE '%' || #{searchKeyword} || '%'
+								where mem_id LIKE '%' || #{searchKeyword} || '%'
 							</when>
 						</choose>
 					</if>
-				
-					ORDER BY vote_status desc, remain
+			
 			  ) S
 		
 				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 
@@ -76,7 +93,8 @@
 		    category_id,
 		    req_id,
 		    mem_id,
-		    del
+		    del,
+		    voted_no
 		) VALUES (
 		    #{voteId},		    
 			(SELECT count(*)
@@ -89,7 +107,8 @@
 		    '2',
 		    #{reqId},
 		    #{memId},
-		    'N'
+		    'N',
+		    '0'
 		)
 	</insert>
 	
@@ -127,13 +146,16 @@
 	<!-- 투표 상세 -->
 	<select id="voteDetail" parameterType="ants.com.board.vote.model.VoteVo"
 				resultType="ants.com.board.vote.model.VoteVo">
-		select vote_title, vote_id, vote_totalno, to_char(vote_deadline, 'YYYY-MM-DD') as vote_deadline,
-                 vote_status, req_id, mem_id, 
+		select d.vote_title, d.vote_id, d.vote_totalno, to_char(d.vote_deadline, 'YYYY/MM/DD HH24:MI') as vote_deadline,
+                 d.vote_status, d.req_id, d.mem_id, e.mem_name,
+                 (to_char(d.vote_deadline, 'YYYYMMDDHH24MI') - to_char(sysdate, 'YYYYMMDDHH24MI')) as  remain,
                 ( select count(*) 
                     from voteresult a, voteitem b, vote c 
 				   where c.vote_id = b.vote_id and b.voteitem_id = a.voteitem_id and  b.vote_id = #{voteId}) as voted_no
-          from vote 
-          where vote_id = #{voteId}	
+				   
+          from vote d, member e
+          where d.mem_id = e.mem_id
+          and vote_id = #{voteId}
           order by vote_deadline 		
 	</select>
 	
@@ -185,13 +207,24 @@
 	  	]]>
 	</update>
 	
+	
+	
 	<!-- 투표할 인원이 모두 투표를 완료했을 경우 finish로 변경처리-->
 	<update id="fullstatusupdate" parameterType="ants.com.board.vote.model.VoteResultVo">			
-		UPDATE vote SET vote_status = 'finish' 
-		WHERE vote_totalno = 
+		UPDATE vote SET vote_status = case when vote_totalno = 
 				(SELECT count(*) FROM voteresult a, voteitem b, vote c 
-				WHERE c.vote_id = b.vote_id AND b.voteitem_id = a.voteitem_id AND  b.vote_id = #{voteId}) 
-		 AND vote_id = #{voteId}
+				WHERE c.vote_id = b.vote_id AND b.voteitem_id = a.voteitem_id AND  b.vote_id = #{voteId}) then 'finish' else 'ing' end,
+                
+                voted_no = case when vote_id = #{voteId} then  
+                		(select count(*) from voteitem a, voteresult b where a.voteitem_id = b.voteitem_id and a.vote_id = #{voteId}) end
+		WHERE 
+		 vote_id = #{voteId}
+ 	</update>
+ 	
+ 	
+ 	<!-- 투표 삭제하기 -->
+ 	<update id="votedel" parameterType="ants.com.board.vote.model.VoteVo">
+ 		UPDATE vote SET del = 'Y' WHERE vote_id = #{voteId}
  	</update>
 
 </mapper>

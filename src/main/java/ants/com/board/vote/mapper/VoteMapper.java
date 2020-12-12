@@ -46,6 +46,9 @@ public interface VoteMapper {
 	// 투표기간 지난 투표상태 변경
 	public int fullstatusupdate(VoteResultVo voteresultvo);
 	
+	// 투표 삭제
+	public int votedel(VoteVo voteVo);
+	
 	
 	
 	
