@@ -288,6 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 </head>
 <body class="ns">
+<%@include file="../layout/contentmenu.jsp"%>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">

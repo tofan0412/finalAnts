@@ -110,4 +110,8 @@ public class ManageBoardService {
 	public String gethissueId() {
 		return mapper.gethissueId();
 	}
+
+	public List<TodoVo> todostackchart(String reqId) {
+		return mapper.todostackchart(reqId);
+	}
 }
