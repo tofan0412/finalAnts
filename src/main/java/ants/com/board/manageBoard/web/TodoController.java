@@ -50,6 +50,21 @@ public class TodoController {
 		return "redirect:/todo/todoList";
 	}
 
+	// 차트 뷰
+	@RequestMapping("/chartView")
+	public String chartView(Model model, TodoVo todoVo, HttpSession session ) {
+		String reqId = (String) session.getAttribute("projectId");
+		todoVo.setReqId(reqId);
+		List<TodoVo> todoVoList = manageBoardService.todostackchart(reqId);
+		for(int i=0; i<todoVoList.size(); i++) {
+			
+		}
+		
+		
+		return "tiles/chart/baniChart";
+	}
+	
+	
 	// 일감 등록 화면 출력 메서드
 	@RequestMapping("/todoInsertView")
 	public String todoInsertView(Model model, TodoVo todoVo, HttpSession session,
@@ -65,7 +80,7 @@ public class TodoController {
 		}
 		return "tiles/manager/pl_todoInsertView";
 	}
-
+	
 	// 일감 등록 메서드
 	@RequestMapping("/todoInsert")
 	public String todoInsert(Model model, TodoVo todoVo, HttpSession session) {

@@ -305,4 +305,14 @@
 			WHERE req_id =#{reqId}
 			AND del ='N'
 		</select>
+		
+		<select id="todostackchart" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoVo">
+			SELECT
+			    mem_id,
+			    round(sum(todo_percent)/count(mem_id)) as todo_percent
+			FROM todo
+			WHERE del = 'N'
+	   		AND  req_id = #{reqId}
+		    group by mem_id
+		</select>
 </mapper>

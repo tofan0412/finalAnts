@@ -25,6 +25,14 @@
 					SELECT *
 					FROM NOTICE
 					WHERE DEL = 'N'
+					
+					<if test="searchKeyword != null and searchKeyword != ''">
+						<choose>
+							<when test="searchCondition == 1">
+								AND notice_cont LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</if>
 					ORDER BY notice_id desc
 				) a
 		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE RNUM > #{firstIndex}]]>
