@@ -129,7 +129,7 @@ $(function(){
 					data : {"removeList" : removeList},
 					method : "POST",
 					success : function(res){
-						
+						window.location.reload();
 					}
 				})	
 			}
@@ -142,6 +142,7 @@ $(function(){
 				contentType : false,
 				processData : false,
 				success : function(res){
+					window.location.reload();
 				}
 			})
 			// 이후 게시글을 수정한다. 

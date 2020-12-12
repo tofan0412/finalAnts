@@ -48,11 +48,11 @@ public class ProjectController {
 	}
 
 	// 요구사항 정의서에 대한 프로젝트를 생성한다 in DB
-	@RequestMapping(value = "/insertProject")
+	@RequestMapping(value="/updateProject")
 	@ResponseBody
-	public String insertProject(ProjectVo projectVo, Model model, HttpSession session) {
+	public String updateProject(ProjectVo projectVo, Model model, HttpSession session) {
 
-		int result = projectService.insertProject(projectVo);
+		int result = projectService.updateProject(projectVo);
 		if (result > 0) {
 			return "success";
 		} else {
@@ -82,22 +82,22 @@ public class ProjectController {
 
 	@ResponseBody
 	@RequestMapping("/insertPjtMember")
-	public String insertPjtMember(@RequestParam(value = "inviteMemList[]") String[] inviteMemList,
+	public String insertPjtMember(@RequestParam(value = "inviteMemList[]") List<String> inviteMemList,
 			@RequestParam(value = "reqId") String reqId, @RequestParam(value = "memId") String memId) {
 
 		int cnt = 0;
 		// 프로젝트 초대 회원수만큼, DB에 입력한다.
-		for (int i = 0; i < inviteMemList.length; i++) {
+		for (int i = 0; i < inviteMemList.size(); i++) {
 			ProjectMemberVo pjtMem = new ProjectMemberVo();
 			pjtMem.setReqId(reqId);
-			pjtMem.setMemId(inviteMemList[i]);
+			pjtMem.setMemId(inviteMemList.get(i));
 
 			// 내가 아닌 다른 회원인 경우에는 상태를 'WAIT'으로 설정하지만,
 			// 나 자신은 PL이면서 프로젝트 멤버이므로, 'IN'으로 설정한다.
-			if (inviteMemList[i] != memId) { // 만약 memId가 null이면 무조건 true..
-				pjtMem.setPromemStatus("WAIT");
-			} else {
+			if (inviteMemList.get(i).equals(memId) ) { // 만약 memId가 null이면 무조건 true..
 				pjtMem.setPromemStatus("IN");
+			} else {
+				pjtMem.setPromemStatus("WAIT");
 			}
 
 			pjtMem.setPromemId("trashValue");
@@ -105,7 +105,7 @@ public class ProjectController {
 			cnt += result;
 		}
 
-		if (inviteMemList.length == cnt) {
+		if (inviteMemList.size() == cnt) {
 			return "success";
 		} else {
 			return "fail";
@@ -117,10 +117,14 @@ public class ProjectController {
 		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
 
 		if ("ACCEPT".equals(reqVo.getStatus())) {
-			// PL이 요청 사항에 대해 승인 처리한 경우 -> STATUS, plId를 업데이트한다.
-			reqVo.setPlId(memberVo.getMemId());
-
+			// PL이 요청 사항에 대해 승인 처리한 경우 -> STATUS만 업데이트 한다. (PL_ID는 전송한 시점에서 바로 업데이트 된다.)
 			reqService.reqUpdate(reqVo);
+			
+			// 프로젝트 찾아서 memId를 등록해 준다.
+			ProjectVo projectVo = new ProjectVo();
+			projectVo.setMemId(memberVo.getMemId());
+			projectService.updateProject(projectVo);
+			
 
 		} else {
 			// PL이 요청 사항에 대해 반려 처리한 경우 -> STATUS만 REJECT로 수정한다.

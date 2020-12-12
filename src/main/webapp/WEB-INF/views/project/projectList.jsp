@@ -101,11 +101,11 @@ th, td {
 			}
 			
 			// 프로젝트를 먼저 생성한다.
+			// 20.12.12 수정 : 프로젝트는 수정되어 있고 제목만 등록한다. 
 			$.ajax({
-				url : "/project/insertProject",
-				data : {	reqId : reqId, 
-							memId : me, 
-							proName : projectName },
+				url : "/project/updateProject",
+				data : { "reqId" : reqId,
+						 "proName" : projectName },
 				method : "POST",
 				success : function(res){
 					if ("success" == res){
@@ -117,9 +117,6 @@ th, td {
 							method : "POST",
 							success : function(res){
 								if (res == "success"){
-									// 해당 요구사항 정의서의 상태를 변경해야 한다.
-// 									console.log("프로젝트가 생성되었습니다.");
-									
 									//프로젝트 초대알림 db저장
 									saveReqMsg(alarmData);
 									alert("프로젝트를 생성하였습니다.");

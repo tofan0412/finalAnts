@@ -16,7 +16,14 @@ public class ReqVo extends BaseVo{
 	private String proPercent;
 	private String proId;
 	private String categoryId;
+	private String del;
 	
+	public String getDel() {
+		return del;
+	}
+	public void setDel(String del) {
+		this.del = del;
+	}
 	public String getReqId() {
 		return reqId;
 	}

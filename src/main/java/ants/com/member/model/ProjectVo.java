@@ -10,7 +10,14 @@ public class ProjectVo {
 	private String proName;
 	private String percent;
 	private String regDt;
+	private String del;
 	
+	public String getDel() {
+		return del;
+	}
+	public void setDel(String del) {
+		this.del = del;
+	}
 	public String getReqId() {
 		return reqId;
 	}

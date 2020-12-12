@@ -35,4 +35,9 @@ public interface ProjectMapper {
 	public int insertPjtMember(ProjectMemberVo pjtMem);
 	
 	public int propercentChange(ProjectVo projectVo);
+	
+	// 프로젝트 수정하기
+	public int updateProject(ProjectVo projectVo);
+	
+	
 }

@@ -64,4 +64,9 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	public int propercentChange(ProjectVo projectVo) {
 		return mapper.propercentChange(projectVo);
 	}
+	
+	// 프로젝트 수정하기
+	public int updateProject(ProjectVo projectVo) {
+		return mapper.updateProject(projectVo);
+	}
 }

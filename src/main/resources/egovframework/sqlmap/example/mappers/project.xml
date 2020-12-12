@@ -53,10 +53,13 @@
                            WHERE PL_ID = #{plId}
                              AND STATUS = 'WAIT')
             OR REQ_ID IN (SELECT REQ_ID
-                            FROM REQLIST
-                           WHERE PL_ID = #{plId}
-                             AND STATUS = 'ACCEPT'
-                             AND REQ_ID NOT IN (SELECT REQ_ID FROM PROJECT))
+                            FROM REQLIST A
+                           WHERE A.PL_ID = #{plId}
+                             AND A.STATUS = 'ACCEPT'
+                             AND A.REQ_ID IN (SELECT B.REQ_ID
+                                              FROM PROJECT B
+                                             WHERE PRO_NAME is NULL
+                                               AND MEM_ID IS NOT NULL))
 	</select>
 
 	<insert id="insertProject"
@@ -92,6 +95,21 @@ SELECT *
 			    	req_id =#{reqId}
     
 		</update>
-	
+		
+<!-- 프로젝트 update -->
+<update id="updateProject"  parameterType="ants.com.member.model.ProjectVo">
+	UPDATE PROJECT
+	<set>
+       	<if test="memId != null">MEM_ID = #{memId},</if>
+       	<if test="proName != null">PRO_NAME = #{proName},</if>
+       	<if test="percent != null">PRO_PERCENT = #{percent},</if>
+       	<if test="regDt != null">REG_DT = #{regDt},</if>
+       	<if test="del != null">DEL = #{del}</if>
+     </set>    
+	 WHERE 1=1
+	   AND REQ_ID = #{reqId}
+</update>
+
+
 
 </mapper>
