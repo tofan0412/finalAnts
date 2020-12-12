@@ -28,8 +28,6 @@
 					WHERE DEL = 'N'
 				) a
 		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE RNUM > #{firstIndex}]]>
-<!-- 		SELECT * -->
-<!-- 					FROM MEMBER -->
 	</select>
 	
 	<!-- 목록 갯수  -->

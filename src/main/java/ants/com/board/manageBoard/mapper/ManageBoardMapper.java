@@ -55,7 +55,13 @@ public interface ManageBoardMapper {
 
 	// 다음 index값 추출
 	public String gettodoId();
-
+	
+	// 프로젝트진행율 계산
+	public String proPerChangebytodo(TodoVo todoVo);
+	
+	
+	
+	
 	// 핫이슈 기능
 	// 핫이슈 리스트 조회
 	public List<HotIssueVo> gethissueList(HotIssueVo hotIssueVo);

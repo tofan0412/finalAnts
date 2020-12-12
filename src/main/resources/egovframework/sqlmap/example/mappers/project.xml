@@ -81,4 +81,17 @@ SELECT *
 	VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL, #{memId},#{promemStatus})
 	
 </insert>
+		
+		<!-- 진행도 update -->
+		<update id="propercentChange" parameterType="ants.com.member.model.ProjectVo">
+			
+			UPDATE PROJECT
+			    SET
+			       pro_percent =#{percent}
+				WHERE
+			    	req_id =#{reqId}
+    
+		</update>
+	
+
 </mapper>

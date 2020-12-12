@@ -1,5 +1,6 @@
 package ants.com.common.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,10 +13,9 @@ import ants.com.member.model.MemberVo;
 
 @Service("alarmService")
 public class AlarmService {
-	
-	@Resource(name="alarmMapper")
+
+	@Resource(name = "alarmMapper")
 	private AlarmMapper alarmMapper;
-	
 
 	public int alarmInsert(AlarmVo alarmData) {
 		return alarmMapper.alarmInsert(alarmData);
@@ -35,5 +35,9 @@ public class AlarmService {
 
 	public int alarmUpdate(AlarmVo alarmVo) {
 		return alarmMapper.alarmUpdate(alarmVo);
+	}
+
+	public int alarmDelete(ArrayList<String> deleteData) {
+		return alarmMapper.alarmDelete(deleteData);
 	}
 }

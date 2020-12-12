@@ -112,7 +112,7 @@
 		    ]]>
 		</select>
 		
-	<!-- 내일감 페이지 천리를 위한 요구사항개수 -->
+	<!-- 내일감 페이지 처리를 위한 요구사항개수 -->
 		<select id="todoMyListCount" parameterType="String"
 			resultType="java.lang.Integer">
 			<![CDATA[
@@ -143,8 +143,9 @@
 			    todo.del,
 			    todo.mem_id
 			FROM todo todo
-			WHERE todo.todo_id = #{todoId}
-            or   todo.todo_parentid = #{todoId} 
+			WHERE todo.del = 'N'
+			AND (todo.todo_id = #{todoId}
+            OR   todo.todo_parentid = #{todoId}) 
 			]]>
 		</select>
 		
@@ -168,6 +169,7 @@
 			    todo.mem_id
 			FROM todo todo
 			WHERE todo.todo_id = #{todoId}
+			AND todo.del = 'N'
 			]]>
 		</select>
 
@@ -269,6 +271,7 @@
 				todo_id = #{todoId}
 		</update>
 	
+		<!-- 인수인계 -->
 		<insert id="todoChangeMem"
 			parameterType="ants.com.board.manageBoard.model.TodoLogVo">
 			INSERT INTO todolog (
@@ -288,8 +291,18 @@
 			)
 		</insert>
 		
+		<!-- 프로젝트 멤버 가져오기 -->
 		<select id="projectList" parameterType="ants.com.member.model.ProjectVo"
 		resultType="ants.com.member.model.ProjectVo">
 		select * from project where mem_id= #{memId} and req_id = #{reqId}
+		</select>
+		
+		<!-- 일감등록, 진행도 수정, 일감삭제시 프로젝트 진행도 계산용 -->
+		<select id="proPerChangebytodo" parameterType="ants.com.board.manageBoard.model.TodoVo" resultType ="java.lang.String">
+		SELECT 
+    		ROUND(SUM(todo_percent)/COUNT(todo_id),1)as pro_percent 
+		FROM todo 
+			WHERE req_id =#{reqId}
+			AND del ='N'
 		</select>
 </mapper>

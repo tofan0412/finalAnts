@@ -71,8 +71,19 @@
 	<update id="alarmUpdate" parameterType="ants.com.common.model.AlarmVo">
 		UPDATE alarm
 		   SET alarm_status = 'Y'
-		 WHERE alarm_Id = #{alarmId}
+		 WHERE alarm_id = #{alarmId}
 		
 	</update>
+	
+	<delete id="alarmDelete" parameterType="java.util.ArrayList">
+		DELETE
+		  FROM alarm
+		<where>
+			alarm_id IN  ('TEST', 'TSET2')
+			<foreach collection="list" item="item" separator="," open="(" close=")">
+				 #{item}
+			</foreach>
+		</where>
+	</delete>
 
 </mapper>

@@ -47,27 +47,27 @@
 		            <ul class="nav nav-treeview" style="display: block;">
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/admin/noticelist" class="nav-link">
-		                 <i class="nav-icon fas fa-bullhorn"></i>
+		                 <i class="nav-icon fas fa-clipboard-list"></i>
 							<p class="selectable">공지사항</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/admin/memberlist" class="nav-link">
-						<i class="nav-icon far fa-lightbulb"></i>
+						<i class="nav-icon fas fa-address-book"></i>
 						<p class="selectable">회원 리스트</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="#" class="nav-link">
-						<i class="nav-icon fas fa-bookmark"></i>
-						<p class="selectable">IP 리스트</p>
+						<i class="nav-icon fas fa-network-wired"></i>
+						<p class="selectable">관리자 허용ip 리스트</p>
 		                </a>
 		              </li>
 					</ul>
 				</li><br>
 
 					<br> 
-					
+				<%--
 				<li class="nav-item has-treeview menu-open">
 					<c:choose>
 						<c:when test="${SADMIN.adminId eq 'admin' }">
@@ -96,6 +96,7 @@
 						</c:when>
 					</c:choose>
 				</li>
+				
 				<br>
 				
 				<!-- memType이 MEM일때  -->
@@ -126,6 +127,7 @@
 							<p>참여중인 프로젝트가 없습니다</p>
 						</a>
 				 </c:if>
+				  --%>
 			</ul>
 		</nav>
 		<!-- /.sidebar-menu -->

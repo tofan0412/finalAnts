@@ -8,6 +8,34 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script>
+
+	{
+	"version" : "v2",
+	"userId": "U47b00b58c90f8e47428af8b7bddcda3d",
+	"bubbles": [ {
+				"type": "text",
+				"data" : { "description" : "text content which is user input" } } 
+				],
+	"event": "send"
+	}
+
+
+
+	{
+	  "version": "v2",
+	  "userId": "U47b00b58c90f8e47428af8b7bddcda3d",
+	  "sessionId": "34a59946-5dcb-4b72-9b63-a773c659702e",
+	  "bubbles": [
+	    {
+	      "type": "text",
+	      "data" : {
+	        "description" : "description, optional: only description"
+	      }
+	    }
+	  ],
+	  "event": "send"
+	}
+	
 	$(function(){
 		// 메뉴를 선택하면 배경색이 변한다. 
 		$('.selectable').click(function(){

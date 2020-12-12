@@ -33,4 +33,6 @@ public interface ProjectMapper {
 	
 	// 프로젝트 회원 추가하기
 	public int insertPjtMember(ProjectMemberVo pjtMem);
+	
+	public int propercentChange(ProjectVo projectVo);
 }

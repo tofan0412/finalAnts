@@ -5,8 +5,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,18 +20,21 @@ import ants.com.file.model.PublicFileVo;
 import ants.com.file.view.FileController;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
+import ants.com.member.web.ProjectController;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @RequestMapping("/todo")
 @Controller
 public class TodoController {
-	private static final Logger logger = LoggerFactory.getLogger(TodoController.class);
 
 	@Resource(name = "manageBoardService")
 	private ManageBoardService manageBoardService;
 
 	@Autowired
 	FileController filecontroller;
+
+	@Autowired
+	ProjectController projectController;
 
 	// 프로젝트명 클릭시 세션저장
 	@RequestMapping("/projectgetReq")
@@ -59,8 +60,8 @@ public class TodoController {
 		String todoId = manageBoardService.gettodoId();
 		model.addAttribute("promemList", promemList);
 		model.addAttribute("todoSeq", todoId);
-		if(todoParentid != null) {
-			model.addAttribute("todoVo", todoVo);			
+		if (todoParentid != null) {
+			model.addAttribute("todoVo", todoVo);
 		}
 		return "tiles/manager/pl_todoInsertView";
 	}
@@ -73,22 +74,40 @@ public class TodoController {
 
 		int todoInsert = manageBoardService.todoInsert(todoVo);
 		if (todoInsert > 0) {
-			return "redirect:/todo/todoList?reqId=" + todoVo.getReqId();
+			String proper = (String) manageBoardService.proPerChangebytodo(todoVo);
+			ProjectVo projectVo = new ProjectVo();
+			projectVo.setPercent(proper);
+			projectVo.setReqId(reqId);
+			int res = projectController.propercentChange(projectVo);
+			if (res > 0) {
+				return "redirect:/todo/todoList?reqId=" + todoVo.getReqId();
+			} else {
+				return "redirect:/todo/todoInsertView?reqId=" + todoVo.getReqId();
+			}
 		} else {
 			return "redirect:/todo/todoInsertView?reqId=" + todoVo.getReqId();
 		}
 	}
-	
+
 	// 상위 등록 하고 바로 하위 등록 메서드
 	@RequestMapping("/todoChildInsert")
 	public String todoChildInsert(Model model, TodoVo todoVo, HttpSession session) {
 		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
-		
+
 		int todoInsert = manageBoardService.todoInsert(todoVo);
 		String todoId = todoVo.getTodoId();
 		if (todoInsert > 0) {
-			return "redirect:/todo/todoInsertView?todoParentid=" + todoId;
+			String proper = (String) manageBoardService.proPerChangebytodo(todoVo);
+			ProjectVo projectVo = new ProjectVo();
+			projectVo.setPercent(proper);
+			projectVo.setReqId(reqId);
+			int res = projectController.propercentChange(projectVo);
+			if (res > 0) {
+				return "redirect:/todo/todoInsertView?todoParentid=" + todoId;
+			} else {
+				return "redirect:/todo/todoInsertView?reqId=" + todoVo.getReqId();
+			}
 		} else {
 			return "redirect:/todo/todoInsertView?reqId=" + todoVo.getReqId();
 		}
@@ -116,17 +135,17 @@ public class TodoController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		return "tiles/manager/Pl_todoList";
 	}
-	
+
 	// 한개의 일감 조회 Ajax
 	@RequestMapping("/onetodo")
 	public String todoDetailView(Model model, TodoVo todoVo, HttpSession session) {
-	
+
 		List<TodoVo> dbtodoVo = manageBoardService.getTodo(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
 		String todoId = todoVo.getTodoId();
 		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
-		PublicFileVo pfv = new PublicFileVo("1", todoId , reqId);
+		PublicFileVo pfv = new PublicFileVo("1", todoId, reqId);
 		filecontroller.getfiles(pfv, model);
 		return "jsonView";
 	}
@@ -136,7 +155,7 @@ public class TodoController {
 	public String todoView() {
 		return "tiles/manager/Pl_Onetodo";
 	}
-	
+
 	// 한개의 일감 조회 Ajax
 	@RequestMapping("/myonetodo")
 	public String mytodoDetailView(Model model, TodoVo todoVo) {
@@ -144,11 +163,11 @@ public class TodoController {
 		model.addAttribute("todoVo", dbtodoVo);
 		String todoId = dbtodoVo.getTodoId();
 		String reqId = dbtodoVo.getReqId();
-		PublicFileVo pfv = new PublicFileVo("1",todoId , reqId);
+		PublicFileVo pfv = new PublicFileVo("1", todoId, reqId);
 		filecontroller.getfiles(pfv, model);
 		return "jsonView";
 	}
-	
+
 	// 한개의 일감조회 화면 출력
 	@RequestMapping("/myonetodoView")
 	public String mytodoView() {
@@ -162,7 +181,7 @@ public class TodoController {
 		todoVo.setReqId(reqId);
 		List<MemberVo> promemList = manageBoardService.projectMemList(todoVo);
 		TodoVo dbtodoVo = manageBoardService.mygetTodo(todoVo);
-		PublicFileVo pfv = new PublicFileVo("1", todoVo.getTodoId() , reqId);
+		PublicFileVo pfv = new PublicFileVo("1", todoVo.getTodoId(), reqId);
 		filecontroller.getfiles(pfv, model);
 		model.addAttribute("todoVo", dbtodoVo);
 		model.addAttribute("promemList", promemList);
@@ -189,14 +208,24 @@ public class TodoController {
 			return "redirect:/todo/updatetodoView?todoId=" + todoVo.getTodoId();
 		}
 	}
-	
-		
+
 	// 진행도 수정
 	@RequestMapping("/progressChange")
-	public String progressChange(TodoVo todoVo, Model model) {	
+	public String progressChange(TodoVo todoVo, Model model) {
+		String reqId = todoVo.getReqId();
 		int proChangeCnt = manageBoardService.progressChange(todoVo);
+		
 		if (proChangeCnt > 0) {
-			return "redirect:/todo/MytodoList";
+			String proper = (String) manageBoardService.proPerChangebytodo(todoVo);
+			ProjectVo projectVo = new ProjectVo();
+			projectVo.setPercent(proper);
+			projectVo.setReqId(reqId);
+			int res = projectController.propercentChange(projectVo);
+			if (res > 0) {
+				return "redirect:/todo/MytodoList";
+			} else {
+				return "redirect:/todo/updatetodoView?todoId=" + todoVo.getTodoId();
+			}
 		} else {
 			return "redirect:/todo/updatetodoView?todoId=" + todoVo.getTodoId();
 		}
@@ -204,11 +233,20 @@ public class TodoController {
 
 	// 일감 삭제
 	@RequestMapping("/deletetodo")
-	public String tododelete(TodoVo todoVo, Model model, HttpSession session) {
-		String reqId = (String) session.getAttribute("projectId");
+	public String tododelete(TodoVo todoVo, Model model) {
+		String reqId = todoVo.getReqId();
 		int delTodoCnt = manageBoardService.tododelete(todoVo);
 		if (delTodoCnt > 0) {
-			return "redirect:/todo/todoList?reqId=" + reqId;
+			String proper = (String) manageBoardService.proPerChangebytodo(todoVo);
+			ProjectVo projectVo = new ProjectVo();
+			projectVo.setPercent(proper);
+			projectVo.setReqId(reqId);
+			int res = projectController.propercentChange(projectVo);
+			if(res >0) {
+				return "redirect:/todo/todoList?reqId=" + reqId;
+			}else {
+				return "redirect:/todo/updatetodoView?todoId=" + todoVo.getTodoId();
+			}
 		} else {
 			return "redirect:/todo/updatetodoView?todoId=" + todoVo.getTodoId();
 		}
@@ -239,4 +277,5 @@ public class TodoController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		return "tiles/board/MY_todoList";
 	}
+
 }

@@ -162,7 +162,7 @@
 						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
 						  <li>
 							<c:choose>
-								<c:when test="${files.pubExtension eq 'png' or files.pubExtension eq 'jsp' or files.pubExtension eq 'PNG' or files.pubExtension eq 'JSP'  }">
+								<c:when test="${files.pubExtension eq 'png' or files.pubExtension eq 'jpg' or files.pubExtension eq 'PNG' or files.pubExtension eq 'JPG'  }">
 									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
 										<i class="far fa-fw fa-image "></i>&nbsp;${files.pubFilename }
 									</a>
@@ -177,11 +177,7 @@
 										<i class="far fa-fw fa-image "></i>&nbsp;${files.pubFilename }
 									</a>
 								</c:when>
-								<c:when test="${files.pubExtension eq 'png' or files.pubExtension eq 'jsp' or files.pubExtension eq 'PNG' or files.pubExtension eq 'JSP'  }">
-									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
-										<i class="far fa-fw fa-image "></i>&nbsp;${files.pubFilename }
-									</a>
-								</c:when>
+								
 							</c:choose>
 						  </li>
 		                </c:forEach>

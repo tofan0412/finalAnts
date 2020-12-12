@@ -8,11 +8,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style type="text/css">
-
 
 	#pagenum a{
 		 display: inline-block;
@@ -59,44 +57,6 @@ $(function(){
 	
 	$("#pagenum a").addClass("page-link");  
 	
-	/*
-	// 북마크 클릭시
-	$(".area-desc").click(function() { 
-		var arrowImage = $(this).children("span").children("img"); 
-		
-		arrowImage.attr("src", function(index, attr){ 
-			issueid = arrowImage.attr('name')
-			if (attr.match('white')) { 			
-						
-				$.ajax({url :"${pageContext.request.contextPath}/bookmark/addbookmark",
-					 method : "get",
-					 data : {issueId : issueid},
-					 success :function(data){	
-						
-						alert('등록성공') 	
-					 }
-				})				
-				return attr.replace("white", "black"); 
-			} else if(attr.match('black')){ 
-						
-				$.ajax({url :"${pageContext.request.contextPath}/bookmark/removebookmark",
-					 method : "get",
-					 data : {issueId : issueid},
-					 success :function(data){	
-						
-						alert('삭제성공') 	
-					 }
-				})	
-				return attr.replace("black", "white"); 
-				
-			} 
-		}); 
-	});
-	
-	*/
-	
-
-
 
 })
 
@@ -128,79 +88,69 @@ $(function(){
 </script>
 </head>
 
-<%-- <%@include file="./issuecontentmenu.jsp"%> --%>
-<%@include file="../layout/admin/adcontentmenu.jsp"%>
 
 <body>
 <!-- 	<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 <form:form commandName="memberVo" id="listForm" name="listForm" method="post">
 
 		    <!-- Content Header (Page header) -->
-		    
-		    
-		  
-		    
-		    
-<!-- 		 	<h3>협업이슈 리스트</h3> -->
-<!-- 				<input type= "button" value="작성하기" id="insertissue"> -->
-	
-			<section class="content" >
-		      <div class="col-12 col-sm-12">
-			      <div class="card" style="border-radius: inherit; padding : 2px;">
-			      
-			    <div class="container-fluid">
+		    <section class="content-header" style="
+											border-bottom: 1px solid #dee2e6;
+											background: linear-gradient(-10deg, #007bff, lightgoldenrodyellow) fixed;">
+		      <div class="container-fluid">
 		        <div class="row mb-2">
-		         <br>
 		          <div class="col-sm-6">
-		          <br>
-		            <h1 class="jg" style=" padding-left : 10px;">멤버 리스트</h1>
+		            <h1 class="jg">회원 리스트</h1>
 		          </div>
 		          <div class="col-sm-6">
-		            <ol class="breadcrumb float-sm-right"  style="background : white">
+		            <ol class="breadcrumb float-sm-right">
 		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active">멤버 리스트</li>
+		              <li class="breadcrumb-item active">회원 리스트</li>
 		            </ol>
 		          </div>
 		        </div>
-		        </div>
 		        
-		        <%--  
-		        <div class="card-header  ">
+		        <div class="card-header with-border">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">
 						<label for="searchCondition" style="visibility:hidden;"></label>
-					
-						<form:select path="IssueKind" id="issuekindselect" cssClass="use" class="form-control col-md-3" style="width: 100px;">
-							<form:option value="" label="전체글"/>
-							<form:option value="issue" label="이슈"/>
-							<form:option value="notice" label="공지사항"/>
-						</form:select>
 						
 						
         				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
-							<form:option value="1" label="작성자"/>
-							<form:option value="2" label="제목"/>
-							<form:option value="3" label="내용"/>
+<!-- 						<select class="form-control col-md-3" name="searchType" id="searchType" required> -->
+						
+							<form:option value="0" label="종류"/>
+							<form:option value="1" label="이메일"/>
+							<form:option value="2" label="이름"/>
+							<form:option value="3" label="타입"/>
+						
 						</form:select> 
 						
 						
-						<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                    <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
+							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
+	                        <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
 <!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
 						<span class="input-group-append">							
 							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
 								<i class="fa fa-fw fa-search"></i>
 							</button>
 						</span>
-						
 						<!-- end : search bar -->
 					</div>
-					<br>
 		        </div>
-		        
+		        </div>
 		      </div><!-- /.container-fluid -->
- 			--%>
-	              <!-- /.card-header -->
+		    </section>
+		    
+		  
+		    
+		    
+	
+			<section class="content" >
+		      <div class="col-12 col-sm-12">
+			      <div class="card" style="border-radius: inherit; padding : 2px;">
+			      
+		        
 	              <div class="card-body p-0">
 	                <table class="table">
 	                  <thead>
@@ -212,7 +162,6 @@ $(function(){
 							<th style="text-align: center;">   전화번호   </th>
 							<th style="text-align: center;"> 타입 </th>
 							<th style="text-align: center;"> 알람 </th>
-<!-- 	                      <th style="text-align: center;">응답 상태</th> -->
 	                      <th></th>
 	                    </tr>
 	                  </thead>
@@ -252,13 +201,6 @@ $(function(){
 	                 </ul>
         		  </div>
         		  <br>
-        		  <%-- 
-        		  <div class="card-footer clearfix">
-	                <button id="insertmemlist" type="button" class="btn btn-default float-right" onclick="memlistInsert()"><i class="fas fa-plus"></i>등 록</button>
-	              </div>
-        		 --%>
-        		  
-        		  
 	              <!-- /.card-body -->
 	            </div>
              </div>

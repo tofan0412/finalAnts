@@ -13,7 +13,25 @@
  }
 </style>
 <script>
+toastr.options = {
+  	  "closeButton": false,
+  	  "debug": false,
+  	  "newestOnTop": false,
+  	  "progressBar": false,
+  	  "positionClass": "toast-top-right",
+  	  "preventDuplicates": false,
+  	  "onclick": null,
+  	  "showDuration": "300",
+  	  "hideDuration": "1000",
+  	  "timeOut": "5000",
+  	  "extendedTimeOut": "1000",
+  	  "showEasing": "swing",
+  	  "hideEasing": "linear",
+  	  "showMethod": "fadeIn",
+  	  "hideMethod": "fadeOut"
+  	}  	
   $(function () {
+	  
 	var searchCondition = "${alarmVo.searchCondition}";
 		if (searchCondition != "") {
 			$('#searchCondition').val("" + searchCondition + "").attr("selected","selected");
@@ -32,10 +50,23 @@
         $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
       }
       $(this).data('clicks', !clicks)
-    })
+    });
+	
+    $('.delBtn').on('click',function(){
+	    var selectData = [];
+	    $("input[name='alarmDel']:checked").each(function(){
+	    	selectData.push($(this).val());
+	    });
+	    
+	    if(selectData.length <= 0){
+	    	toastr.warning('삭제할 알림이 없습니다.');
+	    }else{
+		    alarmDelete(selectData);
+	    }
+    });
 
     
-  })
+  }); //function
   
     /* pagination 페이지 링크 function */
 	function fn_egov_link_page(pageNo) {
@@ -51,22 +82,19 @@
 		document.alarmForm.submit();
 	}
   	
-  	function readAlarm(id){
-  		$.ajax({
-  				url : "/alarmUpdate",
-  				data : {alarmId : id},
-  				method : "post",
-  				dataType : "json",
-  				success : function(data){
-  					alarmList();
-  				}
-  		})
-  	}
-  	
-  	function getReqDetail(url,alarmId){
-		readAlarm(alarmId);
-  		document.location = url;
-  	}
+	/* 알림삭제 */
+	function alarmDelete(selectData){
+		$.ajax({
+				url : "/alarmDelete",
+				data : JSON.stringify(selectData),
+				method : "post",
+				contentType : "application/json; charset=utf-8",
+				dataType : "text",
+				success : function(data){
+					alarmList();
+				}
+		});
+	}
   
 </script>
 
@@ -103,7 +131,7 @@
 		                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
 		                </button>
 		                <div class="btn-group">
-		                  <button type="button" class="btn btn-default btn-sm">
+		                  <button type="button" class="btn btn-default btn-sm delBtn">
 		                    <i class="far fa-trash-alt"></i>
 		                  </button>
 		                  <button type="button" class="btn btn-default btn-sm">
@@ -133,19 +161,19 @@
 		                  	</c:if>
 		                <table class="table table-hover">
 		                  <tbody>
-		                    <c:forEach items="${alarmList }" var="a" >
+		                    <c:forEach items="${alarmList }" var="a" varStatus="i">
 		                      <c:if test="${a.alarmStatus eq 'N' }"><tr class="alarm-row" ></c:if>
 		                      <c:if test="${a.alarmStatus eq 'Y' }"><tr class="alarm-row" style="background-color: rgba(0,0,0,.075)"></c:if>
 			                  
 			                    <td>
 			                      <div class="icheck-primary">
-			                        <input type="checkbox" value="" class="check1">
+			                        <input type="checkbox" value="${a.alarmId }" class="check1" name= "alarmDel">
 			                        <label for="check1"></label>
 			                      </div>
 			                    </td>
 			                    <td class="mailbox-star">
 				                    <c:choose>
-				                    	<c:when test="${a.alarmType eq 'req-pl' or 'res-pl' }">
+				                    	<c:when test="${a.alarmType eq 'req-pl' or a.alarmType eq 'res-pl' or a.alarmType eq 'req-pro'}">
 				                    		<c:if test="${a.alarmStatus eq 'N' }"><i class="far fa-envelope text-default"></i></c:if>
 				                    		<c:if test="${a.alarmStatus eq 'Y' }"><i class="far fa-envelope-open text-default"></i></c:if>
 				                    	</c:when>
@@ -165,7 +193,9 @@
 				                    	<c:when test="${a.alarmType eq 'req-pl' or 'res-pl' }"><b>PL 요청</b>
 					                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} (제목을 누르면 상세페이지로 이동합니다.)</a>
 				                    	</c:when>
-				                    	<c:when test="${a.alarmType eq 'res-pl' }"><b>PL 응답</b></c:when>
+				                    	<c:when test="${a.alarmType eq 'res-pl' }"><b>PL 응답</b>
+					                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} : ${fn:split(a.alarmCont,',')[5] } </a>
+				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'reply'}"><b>댓글</b>
 					                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} : ${fn:split(a.alarmCont,',')[5] } </a>
 				                    	</c:when>
@@ -196,7 +226,7 @@
 		                  <i class="far fa-square"></i>
 		                </button>
 		                <div class="btn-group">
-		                  <button type="button" class="btn btn-default btn-sm">
+		                  <button type="button" class="btn btn-default btn-sm delBtn">
 		                    <i class="far fa-trash-alt"></i>
 		                  </button>
 		                  <button type="button" class="btn btn-default btn-sm">

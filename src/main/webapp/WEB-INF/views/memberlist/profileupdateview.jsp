@@ -140,7 +140,6 @@
 						<select id="memTypeSelect" name="memTypeSelect">
 							<option value="1" selected="selected">타입</option>
 							<option value="PM">PM</option>
-							<option value="PL">PL</option>
 							<option value="MEM">MEM</option>
 						</select>	
 					<%--
