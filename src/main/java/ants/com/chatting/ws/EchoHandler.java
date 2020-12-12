@@ -57,4 +57,5 @@ public class EchoHandler extends TextWebSocketHandler {
 		sessionList.remove(session);
 		LOGGER.info("{} 연결 끊김\n", SMEMBER.getMemId());
 	}
+	
 }

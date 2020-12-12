@@ -11,6 +11,7 @@
 	                    WHERE REQ_ID = #{reqId}) B
 	 WHERE A.TODO_ID = B.TODO_ID
 	   AND A.DEL = 'N'
+	 ORDER BY A.REG_DT DESC
 </select>
 
 <select id="searchTodo" parameterType="ants.com.board.manageBoard.model.TodoVo" resultType="ants.com.board.manageBoard.model.TodoVo">
@@ -67,7 +68,16 @@ SELECT *
 </select>
 
 
+<select id="suggestFile" parameterType="ants.com.file.model.PublicFileVo" resultType="ants.com.file.model.PublicFileVo">
+SELECT * 
+  FROM PUBLICFILE
+ WHERE PUB_ID = #{pubId}
+</select>
 
+<delete id="suggestFileDel" parameterType="ants.com.file.model.PublicFileVo">
+DELETE FROM PUBLICFILE
+ WHERE PUB_ID = #{pubId} 
+</delete>
 
 
 </mapper>

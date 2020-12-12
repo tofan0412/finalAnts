@@ -2,16 +2,20 @@ package ants.com.board.memBoard.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -29,7 +33,6 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 @RequestMapping("/suggest")
 @Controller
 public class SuggestController {
-
 	@Resource(name ="suggestService")
 	private SuggestService suggestService;
 	
@@ -120,7 +123,7 @@ public class SuggestController {
 	
 	@RequestMapping("/suggestMod")
 	public String suggestMod(@ModelAttribute("suggestVo") SuggestVo suggestVo, 
-							Model model, HttpSession session) {
+							HttpSession session, RedirectAttributes ra ) {
 		// todoId를 먼저 가공해야 한다.
 		String[] todoArr = suggestVo.getTodoId().split(":");
 		todoArr[0] = todoArr[0].replace("@", "");
@@ -134,9 +137,46 @@ public class SuggestController {
 		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
 		suggestVo.setMemId(memberVo.getMemId());
 		
-		model.addAttribute("suggestVo", suggestVo);
-		// 수정한 내용이 포함되어 있는 애를 다시 redirect
-		return "redirect:tiles/suggest/suggestDetail";
+		ra.addAttribute("sgtId", suggestVo.getSgtId());
+		ra.addAttribute("memId", memberVo.getMemId());
+		
+		return "redirect:/suggest/suggestDetail";
+	}
+	
+	@RequestMapping("/suggestFileMod")
+	@ResponseBody
+	public String suggestFileMod(@RequestParam(value="removeList[]")List<String> removeList) {
+		// 파일 하나하나를 먼저 서버 저장 위치에서 삭제한다.
+		List<PublicFileVo> fileList = new ArrayList<>();
+		int delCnt = 0;
+		
+		PublicFileVo pfv = new PublicFileVo();
+		for (int i = 0 ; i < removeList.size() ; i++) {
+			pfv.setPubId(removeList.get(i));
+			fileList.add(suggestService.suggestFile(pfv));
+		}
+		
+		// 해당 경로 이용해서 파일 삭제하기..
+		for (int i = 0; i < fileList.size(); i++) {
+			String file_path = fileList.get(i).getPubFilepath();
+
+			File file = new File(file_path);
+			file.delete();
+		}
+		
+		// 파일 정보를 DB에서 삭제하기.
+		for(int i = 0 ; i < removeList.size() ; i++) {
+			pfv.setPubId(removeList.get(i));
+			int result = suggestService.suggestFileDel(pfv);
+			delCnt += result;
+		}
+		
+		if (delCnt == removeList.size()) {
+			System.out.println("삭제 성공");
+			return "jsonView";
+		}else {
+			return "jsonView";
+		}
 	}
 	
 	@RequestMapping("/delSuggest")
@@ -156,7 +196,7 @@ public class SuggestController {
 	
 	@RequestMapping("/suggestFileInsert")
 	public String suggestFileInsert(MultipartHttpServletRequest mtfRequest, HttpSession session,
-			Model model) {
+			Model model, String sgtId) {
 		// 프로젝트 구별
 		String reqId = (String)session.getAttribute("projectId");
 		
@@ -166,9 +206,12 @@ public class SuggestController {
 		String sgtSeq = "";
 		
 		List<MultipartFile> fileList = mtfRequest.getFiles("file");
-	
-		// someId를 위해 nextval을 가져와야 한다. 
-		sgtSeq = suggestService.getSgtSeq();
+		if (sgtId != null) {
+			sgtSeq = sgtId; 
+		}else {
+			// someId를 위해 nextval을 가져와야 한다. 
+			sgtSeq = suggestService.getSgtSeq();
+		}
 
 		for (int i = 0 ; i < fileList.size() ; i++) {
 			if(fileList.get(i).getSize()>0) {
@@ -184,6 +227,7 @@ public class SuggestController {
 				try {
 					fileList.get(i).transferTo(uploadFile);
 				} catch (IllegalStateException | IOException e) {
+				
 				}
 				
 				PublicFileVo filevo = new PublicFileVo(filepath, fileList.get(i).getOriginalFilename(), extension,

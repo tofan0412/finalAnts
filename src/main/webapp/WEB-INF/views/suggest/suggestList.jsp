@@ -171,6 +171,7 @@ $(function(){
 		if (fileNum > 5){
 			alert("파일은 최대 5개까지 첨부할 수 있습니다.");
 			$('.file').val('');
+			fileCnt = 0;
 		}
 		else{
 			fileCnt = fileNum;
