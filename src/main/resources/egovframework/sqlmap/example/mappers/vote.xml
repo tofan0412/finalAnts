@@ -43,7 +43,7 @@
 								where vote_title LIKE '%' || #{searchKeyword} || '%'
 							</when>
 				            <when test="searchCondition == 2">
-								where mem_id LIKE '%' || #{searchKeyword} || '%'
+								where mem_name LIKE '%' || #{searchKeyword} || '%'
 							</when>
 						</choose>
 					</if>
