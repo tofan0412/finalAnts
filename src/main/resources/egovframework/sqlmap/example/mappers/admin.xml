@@ -26,6 +26,19 @@
 					SELECT *
 					FROM MEMBER
 					WHERE DEL = 'N'
+					<if test="searchKeyword != null and searchKeyword != ''">
+						<choose>
+							<when test="searchCondition == 1">
+								AND mem_id LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 2">
+								AND mem_name LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 3">
+								AND mem_type LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</if>
 				) a
 		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE RNUM > #{firstIndex}]]>
 	</select>

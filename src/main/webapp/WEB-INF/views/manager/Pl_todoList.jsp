@@ -52,7 +52,9 @@
 	<form:form commandName="todoVo" id="listForm" name="listForm" method="post">
 	<div style="padding-left: 30px; background-color: white;">
 		<c:if test="${SMEMBER.memId eq projectVo.memId }">
-		<a class="btn btn-default " href="${pageContext.request.contextPath }/todo/todoInsertView"><i class="fas fa-edit"></i>일감 등록</a></c:if>
+		<a class="btn btn-default " href="${pageContext.request.contextPath }/todo/todoInsertView"><i class="fas fa-edit"></i>일감 등록</a>
+		<a class="btn btn-default " href="${pageContext.request.contextPath }/todo/chartView"><i class="fas fa-edit"></i>차트</a>
+		</c:if>
 		<br>
 		    <div class="card-header with-border">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">

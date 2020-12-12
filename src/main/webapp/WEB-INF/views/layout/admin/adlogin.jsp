@@ -78,19 +78,20 @@ $(function(){
 		<div class="col-sm-6" style="background-color: rgb(39, 9, 73);">
 			<div class="center">
 				<div>
-					<h1 class="jg" style="line-height: 25px;">Welcome!</h1>
+					<h1 class="jg" style="line-height: 25px;">Welcome Admin!</h1>
 					<br>
 					<h4>
-					Since our opening, we have become masters of<br> 
-					our craft. our commitment to quality products,<br>
-					exceptional services and incomparable customer<br>
-					care keep our community coming back again<br>
-					and again.
+					I don't have anything to say,<br>
+					so I'm writing anything to make it look fun.<br>
+					I don't think I can use this much,<br>
+					so I have to write more, but I don't know what to say.<br>
+					Thank you for your hard work on the final project.<br>
+					This is the administrator login page.<br>
 					
 					<br><br>
 					
 					ants1000@ants.com<br>
-					010-1000-1000<br>
+					010-1000-1001<br>
 					</h4>
 				</div>
 				
@@ -254,7 +255,7 @@ $(function(){
 		         	$('#lform').submit();
 		        },  
 		        error : function(error) {
-		        	$('#sp').html('일치하는 관리자정보가 없습니다.'); 
+		        	$('#sp').html('No matching administrator information found.'); 
 		        }
 			}) 
 // 			return false;

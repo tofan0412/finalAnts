@@ -223,7 +223,7 @@ function insertvoteItem(voteitems){
 			 
 // 		    alert('투표아이템 테이블 등록');
 		   
-			$(location).attr('href', '${pageCContext.request.contextPath}/vote/votelist');
+			$(location).attr('href', '${pageCContext.request.contextPath}/voCte/votelist');
 		 }
 	})
 }
@@ -304,8 +304,8 @@ function itemdetail(voteid){
 																
 						
         				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
-							<form:option value="1" label="작성자"/>
-							<form:option value="2" label="제목"/>
+							<form:option value="1" label="제목"/>
+							<form:option value="2" label="작성자"/>
 						</form:select> 
 						
 						
@@ -332,35 +332,42 @@ function itemdetail(voteid){
 	                    <tr>
 	                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
 	                     	<th  style="padding-left: 30px; text-align: center;"> 투표제목</th> 
-							<th style="text-align: center;"> 작성자 </th>
 							<th style="text-align: center;"> 마감일  </th>
-							<th style="text-align: center;"> 투표정원   </th>
+							<th style="text-align: center;"> 투표율  </th>
 							<th style="text-align: center;">  상태   </th>
+							<th style="text-align: center;"> 작성자 </th>
 <!-- 	                      <th style="text-align: center;">응답 상태</th> -->
-	                      <th></th>
+<!-- 	                      <th></th> -->
 	                    </tr>
 	                  </thead>
 	                  <tbody>
 	                      
                        <c:forEach items = "${votelist }" var ="vote" varStatus="status">
+                      	   <tr>
 			                    <td  style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((voteVo.pageIndex-1) * voteVo.pageUnit + (status.index+1))}"/>.</td>
 							
 								<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/vote/voteDetail?voteId=${vote.voteId }">${vote.voteTitle}</a></td>
-								<td style="text-align: center;"> ${vote.memId }</td>
 								<td style="text-align: center;"> ${vote.voteDeadline }</td>
-								<td style="text-align: center;"> ${vote.voteTotalno }</td>
-								<c:if test="${vote.voteStatus =='ing'}">
+								<td style="text-align: center;"> <fmt:formatNumber value="${vote.votedNo/vote.voteTotalno }" type="percent"></fmt:formatNumber></td>
+							
+								<c:if test="${vote.remain > 1000 and vote.voteStatus=='ing'}">
 									<td style="text-align: center;"> 
 									 	<span class="badge badge-success">진행중</span>
 									</td>
 								</c:if>
-								<c:if test="${vote.voteStatus =='finish'}">
+								<c:if test="${(vote.remain <= 1000 and vote.remain > 0) and vote.voteStatus == 'ing'}">
+									<td style="text-align: center;"> 
+									 	<span class="badge badge-warning">임박</span>
+									</td>
+								</c:if>
+								<c:if test="${vote.remain <= 0 or vote.voteStatus== 'finish'}">
 									<td style="text-align: center;" >
 										<span class="badge badge-danger"> 완료 </span>
 									</td>
 								</c:if>
 <%-- 								<td style="text-align: center;"><button class="votebtn">투표하기</button><input type="hidden" value="${vote.voteId }"></td> --%>
-		                     	<td style="text-align: center;">
+								<td style="text-align: center;"> ${vote.memName }</td>
+<!-- 		                     	<td style="text-align: center;"> -->
 								 
 							</tr>
 						 </c:forEach> 

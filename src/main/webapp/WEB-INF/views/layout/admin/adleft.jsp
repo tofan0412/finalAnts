@@ -27,7 +27,7 @@
 </script>
 
 
-<aside class="main-sidebar sidebar-light-teal elevation-4">
+<aside class="main-sidebar sidebar-light-teal elevation-4" >
 	<!-- Brand Logo -->
 	<a href="/admin/adMainView" class="brand-link"> 
 	<img src="/dist/img/AdminLoginImage.png" class="brand-image "style="float: none; margin: 15px 0px 10px 12px;">
@@ -39,26 +39,26 @@
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-				<li class="nav-item has-treeview menu-open">
+				<li class="nav-item has-treeview menu-open" >
 		            <a href="#" class="nav-link active">
 		              <i class="fas fa-newspaper"></i>
 						<p>전체정보<i class="fas fa-angle-left right"></i></p>
 		            </a>
 		            <ul class="nav nav-treeview" style="display: block;">
 		              <li class="nav-item">
-		                <a href="${pageContext.request.contextPath}/admin/noticelist" class="nav-link">
+		                <a href="${pageContext.request.contextPath}/admin/noticelist" class="nav-link" >
 		                 <i class="nav-icon fas fa-clipboard-list"></i>
 							<p class="selectable">공지사항</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
-		                <a href="${pageContext.request.contextPath}/admin/memberlist" class="nav-link">
+		                <a href="${pageContext.request.contextPath}/admin/memberlist" class="nav-link" >
 						<i class="nav-icon fas fa-address-book"></i>
 						<p class="selectable">회원 리스트</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
-		                <a href="#" class="nav-link">
+		                <a href="#" class="nav-link" >
 						<i class="nav-icon fas fa-network-wired"></i>
 						<p class="selectable">관리자 허용ip 리스트</p>
 		                </a>

@@ -71,9 +71,6 @@ $(function(){
  }
  
  function search(){
-// 	    var issuekind =  $("#issueKind option").val();
-// 	    alert(issuekind);
-// 	    document.listForm.issueKind = issuekind;
 	 	document.listForm.action = "<c:url value='/admin/noticelist'/>";
 	    document.listForm.submit();
 }
@@ -105,30 +102,20 @@ $(function(){
 		        
 		        <div class="card-header with-border">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
-					<div class="input-group row">
-						<label for="searchCondition" style="visibility:hidden;"></label>
-						
-						
-        				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
-<!-- 						<select class="form-control col-md-3" name="searchType" id="searchType" required> -->
-						
-							<form:option value="0" label="제목"/>
-						
-						</form:select> 
-						
-						
-							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                        <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
-<!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
-						<span class="input-group-append">							
-							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
-								<i class="fa fa-fw fa-search"></i>
-							</button>
-						</span>
-						<!-- end : search bar -->
+					<div class="input-group row">						
+        				<select name="searchCondition" class="form-control col-md-3" style="width: 100px;">
+							<option value="1" label="제목"/>
+						</select> 
+							 <label for="searchKeyword" style="visibility:hidden; display:none;"></label>
+	                         <input type="text" class="form-control" name="searchKeyword" value="${noticeVo.searchKeyword }">
+		                  <a href="javascript:search();">
+		                  	<button type="button" class="btn-default" style="height: 100%;">
+                               <i class="fa fa-search"></i>
+                          	</button>
+                          </a>
 					</div>
 		        </div>
-		        </div>
+		      </div>
 		        
 		        
 		      </div><!-- /.container-fluid -->
@@ -192,8 +179,10 @@ $(function(){
 	                    
 		        		<li  class="page-item" id ="pagenum" >	
 <%-- 		        		<input type="button" value="#{paginationInfo}" > --%>
+<!-- 						<li class="page-item"><a class="page-link" href="#">«</a></li> -->
 		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
 		        			<form:hidden path="pageIndex" />
+<!-- 		        		<li class="page-item"><a class="page-link" href="#"> »</a></li> -->
 		        			
 	                 </ul>
         		  </div>

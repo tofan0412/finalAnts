@@ -71,7 +71,6 @@ public class VoteController{
 	public String voteinsertView(Model model){
 		
 		String nextVoteId = voteService.getvoteid();
-		System.out.println("nextVoteId : " +nextVoteId);
 		model.addAttribute("nextSeq", nextVoteId);
 		
 		return "jsonView";
@@ -132,12 +131,19 @@ public class VoteController{
 		voteresultVo.setMemId(memId);
 		
 		voteService.voteMember(voteresultVo);
-		voteService.cntupdate(voteresultVo);
-		voteService.fullstatusupdate(voteresultVo);
 		
 		ra.addAttribute("voteId", voteresultVo.getVoteId());
 		
 		return "redirect:/vote/voteDetail";
+	}
+	
+	// 투표 삭제
+	@RequestMapping("/delVote")
+	public String voteDel(VoteVo voteVo, Model model, HttpSession session, RedirectAttributes ra){
+		
+		voteService.delvote(voteVo);
+		
+		return "redirect:/vote/votelist";
 	}
 	
 	

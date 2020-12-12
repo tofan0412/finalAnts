@@ -59,6 +59,8 @@ public interface ManageBoardMapper {
 	// 프로젝트진행율 계산
 	public String proPerChangebytodo(TodoVo todoVo);
 	
+	//
+	public List<TodoVo> todostackchart(String reqId);
 	
 	
 	
@@ -82,4 +84,5 @@ public interface ManageBoardMapper {
 	public int hIssuedelete(HotIssueVo hotIssueVo);
 	// 다음 index값 추출
 	public String gethissueId();
+	
 }

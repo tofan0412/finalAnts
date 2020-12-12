@@ -58,12 +58,15 @@ public class VoteService{
 	
 	// 멤버 투표
 	public int voteMember(VoteResultVo voteresultvo) {
-		return mapper.voteMember(voteresultvo);
-	}
-	
-	// 투표 카운트 update
-	public int cntupdate(VoteResultVo voteresultvo) {
-		return mapper.cntupdate(voteresultvo);
+		int insertCnt = mapper.voteMember(voteresultvo);
+		int j,k =0;
+		if(insertCnt>0) {			
+			j = mapper.cntupdate(voteresultvo);// 투표 카운트 update
+			if(j>0) {
+				k = mapper.fullstatusupdate(voteresultvo);// 투표기간 지난 투표상태 변경
+			}
+		}	
+		return k;
 	}
 			
 	// 투표기간 지난 투표상태 변경
@@ -71,8 +74,9 @@ public class VoteService{
 		return mapper.paststatusupdate();
 	}
 	
-	// 투표기간 지난 투표상태 변경
-	public int fullstatusupdate(VoteResultVo voteresultvo) {
-		return mapper.fullstatusupdate(voteresultvo);
+	// 투표 삭제
+	public int delvote(VoteVo voteVo) {
+		return mapper.votedel(voteVo);
 	}
+	
 }
