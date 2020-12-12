@@ -58,4 +58,14 @@ public class SuggestService {
 	public String suggestFileDownload(PublicFileVo publicFileVo) {
 		return mapper.suggestFileDownload(publicFileVo);
 	}
+	
+	// 파일 하나 불러오기 
+	public PublicFileVo suggestFile(PublicFileVo publicFileVo) {
+		return mapper.suggestFile(publicFileVo);
+	}
+	
+	// 파일 하나 DB에서 삭제하기
+	public int suggestFileDel(PublicFileVo publicFileVo) {
+		return mapper.suggestFileDel(publicFileVo);
+	}
 }

@@ -7,11 +7,16 @@
 $(function(){
 	todoSearchList = [];
 	$('#todoDetail').hide();
-	suggestFileList = $('.sgtFile');	// 배열 갯수는 첨부파일 개수이다.
-	// arr[0].textContent : 텍스트 내용 ..
-	// arr[0].attributes.pubid.value 속성값중 pubid란 이름의 값
+	removeList = [];
+	fileCnt = $('.sgtFile').length;	// 현재 모달창 목록에 존재하는 파일 갯수
+	newFileCnt = 0;					// 새롭게 업로드할 파일의 갯수
+	sgtId = "${suggestVo.sgtId}";
 	
-	// 
+	$('.sgtFileList').on('click', '.sgtFile', function(){
+		$(this).css('display', 'none');
+		fileCnt = fileCnt -1;
+		removeList.push($(this).attr('pubId'));
+	})
 	
 	// 건의사항 수정하기
 	$('#modSuggest').click(function(){
@@ -20,6 +25,12 @@ $(function(){
 		$('#sgtContModal').val("${suggestVo.sgtCont}");
 		$('.warningTodo').empty();
 		$('.warningTitle').empty();
+		$('.sgtFile').css('display', 'block');
+		
+		fileCnt = $('.sgtFile').length;
+		removeList = [];
+		$('.file').val('');
+		$('.sgtFileListNew').empty();
 		
 		$('#modSuggestModal').modal();
 	})
@@ -27,7 +38,6 @@ $(function(){
 	$('#delSuggest').click(function(){
 		var factor = confirm("삭제하시겠습니까?");
 		if (factor){
-			var sgtId = "${suggestVo.sgtId}";
 			$(location).attr("href", "/suggest/delSuggest?sgtId="+sgtId);
 		}
 		
@@ -111,17 +121,33 @@ $(function(){
 			cnt++;
 		}
 		if (cnt == 0){
+			// 파일 먼저 수정한다. 
+			// removeList길이를 확인한다.
+			if (removeList.length != 0){	// 사용자가 삭제할 리스트를 추가했다면 ..
+				$.ajax({
+					url : "/suggest/suggestFileMod",
+					data : {"removeList" : removeList},
+					method : "POST",
+					success : function(res){
+						
+					}
+				})	
+			}
+			// 새로 올린 파일 업로드하기..
+			formData = new FormData($('#suggestFileForm')[0]);
+			$.ajax({
+				url : "/suggest/suggestFileInsert?sgtId="+sgtId,
+				type : "POST",
+				data : formData,
+				contentType : false,
+				processData : false,
+				success : function(res){
+				}
+			})
+			// 이후 게시글을 수정한다. 
 			$('#sgtForm').submit();
 		}
 	})
-	
-	// 수정 창에서 파일 제목 누를 시 해당 파일 제거
-	$('.sgtFile').click(function(){
-		$(this).css('font-color', 'red');
-		
-	})
-	
-	
 }) // $(function(){}) END
 
 // 자동 완성 부분 ..
@@ -218,6 +244,30 @@ function replyinsert() {
 			saveMsg();
 		}
 	});
+}
+
+// 파일 갯수 제한, 파일 용량 제한..
+function fileRestrict(fileNum){
+	$('.sgtFileListNew').empty();
+	if (fileNum + fileCnt > 5){	// 기존에 존재하는 파일 개수 + 추가할 파일 개수가 5개가 넘어선 안된다.
+		alert("파일은 최대 5개까지 첨부할 수 있습니다.");
+		$('.file').val('');
+		newFileCnt = 0;
+	}
+	else{
+		newFileCnt = fileNum;	// 새롭게 업로드할 파일의 갯수
+		for(var i = 0 ; i < fileNum ; i++){
+			if ( ($('.file')[0].files[i].size/1024)/1024 >= 20 ){
+				alert("20MB 이상의 파일은 업로드할 수 없습니다.("+$('.file')[0].files[i].name+")");
+				$('.sgtFileListNew').empty();
+				$('.file').val('');
+				newFileCnt = 0;
+				return;
+			}else{
+				$('.sgtFileListNew').append($('.file')[0].files[i].name+"<br>");
+			}
+		}
+	}
 }
 
 function saveMsg(){
@@ -326,11 +376,10 @@ label{
 				<!-- 파일 목록 출력하기  -->
 				<label class="col-sm-2 control-label" >첨부 파일 목록</label>
 				<div class="form-group">
-					<ul>
 					<c:forEach items="${suggestFileList }" var="file" >
-						<li><a href="/suggest/suggestFileDownload?pubId=${file.pubId }">${file.pubFilename } (${file.pubSize }KB)</a></li>						
+						<div class="fileListOrigin" pubId="${file.pubId }"><a href="/suggest/suggestFileDownload?pubId=${file.pubId }">${file.pubFilename } (${file.pubSize }KB)</a>
+						</div>						
 					</c:forEach>
-					</ul>
 					<c:if test="${suggestFileList eq null }">
 						<span class="jg">첨부한 파일이 없습니다.</span>
 					</c:if>
@@ -472,17 +521,22 @@ label{
 				</form:form>
 				<br>
 				
+					
+				<label class="jg">파일 첨부</label>&nbsp;&nbsp;
+				<span>파일은 최대 5개까지 첨부 가능합니다.</span>
+				<div class="sgtFileList">
+					<c:forEach items="${suggestFileList }" var="file" >
+						<div class="jg sgtFile" pubId="${file.pubId }">
+							<a href="#">${file.pubFilename }</a>
+						</div>
+					</c:forEach>
+				</div>
+				
 				<form id="suggestFileForm">
-					<!-- 파일 첨부하기.. -->			
-					<label class="jg">파일 첨부</label>&nbsp;&nbsp;
-					<span>파일은 최대 5개까지 첨부 가능합니다.</span>
-					<div class="sgtFileList">
-						<ul>
-						<c:forEach items="${suggestFileList }" var="file" >
-							<li class="jg sgtFile" pubId="${file.pubId }"><a href="#">${file.pubFilename }</a></li><br>
-						</c:forEach>
-						</ul>
-					</div>
+					파일 첨부하기..		
+					<input name="file" type="file" class="file" 
+						onchange="fileRestrict($('.file')[0].files.length)" multiple="multiple" />
+					<div class="sgtFileListNew"></div>
 				</form>
 			</div>
 			

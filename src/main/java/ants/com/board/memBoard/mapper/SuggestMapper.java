@@ -36,4 +36,10 @@ public interface SuggestMapper {
 	
 	// 건의사항 첨부파일 다운로드
 	public String suggestFileDownload(PublicFileVo publicFileVo);
+	
+	// 건의사항 파일 하나 불러오기
+	public PublicFileVo suggestFile(PublicFileVo publicFileVo);
+	
+	// 건의사항에서 올린 첨부파일 하나 삭제하기
+	public int suggestFileDel(PublicFileVo publicFileVo);
 }
