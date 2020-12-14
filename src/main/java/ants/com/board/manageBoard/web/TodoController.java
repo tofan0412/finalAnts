@@ -53,15 +53,32 @@ public class TodoController {
 	// 차트 뷰
 	@RequestMapping("/chartView")
 	public String chartView(Model model, TodoVo todoVo, HttpSession session ) {
+		
+		return "tiles/chart/baniChart";
+	}
+	
+	// 차트 뷰
+	@RequestMapping("/stackedbarchart")
+	public String stackedbarchart(Model model, TodoVo todoVo, HttpSession session ) {
 		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
 		List<TodoVo> todoVoList = manageBoardService.todostackchart(reqId);
-		for(int i=0; i<todoVoList.size(); i++) {
-			
-		}
-		
-		
-		return "tiles/chart/baniChart";
+		model.addAttribute("todoVoList", todoVoList);
+		int Size = todoVoList.size();
+		model.addAttribute("size", Size);
+		return "jsonView";
+	}
+	
+	// 차트 뷰
+	@RequestMapping("/donutChart")
+	public String donutChart(Model model, TodoVo todoVo, HttpSession session ) {
+		String reqId = (String) session.getAttribute("projectId");
+		todoVo.setReqId(reqId);
+		List<TodoVo> donutChartList = manageBoardService.donutChart(reqId);
+		model.addAttribute("donutChartList", donutChartList);
+		int Size = donutChartList.size();
+		model.addAttribute("dsize", Size);
+		return "jsonView";
 	}
 	
 	

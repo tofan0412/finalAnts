@@ -18,7 +18,7 @@
 <body class="hold-transition sidebar-mini accent-teal">
 
 	<!-- Main content -->
-	<section class="content" style="margin-top: 13px;">
+	<section class="content" style="margin-top: 13px; display:none;">
 	<div class="col-12 col-sm-9">
 		<div class="card card-teal card-outline card-tabs">
 			<div class="card-header p-0 pt-1 border-bottom-0">
@@ -26,7 +26,7 @@
 
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-notice"
-						href="${pageContext.request.contextPath}/admin/noticelist">공지사항</a>
+						href="${pageContext.request.contextPath}/admin/noticelist">공지사항1</a>
 					</li>
 
 					<li class="nav-item"><a class="nav-link"

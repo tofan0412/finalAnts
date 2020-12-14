@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -19,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ants.com.admin.model.AdminVo;
+import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
 import ants.com.member.model.MemberVo;
@@ -41,19 +44,19 @@ public class AdminController {
 	@Resource(name="memberService")
 	MemberService memberService;
 	
-	@RequestMapping("/adminproject")
-	public String projectmain(HttpSession session) {
-		
-		session.setAttribute("noticeId", "1");
-		return "admin.tiles/layout/admin/adcontentmenu";
-	}
+//	@RequestMapping("/adminproject")
+//	public String projectmain(HttpSession session) {
+//		
+//		session.setAttribute("noticeId", "1");
+//		return "admin.tiles/admin/adcontentmenu";
+//	}
 	
 	////////////////////////////////////////////////관리자 로그인
 	
 	//관리자 로그인 페이지
 	@RequestMapping("/adloginView")
 	public String adloginView() {
-		return "/layout/admin/adlogin";
+		return "/admin/adlogin";
 	}
 	
 	// 로그인 로직
@@ -66,7 +69,8 @@ public class AdminController {
 		
 		if (dbAdmin != (null) && adminVo.getAdminPass().equals(dbAdmin.getAdminPass())) {
 			session.setAttribute("SADMIN", dbAdmin);
-				return "admin.tiles/layout/admin/adcontentmenu";
+//				return "admin.tiles/admin/adcontentmenu";
+				return "redirect:/admin/adMainView";
 		} else {
 			return "redirect:/member/loginView";
 		}
@@ -87,7 +91,7 @@ public class AdminController {
 		model.addAttribute("adminId", dbAdmin.getAdminId());
 		model.addAttribute("adminPass", dbAdmin.getAdminPass());
 		
-		return "/layout/admin/adlogin";
+		return "/admin/adlogin";
 	}
 	
 	//관리자 로그아웃
@@ -100,7 +104,7 @@ public class AdminController {
 	// 화면 상단 로고 클릭 시 메인 페이지로 이동
 	@RequestMapping("/adMainView")
 	public String adMainView() {
-		return "admin.tiles/layout/admin/adcontentmenu";
+		return "admin.tiles/admin/adcontentmenu";
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////관리자 로그인 끝	
 	
@@ -373,6 +377,50 @@ public class AdminController {
 		}
 	}
 	
+	// Ip 리스트 전체 가져오기
+	@RequestMapping("/getIpList")
+	public String getIpList(Model model) {
+		List<IpVo> ipList = adminService.getIpList();
+		
+		model.addAttribute("ipList", ipList);
+		return "";
+	}
+	
+	// Ip 하나만 가져오기
+	@RequestMapping("/getIp")
+	public String getIp(IpVo ipVo) {
+		IpVo result = adminService.getIp(ipVo);
+		return "";
+	}
+	
+	// Ip 삭제하기
+	@RequestMapping("/delIp")
+	public String delIp(IpVo ipVo) {
+		int result = adminService.delIp(ipVo);
+		return "";
+	}
+	
+	// Ip 수정하기
+	@RequestMapping("/updateIp")
+	public String updateIp(IpVo ipVo) {
+		int result = adminService.updateIp(ipVo);
+		return "";
+	}
+	
+	// Ip 입력하기
+	@RequestMapping("/insertIp")
+	public String insertIp(IpVo ipVo) {
+		int result = adminService.insertIp(ipVo);
+		return "";
+	}
+	
+	@RequestMapping("/getIpCount")
+	@ResponseBody
+	public int getIpCount() {
+		int result = adminService.getIpCount();
+		
+		return result;
+	}
 	
 }
 

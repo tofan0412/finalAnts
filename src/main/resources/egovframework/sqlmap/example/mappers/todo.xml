@@ -315,4 +315,14 @@
 	   		AND  req_id = #{reqId}
 		    group by mem_id
 		</select>
+		
+		<select id="donutChart" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoVo">
+			SELECT
+			    mem_id,
+			    count(todo_id) as todo_percent
+			FROM todo
+			WHERE del = 'N'
+	   		AND  req_id = #{reqId}
+		    group by mem_id
+		</select>
 </mapper>

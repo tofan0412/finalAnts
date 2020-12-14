@@ -86,6 +86,35 @@ public class AdminService extends EgovAbstractServiceImpl{
 		return mapper.delmemlist(memId);
 	}
 	
+	// Ip 전체 리스트 가져오기
+	public List<IpVo> getIpList(){
+		return mapper.getIpList();
+	}
+	
+	// 특정 Ip만 가져오기
+	public IpVo getIp(IpVo ipVo) {
+		return mapper.getIp(ipVo);
+	}
+	
+	// Ip 삭제하기
+	public int delIp(IpVo ipVo) {
+		return mapper.delIp(ipVo);
+	}
+	
+	// Ip 수정하기
+	public int updateIp(IpVo ipvo) {
+		return mapper.updateIp(ipvo);
+	}
+	
+	// Ip 입력하기
+	public int insertIp(IpVo ipVo) {
+		return mapper.insertIp(ipVo);
+	}
+	
+	// Ip 카운트 세기
+	public int getIpCount() {
+		return mapper.getIpCount();
+	}
 
 	
 	

@@ -73,7 +73,6 @@ $(function(){
 		</div>
 		
 		
-<!-- 	<form action="admain.tiles/layout/admin/adlogin.jsp" method="post" name="loginForm"> -->
 
 		<div class="col-sm-6" style="background-color: rgb(39, 9, 73);">
 			<div class="center">

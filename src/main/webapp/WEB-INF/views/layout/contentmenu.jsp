@@ -225,7 +225,7 @@ $(function(){
 						id="custom-tabs-three-home-tab"
 						href="${pageContext.request.contextPath}/todo/todoList">일감</a></li>
 					<li class="nav-item"><a class="nav-link"
-						id="custom-tabs-three-gantt-tab" href="#custom-tabs-three-gantt">간트</a>
+						id="custom-tabs-three-gantt-tab" href="${pageContext.request.contextPath }/ganttView">간트</a>
 					</li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-messages-issue"
