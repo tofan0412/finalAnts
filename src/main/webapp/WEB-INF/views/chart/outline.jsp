@@ -92,22 +92,30 @@ text-align: right;
 					 <br><br>
                 <div class="row" style="width: 65%;  float:left;">
                   <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline; width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="100" data-width="150" data-height="150" data-fgcolor="rgb(59, 191, 103)" data-thickness="1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: rgb(60, 141, 188); font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    <div style="display:inline; width:100px;height:100px;">
+                    <canvas width="100" height="100"></canvas>
+                    <input type="text" class="knob" value="100" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: #6495ED; font: bold 18px Arial; text-align: center; color: #6495ED; padding: 0px; appearance: none;" readonly="readonly"></div>
 
                     <div class="knob-label">status</div>
                   </div>
                   <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="90" data-width="150" data-height="150" data-fgcolor="mediumseagreen " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    <div style="display:inline;width:100px;height:100px;">
+                    <canvas width="100" height="100"></canvas>
+                    <input type="text" class="knob" value="90" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
                     <div class="knob-label">progress</div>
                   </div>
                   <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="50" data-width="150" data-height="150" data-fgcolor="mediumseagreen " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    <div style="display:inline;width:100px;height:100px;">
+                    <canvas width="100" height="100"></canvas>
+                    <input type="text" class="knob" value="50" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
                     <div class="knob-label">Time elapsed</div>
                   </div>
                   <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="20" data-width="150" data-height="150" data-fgcolor="mediumseagreen " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    <div style="display:inline;width:100px;height:100px;">
+                    <canvas width="100" height="100"></canvas>
+                    <input type="text" class="knob" value="20" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
                     <div class="knob-label">suggest</div>
                   </div>
@@ -115,19 +123,19 @@ text-align: right;
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%;" >
                      Progress/Time
                       <div class="progress progress-md">
-                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                        <div class="progress-bar bg-warning" style="width: 80%"></div>
                       </div>
                     </div>
                		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; ">
                       ProjectFiles
                       <div class="progress progress-md">
-                        <div class="progress-bar bg-danger" style="width: 80%"></div>
+                        <div class="progress-bar bg-warning" style="width: 80%"></div>
                       </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%;" >
                       Issues Reply
                       <div class="progress progress-md" >
-                        <div class="progress-bar " style="width: 80%; background-color: goldenrod"></div>
+                        <div class="progress-bar bg-warning" style="width: 80%;"></div>
                       </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; margin-top: 5%;" >
@@ -139,7 +147,7 @@ text-align: right;
                		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; margin-top: 5%;">
                       Todo
                       <div class="progress progress-md">
-                        <div class="progress-bar " style="width: 80%; background-color: mediumpurple  "></div>
+                        <div class="progress-bar bg-warning" style="width: 80%; "></div>
                       </div>
                     </div>
                     
