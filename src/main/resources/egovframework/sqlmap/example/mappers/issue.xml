@@ -27,7 +27,7 @@
 					<if test="searchKeyword != null and searchKeyword != ''">
 				        <choose>
 				         	<when test="searchCondition == 1">
-								AND	c.issuemem LIKE '%' || #{searchKeyword} || '%'
+								AND	d.mem_name LIKE '%' || #{searchKeyword} || '%'
 							</when>
 				            <when test="searchCondition == 2">
 								AND	c.issue_title LIKE '%' || #{searchKeyword} || '%'
@@ -56,34 +56,40 @@
 	<!-- 프로젝트에 따른 이슈게시글 수 조회하기 -->	
 	<select id="issuePagingListCnt" parameterType="ants.com.board.memBoard.model.IssueVo"  resultType="int">
 		select count(*) as totCnt
-		from issue
-		where req_id = #{reqId} and issue_del = 'N'
+		from issue a, member b
+		where a.req_id = #{reqId} 
+		  and a.issue_del = 'N'
+		  and a.mem_id = b.mem_id
 		
 		<if test="searchKeyword != null and searchKeyword != ''">
 		        <choose>
 		            <when test="searchCondition == 1">
-						AND	mem_id LIKE '%' || #{searchKeyword} || '%'
+						AND	b.mem_name LIKE '%' || #{searchKeyword} || '%'
 					</when>
 		            <when test="searchCondition == 2">
-						AND	issue_title LIKE '%' || #{searchKeyword} || '%'
+						AND	a.issue_title LIKE '%' || #{searchKeyword} || '%'
 					</when>
 		            <when test="searchCondition == 3">
-						AND	issue_cont LIKE '%' || #{searchKeyword} || '%'
+						AND	a.issue_cont LIKE '%' || #{searchKeyword} || '%'
 					</when>
 				</choose>
-			</if>		
+		</if>	
+		<if test = "issueKind != null and issueKind != ''">
+					AND a.issue_kind = #{issueKind}
+		</if>	
 	</select>	
 
 	
 	<!-- 각 이슈게시글 내용 가져오기 -->
 	<select id="geteachissue"  resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="String">
 		select  a.issue_id ,  a.issue_title , a.issue_cont ,TO_CHAR( a.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt, 
-				a.todo_id , b.mem_name ,  a.category_id, a.issue_kind , a.mem_id
+				a.todo_id , b.mem_name ,  a.category_id, a.issue_kind , a.mem_id , c.pro_name 
 			
-		from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id, category_id, issue_kind, todo_id
+		from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id, category_id, issue_kind, todo_id, req_id
 		        from issue
-		        where issue_id = #{issueId} ) a , member b 
+		        where issue_id = #{issueId} ) a , member b , project c
 		where a.mem_id = b.mem_id and a.issue_del = 'N' 
+			  and a.req_id = c.req_id
 			
 	</select>
 	
@@ -220,4 +226,5 @@
 			
 	</select>
 
+	
 </mapper>

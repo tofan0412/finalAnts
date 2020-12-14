@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.model.IssueVo;
@@ -61,6 +62,7 @@ public class ProjectMemberController {
 		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
 		String memId = memberVo.getMemId();
 		issueVo.setMemId(memId);
+		session.setAttribute("categoryId", "8");
 		
 		/** EgovPropertyService.sample */
 		issueVo.setPageUnit(propertiesService.getInt("pageUnit"));
@@ -83,6 +85,13 @@ public class ProjectMemberController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
+		if(issueVo.getSearchKeyword() != null) {			
+			session.setAttribute("searchKeyword", issueVo.getSearchKeyword());
+			session.setAttribute("searchCondition",issueVo.getSearchCondition());
+			session.setAttribute("issueKind", issueVo.getIssueKind());
+			session.setAttribute("pageIndex", issueVo.getPageIndex());
+		}
+		
 		return "tiles/board/MY_issueList";
 	}
 	
@@ -92,6 +101,7 @@ public class ProjectMemberController {
 	@RequestMapping("/issuelist")
 	public String getissuelist(@ModelAttribute("issueVo") IssueVo issueVo, HttpSession session, Model model) throws Exception{
 		
+		session.setAttribute("categoryId", "3");
 		String reqId = (String)session.getAttribute("projectId");
 		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
 		String memId = memberVo.getMemId();
@@ -111,22 +121,30 @@ public class ProjectMemberController {
 		issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
 		issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
+		
 		List<IssueVo> resultList = promemService.issuelist(issueVo);
 		model.addAttribute("issuelist", resultList);
 
 		int totCnt = promemService.issuePagingListCnt(issueVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
+		System.out.println("totCnt:" + totCnt);
+		
+		if(issueVo.getSearchKeyword() != null) {			
+			session.setAttribute("searchKeyword", issueVo.getSearchKeyword());
+			session.setAttribute("searchCondition",issueVo.getSearchCondition());
+			session.setAttribute("issueKind", issueVo.getIssueKind());
+			session.setAttribute("pageIndex", issueVo.getPageIndex());
+		}
 		
 		return "tiles/board/issuelist2";
 	}
 	
 	// 각 이슈 상세보기
 	@RequestMapping("/eachissueDetail")
-	public String geteachissue(String issueId, String reqId, HttpSession session, Model model) throws SQLException, IOException {
+	public String geteachissue(IssueVo issueVo, String reqId, HttpSession session, Model model) throws SQLException, IOException {
 		
-		IssueVo issuevo = promemService.geteachissue(issueId);	
+		IssueVo issuevo = promemService.geteachissue(issueVo.getIssueId());	// 이슈상세조회
 		
 		if(session.getAttribute("projectId") !=  null) {
 			reqId = (String)session.getAttribute("projectId");
@@ -134,16 +152,14 @@ public class ProjectMemberController {
 		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
 		String memId = memberVo.getMemId();
 		
-		PublicFileVo pfv = new PublicFileVo("3",issueId , reqId);
-		
+		PublicFileVo pfv = new PublicFileVo("3",issueVo.getIssueId() , reqId);//파일조회
 		filecontroller.getfiles(pfv, model);
 
+		ReplyVo replyVo = new ReplyVo(issueVo.getIssueId(), "3", reqId,memId);	//댓글 조회
+		List<ReplyVo> replylist= memBoardService.replylist(replyVo);
+		
 		model.addAttribute("issuevo", issuevo);	
 		model.addAttribute("memId", issuevo.getMemId());
-		
-		ReplyVo replyVo = new ReplyVo(issueId,"3",reqId,memId);
-		
-		List<ReplyVo> replylist= memBoardService.replylist(replyVo);
 		model.addAttribute("replylist", replylist);
 		 
 		return "tiles/board/issueDetail";
@@ -206,13 +222,13 @@ public class ProjectMemberController {
 	
 	// 이슈 update View
 	@RequestMapping("/updateissueView")
-	public String updateissueView(String issueId, Model model, HttpSession session) {
+	public String updateissueView(IssueVo issueVo, Model model, HttpSession session) {
 		
 		String reqId = (String)session.getAttribute("projectId");
 		
-		IssueVo issuevo = promemService.geteachissue(issueId);
+		IssueVo issuevo = promemService.geteachissue(issueVo.getIssueId());
 		
-		PublicFileVo pfv = new PublicFileVo("3",issueId , reqId);
+		PublicFileVo pfv = new PublicFileVo("3",issueVo.getIssueId() , reqId);
 		
 		filecontroller.getfiles(pfv, model);
 				
@@ -225,7 +241,8 @@ public class ProjectMemberController {
 
 	// 이슈 update 
 	@RequestMapping("/updateissue")
-	public String updateissue(IssueVo issueVo, String delfile, MultipartHttpServletRequest multirequest, HttpSession session, Model model ) {
+	public String updateissue(IssueVo issueVo, String delfile, MultipartHttpServletRequest multirequest,
+					HttpSession session, Model model, RedirectAttributes ra ) {
 		
 		String reqId = (String)session.getAttribute("projectId");
 		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
@@ -235,7 +252,6 @@ public class ProjectMemberController {
 		issueVo.setMemId(memId);
 		
 		int insertCnt = promemService.updateissue(issueVo);
-		
 		
 		if(insertCnt>0) {		
 			return "redirect:/projectMember/eachissueDetail?issueId="+issueVo.getIssueId();
