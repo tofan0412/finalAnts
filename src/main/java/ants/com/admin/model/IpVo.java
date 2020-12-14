@@ -7,7 +7,14 @@ public class IpVo extends BaseVo{
 	private String ipAddr;
 	private String ipStatus;
 	private String adminId;
+	private String del;
 	
+	public String getDel() {
+		return del;
+	}
+	public void setDel(String del) {
+		this.del = del;
+	}
 	public String getIpId() {
 		return ipId;
 	}
