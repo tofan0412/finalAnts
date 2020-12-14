@@ -7,6 +7,7 @@ import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
@@ -71,7 +72,8 @@ public interface AdminMapper {
 	// Ip 카운트 세기
 	public int getIpCount();
 	
-	
+	// 사용자 로그인 기록 등록하기
+	public int insertMemLoginLog(IpHistoryVo log);
 	
 	
 
