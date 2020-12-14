@@ -91,8 +91,8 @@ public class ReqService{
 	 * 프로젝트 개요의 req 정보 가져오기
 	 * @return reqVo
 	 */
-	public ReqVo getoutlinereq(ReqVo reqVo) {
-		return mapper.getoutlinereq(reqVo);
+	public ReqVo getoutlinereq(String reqId) {
+		return mapper.getoutlinereq(reqId);
 	}
 
 

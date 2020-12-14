@@ -9,6 +9,18 @@
 	 WHERE REQ_ID = #{reqId}
 	   AND PROMEM_STATUS != 'OUT'
 </select>
+<select id="getoutlinepromem" parameterType="java.lang.String" resultType="ants.com.member.model.ProjectMemberVo">
+	SELECT
+	    p.req_id,
+	    p.promem_id,
+	    m.mem_name as MEM_ID,
+	    p.promem_status
+	FROM (select * from member)m,
+    	projectmember p
+	WHERE m.mem_id = p.mem_id
+	AND req_id = #{reqId}
+	AND PROMEM_STATUS ='IN'
+</select>
 
 
 	

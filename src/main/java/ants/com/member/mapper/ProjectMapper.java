@@ -39,5 +39,8 @@ public interface ProjectMapper {
 	// 프로젝트 수정하기
 	public int updateProject(ProjectVo projectVo);
 	
+	//개요 페이지 프로젝트 정보가져오기
+	public ProjectVo getoutlinepro(String reqId);
+	
 	
 }
