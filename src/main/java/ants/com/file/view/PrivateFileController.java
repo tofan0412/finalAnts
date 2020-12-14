@@ -1,6 +1,9 @@
 package ants.com.file.view;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +112,7 @@ public class PrivateFileController {
 				String filekey = UUID.randomUUID().toString();
 				
 				/*+ filekey + "\\"*/
-				Filepath = "D:\\upload\\" + file.get(i).getOriginalFilename();
+				Filepath = "C:\\upload\\" + file.get(i).getOriginalFilename();
 				Filename = file.get(i).getOriginalFilename();
 				File uploadFile = new File(Filepath);
 				Filesize = String.valueOf(file.get(i).getSize());
@@ -137,6 +140,51 @@ public class PrivateFileController {
 		return "redirect:/privatefile/privatefileView";
 	}
 	
+	// 파일 복사
+	@RequestMapping(path="/copyfile")
+	public String copyfile(PublicFileVo pubfilevo, HttpSession session) throws IOException {
+		
+		List<PrivateFileVo> list = new ArrayList<>(); 
+		
+		PublicFileVo filevo = fileService.getfile(pubfilevo.getPubId()); // 파일 조회
+
+		//원본 파일경로
+        String oriFilePath = filevo.getPubFilepath();
+		
+        String filename = UUID.randomUUID().toString();
+		String extension = filevo.getPubFilename().split("\\.")[1];
+	
+		
+        //복사될 파일경로
+        String copyFilePath = "C:\\profile\\"+filename+"."+extension;
+        
+        //파일객체생성
+        File oriFile = new File(oriFilePath);
+        //복사파일객체생성
+        File copyFile = new File(copyFilePath);
+        
+            
+        FileInputStream fis = new FileInputStream(oriFile); //읽을파일
+        FileOutputStream fos = new FileOutputStream(copyFile); //복사할파일
+        
+        fis.close();
+        fos.close();
+        
+        
+        PrivateFileVo privateVo = new PrivateFileVo();
+        MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		privateVo.setMemId(memberVo.getMemId());
+		
+        privateVo.setPrivFilepath(copyFilePath);
+		privateVo.setPrivFilename(filevo.getPubFilename());
+		privateVo.setPrivSize(String.valueOf(filevo.getPubSize()));
+		
+		list.add(privateVo);
+		
+		fileService.privateInsert(list);	
+
+		return "redirect:/file/publicfileview";
+	}
 	
 	
 	// 파일 업로드
@@ -159,7 +207,7 @@ public class PrivateFileController {
 				double size = ((double) files.get(i).getSize()/1024);				
 				double filesize = Math.round(size *100)/100.0;
 				
-				String Filepath = "D:\\upload\\" + files.get(i).getOriginalFilename();
+				String Filepath = "C:\\upload\\" + files.get(i).getOriginalFilename();
 				String Filename = files.get(i).getOriginalFilename();
 				
 				File uploadFile = new File(Filepath);
