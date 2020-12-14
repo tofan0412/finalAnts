@@ -122,6 +122,11 @@ public class AdminService extends EgovAbstractServiceImpl{
 		return mapper.insertMemLoginLog(log);
 	}
 	
+	// 사용자 로그인 기록 불러오기
+	public List<IpHistoryVo> loginLogList(){
+		return mapper.loginLogList();
+	}
+	
 
 	
 	

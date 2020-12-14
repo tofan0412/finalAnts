@@ -32,7 +32,7 @@
 	<bean id ="FileDownloadView" class="ants.com.file.view.FileDownloadView"/>
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<property name="order" value="1"></property>
+		<property name="order" value="0"></property>
 	</bean>
 	
 	
@@ -53,18 +53,18 @@
 		<property name="paramName" value="language" />
 	</bean>
 
-	<bean
-		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="defaultErrorView" value="cmmn/egovError" />
-		<property name="exceptionMappings">
-			<props>
-				<prop key="org.springframework.dao.DataAccessException">cmmn/dataAccessFailure</prop>
-				<prop key="org.springframework.transaction.TransactionException">cmmn/transactionFailure</prop>
-				<prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">cmmn/egovError</prop>
-				<prop key="org.springframework.security.AccessDeniedException">cmmn/egovError</prop>
-			</props>
-		</property>
-	</bean>
+<!-- 	<bean -->
+<!-- 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
+<!-- 		<property name="defaultErrorView" value="common/exceptionError" /> -->
+<!-- 		<property name="exceptionMappings"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="org.springframework.dao.DataAccessException">/common/exceptionError</prop> -->
+<!-- 				<prop key="org.springframework.transaction.TransactionException">/common/exceptionError</prop> -->
+<!-- 				<prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">/common/exceptionError</prop> -->
+<!-- 				<prop key="org.springframework.security.AccessDeniedException">/common/exceptionError</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 	
 	<bean
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver"
@@ -123,7 +123,7 @@
 		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles3.TilesView"></property>
-		<property name="order" value="0"></property>
+		<property name="order" value="1"></property>
 	</bean>
 	
 	<!-- 웹소켓 관련 설정 -->
@@ -151,4 +151,14 @@
 	
 	<!-- 처리할 수 없는 경우, serlvet 기본 핸들러가 처리한다. -->
     <mvc:default-servlet-handler/>
+    
+    <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/member/loginView" />
+			<mvc:exclude-mapping path="/member/mainView" />
+			<mvc:exclude-mapping path="/admin/adloginView" />
+			<bean class="ants.com.config.interceptor.LoginCheckInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>

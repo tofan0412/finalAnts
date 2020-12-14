@@ -24,6 +24,7 @@ import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
+import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.service.MemberService;
 import egovframework.rte.fdl.property.EgovPropertyService;
@@ -423,6 +424,12 @@ public class AdminController {
 	@RequestMapping("/ipMain")
 	public String ipMain() {
 		return "admin.tiles/admin/ipMain";
+	}
+	
+	@RequestMapping("/loginLogList")
+	@ResponseBody
+	public List<IpHistoryVo> loginLogList() {
+		return adminService.loginLogList();
 	}
 	
 }
