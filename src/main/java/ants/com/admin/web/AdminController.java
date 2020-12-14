@@ -95,7 +95,7 @@ public class AdminController {
 	@RequestMapping("/adlogout")
 	public String adlogout(HttpSession session) {
 		session.invalidate();
-		return adloginView();
+		return "redirect:/admin/adloginView";
 	}
 	
 	// 화면 상단 로고 클릭 시 메인 페이지로 이동
@@ -415,9 +415,29 @@ public class AdminController {
 	
 	// Ip 입력하기
 	@RequestMapping("/insertIp")
-	public String insertIp(IpVo ipVo) {
+	public String insertIp(String ip1,String ip2,String ip3,String ip4, HttpSession session) {
+		logger.debug("{} {} {} {}", ip1, ip2, ip3, ip4);
+		
+		
+		String ip = ip1.concat(".")
+					.concat(ip2)
+					.concat(".")
+					.concat(ip3)
+					.concat(".")
+					.concat(ip4);
+		
+		AdminVo admin =(AdminVo) session.getAttribute("SADMIN");
+		logger.debug("adminVo : {}", admin);
+		IpVo ipVo = new IpVo();
+		
+		ipVo.setIpAddr(ip);
+		ipVo.setAdminId(admin.getAdminId());
+		ipVo.setDel("N");
+		ipVo.setIpStatus("ACCEPTED");
+		
 		int result = adminService.insertIp(ipVo);
-		return "";
+		
+		return "redirect:/admin/getIpList";
 	}
 	
 	@RequestMapping("/getIpCount")

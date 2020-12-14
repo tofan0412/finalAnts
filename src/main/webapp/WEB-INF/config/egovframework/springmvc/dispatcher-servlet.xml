@@ -153,6 +153,7 @@
     <mvc:default-servlet-handler/>
     
     <mvc:interceptors>
+		<!-- 회원 로그인 관련 Interceptor -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/member/loginView" />
@@ -162,5 +163,25 @@
 			<mvc:exclude-mapping path="/admin/*" />
 			<bean class="ants.com.config.interceptor.LoginCheckInterceptor"/>
 		</mvc:interceptor>
+		
+		<!-- IP 접속 관련 Interceptor -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/member/loginView" />
+			<mvc:exclude-mapping path="/member/loginFunc" />
+			<mvc:exclude-mapping path="/member/mainView" />
+			<mvc:exclude-mapping path="/admin/*" />
+			<bean class="ants.com.config.interceptor.IpCheckInterceptor"/>
+		</mvc:interceptor>
+		
+		<!-- 관리자 로그인 관련 Interceptor -->
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**"/>
+			<mvc:exclude-mapping path="/admin/adloginView" />
+			<mvc:exclude-mapping path="/admin/adloginFunc" />
+			<mvc:exclude-mapping path="/admin/adlogout" />
+			<bean class="ants.com.config.interceptor.AdminLoginCheckInterceptor"/>
+		</mvc:interceptor>
+		
 	</mvc:interceptors>
 </beans>

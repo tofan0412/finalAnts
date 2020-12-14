@@ -36,7 +36,6 @@ $(function(){
 		<h5 class="jg">허용 IP 리스트</h5>
 		<table class="acceptedIpList">
 			<tr style="height : 30px;">
-				<th>사용자</th>
 				<th>IP</th>
 				<th>담당자</th>
 				<th>-</th>
@@ -44,7 +43,6 @@ $(function(){
 			<c:forEach items="${ipList }" var="ip">
 				<tr>
 					<td hidden="hidden">${ip.ipId }</td>
-					<td>${ip.memId }</td>
 					<td>${ip.ipAddr }</td>
 					<td>${ip.adminId }</td>
 					<td><button class="btn btn-failure">해제</button></td>
