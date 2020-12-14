@@ -147,4 +147,11 @@
 SELECT REQ_SEQ.nextval 
   FROM DUAL
 </select>
+
+		<select id="getoutlinereq" resultType="ants.com.member.model.ReqVo" parameterType="ants.com.member.model.ReqVo">
+		SELECT * 
+			FROM 
+			reqlist 
+			WHERE REQ_ID=  #{reqId} 
+		</select>
 </mapper>
