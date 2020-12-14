@@ -29,6 +29,6 @@ public interface ReqMapper {
 
 	public String getReqId();
 	
-	public ReqVo getoutlinereq(ReqVo reqVo);
+	public ReqVo getoutlinereq(String reqId);
 
 }

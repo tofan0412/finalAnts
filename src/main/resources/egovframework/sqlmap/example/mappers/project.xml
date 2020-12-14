@@ -47,69 +47,92 @@
 		resultType="ants.com.member.model.ReqVo"
 		parameterType="java.lang.String">
 		SELECT *
-          FROM REQLIST
-         WHERE REQ_ID IN (SELECT REQ_ID
-                            FROM REQLIST
-                           WHERE PL_ID = #{plId}
-                             AND STATUS = 'WAIT')
-            OR REQ_ID IN (SELECT REQ_ID
-                            FROM REQLIST A
-                           WHERE A.PL_ID = #{plId}
-                             AND A.STATUS = 'ACCEPT'
-                             AND A.REQ_ID IN (SELECT B.REQ_ID
-                                              FROM PROJECT B
-                                             WHERE PRO_NAME is NULL
-                                               AND MEM_ID IS NOT NULL))
+		FROM REQLIST
+		WHERE REQ_ID IN (SELECT REQ_ID
+		FROM
+		REQLIST
+		WHERE PL_ID = #{plId}
+		AND STATUS = 'WAIT')
+		OR REQ_ID IN (SELECT
+		REQ_ID
+		FROM REQLIST A
+		WHERE A.PL_ID = #{plId}
+		AND A.STATUS = 'ACCEPT'
+		AND
+		A.REQ_ID IN (SELECT B.REQ_ID
+		FROM PROJECT B
+		WHERE PRO_NAME is NULL
+		AND
+		MEM_ID IS NOT NULL))
 	</select>
 
 	<insert id="insertProject"
 		parameterType="ants.com.member.model.ProjectVo">
 		INSERT INTO PROJECT (REQ_ID,MEM_ID,PRO_NAME,REG_DT)
-		VALUES (#{reqId},#{memId,jdbcType=VARCHAR},#{proName,jdbcType=VARCHAR},SYSDATE)
+		VALUES
+		(#{reqId},#{memId,jdbcType=VARCHAR},#{proName,jdbcType=VARCHAR},SYSDATE)
 	</insert>
-	
+
 	<select id="userSearch" parameterType="java.lang.String"
 		resultType="ants.com.member.model.MemberVo">
 		SELECT * FROM MEMBER WHERE MEM_ID LIKE #{keyword}
 	</select>
-	
-	<select id="chkMemId" parameterType="java.lang.String" resultType="ants.com.member.model.MemberVo">
-SELECT *
-		  FROM MEMBER
-		 WHERE MEM_ID = #{memId}
-</select>
-	
-<insert id="insertPjtMember" parameterType="ants.com.member.model.ProjectMemberVo">
-	INSERT INTO PROJECTMEMBER (req_id, promem_id, mem_id, promem_status) 
-	VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL, #{memId},#{promemStatus})
-	
-</insert>
-		
-		<!-- 진행도 update -->
-		<update id="propercentChange" parameterType="ants.com.member.model.ProjectVo">
-			
-			UPDATE PROJECT
-			    SET
-			       pro_percent =#{percent}
-				WHERE
-			    	req_id =#{reqId}
-    
-		</update>
-		
-<!-- 프로젝트 update -->
-<update id="updateProject"  parameterType="ants.com.member.model.ProjectVo">
-	UPDATE PROJECT
-	<set>
-       	<if test="memId != null">MEM_ID = #{memId},</if>
-       	<if test="proName != null">PRO_NAME = #{proName},</if>
-       	<if test="percent != null">PRO_PERCENT = #{percent},</if>
-       	<if test="regDt != null">REG_DT = #{regDt},</if>
-       	<if test="del != null">DEL = #{del}</if>
-     </set>    
-	 WHERE 1=1
-	   AND REQ_ID = #{reqId}
-</update>
 
+	<select id="chkMemId" parameterType="java.lang.String"
+		resultType="ants.com.member.model.MemberVo">
+		SELECT *
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
 
+	<insert id="insertPjtMember"
+		parameterType="ants.com.member.model.ProjectMemberVo">
+		INSERT INTO PROJECTMEMBER (req_id, promem_id, mem_id,
+		promem_status)
+		VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL,
+		#{memId},#{promemStatus})
 
+	</insert>
+
+	<!-- 진행도 update -->
+	<update id="propercentChange"
+		parameterType="ants.com.member.model.ProjectVo">
+
+		UPDATE PROJECT
+		SET
+		pro_percent =#{percent}
+		WHERE
+		req_id
+		=#{reqId}
+
+	</update>
+
+	<!-- 프로젝트 update -->
+	<update id="updateProject"
+		parameterType="ants.com.member.model.ProjectVo">
+		UPDATE PROJECT
+		<set>
+			<if test="memId != null">MEM_ID = #{memId},</if>
+			<if test="proName != null">PRO_NAME = #{proName},</if>
+			<if test="percent != null">PRO_PERCENT = #{percent},</if>
+			<if test="regDt != null">REG_DT = #{regDt},</if>
+			<if test="del != null">DEL = #{del}</if>
+		</set>
+		WHERE 1=1
+		AND REQ_ID = #{reqId}
+	</update>
+
+	<!-- 개요페이지 프로젝트 정보 -->
+	<select id="getoutlinepro" parameterType="String" resultType="ants.com.member.model.ProjectVo">
+		SELECT
+			req_id,
+			mem_id,
+			pro_name,
+			pro_percent,
+			reg_dt,
+			del
+		FROM
+			project
+		where req_id = #{reqId}
+	</select>
 </mapper>

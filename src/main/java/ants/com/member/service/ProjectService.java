@@ -69,4 +69,8 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	public int updateProject(ProjectVo projectVo) {
 		return mapper.updateProject(projectVo);
 	}
+	// 개요페이지 프로젝트 정보가져오기
+	public ProjectVo getoutlinepro(String reqId) {
+		return mapper.getoutlinepro(reqId);
+	}
 }
