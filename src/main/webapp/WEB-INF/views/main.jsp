@@ -204,13 +204,12 @@
 			<h1>Ants 데모영상</h1>
 		</div>
 		<iframe width="853" height="480" 
-		src="https://www.youtube.com/embed/vO-kmDarLwM" 
-		frameborder="0" allow="accelerometer; autoplay; 
-		clipboard-write; encrypted-media; gyroscope; 
-		picture-in-picture" allowfullscreen
-		style="position: absolute; top:25%; left:25%;"
-		>
+			src="https://www.youtube.com/embed/lhovFTBky78" 
+			frameborder="0" allow="accelerometer; autoplay; 
+			clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+			allowfullscreen style="position: absolute; top:25%; left:25%;">
 		</iframe>
+		
 	</div>
 	
 	<div class="content" style="float : bottom;">
