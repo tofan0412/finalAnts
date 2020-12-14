@@ -36,20 +36,6 @@ public class TodoController {
 	@Autowired
 	ProjectController projectController;
 
-	// 프로젝트명 클릭시 세션저장
-	@RequestMapping("/projectgetReq")
-	public String projectgetReq(HttpSession session, String reqId) {
-		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
-		String memId = memberVo.getMemId();
-		ProjectVo projectVo = new ProjectVo();
-		projectVo.setMemId(memId);
-		projectVo.setReqId(reqId);
-		ProjectVo sessionVo = manageBoardService.projectList(projectVo);
-		session.setAttribute("projectVo", sessionVo);
-		session.setAttribute("projectId", reqId);
-//		return "redirect:/todo/todoList";
-		return "tiles/chart/outline";
-	}
 
 	// 차트 뷰
 	@RequestMapping("/chartView")
