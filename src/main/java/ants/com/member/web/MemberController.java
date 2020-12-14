@@ -33,8 +33,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import ants.com.admin.service.AdminService;
+import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.service.MemberService;
@@ -53,6 +57,10 @@ public class MemberController {
 	
 	@Resource(name = "projectService")
 	private ProjectService projectService;
+	
+	@Resource(name="adminService")
+	private AdminService adminService;
+	
 	
 	@RequestMapping("/mainView")
 	public String mainView() {
@@ -76,6 +84,37 @@ public class MemberController {
 		
 		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
 			session.setAttribute("SMEMBER", dbMember);
+			// 로그인 정보를 history에 기록한다.
+			
+			// 1. IP 가져오기
+			HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder
+										.currentRequestAttributes()).getRequest();
+			String ip = req.getHeader("X-FORWARDED-FOR");
+			
+//	        String ip_proxy = req.getHeader("Proxy-Client-IP");
+//	        logger.info("> Proxy-Client-IP : " + ip_proxy);
+//	        
+//	        String ip_wl = req.getHeader("WL-Proxy-Client-IP");
+//	        logger.info(">  WL-Proxy-Client-IP : " + ip_wl);
+//	        
+//	        String ip_client = req.getHeader("HTTP_CLIENT_IP");
+//	        logger.info("> HTTP_CLIENT_IP : " + ip_client);
+//	        
+//	        String ip_client2 = req.getHeader("HTTP_X_FORWARDED_FOR");
+//	        logger.info("> HTTP_X_FORWARDED_FOR : " + ip_client2);
+			
+			if (ip == null) ip = req.getRemoteAddr();
+			model.addAttribute("clientIp", ip);
+			
+			// 2. IpHistoryVo를 이용하여 기록하기.
+			IpHistoryVo log = new IpHistoryVo();
+			log.setMemId(dbMember.getMemId());
+			log.setIpAddr(ip);
+			
+			adminService.insertMemLoginLog(log);
+			
+			
+			
 			List<ProjectVo> proList = projectService.memInProjectList(dbMember.getMemId());
 			if (proList.size() != 0) {
 				session.setAttribute("memInProjectList", proList);
@@ -423,10 +462,20 @@ public class MemberController {
 		return loginView();
 	}
 	
+	
 	// 화면 상단 로고 클릭 시 메인 페이지로 이동
 	@RequestMapping("/projectMainView")
 	public String projectMainView() {
 		return "tiles/layout/contentmenu";
+	}
+	
+	
+	// 알람 on/off
+	@RequestMapping(path = "/updateAlarm", method = RequestMethod.GET)
+	public String updateAlarm(MemberVo memberVo, Model model) {
+		int dbMember = memberService.updateAlarm(memberVo);
+		model.addAttribute("memberVo", memberVo);
+		return "tiles/member/memberProfile";
 	}
 	
 }

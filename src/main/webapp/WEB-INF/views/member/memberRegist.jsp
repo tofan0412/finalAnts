@@ -349,7 +349,7 @@ function unityPW(){
 							btn.disabled = false;
 						}else{ 
 							$('#checkMsg').html('<p style="color:red">사용불가능</p>'); 
-						} 
+						}
 					}
 				}); //end ajax 
 				return false;	/* 페이지 새로고침 막기 */

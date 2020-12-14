@@ -11,6 +11,7 @@
 
 $(document).ready(function() {
 	stackedbarchart();
+	donutChart();
   });
   
 function stackedbarchart() {
@@ -80,6 +81,41 @@ function stackedbarchart() {
 		}
 	});
 }
+
+function donutChart() {
+	$.ajax({
+		url : "/todo/donutChart",
+		method : "get",
+		success : function(data) {
+		var dnum = [];
+		var dpercent=[];
+		for(i=0; i<data.dsize; i++){
+		dnum.push(data.donutChartList[i].memId);	
+		dpercent.push(data.donutChartList[i].todoPercent);
+		
+		}
+		var donutChartData = {
+				labels : dnum,
+				 datasets: [
+				        {
+				          data: dpercent,
+				          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+				        }
+				      ]
+		};
+		 var donutOptions     = {
+			      maintainAspectRatio : false,
+			      responsive : true,
+			    }
+		var dctx = document.getElementById('donutChart').getContext('2d');
+		var donutChart = new Chart(dctx, {
+		      type: 'doughnut',
+		      data: donutChartData,
+		      options: donutOptions
+		    });
+		}
+	});
+}
 		
 	
 </script>
@@ -91,9 +127,9 @@ function stackedbarchart() {
           <div style="width: 80%;">
            
             <!-- STACKED BAR CHART -->
-            <div class="card card-success">
+           <div class="card card-success">
               <div class="card-header">
-                <h3 class="card-title">Stacked Bar Chart</h3>
+                <h3 class="card-title">할일 진행도 차트</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -109,15 +145,29 @@ function stackedbarchart() {
                   <canvas id="stackedBarChart" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
                 </div>
               </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
+      
+      
+      <div class="card card-success">
+       <div class="card-header">
+                <h3 class="card-title">할일 비중 차트</h3>
 
-          </div>
-          <!-- /.col (RIGHT) -->
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
+              </div>
+            </div>
+           </div>
         </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
+      </div>
   
 
 </body>

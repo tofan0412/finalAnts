@@ -78,7 +78,11 @@
 		where mem_id = #{memId}
 	</update>
 	
-	
-	
-	
+<insert id="insertMemLoginLog" parameterType="ants.com.common.model.IpHistoryVo">
+INSERT INTO IPHISTORY (IPHIST_IDX,MEM_ID,IP_ADDR,IPHIST_DATE) 
+VALUES (IPHIST_SEQ.NEXTVAL,#{memId},#{ipAddr},SYSDATE)
+</insert>
+
+
+
 </mapper>

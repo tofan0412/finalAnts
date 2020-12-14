@@ -27,5 +27,5 @@ public interface MemberMapper {
 	
 	public int profileupdate(MemberVo memberVo);
 	
-	
+	public int updateAlarm(MemberVo memberVo);
 }

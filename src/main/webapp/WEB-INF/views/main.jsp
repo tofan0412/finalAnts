@@ -69,7 +69,7 @@
 	font-size : 1.3em;
 }
 </style>
- 
+
 <!-- Channel Plugin Scripts -->
 <script>
   (function() {
