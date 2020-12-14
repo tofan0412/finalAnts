@@ -41,12 +41,12 @@ public class AdminController {
 	@Resource(name="memberService")
 	MemberService memberService;
 	
-	@RequestMapping("/adminproject")
-	public String projectmain(HttpSession session) {
-		
-		session.setAttribute("noticeId", "1");
-		return "admin.tiles/admin/adcontentmenu";
-	}
+//	@RequestMapping("/adminproject")
+//	public String projectmain(HttpSession session) {
+//		
+//		session.setAttribute("noticeId", "1");
+//		return "admin.tiles/admin/adcontentmenu";
+//	}
 	
 	////////////////////////////////////////////////관리자 로그인
 	
@@ -66,7 +66,8 @@ public class AdminController {
 		
 		if (dbAdmin != (null) && adminVo.getAdminPass().equals(dbAdmin.getAdminPass())) {
 			session.setAttribute("SADMIN", dbAdmin);
-				return "admin.tiles/admin/adcontentmenu";
+//				return "admin.tiles/admin/adcontentmenu";
+				return "redirect:/admin/adMainView";
 		} else {
 			return "redirect:/member/loginView";
 		}
