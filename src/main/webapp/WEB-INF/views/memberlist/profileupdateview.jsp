@@ -23,6 +23,22 @@
 	});
 	
 	
+	
+	$(document).ready(function(){
+	    $('.content i').on('click',function(){
+	        $('input').toggleClass('active');
+	        if($('input').hasClass('active')){
+	            $(this).attr('class',"fa fa-eye-slash fa-lg")
+	            .prev('input').attr('type',"text");
+	        }else{
+	            $(this).attr('class',"fa fa-eye fa-lg")
+	            .prev('input').attr('type','password');
+	        }
+	    });
+	});
+
+	
+	
 </script>
 <style>
 	body{
@@ -113,6 +129,7 @@
 					</label>
 					<div>
 						<input class="input" name="memPass" type="password" id="memPass" placeholder="패스워드1" value="${memberVo.memPass}" readonly/>
+						<i class="fa fa-eye fa-lg"></i>
 					</div>
 				</div>
 				
@@ -123,13 +140,14 @@
 					</label>
 					<div>
 						<input class="input" type="password" id="memPass2" placeholder="패스워드2" value="${memberVo.memPass}" readonly/>
+						<i class="fa fa-eye fa-lg"></i>
 					</div>
 				</div>
 
 				<div class="content">
 						&nbsp;&nbsp;&nbsp;&nbsp;<label for="alias" style="font-size: 0.9em;">전화번호</label>
 					<div>
-						<input class="input" name="memTel" type="tel" id="memTel" placeholder="전화번호( '-' 없이 작성해주세요)" maxlength="13" value="${memberVo.memTel}" />
+						<input class="input" name="memTel" type="tel" id="memTel" placeholder="전화번호( '-' 없이 작성해주세요)" maxlength="13" value="${memberVo.memTel}"autocomplete='off' />
 						
 					</div>
 				</div>

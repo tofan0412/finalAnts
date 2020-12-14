@@ -99,6 +99,8 @@
 		location="/WEB-INF/views/userprofile/" />
 	<mvc:resources mapping="/fileFormat/*"
 		location="/WEB-INF/views/layout/fileFormat/" />
+<!-- 	<mvc:resources mapping="/gantt/**" location="/resources/plugins/robicch-jQueryGantt/"/> -->
+	<mvc:resources mapping="/gantt/**" location="/resources/plugins/gantt/"/>
 		
 		
 	<!-- 파일 업로드 처리를 위한 multipartResolver 설정 -->
