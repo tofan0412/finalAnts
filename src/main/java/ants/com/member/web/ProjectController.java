@@ -162,8 +162,11 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/outlineView")
-	public String outlineView(HttpSession session, String reqId) {
-		
+	public String outlineView(HttpSession session, Model model, ReqVo reqVo) {
+		String reqId = (String) session.getAttribute("projectId");
+		reqVo.setReqId(reqId);
+		ReqVo dbvo = reqService.getoutlinereq(reqVo);
+		model.addAttribute("req", dbvo);
 		return "tiles/layout/outline";
 	}
 }
