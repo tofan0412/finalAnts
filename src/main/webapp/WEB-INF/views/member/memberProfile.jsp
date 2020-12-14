@@ -17,6 +17,8 @@ body{
 .memvar{
 	margin-left : 150px;
 }
+
+								/* 알람 스타일 */
 .switch {
   position: relative;
   display: inline-block;
@@ -82,19 +84,25 @@ p {
 	font-size:15px;
 	font-weight:bold;
 }
-</style>
-<script>
+							/* 알람 스타일 */
 
+</style>
+<script>	
+
+							/*  알람 토글(on/off) 기능     */
 function toggle(element){
 	
+	// 알람 on
 	if(element.checked == true){
 		document.getElementById('alias').value = 'Y';
 		alert('알람ON'); 
+	// 알람 off
 	}else if(element.checked == false){ 
 		document.getElementById('alias').value = 'N';
 		alert('알람OFF'); 
 	}
-		
+	
+	// 알람 데이터 전송
 	$.ajax({
 		type : "GET",
         url : "/member/updateAlarm",
@@ -108,6 +116,7 @@ function toggle(element){
 	}) 
 } 
  
+
 $(document).ready(function(){
 		 
 								/* 기본이미지/사진 선택 해서 보여주기 */
@@ -195,16 +204,14 @@ $(document).ready(function(){
 						<div class="col-sm-6 input-group-sm">
 							<input class="form-control" name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border: none" readonly>
 						</div>
-						
-						
-						<label class="switch">
+							
+						<!-- 알람 토글 버튼 -->
+						<label class="switch">											<!-- 알람 토글 기본 y : y아닐땐 off -->
 							<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>
 							<span class="slider round"></span>
 						</label>
-						
-						
 					</div> 
-	
+						
 					<div class="form-group row">
 						<label for="alias" class="col-sm-3" style="font-size: 0.9em;">
 							<span class="memvar" style="color: red; font-weight: bold;"></span>타입
