@@ -11,6 +11,7 @@ import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -116,7 +117,10 @@ public class AdminService extends EgovAbstractServiceImpl{
 		return mapper.getIpCount();
 	}
 
-	
+	// 사용자 로그인 기록 등록하기
+	public int insertMemLoginLog(IpHistoryVo log) {
+		return mapper.insertMemLoginLog(log);
+	}
 	
 
 	
