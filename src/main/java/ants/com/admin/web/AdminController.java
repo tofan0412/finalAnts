@@ -45,7 +45,7 @@ public class AdminController {
 	public String projectmain(HttpSession session) {
 		
 		session.setAttribute("noticeId", "1");
-		return "admin.tiles/layout/admin/adcontentmenu";
+		return "admin.tiles/admin/adcontentmenu";
 	}
 	
 	////////////////////////////////////////////////관리자 로그인
@@ -53,7 +53,7 @@ public class AdminController {
 	//관리자 로그인 페이지
 	@RequestMapping("/adloginView")
 	public String adloginView() {
-		return "/layout/admin/adlogin";
+		return "/admin/adlogin";
 	}
 	
 	// 로그인 로직
@@ -66,7 +66,7 @@ public class AdminController {
 		
 		if (dbAdmin != (null) && adminVo.getAdminPass().equals(dbAdmin.getAdminPass())) {
 			session.setAttribute("SADMIN", dbAdmin);
-				return "admin.tiles/layout/admin/adcontentmenu";
+				return "admin.tiles/admin/adcontentmenu";
 		} else {
 			return "redirect:/member/loginView";
 		}
@@ -87,7 +87,7 @@ public class AdminController {
 		model.addAttribute("adminId", dbAdmin.getAdminId());
 		model.addAttribute("adminPass", dbAdmin.getAdminPass());
 		
-		return "/layout/admin/adlogin";
+		return "/admin/adlogin";
 	}
 	
 	//관리자 로그아웃
@@ -100,7 +100,7 @@ public class AdminController {
 	// 화면 상단 로고 클릭 시 메인 페이지로 이동
 	@RequestMapping("/adMainView")
 	public String adMainView() {
-		return "admin.tiles/layout/admin/adcontentmenu";
+		return "admin.tiles/admin/adcontentmenu";
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////관리자 로그인 끝	
 	

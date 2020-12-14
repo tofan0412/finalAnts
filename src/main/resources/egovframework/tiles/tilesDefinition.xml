@@ -47,15 +47,15 @@
 	</definition>
 	
 	<!-- 관리자 메인 페이지 화면  -->
-	<definition name="admin.layout" template="/WEB-INF/views/layout/admin/admin_layout.jsp">
+	<definition name="admin.layout" template="/WEB-INF/views/admin/admin_layout.jsp">
 	
-		<put-attribute name="adheader" value="/WEB-INF/views/layout/admin/adheader.jsp" />
+		<put-attribute name="adheader" value="/WEB-INF/views/admin/adheader.jsp" />
 		
-		<put-attribute name="adleft" value="/WEB-INF/views/layout/admin/adleft.jsp" />
+		<put-attribute name="adleft" value="/WEB-INF/views/admin/adleft.jsp" />
 
 		<put-attribute name="adcontent" value="" />
 
-		<put-attribute name="adfooter" value="/WEB-INF/views/layout/admin/adfooter.jsp" />
+		<put-attribute name="adfooter" value="/WEB-INF/views/admin/adfooter.jsp" />
 		
 	</definition>
 	
