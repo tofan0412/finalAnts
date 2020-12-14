@@ -54,4 +54,10 @@
 	</update>
 	
 	
+	<update id="updateAlarm" parameterType="ants.com.member.model.MemberVo">
+		UPDATE MEMBER SET MEM_ALERT = #{memAlert}
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	
 </mapper>

@@ -62,6 +62,8 @@ public class MemberService{
 	}
 	
 	
-
+	public int updateAlarm(MemberVo memberVo) {
+		return mapper.updateAlarm(memberVo);
+	}
 	
 }
