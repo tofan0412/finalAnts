@@ -194,6 +194,7 @@ th{
 											<td>${project.percent}</td>
 											<td>${project.regDt}</td>
 											<td>
+
 												<c:choose>
 													<c:when test="${empty project.reqId}">
 														<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
@@ -205,6 +206,7 @@ th{
 														<a>참여중인 프로젝트가 없습니다.</a>
 													</c:otherwise>
 												</c:choose> 
+
 											</td>	
 										</tr>
 									</c:forEach> 

@@ -8,11 +8,11 @@
 <script src="/dist/js/adminlte.min.js"></script>
 <script src="/plugins/moment/moment.min.js"></script>
 <script src="/plugins/fullcalendar/main.js"></script>
+<script src="/plugins/jquery-knob/jquery.knob.min.js"></script>
 
 <script src="/plugins/fullcalendar-daygrid/main.js"></script>
 <script src="/plugins/fullcalendar-interaction/main.js"></script>
 <script src="/plugins/fullcalendar-timegrid/main.js"></script>
-
 
 <link rel="stylesheet" href="/dist/css/adminlte.min.css">
 <link rel="stylesheet" href="/plugins/fullcalendar/main.css">

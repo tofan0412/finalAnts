@@ -29,12 +29,13 @@
 }
 
 .center {
-	padding: 13%;
+	padding: 10%;
 	color: white;
 }
 
 .login {
 	height: 50px;
+	width: 40%;
 	background-color: #F3F6F9;
 	border-color: #F3F6F9;
 	height: auto !important;
@@ -68,8 +69,7 @@ $(function(){
 	<div class="ff">
 
 		<div class="col-sm-4">
-			<img src="../dist/img/ants.png"  height="60%" width="100%"
-				>
+			<img src="../dist/img/ants.png"  height="60%" width="100%" style="margin-top: 100px">
 		</div>
 		
 		
@@ -112,11 +112,11 @@ $(function(){
 
 					<div class="form-group has-feedback">
 						<div>
-							<header class="jg" style="font-size: 1.2em; float: left;">
+							<header class="jg" style="font-size: 1.2em;">
 								Password<br>
 							</header>
 						</div>
-						<input type="password" class="form-control login" id="adminPass" name="adminPass" value="" style="border: 0; outline: 0;">
+							<input type="password" class="form-control login" id="adminPass" name="adminPass" value="" style="border: 0; outline: 0;" >
 					</div>
 
 					<div class="row">

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ants.com.admin.mapper.AdminMapper">
 
-<select id="getIpList" resultType="ants.com.admin.model.IpVo">
+<select id="getIpList" resultType="ants.com.admin.model.IpVo" parameterType="ants.com.admin.model.IpVo">
 SELECT * 
   FROM IP
  WHERE DEL != 'Y'
@@ -34,7 +34,7 @@ UPDATE IP
 
 <insert id="insertIp" parameterType="ants.com.admin.model.IpVo">
 INSERT INTO IP (IP_ID,IP_ADDR,IP_STATUS,ADMIN_ID,DEL) 
-VALUES (IP_SEQ.NEXTVAL, #{idAddr}, #{ipStatus}, #{adminId}, 'N')
+VALUES (IP_SEQ.NEXTVAL, #{ipAddr}, #{ipStatus}, #{adminId}, 'N')
 </insert>
 
 <select id="getIpCount" resultType="java.lang.Integer">
@@ -42,4 +42,9 @@ SELECT COUNT(*)
   FROM IP
 </select>
 
+<select id="loginLogList" resultType="ants.com.common.model.IpHistoryVo">
+SELECT * 
+  FROM IPHISTORY
+ORDER BY IPHIST_DATE DESC
+</select>
 </mapper>

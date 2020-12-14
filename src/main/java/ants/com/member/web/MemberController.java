@@ -77,6 +77,12 @@ public class MemberController {
 		return "member/login";
 	}
 	
+	// 메인 페이지로 이동
+	@RequestMapping("/projectMainView")
+	public String projectMainView() {
+		return "tiles/layout/contentmain";
+	}
+	
 	// 로그인 로직
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
@@ -94,18 +100,6 @@ public class MemberController {
 			HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder
 										.currentRequestAttributes()).getRequest();
 			String ip = req.getHeader("X-FORWARDED-FOR");
-			
-//	        String ip_proxy = req.getHeader("Proxy-Client-IP");
-//	        logger.info("> Proxy-Client-IP : " + ip_proxy);
-//	        
-//	        String ip_wl = req.getHeader("WL-Proxy-Client-IP");
-//	        logger.info(">  WL-Proxy-Client-IP : " + ip_wl);
-//	        
-//	        String ip_client = req.getHeader("HTTP_CLIENT_IP");
-//	        logger.info("> HTTP_CLIENT_IP : " + ip_client);
-//	        
-//	        String ip_client2 = req.getHeader("HTTP_X_FORWARDED_FOR");
-//	        logger.info("> HTTP_X_FORWARDED_FOR : " + ip_client2);
 			
 			if (ip == null) ip = req.getRemoteAddr();
 			model.addAttribute("clientIp", ip);
@@ -470,16 +464,8 @@ public class MemberController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return loginView();
+		return "redirect:/member/loginView";
 	}
-	
-	
-	// 화면 상단 로고 클릭 시 메인 페이지로 이동
-	@RequestMapping("/projectMainView")
-	public String projectMainView() {
-		return "tiles/layout/contentmenu";
-	}
-	
 	
 	// 알람 on/off
 	@RequestMapping(path = "/updateAlarm", method = RequestMethod.GET)

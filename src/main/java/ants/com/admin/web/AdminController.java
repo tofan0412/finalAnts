@@ -24,6 +24,7 @@ import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
+import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.service.MemberService;
 import egovframework.rte.fdl.property.EgovPropertyService;
@@ -100,7 +101,8 @@ public class AdminController {
 	// 화면 상단 로고 클릭 시 메인 페이지로 이동
 	@RequestMapping("/adMainView")
 	public String adMainView() {
-		return "admin.tiles/admin/adcontentmenu";
+		return "admin.tiles/admin/adcontentmain";
+//		return "redirect:/admin/adMainView";
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////관리자 로그인 끝	
 	
@@ -373,13 +375,15 @@ public class AdminController {
 		}
 	}
 	
-	// Ip 리스트 전체 가져오기
+	// Ip 리스트 전체 가져오기 -> 차단 리스트 또는 허용 리스트
 	@RequestMapping("/getIpList")
 	public String getIpList(Model model) {
 		List<IpVo> ipList = adminService.getIpList();
 		
 		model.addAttribute("ipList", ipList);
-		return "admin.tiles/admin/ipList";
+		
+		return "admin.tiles/admin/ipAcceptedList";
+		
 	}
 	
 	// Ip 하나만 가져오기
@@ -403,11 +407,17 @@ public class AdminController {
 		return "admin.tiles/admin/ipUpdate";
 	}
 	
+	//Ip 입력창으로 이동
+	@RequestMapping("/insertIpView")
+	public String insertIpView() {
+		return "admin.tiles/admin/ipInsert";
+	}
+	
 	// Ip 입력하기
 	@RequestMapping("/insertIp")
 	public String insertIp(IpVo ipVo) {
 		int result = adminService.insertIp(ipVo);
-		return "admin.tiles/admin/ipInsert";
+		return "";
 	}
 	
 	@RequestMapping("/getIpCount")
@@ -422,6 +432,12 @@ public class AdminController {
 	@RequestMapping("/ipMain")
 	public String ipMain() {
 		return "admin.tiles/admin/ipMain";
+	}
+	
+	@RequestMapping("/loginLogList")
+	@ResponseBody
+	public List<IpHistoryVo> loginLogList() {
+		return adminService.loginLogList();
 	}
 	
 }

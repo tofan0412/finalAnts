@@ -85,6 +85,7 @@ public class BookmarkController {
 	@RequestMapping(path ="/getallbookmark")
 	public String getallbookmark(@ModelAttribute("AllBookMarkVo") AllBookMarkVo allbookmarkVo, Model model, HttpSession session) throws SQLException, IOException {
 		
+		session.setAttribute("categoryId", "9");
 		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
 		String memId = memberVo.getMemId();
 		
@@ -113,6 +114,13 @@ public class BookmarkController {
 		int totCnt = memBoardService.bookmarkPagingListCnt(allbookmarkVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
+		
+		if(allbookmarkVo.getSearchKeyword() != null) {			
+			session.setAttribute("searchKeyword", allbookmarkVo.getSearchKeyword());
+			session.setAttribute("searchCondition",allbookmarkVo.getSearchCondition());
+			session.setAttribute("issueKind", allbookmarkVo.getIssueKind());
+			session.setAttribute("pageIndex", allbookmarkVo.getPageIndex());
+		}
 		
 		return "tiles/board/bookmarklist";
 	}

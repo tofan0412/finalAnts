@@ -40,12 +40,11 @@ public interface AdminMapper {
 
 	//멤버 리스트
 	public List<MemberVo> memberlist(MemberVo memberVo);
-
+	
 	public int memberlistPagingListCnt(MemberVo memberVo);
 
 	//멤버 리스트 상세보기
 	public MemberVo geteachmemlist(String memId);
-
 	
 	public MemberVo getMember(MemberVo memberVo);
 	
@@ -75,7 +74,8 @@ public interface AdminMapper {
 	// 사용자 로그인 기록 등록하기
 	public int insertMemLoginLog(IpHistoryVo log);
 	
-	
+	// 사용자 로그인 기록 리스트로 불러오기
+	public List<IpHistoryVo> loginLogList();
 
 	
 	

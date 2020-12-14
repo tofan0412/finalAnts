@@ -16,6 +16,7 @@ public class IssueVo extends BaseVo{
 	private String memId;
 	private String memName;
 	private String bookmark;
+	private String proName;
 	
 	public String getIssueId() {
 		return issueId;
@@ -88,6 +89,12 @@ public class IssueVo extends BaseVo{
 	}
 	public void setBookmark(String bookmark) {
 		this.bookmark = bookmark;
+	}	
+	public String getProName() {
+		return proName;
+	}
+	public void setProName(String proName) {
+		this.proName = proName;
 	}
 	
 	@Override

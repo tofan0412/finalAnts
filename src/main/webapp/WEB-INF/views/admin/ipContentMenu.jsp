@@ -7,19 +7,22 @@
 		<div class="card-header p-0 pt-1 border-bottom-0">
 			<ul class="nav nav-tabs" id="custom-tabs-three-tab">
 
-				<li class="nav-item"><a class="nav-link"
+				<li class="nav-item getIpList">
+					<a class="nav-link"
 					id="custom-tabs-three-notice"
-					href="${pageContext.request.contextPath}/admin/noticelist">허용
-						IP 리스트</a></li>
+					href="/admin/ipMain">최근 접속 IP</a>
+				</li>
+				
+				<li class="nav-item getIpList">
+					<a class="nav-link"
+					id="custom-tabs-three-notice"
+					href="/admin/getIpList">허용 IP</a>
+				</li>
 
 				<li class="nav-item"><a class="nav-link"
-					id="custom-tabs-three-memberlist"
-					href="${pageContext.request.contextPath}/admin/memberlist">차단
-						IP 리스트</a></li>
-
-				<li class="nav-item"><a class="nav-link"
-					id="custom-tabs-three-iplist" href="#custom-tabs-three-iplist1">IP
-						등록</a></li>
+					id="custom-tabs-three-iplist" href="/admin/insertIpView">
+					IP 등록</a>
+				</li>
 
 				<li class="nav-item"><a class="nav-link"
 					id="custom-tabs-three-iplist" href="#custom-tabs-three-iplist1">IP
