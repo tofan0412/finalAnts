@@ -7,6 +7,13 @@
 <%@include file="../layout/fullcalendarLib.jsp"%>
 <style>
 
+.knob-label{
+padding-left: 100px;
+}
+.dayt{
+text-align: right;
+}
+
 
 </style>
 <script>
@@ -81,30 +88,128 @@
 </head>
 <body>
 <%@include file="../layout/contentmenu.jsp"%>
-	<h4>프로젝트 이름</h4>
-	<div class="card-body">
-                <div class="row" style="width: 65%;">
+					<h4 style="margin-left: 50px;">${projectVo.proName}</h4>
+					 <br><br>
+                <div class="row" style="width: 65%;  float:left;">
                   <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline; width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="100" data-width="150" data-height="150" data-fgcolor="#3c8dbc" data-thickness="1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: rgb(60, 141, 188) font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    <div style="display:inline; width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="100" data-width="150" data-height="150" data-fgcolor="rgb(59, 191, 103)" data-thickness="1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: rgb(60, 141, 188); font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
                     <div class="knob-label">status</div>
                   </div>
                   <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="90" data-width="150" data-height="150" data-fgcolor="#3c8dbc" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="90" data-width="150" data-height="150" data-fgcolor="mediumseagreen " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
                     <div class="knob-label">progress</div>
                   </div>
                   <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="90" data-width="150" data-height="150" data-fgcolor="#3c8dbc" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
-
-                    <div class="knob-label">suggest</div>
-                  </div>
-                  <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="90" data-width="150" data-height="150" data-fgcolor="#3c8dbc" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="50" data-width="150" data-height="150" data-fgcolor="mediumseagreen " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
                     <div class="knob-label">Time elapsed</div>
                   </div>
+                  <div class="col-6 col-md-3 text-center">
+                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100"></canvas><input type="text" class="knob" value="20" data-width="150" data-height="150" data-fgcolor="mediumseagreen " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+
+                    <div class="knob-label">suggest</div>
+                  </div>
+                  <div class="row" style="width: 100%; margin-left: 10%; margin-top: 8%;" >
+                    <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%;" >
+                     Progress/Time
+                      <div class="progress progress-md">
+                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                      </div>
+                    </div>
+               		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; ">
+                      ProjectFiles
+                      <div class="progress progress-md">
+                        <div class="progress-bar bg-danger" style="width: 80%"></div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3" style="width: 35%;" >
+                      Issues Reply
+                      <div class="progress progress-md" >
+                        <div class="progress-bar " style="width: 80%; background-color: goldenrod"></div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; margin-top: 5%;" >
+                      Turnout
+                      <div class="progress progress-md">
+                        <div class="progress-bar bg-warning" style="width: 80%"></div>
+                      </div>
+                    </div>
+               		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; margin-top: 5%;">
+                      Todo
+                      <div class="progress progress-md">
+                        <div class="progress-bar " style="width: 80%; background-color: mediumpurple  "></div>
+                      </div>
+                    </div>
+                    
+                    
+					</div>
+					</div>
+                
+
+                    
+              <div class="row" style="width: 30%; float:left; margin-left:5%;  border-bottom: 1px solid black;" > 
+              	   <h2>Project Day</h2>
+                    <table class="table table-sm" >
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td>시작일</td>
+                      <td></td>
+                      <td class="dayt">
+                        2020-12-14
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+						<td></td>
+                      <td>종료일</td>
+                      <td></td>
+                        <td class="dayt">
+                        2021-05-09
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                    <td></td>
+                      <td>Day</td>
+                      <td></td>
+                        <td class="dayt">
+                        1
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-	</div>
+              <div class="row" style="width: 30%; float:right; margin-right:1%;  margin-top:2%; border-bottom: 1px solid black;" > 
+              
+              	   <h2>WorkGroup</h2>
+                    <ul class="users-list clearfix">
+                      <li>
+                        <img src="../userprofile/user-0.png" alt="User Image">
+                        <span class="users-list-date">test</span>
+                      </li>
+                      <li>
+                         <img src="../userprofile/user-1.png" alt="User Image">
+                        <span class="users-list-date">test</span>
+                      </li>
+                      <li>
+                         <img src="../userprofile/user-2.png" alt="User Image">
+                        <span class="users-list-date">test</span>
+                      </li>
+                      <li>
+                         <img src="../userprofile/user-3.png" alt="User Image">
+                        <span class="users-list-date">test</span>
+                      </li>
+                      <li>
+                         <img src="../userprofile/user-4.png" alt="User Image">
+                        <span class="users-list-date">test</span>
+                      </li>
+                    </ul>
+                    <!-- /.users-list -->
+              		
+              </div>
 </body>
 </html>
