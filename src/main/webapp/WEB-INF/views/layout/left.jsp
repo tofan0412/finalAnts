@@ -166,7 +166,7 @@
 					    <ul class="nav nav-treeview" style="display: block;">
 					    	<c:forEach items="${memInProjectList}" var="project">
 						    	<li class="nav-item">
-									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+									<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
 								 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
 								 	</a>
 								</li>
@@ -184,7 +184,7 @@
 					    <ul class="nav nav-treeview" >
 					    	<c:forEach items="${plInProjectList}" var="project">
 						    	<li class="nav-item">
-									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+									<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
 								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
 								 	</a>
 								</li>
@@ -202,7 +202,7 @@
 					    <ul class="nav nav-treeview" >
 					    	<c:forEach items="${pmInProjectList}" var="project">
 						    	<li class="nav-item">
-									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+									<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
 								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
 								 	</a>
 								</li>

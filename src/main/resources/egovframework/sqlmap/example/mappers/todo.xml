@@ -325,4 +325,12 @@
 	   		AND  req_id = #{reqId}
 		    group by mem_id
 		</select>
+		
+		<select id="getAllTodo" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoVo">
+			SELECT *
+			  FROM todo
+			WHERE req_id = #{reqId} 
+		</select>
+		
+		
 </mapper>

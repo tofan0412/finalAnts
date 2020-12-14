@@ -52,7 +52,8 @@
 
   <!-- 클릭한 파일 정보 -->
   <select id="getfileDetail" parameterType="String" resultType="ants.com.file.model.PublicFileVo">
-  	 SELECT * 
+  	 SELECT  pub_id, pub_filepath, pub_filename, pub_extension, reg_dt, category_id,
+      		 some_id, req_id, pub_size, mem_id
      FROM publicfile 
      WHERE pub_id = #{pubId}
   </select>
@@ -66,11 +67,12 @@
 	           	   S.*
 		      FROM (				  	
 					SELECT a.PUB_ID, a.PUB_EXTENSION ,a.pub_filename, to_char(a.reg_dt,'yyyy-mm-dd hh:mm') as reg_dt ,
-						   a.pub_size , b.mem_name as mem_id
+						   a.pub_size , b.mem_name as mem_id , a.category_id
 					  FROM publicfile a, member b
 					 WHERE req_id = #{reqId}
 					   AND a.mem_id = b.mem_id
-				     
+                       AND a.category_id in (1,2,3,4,6)
+                      
 			        <if test="searchKeyword != null and searchKeyword != ''">
 				        <choose>				         	
 				            <when test="searchCondition == 1">
@@ -110,11 +112,11 @@
   <!-- 프로젝트에 해당하는 파일 수 조회하기 -->	
 	<select id="pubfilePagingListCnt" parameterType="ants.com.file.model.PublicFileVo"  
 				resultType="int">
-		select count(*) as totCnt
-		from publicfile a, member b
-		where req_id = #{reqId}
-		and a.mem_id = b.mem_id
-		
+		SELECT count(*) as totCnt
+		FROM publicfile a, member b
+		WHERE req_id = #{reqId}
+		AND a.mem_id = b.mem_id
+		AND a.category_id in (1, 2,3,4,6)
 		<if test="searchKeyword != null and searchKeyword != ''">
 		        <choose>
 		            <when test="searchCondition == 1">

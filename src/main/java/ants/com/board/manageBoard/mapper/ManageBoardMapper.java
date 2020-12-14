@@ -86,5 +86,7 @@ public interface ManageBoardMapper {
 	public int hIssuedelete(HotIssueVo hotIssueVo);
 	// 다음 index값 추출
 	public String gethissueId();
+	// 전체 todoList
+	public List<TodoVo> getAllTodo(String reqId);
 	
 }

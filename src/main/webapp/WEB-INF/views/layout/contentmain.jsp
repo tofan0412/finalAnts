@@ -98,7 +98,7 @@ th{
 											<td>${project.percent}</td>
 											<td>${project.regDt}</td>
 											<td>
-												<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+												<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
 											 		<input type="button" value="들어가기">
 											 	</a>
 											</td>	

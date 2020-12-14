@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ants.com.board.manageBoard.service.ManageBoardService;
 import ants.com.file.model.PublicFileVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectMemberVo;
@@ -34,6 +35,9 @@ public class ProjectController {
 	@Resource(name = "reqService")
 	private ReqService reqService;
 
+	@Resource(name = "manageBoardService")
+	private ManageBoardService manageBoardService;
+	
 	@RequestMapping("/readReqList")
 	// 나에게 요청된 요구사항정의서 목록을 살펴본다.
 	public String readReqList(HttpSession session, Model model) {
@@ -142,5 +146,24 @@ public class ProjectController {
 		
 		return res;
 		
+	}
+	// 프로젝트 버튼 클릭시 세션저장
+	@RequestMapping("/projectgetReq")
+	public String projectgetReq(HttpSession session, String reqId) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		ProjectVo projectVo = new ProjectVo();
+		projectVo.setMemId(memId);
+		projectVo.setReqId(reqId);
+		ProjectVo sessionVo = manageBoardService.projectList(projectVo);
+		session.setAttribute("projectVo", sessionVo);
+		session.setAttribute("projectId", reqId);
+		return "redirect:/project/outlineView";
+	}
+	
+	@RequestMapping("/outlineView")
+	public String outlineView(HttpSession session, String reqId) {
+		
+		return "tiles/layout/outline";
 	}
 }
