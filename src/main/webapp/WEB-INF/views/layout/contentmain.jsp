@@ -49,72 +49,33 @@ $(function(){
 		var plId = '${SMEMBER.memId}';
 		$(location).attr('href', '/project/readReqList?plId='+plId);
 	})
-	
-	
 })
 	
-function ini_events(ele) {
-    ele.each(function () {
-
-      // create an Event Object (https://fullcalendar.io/docs/event-object)
-      // it doesn't need to have a start or end
-      var eventObject = {
-        title: $.trim($(this).text()) // use the element's text as the event title
-      }
-
-      // store the Event Object in the DOM element so we can get to it later
-      $(this).data('eventObject', eventObject)
-
-      // make the event draggable using jQuery UI
-      $(this).draggable({
-        zIndex        : 1070,
-        revert        : true, // will cause the event to go back to its
-        revertDuration: 0  //  original position after the drag
-      })
-
-      })
-} 
-
-ini_events($('#external-events div.external-event'))
 document.addEventListener('DOMContentLoaded', function() {
-	$("#modalbtn").hide();
 	var Calendar = FullCalendar.Calendar;
-	var Draggable = FullCalendar.Draggable;
-	var containerEl = document.getElementById('external-events');
-	var checkbox = document.getElementById('drop-remove');
 	var calendarEl = document.getElementById('calendar');
-	
+				
 	var calendar = new FullCalendar.Calendar(calendarEl, { 
-		plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], 
-		defaultView: 'dayGridMonth', 
+		plugins: [ 'interaction', 'dayGrid' ],
 		defaultDate: new Date(),
-		header: { left: 'prev,next today', center: 'title',  right : 'dayGridMonth,timeGridWeek,timeGridDay' },
-		editable: true,
-		eventLimit : true,
-		droppable: true, 
-	    selectable: true,
-	    draggable :true,
-		themeSystem: 'bootstrap',
-		displayEventTime: false,
-		events: [
+		center: 'title',
+		events: [ 
 	        <%
 	         for(int i =0; i<list.size(); i++){
 	        	 ScheduleVo dto = (ScheduleVo)list.get(i);
-	         
 	        %>
-			{
-				id : '<%= dto.getScheId()%>',
-				navLinks: true,
-				title : '<%= dto.getScheTitle()%>',
-				backgroundColor: '<%= dto.getCalendarcss()%>',
-				start: '<%= dto.getStartDt()%>',
-				end: '<%= dto.getEndDt()%>'
-			},
-			<%
+				{	
+					id : '<%= dto.getScheId()%>',
+					navLinks: true,
+					title : '<%= dto.getScheTitle()%>',
+					backgroundColor: '<%= dto.getCalendarcss()%>',
+					start: '<%= dto.getStartDt()%>',
+					end: '<%= dto.getEndDt()%>'
+				},
+			<% 
 	         }
 			%>
-				
-	      ] 
+	      ]
 	});
 	calendar.render();
 });
@@ -142,22 +103,30 @@ th{
 .bottom{
 	border: 1px solid lightgray; 
 	width:48%; 
-	height:550px; 
+	height:650px; 
 	float:left; 
 	background-color:white;
-	
+		
 	padding-top:2%;
 	padding-bottom:2%;
 	padding-left:4%;
 	padding-right:4%;
+	margin: auto;
+	vertical-align: middle;
+	horizontal-align: middle;  
 } 
 .todoTable {
 	width: 98%;
 	border-collapse: collapse;
-}
+}	
+#calendar { 
+	width:700px;
+	padding-left: 6%; 
+}    
+.fc-sat, .fc-sun, .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri {width:10px;} 
 </style>
-</head> 
-
+</head>
+	 
 <body>
 <div>
 	<div class="top" style="margin-left:1.5%;"><h4>프로젝트 현황</h4>
@@ -196,7 +165,7 @@ th{
 											<td>
 
 												<c:choose>
-													<c:when test="${empty project.reqId}">
+													<c:when test="${not empty project.reqId}">
 														<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
 													 		<input type="button" value="들어가기">
 													 	</a>
@@ -246,7 +215,7 @@ th{
 											<td>${project.regDt}</td>
 											<td>
 												<c:choose>
-													<c:when test="${empty project.reqId}">
+													<c:when test="${not empty project.reqId}">
 														<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
 													 		<input type="button" value="들어가기">
 													 	</a>
@@ -264,22 +233,22 @@ th{
 						</ul>
 					</li>
 				 </c:if>
+				 
 				 <!-- memType이 PM일때 -->
 				 <c:if test="${not empty pmInProjectList}">
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active" style="background-color:#6495ED;">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>프로젝트 관리(PM)<i class="fas fa-angle-left right"></i></p>
+							<p>프로젝트 관리(PM)<i class="fas fa-angle-left right"></i></p> 
 						</a>
-					    <ul class="nav nav-treeview" > 
+					    <ul class="nav nav-treeview">
 							<table class="todoTable" style="margin-left:3%">
 								<tr>
 									<th style="padding-left:47px;">프로젝트명</th>
 									<th>상태(일단 프로젝트번호)</th>
 									<th>완료율</th>
 									<th>생성일</th>
-									   
-								</tr> 
+								</tr> 	
 								<tbody id=pmInProjectList> 
 									<c:forEach items="${pmInProjectList}" var="project" varStatus="sts" >
 									    <tr "data-privid="${project.reqId}">
@@ -294,8 +263,8 @@ th{
 											<td>${project.percent}</td>
 											<td>${project.regDt}</td>
 											<td>
-												<c:choose>
-													<c:when test="${empty project.reqId}">
+												<c:choose> 
+													<c:when test="${not empty project.reqId}">
 														<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
 													 		<input type="button" value="들어가기">
 													 	</a>
@@ -330,7 +299,7 @@ th{
 	
 	<!-- 위 오른쪽 공지사항 -->
 	<div class="top" style="margin-left:1%;"><h4>공지사항</h4><br>
-	</div>
+	</div> 
 
 	
 	<!-- 아래  -->
@@ -338,12 +307,10 @@ th{
 		<div class="bottom" style="margin-left:1.5%;"><h4>프로젝트별 통계</h4><br>
 			<img src="/dist/img/통계.gif" style="height: 100%; width: 100%; ">
 		</div>
-		
+		  
 		<!-- 오른쪽 캘린더 -->
-		<div class="bottom" style="margin-left:1%;"><h4>프로젝트 일정</h4><br>
-		
-        <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-bootstrap"></div>
-    
+		<div class="bottom" style="margin-left:1%;">
+        	<div id="calendar"></div>
 		</div>
 </div>
 </body>
