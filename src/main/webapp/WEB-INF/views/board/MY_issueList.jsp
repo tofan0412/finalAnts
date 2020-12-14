@@ -144,8 +144,8 @@ $(function(){
 		          <div class="col-sm-6">
 		          <br>
 		            <ol class="breadcrumb float-sm-right"  style="background : white">
-		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active">내가 작성한 이슈</li>
+		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
+		              <li class="breadcrumb-item active jg">내가 작성한 이슈</li>
 		            </ol>
 		          </div>
 		        </div>
@@ -156,14 +156,14 @@ $(function(){
 					<div class="input-group row">
 						<label for="searchCondition" style="visibility:hidden;"></label>
 					
-						<form:select path="IssueKind" id="issuekindselect" cssClass="use" class="form-control col-md-3" style="width: 100px;">
+						<form:select path="IssueKind" id="issuekindselect" class="form-control col-md-3 jg" style="width: 100px;">
 							<form:option value="" label="전체글"/>
 							<form:option value="issue" label="이슈"/>
 							<form:option value="notice" label="공지사항"/>
 						</form:select>
 						
 						
-        				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
+        				<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
 							<form:option value="1" label="제목"/>
 							<form:option value="2" label="내용"/>
 							<form:option value="3" label="프로젝트명"/>
@@ -171,7 +171,7 @@ $(function(){
 						
 						
 						<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                    <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
+	                    <form:input style="width: 300px;" path="searchKeyword"  placeholder="검색어를 입력하세요." class="form-control jg"/>
 <!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
 						<span class="input-group-append">							
 							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
@@ -191,12 +191,12 @@ $(function(){
 	                <table class="table">
 	                  <thead>
 	                    <tr>
-	                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-	                     	<th  style="padding-left: 30px; text-align: center;">  이슈 제목</th> 
-							<th style="text-align: center;"> 프로젝트명 </th>
-							<th style="text-align: center;">   날짜   </th>
-							<th style="text-align: center;">   종류   </th>
-							<th style="text-align: center;"> 즐겨찾기 </th>
+	                        <th class="jg" style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
+	                     	<th class="jg" style="padding-left: 30px; text-align: center;">  이슈 제목</th> 
+							<th class="jg" style="text-align: center;"> 프로젝트명 </th>
+							<th class="jg" style="text-align: center;">   날짜   </th>
+							<th class="jg" style="text-align: center;">   종류   </th>
+							<th class="jg" style="text-align: center;"> 즐겨찾기 </th>
 <!-- 	                      <th style="text-align: center;">응답 상태</th> -->
 	                      <th></th>
 	                    </tr>
@@ -205,16 +205,16 @@ $(function(){
 	                       <c:forEach items = "${myissuelist }" var ="issue" varStatus="status">
 								<tr>
 				                 
-				                    <td  style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
+				                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
 								
-									<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${issue.reqId}"> ${issue.issueTitle }</a> </td>
-									<td style="text-align: center;"> ${issue.memId }</td>
-									<td style="text-align: center;"> ${issue.regDt }</td>
+									<td class="jg" style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${issue.reqId}"> ${issue.issueTitle }</a> </td>
+									<td class="jg" style="text-align: center;"> ${issue.memId }</td>
+									<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
 									<c:if test="${issue.issueKind == 'issue'}">
-										<td style="text-align: center;"> 이슈</td>										
+										<td class="jg" style="text-align: center;"> 이슈</td>										
 									</c:if>
 									<c:if test="${issue.issueKind == 'notice'}">
-										<td style="text-align: center;"> 공지사항</td>										
+										<td class="jg" style="text-align: center;"> 공지사항</td>										
 									</c:if>
 <%-- 									<c:forEach items = "${bookmarklist }" var ="book" > --%>
 			
@@ -222,10 +222,10 @@ $(function(){
 	<!-- 													OnClick="toggle_img_src( 'bookmark_toggle_01', '/resources/dist/img/bookmark-white.png', '/resources/dist/img/bookmark-black.png');" style="cursor:pointer"></td> -->
 										<c:choose>
 											<c:when test="${issue.issueDel == '' || issue.issueDel == null }">
-												<td style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
+												<td class="jg" style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
 											</c:when>
 											<c:otherwise>
-												<td style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
+												<td class="jg" style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
 											</c:otherwise>
 										</c:choose>
 										
@@ -238,7 +238,7 @@ $(function(){
 						<c:if test="${myissuelist.size() == 0}">
 							
 						 	<tr>
-								<td colspan="7" style="text-align: center;"><br><strong> [ 결과가 없습니다. ] </strong></td>
+								<td class="jg" colspan="7" style="text-align: center;"><br> [ 결과가 없습니다. ] </td>
 							</tr>
 						</c:if>
 	                  </tbody>
@@ -248,16 +248,17 @@ $(function(){
 	              
 	              <br>
 	              <div id="paging" class="card-tools">
-	              	<ul class="pagination pagination-sm" id ="pagingui">
+	              	<ul class="pagination pagination-sm jg" id ="pagingui">
 	              	
-		        		<li  class="page-item" id ="pagenum" >	
+		        		<li  class="page-item jg" id ="pagenum" >	
 		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
 		        		<form:hidden path="pageIndex" />		        		
                     
 	                 </ul>
         		  </div>
         		  <br>
-   
+           		  <div class="card-footer clearfix">
+	              </div>
         		  
 	              <!-- /.card-body -->
 	            </div>

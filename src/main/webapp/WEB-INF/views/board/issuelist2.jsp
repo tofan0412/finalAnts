@@ -47,6 +47,12 @@
 	    box-shadow: none;
 	}	
 	
+	.option{
+		height: 50px;
+		width: 150px;
+		padding: 5px;
+	}
+	
 </style>
 
 <script type="text/javascript">
@@ -141,8 +147,8 @@ $(function(){
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right"  style="background : white">
-		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active">현업이슈 리스트</li>
+		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
+		              <li class="breadcrumb-item active jg">현업이슈 리스트</li>
 		            </ol>
 		          </div>
 		        </div>
@@ -154,22 +160,22 @@ $(function(){
 					<div class="input-group row">
 						<label for="searchCondition" style="visibility:hidden;"></label>
 					
-						<form:select path="IssueKind" id="issuekindselect" cssClass="use" class="form-control col-md-3" style="width: 100px;">
-							<form:option value="" label="전체글"/>
-							<form:option value="issue" label="이슈"/>
-							<form:option value="notice" label="공지사항"/>
+						<form:select path="IssueKind" id="issuekindselect" class="form-control col-md-3 jg" style="width: 100px; ">
+							<form:option value="" class="jg option" label="전체글"/>
+							<form:option value="issue" class="jg option"  label="이슈"/>
+							<form:option value="notice" class="jg option" label="공지사항"/>
 						</form:select>
 						
 						
-        				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
-							<form:option value="1" label="작성자"/>
-							<form:option value="2" label="제목"/>
-							<form:option value="3" label="내용"/>
+        				<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
+							<form:option value="1"  class="jg" label="작성자"/>
+							<form:option value="2"  class="jg" label="제목"/>
+							<form:option value="3"  class="jg" label="내용"/>
 						</form:select> 
 						
 						
-						<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                    <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"
+						<label for="searchKeyword" style="visibility:hidden; display:none;"  class="jg"></label>
+	                    <form:input style="width: 300px;" path="searchKeyword" placeholder="검색어를 입력하세요." class="form-control jg"
 	                    		/>
 <!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
 						<span class="input-group-append">							
@@ -191,11 +197,11 @@ $(function(){
 	                  <thead>
 	                    <tr>
 	                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-	                     	<th  style="padding-left: 30px; text-align: center;">  이슈 제목</th> 
-							<th style="text-align: center;">   작성자 </th>
-							<th style="text-align: center;">   날짜   </th>
-							<th style="text-align: center;">   종류   </th>
-							<th style="text-align: center;"> 즐겨찾기 </th>
+	                     	<th  style="padding-left: 30px; text-align: center;" class="jg">  이슈 제목</th> 
+							<th style="text-align: center;" class="jg">   작성자 </th>
+							<th style="text-align: center;" class="jg">   날짜   </th>
+							<th style="text-align: center;" class="jg">   종류   </th>
+							<th style="text-align: center;" class="jg"> 즐겨찾기 </th>
 <!-- 	                      <th style="text-align: center;">응답 상태</th> -->
 	                      <th></th>
 	                    </tr>
@@ -205,16 +211,16 @@ $(function(){
                        <c:forEach items = "${issuelist }" var ="issue" varStatus="status">
 							<tr>
 			                 
-			                    <td  style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
+			                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
 							
-								<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> ${issue.issueTitle }</a> </td>
-								<td style="text-align: center;"> ${issue.memId }</td>
-								<td style="text-align: center;"> ${issue.regDt }</td>
+								<td class="jg"  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> ${issue.issueTitle }</a> </td>
+								<td class="jg" style="text-align: center;"> ${issue.memId }</td>
+								<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
 								<c:if test="${issue.issueKind == 'issue'}">
-									<td style="text-align: center;"> 이슈</td>										
+									<td style="text-align: center;" class="jg"> 이슈</td>										
 								</c:if>
 								<c:if test="${issue.issueKind == 'notice'}">
-									<td style="text-align: center;"> 공지사항</td>										
+									<td style="text-align: center;" class="jg"> 공지사항</td>										
 								</c:if>
 									<c:choose>
 										<c:when test="${issue.issueDel == '' || issue.issueDel == null }">
@@ -229,7 +235,7 @@ $(function(){
 							</tr>
 						 </c:forEach> 
 						 <c:if test="${issuelist.size() == 0}">
-							<td colspan="7" style="text-align: center;"><br><strong> [ 결과가 없습니다. ] </strong></td>
+							<td colspan="7" style="text-align: center;"  class="jg"><br> [ 결과가 없습니다. ] </td>
 						 </c:if>
 
 	                  </tbody>
@@ -239,9 +245,9 @@ $(function(){
 	              
 	              <br>
 	              <div id="paging" class="card-tools">
-	              	<ul class="pagination pagination-sm" id ="pagingui">
+	              	<ul class="pagination pagination-sm jg" id ="pagingui">
 	              	
-		        		<li  class="page-item" id ="pagenum" >	
+		        		<li  class="page-item jg" id ="pagenum" >	
 		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
 		        		<form:hidden path="pageIndex" />		        		
                     
@@ -249,7 +255,7 @@ $(function(){
         		  </div>
         		  <br>
         		  <div class="card-footer clearfix">
-	                <button id="insertissue" type="button" class="btn btn-default float-right" onclick="issueInsert()"><i class="fas fa-plus"></i>등 록</button>
+	                <button id="insertissue" type="button" class="btn btn-default float-right jg" onclick="issueInsert()"><i class="fas fa-plus "></i>등 록</button>
 	              </div>
         		 
         		  

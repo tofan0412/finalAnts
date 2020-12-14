@@ -30,9 +30,12 @@ body {
 <body>
 	<h1>UploadiFive Demo</h1>
 	<form>
-
+	
+	
+	
+	
 		<div id="queue"></div>
-		<input id="file_upload" name="file" type="file" multiple="true"/>
+		<input id="file_upload" name="file_upload" type="file" multiple="true"/>
 		<input id="submit" type="button" onClick="javascript:$('#file_upload').uploadifive('upload')" value="제출"/>
 	</form>
 
@@ -40,21 +43,50 @@ body {
 		var timestamp = new Date();
 		$(function() {
 			$('#file_upload').uploadifive({
+				'auto'             : true,
+                'uploadScript'     : '/file/insertfile',
+				'formData'         : {
+									   'categoryId' : "3",
+									   'someId'     : '10'
+				                     },
+				'fileObjName'     : 'file',   
+				'queueID'          : 'queue',
+                "fileType": '.gif, .jpg, .png, .jpeg, .bmp, .doc, .ppt, .xls, .xlsx, .docx, .pptx, .zip, .rar, .pdf',
+              
+                "multi": true,
+                "height": 20,
+                "width": 100,
+                "fileSizeLimit": "20MB",
+                "uploadLimit": 10,
+                "buttonText": "파일찾기",
+                'removeCompleted' : true,
+				'onUploadComplete' : function(file, data) {
+					var obj = JSON.parse(data);
+					console.log(data);
+				},
+				onCancel : function(file) {
+					alert(file.name + " 취소되었습니다.");
+				},
+				onFallback : function() {
+					alert("该浏览器无法使用!");
+				},
+				onUpload : function(file) {
+					//document.getElementById("submit").disabled = true;//当开始上传文件，要防止上传未完成而表单被提交
+				},
+			});
+			
+			$('#file_upload').uploadifive({
 				'uploadScript'     : '/file/insertfile',
-				'fileObjName'     : 'file',    
 				'formData'         : {
 									   'categoryId' : "3",
 									   'someId'     : '10'
 				                     },
 				'auto'             : false,
 				'queueID'          : 'queue',
-				'onUploadComplete' : function(file, data) { 
-					
-					console.log(data); 
-				}
+				'uploadScript'     : 'uploadifive.php',
+				'onUploadComplete' : function(file, data) { console.log(data); }
 			});
 		});
-		
 	</script>
 </body>
 </html>

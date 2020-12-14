@@ -290,8 +290,8 @@ function itemdetail(voteid){
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right"  style="background : white">
-		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active">투표</li>
+		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
+		              <li class="breadcrumb-item active jg">투표</li>
 		            </ol>
 		          </div>
 		        </div>
@@ -303,14 +303,14 @@ function itemdetail(voteid){
 						<label for="searchCondition" style="visibility:hidden;"></label>
 																
 						
-        				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
+        				<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
 							<form:option value="1" label="제목"/>
 							<form:option value="2" label="작성자"/>
 						</form:select> 
 						
 						
 						<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                    <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
+	                    <form:input style="width: 300px;" path="searchKeyword" placeholder="검색어를 입력하세요." class="form-control jg"/>
 <!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
 						<span class="input-group-append">							
 							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
@@ -330,12 +330,12 @@ function itemdetail(voteid){
 	                <table class="table">
 	                  <thead>
 	                    <tr>
-	                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-	                     	<th  style="padding-left: 30px; text-align: center;"> 투표제목</th> 
-							<th style="text-align: center;"> 마감일  </th>
-							<th style="text-align: center;"> 투표율  </th>
-							<th style="text-align: center;">  상태   </th>
-							<th style="text-align: center;"> 작성자 </th>
+	                        <th class="jg" style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
+	                     	<th class="jg" style="padding-left: 30px; text-align: center;"> 투표제목</th> 
+							<th class="jg" style="text-align: center;"> 마감일  </th>
+							<th class="jg" style="text-align: center;"> 투표율  </th>
+							<th class="jg" style="text-align: center;">  상태   </th>
+							<th class="jg" style="text-align: center;"> 작성자 </th>
 <!-- 	                      <th style="text-align: center;">응답 상태</th> -->
 <!-- 	                      <th></th> -->
 	                    </tr>
@@ -344,35 +344,35 @@ function itemdetail(voteid){
 	                      
                        <c:forEach items = "${votelist }" var ="vote" varStatus="status">
                       	   <tr>
-			                    <td  style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((voteVo.pageIndex-1) * voteVo.pageUnit + (status.index+1))}"/>.</td>
+			                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((voteVo.pageIndex-1) * voteVo.pageUnit + (status.index+1))}"/>.</td>
 							
-								<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/vote/voteDetail?voteId=${vote.voteId }">${vote.voteTitle}</a></td>
-								<td style="text-align: center;"> ${vote.voteDeadline }</td>
-								<td style="text-align: center;"> <fmt:formatNumber value="${vote.votedNo/vote.voteTotalno }" type="percent"></fmt:formatNumber></td>
+								<td class="jg" style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/vote/voteDetail?voteId=${vote.voteId }">${vote.voteTitle}</a></td>
+								<td class="jg" style="text-align: center;"> ${vote.voteDeadline }</td>
+								<td class="jg" style="text-align: center;"> <fmt:formatNumber value="${vote.votedNo/vote.voteTotalno }" type="percent"></fmt:formatNumber></td>
 							
 								<c:if test="${vote.remain > 1000 and vote.voteStatus=='ing'}">
 									<td style="text-align: center;"> 
-									 	<span class="badge badge-success">진행중</span>
+									 	<span class="badge badge-success ">진행중</span>
 									</td>
 								</c:if>
 								<c:if test="${(vote.remain <= 1000 and vote.remain > 0) and vote.voteStatus == 'ing'}">
 									<td style="text-align: center;"> 
-									 	<span class="badge badge-warning">임박</span>
+									 	<span class="badge badge-warning ">임박</span>
 									</td>
 								</c:if>
 								<c:if test="${vote.remain <= 0 or vote.voteStatus== 'finish'}">
 									<td style="text-align: center;" >
-										<span class="badge badge-danger"> 완료 </span>
+										<span class="badge badge-danger "> 완료 </span>
 									</td>
 								</c:if>
 <%-- 								<td style="text-align: center;"><button class="votebtn">투표하기</button><input type="hidden" value="${vote.voteId }"></td> --%>
-								<td style="text-align: center;"> ${vote.memName }</td>
+								<td class="jg" style="text-align: center;"> ${vote.memName }</td>
 <!-- 		                     	<td style="text-align: center;"> -->
 								 
 							</tr>
 						 </c:forEach> 
 						 <c:if test="${votelist.size() == 0}">
-							<td colspan="7" style="text-align: center;"><br><strong> [ 결과가 없습니다. ] </strong></td>
+							<td colspan="7" style="text-align: center;" class="jg"><br>[ 결과가 없습니다. ]</td>
 						 </c:if>
 
 	                  </tbody>
@@ -382,9 +382,9 @@ function itemdetail(voteid){
 	              
 	              <br>
 	              <div id="paging" class="card-tools">
-	              	<ul class="pagination pagination-sm" id ="pagingui">
+	              	<ul class="pagination pagination-sm jg" id ="pagingui">
 	              	
-		        		<li  class="page-item" id ="pagenum" >	
+		        		<li  class="page-item jg" id ="pagenum" >	
 		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
 		        		<form:hidden path="pageIndex" />		        		
                     
@@ -392,7 +392,7 @@ function itemdetail(voteid){
         		  </div>
         		  <br>
         		  <div class="card-footer clearfix">
-	                <button id="insertvote" type="button" class="btn btn-default float-right" "><i class="fas fa-plus"></i>등 록</button>
+	                <button id="insertvote" type="button" class="btn btn-default float-right jg"><i class="fas fa-plus"></i>등 록</button>
 	              </div>
         		 
         		  
