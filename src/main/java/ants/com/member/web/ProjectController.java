@@ -158,6 +158,12 @@ public class ProjectController {
 		ProjectVo sessionVo = manageBoardService.projectList(projectVo);
 		session.setAttribute("projectVo", sessionVo);
 		session.setAttribute("projectId", reqId);
-		return "tiles/chart/outline";
+		return "redirect:/project/outlineView";
+	}
+	
+	@RequestMapping("/outlineView")
+	public String outlineView(HttpSession session, String reqId) {
+		
+		return "tiles/layout/outline";
 	}
 }
