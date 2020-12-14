@@ -207,8 +207,8 @@ function pubfiledel(){
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right"  style="background : white">
-		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active">파일함</li>
+		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
+		              <li class="breadcrumb-item active jg">파일함</li>
 		            </ol>
 		          </div>
 		        </div>
@@ -231,14 +231,14 @@ function pubfiledel(){
 <%-- 						</form:select> --%>
 						
 						
-        				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
+        				<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
 							<form:option value="1" label="파일명"/>
 							<form:option value="2" label="소유자" />
 						</form:select> 
 						
 						
 						<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                    <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
+	                    <form:input style="width: 300px;" path="searchKeyword"  placeholder="검색어를 입력하세요." class="form-control jg"/>
 <!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
 						<span class="input-group-append">							
 							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
@@ -258,12 +258,12 @@ function pubfiledel(){
 	                <table class="table">
 	                  <thead>
 	                    <tr>
-	                        <th style="width: 250px;  text-align: center;">No.</th>
-	                     	<th style="padding-left: 70px; width: 400px; text-align: center;"> 파일명</th> 
-							<th style="text-align: center;"> 소유자 </th>
-							<th style="text-align: center;"> 날짜   </th>
-							<th style="text-align: center;"> 확장자   </th>
-							<th style="text-align: center;"> 용량   </th>
+	                        <th style="width: 250px;  text-align: center;" class="jg">No.</th>
+	                     	<th style="padding-left: 70px; width: 400px; text-align: center;" class="jg"> 파일명</th> 
+							<th style="text-align: center;" class="jg"> 소유자 </th>
+							<th style="text-align: center;" class="jg"> 날짜   </th>
+							<th style="text-align: center;" class="jg"> 확장자   </th>
+							<th style="text-align: center;" class="jg"> 용량   </th>
 <!-- 		                    <th></th> -->
 	                    </tr>
 	                  </thead>
@@ -272,30 +272,30 @@ function pubfiledel(){
 	                      
 	                       <c:forEach items = "${pubfilelist  }" var ="file" varStatus="status">
 								<tr data-pubfileid="${file.pubId }">
-				                 	<td  style="width: 250px;  text-align: center;"><c:out value="${  ((publicFileVo.pageIndex-1) * publicFileVo.pageUnit + (status.index+1))}"/>.</td>
+				                 	<td class="jg" style="width: 250px;  text-align: center;"><c:out value="${  ((publicFileVo.pageIndex-1) * publicFileVo.pageUnit + (status.index+1))}"/>.</td>
 									
 										
-									<td  style="padding-left: 70px; text-align: left; width: 400px;">
+									<td class="jg" style="padding-left: 70px; text-align: left; width: 400px;">
 									<input type="hidden" id="${file.pubId}" name="${file.pubId}">		
 										
 										<img name="link" src="/fileFormat/${fn:toLowerCase(file.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">										 																	
 									 		${file.pubFilename}
 									</td>
 		
-									<td style="text-align: center;"> ${file.memId }</td>
-									<td style="text-align: center;"> ${file.regDt }</td>
-									<td style="text-align: center;"> ${fn:toUpperCase(file.pubExtension) }</td>
+									<td class="jg" style="text-align: center;"> ${file.memId }</td>
+									<td class="jg" style="text-align: center;"> ${file.regDt }</td>
+									<td class="jg" style="text-align: center;"> ${fn:toUpperCase(file.pubExtension) }</td>
 
 									<c:set var="balance" value="${file.pubSize}" />
 									<fmt:parseNumber var="i" type="number" value="${balance}" />
 									
 									<!-- 용량이 1024KB를 초과했을 시 MB로 표시 -->
 									<c:if test="${i >= 1024}">
-										<td style="text-align: center;"> <fmt:formatNumber value="${i/1024}" pattern=".00" /> MB</td>
+										<td class="jg" style="text-align: center;"> <fmt:formatNumber value="${i/1024}" pattern=".00" /> MB</td>
 									</c:if>
 									<!-- 용량이 1024KB 이하일때 KB로 표시 -->
 									<c:if test="${i < 1024}">
-										<td style="text-align: center;"> ${i} KB</td>
+										<td class="jg" style="text-align: center;"> ${i} KB</td>
 									</c:if>
 <!-- 			                        <td style="text-align: center;"> -->
 								</tr>
@@ -308,9 +308,9 @@ function pubfiledel(){
 	              
 	              <br>
 	              <div id="paging" class="card-tools">
-	              	<ul class="pagination pagination-sm" id ="pagingui">
+	              	<ul class="pagination pagination-sm jg" id ="pagingui">
 	              	
-		        		<li  class="page-item" id ="pagenum" >	
+		        		<li  class="page-item jg" id ="pagenum" >	
 		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
 		        		<form:hidden path="pageIndex" />		        		
                     

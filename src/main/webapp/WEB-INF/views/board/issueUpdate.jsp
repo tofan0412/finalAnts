@@ -189,7 +189,7 @@
 						 }
 					  }
 					 
-					 html  =  '<label for="todoId" class="col-sm-2 control-label">일감 </label>'
+					 html  =  '<label for="todoId" class="col-sm-2 control-label jg">일감 </label>'
 				     html +=  '<select name="todoId" id="todoselect"  class ="col-sm-4" required>'		
 				     
 					 for( i = 0 ; i< data.todolist.length; i++){
@@ -275,36 +275,36 @@
 			<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/updateissue" id="updateform"  >	
 			
 				<div class="form-group" >
-					<label for="issueTitle" class="col-sm-2 control-label">이슈종류 </label>
-					<input type="text" name="issueKind" id="kindselect" disabled>
+					<label for="issueTitle" class="col-sm-2 control-label jg">이슈종류 </label>
+					<input type="text" class="jg" name="issueKind" id="kindselect" disabled>
 				</div>	
 				   
-				<div class="form-group" id="todolist" >
+				<div class="form-group jg" id="todolist" >
 				
 				</div>
 					
 					
 				<div class="form-group" >
 				
-					<label for="issueTitle" class="col-sm-2 control-label">이슈제목 </label>
-					<input type="text" name="issueTitle" style="width: 450px;" value="${issueVo.issueTitle }" id="issueTitle">
+					<label for="issueTitle" class="col-sm-2 control-label jg">이슈제목 </label>
+					<input type="text" class="jg" name="issueTitle" style="width: 450px;" value="${issueVo.issueTitle }" id="issueTitle">
 					
 				</div>
 				
-				<div class="form-group" style="width: 90%;">
+				<div class="form-group jg" style="width: 90%;">
 				
-					<label for="todoCont" class="col-sm-2 control-label">이슈 내용</label>
-					<textarea class="control-label"  id="summernote" name="issueCont" id="issueCont">${issueVo.issueCont }</textarea>
+					<label for="todoCont" class="col-sm-2 control-label jg">이슈 내용</label>
+					<textarea class="control-label jg"  id="summernote" name="issueCont" id="issueCont">${issueVo.issueCont }</textarea>
 				</div>
 				
 				
 				<div class="form-group">
-					<label id ="filelabel" for="files" class="col-sm-2 control-label">첨부파일</label>		
+					<label id ="filelabel" for="files" class="col-sm-2 control-label jg">첨부파일</label>		
 					<div id ="file" class="col-sm-10">
 					
 						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
-							<input type="search" name="${files.pubId}" value="${files.pubFilename}" disabled >
-		   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">
+							<input type="search" class="jg" name="${files.pubId}" value="${files.pubFilename}" disabled >
+		   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn jg" style="margin-left: 5px; outline: 0; border: 0;">
 								<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i> 
 							</button><br>
 						</c:forEach>								
@@ -319,7 +319,7 @@
 			
 			<form>
 				<div id="queue">			
-					<div id ="dragdiv"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
+					<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
 				</div>
 				
 				<input id="file_upload" name="file" type="file" multiple="true"/>
@@ -327,7 +327,7 @@
 				<br><br>
 				<div class="card-footer clearfix " >
 					
-					<input type="button" class="btn btn-default float-right" id="updatebtn" value="수정하기">
+					<input type="button" class="btn btn-default float-right jg" id="updatebtn" value="수정하기">
 				</div>
 				
 			</form>
