@@ -310,5 +310,12 @@ public class TodoController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		return "tiles/board/MY_todoList";
 	}
+	
+	@RequestMapping("/getAllTodo")
+	public String getAllTodo(Model model, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<TodoVo> todoList = manageBoardService.getAllTodo(reqId);
+		return "jsonView";
+	}
 
 }

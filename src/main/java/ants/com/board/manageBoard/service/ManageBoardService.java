@@ -117,4 +117,8 @@ public class ManageBoardService {
 	public List<TodoVo> donutChart(String reqId) {
 		return mapper.donutChart(reqId);
 	}
+
+	public List<TodoVo> getAllTodo(String reqId) {
+		return mapper.getAllTodo(reqId);
+	}
 }
