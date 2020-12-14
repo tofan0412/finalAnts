@@ -453,7 +453,7 @@ public class MemberController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return loginView();
+		return "redirect:/member/loginView";
 	}
 	
 	// 알람 on/off
