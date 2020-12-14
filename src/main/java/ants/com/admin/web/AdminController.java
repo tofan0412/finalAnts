@@ -100,7 +100,8 @@ public class AdminController {
 	// 화면 상단 로고 클릭 시 메인 페이지로 이동
 	@RequestMapping("/adMainView")
 	public String adMainView() {
-		return "admin.tiles/admin/adcontentmenu";
+		return "admin.tiles/admin/adcontentmain";
+//		return "redirect:/admin/adMainView";
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////관리자 로그인 끝	
 	
