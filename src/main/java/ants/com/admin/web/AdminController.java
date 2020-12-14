@@ -6,19 +6,16 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +25,6 @@ import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
 import ants.com.member.model.MemberVo;
-import ants.com.member.model.ReqVo;
 import ants.com.member.service.MemberService;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
@@ -383,14 +379,14 @@ public class AdminController {
 		List<IpVo> ipList = adminService.getIpList();
 		
 		model.addAttribute("ipList", ipList);
-		return "";
+		return "admin.tiles/admin/ipList";
 	}
 	
 	// Ip 하나만 가져오기
 	@RequestMapping("/getIp")
 	public String getIp(IpVo ipVo) {
 		IpVo result = adminService.getIp(ipVo);
-		return "";
+		return "admin.tiles/admin/ipDetail";
 	}
 	
 	// Ip 삭제하기
@@ -404,14 +400,14 @@ public class AdminController {
 	@RequestMapping("/updateIp")
 	public String updateIp(IpVo ipVo) {
 		int result = adminService.updateIp(ipVo);
-		return "";
+		return "admin.tiles/admin/ipUpdate";
 	}
 	
 	// Ip 입력하기
 	@RequestMapping("/insertIp")
 	public String insertIp(IpVo ipVo) {
 		int result = adminService.insertIp(ipVo);
-		return "";
+		return "admin.tiles/admin/ipInsert";
 	}
 	
 	@RequestMapping("/getIpCount")
@@ -420,6 +416,12 @@ public class AdminController {
 		int result = adminService.getIpCount();
 		
 		return result;
+	}
+	
+	// ip 메인 화면으로 이동하기
+	@RequestMapping("/ipMain")
+	public String ipMain() {
+		return "admin.tiles/admin/ipMain";
 	}
 	
 }

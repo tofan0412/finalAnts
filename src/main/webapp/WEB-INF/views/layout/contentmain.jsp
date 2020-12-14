@@ -8,34 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script>
-
-	{
-	"version" : "v2",
-	"userId": "U47b00b58c90f8e47428af8b7bddcda3d",
-	"bubbles": [ {
-				"type": "text",
-				"data" : { "description" : "text content which is user input" } } 
-				],
-	"event": "send"
-	}
-
-
-
-	{
-	  "version": "v2",
-	  "userId": "U47b00b58c90f8e47428af8b7bddcda3d",
-	  "sessionId": "34a59946-5dcb-4b72-9b63-a773c659702e",
-	  "bubbles": [
-	    {
-	      "type": "text",
-	      "data" : {
-	        "description" : "description, optional: only description"
-	      }
-	    }
-	  ],
-	  "event": "send"
-	}
-	
 	$(function(){
 		// 메뉴를 선택하면 배경색이 변한다. 
 		$('.selectable').click(function(){
@@ -60,9 +32,9 @@
 	min-height:500px;
 	height:550px; 
 	width:48%;
-	float:left; 
+	float:left;  
 	overflow: auto;
-	
+	 
 	padding-top:2%;
 	padding-bottom:2%;
 	padding-left:4%;
@@ -111,7 +83,7 @@ th{
 									<th>상태(일단 프로젝트번호)</th>
 									<th>완료율</th>
 									<th>생성일</th>
-								</tr> 
+								</tr>
 								<tbody id=memInProjectList> 
 									<c:forEach items="${memInProjectList}" var="project" varStatus="sts" >
 									    <tr "data-privid="${project.reqId}">
@@ -121,7 +93,7 @@ th{
 											 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
 											 	</a>
 											</li>
-											</td> 
+											</td>
 											<td>${project.reqId}</td>
 											<td>${project.percent}</td>
 											<td>${project.regDt}</td>

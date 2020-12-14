@@ -1,28 +1,125 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 <title>상세 보기</title>
 
 <!-- Font Awesome Icons -->
 <!-- Theme style -->
 <style>
-	body{
-	    min-width: 1100px;
-	    min-height: 1100px;
-	}
-	span{
-		margin-left : 150px;
-	}
-	
+body{
+	min-width: 1100px;
+	min-height: 1100px;
+}
+.memvar{
+	margin-left : 150px;
+}
+
+								/* 알람 스타일 */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  vertical-align:middle;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+p {
+	margin:0px;
+	display:inline-block;
+	font-size:15px;
+	font-weight:bold;
+}
+							/* 알람 스타일 */
+
 </style>
-<script>
+<script>	
+
+							/*  알람 토글(on/off) 기능     */
+function toggle(element){
+	
+	// 알람 on
+	if(element.checked == true){
+		document.getElementById('alias').value = 'Y';
+		alert('알람ON'); 
+	// 알람 off
+	}else if(element.checked == false){ 
+		document.getElementById('alias').value = 'N';
+		alert('알람OFF'); 
+	}
+	
+	// 알람 데이터 전송
+	$.ajax({
+		type : "GET",
+        url : "/member/updateAlarm",
+	        data: {  "memId" : $('#memId').val(),
+	        		 "memAlert" : $('#alias').val() }, 
+        dataType : "text", 
+        success : function(data) {
+        },    
+        error : function(error) {
+        }
+	}) 
+} 
+ 
+
 $(document).ready(function(){
-	
+		 
 								/* 기본이미지/사진 선택 해서 보여주기 */
-	
 	
 	pict = document.getElementById('pict').src	// display none 에 숨어있는 사진의 src속성값 가져옴
 												// src="/profileImgView?memId=${memberVo.memId}" 
@@ -49,7 +146,6 @@ $(document).ready(function(){
 		$('#pictureViewImg').attr('src', imge);
 	}
 	
-	
 })
 </script>
 </head>
@@ -73,11 +169,10 @@ $(document).ready(function(){
 						</div>
 						<br>
 					</div>
-	
-					
+
 					<div class="form-group row">
 						<label for="id" class="col-sm-3" style="font-size: 0.9em;">
-							<span style="color: red; font-weight: bold;">*</span>아이디
+							<span class="memvar" style="color: red; font-weight: bold;">*</span>아이디
 						</label>
 						<div class="col-sm-6 input-group-sm">
 							<input class="form-control" name="memId" type="text" class="form-control" id="memId" placeholder="(아이디)" value="${memberVo.memId}" style="border: none" readonly>
@@ -86,7 +181,7 @@ $(document).ready(function(){
 
 					<div class="form-group row">
 						<label for="pwd" class="col-sm-3" style="font-size: 0.9em;">
-							<span style="color: red; font-weight: bold;">*</span>이름
+							<span class="memvar" style="color: red; font-weight: bold;">*</span>이름
 						</label>
 						<div class="col-sm-6 input-group-sm">
 							<input class="form-control" name="memName" type="text" class="form-control" id="memName" placeholder="(이름)" value="${memberVo.memName}" style="border: none" readonly />
@@ -95,7 +190,7 @@ $(document).ready(function(){
 
 					<div class="form-group row">
 						<label for="name" class="col-sm-3" style="font-size: 0.9em;">
-							<span style="color: red; font-weight: bold;">*</span>전화번호
+							<span class="memvar" style="color: red; font-weight: bold;">*</span>전화번호
 						</label>
 						<div class="col-sm-6 input-group-sm">
 							<input class="form-control" name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border: none" readonly />
@@ -104,16 +199,22 @@ $(document).ready(function(){
 
 					<div class="form-group row">
 						<label for="alias" class="col-sm-3" style="font-size: 0.9em;">
-							<span style="color: red; font-weight: bold;"></span>알람
+							<span class="memvar" style="color: red; font-weight: bold;"></span>알람
 						</label>
 						<div class="col-sm-6 input-group-sm">
 							<input class="form-control" name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border: none" readonly>
 						</div>
-					</div>
-
+							
+						<!-- 알람 토글 버튼 -->
+						<label class="switch">											<!-- 알람 토글 기본 y : y아닐땐 off -->
+							<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>
+							<span class="slider round"></span>
+						</label>
+					</div> 
+						
 					<div class="form-group row">
 						<label for="alias" class="col-sm-3" style="font-size: 0.9em;">
-							<span style="color: red; font-weight: bold;"></span>타입
+							<span class="memvar" style="color: red; font-weight: bold;"></span>타입
 						</label>
 						<div class="col-sm-6 input-group-sm">
 							<input name="memType" type="text" class="form-control" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border: none" readonly>

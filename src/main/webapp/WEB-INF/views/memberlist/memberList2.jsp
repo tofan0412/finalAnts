@@ -45,6 +45,10 @@
 	    box-shadow: none;
 	}	
 	
+	.memlistMain{
+		margin: 9px 9px 9px 9px;
+		padding: 9px 9px 9px 9px;
+	}
 </style>
 
 <script type="text/javascript">
@@ -59,8 +63,6 @@ $(function(){
 	
 
 })
-
-
 
 /* pagination 페이지 링크 function */
  function fn_egov_link_page(pageNo){
@@ -93,60 +95,68 @@ $(function(){
 <!-- 	<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 <form:form commandName="memberVo" id="listForm" name="listForm" method="post">
 
-		    <!-- Content Header (Page header) -->
-		    <section class="content-header" style="
-											border-bottom: 1px solid #dee2e6;
-											background: linear-gradient(-10deg, #007bff, lightgoldenrodyellow) fixed;">
-		      <div class="container-fluid">
-		        <div class="row mb-2">
-		          <div class="col-sm-6">
-		            <h1 class="jg">회원 리스트</h1>
-		          </div>
-		          <div class="col-sm-6">
-		            <ol class="breadcrumb float-sm-right">
-		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active">회원 리스트</li>
-		            </ol>
-		          </div>
-		        </div>
-		        
-		        <div class="card-header with-border">
-				<div id="keyword" class="card-tools float-right" style="width: 550px;">
+		<!-- Content Header (Page header) -->
+		<section class="content">
+		<div class="card memlistMain">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="jg">회원 리스트</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right"
+							style="background-color: white">
+							<li class="breadcrumb-item san"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">회원리스트</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+
+			<!-- 검색창라인 -->
+			<div class="card-header  ">
+				<div id="keyword" class="card-tools float-right"
+					style="width: 450px;">
 					<div class="input-group row">
-						<label for="searchCondition" style="visibility:hidden;"></label>
-						
-						
-        				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
-<!-- 						<select class="form-control col-md-3" name="searchType" id="searchType" required> -->
-						
-							<form:option value="0" label="종류"/>
-							<form:option value="1" label="이메일"/>
-							<form:option value="2" label="이름"/>
-							<form:option value="3" label="타입"/>
-						
-						</form:select> 
-						
-						
-							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                        <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
-<!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
-						<span class="input-group-append">							
-							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
+						<label for="searchCondition" style="visibility: hidden;"></label>
+
+
+						<form:select path="searchCondition" cssClass="use"
+							class="form-control col-md-3" style="width: 100px;">
+							<form:option value="1" label="이메일" />
+							<form:option value="2" label="이름" />
+							<form:option value="3" label="타입" />
+						</form:select>
+
+
+						<label for="searchKeyword"
+							style="visibility: hidden; display: none;"></label>
+						<form:input style="width: 300px;" path="searchKeyword"
+							cssClass="txt" placeholder="검색어를 입력하세요." class="form-control" />
+						<!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
+						<span class="input-group-append">
+							<button class="btn btn-primary" type="button" id="searchBtn"
+								onclick="search()">
 								<i class="fa fa-fw fa-search"></i>
 							</button>
 						</span>
+
 						<!-- end : search bar -->
 					</div>
-		        </div>
-		        </div>
-		      </div><!-- /.container-fluid -->
-		    </section>
-		    
-		  
-		    
-		    
-	
-			<section class="content" >
+					<br>
+				</div>
+
+
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		</section>
+
+
+
+
+
+		<section class="content" >
 		      <div class="col-12 col-sm-12">
 			      <div class="card" style="border-radius: inherit; padding : 2px;">
 			      

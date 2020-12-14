@@ -58,7 +58,7 @@
 		                </a>
 		              </li>
 		              <li class="nav-item">
-		                <a href="#" class="nav-link" >
+		                <a href="/admin/ipMain" class="nav-link" >
 						<i class="nav-icon fas fa-network-wired"></i>
 						<p class="selectable">관리자 허용ip 리스트</p>
 		                </a>
