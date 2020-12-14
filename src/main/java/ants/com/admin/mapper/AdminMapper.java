@@ -3,6 +3,7 @@ package ants.com.admin.mapper;
 import java.util.List;
 
 import ants.com.admin.model.AdminVo;
+import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
@@ -51,6 +52,27 @@ public interface AdminMapper {
 
 	//회원삭제
 	public int delmemlist(String memId);
+	
+	// Ip 전체 리스트 가져오기
+	public List<IpVo> getIpList();
+	
+	// 특정 Ip만 가져오기
+	public IpVo getIp(IpVo ipVo);
+	
+	// Ip 삭제하기
+	public int delIp(IpVo ipVo);
+	
+	// Ip 수정하기
+	public int updateIp(IpVo ipvo);
+	
+	// Ip 입력하기
+	public int insertIp(IpVo ipVo);
+	
+	// Ip 카운트 세기
+	public int getIpCount();
+	
+	
+	
 	
 
 	
