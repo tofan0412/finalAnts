@@ -62,6 +62,8 @@ public interface ManageBoardMapper {
 	//
 	public List<TodoVo> todostackchart(String reqId);
 	
+	public List<TodoVo> donutChart(String reqId);
+	
 	
 	
 	// 핫이슈 기능
