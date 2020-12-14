@@ -75,7 +75,8 @@ public interface AdminMapper {
 	// 사용자 로그인 기록 등록하기
 	public int insertMemLoginLog(IpHistoryVo log);
 	
-	
+	// 사용자 로그인 기록 리스트로 불러오기
+	public List<IpHistoryVo> loginLogList();
 
 	
 	

@@ -42,4 +42,9 @@ SELECT COUNT(*)
   FROM IP
 </select>
 
+<select id="loginLogList" resultType="ants.com.common.model.IpHistoryVo">
+SELECT * 
+  FROM IPHISTORY
+ORDER BY IPHIST_DATE DESC
+</select>
 </mapper>
