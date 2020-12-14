@@ -11,7 +11,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js">
 </script>
 	<!-- jQuery, style -->
-	<%@include file="../commonLib.jsp"%>
+	<%@include file="../layout/commonLib.jsp"%>
 	<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 </head>
 <title>관리자 협업관리</title>
