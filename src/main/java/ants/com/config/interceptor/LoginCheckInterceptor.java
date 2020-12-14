@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
-	private static final Logger logger = LoggerFactory.getLogger(LoginCheckInterceptor.class);
 	// Controller 진입 전에 수행하는 메서드
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

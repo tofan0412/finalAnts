@@ -156,8 +156,9 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/member/loginView" />
+			<mvc:exclude-mapping path="/member/logout" />
 			<mvc:exclude-mapping path="/member/mainView" />
-			<mvc:exclude-mapping path="/admin/adloginView" />
+			<mvc:exclude-mapping path="/admin/*" />
 			<bean class="ants.com.config.interceptor.LoginCheckInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

@@ -69,7 +69,9 @@
 		<div class="col-sm-6" style="background-color: white;">
 			<div class="center">
 				<div>
-					<h2 class="jg" style="line-height: 25px;">Ants에 오신 걸 환영합니다 !</h2>
+					<h2 class="jg" style="line-height: 25px;">
+						<a href="/member/mainView" style="color : #0BB783;">Ants</a>에 오신 걸 환영합니다 !
+					</h2>
 					<h4 class="jg">
 						새로 오신 분인가요 ? <a href="/member/memberRegistview" style="color: #0BB783;"><strong>새계정을 만드세요.</strong></a>
 					</h4>
@@ -223,6 +225,12 @@
 	
 	<script>
  	$(document).ready(function(){
+ 		loginAlert = '${flashAlert}';
+ 		if (loginAlert != ''){
+ 			alert(loginAlert);
+ 		}
+ 		
+ 		
  		$("body").keyup(function(e){
  			if(e.keyCode == 13){
  				$('#loginBtn').trigger("click");

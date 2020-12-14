@@ -374,13 +374,15 @@ public class AdminController {
 		}
 	}
 	
-	// Ip 리스트 전체 가져오기
+	// Ip 리스트 전체 가져오기 -> 차단 리스트 또는 허용 리스트
 	@RequestMapping("/getIpList")
 	public String getIpList(Model model) {
 		List<IpVo> ipList = adminService.getIpList();
 		
 		model.addAttribute("ipList", ipList);
-		return "admin.tiles/admin/ipList";
+		
+		return "admin.tiles/admin/ipAcceptedList";
+		
 	}
 	
 	// Ip 하나만 가져오기
@@ -404,11 +406,17 @@ public class AdminController {
 		return "admin.tiles/admin/ipUpdate";
 	}
 	
+	//Ip 입력창으로 이동
+	@RequestMapping("/insertIpView")
+	public String insertIpView() {
+		return "admin.tiles/admin/ipInsert";
+	}
+	
 	// Ip 입력하기
 	@RequestMapping("/insertIp")
 	public String insertIp(IpVo ipVo) {
 		int result = adminService.insertIp(ipVo);
-		return "admin.tiles/admin/ipInsert";
+		return "";
 	}
 	
 	@RequestMapping("/getIpCount")

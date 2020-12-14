@@ -24,15 +24,17 @@
 $(function(){
 	readRecentIpList();
 
+	$(".getIpList").click(function(){
+		$(location).attr("href", "/admin/getIpList");
+	})
 })
-
 
 function readRecentIpList(){
 	$.ajax({
 		url : "/admin/loginLogList", 
 		method : "POST",
 		success : function(res){
-			for(var i = 0 ; i < 5; i++){
+			for(var i = 0 ; i < 10; i++){
 				$('.recentIpList')
 				  .append("<tr><td>"+res[i].memId + "</td>" 
 						+ "<td>" + res[i].ipAddr + "</td>" 
@@ -50,7 +52,7 @@ function readRecentIpList(){
 	
 	<div style="float : left; width : 100%;">
 		<!-- right : 최근 접속 IP 리스트 -->
-		<h5 class="jg">최근 접속 IP 리스트</h5>
+		<h5 class="jg">최근 접속 IP 리스트 (최근 10개 항목)</h5>
 		<table class="recentIpList">
 			<tr style="height : 30px;">
 				<th>사용자</th>
@@ -61,4 +63,3 @@ function readRecentIpList(){
 		</table>
 	</div>
 </div>
-<!-- /.content -->

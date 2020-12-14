@@ -40,12 +40,11 @@ public interface AdminMapper {
 
 	//멤버 리스트
 	public List<MemberVo> memberlist(MemberVo memberVo);
-
+	
 	public int memberlistPagingListCnt(MemberVo memberVo);
 
 	//멤버 리스트 상세보기
 	public MemberVo geteachmemlist(String memId);
-
 	
 	public MemberVo getMember(MemberVo memberVo);
 	
