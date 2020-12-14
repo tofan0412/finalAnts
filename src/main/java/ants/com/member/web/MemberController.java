@@ -462,10 +462,20 @@ public class MemberController {
 		return loginView();
 	}
 	
+	
 	// 화면 상단 로고 클릭 시 메인 페이지로 이동
 	@RequestMapping("/projectMainView")
 	public String projectMainView() {
 		return "tiles/layout/contentmenu";
+	}
+	
+	
+	// 알람 on/off
+	@RequestMapping(path = "/updateAlarm", method = RequestMethod.GET)
+	public String updateAlarm(MemberVo memberVo, Model model) {
+		int dbMember = memberService.updateAlarm(memberVo);
+		model.addAttribute("memberVo", memberVo);
+		return "tiles/member/memberProfile";
 	}
 	
 }

@@ -69,6 +69,18 @@ public class TodoController {
 		return "jsonView";
 	}
 	
+	// 차트 뷰
+	@RequestMapping("/donutChart")
+	public String donutChart(Model model, TodoVo todoVo, HttpSession session ) {
+		String reqId = (String) session.getAttribute("projectId");
+		todoVo.setReqId(reqId);
+		List<TodoVo> donutChartList = manageBoardService.donutChart(reqId);
+		model.addAttribute("donutChartList", donutChartList);
+		int Size = donutChartList.size();
+		model.addAttribute("dsize", Size);
+		return "jsonView";
+	}
+	
 	
 	// 일감 등록 화면 출력 메서드
 	@RequestMapping("/todoInsertView")
