@@ -110,6 +110,7 @@ $(function(){
  }
  
  function search(){
+	 	document.listForm.pageIndex.value = 1;
 	 	document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
 	    document.listForm.submit();
 }
@@ -146,6 +147,7 @@ $(function(){
 		          </div>
 		        </div>
 		        </div>
+		    
 		        
 		        <div class="card-header  ">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
@@ -167,7 +169,8 @@ $(function(){
 						
 						
 						<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                    <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"/>
+	                    <form:input style="width: 300px;" path="searchKeyword" cssClass="txt" placeholder="검색어를 입력하세요." class="form-control"
+	                    		/>
 <!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
 						<span class="input-group-append">							
 							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >

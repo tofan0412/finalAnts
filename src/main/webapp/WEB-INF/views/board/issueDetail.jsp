@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,9 +14,7 @@
 <script type="text/javascript">
 $(function(){
 	
-// 	resizeIt();	
-    
-	$('#todoDetail').hide();
+	$('#todoDetaildiv').hide();
 	
 	$("#modissue").on('click', function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/updateissueView?issueId=${issuevo.issueId}');
@@ -43,25 +42,37 @@ $(function(){
 	
 	// issue에서 뒤로가기
 	$(document).on('click','#back', function(){
-		
-		window.history.back();
+		if('${categoryId}' =='3'){ // 프로젝트 내 이슈글		
+			$("#listform").attr("action", "${pageContext.request.contextPath}/projectMember/issuelist");
+			listform.submit();			
+		}else if('${categoryId}' == '8'){ // 나의 이슈글
+			$("#listform").attr("action", "${pageContext.request.contextPath}/projectMember/myissuelist");
+			listform.submit();						
+		}else if('${categoryId}'=='9'){ // 나의 북마크
+			$("#listform").attr("action", "${pageContext.request.contextPath}/bookmark/getallbookmark");
+			listform.submit();						
+		}
+// 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/issuelist?searchCondition=${searchCondition}&searchKeyword=${searchKeyword }&issueKind=${issueKind }&pageIndex=${pageIndex}');
+// 		window.history.back(); 
 	})
 	
 	// todo에서 뒤로가기
 	$(document).on('click','#todoback', function(){
-		$('#todoDetail').hide();
+		$('#todoDetaildiv').hide();
 		$('#detailDiv').show();
 		window.history.back();
 	})
 	
 	// 일감링크
 	$(document).on('click','#todolink', function(){
-		 todoId = $(this).data("todoid")
+		console.log('일감 링크')
+		 todoId = $('#todoId').val()
 		 
-		 $('#todoDetail').show();
+		 $('#todoDetaildiv').show();
 		 $('#detailDiv').hide();
+		console.log('일감 링크')
 			
-		 todoDetail(todoId)
+// 		 todoDetail(todoId)
 	})
 	
 	// 댓글 작성
@@ -69,6 +80,7 @@ $(function(){
 		replyinsert();
 	})
 	
+	// 댓글 작성하기 삭제 버튼
 	$('#replydiv').on('click','#replydelbtn', function(){
 		var someid = $(this).prev().val();
 		var replyid = $(this).prev().prev().val();
@@ -140,10 +152,7 @@ function todoDetail(todoId) {
 		},
 		success : function(data) {
 			console.log(data)
-			
-			$('#todoDetail').show();
-			$('#detailDiv').hide();
-			
+
 			$("#todoTitle").html(data.todoVo.todoTitle);
 			$("#todoCont").html(data.todoVo.todoCont);
 			$("#memId").html(data.todoVo.memId);
@@ -269,16 +278,35 @@ function saveMsg(){
 
 </head>
 
-<%-- <%@include file="./issuecontentmenu.jsp"%> --%>
-<%@include file="../layout/contentmenu.jsp"%>
+<!-- 이슈메뉴에서만 include -->
+<c:if test="${categoryId == 3 }">
+	<%@include file="../layout/contentmenu.jsp"%>
+</c:if>
 
-<body>
-
-<div class="col-12 col-sm-9">
+<div class="col-12 col-sm-12">
 	<div class="card card-teal ">
 	  <!-- 이슈 상세보기 -->
 	  <div class="card-body" id="detailDiv">
-<!-- 		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
+			
+			<form id="listform" action="${pageContext.request.contextPath}/projectMember/issuelist" method="post">
+			    <input type="hidden" value="${searchCondition }" name="searchCondition">
+			    <input type="hidden" value="${searchKeyword }" name="searchKeyword">
+			    <input type="hidden" value="${issueKind }" name="issueKind">
+			    <input type="hidden" value="${pageIndex }" name="pageIndex">
+			</form>
+			
+<%-- 			${searchCondition }, --%>
+<%-- 			${searchKeyword }, --%>
+<%-- 			${issueKind }, --%>
+<%-- 			${pageIndex } --%>
+			
+			<!-- 북마크, 내가작성한 이슈일 경우 프로젝트명을 찍어주기위함 -->
+			<c:if test="${categoryId == 8 or categoryId == 9}">
+				<c:set var="projectNAME" value="${issuevo.proName}"></c:set>
+				<h1 class="jg">${projectNAME}</h1> 
+				<hr><br>
+			</c:if>
+			
 			<h3>협업이슈 상세내역</h3>
 			<br>
 			<div class="form-group">
@@ -294,7 +322,7 @@ function saveMsg(){
 			<div class="form-group">
 				<label for="memid" class="col-sm-2 control-label">작성자</label>
 				<label id ="memid" class="control-label">${issuevo.memName }</label> 
-
+			</div>
 
 			<div class="form-group">
 				<label for="regDt" class="col-sm-2 control-label">작성일</label>
@@ -328,8 +356,14 @@ function saveMsg(){
 					</c:if>
 					
 					<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
-									
-						<a href="${cp }/file/publicfileDown?pubId=${files.pubId}"><input id ="files${vs.index}"  type="button" class="btn btn-default" name="${files.pubId}" value="${files.pubFilename} 다운로드" ></a>
+															 					
+						<a href="${cp }/file/publicfileDown?pubId=${files.pubId}">
+							<button id ="files${vs.index}" class="btn btn-default" name="${files.pubId}">
+								<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
+								 ${files.pubFilename} 다운로드
+							</button>
+						
+						</a>
 						<br>
 					</c:forEach>
 				</div>
@@ -381,14 +415,12 @@ function saveMsg(){
 					</div>
 				</div>
 			</form>
-            
-
 	    </div>
-	    <!-- 이슈 상세보기 끝-->
-	    
-	    
+		<!-- 이슈 상세보기 끝-->  
+	
+	
 	    <!-- 일감 상세보기 -->
-	    <div id="todoDetail" class="card-body">
+	    <div id="todoDetaildiv" class="card-body">
 	    
 	    	<h3>일감 상세보기</h3><br>
 		
@@ -408,8 +440,7 @@ function saveMsg(){
 			</div>
 			
 			<div class="form-group">
-				<label for="todoImportance" class="col-sm-2 control-label">우선순위</label>
-				
+				<label for="todoImportance" class="col-sm-2 control-label">우선순위</label>				
 				<label class="control-label" id="todoImportance"></label>
 			</div>
 			
@@ -428,18 +459,11 @@ function saveMsg(){
 			</div>
 		
 		</div>
-	    
-	          
 	   </div>
 	   <!-- 일감 상세보기   끝-->
-	   
-	
-	   
+
+
+
 </div>
 
-
-
-
-
-</body>
 </html>

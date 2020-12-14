@@ -21,7 +21,7 @@
 						                                vote_status, category_id, req_id, b.mem_name, a.mem_id, (to_char(vote_deadline, 'YYYYMMDDHH24MI') - to_char(sysdate, 'YYYYMMDDHH24MI')) as  remain
 						                         from vote a, member b
 						                         where a.mem_id = b.mem_id
-						                           and a.req_id = 1
+						                           and a.req_id = #{reqId}
 						                           and a.del = 'N'
 						                           and a.vote_status ='ing'
 						                          order by remain)             
@@ -32,7 +32,7 @@
 						                                vote_status, category_id, req_id, b.mem_name, a.mem_id, (to_char(vote_deadline, 'YYYYMMDDHH24MI') - to_char(sysdate, 'YYYYMMDDHH24MI')) as  remain
 						                         from vote a, member b
 						                         where a.mem_id = b.mem_id
-						                           and a.req_id = 1
+						                           and a.req_id = #{reqId}
 						                           and a.del = 'N'
 						                           and a.vote_status ='finish'
 						                           order by remain desc)) 

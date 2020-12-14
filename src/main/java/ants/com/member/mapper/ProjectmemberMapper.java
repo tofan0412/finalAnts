@@ -18,8 +18,8 @@ public interface ProjectmemberMapper {
 	// 해당 프로젝트 이슈리스트
 	public List<IssueVo> issuelist(IssueVo issueVo);
 	
-	// 나의 이슈리스트
-	public List<IssueVo> myissuelist(IssueVo issueVo);
+	// 해당 프로젝트의 이슈 개수
+	public int issuePagingListCnt(IssueVo issueVo);
 	
 	// 해당 이슈
 	public IssueVo geteachissue(String issueId);
@@ -35,9 +35,10 @@ public interface ProjectmemberMapper {
 	
 	// 이슈게시글 삭제
 	public int delissue(String issueId);
+		
 	
-	// 해당 프로젝트의 이슈 개수
-	public int issuePagingListCnt(IssueVo issueVo);
+	// 나의 이슈리스트
+	public List<IssueVo> myissuelist(IssueVo issueVo);
 	
 	// 내가 작성한 이슈 개수
 	public int myissuePagingListCnt(IssueVo issueVo);
