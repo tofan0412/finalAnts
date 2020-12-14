@@ -301,6 +301,7 @@ public class TodoController {
 	public String getAllTodo(Model model, HttpSession session) {
 		String reqId = (String) session.getAttribute("projectId");
 		List<TodoVo> todoList = manageBoardService.getAllTodo(reqId);
+		model.addAttribute("todoList", todoList);
 		return "jsonView";
 	}
 
