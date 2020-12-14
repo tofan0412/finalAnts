@@ -223,6 +223,9 @@ $(function(){
 				<ul class="nav nav-tabs" id="custom-tabs-three-tab">
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-home-tab"
+						href="${pageContext.request.contextPath}/project/outlineView">개요</a></li>
+					<li class="nav-item"><a class="nav-link"
+						id="custom-tabs-three-home-tab"
 						href="${pageContext.request.contextPath}/todo/todoList">일감</a></li>
 					<li class="nav-item"><a class="nav-link"
 						id="custom-tabs-three-gantt-tab" href="${pageContext.request.contextPath }/ganttView">간트</a>
