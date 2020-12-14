@@ -11,7 +11,15 @@ public class ProjectVo {
 	private String percent;
 	private String regDt;
 	private String del;
+	private String endDt;
+	private String elepsedTime;
 	
+	public String getEndDt() {
+		return endDt;
+	}
+	public void setEndDt(String endDt) {
+		this.endDt = endDt;
+	}
 	public String getDel() {
 		return del;
 	}
@@ -48,10 +56,18 @@ public class ProjectVo {
 	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
+	public String getElepsedTime() {
+		return elepsedTime;
+	}
+	public void setElepsedTime(String elepsedTime) {
+		this.elepsedTime = elepsedTime;
+	}
 	@Override
 	public String toString() {
 		return "ProjectVo [reqId=" + reqId + ", memId=" + memId + ", proName=" + proName + ", percent=" + percent
-				+ ", regDt=" + regDt + "]";
+				+ ", regDt=" + regDt + ", del=" + del + ", endDt=" + endDt + ", elepsedTime=" + elepsedTime + "]";
 	}
+	
+	
 
 }

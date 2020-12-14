@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -90,7 +92,7 @@ text-align: right;
 <%@include file="../layout/contentmenu.jsp"%>
 					<h4 style="margin-left: 50px;">${projectVo.proName}</h4>
 					 <br><br>
-                <div class="row" style="width: 65%;  float:left;">
+                	<div class="row" style="width: 65%;  float:left;">
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline; width:100px;height:100px;">
                     <canvas width="100" height="100"></canvas>
@@ -101,14 +103,14 @@ text-align: right;
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline;width:100px;height:100px;">
                     <canvas width="100" height="100"></canvas>
-                    <input type="text" class="knob" value="90" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    <input type="text" class="knob" value="${pro.percent}" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
                     <div class="knob-label">progress</div>
                   </div>
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline;width:100px;height:100px;">
                     <canvas width="100" height="100"></canvas>
-                    <input type="text" class="knob" value="50" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    <input type="text" class="knob" value="${pro.elepsedTime }" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
                     <div class="knob-label">Time elapsed</div>
                   </div>
@@ -166,7 +168,7 @@ text-align: right;
                       <td>시작일</td>
                       <td></td>
                       <td class="dayt">
-                        2020-12-14
+                        ${pro.regDt }
                       </td>
                       <td></td>
                     </tr>
@@ -175,7 +177,7 @@ text-align: right;
                       <td>종료일</td>
                       <td></td>
                         <td class="dayt">
-                        2021-05-09
+                        ${pro.endDt }
                       </td>
                       <td></td>
                     </tr>
@@ -184,7 +186,7 @@ text-align: right;
                       <td>Day</td>
                       <td></td>
                         <td class="dayt">
-                        1
+                        ${pro.elepsedTime }
                       </td>
                       <td></td>
                     </tr>
@@ -197,24 +199,14 @@ text-align: right;
                     <ul class="users-list clearfix">
                       <li>
                         <img src="../userprofile/user-0.png" alt="User Image">
-                        <span class="users-list-date">test</span>
+                        <span class="users-list-date">PL : ${req.plId }</span>
                       </li>
-                      <li>
-                         <img src="../userprofile/user-1.png" alt="User Image">
-                        <span class="users-list-date">test</span>
-                      </li>
-                      <li>
-                         <img src="../userprofile/user-2.png" alt="User Image">
-                        <span class="users-list-date">test</span>
-                      </li>
-                      <li>
-                         <img src="../userprofile/user-3.png" alt="User Image">
-                        <span class="users-list-date">test</span>
-                      </li>
+                      <c:forEach items="${promem }" var="pro" varStatus="sts">
                       <li>
                          <img src="../userprofile/user-4.png" alt="User Image">
-                        <span class="users-list-date">test</span>
+                        <span class="users-list-date">${pro.memId }</span>
                       </li>
+                      </c:forEach>
                     </ul>
                     <!-- /.users-list -->
               		

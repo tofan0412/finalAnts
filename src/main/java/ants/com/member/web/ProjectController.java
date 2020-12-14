@@ -23,6 +23,7 @@ import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.model.ReqVo;
 import ants.com.member.service.ProjectService;
+import ants.com.member.service.ProjectmemberService;
 import ants.com.member.service.ReqService;
 
 @RequestMapping("/project")
@@ -31,6 +32,7 @@ public class ProjectController {
 
 	@Resource(name = "projectService")
 	private ProjectService projectService;
+	
 
 	@Resource(name = "reqService")
 	private ReqService reqService;
@@ -166,8 +168,15 @@ public class ProjectController {
 		String reqId = (String) session.getAttribute("projectId");
 		ReqVo dbreqvo = reqService.getoutlinereq(reqId);
 		ProjectVo dbprojectvo = projectService.getoutlinepro(reqId);
+		List<ProjectMemberVo>dbpromemvo = projectService.getoutlinepromem(reqId);
 		model.addAttribute("req", dbreqvo);
 		model.addAttribute("pro", dbprojectvo);
+		model.addAttribute("promem", dbpromemvo);
+		//파일
+		//투표율
+		//이슈답글용
+		//건의사항처리율
+		
 		return "tiles/layout/outline";
 	}
 }
