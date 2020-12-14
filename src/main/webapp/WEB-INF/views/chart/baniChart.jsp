@@ -127,7 +127,7 @@ function donutChart() {
           <div style="width: 80%;">
            
             <!-- STACKED BAR CHART -->
-            <div class="card card-success">
+           <div class="card card-success">
               <div class="card-header">
                 <h3 class="card-title">할일 진행도 차트</h3>
 
