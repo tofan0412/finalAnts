@@ -47,7 +47,8 @@ public class TodoController {
 		ProjectVo sessionVo = manageBoardService.projectList(projectVo);
 		session.setAttribute("projectVo", sessionVo);
 		session.setAttribute("projectId", reqId);
-		return "redirect:/todo/todoList";
+//		return "redirect:/todo/todoList";
+		return "tiles/chart/outline";
 	}
 
 	// 차트 뷰
