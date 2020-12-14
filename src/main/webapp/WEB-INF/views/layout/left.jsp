@@ -83,37 +83,37 @@
 				<li class="nav-item has-treeview menu-open">
 		            <a href="#" class="nav-link active">
 		              <i class="nav-icon fas fa-newspaper"></i>
-						<p>전체정보<i class="fas fa-angle-left right"></i></p>
+						<p class="jg">전체정보<i class="fas fa-angle-left right"></i></p>
 		            </a>
 		            <ul class="nav nav-treeview" style="display: block;">
 		              <li class="nav-item">
 		                <a href="/alarmList" class="nav-link">
 		                 <i class="nav-icon fas fa-bullhorn"></i>
-							<p class="selectable">새로운 소식</p>
+							<p class="selectable jg">새로운 소식</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/bookmark/getallbookmark" class="nav-link">
 						<i class="nav-icon fas fa-bookmark"></i>
-						<p class="selectable">내 북마크</p>
+						<p class="selectable jg">내 북마크</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/projectMember/myissuelist" class="nav-link">
 						<i class="nav-icon far fa-lightbulb"></i>
-						<p class="selectable">내가 작성한 이슈</p>
+						<p class="selectable jg">내가 작성한 이슈</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/schedule/MyclendarView" class="nav-link">
 		                <i class="nav-icon far fa-calendar-alt"></i>
-						<p class="selectable">개인 캘린더</p>
+						<p class="selectable jg">개인 캘린더</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/privatefile/privatefileView" class="nav-link">
 		                <i class="nav-icon fas fa-folder-open"></i>
-						<p class="selectable">내 파일함</p>
+						<p class="selectable jg">내 파일함</p>
 		                </a>
 		              </li>
 		              
@@ -124,29 +124,29 @@
 					<c:choose>
 						<c:when test="${SMEMBER.memType eq 'PM' }">
 							<a href="#"	class="nav-link active"><i class="nav-icon fa fa-check"></i>
-								<p>요구사항공간<i class="fas fa-angle-left right"></i></p>
+								<p class="jg">요구사항공간<i class="fas fa-angle-left right"></i></p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
 									<a href="/req/reqList" class="nav-link"><i class=" nav-icon fas fa-clipboard-list"></i>
-										<p>요구사항정의서 관리</p>
+										<p class="jg">요구사항정의서 관리</p>
 									</a>
 								</li>
 								<li class="nav-item">
 									<a href="/req/reqInsertView" class="nav-link"><i	class="nav-icon fa fa-plus-square"></i>
-										<p>요구사항정의서  생성하기</p>
+										<p class="jg">요구사항정의서  생성하기</p>
 									</a>
 								</li>
 							</ul>	
 						</c:when>
 						<c:when test="${SMEMBER.memType ne 'PM' }">
 							<a href="#"	class="nav-link active"><i class="nav-icon fa fa-check"></i>
-								<p>협업공간<i class="fas fa-angle-left right"></i></p>
+								<p class="jg">협업공간<i class="fas fa-angle-left right"></i></p>
 							</a>	
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
 									<a href="#" class="nav-link"><i	class="nav-icon fa fa-plus-square"></i>
-										<p class="selectable mkPjtBtn">프로젝트  생성하기</p>
+										<p class="selectable mkPjtBtn jg">프로젝트  생성하기</p>
 									</a>
 								</li>
 							</ul>
@@ -160,16 +160,18 @@
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>참여중인 프로젝트<i class="fas fa-angle-left right"></i></p>
+							<p class="jg">참여중인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
 							
 					    <ul class="nav nav-treeview" style="display: block;">
 					    	<c:forEach items="${memInProjectList}" var="project">
-						    	<li class="nav-item">
-									<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-								 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
-								 	</a>
-								</li>
+					    		<c:if test="${project.memId != SMEMBER.memId }">
+							    	<li class="nav-item">
+										<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
+									 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
+									 	</a>
+									</li>
+								</c:if>
 							</c:forEach>
 						</ul>
 					</li>
@@ -179,15 +181,17 @@
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
+							<p class="jg">내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
 					    <ul class="nav nav-treeview" >
 					    	<c:forEach items="${plInProjectList}" var="project">
-						    	<li class="nav-item">
-									<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
-								 	</a>
-								</li>
+					    		<c:if test="${project.proName != '' and project.proName != null}">
+							    	<li class="nav-item">
+										<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
+									 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+									 	</a>
+									</li>
+								</c:if>
 							</c:forEach>
 						</ul>
 					</li>
@@ -197,15 +201,17 @@
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>프로젝트관리<i class="fas fa-angle-left right"></i></p>
+							<p class="jg">프로젝트관리<i class="fas fa-angle-left right"></i></p>
 						</a>
 					    <ul class="nav nav-treeview" >
 					    	<c:forEach items="${pmInProjectList}" var="project">
-						    	<li class="nav-item">
-									<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
-								 	</a>
-								</li>
+					    		<c:if test="${project.proName != '' and project.proName != null}">
+							    	<li class="nav-item">
+										<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}" >
+									 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+									 	</a>
+									</li>
+								</c:if>
 							</c:forEach>
 						</ul>
 					</li>
@@ -216,7 +222,7 @@
 					<li class="nav-item has-treeview menu-close">
 			            <a href="#" class="nav-link">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>참여중인 프로젝트가 없습니다</p>
+							<p class="jg">참여중인 프로젝트가 없습니다</p>
 						</a>
 				 </c:if>
 			</ul>

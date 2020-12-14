@@ -69,7 +69,7 @@ public class AdminController {
 //				return "admin.tiles/admin/adcontentmenu";
 				return "redirect:/admin/adMainView";
 		} else {
-			return "redirect:/member/loginView";
+			return "redirect:/admin/adloginView";
 		}
 
 	}

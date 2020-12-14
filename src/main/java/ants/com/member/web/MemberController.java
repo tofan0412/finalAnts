@@ -38,6 +38,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import ants.com.admin.service.AdminService;
+import ants.com.board.memBoard.model.ScheduleVo;
+import ants.com.board.memBoard.service.memBoardService;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
@@ -61,6 +63,8 @@ public class MemberController {
 	@Resource(name="adminService")
 	private AdminService adminService;
 	
+	@Resource(name = "memBoardService")
+	private memBoardService memBoardService;
 	
 	@RequestMapping("/mainView")
 	public String mainView() {
@@ -112,6 +116,13 @@ public class MemberController {
 			List<ProjectVo> proList = projectService.memInProjectList(dbMember.getMemId());
 			if (proList.size() != 0) {
 				session.setAttribute("memInProjectList", proList);
+					
+				// 로그인시 pl-pm 메인페이지에 캘린더 초기값 
+				ScheduleVo scheduleVo = new ScheduleVo();
+				scheduleVo.setReqId(proList.get(0).getReqId());
+				List<ScheduleVo> showCalendar = memBoardService.showCalendar(scheduleVo);
+				logger.debug("showCalendar : {}",showCalendar); 
+				model.addAttribute("showSchedule", showCalendar); 
 			}
 			List<ProjectVo> pro_pL = projectService.plInProjectList(dbMember.getMemId());
 			if(pro_pL != null) {	

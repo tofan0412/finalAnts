@@ -285,6 +285,12 @@ function saveMsg(){
 
 <div class="col-12 col-sm-12">
 	<div class="card card-teal ">
+		<c:if test="${categoryId == 8 or categoryId == 9}">
+			<br>
+			<c:set var="projectNAME" value="${issuevo.proName}"></c:set>
+			<h1 class="jg" style="padding-left:10px;">${projectNAME}</h1> 
+			<hr><br>
+		</c:if>
 	  <!-- 이슈 상세보기 -->
 	  <div class="card-body" id="detailDiv">
 			
@@ -301,64 +307,61 @@ function saveMsg(){
 <%-- 			${pageIndex } --%>
 			
 			<!-- 북마크, 내가작성한 이슈일 경우 프로젝트명을 찍어주기위함 -->
-			<c:if test="${categoryId == 8 or categoryId == 9}">
-				<c:set var="projectNAME" value="${issuevo.proName}"></c:set>
-				<h1 class="jg">${projectNAME}</h1> 
-				<hr><br>
-			</c:if>
 			
-			<h3>협업이슈 상세내역</h3>
+			
+			<h3 class="jg">협업이슈 상세내역</h3>
 			<br>
 			<div class="form-group">
-				<label for="issueKind" class="col-sm-2 control-label">종류</label>
-				<label id ="issueKind" class="control-label"></label> 							
+				<label for="issueKind" class="col-sm-2 control-label jg">종류</label>
+				<label id ="issueKind" class="control-label jg"></label> 							
 			</div>
 			
-			<div class="form-group" id ="todo">
+			<div class="form-group jg" id ="todo">
 				
 			</div>
 			
 
 			<div class="form-group">
-				<label for="memid" class="col-sm-2 control-label">작성자</label>
-				<label id ="memid" class="control-label">${issuevo.memName }</label> 
+				<label for="memid" class="col-sm-2 control-label jg">작성자</label>
+				<label id ="memid" class="control-label jg">${issuevo.memName }</label> 
 			</div>
 
 			<div class="form-group">
-				<label for="regDt" class="col-sm-2 control-label">작성일</label>
-				<label id ="regDt" class="control-label">${issuevo.regDt }</label> 
+				<label for="regDt" class="col-sm-2 control-label jg">작성일</label>
+				<label id ="regDt" class="control-label jg">${issuevo.regDt }</label> 
 			</div>
 	
 			<div class="form-group">
-				<label for="issueTitle" class="col-sm-2 control-label">이슈제목</label>
-				<label id ="issueTitle" class="control-label">${issuevo.issueTitle}</label>
+				<label for="issueTitle" class="col-sm-2 control-label jg">이슈제목</label>
+				<label id ="issueTitle" class="control-label jg">${issuevo.issueTitle}</label>
 			</div>
 
 			<div class="form-group">
-				<label id="issuecont" for="issueCont" class="col-sm-2 control-label">이슈 내용</label>
+				<label id="issuecont" for="issueCont" class="col-sm-2 control-label jg">이슈 내용</label>
 			
 				<c:if test="${issuevo.issueCont == '<p><br></p>'}">
-					[ 내용이 없습니다. ]
+					<label class="jg">[ 내용이 없습니다. ] </label>
 				</c:if>
 				<c:if test="${issuevo.issueCont == null}">
-					[ 내용이 없습니다. ]
+					<label class="jg">[ 내용이 없습니다. ] </label>
 				</c:if>
 				
-				<label id ="issueCont" class="control-label">${issuevo.issueCont }</label>
+				<label id ="issueCont" class="control-label jg">${issuevo.issueCont }</label>
 			</div>	
 			
 
 			<div class="form-group">
-				<label id="filelabel" for="File" class="col-sm-2 control-label">첨부파일</label>
+				<label id="filelabel" for="File" class="col-sm-2 control-label jg">첨부파일</label>
 				<div id = "filediv">
 					<c:if test="${filelist.size() == 0}">
-						[ 첨부파일이 없습니다. ]
+						<label class="jg">	[ 첨부파일이 없습니다. ] </label>
+					
 					</c:if>
 					
 					<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
 															 					
 						<a href="${cp }/file/publicfileDown?pubId=${files.pubId}">
-							<button id ="files${vs.index}" class="btn btn-default" name="${files.pubId}">
+							<button id ="files${vs.index}" class="btn btn-default jg" name="${files.pubId}">
 								<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
 								 ${files.pubFilename} 다운로드
 							</button>
@@ -374,9 +377,9 @@ function saveMsg(){
 			<div class="card-footer clearfix" >
 				
 		 			<c:if test="${issuevo.memId == memId}">
-						<input type= "button" value="삭제하기" id="delissue"  class="btn btn-default float-right" >			
-						<input type= "button" value="수정하기" id ="modissue" class="btn btn-default float-right" style="margin-right: 5px;">
-						<input type= "button" value="목록으로" id ="back" class="btn btn-default float-left" >
+						<input type= "button" value="삭제하기" id="delissue"  class="btn btn-default float-right jg" >			
+						<input type= "button" value="수정하기" id ="modissue" class="btn btn-default float-right jg" style="margin-right: 5px;">
+						<input type= "button" value="목록으로" id ="back" class="btn btn-default float-left jg" >
 					</c:if>
 				
             </div>
@@ -385,7 +388,7 @@ function saveMsg(){
             <form class="form-horizontal" role="form" id ="frm" method="post" action="${pageContext.request.contextPath}/reply/insertreply">	
 				<div class="form-group">
 				<hr>
-					<label for="pass" class="col-sm-2 control-label">댓글</label>
+					<label for="pass" class="col-sm-2 control-label jg">댓글</label>
 					<div class="col-sm-12" id="replydiv">					
 						<c:forEach items="${replylist }" var="replylist">
 							<c:if test= "${replylist.del == 'N'}">								
@@ -395,7 +398,7 @@ function saveMsg(){
 								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">		
 									<input type="hidden" value="${replylist.replyId}">
 									<input type="hidden" value="${replylist.someId}">																							
-									<input id ="replydelbtn" type="button" class="btn btn-default" value ="삭제"/>						
+									<input id ="replydelbtn" type="button" class="btn btn-default jg" value ="삭제"/>						
 								</c:if>		
 												
 							</c:if>		 														
@@ -409,8 +412,8 @@ function saveMsg(){
 						 <input type="hidden" name="categoryId" value="${issuevo.categoryId}">
 						 <input type="hidden" name="reqId" value="${issuevo.reqId }">
 						 <input type="hidden" name="memId" value="${issuevo.memId }">
-							<textarea name = "replyCont" id ="re_con"  ></textarea>&nbsp;<input id="replybtn2" type = "button" class="btn btn-default" value = "댓글작성"><br>
-							<span id="count"> 0</span> &nbsp;자 / 500 자 
+						 <textarea name = "replyCont" id ="re_con"  ></textarea>&nbsp;<input id="replybtn2" type = "button" class="btn btn-default jg" value = "댓글작성"><br>
+						 <span id="count"> 0</span> &nbsp;자 / 300 자 
 							
 					</div>
 				</div>
@@ -422,40 +425,40 @@ function saveMsg(){
 	    <!-- 일감 상세보기 -->
 	    <div id="todoDetaildiv" class="card-body">
 	    
-	    	<h3>일감 상세보기</h3><br>
+	    	<h3 class="jg">일감 상세보기</h3><br>
 		
 			<input type="hidden" id="todoId">
 			<div class="form-group">
-				<label for="todoTitle" class="col-sm-2 control-label">제목</label>
-				<label class="control-label" id="todoTitle"></label>
+				<label for="todoTitle" class="col-sm-2 control-label jg">제목</label>
+				<label class="control-label jg" id="todoTitle"></label>
 			</div>
 			
 			<div class="form-group">
-				<label for="todoCont" class="col-sm-2 control-label">할일</label>
-				<label class="control-label" id="todoCont"></label>
+				<label for="todoCont" class="col-sm-2 control-label jg">할일</label>
+				<label class="control-label jg" id="todoCont"></label>
 			</div>
 			<div class="form-group">
-				<label for="memId" class="col-sm-2 control-label">담당자</label>
-				<label class="control-label" id="memId"></label>
-			</div>
-			
-			<div class="form-group">
-				<label for="todoImportance" class="col-sm-2 control-label">우선순위</label>				
-				<label class="control-label" id="todoImportance"></label>
+				<label for="memId" class="col-sm-2 control-label jg">담당자</label>
+				<label class="control-label jg" id="memId"></label>
 			</div>
 			
 			<div class="form-group">
-				<label for="todoStart" class="col-sm-2 control-label">시작 일</label>
-				<label class="control-label" id="todoStart"></label>
+				<label for="todoImportance" class="col-sm-2 control-label jg">우선순위</label>				
+				<label class="control-label jg" id="todoImportance"></label>
 			</div>
 			
 			<div class="form-group">
-				<label for="todoEnd" class="col-sm-2 control-label">종료 일</label>
-				<label class="control-label" id="todoEnd"></label>
+				<label for="todoStart" class="col-sm-2 control-label jg">시작 일</label>
+				<label class="control-label jg" id="todoStart"></label>
+			</div>
+			
+			<div class="form-group">
+				<label for="todoEnd" class="col-sm-2 control-label jg">종료 일</label>
+				<label class="control-label jg" id="todoEnd"></label>
 			</div>
 			
 			<div class="card-footer clearfix" >
-				<button type="button" class="btn btn-default" id="todoback">뒤로가기</button>					
+				<button type="button" class="btn btn-default jg" id="todoback">뒤로가기</button>					
 			</div>
 		
 		</div>
