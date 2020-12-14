@@ -10,61 +10,78 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+	stackedbarchart();
+  });
+  
+function stackedbarchart() {
+	$.ajax({
+		url : "/todo/stackedbarchart",
+		method : "get",
+		success : function(data) {
+		var num = [];
+		var percent=[];
+		var percent2=[];
+		for(i=0; i<data.size; i++){
+		num.push(data.todoVoList[i].memId);	
+		percent.push(data.todoVoList[i].todoPercent);
+		if(data.todoVoList[i].todoPercent == '0'){
+		percent2.push(100);	
+			
+		}
+		if(data.todoVoList[i].todoPercent != '0'){
+		percent2.push(100 - data.todoVoList[i].todoPercent);				
+		}
+		}
+		var barChartData = {
+				labels : num,
+				 datasets: [
+				        {
+				          label               : '할일 진행도',
+				          backgroundColor     : 'rgba(60,141,188,0.9)',
+				          borderColor         : 'rgba(60,141,188,0.8)',
+				          pointRadius          : false,
+				          pointColor          : '#3b8bba',
+				          pointStrokeColor    : 'rgba(60,141,188,1)',
+				          pointHighlightFill  : '#fff',
+				          pointHighlightStroke: 'rgba(60,141,188,1)',
+				          data                : percent 
+				        },
+				        {
+				          label               : '남은 할일',
+				          backgroundColor     : 'rgba(210, 214, 222, 1)',
+				          borderColor         : 'rgba(210, 214, 222, 1)',
+				          pointRadius         : false,
+				          pointColor          : 'rgba(210, 214, 222, 1)',
+				          pointStrokeColor    : '#c1c7d1',
+				          pointHighlightFill  : '#fff',
+				          pointHighlightStroke: 'rgba(220,220,220,1)',
+				          data                : percent2
+				        }]
+		};
+		var stackedBarChartOptions = {
+			      responsive              : true,
+			      maintainAspectRatio     : false,
+			      scales: {
+			        xAxes: [{
+			          stacked: true,
+			        }],
+			        yAxes: [{
+			          stacked: true
+			        }]
+			      }
+			    };
+		var ctx = document.getElementById('stackedBarChart').getContext('2d');
+		var stackedBarChartData = $.extend(true, {}, barChartData);
+		var stackedBarChart = new Chart(ctx, {
+		      type: 'bar',
+		      data: stackedBarChartData,
+		      options: stackedBarChartOptions
+		    });
+		}
+	});
+}
+		
 	
-    var barChartData = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'test', 'test2', 'test3'],
-      datasets: [
-        {
-          label               : '할일 진행도',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [10, 30, 40, 20, 40, 30, 60, 20, 10, 10] 
-        },
-        {
-          label               : '남은 할일',
-          backgroundColor     : 'rgba(210, 214, 222, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [90, 70, 60, 80, 60, 70, 40, 80, 90, 90]
-        },
-      ]
-    }
-
-
-  
-    var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
-    var stackedBarChartData = $.extend(true, {}, barChartData)
-
-    var stackedBarChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      scales: {
-        xAxes: [{
-          stacked: true,
-        }],
-        yAxes: [{
-          stacked: true
-        }]
-      }
-    }
-
-    var stackedBarChart = new Chart(stackedBarChartCanvas, {
-      type: 'bar',
-      data: stackedBarChartData,
-      options: stackedBarChartOptions
-    })
-  })
-  
- 
 </script>
 <body>
 <%@include file="../layout/contentmenu.jsp"%>
