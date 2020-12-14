@@ -165,11 +165,13 @@
 							
 					    <ul class="nav nav-treeview" style="display: block;">
 					    	<c:forEach items="${memInProjectList}" var="project">
-						    	<li class="nav-item">
-									<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-								 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
-								 	</a>
-								</li>
+					    		<c:if test="${project.memId != SMEMBER.memId }">
+							    	<li class="nav-item">
+										<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
+									 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
+									 	</a>
+									</li>
+								</c:if>
 							</c:forEach>
 						</ul>
 					</li>
@@ -183,11 +185,13 @@
 						</a>
 					    <ul class="nav nav-treeview" >
 					    	<c:forEach items="${plInProjectList}" var="project">
-						    	<li class="nav-item">
-									<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
-								 	</a>
-								</li>
+					    		<c:if test="${project.proName != '' and project.proName != null}">
+							    	<li class="nav-item">
+										<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
+									 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+									 	</a>
+									</li>
+								</c:if>
 							</c:forEach>
 						</ul>
 					</li>
@@ -201,11 +205,13 @@
 						</a>
 					    <ul class="nav nav-treeview" >
 					    	<c:forEach items="${pmInProjectList}" var="project">
-						    	<li class="nav-item">
-									<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-								 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
-								 	</a>
-								</li>
+					    		<c:if test="${project.proName != '' and project.proName != null}">
+							    	<li class="nav-item">
+										<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}" >
+									 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+									 	</a>
+									</li>
+								</c:if>
 							</c:forEach>
 						</ul>
 					</li>
