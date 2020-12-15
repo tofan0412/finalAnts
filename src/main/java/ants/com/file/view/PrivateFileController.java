@@ -77,14 +77,17 @@ public class PrivateFileController {
 		int totCnt = fileService.privatefilelistCount(privatefileVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-		logger.debug("totCnt : {}", totCnt);
+		
+		// 개인파일함 총 사용량
+		String totalSize = fileService.privatefiletotalSize(privatefileVo);
+		model.addAttribute("totalSize", totalSize);
 		
 		return "tiles/privatefile/privatefileView";
 	}
 	
 	
 	
-	// 파일등록	(파일 버튼 추가/제거 버전)
+	// 파일등록(파일 버튼 추가/제거 버전)
 	@RequestMapping("/privateInsert0")
 	public String todoView(PrivateFileVo privatefileVo, BindingResult br, @RequestPart(value="privFilepath", required=false)  List<MultipartFile> file, Model model, HttpSession session) {
 		
@@ -109,10 +112,9 @@ public class PrivateFileController {
 	//				return "main.tiles/member/memberRegist";
 				}
 				
-				String filekey = UUID.randomUUID().toString();
-				
-				/*+ filekey + "\\"*/
-				Filepath = "C:\\upload\\" + file.get(i).getOriginalFilename();
+				String filename = UUID.randomUUID().toString();
+				String extension = file.get(i).getOriginalFilename().split("\\.")[1];
+				Filepath = "C:\\upload\\" + filename +"."+extension;
 				Filename = file.get(i).getOriginalFilename();
 				File uploadFile = new File(Filepath);
 				Filesize = String.valueOf(file.get(i).getSize());
@@ -207,8 +209,11 @@ public class PrivateFileController {
 				double size = ((double) files.get(i).getSize()/1024);				
 				double filesize = Math.round(size *100)/100.0;
 				
-				String Filepath = "C:\\upload\\" + files.get(i).getOriginalFilename();
-				String Filename = files.get(i).getOriginalFilename();
+				
+				String filename = UUID.randomUUID().toString();
+				String extension = files.get(i).getOriginalFilename().split("\\.")[1];
+				String Filepath = "C:\\upload\\" + filename +"."+extension;
+				String realfilename = files.get(i).getOriginalFilename();
 				
 				File uploadFile = new File(Filepath);
 				try {
@@ -217,7 +222,7 @@ public class PrivateFileController {
 				}
 				
 				privateVo.setPrivFilepath(Filepath);
-				privateVo.setPrivFilename(Filename);
+				privateVo.setPrivFilename(realfilename);
 				privateVo.setPrivSize(String.valueOf(filesize));
 				
 				list.add(privateVo);

@@ -39,12 +39,6 @@
 /* 		 text-align: center; */
 		 width:auto; float:left; margin:0 auto; text-align:center;"
 		 
-	}
-	#searchBtn {
-	    color: #fff;
-	    background-color: #007bffab;
-	    border-color: #007bff;
-	    box-shadow: none;
 	}	
 	
 </style>
@@ -174,7 +168,7 @@ $(function(){
 	                    <form:input style="width: 300px;" path="searchKeyword"  placeholder="검색어를 입력하세요." class="form-control jg"/>
 <!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
 						<span class="input-group-append">							
-							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
+							<button class="btn btn-default" type="button" id="searchBtn" onclick="search()" >
 								<i class="fa fa-fw fa-search"></i>
 							</button>
 						</span>

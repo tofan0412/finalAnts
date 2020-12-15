@@ -14,24 +14,30 @@
 			     <if test="searchKeyword != null and searchKeyword != ''">
 					<choose>	
 						<when test="searchCondition == 1">
+							AND PRIV_FILENAME LIKE '%' || #{searchKeyword} || '%'
 						</when>
 						<when test="searchCondition == 2">
-							AND PRIV_FILENAME LIKE '%' || #{searchKeyword} || '%'
 						</when>
 					</choose>
 				</if>
-			     ORDER BY REG_DT DESC) a
+			     ORDER BY REG_DT DESC, PRIV_ID DESC) a
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
 	</select>
 	<!-- WHERE rownum <= #{lastIndex}) c WHERE rnum > #{firstIndex} -->
-	 
-	    
 	
 	<!-- 파일목록 갯수  -->
 	<select id="privatefilelistCount" parameterType="ants.com.file.model.PrivateFileVo" resultType="int">
 		SELECT COUNT(*)
 		  FROM privatefile
 		 WHERE MEM_ID = #{memId}
+	</select>
+	
+	<!-- 개인파일함 해당 사용자 사용량  -->
+	<select id="privatefiletotalSize" parameterType="ants.com.file.model.PrivateFileVo" resultType="String">
+		select sum(priv_size)
+		from privatefile
+		where mem_id = #{memId}
+		group by mem_id
 	</select>
 	
 	

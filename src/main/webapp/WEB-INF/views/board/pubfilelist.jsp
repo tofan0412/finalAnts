@@ -41,12 +41,6 @@
 /* 		 text-align: center; */
 		 width:auto; float:left; margin:0 auto; text-align:center;"
 		 
-	}
-	#searchBtn {
-	    color: #fff;
-	    background-color: #007bffab;
-	    border-color: #007bff;
-	    box-shadow: none;
 	}	
 	
 	 .contextmenu {
@@ -105,7 +99,6 @@ $(function(){
 	$("#pubfileList tr").on("mousedown", function(e){
 			console.log('click')
 			var pubfileId = $(this).data("pubfileid");
-			var pubfileName = $(this).data("pubfilename");
 			if(event.button == 2){
 			 //Get window size:
 		    var winWidth = $(document).width();
@@ -124,19 +117,17 @@ $(function(){
 		      "top": posY-50
 		    }).show();
 		    id=pubfileId;
-		    name=pubfileName;
+		    
 		    //Prevent browser default contextmenu.
 		    return false;
 			}
-		
-		
-		 $(document).click(function(){
-			    $(".contextmenu").hide();
-		 });
-		 
+	 
 	});
 		
-	
+
+	 $(document).click(function(){
+		    $(".contextmenu").hide();
+	 });
 
 	
 
@@ -151,6 +142,7 @@ function pubfiledown(){
 // 파일 복사
 function pubfilecopy(){
    	document.location = "/privatefile/copyfile?pubId="+id;
+   	alert('내 파일함으로 복사되었습니다.')
 }
 
 
@@ -201,21 +193,21 @@ function pubfilecopy(){
 		      <div class="col-12 col-sm-12">
 			      <div class="card" style="border-radius: inherit; padding : 2px;">
 			      
-			    <div class="container-fluid">
-		        <div class="row mb-2">
-		         <br>
-		          <div class="col-sm-6">
-		          <br>
-		            <h1 class="jg" style=" padding-left : 10px;">파일함</h1>
-		          </div>
-		          <div class="col-sm-6">
-		            <ol class="breadcrumb float-sm-right"  style="background : white">
-		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active jg">파일함</li>
-		            </ol>
-		          </div>
-		        </div>
-		        </div>
+				    <div class="container-fluid">
+				        <div class="row mb-2">
+				         <br>
+				          <div class="col-sm-6">
+				          <br>
+				            <h1 class="jg" style=" padding-left : 10px;">파일함</h1>
+				          </div>
+				          <div class="col-sm-6">
+				            <ol class="breadcrumb float-sm-right"  style="background : white">
+				              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
+				              <li class="breadcrumb-item active jg">파일함</li>
+				            </ol>
+				          </div>
+				        </div>
+			        </div>
 		        
 		        <div class="card-header  ">
 				<div id="keyword" class="card-tools float-right" style="width: 450px;">
@@ -244,7 +236,7 @@ function pubfilecopy(){
 	                    <form:input style="width: 300px;" path="searchKeyword"  placeholder="검색어를 입력하세요." class="form-control jg"/>
 <!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
 						<span class="input-group-append">							
-							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
+							<button class="btn btn-default" type="button" id="searchBtn" onclick="search()" >
 								<i class="fa fa-fw fa-search"></i>
 							</button>
 						</span>

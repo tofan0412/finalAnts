@@ -36,6 +36,9 @@ public interface FileMapper {
 	
 	// 파일 갯수
 	public int privatefilelistCount(PrivateFileVo privatefileVo);
+
+	// 해당 사용자 개인파일함 총 용량
+	public String privatefiletotalSize(PrivateFileVo privatefilevo);
 	
 	// 파일등록
 	public int privateInsert(List<PrivateFileVo> list);

@@ -62,6 +62,11 @@ public class FileService {
 	public int privatefilelistCount(PrivateFileVo privatefileVo) {
 		return mapper.privatefilelistCount(privatefileVo);
 	}
+	
+	// 개인파일함 총 사용량
+	public String privatefiletotalSize(PrivateFileVo privatefilevo) {
+		return mapper.privatefiletotalSize(privatefilevo);
+	}
 
 	// 파일 등록
 	public int privateInsert(List<PrivateFileVo> list) {
