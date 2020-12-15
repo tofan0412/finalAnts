@@ -9,7 +9,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
+<head>	
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@include file="/WEB-INF/views/layout/fonts.jsp"%>
  
@@ -123,17 +123,15 @@ th{
 #calendar { 
 	width:700px;
 	padding-left: 6%; 
-}    
+} 	
 .fc-sat, .fc-sun, .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri {width:10px;} 
 </style>
 </head>
-	 
+	 	
 <body>
 <div>
 	<div class="top" style="margin-left:1.5%;"><h4>프로젝트 현황</h4>
-	(이름 클릭하면 해당 프로젝트 정보 가져오게 할것임..예정.. <br>
-	 프로젝트는 들어가기 버튼으로..)
-		<nav class="mt-2">
+		<div class="mt-2" style="padding-top:7%;">
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 				<!-- memType이 MEM일때  -->
 				 <c:if test="${not empty memInProjectList}">
@@ -156,7 +154,7 @@ th{
 										    <tr "data-privid="${project.reqId}">
 												<td>
 												<li class="nav-item">
-													<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
+													<a class="nav-link" href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}">
 												 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
 												 	</a>
 												</li> 
@@ -209,7 +207,7 @@ th{
 										    <tr "data-privid="${project.reqId}">
 												<td>
 												<li class="nav-item">
-													<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
+													<a class="nav-link" href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}">
 												 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
 												 	</a>
 												</li>
@@ -259,11 +257,11 @@ th{
 										    <tr "data-privid="${project.reqId}">
 												<td>
 												<li class="nav-item">
-													<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
+													<a class="nav-link" href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}">
 												 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
 												 	</a> 
 												</li>
-												</td> 
+												</td> 	
 												<td>${project.reqId}</td>
 												<td>${project.percent}</td>
 												<td>${fn:substring(project.regDt,0,10)}</td>
@@ -299,12 +297,49 @@ th{
 				 </c:if>
 				 
 			</ul>
-		</nav>
+		</div>
 	</div>
 	
 	
+	
+	
+			
 	<!-- 위 오른쪽 공지사항 -->
-	<div class="top" style="margin-left:1%;"><h4>공지사항</h4><br>
+	<div class="top" style="margin-left:1%;"><h4>공지사항</h4>
+		<div style="padding-top:7%; width:100%; height:100%">
+			<table class="table">
+				<thead>					
+					<tr>				
+						<th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
+						<th  style="padding-left: 30px; text-align: center;" class="jg">  이슈 제목</th> 
+						<th style="text-align: center;" class="jg">   작성자 </th>
+						<th style="text-align: center;" class="jg">   날짜   </th>
+					</tr>
+				</thead>
+			<tbody>			
+				<c:forEach items = "${issuelist }" var ="issue" varStatus="status" end="4">
+					<tr>		
+						<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
+							<c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.
+						</td>
+						<td class="jg"  style="padding-left: 30px; text-align: center;">
+							<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${reqId}"> ${issue.issueTitle }</a> 
+						</td>
+								
+						<td class="jg" style="text-align: center;"> ${issue.memId }</td>
+						<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
+							
+						<c:if test="${issue.issueKind == 'issue'}">
+							<td style="text-align: center;" class="jg"> 이슈</td>										
+						</c:if>
+					</tr>
+				</c:forEach> 
+					<c:if test="${issuelist.size() == 0}">
+						<td colspan="7" style="text-align: center;"  class="jg"><br> [ 결과가 없습니다. ] </td>
+					</c:if>
+			</tbody>
+			</table>
+		</div>
 	</div> 
 
 	
