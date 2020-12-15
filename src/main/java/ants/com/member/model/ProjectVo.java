@@ -1,9 +1,5 @@
 package ants.com.member.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-import org.hibernate.validator.constraints.NotBlank;
-
 public class ProjectVo {
 	private String reqId;
 	private String memId;
