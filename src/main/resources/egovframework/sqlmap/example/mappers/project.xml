@@ -64,9 +64,10 @@
 
 	<insert id="insertProject"
 		parameterType="ants.com.member.model.ProjectVo">
-		INSERT INTO PROJECT (REQ_ID,MEM_ID,PRO_NAME,REG_DT)
+		INSERT INTO PROJECT 
+			(REQ_ID,MEM_ID,PRO_NAME,REG_DT)
 		VALUES
-		(#{reqId},#{memId,jdbcType=VARCHAR},#{proName,jdbcType=VARCHAR},SYSDATE)
+			(#{reqId},#{memId,jdbcType=VARCHAR},#{proName,jdbcType=VARCHAR},SYSDATE)
 	</insert>
 
 	<select id="userSearch" parameterType="java.lang.String"
@@ -83,10 +84,9 @@
 
 	<insert id="insertPjtMember"
 		parameterType="ants.com.member.model.ProjectMemberVo">
-		INSERT INTO PROJECTMEMBER (req_id, promem_id, mem_id,
-		promem_status)
-		VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL,
-		#{memId},#{promemStatus})
+		INSERT INTO PROJECTMEMBER 
+			(req_id, promem_id, mem_id, promem_status)
+		VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL, #{memId},#{promemStatus})
 
 	</insert>
 
@@ -96,10 +96,9 @@
 
 		UPDATE PROJECT
 		SET
-		pro_percent =#{percent}
+			pro_percent =#{percent}
 		WHERE
-		req_id
-		=#{reqId}
+			req_id=#{reqId}
 
 	</update>
 
@@ -138,12 +137,12 @@
 	<select id="getoutlinepromem" parameterType="java.lang.String"
 		resultType="ants.com.member.model.ProjectMemberVo">
 		SELECT
-		p.req_id,
-		p.promem_id,
-		m.mem_name as MEM_ID,
-		p.promem_status
+			p.req_id,
+			p.promem_id,
+			m.mem_name as MEM_ID,
+			p.promem_status
 		FROM (select * from member)m,
-		projectmember p
+			projectmember p
 		WHERE m.mem_id = p.mem_id
 		AND req_id = #{reqId}
 		AND PROMEM_STATUS ='IN'
@@ -158,11 +157,24 @@
 	</select>
 	<select id="getoutlinevote" parameterType="java.lang.String"
 		resultType="ants.com.board.vote.model.VoteVo">
-		   select round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)) as votepercent
-						                         from vote a, member b
-						                         where a.mem_id = b.mem_id
-						                           and a.req_id = #{reqId}
-						                           and a.del = 'N'
+		    SELECT round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)) as votepercent
+				FROM vote a, member b
+				WHERE a.mem_id = b.mem_id
+				AND a.req_id = #{reqId}
+				AND a.del = 'N'
 			
+	</select>
+	<select id="getoutlinereply" parameterType="java.lang.String"
+		resultType="ants.com.board.memBoard.model.ReplyVo">
+		SELECT  round(((
+        	SELECT COUNT(distinct(some_id))
+        	FROM   reply where req_id =#{reqId} and del='N'
+        	)/(
+        	SELECT COUNT(issue_id)
+        	from issue where req_id=#{reqId}
+        	and issue_del ='N'
+        	))*100)as replypercent 
+		FROM    dual        
+        
 	</select>
 </mapper>

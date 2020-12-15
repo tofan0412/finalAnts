@@ -166,6 +166,11 @@
 					if ("success" == res){
 						if($('.uploadifive-queue-item').length > 0){
 							fileUpload(reqVo);
+							// 파일업로드가 끝나면, alert를 띄우고 요구사항정의서 리스트로 돌아간다.
+							alert("요구사항 정의서를 작성하였습니다.");
+							// 요구사항 정의서 목록으로 돌아가기 ..
+							$(location).attr("href" , "/req/reqList");
+							
 			     		}else{
 			     			insert();
 			     		}
