@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+<link rel="stylesheet" href="/plugins/fullcalendar/main.css">
 <!-- Google Font: Source Sans Pro -->
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
@@ -22,6 +23,12 @@
 <script src="/plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
+<!-- fullcalendar -->
+<script src="/plugins/moment/moment.min.js"></script>
+<script src="/plugins/fullcalendar/main.js"></script>
+<script src="/plugins/fullcalendar-daygrid/main.js"></script>
+<script src="/plugins/fullcalendar-interaction/main.js"></script>
+<script src="/plugins/fullcalendar-timegrid/main.js"></script>
 <!--  
 캐시무력화 
 <script src="/dist/js/adminlte.min.js?ver=1"></script>
