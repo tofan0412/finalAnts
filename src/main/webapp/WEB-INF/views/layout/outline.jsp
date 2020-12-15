@@ -103,33 +103,38 @@ text-align: right;
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline;width:100px;height:100px;">
                     <canvas width="100" height="100"></canvas>
+                    <c:if test="${empty pro.percent}">
+                    <input type="text" class="knob" value="0" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div></c:if>
+                    <c:if test="${not empty pro.percent}">
                     <input type="text" class="knob" value="${pro.percent}" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    </c:if>
 
-                    <div class="knob-label">progress</div>
+                    <div class="knob-label">진행도</div>
                   </div>
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline;width:100px;height:100px;">
                     <canvas width="100" height="100"></canvas>
                     <input type="text" class="knob" value="${pro.elepsedTime }" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
-                    <div class="knob-label">Time elapsed</div>
+                    <div class="knob-label">경과 시간</div>
                   </div>
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline;width:100px;height:100px;">
                     <canvas width="100" height="100"></canvas>
                     <input type="text" class="knob" value="20" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
-                    <div class="knob-label">suggest</div>
+                    <div class="knob-label">건의사항 수용률</div>
                   </div>
                   <div class="row" style="width: 100%; margin-left: 10%; margin-top: 8%;" >
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%;" >
-                     Progress/Time
+                     	경과시간 대비 진행율
                       <div class="progress progress-md">
-                        <div class="progress-bar bg-warning" style="width: 80%"></div>
+                      <fmt:parseNumber value="${pro.percent/pro.elepsedTime }" var="timecalc"/>
+                        <div class="progress-bar bg-warning" style="width:<c:out value="${timecalc}" />%"></div>
                       </div>
                     </div>
                		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; ">
-                      ProjectFiles
+                      	프로젝트 파일함 사용량
                       <div class="progress progress-md">
                       <fmt:parseNumber value="${dbfilevo.pubSize/1024}" var="pnum"/>
                         <c:if test="${pnum>=1024}">
@@ -139,13 +144,13 @@ text-align: right;
                       </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%;" >
-                      Issues Reply
+                      	소통량
                       <div class="progress progress-md" >
                         <div class="progress-bar bg-warning" style="width: 80%;"></div>
                       </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; margin-top: 5%;" >
-                      Turnout
+                      	투표율
                       <fmt:parseNumber value="${dbvotevo.votepercent}" var="NUM"/>
                       <div class="progress progress-md">
                         <div class="progress-bar bg-warning" style="width: <c:out value="${NUM}" />%"></div>
@@ -154,7 +159,7 @@ text-align: right;
                		
                		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-top: 7%; margin-right: 10%;">
                      
-						<a href="#"> More charts..</a>
+						<a href="#">차트 보러가기</a>
                     </div>
                     
                     
@@ -169,7 +174,7 @@ text-align: right;
                   <tbody>
                     <tr>
                       <td></td>
-                      <td>시작일</td>
+                      <td>시작 일</td>
                       <td></td>
                       <td class="dayt">
                         ${pro.regDt }
@@ -178,7 +183,7 @@ text-align: right;
                     </tr>
                     <tr>
 						<td></td>
-                      <td>종료일</td>
+                      <td>종료 일</td>
                       <td></td>
                         <td class="dayt">
                         ${pro.endDt }
@@ -187,7 +192,7 @@ text-align: right;
                     </tr>
                     <tr>
                     <td></td>
-                      <td>Day</td>
+                      <td>경과 일</td>
                       <td></td>
                         <td class="dayt">
                         ${pro.elepsedTime }
