@@ -14,6 +14,12 @@ public class AdminLoginCheckInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		HttpSession session = request.getSession();
 		
+		// 정적 자원 요청인 경우 Interceptor 예외 처리한다.
+		String requestUrl = request.getRequestURL().toString(); 
+		if(requestUrl.contains("/resources")){ 
+		      return true;
+		}
+		
 		if(session.getAttribute("SADMIN") == null) {
 			// 로그인 페이지로 이동한다. 
 			response.sendRedirect("/admin/adloginView");

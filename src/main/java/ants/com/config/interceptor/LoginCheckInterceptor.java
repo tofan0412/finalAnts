@@ -14,6 +14,13 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
+		// 정적 자원 요청인 경우 Interceptor 예외 처리한다.
+		String requestUrl = request.getRequestURL().toString(); 
+		if(requestUrl.contains("/resources")){ 
+		      return true;
+		}
+		
 		HttpSession session = request.getSession();
 		
 		if(session.getAttribute("SMEMBER") == null) {

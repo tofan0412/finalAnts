@@ -17,16 +17,6 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
-	<!-- 외부 접속 허용 필터 .. ? -->
-	<filter>
-		<filter-name>AlowControl</filter-name>
-		<filter-class>ants.com.filter.ChatFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>AlowControl</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
     
 <!-- 	<filter> -->
 <!-- 		<filter-name>HTMLTagFilter</filter-name> -->

@@ -16,17 +16,13 @@
 				<li class="nav-item getIpList">
 					<a class="nav-link"
 					id="custom-tabs-three-notice"
-					href="/admin/getIpList">허용 IP</a>
+					href="/admin/getIpList">IP 관리</a>
 				</li>
 
 				<li class="nav-item"><a class="nav-link"
 					id="custom-tabs-three-iplist" href="/admin/insertIpView">
 					IP 등록</a>
 				</li>
-
-				<li class="nav-item"><a class="nav-link"
-					id="custom-tabs-three-iplist" href="#custom-tabs-three-iplist1">IP
-						변경</a></li>
 			</ul>
 		</div>
 	</div>

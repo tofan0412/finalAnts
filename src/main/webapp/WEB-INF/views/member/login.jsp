@@ -60,10 +60,9 @@
 	<div class="ff">
 
 		<div class="col-sm-4" style="background-color: lavender;">
-			<img src="../dist/loginimage.png" height="100%" width="100%"
+			<img src="${pageContext.request.contextPath }/resources/dist/loginimage.png" height="100%" width="100%"
 				alt="Avatar">
 		</div>
-		
 		
 
 		<div class="col-sm-6" style="background-color: white;">

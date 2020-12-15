@@ -77,6 +77,12 @@ public class MemberController {
 		return "member/login";
 	}
 	
+	// 블락 페이지 이동
+	@RequestMapping("/blockView")
+	public String blockView() {
+		return "member/block";
+	}
+	
 	// 메인 페이지로 이동
 	@RequestMapping("/projectMainView")
 	public String projectMainView() {
