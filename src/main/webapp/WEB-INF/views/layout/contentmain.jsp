@@ -22,7 +22,6 @@
 <script src="/plugins/fullcalendar-interaction/main.js"></script>
 <script src="/plugins/fullcalendar-timegrid/main.js"></script>
 
-
 <link rel="stylesheet" href="/dist/css/adminlte.min.css">
 <link rel="stylesheet" href="/plugins/fullcalendar/main.css">
 <!-- Google Font: Source Sans Pro -->
@@ -30,17 +29,17 @@
 	
 <!-- Font Awesome -->
 <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
- 
-
 <%
 	List<ScheduleVo> list = (ArrayList<ScheduleVo>)request.getAttribute("showSchedule");
 %>
 <title>Insert title here</title>
+
+
 <script>
 $(function(){
 	// 메뉴를 선택하면 배경색이 변한다. 
 	$('.selectable').click(function(){
-//			alert($(this).text());
+	// alert($(this).text());
 		$('.selectable').parent().removeClass("active");
 		$(this).parent().addClass("active");
 	})
@@ -55,31 +54,32 @@ document.addEventListener('DOMContentLoaded', function() {
 	var Calendar = FullCalendar.Calendar;
 	var calendarEl = document.getElementById('calendar');
 				
-	var calendar = new FullCalendar.Calendar(calendarEl, { 
+	var calendar = new FullCalendar.Calendar(calendarEl, {
 		plugins: [ 'interaction', 'dayGrid' ],
 		defaultDate: new Date(),
 		center: 'title',
-		events: [ 
-	        <%
-	         for(int i =0; i<list.size(); i++){
-	        	 ScheduleVo dto = (ScheduleVo)list.get(i);
+		events: [
+	        <% 
+			if(list.size() > 0){
+	        	for(int i =0; i<list.size(); i++){
+	        		ScheduleVo dto = (ScheduleVo)list.get(i);
 	        %>
-				{	
-					id : '<%= dto.getScheId()%>',
-					navLinks: true,
-					title : '<%= dto.getScheTitle()%>',
-					backgroundColor: '<%= dto.getCalendarcss()%>',
-					start: '<%= dto.getStartDt()%>',
-					end: '<%= dto.getEndDt()%>'
-				},
+					{	
+						id : '<%= dto.getScheId()%>',
+						navLinks: true,
+						title : '<%= dto.getScheTitle()%>',
+						backgroundColor: '<%= dto.getCalendarcss()%>',
+						start: '<%= dto.getStartDt()%>',
+						end: '<%= dto.getEndDt()%>'
+					},
 			<% 
-	         }
+	        	}
+			}	
 			%>
 	      ]
 	});
 	calendar.render();
 });
-
 </script>
 <style>
 .top{
@@ -122,7 +122,7 @@ th{
 #calendar { 
 	width:700px;
 	padding-left: 6%; 
-}    
+} 
 .fc-sat, .fc-sun, .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri {width:10px;} 
 </style>
 </head>
@@ -233,9 +233,11 @@ th{
 						</ul>
 					</li>
 				 </c:if>
-				 
-				 <!-- memType이 PM일때 -->
-				 <c:if test="${not empty pmInProjectList}">
+				 	
+				 <!-- memType이 PM일때	
+				 not empty pmInProjectList and pmInProjectList ne ' ' and pmInProjectList ne '' and pmInProjectList ne null
+				  --> 	
+				 <c:if test="${ not empty pmInProjectList }"> 
 					<li class="nav-item has-treeview menu-open">
 			            <a href="#" class="nav-link active" style="background-color:#6495ED;">
 				        	<i class="nav-icon fas fa-poll-h"></i>
