@@ -55,7 +55,7 @@ public class AdminController {
 	//관리자 로그인 페이지
 	@RequestMapping("/adloginView")
 	public String adloginView() {
-		return "/login/adlogin";
+		return "/login/adlogin2";
 	}
 	
 	// 로그인 로직
@@ -92,7 +92,7 @@ public class AdminController {
 		model.addAttribute("adminId", dbAdmin.getAdminId());
 		model.addAttribute("adminPass", dbAdmin.getAdminPass());
 		
-		return "/login/adlogin";
+		return "/login/adlogin2";
 	}
 	
 	//관리자 로그아웃
@@ -106,7 +106,7 @@ public class AdminController {
 	@RequestMapping("/adMainView")
 	public String adMainView() {
 //		return "admin.tiles/admin/adcontentmain";
-		return "redirect:/admin/adMainView";
+		return "redirect:/admin/noticelist";
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////관리자 로그인 끝	
 	
