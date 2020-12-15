@@ -77,11 +77,11 @@ $(function(){
 			<br>
 			
 			
-			<br>
+			<br><br>
 			<c:if test="${noticevo.adminId == adminId}">
-				<input type= "button" value="수정하기" id ="modnotice" class="btn btn-default">
-				<input type= "button" value="삭제하기" id="delnotice"  class="btn btn-default">			
-				<input type= "button" value="뒤로가기" id="back"  class="btn btn-default">			
+				<input type= "button" value="수정" id ="modnotice" class="btn btn-info">
+				<input type= "button" value="목록" id="back"  class="btn btn-success">			
+				<input type= "button" value="삭제" id="delnotice"  class="btn btn-danger">			
 			</c:if>
 				
 

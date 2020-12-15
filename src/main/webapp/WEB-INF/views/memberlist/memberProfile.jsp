@@ -52,6 +52,15 @@ $(document).ready(function(){
 	
 })
 
+$(function(){
+	$("#delmemlist").on('click',function(){
+		if(confirm("정말 삭제하시겠습니까 ?") == true){
+			$(location).attr('href', '${pageContext.request.contextPath}/admin/delmemlist?memId=${membervo.memId}');
+        }else{
+        	return;
+        }
+	})
+})
 
 
 
@@ -146,21 +155,13 @@ $(document).ready(function(){
 					</div>
 					
 					<br><br><br><br> 
-					<div class="card-footer">
+					<div class="card-footer" style="background-color: whote">
 						<div class="row">
 							<div class="col-sm-6">
 								<a href="/admin/memlistprofileupdate?memId=${memberVo.memId}"><button type="button" id="registBtn" class="btn btn-info">수정</button></a>
 								<a href="/admin/memberlist"><button type="button" id="registBtn" class="btn btn-success">목록</button></a>
-								<a href="/admin/delmemlist?memId=${memberVo.memId }"><button type="button" id="registBtn" class="btn btn-danger">삭제</button></a>
+								<a href="/admin/delmemlist?memId=${memberVo.memId }"><button type="button" id="delmemlist" class="btn btn-danger">삭제</button></a>
 							</div>
-
-							<%--
-							<div class="col-sm-6">
-								<button type="button" id="cancelBtn"
-									onclick="window.history.back()"
-									class="btn btn-default float-right">&nbsp;뒤&nbsp;&nbsp;로&nbsp;&nbsp;가&nbsp;&nbsp;기&nbsp;</button>
-							</div>
-							 --%>
 							 
 						</div>
 					</div>

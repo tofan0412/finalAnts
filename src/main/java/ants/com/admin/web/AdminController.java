@@ -2,6 +2,7 @@ package ants.com.admin.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
+import ants.com.board.memBoard.model.IssueVo;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.service.MemberService;
@@ -66,8 +68,10 @@ public class AdminController {
 		
 		if (dbAdmin != (null) && adminVo.getAdminPass().equals(dbAdmin.getAdminPass())) {
 			session.setAttribute("SADMIN", dbAdmin);
-//				return "admin.tiles/admin/adcontentmenu";
-				return "redirect:/admin/adMainView";
+			
+			
+//			return "admin.tiles/admin/adcontentmain";
+				return "redirect:/admin/noticelist";
 		} else {
 			return "redirect:/admin/adloginView";
 		}
@@ -101,8 +105,8 @@ public class AdminController {
 	// 화면 상단 로고 클릭 시 메인 페이지로 이동
 	@RequestMapping("/adMainView")
 	public String adMainView() {
-		return "admin.tiles/admin/adcontentmain";
-//		return "redirect:/admin/adMainView";
+//		return "admin.tiles/admin/adcontentmain";
+		return "redirect:/admin/adMainView";
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////관리자 로그인 끝	
 	
