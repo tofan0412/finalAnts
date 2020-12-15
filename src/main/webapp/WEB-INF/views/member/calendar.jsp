@@ -4,10 +4,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@include file="../layout/fullcalendarLib.jsp"%>
 <%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 <%
 	List<ScheduleVo> list = (ArrayList<ScheduleVo>)request.getAttribute("showSchedule");
@@ -175,7 +173,17 @@ document.addEventListener('DOMContentLoaded', function() {
 					      calendarUpdate2(info.event.id, info.event.title, start);			    				 		
 					 	}
 			    }
-			  },
+			  },          
+			  eventResize: function(info) {
+		            if (!confirm("일정 변경을 저장하시겠습니까??")) {
+		            info.revert();
+		            }else{
+		            var start = moment(info.event.start).format('YYYY-MM-DD');
+		    		var end = moment(info.event.end).format('YYYY-MM-DD');
+				      calendarUpdate(info.event.id, info.event.title, start, end);
+		            }
+				      },
+		            
 			  eventDragStop: function (info) {
 				    var trashEl = jQuery('.calendarTrash');
 				    var ofs = trashEl.offset();

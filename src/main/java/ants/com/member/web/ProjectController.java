@@ -1,6 +1,5 @@
 package ants.com.member.web;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ants.com.board.manageBoard.service.ManageBoardService;
+import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.vote.model.VoteVo;
 import ants.com.file.model.PublicFileVo;
 import ants.com.member.model.MemberVo;
@@ -184,15 +184,13 @@ public class ProjectController {
 		List<ProjectMemberVo>dbpromemvo = projectService.getoutlinepromem(reqId);
 		VoteVo dbvotevo= projectService.getoutlinevote(reqId);
 		PublicFileVo dbfilevo = projectService.getoutlinefiles(reqId);
+		ReplyVo dbreplyvo = projectService.getoutlinereply(reqId);
 		model.addAttribute("req", dbreqvo);
 		model.addAttribute("pro", dbprojectvo);
 		model.addAttribute("promem", dbpromemvo);
 		model.addAttribute("dbvotevo", dbvotevo);
 		model.addAttribute("dbfilevo", dbfilevo);
-		
-		//이슈답글용
-		//건의사항처리율
-		
+		model.addAttribute("dbreplyvo", dbreplyvo);
 		return "tiles/layout/outline";
 	}
 }

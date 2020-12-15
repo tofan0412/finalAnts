@@ -39,6 +39,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import ants.com.admin.service.AdminService;
+import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.board.memBoard.service.memBoardService;
 import ants.com.common.model.IpHistoryVo;
@@ -46,6 +47,8 @@ import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.service.MemberService;
 import ants.com.member.service.ProjectService;
+import ants.com.member.service.ProjectmemberService;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @MultipartConfig
@@ -66,6 +69,9 @@ public class MemberController {
 	
 	@Resource(name = "memBoardService")
 	private memBoardService memBoardService;
+	
+	@Resource(name="promemService")
+	ProjectmemberService promemService;
 	
 	@RequestMapping("/mainView")
 	public String mainView() {
@@ -93,12 +99,12 @@ public class MemberController {
 	// 로그인 로직
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
-
+		
 		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
-
+		
 		MemberVo dbMember = memberService.getMember(memberVo);
 		logger.debug("dbMember : {}", dbMember);
-		
+			
 		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
 			session.setAttribute("SMEMBER", dbMember);
 			// 로그인 정보를 history에 기록한다.
@@ -119,8 +125,8 @@ public class MemberController {
 			adminService.insertMemLoginLog(log);
 			
 			
-			// 캘린더 목록 선언 및 초기화
-			List<ScheduleVo> showCalendar = new ArrayList<>();
+			List<ScheduleVo> showCalendar = new ArrayList<>();	// 캘린더 목록 선언 및 초기화
+			List<IssueVo> resultList = new ArrayList<>();		// 공지사항 목록 선언 및 초기화
 			
 			// 회원 타입이 MEM일 때만 조회
 			if(dbMember.getMemType().equals("MEM")) {
@@ -131,10 +137,32 @@ public class MemberController {
 				if (proList.size() != 0) {
 					session.setAttribute("memInProjectList", proList);	// 프로젝트 리스트 세션에 저장
 					
-					// 로그인시 메인페이지에 캘린더 초기값 
+					// 로그인
+					/*캘린더 초기값 */
 					ScheduleVo scheduleVo = new ScheduleVo();		
 					scheduleVo.setReqId(proList.get(0).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
 					showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
+					
+					/*공지사항 초기값*/
+					IssueVo issueVo = new IssueVo();
+					issueVo.setMemId(dbMember.getMemId());
+					issueVo.setReqId(proList.get(0).getReqId());	// 첫번째 프로젝트의 이슈 가져오기
+					issueVo.setCategoryId("3");						// 카테고리 번호 (3번이 이슈)
+					issueVo.setIssueKind("notice");					// 이슈 말머리 선택 (공지사항)
+					model.addAttribute("reqId", proList.get(0).getReqId());	// 기본 프로젝트 번호 jsp로 넘겨주기
+											
+					/** pageing setting */
+					PaginationInfo paginationInfo = new PaginationInfo();
+					paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
+					paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
+					paginationInfo.setPageSize(issueVo.getPageSize());
+					
+					issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+					issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
+					issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+					resultList = promemService.issuelist(issueVo);
+					
 				}
 				
 				List<ProjectVo> pro_pL = projectService.plInProjectList(dbMember.getMemId());// 프로젝트 리스트 조회
@@ -142,11 +170,10 @@ public class MemberController {
 				// PL의 프로젝트 리스트가 있을때만
 				if (pro_pL.size() != 0) {
 					session.setAttribute("plInProjectList", pro_pL);	// 프로젝트 리스트 세션에 저장
-						
 				}
-				
-			}
-				
+			}	
+			
+			
 			// 회원 타입이 PM일 때만 조회
 			if(dbMember.getMemType().equals("PM")) {
 				List<ProjectVo> prp_pm = projectService.pmInProjectList(dbMember.getMemId());// 프로젝트 리스트 조회			
@@ -155,22 +182,43 @@ public class MemberController {
 				if (prp_pm.size() != 0) {
 					session.setAttribute("pmInProjectList", prp_pm);	// 프로젝트 리스트 세션에 저장
 					
-					// 로그인시 메인페이지에 캘린더 초기값 
+					// 로그인
+					/*캘린더 초기값 */
 					ScheduleVo scheduleVo = new ScheduleVo();		
 					scheduleVo.setReqId(prp_pm.get(0).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
 					showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
+					
+					/*공지사항 초기값*/
+					IssueVo issueVo = new IssueVo();	
+					issueVo.setMemId(dbMember.getMemId());
+					issueVo.setReqId(prp_pm.get(0).getReqId());	// 첫번째 프로젝트의 이슈 가져오기
+					issueVo.setCategoryId("3");					// 카테고리 번호 (3번이 이슈)
+					issueVo.setIssueKind("notice");				// 이슈 말머리 선택 (공지사항)
+					model.addAttribute("reqId", prp_pm.get(0).getReqId());	// 기본 프로젝트 번호 jsp로 넘겨주기
+					
+					/** pageing setting */
+					PaginationInfo paginationInfo = new PaginationInfo();
+					paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
+					paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
+					paginationInfo.setPageSize(issueVo.getPageSize());
+					
+					issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+					issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
+					issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+					resultList = promemService.issuelist(issueVo);
 				}
 			}	
 			
 			// 캘린더 전송	// 캘린더는 있든 없든 전송해야함
 			model.addAttribute("showSchedule", showCalendar);
-			
+			// 공지사항 전송 
+			model.addAttribute("issuelist", resultList);
+				
 			return "tiles/layout/contentmain";
-			
 		} else {
 			return "redirect:/member/loginView";
 		}
-
 	}
 	
 	// 로그인 체크 ajax

@@ -1,17 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@include file="../layout/fullcalendarLib.jsp"%>
+<meta charset="utf-8">
 <style>
 
-.knob-label{
-padding-left: 100px;
-}
+/* .knob-label{ */
+/* padding-left: 100px; */
+/* } */
 .dayt{
 text-align: right;
 }
@@ -145,8 +149,9 @@ text-align: right;
                     </div>
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%;" >
                       	소통량
+                      	<fmt:parseNumber value="${dbreplyvo.replypercent}" var="reply"/>
                       <div class="progress progress-md" >
-                        <div class="progress-bar bg-warning" style="width: 80%;"></div>
+                        <div class="progress-bar bg-warning" style="width:<c:out value="${reply}" />%"></div>
                       </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; margin-top: 5%;" >
@@ -207,12 +212,12 @@ text-align: right;
               	   <h2>WorkGroup</h2>
                     <ul class="users-list clearfix">
                       <li>
-                        <img src="../userprofile/user-0.png" alt="User Image">
+<!--                         <img src="../userprofile/user-0.png" alt="User Image"> -->
                         <span class="users-list-date">PL : ${req.plId }</span>
                       </li>
                       <c:forEach items="${promem }" var="pro" varStatus="sts">
                       <li>
-                         <img src="../userprofile/user-4.png" alt="User Image">
+<!--                          <img src="../userprofile/user-4.png" alt="User Image"> -->
                         <span class="users-list-date">${pro.memId }</span>
                       </li>
                       </c:forEach>

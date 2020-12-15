@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+	
 <!-- Channel Plugin Scripts -->
 <script>
   (function() {
@@ -45,7 +45,6 @@
   });
 </script>
 <!-- End Channel Plugin -->
-
  
 <script>
 	$(function(){
@@ -69,12 +68,12 @@
 
 
 <aside class="main-sidebar sidebar-light-teal elevation-4">
-	<!-- Brand Logo -->
-	<a href="/member/projectMainView" class="brand-link" style="border-bottom: none"> 
-	<img src="${pageContext.request.contextPath }/resources/dist/img/antslogo.png" class="brand-image" style="float: none;width: 46px;margin: 15px 8px 10px 7px;height: 50px;">
-	<img src="${pageContext.request.contextPath }/resources/dist/img/ants.png" style="width: 100px;">
+	<!-- Brand Logo -->		
+	<a href="/mainpage/mainreconnection?memId=${SMEMBER.memId}" class="brand-link" style="border-bottom: none"> 
+	<img src="/dist/img/antslogo.png" class="brand-image" style="float: none;width: 46px;margin: 15px 8px 10px 7px;height: 50px;">
+	<img src="/dist/img/ants.png" style="width: 100px;">
 	</a>
-
+		
 	<!-- Sidebar -->
 	<div class="sidebar" style="font-size: 0.8em;">
 		<!-- Sidebar Menu -->
