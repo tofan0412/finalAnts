@@ -129,7 +129,7 @@
     	  환영합니다, ${SMEMBER.memName }님!
    		</c:if>
    		<c:if test="${projectId ne null }">
-    	  현재 프로젝트 번호 : ${projectId}
+<%--     	  현재 프로젝트 번호 : ${projectId} --%>
    		</c:if>
    		
       </li>

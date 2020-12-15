@@ -56,28 +56,29 @@
 	padding-top : 13%;
 	padding-bottom : 13%;
 }
+.loginContainer::after{	/* 배경만 흐리게 하기 위한 가상 요소이다. */
+	width: 100%;
+  	height: 100%;
+  	content: "";		/* 가상 요소이기 때문에 내용은 비워 놓는다. */
+/*   	background-image : url('${pageContext.request.contextPath}/resources/img/background.jpg'); */
+	background-color : white;
+  	position : absolute;/* container와 동일한 위치에 있어야 하기 때문에 */
+  	top : 0; 
+  	left : 0;
+  	z-index : -1;
+	filter : blur(2px) brightness(100%);;
+}
 
 .loginBox{
 	background-color : white;
-	width : 35%; 
-	height : 100%;
-	float : right;
-	margin-right : 10%;
+	border : 1px solid lightgrey; 
+	width : 30%; 
+	margin : 0 auto;
 	padding : 15px; 15px; 35px; 35px;
+	box-shadow : 2px 2px black ;
 	-webkit-animation: fadein 1s; /* Safari and Chrome */
 	border-radius: 0.7rem;
 }
-.imgBox{
-	float : left;
-	width : 45%;
-	height : 100%;
-	position : absolute;
-	top : 0;
-	left : 0;
-	background-image : url('${pageContext.request.contextPath}/resources/img/background.jpg');
-	filter : brightness(80%);
-}
-
 @-webkit-keyframes fadein { /* Safari and Chrome */
     from {
         opacity:0;
@@ -211,10 +212,6 @@
 </head>
 <title>Ants - 로그인</title>
 <body class="loginContainer fadein">
-	
-	<div class="imgBox">
-	ㅋㅋㅋ
-	</div>
 	<div class="loginBox">
 		<div>
 			<h2 class="jg" style="line-height: 25px;">
