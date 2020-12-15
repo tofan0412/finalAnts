@@ -4,6 +4,8 @@ import java.util.List;
 
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.board.vote.model.VoteVo;
+import ants.com.file.model.PublicFileVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ProjectVo;
@@ -44,5 +46,11 @@ public interface ProjectMapper {
 
 	// 개요 프로젝트멤버 조회
 	public List<ProjectMemberVo> getoutlinepromem(String reqId);
+	
+	// 개요 프로젝트파일량 조회
+	public PublicFileVo getoutlinefiles(String reqId);
+
+	// 개요 프로젝트 투표율 조회
+	public VoteVo getoutlinevote(String reqId);
 
 }

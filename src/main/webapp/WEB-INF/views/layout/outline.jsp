@@ -131,7 +131,11 @@ text-align: right;
                		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; ">
                       ProjectFiles
                       <div class="progress progress-md">
-                        <div class="progress-bar bg-warning" style="width: 80%"></div>
+                      <fmt:parseNumber value="${dbfilevo.pubSize/1024}" var="pnum"/>
+                        <c:if test="${pnum>=1024}">
+                        <div class="progress-bar bg-warning" style="width: <c:out value="${pnum/1024}" />%"></div></c:if>
+                        <c:if test="${pnum<1024}">
+                        <div class="progress-bar bg-warning" style="width: <c:out value="${pnum}" />%"></div></c:if>
                       </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%;" >
@@ -142,15 +146,15 @@ text-align: right;
                     </div>
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; margin-top: 5%;" >
                       Turnout
+                      <fmt:parseNumber value="${dbvotevo.votepercent}" var="NUM"/>
                       <div class="progress progress-md">
-                        <div class="progress-bar bg-warning" style="width: 80%"></div>
+                        <div class="progress-bar bg-warning" style="width: <c:out value="${NUM}" />%"></div>
                       </div>
                     </div>
-               		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; margin-top: 5%;">
-                      Todo
-                      <div class="progress progress-md">
-                        <div class="progress-bar bg-warning" style="width: 80%; "></div>
-                      </div>
+               		
+               		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-top: 7%; margin-right: 10%;">
+                     
+						<a href="#"> More charts..</a>
                     </div>
                     
                     

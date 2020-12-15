@@ -3,6 +3,7 @@ package ants.com.member.web;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -118,27 +119,59 @@ public class MemberController {
 			adminService.insertMemLoginLog(log);
 			
 			
+			// 캘린더 목록 선언 및 초기화
+			List<ScheduleVo> showCalendar = new ArrayList<>();
 			
-			List<ProjectVo> proList = projectService.memInProjectList(dbMember.getMemId());
-			if (proList.size() != 0) {
-				session.setAttribute("memInProjectList", proList);
+			// 회원 타입이 MEM일 때만 조회
+			if(dbMember.getMemType().equals("MEM")) {
+				// 로그인 한 회원 프로젝트 리스트 가져옴
+				List<ProjectVo> proList = projectService.memInProjectList(dbMember.getMemId());
+				
+				// MEM의 프로젝트 리스트가 있을때만
+				if (proList.size() != 0) {
+					session.setAttribute("memInProjectList", proList);	// 프로젝트 리스트 세션에 저장
+				
+				}
+				
+				List<ProjectVo> pro_pL = projectService.plInProjectList(dbMember.getMemId());// 프로젝트 리스트 조회
+				
+				// PL의 프로젝트 리스트가 있을때만
+				if (pro_pL.size() != 0) {
+					session.setAttribute("plInProjectList", pro_pL);	// 프로젝트 리스트 세션에 저장
 					
-				// 로그인시 pl-pm 메인페이지에 캘린더 초기값 
-				ScheduleVo scheduleVo = new ScheduleVo();
-				scheduleVo.setReqId(proList.get(0).getReqId());
-				List<ScheduleVo> showCalendar = memBoardService.showCalendar(scheduleVo);
-				logger.debug("showCalendar : {}",showCalendar); 
-				model.addAttribute("showSchedule", showCalendar); 
+				}
+				
+				// 로그인시 메인페이지에 캘린더 초기값 
+				ScheduleVo scheduleVo = new ScheduleVo();		
+				scheduleVo.setReqId(proList.get(0).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
+				showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
 			}
-			List<ProjectVo> pro_pL = projectService.plInProjectList(dbMember.getMemId());
-			if(pro_pL != null) {	
-				session.setAttribute("plInProjectList", pro_pL);				
+			
+			// 회원 타입이 PL일 때만 조회
+			if(dbMember.getMemType().equals("PL")) {
+				
 			}
-			List<ProjectVo> prp_pm = projectService.pmInProjectList(dbMember.getMemId());				
-			if(prp_pm != null) {
-				session.setAttribute("pmInProjectList", prp_pm);							
-			}
-				return "tiles/layout/contentmain";
+				
+			// 회원 타입이 PM일 때만 조회
+			if(dbMember.getMemType().equals("PM")) {
+				List<ProjectVo> prp_pm = projectService.pmInProjectList(dbMember.getMemId());// 프로젝트 리스트 조회			
+				
+				// PM의 프로젝트 리스트가 있을때만
+				if (prp_pm.size() != 0) {
+					session.setAttribute("pmInProjectList", prp_pm);	// 프로젝트 리스트 세션에 저장
+					
+					// 로그인시 메인페이지에 캘린더 초기값 
+					ScheduleVo scheduleVo = new ScheduleVo();		
+					scheduleVo.setReqId(prp_pm.get(0).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
+					showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
+				}
+			}	
+			
+			// 캘린더 전송	// 캘린더는 있든 없든 전송해야함
+			model.addAttribute("showSchedule", showCalendar);
+			
+			return "tiles/layout/contentmain";
+			
 		} else {
 			return "redirect:/member/loginView";
 		}

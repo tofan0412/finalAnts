@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ants.com.board.manageBoard.service.ManageBoardService;
+import ants.com.board.vote.model.VoteVo;
 import ants.com.file.model.PublicFileVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectMemberVo;
@@ -169,11 +170,14 @@ public class ProjectController {
 		ReqVo dbreqvo = reqService.getoutlinereq(reqId);
 		ProjectVo dbprojectvo = projectService.getoutlinepro(reqId);
 		List<ProjectMemberVo>dbpromemvo = projectService.getoutlinepromem(reqId);
+		VoteVo dbvotevo= projectService.getoutlinevote(reqId);
+		PublicFileVo dbfilevo = projectService.getoutlinefiles(reqId);
 		model.addAttribute("req", dbreqvo);
 		model.addAttribute("pro", dbprojectvo);
 		model.addAttribute("promem", dbpromemvo);
-		//파일
-		//투표율
+		model.addAttribute("dbvotevo", dbvotevo);
+		model.addAttribute("dbfilevo", dbfilevo);
+		
 		//이슈답글용
 		//건의사항처리율
 		

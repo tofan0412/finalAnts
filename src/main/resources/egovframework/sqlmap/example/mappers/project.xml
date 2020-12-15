@@ -152,4 +152,21 @@
 		AND req_id = #{reqId}
 		AND PROMEM_STATUS ='IN'
 	</select>
+	<select id="getoutlinefiles" parameterType="java.lang.String"
+		resultType="ants.com.file.model.PublicFileVo">
+		 SELECT
+		   round(sum(pub_size)) as pub_size
+		FROM
+		    publicfile
+		where req_id=#{reqId}
+	</select>
+	<select id="getoutlinevote" parameterType="java.lang.String"
+		resultType="ants.com.board.vote.model.VoteVo">
+		   select round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)) as votepercent
+						                         from vote a, member b
+						                         where a.mem_id = b.mem_id
+						                           and a.req_id = #{reqId}
+						                           and a.del = 'N'
+			
+	</select>
 </mapper>

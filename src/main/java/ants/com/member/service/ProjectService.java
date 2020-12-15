@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.board.vote.model.VoteVo;
+import ants.com.file.model.PublicFileVo;
 import ants.com.member.mapper.ProjectMapper;
 import ants.com.member.mapper.ProjectmemberMapper;
 import ants.com.member.model.MemberVo;
@@ -76,5 +78,13 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	// 개요페이지 프로젝트멤버 정보가져오기
 	public List<ProjectMemberVo>getoutlinepromem(String reqId) {
 		return mapper.getoutlinepromem(reqId);
+	}
+	// 개요페이지 프로젝트파일함 사용량 정보가져오기
+	public PublicFileVo getoutlinefiles(String reqId) {
+		return mapper.getoutlinefiles(reqId);
+	}
+	// 개요페이지 프로젝트투표율 정보가져오기
+	public VoteVo getoutlinevote(String reqId) {
+		return mapper.getoutlinevote(reqId);
 	}
 }
