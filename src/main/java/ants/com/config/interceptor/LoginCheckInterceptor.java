@@ -19,6 +19,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		if(session.getAttribute("SMEMBER") == null) {
 			// 로그인 페이지로 이동한다. 
 			response.sendRedirect("/member/loginView");
+			return false;
 		}
 		//  true인 경우 다음 interceptor를 호출하고 없으면 controller를 호출한다. 
 		// false인 경우 : 요청 처리를 멈춘다.

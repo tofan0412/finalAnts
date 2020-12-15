@@ -15,21 +15,18 @@ import ants.com.admin.model.IpVo;
 import ants.com.admin.service.AdminService;
 
 public class IpCheckInterceptor extends HandlerInterceptorAdapter {
-	private static final Logger logger = LoggerFactory.getLogger(IpCheckInterceptor.class);
 	@Resource(name="adminService")
 	AdminService adminService;
 	
 	// Controller 진입 전에 수행하는 메서드
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 
+			Object handler) throws Exception {
 		
 		String ip = request.getHeader("X-FORWARDED-FOR");
 		if (ip == null) ip = request.getRemoteAddr();
-		logger.debug("사용자 IP : {}", ip);
 		
-		String[] clientIpArr = ip.split(".");
-		logger.debug("분할 후 : {}",clientIpArr);
+		String[] clientIpArr = ip.split("\\.");
 		
 		List<IpVo> ipList = adminService.getIpList();
 		
@@ -40,10 +37,9 @@ public class IpCheckInterceptor extends HandlerInterceptorAdapter {
 				break;	// 일치하는 IP를 찾았으므로, 더이상 찾을 필요가 없다.
 			}
 			
-			String[] serverIpArr = ipList.get(i).getIpAddr().split(".");	// 반드시 4개이다.
+			String[] serverIpArr = ipList.get(i).getIpAddr().split("\\.");	// 반드시 4개이다.
 			equalsCnt = 0;
 			
-			logger.debug("비교할 Server 등록 IP : {}",serverIpArr);
 			for (int j = 0 ; j < 4 ; j++) {
 				if (clientIpArr[j].equals(serverIpArr[j])
 					|| serverIpArr[j].equals("*")) {
@@ -56,13 +52,11 @@ public class IpCheckInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
-		if(factor == 1) {
-			return true;
-		}else {
-		// 여기까지 왔다는 건, 해당하는 IP를 찾지 못했다는 뜻이다. 
+		if(factor != 1) {	// IP가 서버에 등록되지 않았다는 뜻이다. 
 			response.sendRedirect("/member/mainView");
-			return true;
+			return false;
 		}
+		return true;
 	}
 	
 	// Controller 진입 후에 수행하는 메서드
