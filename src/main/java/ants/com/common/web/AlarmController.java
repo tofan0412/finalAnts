@@ -37,9 +37,8 @@ public class AlarmController {
 	
 	@RequestMapping("/alarmInsert")
 	public String alarmInsert(@RequestBody AlarmVo alarmData, Model model) {
-		String[] memIds = alarmData.getMemIds();
 		//project member초대
-		if(memIds.length > 0) {
+		if(alarmData.getMemIds() != null) {
 			for(String memId : alarmData.getMemIds()) {
 				alarmData.setMemId(memId);
 				int cnt = alarmService.alarmInsert(alarmData);
