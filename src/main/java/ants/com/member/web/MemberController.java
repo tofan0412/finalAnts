@@ -99,12 +99,12 @@ public class MemberController {
 	// 로그인 로직
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
-
+		
 		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
-
+		
 		MemberVo dbMember = memberService.getMember(memberVo);
 		logger.debug("dbMember : {}", dbMember);
-		
+			
 		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
 			session.setAttribute("SMEMBER", dbMember);
 			// 로그인 정보를 history에 기록한다.
@@ -123,7 +123,6 @@ public class MemberController {
 			log.setIpAddr(ip);
 			
 			adminService.insertMemLoginLog(log);
-			
 			
 			
 			List<ScheduleVo> showCalendar = new ArrayList<>();	// 캘린더 목록 선언 및 초기화
@@ -146,13 +145,11 @@ public class MemberController {
 					
 					/*공지사항 초기값*/
 					IssueVo issueVo = new IssueVo();
-					String memId = dbMember.getMemId();
-						
-					issueVo.setMemId(memId);
-					issueVo.setReqId(proList.get(0).getReqId());
-					issueVo.setCategoryId("3");
-					issueVo.setIssueKind("notice");
-					model.addAttribute("reqId", proList.get(0).getReqId());
+					issueVo.setMemId(dbMember.getMemId());
+					issueVo.setReqId(proList.get(0).getReqId());	// 첫번째 프로젝트의 이슈 가져오기
+					issueVo.setCategoryId("3");						// 카테고리 번호 (3번이 이슈)
+					issueVo.setIssueKind("notice");					// 이슈 말머리 선택 (공지사항)
+					model.addAttribute("reqId", proList.get(0).getReqId());	// 기본 프로젝트 번호 jsp로 넘겨주기
 											
 					/** pageing setting */
 					PaginationInfo paginationInfo = new PaginationInfo();
@@ -192,14 +189,12 @@ public class MemberController {
 					showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
 					
 					/*공지사항 초기값*/
-					IssueVo issueVo = new IssueVo();
-					String memId = dbMember.getMemId();
-							
-					issueVo.setMemId(memId);
-					issueVo.setReqId(prp_pm.get(0).getReqId());
-					issueVo.setCategoryId("3");
-					issueVo.setIssueKind("notice");
-					model.addAttribute("reqId", prp_pm.get(0).getReqId());
+					IssueVo issueVo = new IssueVo();	
+					issueVo.setMemId(dbMember.getMemId());
+					issueVo.setReqId(prp_pm.get(0).getReqId());	// 첫번째 프로젝트의 이슈 가져오기
+					issueVo.setCategoryId("3");					// 카테고리 번호 (3번이 이슈)
+					issueVo.setIssueKind("notice");				// 이슈 말머리 선택 (공지사항)
+					model.addAttribute("reqId", prp_pm.get(0).getReqId());	// 기본 프로젝트 번호 jsp로 넘겨주기
 					
 					/** pageing setting */
 					PaginationInfo paginationInfo = new PaginationInfo();
