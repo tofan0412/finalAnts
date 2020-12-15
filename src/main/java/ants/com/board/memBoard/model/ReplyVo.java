@@ -11,6 +11,7 @@ public class ReplyVo {
 	private String categoryId;
 	private String reqId;
 	private String memId;
+	private String replypercent;
 	
 	public ReplyVo() {
 		// TODO Auto-generated constructor stub
@@ -24,6 +25,15 @@ public class ReplyVo {
 		this.memId = memId;
 	}
 	
+	
+	public String getReplypercent() {
+		return replypercent;
+	}
+
+	public void setReplypercent(String replypercent) {
+		this.replypercent = replypercent;
+	}
+
 	public String getReplyId() {
 		return replyId;
 	}
@@ -72,12 +82,15 @@ public class ReplyVo {
 	public void setMemId(String memId) {
 		this.memId = memId;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ReplyVo [replyId=" + replyId + ", someId=" + someId + ", replyCont=" + replyCont + ", regDt=" + regDt
-				+ ", del=" + del + ", categoryId=" + categoryId + ", reqId=" + reqId + ", memId=" + memId + "]";
+				+ ", del=" + del + ", categoryId=" + categoryId + ", reqId=" + reqId + ", memId=" + memId
+				+ ", replypercent=" + replypercent + "]";
 	}
+	
+	
 	
 	
 }
