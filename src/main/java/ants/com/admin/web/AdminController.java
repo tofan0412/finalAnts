@@ -53,7 +53,7 @@ public class AdminController {
 	//관리자 로그인 페이지
 	@RequestMapping("/adloginView")
 	public String adloginView() {
-		return "/admin/adlogin";
+		return "/login/adlogin";
 	}
 	
 	// 로그인 로직
@@ -88,7 +88,7 @@ public class AdminController {
 		model.addAttribute("adminId", dbAdmin.getAdminId());
 		model.addAttribute("adminPass", dbAdmin.getAdminPass());
 		
-		return "/admin/adlogin";
+		return "/login/adlogin";
 	}
 	
 	//관리자 로그아웃

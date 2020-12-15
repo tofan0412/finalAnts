@@ -69,7 +69,7 @@ $(function(){
 	<div class="ff">
 
 		<div class="col-sm-4">
-			<img src="../dist/img/ants.png"  height="60%" width="100%" style="margin-top: 100px">
+			<img src="../dist/img/addpl.png"  height="60%" width="100%" style="margin-top: 100px">
 		</div>
 		
 		
@@ -119,7 +119,7 @@ $(function(){
 							<input type="password" class="form-control login" id="adminPass" name="adminPass" value="" style="border: 0; outline: 0;" >
 					</div>
 
-					<div class="row">
+					<div class="row" >
 						<div class="col-sm-8">
 							<div class="checkbox icheck">
 								<label> <input type="checkbox" id="rememberMe"
@@ -130,7 +130,7 @@ $(function(){
 						<!-- /.col -->
 						<div>
 							<br> <br>
-							<div style="float: right;">
+							<div style="float: right">
 								<span id="sp" style="color:red"></span>
 								<button type="button" id="mainBtn" class="jg loginBtn" style="width: 100px;">MAIN</button>
 								<button type="button" id="loginBtn" class="jg loginBtn" style="width: 100px;">LOGIN</button>

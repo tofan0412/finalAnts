@@ -41,93 +41,31 @@
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 				<li class="nav-item has-treeview menu-open" >
 		            <a href="#" class="nav-link active">
-		              <i class="fas fa-newspaper"></i>
-						<p>전체정보<i class="fas fa-angle-left right"></i></p>
+		              <i class="nav-icon fas fa-newspaper"></i>
+						<p class="jg">전체정보<i class="fas fa-angle-left right"></i></p>
 		            </a>
 		            <ul class="nav nav-treeview" style="display: block;">
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/admin/noticelist" class="nav-link" >
 		                 <i class="nav-icon fas fa-clipboard-list"></i>
-							<p class="selectable">공지사항</p>
+							<p class="selectable jg">공지사항</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/admin/memberlist" class="nav-link" >
 						<i class="nav-icon fas fa-address-book"></i>
-						<p class="selectable">회원 리스트</p>
+						<p class="selectable jg">회원 리스트</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="/admin/ipMain" class="nav-link" >
 						<i class="nav-icon fas fa-network-wired"></i>
-						<p class="selectable">관리자 허용ip 리스트</p>
+						<p class="selectable jg">관리자 허용ip 리스트</p>
 		                </a>
 		              </li>
 					</ul>
 				</li><br>
 
-					<br> 
-				<%--
-				<li class="nav-item has-treeview menu-open">
-					<c:choose>
-						<c:when test="${SADMIN.adminId eq 'admin' }">
-							<a href="#"	class="nav-link active"><i class="nav-icon fa fa-check"></i>
-								<p>게시판<i class="fas fa-angle-left right"></i></p>
-							</a>
-							<ul class="nav nav-treeview">
-								<li class="nav-item">
-									<a href="/admin/memlistInsertView" class="nav-link"><i	class="nav-icon fa fa-plus-square"></i>
-										<p>게시판  생성하기</p>
-									</a>
-								</li>
-							</ul>	
-						</c:when>
-						<c:when test="${SADMIN.adminId ne 'admin' }">
-							<a href="#"	class="nav-link active"><i class="nav-icon fa fa-check"></i>
-								<p>협업공간<i class="fas fa-angle-left right"></i></p>
-							</a>	
-							<ul class="nav nav-treeview">
-								<li class="nav-item">
-									<a href="#" class="nav-link"><i	class="nav-icon fa fa-plus-square"></i>
-										<p class="selectable mkPjtBtn">프로젝트  생성하기</p>
-									</a>
-								</li>
-							</ul>
-						</c:when>
-					</c:choose>
-				</li>
-				
-				<br>
-				
-				<!-- memType이 MEM일때  -->
-				 <c:if test="${not empty memInProjectList}">
-					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link active">
-				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>생성된 프로젝트<i class="fas fa-angle-left right"></i></p>
-						</a>
-							
-					    <ul class="nav nav-treeview" style="display: block;">
-					    	<c:forEach items="${adminInProjectList}" var="project">
-						    	<li class="nav-item">
-									<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
-								 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
-								 	</a>
-								</li>
-							</c:forEach>
-						</ul>
-					</li>
-				 </c:if>
-				 
-				 <!-- 프로젝트없는 경우 -->
-				 <c:if test="${memInProjectList eq null and plInProjectList eq null and pmInProjectList eq null}">
-					<li class="nav-item has-treeview menu-close">
-			            <a href="#" class="nav-link">
-				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>참여중인 프로젝트가 없습니다</p>
-						</a>
-				 </c:if>
-				  --%>
 			</ul>
 		</nav>
 		<!-- /.sidebar-menu -->
