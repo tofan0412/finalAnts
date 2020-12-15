@@ -83,6 +83,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </script>
 <style>
+@keyframes blink{
+0% {
+	opacity:1;
+}
+50% {
+	opacity:0;
+}
+100% {
+	opacity:1;
+}
+}
+.blink-image{
+    -moz-animation:blink normal 2.5s infinite ease-in-out;
+	-webkit-animation:blink normal 2.5s infinite ease-in-out;
+    -ms-animation:blink normal 2.5s infinite ease-in-out;
+    animation:blink normal 2.5s infinite ease-in-out;
+}
+body{
+	min-width: 2000px;
+	min-height: 1000px;
+}			
 .top{
 	border: 1px solid lightgray; 
 	font-size: 0.8em; 
@@ -97,6 +118,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	padding-bottom:2%;
 	padding-left:4%;
 	padding-right:4%;
+	
+	margin-top:0.5%;
 }
 th{
 	width:300px; 
@@ -104,10 +127,10 @@ th{
 .bottom{
 	border: 1px solid lightgray; 
 	width:48%; 
-	height:650px; 
+	height:700px; 	
 	float:left; 
-	background-color:white;
-		
+	background-color:white;	
+				
 	padding-top:2%;
 	padding-bottom:2%;
 	padding-left:4%;
@@ -115,6 +138,8 @@ th{
 	margin: auto;
 	vertical-align: middle;
 	horizontal-align: middle;  
+	
+	margin-top:0.5%;	
 } 
 .todoTable {
 	width: 98%;
@@ -123,15 +148,23 @@ th{
 #calendar { 
 	width:700px;
 	padding-left: 6%; 
-} 	
+} 
+.fc-event {
+    border: none;
+}
+.inbt{	
+	background-color:white;
+	border-radius: 15px;
+	outline:none;	
+}
 .fc-sat, .fc-sun, .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri {width:10px;} 
 </style>
 </head>
-	 	
+	 		
 <body>
-<div>
+<div>	
 	<div class="top" style="margin-left:1.5%;"><h4>프로젝트 현황</h4>
-		<div class="mt-2" style="padding-top:7%;">
+		<div class="mt-2" style="padding-top:2%;">
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 				<!-- memType이 MEM일때  -->
 				 <c:if test="${not empty memInProjectList}">
@@ -147,6 +180,7 @@ th{
 									<th>상태(일단 프로젝트번호)</th>
 									<th>완료율</th>
 									<th>생성일</th>
+									<th></th>
 								</tr>  
 								<tbody id=memInProjectList> 
 									<c:forEach items="${memInProjectList}" var="project" varStatus="sts" >
@@ -167,7 +201,7 @@ th{
 													<c:choose>
 														<c:when test="${not empty project.reqId}">
 															<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-														 		<input type="button" value="들어가기">
+														 		<input class="inbt" type="button" value="들어가기">
 														 	</a>
 														
 														</c:when>
@@ -199,7 +233,7 @@ th{
 									<th>상태(일단 프로젝트번호)</th>
 									<th>완료율</th>
 									<th>생성일</th>
-									  
+									<th></th>
 								</tr> 
 								<tbody id=plInProjectList> 
 									<c:forEach items="${plInProjectList}" var="project" varStatus="sts" >
@@ -219,7 +253,7 @@ th{
 													<c:choose>
 														<c:when test="${not empty project.reqId}">
 															<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-														 		<input type="button" value="들어가기">
+														 		<input class="inbt" type="button" value="들어가기">
 														 	</a>
 														</c:when>
 														<c:otherwise>
@@ -250,6 +284,7 @@ th{
 									<th>상태(일단 프로젝트번호)</th>
 									<th>완료율</th>
 									<th>생성일</th>
+									<th></th>
 								</tr> 	
 								<tbody id=pmInProjectList> 
 									<c:forEach items="${pmInProjectList}" var="project" varStatus="sts" >
@@ -269,7 +304,7 @@ th{
 													<c:choose> 
 														<c:when test="${not empty project.reqId}">
 															<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-														 		<input type="button" value="들어가기">
+														 		<input class="inbt" type="button" value="들어가기">
 														 	</a>
 															
 														</c:when>
@@ -309,18 +344,19 @@ th{
 		<div style="padding-top:7%; width:100%; height:100%">
 			<table class="table">
 				<thead>					
-					<tr>				
-						<th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-						<th  style="padding-left: 30px; text-align: center;" class="jg">  이슈 제목</th> 
+					<tr>					
+						<th style="width: 150px; padding-left: 50px; text-align: center;">최신글</th>
+						<th style="padding-left: 30px; text-align: center;" class="jg">  이슈 제목</th> 
 						<th style="text-align: center;" class="jg">   작성자 </th>
 						<th style="text-align: center;" class="jg">   날짜   </th>
 					</tr>
-				</thead>
-			<tbody>			
+				</thead>	
+			<tbody>			 
 				<c:forEach items = "${issuelist }" var ="issue" varStatus="status" end="4">
-					<tr>		
+					<tr>	
 						<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
-							<c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.
+							<img src="../dist/img/new.png" class="blink-image">
+							<%-- <c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>. --%>
 						</td>
 						<td class="jg"  style="padding-left: 30px; text-align: center;">
 							<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${reqId}"> ${issue.issueTitle }</a> 
@@ -328,7 +364,7 @@ th{
 								
 						<td class="jg" style="text-align: center;"> ${issue.memId }</td>
 						<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
-							
+						
 						<c:if test="${issue.issueKind == 'issue'}">
 							<td style="text-align: center;" class="jg"> 이슈</td>										
 						</c:if>
@@ -345,14 +381,14 @@ th{
 	
 	<!-- 아래  -->
 		<!-- 왼쪽 통계 -->
-		<div class="bottom" style="margin-left:1.5%;"><h4>프로젝트별 통계</h4><br>
+		<div class="bottom" style="margin-left:1.5%;"><h4>프로젝트 통계</h4><br>
 			<img src="/dist/img/통계.gif" style="height: 100%; width: 100%; ">
 		</div>
-		  
+		  	
 		<!-- 오른쪽 캘린더 -->
-		<div class="bottom" style="margin-left:1%;">
-        	<div id="calendar"></div>
-		</div>
+		<div class="bottom" style="margin-left:1%;"><h4>프로젝트 일정</h4>
+        	<div id="calendar" style="margin-left:12%;"></div>
+		</div>	
 </div>
 </body>
 </html>
