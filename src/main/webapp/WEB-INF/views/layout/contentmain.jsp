@@ -149,7 +149,7 @@ th{
 									<th>상태(일단 프로젝트번호)</th>
 									<th>완료율</th>
 									<th>생성일</th>
-								</tr> 
+								</tr>  
 								<tbody id=memInProjectList> 
 									<c:forEach items="${memInProjectList}" var="project" varStatus="sts" >
 										<c:if test="${project.memId != SMEMBER.memId }">
@@ -165,10 +165,10 @@ th{
 												<td>${project.percent}</td>
 												<td>${fn:substring(project.regDt,0,10)}</td>
 												<td>	
-				
+					
 													<c:choose>
 														<c:when test="${not empty project.reqId}">
-															<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+															<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
 														 		<input type="button" value="들어가기">
 														 	</a>
 														
@@ -220,10 +220,9 @@ th{
 												<td>
 													<c:choose>
 														<c:when test="${not empty project.reqId}">
-															<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+															<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
 														 		<input type="button" value="들어가기">
 														 	</a>
-														
 														</c:when>
 														<c:otherwise>
 															<a>참여중인 프로젝트가 없습니다.</a>
@@ -271,7 +270,7 @@ th{
 												<td>	
 													<c:choose> 
 														<c:when test="${not empty project.reqId}">
-															<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+															<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
 														 		<input type="button" value="들어가기">
 														 	</a>
 															
