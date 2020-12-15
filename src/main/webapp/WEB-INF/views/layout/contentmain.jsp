@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="ants.com.board.memBoard.model.ScheduleVo"%>
@@ -151,33 +152,35 @@ th{
 								</tr> 
 								<tbody id=memInProjectList> 
 									<c:forEach items="${memInProjectList}" var="project" varStatus="sts" >
-									    <tr "data-privid="${project.reqId}">
-											<td>
-											<li class="nav-item">
-												<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
-											 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
-											 	</a>
-											</li> 
-											</td> 
-											<td>${project.reqId}</td>
-											<td>${project.percent}</td>
-											<td>${project.regDt}</td>
-											<td>
-
-												<c:choose>
-													<c:when test="${not empty project.reqId}">
-														<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
-													 		<input type="button" value="들어가기">
-													 	</a>
-													
-													</c:when>
-													<c:otherwise>
-														<a>참여중인 프로젝트가 없습니다.</a>
-													</c:otherwise>
-												</c:choose> 
-
-											</td>	
-										</tr>
+										<c:if test="${project.memId != SMEMBER.memId }">
+										    <tr "data-privid="${project.reqId}">
+												<td>
+												<li class="nav-item">
+													<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
+												 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
+												 	</a>
+												</li> 
+												</td> 
+												<td>${project.reqId}</td>
+												<td>${project.percent}</td>
+												<td>${fn:substring(project.regDt,0,10)}</td>
+												<td>	
+				
+													<c:choose>
+														<c:when test="${not empty project.reqId}">
+															<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+														 		<input type="button" value="들어가기">
+														 	</a>
+														
+														</c:when>
+														<c:otherwise>
+															<a>참여중인 프로젝트가 없습니다.</a>
+														</c:otherwise>
+													</c:choose> 
+	
+												</td>	
+											</tr>
+										</c:if>
 									</c:forEach> 
 								</tbody>
 							</table>
@@ -202,31 +205,33 @@ th{
 								</tr> 
 								<tbody id=plInProjectList> 
 									<c:forEach items="${plInProjectList}" var="project" varStatus="sts" >
-									    <tr "data-privid="${project.reqId}">
-											<td>
-											<li class="nav-item">
-												<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
-											 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
-											 	</a>
-											</li>
-											</td>
-											<td>${project.reqId}</td>
-											<td>${project.percent}</td>
-											<td>${project.regDt}</td>
-											<td>
-												<c:choose>
-													<c:when test="${not empty project.reqId}">
-														<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
-													 		<input type="button" value="들어가기">
-													 	</a>
-													
-													</c:when>
-													<c:otherwise>
-														<a>참여중인 프로젝트가 없습니다.</a>
-													</c:otherwise>
-												</c:choose>
-											</td>	
-										</tr>
+										<c:if test="${project.proName != '' and project.proName != null}">
+										    <tr "data-privid="${project.reqId}">
+												<td>
+												<li class="nav-item">
+													<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
+												 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
+												 	</a>
+												</li>
+												</td>
+												<td>${project.reqId}</td>
+												<td>${project.percent}</td>
+												<td>${fn:substring(project.regDt,0,10)}</td>
+												<td>
+													<c:choose>
+														<c:when test="${not empty project.reqId}">
+															<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+														 		<input type="button" value="들어가기">
+														 	</a>
+														
+														</c:when>
+														<c:otherwise>
+															<a>참여중인 프로젝트가 없습니다.</a>
+														</c:otherwise>
+													</c:choose>
+												</td>	
+											</tr>
+										</c:if>
 									</c:forEach> 
 								</tbody>
 							</table>
@@ -251,31 +256,33 @@ th{
 								</tr> 	
 								<tbody id=pmInProjectList> 
 									<c:forEach items="${pmInProjectList}" var="project" varStatus="sts" >
-									    <tr "data-privid="${project.reqId}">
-											<td>
-											<li class="nav-item">
-												<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
-											 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
-											 	</a> 
-											</li>
-											</td> 
-											<td>${project.reqId}</td>
-											<td>${project.percent}</td>
-											<td>${project.regDt}</td>
-											<td>
-												<c:choose> 
-													<c:when test="${not empty project.reqId}">
-														<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
-													 		<input type="button" value="들어가기">
-													 	</a>
-													
-													</c:when>
-													<c:otherwise>
-														<a>참여중인 프로젝트가 없습니다.</a>
-													</c:otherwise>
-												</c:choose>
-											</td>	
-										</tr>
+										<c:if test="${project.proName != '' and project.proName != null}">
+										    <tr "data-privid="${project.reqId}">
+												<td>
+												<li class="nav-item">
+													<a class="nav-link" href="${pageContext.request.contextPath}/schedule/mainClendar?reqId=${project.reqId}">
+												 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
+												 	</a> 
+												</li>
+												</td> 
+												<td>${project.reqId}</td>
+												<td>${project.percent}</td>
+												<td>${fn:substring(project.regDt,0,10)}</td>
+												<td>	
+													<c:choose> 
+														<c:when test="${not empty project.reqId}">
+															<a class="nav-link" href="${pageContext.request.contextPath}/todo/projectgetReq?reqId=${project.reqId}">
+														 		<input type="button" value="들어가기">
+														 	</a>
+															
+														</c:when>
+														<c:otherwise>
+															<a>참여중인 프로젝트가 없습니다.</a>
+														</c:otherwise>
+													</c:choose>
+												</td>	
+											</tr>
+										</c:if>
 									</c:forEach> 
 								</tbody>
 							</table>

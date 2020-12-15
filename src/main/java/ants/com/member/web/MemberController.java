@@ -130,25 +130,20 @@ public class MemberController {
 				// MEM의 프로젝트 리스트가 있을때만
 				if (proList.size() != 0) {
 					session.setAttribute("memInProjectList", proList);	// 프로젝트 리스트 세션에 저장
-				
+					
+					// 로그인시 메인페이지에 캘린더 초기값 
+					ScheduleVo scheduleVo = new ScheduleVo();		
+					scheduleVo.setReqId(proList.get(0).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
+					showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
 				}
 				
 				List<ProjectVo> pro_pL = projectService.plInProjectList(dbMember.getMemId());// 프로젝트 리스트 조회
-				
+					
 				// PL의 프로젝트 리스트가 있을때만
 				if (pro_pL.size() != 0) {
 					session.setAttribute("plInProjectList", pro_pL);	// 프로젝트 리스트 세션에 저장
-					
+						
 				}
-				
-				// 로그인시 메인페이지에 캘린더 초기값 
-				ScheduleVo scheduleVo = new ScheduleVo();		
-				scheduleVo.setReqId(proList.get(0).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
-				showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
-			}
-			
-			// 회원 타입이 PL일 때만 조회
-			if(dbMember.getMemType().equals("PL")) {
 				
 			}
 				
