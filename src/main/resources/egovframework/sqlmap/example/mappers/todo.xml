@@ -327,9 +327,21 @@
 		</select>
 		
 		<select id="getAllTodo" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoVo">
-			SELECT *
+			SELECT  todo_id,
+					TO_CHAR(todo_start, 'DD-MM-YYYY') as todo_start,
+					TO_DATE(todo_end) - TO_DATE(todo_start) as todo_end,
+					todo_cont,
+					todo_title,
+					TRUNC(todo_percent/100,2) as todoPercent,
+					todo_importance,
+					todo_level,
+					req_id,
+					mem_id,
+					todo_parentid,
+					del
 			  FROM todo
 			WHERE req_id = #{reqId} 
+			ORDER BY todo_level
 		</select>
 		
 		

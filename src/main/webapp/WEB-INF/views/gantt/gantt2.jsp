@@ -7,7 +7,7 @@
 	<link href="/gantt/codebase/dhtmlxgantt.css" rel="stylesheet">
 </head>
 <body>
-	<div id="gantt_here" style='width:1000px; height:400px;'></div>
+	<div id="gantt_here" style='width:1400px; height:1000px;'></div>
     	
     	
     	
@@ -15,10 +15,24 @@
       gantt.init("gantt_here");
       
       $.getJSON("/todo/getAllTodo", function(data){
-    	  	gdata = [];
-    		$.each(data, function(inx, obj){
-    			gdata.push{id : obj.todoId, text:obj.todoTitle};
+    	  	var gdata = [];
+    		$.each(data.todoList, function(inx, obj){
+    			var gdatum = {};
+    				
+    			if(obj.todoParentid == null){
+	    			gdatum = {id:parseInt(obj.todoId), text:obj.todoTitle , start_date:obj.todoStart , duration:parseInt(obj.todoEnd),
+	    					  progress:obj.todoPercent, open:true};
+    			}else{
+	    			gdatum = {id:obj.todoId, text:obj.todoTitle , start_date:obj.todoStart , duration:obj.todoEnd,
+	    					  progress:obj.todoPercent, parent:obj.todoParentid};
+    			}
+    			gdata.push(gdatum);
     		});
+    		gantt.parse({
+    			data : gdata
+    		});
+    		
+    		
 
     
     		

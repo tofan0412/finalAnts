@@ -91,6 +91,7 @@
 <script type="text/javascript">
 
 var id;
+var name;
 
 $(function(){
 	
@@ -104,6 +105,7 @@ $(function(){
 	$("#pubfileList tr").on("mousedown", function(e){
 			console.log('click')
 			var pubfileId = $(this).data("pubfileid");
+			var pubfileName = $(this).data("pubfilename");
 			if(event.button == 2){
 			 //Get window size:
 		    var winWidth = $(document).width();
@@ -122,6 +124,7 @@ $(function(){
 		      "top": posY-50
 		    }).show();
 		    id=pubfileId;
+		    name=pubfileName;
 		    //Prevent browser default contextmenu.
 		    return false;
 			}
@@ -145,9 +148,9 @@ function pubfiledown(){
    	document.location = "/file/publicfileDown?pubId="+id;
 
 }
-
-function pubfiledel(){
-   	document.location = "/hotissueFile/delhotfilesT?hissuefId="+id;
+// 파일 복사
+function pubfilecopy(){
+   	document.location = "/privatefile/copyfile?pubId="+id;
 }
 
 
@@ -178,7 +181,7 @@ function pubfiledel(){
 <!-- 	<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 
 <ul class="contextmenu">
-  <li><a href="#"><i class="fa fa-folder" style="padding-right: 20px;"></i>내 파일함으로</a></li>
+  <li><a href="javascript:pubfilecopy();"><i class="fa fa-folder" style="padding-right: 20px;"></i>내 파일함으로</a></li>
   <li><a href="javascript:pubfiledown();"><i class="fas fa-download"  style="padding-right: 20px;"></i>Download</a></li>
 <!--   <li><a href="javascript:hotfiledel();"><i class="fas fa-trash"  style="padding-right: 20px;"></i>Delete</a></li> -->
 </ul>
@@ -259,7 +262,7 @@ function pubfiledel(){
 	                  <thead>
 	                    <tr>
 	                        <th style="width: 250px;  text-align: center;" class="jg">No.</th>
-	                     	<th style="padding-left: 70px; width: 400px; text-align: center;" class="jg"> 파일명</th> 
+	                     	<th style="padding-left: 150px; width: 400px; " class="jg"> 파일명</th> 
 							<th style="text-align: center;" class="jg"> 소유자 </th>
 							<th style="text-align: center;" class="jg"> 날짜   </th>
 							<th style="text-align: center;" class="jg"> 확장자   </th>
@@ -271,12 +274,13 @@ function pubfiledel(){
 	                
 	                      
 	                       <c:forEach items = "${pubfilelist  }" var ="file" varStatus="status">
-								<tr data-pubfileid="${file.pubId }">
+								<tr data-pubfileid="${file.pubId }" data-pubfilename="${file.pubFilename}">
 				                 	<td class="jg" style="width: 250px;  text-align: center;"><c:out value="${  ((publicFileVo.pageIndex-1) * publicFileVo.pageUnit + (status.index+1))}"/>.</td>
 									
 										
 									<td class="jg" style="padding-left: 70px; text-align: left; width: 400px;">
 									<input type="hidden" id="${file.pubId}" name="${file.pubId}">		
+									<input type="hidden" id="${file.pubFilename}" name="${file.pubFilename}">		
 										
 										<img name="link" src="/fileFormat/${fn:toLowerCase(file.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">										 																	
 									 		${file.pubFilename}
