@@ -175,6 +175,16 @@ document.addEventListener('DOMContentLoaded', function() {
 					 	}
 			    }
 			  },
+			  eventResize: function(info) {
+		            if (!confirm("일정 변경을 저장하시겠습니까??")) {
+		            info.revert();
+		            }else{
+		            var start = moment(info.event.start).format('YYYY-MM-DD');
+		    		var end = moment(info.event.end).format('YYYY-MM-DD');
+				      calendarUpdate(info.event.id, info.event.title, start, end);
+		            }
+				      },
+		            
 			  eventDragStop: function (info) {
 				    var trashEl = jQuery('.calendarTrash');
 				    var ofs = trashEl.offset();
