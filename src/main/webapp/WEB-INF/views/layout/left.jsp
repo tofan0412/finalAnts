@@ -43,10 +43,8 @@
   ChannelIO('boot', {
     "pluginKey": "9fecedd4-d5c5-4ee5-bdcc-ddf8f29b6c2e"
   });
-</script>
-<!-- End Channel Plugin -->
- 
-<script>
+  
+  	
 	$(function(){
 		// 메뉴를 선택하면 배경색이 변한다. 
 		$('.selectable').click(function(){
@@ -62,8 +60,6 @@
 		
 		
 	})
-
-
 </script>
 
 

@@ -341,10 +341,10 @@ th{
 			
 	<!-- 위 오른쪽 공지사항 -->
 	<div class="top" style="margin-left:1%;"><h4>공지사항</h4>
-		<div style="padding-top:7%; width:100%; height:100%">
+		<div style="padding-top:7%; width:100%; height:90%">
 			<table class="table">
-				<thead>					
-					<tr>					
+				<thead>						
+					<tr>							
 						<th style="width: 150px; padding-left: 50px; text-align: center;">최신글</th>
 						<th style="padding-left: 30px; text-align: center;" class="jg">  이슈 제목</th> 
 						<th style="text-align: center;" class="jg">   작성자 </th>
@@ -377,12 +377,12 @@ th{
 			</table>
 		</div>
 	</div> 
-
+	
 	
 	<!-- 아래  -->
 		<!-- 왼쪽 통계 -->
 		<div class="bottom" style="margin-left:1.5%;"><h4>프로젝트 통계</h4><br>
-			<img src="/dist/img/통계.gif" style="height: 100%; width: 100%; ">
+			<img src="/dist/img/통계.gif" style="height: 90%; width: 100%; ">
 		</div>
 		  	
 		<!-- 오른쪽 캘린더 -->
