@@ -397,15 +397,15 @@ public class AdminController {
 	@RequestMapping("/delIp")
 	public String delIp(IpVo ipVo) {
 		int result = adminService.delIp(ipVo);
-		return "";
+		return "redirect:/admin/getIpList";
 	}
 	
-	// Ip 수정하기
-	@RequestMapping("/updateIp")
-	public String updateIp(IpVo ipVo) {
-		int result = adminService.updateIp(ipVo);
-		return "admin.tiles/admin/ipUpdate";
-	}
+//	// Ip 수정하기
+//	@RequestMapping("/updateIp")
+//	public String updateIp(IpVo ipVo) {
+//		int result = adminService.updateIp(ipVo);
+//		return "admin.tiles/admin/ipUpdate";
+//	}
 	
 	//Ip 입력창으로 이동
 	@RequestMapping("/insertIpView")

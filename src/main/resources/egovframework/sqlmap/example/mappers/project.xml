@@ -47,23 +47,19 @@
 		resultType="ants.com.member.model.ReqVo"
 		parameterType="java.lang.String">
 		SELECT *
-		FROM REQLIST
-		WHERE REQ_ID IN (SELECT REQ_ID
-		FROM
-		REQLIST
-		WHERE PL_ID = #{plId}
-		AND STATUS = 'WAIT')
-		OR REQ_ID IN (SELECT
-		REQ_ID
-		FROM REQLIST A
-		WHERE A.PL_ID = #{plId}
-		AND A.STATUS = 'ACCEPT'
-		AND
-		A.REQ_ID IN (SELECT B.REQ_ID
-		FROM PROJECT B
-		WHERE PRO_NAME is NULL
-		AND
-		MEM_ID IS NOT NULL))
+		  FROM REQLIST
+		 WHERE REQ_ID IN (SELECT REQ_ID
+							FROM REQLIST
+						   WHERE PL_ID = #{plId}
+							 AND STATUS = 'WAIT')
+		    OR REQ_ID IN (SELECT REQ_ID
+							FROM REQLIST A
+						   WHERE A.PL_ID = #{plId}
+							 AND A.STATUS = 'ACCEPT'
+							 AND A.REQ_ID IN (SELECT B.REQ_ID
+												FROM PROJECT B
+											   WHERE PRO_NAME is NULL
+												 AND MEM_ID IS NOT NULL))
 	</select>
 
 	<insert id="insertProject"

@@ -23,7 +23,12 @@
 </style>
 <script>
 $(function(){
-	
+	$('.ipDelBtn').click(function(){
+		alert("IP가 삭제되었습니다.");
+		
+		var ipId = $(this).attr("ipId");
+		$(location).attr("href", "/admin/delIp?ipId="+ipId);
+	})
 })
 </script>
 
@@ -45,7 +50,7 @@ $(function(){
 					<td hidden="hidden">${ip.ipId }</td>
 					<td>${ip.ipAddr }</td>
 					<td>${ip.adminId }</td>
-					<td><button class="btn btn-failure">해제</button></td>
+					<td><button class="btn btn-danger ipDelBtn" ipId=${ip.ipId }>삭제</button></td>
 				</tr>
 			</c:forEach>
 			<c:if test="${ipList.size() == 0 }">
