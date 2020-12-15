@@ -34,7 +34,6 @@ public class ProjectController {
 	@Resource(name = "projectService")
 	private ProjectService projectService;
 	
-
 	@Resource(name = "reqService")
 	private ReqService reqService;
 
