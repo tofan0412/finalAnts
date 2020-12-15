@@ -1,18 +1,14 @@
 package ants.com.member.web;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,7 +20,6 @@ import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.model.ReqVo;
 import ants.com.member.service.ProjectService;
-import ants.com.member.service.ProjectmemberService;
 import ants.com.member.service.ReqService;
 
 @RequestMapping("/project")
@@ -117,22 +112,40 @@ public class ProjectController {
 			return "fail";
 		}
 	}
-
+	
+	@RequestMapping("/insertProject")
+	@ResponseBody
+	public String insertProject(ReqVo reqVo) {
+		ProjectVo projectVo = new ProjectVo();
+		projectVo.setReqId(reqVo.getReqId());
+		
+		int result = projectService.insertProject(projectVo);
+		
+		if (result > 0) {
+			return "success";
+		}else {
+			return "failure";
+		}
+	}
+	
+	
 	@RequestMapping("/acceptOrReject")
 	public String acceptOrReject(ReqVo reqVo, HttpSession session) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
 
 		if ("ACCEPT".equals(reqVo.getStatus())) {
 			// PL이 요청 사항에 대해 승인 처리한 경우 -> STATUS만 업데이트 한다. (PL_ID는 전송한 시점에서 바로 업데이트 된다.)
+			
 			reqService.reqUpdate(reqVo);
 			
 			// 프로젝트 찾아서 memId를 등록해 준다.
 			ProjectVo projectVo = new ProjectVo();
-			projectVo.setMemId(memberVo.getMemId());
-			projectService.updateProject(projectVo);
+			projectVo.setMemId(memberVo.getMemId());	// PL 이름 등록
+			projectVo.setReqId(reqVo.getReqId());		// 해당 프로젝트를 ReqId로 찾기.
 			
-
-		} else {
+			projectService.updateProject(projectVo); 
+		} 
+		else {
 			// PL이 요청 사항에 대해 반려 처리한 경우 -> STATUS만 REJECT로 수정한다.
 			reqService.reqUpdate(reqVo);
 		}

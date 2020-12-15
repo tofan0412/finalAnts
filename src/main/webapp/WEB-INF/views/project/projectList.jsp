@@ -36,9 +36,10 @@ th, td {
 		
 		// 사용자가 승인 버튼을 누르는 경우 버튼 내용이 프로젝트 생성으로 변경되며, 
 		// reqList 테이블에서 status 가 accept로 변경된다.
-		$('.accept').click(function(){
+		$('.pjtAcceptBtn').click(function(){
 			var reqId = $(this).attr("reqId");
-			alert(reqId + ": 승인 처리되었습니다.");
+			
+			alert("요구사항 정의서 번호 - "+ reqId + " : 승인 처리되었습니다.");
 			var reqTitle = $(this).attr("reqTitle");
 			var memId = $(this).attr("memId");
 			
@@ -49,11 +50,11 @@ th, td {
 			}
 			// 알림db등록
 			saveResMsg(alarmData);
-			
+			                
 			$(location).attr("href", "/project/acceptOrReject?reqId="+reqId+"&status=ACCEPT");
 		})
 		
-		$('.reject').click(function(){
+		$('.pjtRejectBtn').click(function(){
 			var reqId = $(this).attr("reqId");
 			alert(reqId + ": 반려 처리되었습니다.");
 			$(location).attr("href", "/project/acceptOrReject?reqId="+reqId+"&status=REJECT");
@@ -120,8 +121,10 @@ th, td {
 									//프로젝트 초대알림 db저장
 									saveReqMsg(alarmData);
 									alert("프로젝트를 생성하였습니다.");
+									$(location).attr("href", "/project/projectgetReq?reqId="+reqId);
 								}else{
-// 									console.log("프로젝트 생성에 실패하였습니다..");
+									alert("프로젝트 생성을 실패하였습니다.");
+									$(location).attr("href", "/project/readReqList");
 								}
 							}
 						})
@@ -313,8 +316,8 @@ th, td {
 					<td>${req.status }</td>
 					<td>
 						<c:if test="${req.status == 'WAIT' }">
-							<button reqId="${req.reqId }" reqTitle="${req.reqTitle }" memId = "${req.memId }" class="btn btn-success accept">승인</button>
-							<button reqId="${req.reqId }" reqTitle="${req.reqTitle }" memId = "${req.memId }" class="btn btn-danger reject">반려</button>
+							<button reqId="${req.reqId }" reqTitle="${req.reqTitle }" memId = "${req.memId }" class="btn btn-success pjtAcceptBtn">승인</button>
+							<button reqId="${req.reqId }" reqTitle="${req.reqTitle }" memId = "${req.memId }" class="btn btn-danger pjtRejectBtn">반려</button>
 						</c:if>
 						<c:if test="${req.status == 'ACCEPT' }">
 							<button reqId="${req.reqId }" reqTitle="${req.reqTitle }"

@@ -1,5 +1,6 @@
 package ants.com.member.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -48,7 +49,7 @@ public class ReqService{
 	 * @param reqVo 수정할 요구사항정의서 객체
 	 * @return 성공:1 실패:0
 	 */
-	public int reqUpdate(ReqVo reqVo) {
+	public int reqUpdate(ReqVo reqVo){
 		return mapper.reqUpdate(reqVo);
 	}
 	
