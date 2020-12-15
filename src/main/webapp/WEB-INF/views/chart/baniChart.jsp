@@ -4,7 +4,6 @@
 <html >
 
 <head>
-<%@include file="../layout/fullcalendarLib.jsp"%>
 <%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 </head>
 <script type="text/javascript">

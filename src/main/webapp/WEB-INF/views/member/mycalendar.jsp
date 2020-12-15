@@ -6,7 +6,6 @@
     
 <html>
 <head>
-<%@include file="../layout/fullcalendarLib.jsp"%>
 <%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 <%
 	List<ScheduleVo> list = (ArrayList<ScheduleVo>)request.getAttribute("showSchedule");
