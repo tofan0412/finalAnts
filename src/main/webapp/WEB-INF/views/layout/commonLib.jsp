@@ -17,7 +17,8 @@
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
 <script src="/plugins/chart.js/Chart.min.js"></script>
-
+<!-- knob -->
+<script src="/plugins/jquery-knob/jquery.knob.min.js"></script>
 <script src="/plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
