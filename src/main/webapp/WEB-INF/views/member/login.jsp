@@ -9,8 +9,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/dist/js/js.cookie-2.2.1.min.js"></script>
-
+<script type="text/javascript" src="${pageContext.request.contextPath }/dist/js/js.cookie-2.2.1.min.js"></script>
+	
 <style>
 .ff {
 	width: 100vw;
@@ -74,7 +74,7 @@
 					<h4 class="jg">
 						새로 오신 분인가요 ? <a href="/member/memberRegistview" style="color: #0BB783;"><strong>새계정을 만드세요.</strong></a>
 					</h4>
-				</div>
+				</div>	
 				<br>
 							<!-- onsubmit="return false;"  페이지 새로고침 막기 -->
 				<form id="lform" action="/member/loginFunc" method="POST" >

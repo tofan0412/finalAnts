@@ -285,5 +285,40 @@ public class ProjectMemberController {
 	
 	
 	
+	// 해당 프로젝트 이슈 공지사항 리스트			메인용
+	@RequestMapping("/mainissuelist")
+	public String mainissuelist(@ModelAttribute("issueVo") IssueVo issueVo, HttpSession session, Model model, String reqId) throws Exception {
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+
+		issueVo.setMemId(memId);
+		issueVo.setReqId(reqId);
+		issueVo.setCategoryId("3");
+		issueVo.setIssueKind("notice");
+		
+		/** EgovPropertyService.sample */
+		issueVo.setPageUnit(propertiesService.getInt("pageUnit"));
+		issueVo.setPageSize(propertiesService.getInt("pageSize"));
+		
+		/** pageing setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
+		paginationInfo.setPageSize(issueVo.getPageSize());
+
+		issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
+		issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		List<IssueVo> resultList = promemService.issuelist(issueVo);
+		model.addAttribute("issuelist", resultList);
+
+		int totCnt = promemService.issuePagingListCnt(issueVo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
+		
+		return "tiles/layout/contentmain";
+	}
 	
 }
