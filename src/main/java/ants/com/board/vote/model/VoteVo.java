@@ -18,8 +18,21 @@ public class VoteVo extends BaseVo {
 	private String voteTitle;
 	private String votedNo;
 	private String remain;
+	private String votepercent;
 	
 	
+	public String getVotepercent() {
+		return votepercent;
+	}
+
+
+
+	public void setVotepercent(String votepercent) {
+		this.votepercent = votepercent;
+	}
+
+
+
 	public String getVoteId() {
 		return voteId;
 	}
@@ -169,9 +182,12 @@ public class VoteVo extends BaseVo {
 		return "VoteVo [voteId=" + voteId + ", voteTotalno=" + voteTotalno + ", voteDeadline=" + voteDeadline
 				+ ", voteStatus=" + voteStatus + ", categoryId=" + categoryId + ", reqId=" + reqId + ", memId=" + memId
 				+ ", memName=" + memName + ", del=" + del + ", voteTitle=" + voteTitle + ", votedNo=" + votedNo
-				+ ", remain=" + remain + "]";
+				+ ", remain=" + remain + ", votepercent=" + votepercent + "]";
 	}
 
+
+
+	
 
 
 	
