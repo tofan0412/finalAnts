@@ -16,7 +16,16 @@ public class SuggestVo extends BaseVo{
 	private String todoId;
 	private String memId;
 	private String reqId;
+	private String acceptpercent;
 	
+	
+	
+	public String getAcceptpercent() {
+		return acceptpercent;
+	}
+	public void setAcceptpercent(String acceptpercent) {
+		this.acceptpercent = acceptpercent;
+	}
 	public String getReqId() {
 		return reqId;
 	}
@@ -77,11 +86,12 @@ public class SuggestVo extends BaseVo{
 	public void setDel(String del) {
 		this.del = del;
 	}
-
 	@Override
 	public String toString() {
 		return "SuggestVo [sgtId=" + sgtId + ", sgtTitle=" + sgtTitle + ", sgtCont=" + sgtCont + ", regDt=" + regDt
-				+ ", sgtStatus=" + sgtStatus + ", categoryId=" + categoryId + ", todoId=" + todoId + ", del=" + del
-				+ ", memId=" + memId + ", reqId=" + reqId + "]";
+				+ ", sgtStatus=" + sgtStatus + ", categoryId=" + categoryId + ", del=" + del + ", todoId=" + todoId
+				+ ", memId=" + memId + ", reqId=" + reqId + ", acceptpercent=" + acceptpercent + "]";
 	}
+
+	
 }
