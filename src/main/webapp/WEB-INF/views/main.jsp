@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 
 <%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 <!-- <div class="chatbot_container"> -->
@@ -34,19 +35,9 @@
 }
 
 .shadow-pop-tr {
-	-webkit-animation: fadein 2.5s; /* Safari and Chrome */
-	border-radius: 0.6rem;
+	-webkit-animation: shadow-pop-tr 1.3s linear both;
+	        animation: shadow-pop-tr 1.3s linear both;
 }
-
-@-webkit-keyframes fadein { /* Safari and Chrome */
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
-}
-
 .text-focus-in {
 	-webkit-animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 	        animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
@@ -82,7 +73,7 @@
 <!-- Channel Plugin Scripts -->
 <script>
   (function() {
-	var w = window;
+    var w = window;
     if (w.ChannelIO) {
       return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
     }
@@ -114,73 +105,16 @@
     } else {
       window.addEventListener('DOMContentLoaded', l, false);
       window.addEventListener('load', l, false);
-    }	
-	
-//     // 특정 DIV 스크롤에서 이벤트 진행    
-//     var isVisible = false;
-//     $(window).on('scroll', function(){
-//     	if (checkVisible($('#statistics'))&&!isVisible) {
-//             alert("Visible!!!");
-//             isVisible=true;
-//         }
-//     });
-    
-    sc16 = 1;
-    sc21 = 1;
-    sc27 = 1;
-    sc32 = 1;
-    scEnd = 1;
-    $(window).on('scroll', function(){
-    	$('#scrollVal').val(window.scrollY);
-    	if ( $('#scrollVal').val() >= 1600 && sc16 == 1 ){	// 한 눈에 볼 수 있는 프로젝트 진행도
-    		sc16 = 0;
-    	}
-    	
-		if ( $('#scrollVal').val() >= 2100 && sc21 == 1){	// 팀원간 대화를 간편하게
-    		sc21 = 0;	
-    	}
-		
-		if ( $('#scrollVal').val() >= 2700 && sc27 == 1){	// 간편한 일정 공유
-    		sc27 = 0;	
-    	}
-		
-		if ( $('#scrollVal').val() >= 3200 && sc32 == 1){	// 편리한 공용 파일함
-    		sc32 = 0;	
-    	}
-		
-		if ( $('#scrollVal').val() >= 3440 && scEnd == 1){	// 마지막 부분
-    		scEnd = 0;	
-    	}
-		
-    })
-    
-    
-    
+    }
   })();
-  ChannelIO('boot', {
-    "pluginKey": "9fecedd4-d5c5-4ee5-bdcc-ddf8f29b6c2e", //please fill with your plugin key
-    "memberId": "poiqqw@naver.com", //fill with user id
-    "profile": {
-		"name": "한상진",
-		"mobileNumber": "010490507321", //fill with user phone number
-    }	
+  ChannelIO('boot', {	
+    "pluginKey": "9fecedd4-d5c5-4ee5-bdcc-ddf8f29b6c2e"
   });
-  // 특정 스크롤 부분에서 이벤트 발생하기.
-  function checkVisible( elm, eval ) {
-	    eval = eval || "object visible";
-	    var viewportHeight = $(window).height(), // Viewport Height
-	        scrolltop = $(window).scrollTop(), // Scroll Top
-	        y = $(elm).offset().top,
-	        elementHeight = $(elm).height();   
-	    
-	    if (eval == "object visible") return ((y < (viewportHeight + scrolltop)) && (y > (scrolltop - elementHeight)));
-	    if (eval == "above") return ((y < (viewportHeight + scrolltop)));
-	}
 </script>
 <!-- End Channel Plugin -->
 
 <div class="main_container jg">
-	<input id="scrollVal" type="text" hidden="hidden" readonly/>;
+	
 	
 	<div style="height : 600px; 
 			background-image : 
@@ -214,7 +148,7 @@
 				<div class="conB_icon">
 					<i class="fas fa-chart-bar icon"></i>
 				</div>
-				<div class="conB_content" id="statistics">
+				<div class="conB_content">
 					<h3>통계</h3>
 					<p>프로젝트를 한 눈에 <br>살펴볼 수 있습니다.</p>
 				</div>
@@ -224,7 +158,7 @@
 				<div class="conB_icon">
 					<i class="fas fa-users icon"></i>
 				</div>
-				<div class="conB_content" id="chatting">
+				<div class="conB_content">
 					<h3>대화방</h3>
 					<p>팀원끼리 빠르게<br>메시지를 보내보세요</p>
 				</div>
@@ -244,17 +178,17 @@
 				<div class="conB_icon">
 					<i class="fas fa-calendar icon"></i>
 				</div>
-				<div class="conB_content" id="calendar">
+				<div class="conB_content">
 					<h3>간편한 일정 공유</h3>
 					<p>서로의 일정을<br> 한 눈에 확인할 수 있습니다.</p>
 				</div>
 			</div>
 			
-			<div class="conB_small_container" >
+			<div class="conB_small_container">
 				<div class="conB_icon">
 					<i class="fas fa-file-download icon"></i>
 				</div>
-				<div class="conB_content" id="fileHam">
+				<div class="conB_content">
 					<h3>편리한 공용 파일함</h3>
 					<p>필요한 파일이 있으면<br> 언제든지</p>
 				</div>
@@ -288,8 +222,8 @@
 		</div>
 		
 		<div class="content-text-right">
-			월별 관리부터 현재 프로젝트의 진행 상황 등 GANTT 차트와<br> 
-			다양한 통계를 통해 프로젝트를 보다 효과적으로 관리할 수 있습니다.
+			월별 관리부터 현재 프로젝트의 진행 상황 등 다양한 통계를 통해<br>
+			프로젝트를 보다 효과적으로 관리할 수 있습니다.
 		</div>
 		
 	</div>

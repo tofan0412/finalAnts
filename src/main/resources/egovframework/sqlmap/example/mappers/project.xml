@@ -13,6 +13,7 @@
 		WHERE
 			projectmember.req_id = project.req_id
 		and projectmember.mem_id = #{memId}
+		and projectmember.promem_status='IN'
 	</select>
 
 	<select id="plInProjectList" parameterType="String"
@@ -27,6 +28,7 @@
 		WHERE
 			reqlist.req_id = project.req_id
 		AND reqlist.pl_id= #{memId}
+		AND reqlist.status ='ACCEPT'
 	</select>
 
 	<select id="pmInProjectList" parameterType="String"
@@ -124,11 +126,11 @@
 			p.req_id,
 			p.mem_id,
 			p.pro_name,
-			to_char(round(p.pro_percent)) as percent,
+			TO_CHAR(round(p.pro_percent)) as percent,
 			TO_CHAR(p.reg_dt,'yyyy-mm-dd') as reg_dt,
 			p.del,
 	        TO_CHAR((p.reg_dt + r.req_period),'yyyy-mm-dd') as endDt,
-	        TRUNC(sysdate-to_date(to_char(p.reg_dt, 'yyyymmdd'),'yyyymmdd')) as elepsedTime
+	        nvl(TRUNC(sysdate-to_date(to_char(p.reg_dt, 'yyyymmdd'),'yyyymmdd')),0) as elepsedTime
 		FROM (select * from REQLIST) r,
 			project p
 		where r.req_id = p.req_id
@@ -150,14 +152,14 @@
 	<select id="getoutlinefiles" parameterType="java.lang.String"
 		resultType="ants.com.file.model.PublicFileVo">
 		 SELECT
-		   round(sum(pub_size)) as pub_size
+		   nvl(round(sum(pub_size)),0) as pub_size
 		FROM
 		    publicfile
 		where req_id=#{reqId}
 	</select>
 	<select id="getoutlinevote" parameterType="java.lang.String"
 		resultType="ants.com.board.vote.model.VoteVo">
-		    SELECT round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)) as votepercent
+		    SELECT nvl(round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)),0) as votepercent
 				FROM vote a, member b
 				WHERE a.mem_id = b.mem_id
 				AND a.req_id = #{reqId}

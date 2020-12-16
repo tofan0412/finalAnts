@@ -16,19 +16,20 @@
 <script src="${pageContext.request.contextPath }/resources/plugins/fullcalendar-interaction/main.js"></script>
 <script src="${pageContext.request.contextPath }/resources/plugins/fullcalendar-timegrid/main.js"></script>
 
-
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/dist/css/adminlte.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/fullcalendar/main.css">
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-	
+
 <!-- Font Awesome -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/fontawesome-free/css/all.min.css">
  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <%
 	List<ScheduleVo> list = (ArrayList<ScheduleVo>)request.getAttribute("showSchedule");
 %>
-<script>
+<script>	
 $(function(){
 	// 메뉴를 선택하면 배경색이 변한다. 
 	$('.selectable').click(function(){
@@ -134,179 +135,211 @@ th{
 	border-collapse: collapse;
 }	
 #calendar { 
-	width:700px;
+	width:100%;
 	padding-left: 6%; 
-} 
+} 		
 .fc-event {
     border: none;
-}
-.inbt{	
+}	
+.inbt{		
 	background-color:white;
 	border-radius: 15px;
 	outline:none;	
 }
 .fc-sat, .fc-sun, .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri {width:10px;} 
+
+
+.container{
+	padding-bottom:3%;
+}
+.panel-heading{
+	padding-left:10px;
+	background-color:#6495ED; 
+	border:2px solid lightgray; 
+	border-radius:5px; 
+	height:36px;	
+}			
+.divtitle{
+	color:white;
+	font-size:15px;
+	font-weight:bold;
+}	
 </style>
-	 		
+	 				
 
 <div>	
 	<div class="top" style="margin-left:1.5%;"><h4>프로젝트 현황</h4>
 		<div class="mt-2" style="padding-top:2%;">
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+				
 				<!-- memType이 MEM일때  -->
 				 <c:if test="${not empty memInProjectList}">
-					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link active" style="background-color:#6495ED;">
-				        	<i class="nav-icon fas fa-poll-h"></i> 
-							<p>참여중인 프로젝트<i class="fas fa-angle-left right"></i></p>
-						</a>
-					    <ul class="nav nav-treeview" style="display: none;">
-							<table class="todoTable" style="margin-left:3%">
-								<tr>
-									<th style="padding-left:47px;">프로젝트명</th>
-									<th>상태(일단 프로젝트번호)</th>
-									<th>완료율</th>
-									<th>생성일</th>
-									<th></th>
-								</tr>  
-								<tbody id=memInProjectList> 
-									<c:forEach items="${memInProjectList}" var="project" varStatus="sts" >
-										<c:if test="${project.memId != SMEMBER.memId }">
-										    <tr "data-privid="${project.reqId}">
-												<td>
-												<li class="nav-item">
-													<a class="nav-link" href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}">
-												 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
-												 	</a>
-												</li> 
-												</td> 
-												<td>${project.reqId}</td>
-												<td>${project.percent}</td>
-												<td>${fn:substring(project.regDt,0,10)}</td>
-												<td>	
-					
-													<c:choose>
-														<c:when test="${not empty project.reqId}">
-															<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-														 		<input class="inbt" type="button" value="들어가기">
-														 	</a>
-														
-														</c:when>
-														<c:otherwise>
-															<a>참여중인 프로젝트가 없습니다.</a>
-														</c:otherwise>
-													</c:choose> 
-	
-												</td>	
-											</tr>
-										</c:if>
-									</c:forEach> 
-								</tbody>
-							</table>
-						</ul>
-					</li>
+					<div class="container">
+					  <div class="panel-group">
+					    <div class="panel panel-default">
+					      <div class="panel-heading">
+					        <h4 class="panel-title">			
+					          <a data-toggle="collapse" href="#collapse1" class="divtitle">참여중인 프로젝트</a>
+					        </h4>	
+					      </div> 	
+					      <div id="collapse1" class="panel-collapse collapse">
+					        <div class="panel-body">
+						       	
+						        <table class="todoTable" style="margin-left:3%">
+									<tr>
+										<th style="padding-left:47px;">프로젝트명</th>
+										<th>상태</th>
+										<th>완료율</th>	
+										<th>생성일</th>		
+										<th></th>	
+									</tr>  		
+									<tbody id=memInProjectList> 	
+										<c:forEach items="${memInProjectList}" var="project" varStatus="sts" >
+											<c:if test="${project.memId != SMEMBER.memId }">
+											    <tr "data-privid="${project.reqId}">
+													<td>	
+														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}&proName=${project.proName}">${project.proName}</a>
+													</td> 
+													<td>${project.reqId}</td>
+													<td>${project.percent}</td>
+													<td>${fn:substring(project.regDt,0,10)}</td>
+													<td>
+														<c:choose>
+															<c:when test="${not empty project.reqId}">
+																<a href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
+															 		<input class="inbt" type="button" value="들어가기">
+															 	</a>
+															</c:when>
+															<c:otherwise>
+																<a>참여중인 프로젝트가 없습니다.</a>
+															</c:otherwise>
+														</c:choose> 
+		
+													</td>	
+												</tr>
+											</c:if>
+										</c:forEach> 
+									</tbody>
+								</table>
+							
+					        </div>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 				 </c:if>
+				
 				 <!-- memType이 PL일때 -->
 				 <c:if test="${not empty plInProjectList}">
-					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link active" style="background-color:#6495ED;">
-				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>프로젝트 관리(PL)<i class="fas fa-angle-left right"></i></p>
-						</a>
-					    <ul class="nav nav-treeview" >
-							<table class="todoTable" style="margin-left:3%">
-								<tr>
-									<th style="padding-left:47px;">프로젝트명</th>
-									<th>상태(일단 프로젝트번호)</th>
-									<th>완료율</th>
-									<th>생성일</th>
-									<th></th>
-								</tr> 
-								<tbody id=plInProjectList> 
-									<c:forEach items="${plInProjectList}" var="project" varStatus="sts" >
-										<c:if test="${project.proName != '' and project.proName != null}">
-										    <tr "data-privid="${project.reqId}">
-												<td>
-												<li class="nav-item">
-													<a class="nav-link" href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}">
-												 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
-												 	</a>
-												</li>
-												</td>
-												<td>${project.reqId}</td>
-												<td>${project.percent}</td>
-												<td>${fn:substring(project.regDt,0,10)}</td>
-												<td>
-													<c:choose>
-														<c:when test="${not empty project.reqId}">
-															<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-														 		<input class="inbt" type="button" value="들어가기">
-														 	</a>
-														</c:when>
-														<c:otherwise>
-															<a>참여중인 프로젝트가 없습니다.</a>
-														</c:otherwise>
-													</c:choose>
-												</td>	
-											</tr>
-										</c:if>
-									</c:forEach> 
-								</tbody>
-							</table>
-						</ul>
-					</li>
+				
+					<div class="container">
+					  <div class="panel-group">
+					    <div class="panel panel-default">
+					      <div class="panel-heading">
+					        <h4 class="panel-title">
+					          <a data-toggle="collapse" href="#collapse2" class="divtitle">내가 PL인 프로젝트</a>
+					        </h4>
+					      </div>			
+					      <div id="collapse2" class="panel-collapse collapse show">
+					        <div class="panel-body">
+					       
+						      <table class="todoTable" style="margin-left:3%">
+									<tr>
+										<th style="padding-left:47px;">프로젝트명</th>
+										<th>상태</th>
+										<th>완료율</th>
+										<th>생성일</th>
+										<th></th>		
+									</tr> 		
+									<tbody id=plInProjectList> 
+										<c:forEach items="${plInProjectList}" var="project" varStatus="sts" >
+											<c:if test="${project.proName != '' and project.proName != null}">
+											    <tr "data-privid="${project.reqId}">
+													<td>
+														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}&proName=${project.proName}">${project.proName}</a>
+													</td>
+													<td>${project.reqId}</td>
+													<td>${project.percent}</td>
+													<td>${fn:substring(project.regDt,0,10)}</td>
+													<td>
+														<c:choose>
+															<c:when test="${not empty project.reqId}">
+																<a href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
+															 		<input class="inbt" type="button" value="들어가기">
+															 	</a>
+															</c:when>
+															<c:otherwise>
+																<a>참여중인 프로젝트가 없습니다.</a>
+															</c:otherwise>
+														</c:choose>
+													</td>	
+												</tr>
+											</c:if>
+										</c:forEach> 
+									</tbody>
+								</table>
+							
+					        </div>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 				 </c:if>
-				 
+				 	
 				 <!-- memType이 PM일때 -->
 				 <c:if test="${not empty pmInProjectList}">
-					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link active" style="background-color:#6495ED;">
-				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p>프로젝트 관리(PM)<i class="fas fa-angle-left right"></i></p> 
-						</a>
-					    <ul class="nav nav-treeview">
-							<table class="todoTable" style="margin-left:3%">
-								<tr>
-									<th style="padding-left:47px;">프로젝트명</th>
-									<th>상태(일단 프로젝트번호)</th>
-									<th>완료율</th>
-									<th>생성일</th>
-									<th></th>
-								</tr> 	
-								<tbody id=pmInProjectList> 
-									<c:forEach items="${pmInProjectList}" var="project" varStatus="sts" >
-										<c:if test="${project.proName != '' and project.proName != null}">
-										    <tr "data-privid="${project.reqId}">
-												<td>
-												<li class="nav-item">
-													<a class="nav-link" href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}">
-												 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
-												 	</a> 
-												</li>
-												</td> 	
-												<td>${project.reqId}</td>
-												<td>${project.percent}</td>
-												<td>${fn:substring(project.regDt,0,10)}</td>
-												<td>	
-													<c:choose> 
-														<c:when test="${not empty project.reqId}">
-															<a class="nav-link" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-														 		<input class="inbt" type="button" value="들어가기">
-														 	</a>
-															
-														</c:when>
-														<c:otherwise>
-															<a>참여중인 프로젝트가 없습니다.</a>
-														</c:otherwise>
-													</c:choose>
-												</td>	
-											</tr>
-										</c:if>
-									</c:forEach> 
-								</tbody>
-							</table>
-						</ul>
-					</li>
+					<div class="container">
+					  <div class="panel-group">
+					    <div class="panel panel-default">
+					      <div class="panel-heading">
+					        <h4 class="panel-title">
+					          <a data-toggle="collapse" href="#collapse3" class="divtitle">프로젝트 관리(PM)</a>
+					        </h4>
+					      </div>			
+					      <div id="collapse3" class="panel-collapse collapse">
+					        <div class="panel-body">
+					       
+							  <table class="todoTable" style="margin-left:3%">
+									<tr>
+										<th style="padding-left:47px;">프로젝트명</th>
+										<th>상태</th>
+										<th>완료율</th>
+										<th>생성일</th>
+										<th></th>
+									</tr>
+									<tbody id=pmInProjectList> 
+										<c:forEach items="${pmInProjectList}" var="project" varStatus="sts" >
+											<c:if test="${project.proName != '' and project.proName != null}">
+											    <tr "data-privid="${project.reqId}">
+													<td>
+														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}&proName=${project.proName}">${project.proName}</a> 
+													</td> 		
+													<td>${project.reqId}</td>	
+													<td>${project.percent}</td>	
+													<td>${fn:substring(project.regDt,0,10)}</td>	
+													<td>
+														<c:choose> 
+															<c:when test="${not empty project.reqId}">
+																<a href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
+															 		<input class="inbt" type="button" value="들어가기">
+															 	</a>
+															</c:when>
+															<c:otherwise>
+																<a>참여중인 프로젝트가 없습니다.</a>
+															</c:otherwise>
+														</c:choose>
+													</td>	
+												</tr>
+											</c:if>
+										</c:forEach> 
+									</tbody>
+								</table>
+							
+					        </div>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 				 </c:if>
 				 
 				 <!-- 프로젝트없는 경우 -->
@@ -322,37 +355,50 @@ th{
 		</div>
 	</div>
 	
-			
+		
 	<!-- 위 오른쪽 공지사항 -->
-	<div class="top" style="margin-left:1%;"><h4>공지사항</h4>
+	<div class="top" style="margin-left:1%;"><h4>공지사항( ${proName} )</h4>
 		<div style="padding-top:7%; width:100%; height:90%">
-			<table class="table">
+			<table class="table"> 
 				<thead>						
 					<tr>							
 						<th style="width: 150px; padding-left: 50px; text-align: center;">최신글</th>
 						<th style="padding-left: 30px; text-align: center;" class="jg">  이슈 제목</th> 
 						<th style="text-align: center;" class="jg">   작성자 </th>
-						<th style="text-align: center;" class="jg">   날짜   </th>
+						<th style="text-align: center; width: 200px;" class="jg">   날짜   </th>
 					</tr>
 				</thead>	
-			<tbody>			 
-				<c:forEach items = "${issuelist }" var ="issue" varStatus="status" end="4">
-					<tr>	
-						<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
-							<img src="../dist/img/new.png" class="blink-image">
-							<%-- <c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>. --%>
-						</td>
-						<td class="jg"  style="padding-left: 30px; text-align: center;">
-							<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${reqId}"> ${issue.issueTitle }</a> 
-						</td>
-								
-						<td class="jg" style="text-align: center;"> ${issue.memId }</td>
-						<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
+			<tbody>			 	
+				<c:forEach items = "${issuelist }" var ="issue" varStatus="status" end="6">
+					<c:set var="issueDt1" value="${fn: replace(issue.regDt,'-','')}"/> 		
+						<c:set var="issueDt2" value="${fn: substringBefore(issueDt1,' ')}"/> 	
+						<fmt:parseNumber var="issueDt3" value="${issueDt2 + 3}" integerOnly="true"/>
+							
+						<jsp:useBean id="now" class="java.util.Date"/>
+						<fmt:formatDate var="today1" value="${now}" pattern="yyyyMMdd"/>
+						<c:set var="today2" value="${fn: replace(today1,'-','')}"/> 	
+						<fmt:parseNumber var="today3" value="${today2}" integerOnly="true"/>
 						
-						<c:if test="${issue.issueKind == 'issue'}">
-							<td style="text-align: center;" class="jg"> 이슈</td>										
-						</c:if>
-					</tr>
+						<c:set var="day" value="${issueDt3 - today2}"/>	
+								
+					<c:if test="${day >= 0}">
+						<tr>	
+							<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
+								<img src="../dist/img/new.png" class="blink-image">
+								<%-- <c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>. --%>
+							</td>
+							<td class="jg"  style="padding-left: 30px; text-align: center;">
+								<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${reqId}"> ${issue.issueTitle }</a> 
+							</td>
+									
+							<td class="jg" style="text-align: center;"> ${issue.memId }</td>
+							<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
+								
+							<c:if test="${issue.issueKind == 'issue'}">
+								<td style="text-align: center;" class="jg"> 이슈</td>										
+							</c:if>
+						</tr>
+					</c:if>
 				</c:forEach> 
 					<c:if test="${issuelist.size() == 0}">
 						<td colspan="7" style="text-align: center;"  class="jg"><br> [ 결과가 없습니다. ] </td>

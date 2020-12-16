@@ -294,7 +294,18 @@
 		<!-- 프로젝트 멤버 가져오기 -->
 		<select id="projectList" parameterType="ants.com.member.model.ProjectVo"
 		resultType="ants.com.member.model.ProjectVo">
-		select * from project where mem_id= #{memId} and req_id = #{reqId}
+		
+			SELECT
+				project.req_id,
+	            project.pro_name,
+	            project.mem_id
+			FROM(select * from project)project,
+				projectmember projectmember
+			WHERE
+				projectmember.req_id = project.req_id
+			AND projectmember.mem_id = #{memId}
+			AND projectmember.promem_status='IN'
+	        AND project.req_id = #{reqId}
 		</select>
 		
 		<!-- 일감등록, 진행도 수정, 일감삭제시 프로젝트 진행도 계산용 -->
@@ -342,6 +353,16 @@
 			  FROM todo
 			WHERE req_id = #{reqId} 
 			ORDER BY todo_level
+		</select>
+		
+		<select id="getTodolog" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoLogVo">
+			SELECT
+    			before_id,
+    			after_id
+			FROM
+    			todolog
+			WHERE todo_id = #{todoId}
+			ORDER BY log_id desc
 		</select>
 		
 		

@@ -1,19 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
-<title>상세 보기</title>
 
 <!-- Font Awesome Icons -->
 <!-- Theme style -->
 <style>
 body{
 	min-width: 1100px;
-	min-height: 1100px;
-}
+	min-height: 500px;
+}	
 .memvar{
 	margin-left : 150px;
 }
@@ -78,12 +74,7 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-p {
-	margin:0px;
-	display:inline-block;
-	font-size:15px;
-	font-weight:bold;
-}
+
 							/* 알람 스타일 */
 
 </style>
@@ -149,107 +140,83 @@ $(document).ready(function(){
 })
 </script>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini">	
 	<div class="wrapperdd">
-		<div class="login-logo">
-			<b>프로필</b>
-		</div>	
-		<!-- form start -->
-		<div class="card">
-			<div class="register-card-body">
-
-				<br><br><br><br><br>
-					<div class="input-group mb-3">
-						<div class="mailbox-attachments clearfix"
-							style="text-align: center; width: 100%;">
-							<div class="mailbox-attachment-icon has-img" id="pictureView"
-								style="border: 1px solid green; height: 200px; width: 140px; margin: 0 auto;">
-								<img id="pictureViewImg" style="width: 100%; height: 100%;"/>
-							</div>
-						</div>
-						<br>
-					</div>
-
-					<div class="form-group row">
-						<label for="id" class="col-sm-3" style="font-size: 0.9em;">
-							<span class="memvar" style="color: red; font-weight: bold;">*</span>아이디
-						</label>
-						<div class="col-sm-6 input-group-sm">
-							<input class="form-control" name="memId" type="text" class="form-control" id="memId" placeholder="(아이디)" value="${memberVo.memId}" style="border: none" readonly>
+		<div class="register-card-body">
+			
+			<div class="login-logo">
+				<b>Profile</b>
+			</div>	
+				
+			<div class="card card-primary card-outline">
+				<div class="card-body box-profile">
+					<div class="text-center">
+						<div class="mailbox-attachment-icon has-img" id="pictureView" style=" height: 200px; width: 140px; margin: 0 auto;">
+							<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" alt="User profile picture"/>
 						</div>
 					</div>
-
-					<div class="form-group row">
-						<label for="pwd" class="col-sm-3" style="font-size: 0.9em;">
-							<span class="memvar" style="color: red; font-weight: bold;">*</span>이름
-						</label>
-						<div class="col-sm-6 input-group-sm">
-							<input class="form-control" name="memName" type="text" class="form-control" id="memName" placeholder="(이름)" value="${memberVo.memName}" style="border: none" readonly />
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="name" class="col-sm-3" style="font-size: 0.9em;">
-							<span class="memvar" style="color: red; font-weight: bold;">*</span>전화번호
-						</label>
-						<div class="col-sm-6 input-group-sm">
-							<input class="form-control" name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border: none" readonly />
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="alias" class="col-sm-3" style="font-size: 0.9em;">
-							<span class="memvar" style="color: red; font-weight: bold;"></span>알람
-						</label>
-						<div class="col-sm-6 input-group-sm">
-							<input class="form-control" name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border: none" readonly>
-						</div>
-							
-						<!-- 알람 토글 버튼 -->
-						<label class="switch">											<!-- 알람 토글 기본 y : y아닐땐 off -->
-							<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>
-							<span class="slider round"></span>
-						</label>
-					</div> 
+					
+					<h3 class="profile-username text-center">
+						<input class="profile-username text-center" name="memName" type="text" class="form-control" id="memName" placeholder="(이름)" value="${memberVo.memName}" style="border: none" readonly />
+					</h3>
 						
-					<div class="form-group row">
-						<label for="alias" class="col-sm-3" style="font-size: 0.9em;">
-							<span class="memvar" style="color: red; font-weight: bold;"></span>타입
-						</label>
-						<div class="col-sm-6 input-group-sm">
-							<input name="memType" type="text" class="form-control" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border: none" readonly>
-						</div>
-					</div>
+					<p class="text-muted text-center">
+						<input class="text-muted text-center" name="memId" type="text" class="form-control" id="memId" placeholder="(아이디)" value="${memberVo.memId}" style="border: none" readonly>
+					</p>
 					
-					<!-- style="display: none" -->
-					<div class="content" style="display: none">
-						<br>비밀번호 : <input name="memPass" type="text" id="memPass" placeholder="알람" value="${memberVo.memPass}" style="border: none" readonly><br> 
-						삭제여부: <input name="del" type="text" id="del" placeholder="삭제여부" value="${memberVo.del}" style="border: none" readonly><br>
-						${memberVo.memFilepath} <br>
-						${memberVo.memFilename}
-						<img id="pict" style="width: 30px; height: 30px;" src="/profileImgView?memId=${memberVo.memId}" />
-						<img id="imge" style="width: 30px; height: 30px;" src="${memberVo.memFilepath}" /><br>
-						<span id="sp">sp : </span>
-					</div>
-					
-					<br><br><br><br> 
-					<div class="card-footer">
-						<div class="row">
-							<div class="col-sm-6">
-								<a href="/member/profileupdateview?memId=${memberVo.memId}"><button type="button" id="registBtn" class="btn btn-info">수정</button></a>
-							</div>
-
-							<div class="col-sm-6">
-								<button type="button" id="cancelBtn"
-									onclick="window.history.back()"
-									class="btn btn-default float-right">&nbsp;뒤&nbsp;&nbsp;로&nbsp;&nbsp;가&nbsp;&nbsp;기&nbsp;</button>
-							</div>
-							
-						</div>
-					</div>
+						
+					<ul class="list-group list-group-unbordered mb-3">
+						<li class="list-group-item"><b>전화번호</b> 
+							<a class="float-right">
+								<input class="" name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border:none" readonly />
+							</a>
+						</li>
+						<li class="list-group-item"><b>알람</b> 
+							<a class="float-right">
+								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none; width:115px;" readonly>
+								<!-- 알람 토글 버튼 -->	
+								<label class="switch">											<!-- 알람 토글 기본 y : y아닐땐 off -->
+									<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>	
+									<span class="slider round"></span>	
+								</label>
+							</a>
+						</li>	
+						<li class="list-group-item"><b>타입</b>
+							<a class="float-right">
+								<input name="memType" type="text" class="" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border: none" readonly>
+							</a>
+						</li>
+					</ul>
+				</div>
 			</div>
+				
+			<div class="card-footer">
+				<div class="row">
+					<div class="col-sm-6">
+						<a href="/member/profileupdateview?memId=${memberVo.memId}">
+							<button type="button" id="registBtn" class="btn btn-info">수정</button>
+						</a>
+					</div>
+
+					<div class="col-sm-6">
+						<button type="button" id="cancelBtn" onclick="window.history.back()" class="btn btn-default float-right">&nbsp;뒤&nbsp;&nbsp;로&nbsp;&nbsp;가&nbsp;&nbsp;기&nbsp;</button>
+					</div>
+
+				</div>
+			</div>
+				
+			<!-- style="display: none" -->
+			<div class="content" style="display: none">
+				<br>비밀번호 : <input name="memPass" type="text" id="memPass" placeholder="비밀번호" value="${memberVo.memPass}" style="border: none" readonly><br> 
+				삭제여부: <input name="del" type="text" id="del" placeholder="삭제여부" value="${memberVo.del}" style="border: none" readonly><br>
+				${memberVo.memFilepath} <br>
+				${memberVo.memFilename}
+				<img id="pict" style="width: 30px; height: 30px;" src="/profileImgView?memId=${memberVo.memId}" />
+				<img id="imge" style="width: 30px; height: 30px;" src="${memberVo.memFilepath}" /><br>
+				<span id="sp">sp : </span>
+			</div>
+				
 		</div>
 	</div>
-
 </body>
 </html>

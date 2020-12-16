@@ -113,6 +113,12 @@
 #intodoId{
 	width: 1000px;
 }
+  .success{
+  background-color: #f6f6f6;
+  width: 10%;
+  text-align: center;
+  }
+
 </style>
 
 </head>
@@ -127,41 +133,43 @@
             <div class="card-body">
              	<input type="hidden" id="todoId">
              	<input type="hidden" id="reqId">
-        
-				<label for="todoTitle" class="col-sm-1 control-label">제목:</label>
-		        <label class="control-label" id="todoTitle"></label><br><br>
-				        
-				<label for="memId" class="col-sm-1 control-label">담당자:</label>
-				<label class="control-label" id="memId"></label>
-				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				        
-				<label for="todoPercent" class="col-sm-1 control-label">진행도:</label>
-				<label class="control-label" id="todoPercent"></label>
-				        
-				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				 <label for="todoImportance" class="col-sm-1 control-label">우선순위:</label>
-				 <label class="control-label" id="todoImportance"></label><br><br>
+        <table class="table" >
+        <tr class="stylediff">
+            <th class="success ">제목</th>
+         	<td colspan="3"><label class="control-label" id="todoTitle"></label></td>
+        </tr>
+           
+         
+        <tr class="stylediff">
+            <th class="success ">담당자</th>
+            <td><label class="control-label" id="memId"></label></td>
+            <th class="success ">진행도</th>
+            <td><label class="control-label" id="todoPercent"></label></td>
+        </tr>
+         
+        <tr class="stylediff">
+            <th class="success">변경이력</th>
+            <td><label class="control-label" >추후처리예정</label></td>
+            <th class="success">우선순위</th>
+            <td><label class="control-label" id="todoImportance"></label></td>
+        </tr>
+         
+        <tr class="stylediff">
+            <th class="success">기간</th>
+            <td colspan="3"><label class="control-label" id="todoStart"></label> <label class="control-label">~</label> <label class="control-label" id="todoEnd"></label></td>
+        </tr>
+         
+        <tr>
+            <th class="success">내용</th>
+            <td colspan="3"><label class="control-label" id="todoCont"></label></td>
+        </tr>
+        <tr>
+            <th class="success">첨부파일</th>
+            <td colspan="3"><div id = "filediv">	
+					</div></td>
+        </tr>
+        </table>
 				
-				 <label for="todoStart" class="col-sm-1 control-label">시작 일:</label>
-				 <label class="control-label" id="todoStart"></label>
-				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				 <label for="todoEnd" class="col-sm-1 control-label">종료 일:</label>
-				 <label class="control-label" id="todoEnd"></label><br><br>
-				 <label for="todoCont" class="col-sm-1 control-label">할일:</label>
-				<label class="control-label" id="todoCont"></label><br>
-				
-				<div class="form-group">
-				<label id="filelabel" for="File" class="col-sm-2 control-label">첨부파일 다운로드</label>
-				<div id = "filediv">
-					<br><br>
-				</div>
-				</div>
 		         <div id="btnMenu">
 				 <c:if test="${SMEMBER.memId eq projectVo.memId }">
 					 <button type="button" class="btn btn-default" id="updateBtn" >수정</button>

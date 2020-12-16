@@ -56,7 +56,7 @@
 <!--           </a> -->
           
           <div class="dropdown-divider"></div>
-          <a href="/admin/adlogout" class="dropdown-item">
+          <a href="${pageContext.request.contextPath}/admin/adlogout" class="dropdown-item">
             <i class="fas fa-toggle-off mr-2"></i>로그아웃
           </a>
         </div>
