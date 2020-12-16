@@ -222,7 +222,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
-          <a href="/member/profile" class="dropdown-item">
+          <a href="${pageContext.request.contextPath}/member/profile" class="dropdown-item">
             <i class="fas fa-user-edit mr-2"></i>프로필
           </a>
           
@@ -232,7 +232,7 @@
           </a>
           
           <div class="dropdown-divider"></div>
-          <a href="/member/logout" class="dropdown-item">
+          <a href="${pageContext.request.contextPath}/member/logout" class="dropdown-item">
             <i class="fas fa-toggle-off mr-2"></i>로그아웃
           </a>
         </div>
