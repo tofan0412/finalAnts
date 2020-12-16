@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
-<title>상세 보기</title>
 
 <!-- Font Awesome Icons -->
 <!-- Theme style -->
@@ -78,12 +74,7 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-p {
-	margin:0px;
-	display:inline-block;
-	font-size:15px;
-	font-weight:bold;
-}
+
 							/* 알람 스타일 */
 
 </style>
@@ -149,13 +140,13 @@ $(document).ready(function(){
 })
 </script>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini">	
 	<div class="wrapperdd">
 		<div class="login-logo">
 			<b>프로필</b>
 		</div>	
 		<!-- form start -->
-		<div class="card">
+		<div class="card">	
 			<div class="register-card-body">
 
 				<br><br><br><br><br>
