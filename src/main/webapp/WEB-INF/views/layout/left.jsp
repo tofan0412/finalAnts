@@ -69,7 +69,7 @@
 	<img src="/dist/img/antslogo.png" class="brand-image" style="float: none;width: 46px;margin: 15px 8px 10px 7px;height: 50px;">
 	<img src="/dist/img/ants.png" style="width: 100px;">
 	</a>
-		
+	
 	<!-- Sidebar -->
 	<div class="sidebar" style="font-size: 0.8em;">
 		<!-- Sidebar Menu -->
