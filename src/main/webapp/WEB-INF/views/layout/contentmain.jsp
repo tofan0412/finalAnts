@@ -7,15 +7,8 @@
 <%@page import="ants.com.board.memBoard.model.ScheduleVo"%>
 <%@page import="java.util.List"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>	
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
- 
 <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta/lib/draggable.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/dist/js/adminlte.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/plugins/moment/moment.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/plugins/fullcalendar/main.js"></script>
 
@@ -32,11 +25,9 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/fontawesome-free/css/all.min.css">
  
-
 <%
 	List<ScheduleVo> list = (ArrayList<ScheduleVo>)request.getAttribute("showSchedule");
 %>
-<title>Insert title here</title>
 <script>
 $(function(){
 	// 메뉴를 선택하면 배경색이 변한다. 
@@ -100,10 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
     -ms-animation:blink normal 2.5s infinite ease-in-out;
     animation:blink normal 2.5s infinite ease-in-out;
 }
-body{
-	min-width: 2000px;
-	min-height: 1000px;
-}			
+			
 .top{
 	border: 1px solid lightgray; 
 	font-size: 0.8em; 
@@ -159,9 +147,8 @@ th{
 }
 .fc-sat, .fc-sun, .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri {width:10px;} 
 </style>
-</head>
 	 		
-<body>
+
 <div>	
 	<div class="top" style="margin-left:1.5%;"><h4>프로젝트 현황</h4>
 		<div class="mt-2" style="padding-top:2%;">
@@ -335,9 +322,6 @@ th{
 		</div>
 	</div>
 	
-	
-	
-	
 			
 	<!-- 위 오른쪽 공지사항 -->
 	<div class="top" style="margin-left:1%;"><h4>공지사항</h4>
@@ -378,7 +362,7 @@ th{
 		</div>
 	</div> 
 	
-	
+			
 	<!-- 아래  -->
 		<!-- 왼쪽 통계 -->
 		<div class="bottom" style="margin-left:1.5%;"><h4>프로젝트 통계</h4><br>
@@ -387,8 +371,6 @@ th{
 		  	
 		<!-- 오른쪽 캘린더 -->
 		<div class="bottom" style="margin-left:1%;"><h4>프로젝트 일정</h4>
-        	<div id="calendar" style="margin-left:12%;"></div>
+        	<div id="calendar"></div>
 		</div>	
 </div>
-</body>
-</html>

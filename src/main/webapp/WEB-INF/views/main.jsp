@@ -69,7 +69,7 @@
 	font-size : 1.3em;
 }
 </style>
-
+	
 <!-- Channel Plugin Scripts -->
 <script>
   (function() {
@@ -111,9 +111,8 @@
     "pluginKey": "9fecedd4-d5c5-4ee5-bdcc-ddf8f29b6c2e", //please fill with your plugin key
     "memberId": "poiqqw@naver.com", //fill with user id
     "profile": {
-      "mobileNumber": "010490507321", //fill with user phone number
-      "CUSTOM_VALUE_1": "VALUE_1", //any other custom meta data
-      "CUSTOM_VALUE_2": "VALUE_2"
+		"name": "한상진",
+		"mobileNumber": "010490507321", //fill with user phone number
     }	
   });
 </script>
