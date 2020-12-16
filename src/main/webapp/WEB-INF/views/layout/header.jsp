@@ -200,19 +200,19 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header alarmCount">개의 알림이 있습니다.</span>
           <div class="dropdown-divider"></div>
-          <a href="/alarmList?searchCondition='1'" class="dropdown-item" id="resCnt" style="font-size: 0.9em">
+          <a href="${pageContext.request.contextPath}/alarmList?searchCondition=1" class="dropdown-item" id="resCnt" style="font-size: 0.9em">
             <i class="fas fa-envelope mr-2 " ></i>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="/alarmList?searchCondition='2'" class="dropdown-item" id="replyCnt" style="font-size: 0.9em">
+          <a href="${pageContext.request.contextPath}/alarmList?searchCondition=2" class="dropdown-item" id="replyCnt" style="font-size: 0.9em">
             <i class="fas fa-comment-dots mr-2" ></i> 
           </a>
           <div class="dropdown-divider"></div>
-          <a href="/alarmList?searchCondition='3'" class="dropdown-item" id="postsCnt" style="font-size: 0.9em">
+          <a href="${pageContext.request.contextPath}/alarmList?searchCondition=3" class="dropdown-item" id="postsCnt" style="font-size: 0.9em">
             <i class="fas fa-replyd mr-2" ></i> 
           </a>
           <div class="dropdown-divider"></div>
-          <a href="/alarmList" class="dropdown-item dropdown-footer">모든 알림 보기</a>
+          <a href="${pageContext.request.contextPath}/alarmList" class="dropdown-item dropdown-footer">모든 알림 보기</a>
         </div>
       </li>
       
