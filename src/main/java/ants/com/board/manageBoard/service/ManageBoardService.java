@@ -68,6 +68,10 @@ public class ManageBoardService {
 	public List<TodoVo> getMyTodoList(TodoVo todoVo) {
 		return mapper.getMyTodoList(todoVo);
 	}
+	
+	public List<TodoLogVo> getTodolog(String todoId) {
+		return mapper.getTodolog(todoId);
+	}
 
 	public ProjectVo projectList(ProjectVo projectVo) {
 		return mapper.projectList(projectVo);
