@@ -105,15 +105,10 @@
     } else {
       window.addEventListener('DOMContentLoaded', l, false);
       window.addEventListener('load', l, false);
-    }	
+    }
   })();
-  ChannelIO('boot', {
-    "pluginKey": "9fecedd4-d5c5-4ee5-bdcc-ddf8f29b6c2e", //please fill with your plugin key
-    "memberId": "poiqqw@naver.com", //fill with user id
-    "profile": {
-		"name": "한상진",
-		"mobileNumber": "010490507321", //fill with user phone number
-    }	
+  ChannelIO('boot', {	
+    "pluginKey": "9fecedd4-d5c5-4ee5-bdcc-ddf8f29b6c2e"
   });
 </script>
 <!-- End Channel Plugin -->

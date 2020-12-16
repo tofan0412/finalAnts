@@ -43,8 +43,10 @@
   ChannelIO('boot', {
     "pluginKey": "9fecedd4-d5c5-4ee5-bdcc-ddf8f29b6c2e"
   });
-  
-  	
+</script>
+<!-- End Channel Plugin -->
+		
+<script>
 	$(function(){
 		// 메뉴를 선택하면 배경색이 변한다. 
 		$('.selectable').click(function(){
@@ -69,7 +71,7 @@
 	<img src="/dist/img/antslogo.png" class="brand-image" style="float: none;width: 46px;margin: 15px 8px 10px 7px;height: 50px;">
 	<img src="/dist/img/ants.png" style="width: 100px;">
 	</a>
-	
+		
 	<!-- Sidebar -->
 	<div class="sidebar" style="font-size: 0.8em;">
 		<!-- Sidebar Menu -->
