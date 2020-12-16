@@ -54,7 +54,7 @@ public class MainPageController {
 	
 	// 메인페이지 정보 전달
 	@RequestMapping("/maindata")
-	public String mainClendar(HttpSession session, Model model, String reqId) {
+	public String mainClendar(HttpSession session, Model model, String reqId, String proName) {
 		
 		/* 공지사항 */
 		IssueVo issueVo = new IssueVo();
@@ -79,7 +79,7 @@ public class MainPageController {
 		List<IssueVo> resultList = promemService.issuelist(issueVo);
 		model.addAttribute("issuelist", resultList);
 		model.addAttribute("reqId", reqId);
-				
+		model.addAttribute("proName", proName);
 		
 		/* 캘린더 */
 		ScheduleVo scheduleVo = new ScheduleVo();
@@ -89,7 +89,7 @@ public class MainPageController {
 		model.addAttribute("showSchedule", showCalendar);
 		return "tiles/layout/contentmain";
 	}
-		
+	
 	
 	// 메인 이미지 버튼 눌렀을때 
 	@RequestMapping(path = "/mainreconnection")
@@ -113,17 +113,18 @@ public class MainPageController {
 				// 로그인
 				/* 캘린더 초기값 */
 				ScheduleVo scheduleVo = new ScheduleVo();
-				scheduleVo.setReqId(proList.get(0).getReqId()); // 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
+				scheduleVo.setReqId(proList.get(proList.size() - 1).getReqId()); // 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
 				showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
-
+					
 				/* 공지사항 초기값 */
 				IssueVo issueVo = new IssueVo();
 				issueVo.setMemId(dbMember.getMemId());
-				issueVo.setReqId(proList.get(0).getReqId()); // 첫번째 프로젝트의 이슈 가져오기
+				issueVo.setReqId(proList.get(proList.size()-1).getReqId()); // 첫번째 프로젝트의 이슈 가져오기
 				issueVo.setCategoryId("3"); // 카테고리 번호 (3번이 이슈)
 				issueVo.setIssueKind("notice"); // 이슈 말머리 선택 (공지사항)
-				model.addAttribute("reqId", proList.get(0).getReqId()); // 기본 프로젝트 번호 jsp로 넘겨주기
-
+				model.addAttribute("reqId", proList.get(proList.size()-1).getReqId()); // 기본 프로젝트 번호 jsp로 넘겨주기
+				model.addAttribute("proName", proList.get(proList.size()-1).getProName());	// 프로젝트 이름
+				
 				/** pageing setting */
 				PaginationInfo paginationInfo = new PaginationInfo();
 				paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
@@ -157,17 +158,18 @@ public class MainPageController {
 				// 로그인
 				/* 캘린더 초기값 */
 				ScheduleVo scheduleVo = new ScheduleVo();
-				scheduleVo.setReqId(prp_pm.get(0).getReqId()); // 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
+				scheduleVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId()); // 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
 				showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
 
 				/* 공지사항 초기값 */
 				IssueVo issueVo = new IssueVo();
 				issueVo.setMemId(dbMember.getMemId());
-				issueVo.setReqId(prp_pm.get(0).getReqId()); // 첫번째 프로젝트의 이슈 가져오기
+				issueVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId()); // 첫번째 프로젝트의 이슈 가져오기
 				issueVo.setCategoryId("3"); // 카테고리 번호 (3번이 이슈)
 				issueVo.setIssueKind("notice"); // 이슈 말머리 선택 (공지사항)
-				model.addAttribute("reqId", prp_pm.get(0).getReqId()); // 기본 프로젝트 번호 jsp로 넘겨주기
-
+				model.addAttribute("reqId", prp_pm.get(prp_pm.size()-1).getReqId()); // 기본 프로젝트 번호 jsp로 넘겨주기
+				model.addAttribute("proName", prp_pm.get(prp_pm.size()-1).getProName());	// 프로젝트 이름
+				
 				/** pageing setting */
 				PaginationInfo paginationInfo = new PaginationInfo();
 				paginationInfo.setCurrentPageNo(issueVo.getPageIndex());

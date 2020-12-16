@@ -194,7 +194,7 @@ th{
 											<c:if test="${project.memId != SMEMBER.memId }">
 											    <tr "data-privid="${project.reqId}">
 													<td>	
-														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}">${project.proName}</a>
+														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}&proName=${project.proName}">${project.proName}</a>
 													</td> 
 													<td>${project.reqId}</td>
 													<td>${project.percent}</td>
@@ -252,7 +252,7 @@ th{
 											<c:if test="${project.proName != '' and project.proName != null}">
 											    <tr "data-privid="${project.reqId}">
 													<td>
-														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}">${project.proName}</a>
+														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}&proName=${project.proName}">${project.proName}</a>
 													</td>
 													<td>${project.reqId}</td>
 													<td>${project.percent}</td>
@@ -302,17 +302,17 @@ th{
 										<th>완료율</th>
 										<th>생성일</th>
 										<th></th>
-									</tr> 	
+									</tr>
 									<tbody id=pmInProjectList> 
 										<c:forEach items="${pmInProjectList}" var="project" varStatus="sts" >
 											<c:if test="${project.proName != '' and project.proName != null}">
 											    <tr "data-privid="${project.reqId}">
 													<td>
-														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}">${project.proName}</a> 
-													</td> 	
-													<td>${project.reqId}</td>
-													<td>${project.percent}</td>
-													<td>${fn:substring(project.regDt,0,10)}</td>
+														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}&proName=${project.proName}">${project.proName}</a> 
+													</td> 		
+													<td>${project.reqId}</td>	
+													<td>${project.percent}</td>	
+													<td>${fn:substring(project.regDt,0,10)}</td>	
 													<td>
 														<c:choose> 
 															<c:when test="${not empty project.reqId}">
@@ -351,11 +351,11 @@ th{
 		</div>
 	</div>
 	
-			
+				
 	<!-- 위 오른쪽 공지사항 -->
-	<div class="top" style="margin-left:1%;"><h4>공지사항</h4>
+	<div class="top" style="margin-left:1%;"><h4>공지사항( ${proName} )</h4>
 		<div style="padding-top:7%; width:100%; height:90%">
-			<table class="table">
+			<table class="table"> 
 				<thead>						
 					<tr>							
 						<th style="width: 150px; padding-left: 50px; text-align: center;">최신글</th>
@@ -365,23 +365,36 @@ th{
 					</tr>
 				</thead>	
 			<tbody>			 
-				<c:forEach items = "${issuelist }" var ="issue" varStatus="status" end="4">
-					<tr>	
-						<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
-							<img src="../dist/img/new.png" class="blink-image">
-							<%-- <c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>. --%>
-						</td>
-						<td class="jg"  style="padding-left: 30px; text-align: center;">
-							<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${reqId}"> ${issue.issueTitle }</a> 
-						</td>
-								
-						<td class="jg" style="text-align: center;"> ${issue.memId }</td>
-						<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
+				<c:forEach items = "${issuelist }" var ="issue" varStatus="status" end="10">
+					<c:set var="issueDt1" value="${fn: replace(issue.regDt,'-','')}"/> 		
+						<c:set var="issueDt2" value="${fn: substringBefore(issueDt1,' ')}"/> 	
+						<fmt:parseNumber var="issueDt3" value="${issueDt2 + 3}" integerOnly="true"/>
+							
+						<jsp:useBean id="now" class="java.util.Date"/>
+						<fmt:formatDate var="today1" value="${now}" pattern="yyyyMMdd"/>
+						<c:set var="today2" value="${fn: replace(today1,'-','')}"/> 	
+						<fmt:parseNumber var="today3" value="${today2}" integerOnly="true"/>
 						
-						<c:if test="${issue.issueKind == 'issue'}">
-							<td style="text-align: center;" class="jg"> 이슈</td>										
-						</c:if>
-					</tr>
+						<c:set var="day" value="${issueDt3 - today2}"/>	
+								
+					<c:if test="${day >= 0}">
+						<tr>	
+							<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
+								<img src="../dist/img/new.png" class="blink-image">
+								<%-- <c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>. --%>
+							</td>
+							<td class="jg"  style="padding-left: 30px; text-align: center;">
+								<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${reqId}"> ${issue.issueTitle }</a> 
+							</td>
+									
+							<td class="jg" style="text-align: center;"> ${issue.memId }</td>
+							<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
+								
+							<c:if test="${issue.issueKind == 'issue'}">
+								<td style="text-align: center;" class="jg"> 이슈</td>										
+							</c:if>
+						</tr>
+					</c:if>
 				</c:forEach> 
 					<c:if test="${issuelist.size() == 0}">
 						<td colspan="7" style="text-align: center;"  class="jg"><br> [ 결과가 없습니다. ] </td>
