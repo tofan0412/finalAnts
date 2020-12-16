@@ -79,7 +79,7 @@
 		DELETE
 		  FROM alarm
 		<where>
-			alarm_id IN  ('TEST', 'TSET2')
+			alarm_id IN 
 			<foreach collection="list" item="item" separator="," open="(" close=")">
 				 #{item}
 			</foreach>
