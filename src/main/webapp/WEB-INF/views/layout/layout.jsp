@@ -27,7 +27,7 @@
 
 		<!-- Main content -->
 		<div class="wrapper">
-			<div class="content-wrapper">
+			<div class="content-wrapper" style="background: white;">
 				<tiles:insertAttribute name="content" />
 			</div>
 		</div>
