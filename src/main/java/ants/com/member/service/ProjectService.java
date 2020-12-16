@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ReplyVo;
+import ants.com.board.memBoard.model.SuggestVo;
 import ants.com.board.vote.model.VoteVo;
 import ants.com.file.model.PublicFileVo;
 import ants.com.member.mapper.ProjectMapper;
@@ -91,5 +92,9 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	// 개요페이지 이슈댓글 가져오기
 	public ReplyVo getoutlinereply(String reqId) {
 		return mapper.getoutlinereply(reqId);
+	}
+	// 개요페이지 건의사항 ACCEPT율 가져오기
+	public SuggestVo getoutlinsuggest(String reqId) {
+		return mapper.getoutlinsuggest(reqId);
 	}
 }

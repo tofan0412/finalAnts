@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ants.com.board.manageBoard.service.ManageBoardService;
 import ants.com.board.memBoard.model.ReplyVo;
+import ants.com.board.memBoard.model.SuggestVo;
 import ants.com.board.vote.model.VoteVo;
 import ants.com.file.model.PublicFileVo;
 import ants.com.member.model.MemberVo;
@@ -185,12 +186,14 @@ public class ProjectController {
 		VoteVo dbvotevo= projectService.getoutlinevote(reqId);
 		PublicFileVo dbfilevo = projectService.getoutlinefiles(reqId);
 		ReplyVo dbreplyvo = projectService.getoutlinereply(reqId);
+		SuggestVo dbsuggestvo = projectService.getoutlinsuggest(reqId);
 		model.addAttribute("req", dbreqvo);
 		model.addAttribute("pro", dbprojectvo);
 		model.addAttribute("promem", dbpromemvo);
 		model.addAttribute("dbvotevo", dbvotevo);
 		model.addAttribute("dbfilevo", dbfilevo);
 		model.addAttribute("dbreplyvo", dbreplyvo);
+		model.addAttribute("dbsuggestvo", dbsuggestvo);
 		return "tiles/layout/outline";
 	}
 }

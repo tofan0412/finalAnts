@@ -125,7 +125,7 @@ text-align: right;
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline;width:100px;height:100px;">
                     <canvas width="100" height="100"></canvas>
-                    <input type="text" class="knob" value="20" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    <input type="text" class="knob" value="${dbsuggestvo.acceptpercent}" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
                     <div class="knob-label">건의사항 수용률</div>
                   </div>

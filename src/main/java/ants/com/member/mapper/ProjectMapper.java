@@ -5,6 +5,7 @@ import java.util.List;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ReplyVo;
+import ants.com.board.memBoard.model.SuggestVo;
 import ants.com.board.vote.model.VoteVo;
 import ants.com.file.model.PublicFileVo;
 import ants.com.member.model.MemberVo;
@@ -56,5 +57,8 @@ public interface ProjectMapper {
 	
 	// 개요 프로젝트  댓글 조회
 	public ReplyVo getoutlinereply(String reqId);
+
+	// 개요 프로젝트 건의사항 accept율 조회
+	public SuggestVo getoutlinsuggest(String reqId);
 
 }
