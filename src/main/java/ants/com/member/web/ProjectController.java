@@ -173,6 +173,7 @@ public class ProjectController {
 		projectVo.setReqId(reqId);
 		ProjectVo sessionVo = manageBoardService.projectList(projectVo);
 		session.setAttribute("projectVo", sessionVo);
+		System.out.println(sessionVo);
 		session.setAttribute("projectId", reqId);
 		return "redirect:/project/outlineView";
 	}
