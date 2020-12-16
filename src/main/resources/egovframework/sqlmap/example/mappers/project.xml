@@ -166,15 +166,20 @@
 	</select>
 	<select id="getoutlinereply" parameterType="java.lang.String"
 		resultType="ants.com.board.memBoard.model.ReplyVo">
-		SELECT  round(((
-        	SELECT COUNT(distinct(some_id))
-        	FROM   reply where req_id =#{reqId} and del='N'
-        	)/(
-        	SELECT COUNT(issue_id)
-        	from issue where req_id=#{reqId}
-        	and issue_del ='N'
-        	))*100)as replypercent 
-		FROM    dual        
+			SELECT CASE WHEN nvl((
+        		SELECT COUNT(issue_id)
+        		FROM issue WHERE req_id=#{reqId}
+        		AND issue_del ='N') , 0) > 0 
+        		THEN 
+            		ROUND(((
+        				SELECT COUNT(distinct(some_id))
+        				FROM   reply WHERE req_id =#{reqId} AND del='N'
+        				)/(
+        				SELECT COUNT(issue_id)
+        				FROM issue WHERE req_id=#{reqId}
+        				AND issue_del ='N'
+        				))*100)
+            	ELSE 0 END AS replypercent FROM dual    
         
 	</select>
 </mapper>

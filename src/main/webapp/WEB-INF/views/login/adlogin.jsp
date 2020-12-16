@@ -69,7 +69,7 @@ $(function(){
 	<div class="ff">
 
 		<div class="col-sm-4">
-			<img src="../dist/img/addpl.png"  height="60%" width="100%" style="margin-top: 100px">
+			<img src="../dist/img/addpl2.png"  height="60%" width="100%" style="margin-top: 100px">
 		</div>
 		
 		
