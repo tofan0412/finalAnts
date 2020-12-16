@@ -11,6 +11,19 @@
  a{
  	color : gray;
  }
+ 
+ 	.pagingui{
+		 display: inline-block;
+		 text-align: center;
+		 width: 30px;
+		 
+	}
+	#paging{
+		 display: inline-block;
+/* 		 text-align: center; */
+		 width:auto; float:left; margin:0 auto; text-align:center;"
+		 
+	}	
 </style>
 <script>
 toastr.options = {
@@ -95,6 +108,28 @@ toastr.options = {
 				}
 		});
 	}
+	
+	function readAlarm(url,alarmId,alarmType,reqId){
+		$.ajax({
+				url  : "/alarmUpdate",
+				data : {alarmId : alarmId},
+				method : "post",
+				dataType : "json",
+				success : function(data){
+					if(alarmType == 'reply'){
+						getReply(url,reqId);
+					}else{
+						getPage(url);
+					}
+				}
+		});
+	}
+	function getReply(url,reqId){
+		document.location = url+"&reqId="+reqId;
+	}
+	function getPage(url){
+		document.location = url;
+	}
   
 </script>
 
@@ -105,8 +140,8 @@ toastr.options = {
 											background: white;">
 		      <div class="container-fluid">
 		        <div class="row mb-2">
-		          <div class="col-sm-6">
-		            <h1 class="jg"><i class="nav-icon fas fa-bullhorn"></i>&nbsp;&nbsp;새로운 소식</h1>
+		          <div class="col-sm-6" style="color: dimgray">
+		            <h4 class="jg"><i class="nav-icon fas fa-bullhorn"></i>&nbsp;&nbsp;새로운 소식</h4>
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right">
@@ -153,7 +188,7 @@ toastr.options = {
 							
 							        <div class="error-content">
 							          <h3 class="ns"><i class="fas fa-envelope"></i> 알림이 없습니다.</h3>
-							          <p class="ng"> 
+							          <p class="ns"> 
 							            	본인이 작성한 게시물에 댓글, 답글이 달리거나 요청을 받았을 때 도착한 알림을 볼 수 있는 공간입니다.
 							          </p>
 							        </div>
@@ -187,20 +222,20 @@ toastr.options = {
 				                    	</c:when>
 				                    </c:choose>
 			                    </td>
-			                    <td class="mailbox-name"><a href="read-mail.html">${fn:split(a.alarmCont,',')[2]}(${fn:split(a.alarmCont,',')[1]})</a></td>
+			                    <td class="mailbox-name"><a href="read-mail.html">${fn:split(a.alarmCont,'&&')[2]}(${fn:split(a.alarmCont,'&&')[1]})</a></td>
 			                    <td class="mailbox-subject" style="width: 70%;">
 				                    <c:choose>
 				                    	<c:when test="${a.alarmType eq 'req-pl' or 'res-pl' }"><b>PL 요청</b>
-					                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} (제목을 누르면 상세페이지로 이동합니다.)</a>
+					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]}</a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'res-pl' }"><b>PL 응답</b>
-					                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} : ${fn:split(a.alarmCont,',')[5] } </a>
+					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'reply'}"><b>댓글</b>
-					                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} : ${fn:split(a.alarmCont,',')[5] } </a>
+					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }',${fn:split(a.alarmCont,'&&')[0]})">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'posts'}"><b>게시물</b>
-					                    	 - <a href="javascript:getReqDetail('${fn:split(a.alarmCont,',')[3] }','${a.alarmId }')">${fn:split(a.alarmCont,',')[4]} : ${fn:split(a.alarmCont,',')[5] } </a>
+					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
 				                    	</c:when>
 				                    </c:choose>
 			                    </td>
@@ -264,12 +299,15 @@ toastr.options = {
 		                <!-- /.float-right -->
 		              </div>
 		                  <div id="paging" class="card-tools">
-							<ul class="pagination pagination-sm">
+							<ul class="pagination pagination-sm jg" id="pagingui">
 								<ui:pagination paginationInfo="${paginationInfo}" type="image"
 									jsFunction="fn_egov_link_page" />
 								<form:hidden path="pageIndex" />
 							</ul>
 						  </div>
+						  
+						  
+						  
 		            </div>
 		          </div>
           <!-- /.card -->

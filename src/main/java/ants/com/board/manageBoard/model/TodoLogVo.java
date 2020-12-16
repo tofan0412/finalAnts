@@ -11,7 +11,30 @@ public class TodoLogVo {
 	private String beforeId;
 	private String afterId;
 	private String regDt;
+	private String elapsedDay;
+	private String elapsedTime;
+	private String elapsedMin;
 	
+	
+	
+	public String getElapsedMin() {
+		return elapsedMin;
+	}
+	public void setElapsedMin(String elapsedMin) {
+		this.elapsedMin = elapsedMin;
+	}
+	public String getElapsedDay() {
+		return elapsedDay;
+	}
+	public void setElapsedDay(String elapsedDay) {
+		this.elapsedDay = elapsedDay;
+	}
+	public String getElapsedTime() {
+		return elapsedTime;
+	}
+	public void setElapsedTime(String elapsedTime) {
+		this.elapsedTime = elapsedTime;
+	}
 	public String getTodoId() {
 		return todoId;
 	}
@@ -51,8 +74,10 @@ public class TodoLogVo {
 	@Override
 	public String toString() {
 		return "TodoLogVo [todoId=" + todoId + ", logId=" + logId + ", logComment=" + logComment + ", beforeId="
-				+ beforeId + ", afterId=" + afterId + ", regDt=" + regDt + "]";
+				+ beforeId + ", afterId=" + afterId + ", regDt=" + regDt + ", elapsedDay=" + elapsedDay
+				+ ", elapsedTime=" + elapsedTime + ", elapsedMin=" + elapsedMin + "]";
 	}
+	
 	
 	
 }

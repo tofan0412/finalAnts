@@ -95,93 +95,100 @@ text-align: right;
 </head>
 <body class="jg">
 <%@include file="../layout/contentmenu.jsp"%>
-					<h4 style="margin-left: 50px;">${projectVo.proName}</h4>
-					 <br><br>
-                	<div class="row" style="width: 65%;  float:left;">
-                  <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline; width:100px;height:100px;">
-                    <canvas width="100" height="100"></canvas>
-                    <input type="text" class="knob" value="100" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: #6495ED; font: bold 18px Arial; text-align: center; color: #6495ED; padding: 0px; appearance: none;" readonly="readonly">
-                    </div>
-                    <div style="position: relative; top: -110px; left:20%; color: white; font-size:x-large; font-weight: bold;">Active</div>
-                    <div style="position: relative; top: -100px; left:20%; color: white; font-size: large; font-weight: bold;">${pro.regDt }</div>
-                  </div>
-                   
-                  <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline;width:100px;height:100px;">
-                    <canvas width="100" height="100"></canvas>
-                    <c:if test="${empty pro.percent}">
-                    <input type="text" class="knob" value="0" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div></c:if>
-                    <c:if test="${not empty pro.percent}">
-                    <input type="text" class="knob" value="${pro.percent}" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly">
-                    </div>
-                    </c:if>
-
-                    <div class="knob-label">진행도 : %</div>
-                  </div>
-                  <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline;width:100px;height:100px;">
-                    <canvas width="100" height="100"></canvas>
-                    <input type="text" class="knob" value="${pro.elepsedTime }" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
-
-                    <div class="knob-label">경과 시간 : 일</div>
-                  </div>
-                  <div class="col-6 col-md-3 text-center">
-                    <div style="display:inline;width:100px;height:100px;">
-                    <canvas width="100" height="100"></canvas>
-                    <input type="text" class="knob" value="${dbsuggestvo.acceptpercent}" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
-
-                    <div class="knob-label">건의사항 수용률 : %</div>
-                  </div>
-                  <div class="row" style="width: 100%; margin-left: 10%; margin-top: 8%;" >
-                    <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%;" >
-                     	경과시간 대비 진행율
-                      <div class="progress progress-md">
-                      <c:if test="${pro.elepsedTime ne 0 }">
-                      <fmt:parseNumber value="${pro.percent/pro.elepsedTime }" var="timecalc"/>
-                        <div class="progress-bar bg-warning" style="width:<c:out value="${timecalc}" />%"></div></c:if>
-                        <c:if test="${pro.elepsedTime eq 0 }">
-                        <div class="progress-bar bg-warning" style="width:<c:out value="${pro.percent}" />%"></div></c:if>
-                      </div>
-                    </div>
-               		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; ">
-                      	프로젝트 파일함 사용량
-                      <div class="progress progress-md">
-                      <fmt:parseNumber value="${dbfilevo.pubSize/1024}" var="pnum"/>
-                        <c:if test="${pnum>=1024}">
-                        <div class="progress-bar bg-warning" style="width: <c:out value="${pnum/1024}" />%"></div></c:if>
-                        <c:if test="${pnum<1024}">
-                        <div class="progress-bar bg-warning" style="width: <c:out value="${pnum}" />%"></div></c:if>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-3" style="width: 35%;" >
-                      	소통량
-                      	<fmt:parseNumber value="${dbreplyvo.replypercent}" var="reply"/>
-                      <div class="progress progress-md" >
-                        <div class="progress-bar bg-warning" style="width:<c:out value="${reply}" />%"></div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; margin-top: 5%;" >
-                      	투표율
-                      <fmt:parseNumber value="${dbvotevo.votepercent}" var="NUM"/>
-                      <div class="progress progress-md">
-                        <div class="progress-bar bg-warning" style="width: <c:out value="${NUM}" />%"></div>
-                      </div>
-                    </div>
-               		
-               		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-top: 7%; margin-right: 10%;">
-                     
-						<a href="#">차트 보러가기</a>
-                    </div>
+					<br><br>
+                	<div class="row jg" style="width: 65%;  float:left;">
+                  		<div class="col-6 col-md-3 text-center taskStats clearfix">
+                  			<div class="circle" id="STATUS">
+                				<div id="statusBall" style="border-radius: 100%; margin: 0px auto; position: relative; display: table; background-color: rgb(100, 149, 237); color: rgb(255, 255, 255); width: 156px; height: 156px;">
+                					<div style="display: table-cell; vertical-align: middle; text-align: center;">
+                						<span class="_stsLabel" style="font-size: x-large;">Active</span>
+                						<span class="additionalLabelText" style="color: rgb(255, 255, 255);"><br>${pro.regDt }</span>
+                					</div>
+                				</div><h5>status</h5>
+                			</div>
+                  		</div>
+                  		<div class="col-6 col-md-3 text-center taskStats clearfix">
+                  			<div class="circle" id="circle_TASK_PROGRESS">
+                  				<div class="circles-wrp" style="position: relative; display: inline-block;">
+                  					<canvas width="1" height="100"></canvas>
+			                    	<c:if test="${empty pro.percent}">
+			                    		<input type="text" class="knob" value="0" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly">
+			                    	</c:if>
+			                    	<c:if test="${not empty pro.percent}">
+			                    		<input type="text" class="knob" value="${pro.percent}" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly">
+			                    	</c:if>	
+                  				</div>
+                  			</div><h5>진행도 : %</h5>
+                  		</div>
+                  		<div class="col-6 col-md-3 text-center taskStats clearfix">
+                  			<div class="circle" id="circle_TASK_PROGRESS">
+                  				<div class="circles-wrp" style="position: relative; display: inline-block;">
+                  					<canvas width="1" height="100"></canvas>
+			                    	<input type="text" class="knob" value="${pro.elepsedTime }" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly">
+                  				</div>
+                  			</div><h5>경과 시간 : 일</h5>
+                  		</div>
+                  		<div class="col-6 col-md-3 text-center taskStats clearfix">
+                  			<div class="circle" id="circle_TASK_PROGRESS">
+                  				<div class="circles-wrp" style="position: relative; display: inline-block;">
+                  					<canvas width="1" height="100"></canvas>
+                  					<input type="text" class="knob" value="${dbsuggestvo.acceptpercent}" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly">
+                  				</div>
+                  			</div><h5>건의사항 수용률 : %</h5>
+                  		</div>
+                  		
+                  		
+                  		<div class="row jg" style="width: 100%; margin-left: 10%; margin-top: 8%;" >
+	                    	<div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%;" >
+	                     		경과시간 대비 진행율
+	                      		<div class="progress progress-md">
+	                      			<c:if test="${pro.elepsedTime ne 0 }">
+	                      				<fmt:parseNumber value="${pro.percent/pro.elepsedTime }" var="timecalc"/>
+	                        				<div class="progress-bar bg-warning" style="width:<c:out value="${timecalc}" />%"></div>
+	                        		</c:if>
+	                        		<c:if test="${pro.elepsedTime eq 0 }">
+	                        			<div class="progress-bar bg-warning" style="width:<c:out value="${pro.percent}" />%"></div>
+	                        		</c:if>
+	                      		</div>
+	                    	</div>
+	               		 	<div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; ">
+	                      		프로젝트 파일함 사용량
+	                      		<div class="progress progress-md">
+	                      			<fmt:parseNumber value="${dbfilevo.pubSize/1024}" var="pnum"/>
+	                        		<c:if test="${pnum>=1024}">
+	                        			<div class="progress-bar bg-warning" style="width: <c:out value="${pnum/1024}" />%"></div>
+	                        		</c:if>
+	                        		<c:if test="${pnum<1024}">
+	                        			<div class="progress-bar bg-warning" style="width: <c:out value="${pnum}" />%"></div>
+	                        		</c:if>
+	                      		</div>
+	                    	</div>
+	                    	<div class="col-12 col-sm-6 col-md-3" style="width: 35%;" >
+	                      	소통량
+	                      		<fmt:parseNumber value="${dbreplyvo.replypercent}" var="reply"/>
+	                      		<div class="progress progress-md" >
+	                        		<div class="progress-bar bg-warning" style="width:<c:out value="${reply}" />%"></div>
+	                      		</div>
+	                    	</div>
+	                    	<div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; margin-top: 5%;" >
+	                  		투표율
+		                      	<fmt:parseNumber value="${dbvotevo.votepercent}" var="NUM"/>
+		                      	<div class="progress progress-md">
+		                        	<div class="progress-bar bg-warning" style="width: <c:out value="${NUM}" />%"></div>
+		                      	</div>
+	                    	</div>
+	               		
+	               		 	<div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-top: 7%; margin-right: 10%;">
+								<a href="#">차트 보러가기</a>
+	                    	</div>
                     
-                    
-					</div>
+						</div>
 					</div>
                 
 
                     
-              <div class="row" style="width: 30%; float:left; margin-left:5%;  border-bottom: 1px solid black;" > 
-              	   <h2>Project Day</h2>
+              <div class="row jg" style="width: 25%; float:left; margin-left:5%;  border-bottom: 1px solid gray;" > 
+              	   <h3>Project Day</h3>
                     <table class="table table-sm" >
                   <tbody>
                     <tr>
@@ -214,21 +221,28 @@ text-align: right;
                   </tbody>
                 </table>
               </div>
-              <div class="row" style="width: 30%; float:right; margin-right:1%;  margin-top:2%; border-bottom: 1px solid black;" > 
-              	   <h2>WorkGroup</h2>
-              	   <br>
-                    <ul class="users-list clearfix">
-                      <li>
+              <div class="row jg" style="width: 25%; float:left; margin-left:5%;  border-bottom: 1px solid gray; margin-top: 40px;" > 
+              	   <h3>WorkGroup</h3>
+              	   <table class="table table-sm">
+              	   <tbody>
+              	   	<tr>
+              	   		<th style="border: none">PL : ${req.plId }</th>
+              	   	</tr>
 <!--                         <img src="../userprofile/user-0.png" alt="User Image"> -->
-                        <span>PL : ${req.plId }</span>
-                      </li>
-                      <c:forEach items="${promem }" var="pro" varStatus="sts">
-                      <li>
+                    <c:forEach items="${promem }" var="pro" varStatus="sts">
+                    	<c:if test="${sts.index%3 eq 0 and sts.index != 0}">
+	                    	<tr>
+	                    		<td>${pro.memId }</td>
+	                    	</tr>
+                    	</c:if>
 <!--                          <img src="../userprofile/user-4.png" alt="User Image"> -->
-                        <span >${pro.memId }</span>
-                      </li>
-                      </c:forEach>
-                    </ul>
+                        	
+                        <c:if test="${sts.index%3 != 0 or sts.index eq 0}">
+	                    	<td>${pro.memId }</td>
+                    	</c:if>
+                    </c:forEach>
+                   </tbody>
+              	  </table>
                     <!-- /.users-list -->
               		
               </div>
