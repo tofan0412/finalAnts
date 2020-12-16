@@ -4,9 +4,9 @@
 	padding: 0;
 }
 
-header {
-	background-color: #FFF;
-}
+/* header { */
+/* 	background-color: #FFFFFF; */
+/* } */
 
 .header_container {
 	display: flex;
@@ -69,12 +69,12 @@ header {
 	display: block;
 	cursor: default;
 	text-align: center;
-	color: rgba(255, 255, 255, 1);
-	background-color: rgba(25, 25, 25, 1);
+	color: #000000;
+	background-color: #FFFFFF;
 }
 
 .footer_container .footA {
-	font-size: 25px;
+	font-size: 5px;
 	margin-top: 20px;
 	margin-bottom: 10px;
 }

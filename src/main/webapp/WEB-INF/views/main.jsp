@@ -291,4 +291,11 @@
 			지금 바로 Ants를 사용해 보세요 !
 			</div>
 	</div>
+	
+	<div style="height: 90px; background-color: #000000;color:#FFFFFF ; text-align: center;" >
+		<div onclick="location.href='/admin/adloginView';" style="padding-top: 20px">
+			Ant's
+		</div>
+		© 2020-2020 Ants Lab, Inc. (주)개미랩 | 대전광역시 중구 중앙로 76 | 대덕인재개발원 | 404호
+	</div>
 </div>
