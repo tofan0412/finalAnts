@@ -351,7 +351,7 @@ th{
 		</div>
 	</div>
 	
-				
+		
 	<!-- 위 오른쪽 공지사항 -->
 	<div class="top" style="margin-left:1%;"><h4>공지사항( ${proName} )</h4>
 		<div style="padding-top:7%; width:100%; height:90%">
@@ -361,11 +361,11 @@ th{
 						<th style="width: 150px; padding-left: 50px; text-align: center;">최신글</th>
 						<th style="padding-left: 30px; text-align: center;" class="jg">  이슈 제목</th> 
 						<th style="text-align: center;" class="jg">   작성자 </th>
-						<th style="text-align: center;" class="jg">   날짜   </th>
+						<th style="text-align: center; width: 200px;" class="jg">   날짜   </th>
 					</tr>
 				</thead>	
-			<tbody>			 
-				<c:forEach items = "${issuelist }" var ="issue" varStatus="status" end="10">
+			<tbody>			 	
+				<c:forEach items = "${issuelist }" var ="issue" varStatus="status" end="6">
 					<c:set var="issueDt1" value="${fn: replace(issue.regDt,'-','')}"/> 		
 						<c:set var="issueDt2" value="${fn: substringBefore(issueDt1,' ')}"/> 	
 						<fmt:parseNumber var="issueDt3" value="${issueDt2 + 3}" integerOnly="true"/>
