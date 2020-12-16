@@ -81,12 +81,11 @@ public class AlarmController {
 	@RequestMapping("/alarmUpdate")
 	public String alarmUpdate(@ModelAttribute("alarmVo") AlarmVo alarmVo) {
 		alarmService.alarmUpdate(alarmVo);
-		return "tiles/alarm/alarm";
+		return "jsonView";
 	}
 	
 	@RequestMapping("/alarmDelete")
 	public String alarmDelete(@RequestBody ArrayList<String> deleteData, Model model) {
-		logger.debug("알림삭제알림삭제알림삭제:{}", deleteData);
 		
 		int cnt = alarmService.alarmDelete(deleteData);
 		model.addAttribute("cnt", cnt);
