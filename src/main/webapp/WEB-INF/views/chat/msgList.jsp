@@ -7,10 +7,16 @@
 <c:set value="<%=new Date() %>" var="currTime" ></c:set>
 <fmt:formatDate value="${currTime }" var="currTime" pattern="yyyy-MM-dd HH:mm:ss" />
 <script>
-	let sock = new SockJS("/echo");
-	sock.onmessage = onMessage;
-	sock.onclose = onClose;
-
+	// sockJS 선언하기. 만약 기존에 선언된 경우 선언을 생략한다.
+	if (typeof sockMsg == "undefined"){
+    	sockMsg = new SockJS("/echo");
+    	sockMsg.onmessage = onMessage;
+    	sockMsg.onclose = onClose;
+	}else{
+		sockMsg.onmessage = onMessage;
+    	sockMsg.onclose = onClose;
+	}
+	
 	$('#sendMsg').on('click',function(){
 		// 공백인 경우 전송하지 않는다.
 		if ($('#sendChatCont').val() == ''){
@@ -40,7 +46,7 @@
 	
 	// 메시지 전송
 	function sendMessage() {
-		sock.send($("#sendChatCont").val());
+		sockMsg.send($("#sendChatCont").val());
 	}
 	// 서버로부터 메시지를 받았을 때. 내 아이디인 경우 우측에 배치하고 상대방인 경우 좌측에 배치한다. 
 	function onMessage(msg) {

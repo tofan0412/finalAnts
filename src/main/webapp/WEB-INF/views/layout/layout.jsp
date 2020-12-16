@@ -10,7 +10,11 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js">
 </script>
-
+<script type="text/javascript">
+$(function(){
+	
+})
+</script>
 	<!-- jQuery, style -->
 	<%@include file="commonLib.jsp"%>
 	<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
