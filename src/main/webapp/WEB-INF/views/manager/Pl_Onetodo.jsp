@@ -60,6 +60,7 @@
 				var i = 0;
 				var html = "";
 				var res ="";
+				var log ="";
 				for (var i = 0; i < data.todoVo.length; i++) {
 					var todo = data.todoVo[i];
 					if("${param.todoId}"==todo.todoId){
@@ -92,9 +93,28 @@
 						}
 						
 					}
-				
+				for(var i=0; i<data.dbtodolog.length; i++){
+					var todolog = data.dbtodolog[i];
+					if(todolog.elapsedDay =='0'){
+							log += '<label class="control-label" >오늘&nbsp;&nbsp;변경&nbsp;&nbsp;내역</label><br>';
+						if(todolog.elapsedTime =='0'){							
+							log += ' <p style="padding-left: 2%;">'+todolog.elapsedTime+'분&nbsp;&nbsp;전 &nbsp;&nbsp;<span class="bef">'+todolog.beforeId+'</span>에서&nbsp;&nbsp;<span class="aft">'+todolog.afterId+'</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p><br>';
+						} 
+					     
+						else if(todolog.elapsedTime !='0'){
+							log += ' <p style="padding-left: 2%;">'+todolog.elapsedTime+'시간&nbsp;&nbsp;'+todolog.elapsedTime+'분&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">'+todolog.beforeId+'</span>에서&nbsp;&nbsp;<span class="aft">'+todolog.afterId+'</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p><br>';
+						}
+					}
+					else{
+						log += '<label class="control-label" >'+todolog.elapsedDay+'일&nbsp;&nbsp;전&nbsp;&nbsp;변경&nbsp;&nbsp;내역</label><br>';
+						log += '<p style="padding-left: 2%;"><span class="bef">'+todolog.beforeId+'</span>에서&nbsp;&nbsp;<span class="aft">'+todolog.afterId+'</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p><br>';
+					}
+					log += '<br>';
+					
+				}
+				$("#todolog").html(log);
 				if(data.filelist.length == 0){
-					res += '<p>[ 첨부파일이 없습니다. ]</p>';
+					res += '<label class="control-label" >[ 첨부파일이 없습니다. ]</label>';
 					$("#filediv").html(res);
 				}
 				if(data.filelist.length != 0) {
@@ -118,7 +138,12 @@
   width: 10%;
   text-align: center;
   }
-
+.aft{
+	color: blue;
+}
+.bef{
+	color: red;
+}
 </style>
 
 </head>
@@ -148,15 +173,10 @@
         </tr>
          
         <tr class="stylediff">
-            <th class="success">변경이력</th>
-            <td><label class="control-label" >추후처리예정</label></td>
+            <th class="success">기간</th>
+            <td><label class="control-label" id="todoStart"></label>~<label class="control-label" id="todoEnd"></label></td>
             <th class="success">우선순위</th>
             <td><label class="control-label" id="todoImportance"></label></td>
-        </tr>
-         
-        <tr class="stylediff">
-            <th class="success">기간</th>
-            <td colspan="3"><label class="control-label" id="todoStart"></label> <label class="control-label">~</label> <label class="control-label" id="todoEnd"></label></td>
         </tr>
          
         <tr>
@@ -166,10 +186,10 @@
         <tr>
             <th class="success">첨부파일</th>
             <td colspan="3"><div id = "filediv">	
-					</div></td>
+					</div>
+			</td>
         </tr>
         </table>
-				
 		         <div id="btnMenu">
 				 <c:if test="${SMEMBER.memId eq projectVo.memId }">
 					 <button type="button" class="btn btn-default" id="updateBtn" >수정</button>
@@ -192,6 +212,22 @@
             </div>
             <div class="card-body" style="display: block;">
               <div class="form-group" id ="childtodo">
+               
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <div class="card card-primary" id ="todologl">
+            <div class="card-header">
+              <h3 class="card-title">변경이력</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body" style="display: none;">
+              <div class="form-group" id ="todolog">
                
               </div>
             </div>
