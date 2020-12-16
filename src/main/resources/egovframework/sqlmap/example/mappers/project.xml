@@ -124,7 +124,7 @@
 			p.req_id,
 			p.mem_id,
 			p.pro_name,
-			to_char(round(p.pro_percent)) as percent,
+			TO_CHAR(round(p.pro_percent)) as percent,
 			TO_CHAR(p.reg_dt,'yyyy-mm-dd') as reg_dt,
 			p.del,
 	        TO_CHAR((p.reg_dt + r.req_period),'yyyy-mm-dd') as endDt,

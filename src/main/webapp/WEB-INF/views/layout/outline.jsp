@@ -91,8 +91,9 @@ text-align: right;
   })
 
 </script>
+<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 </head>
-<body>
+<body class="jg">
 <%@include file="../layout/contentmenu.jsp"%>
 					<h4 style="margin-left: 50px;">${projectVo.proName}</h4>
 					 <br><br>
@@ -100,9 +101,10 @@ text-align: right;
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline; width:100px;height:100px;">
                     <canvas width="100" height="100"></canvas>
-                    <input type="text" class="knob" value="100" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: #6495ED; font: bold 18px Arial; text-align: center; color: #6495ED; padding: 0px; appearance: none;" readonly="readonly"></div>
-
-                    <div class="knob-label">status</div>
+                    <input type="text" class="knob" value="100" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: #6495ED; font: bold 18px Arial; text-align: center; color: #6495ED; padding: 0px; appearance: none;" readonly="readonly">
+                    </div>
+                    <div style="position: relative; top: -110px; left:20%; color: white; font-size:x-large; font-weight: bold;">Active</div>
+                    <div style="position: relative; top: -100px; left:20%; color: white; font-size: large; font-weight: bold;">${pro.regDt }</div>
                   </div>
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline;width:100px;height:100px;">
@@ -110,24 +112,25 @@ text-align: right;
                     <c:if test="${empty pro.percent}">
                     <input type="text" class="knob" value="0" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div></c:if>
                     <c:if test="${not empty pro.percent}">
-                    <input type="text" class="knob" value="${pro.percent}" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
+                    <input type="text" class="knob" value="${pro.percent}" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly">
+                    </div>
                     </c:if>
 
-                    <div class="knob-label">진행도</div>
+                    <div class="knob-label">진행도 : %</div>
                   </div>
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline;width:100px;height:100px;">
                     <canvas width="100" height="100"></canvas>
                     <input type="text" class="knob" value="${pro.elepsedTime }" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
-                    <div class="knob-label">경과 시간</div>
+                    <div class="knob-label">경과 시간 : 일</div>
                   </div>
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline;width:100px;height:100px;">
                     <canvas width="100" height="100"></canvas>
                     <input type="text" class="knob" value="${dbsuggestvo.acceptpercent}" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly"></div>
 
-                    <div class="knob-label">건의사항 수용률</div>
+                    <div class="knob-label">건의사항 수용률 : %</div>
                   </div>
                   <div class="row" style="width: 100%; margin-left: 10%; margin-top: 8%;" >
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%;" >
@@ -208,17 +211,17 @@ text-align: right;
                 </table>
               </div>
               <div class="row" style="width: 30%; float:right; margin-right:1%;  margin-top:2%; border-bottom: 1px solid black;" > 
-              
               	   <h2>WorkGroup</h2>
+              	   <br>
                     <ul class="users-list clearfix">
                       <li>
 <!--                         <img src="../userprofile/user-0.png" alt="User Image"> -->
-                        <span class="users-list-date">PL : ${req.plId }</span>
+                        <span>PL : ${req.plId }</span>
                       </li>
                       <c:forEach items="${promem }" var="pro" varStatus="sts">
                       <li>
 <!--                          <img src="../userprofile/user-4.png" alt="User Image"> -->
-                        <span class="users-list-date">${pro.memId }</span>
+                        <span >${pro.memId }</span>
                       </li>
                       </c:forEach>
                     </ul>
