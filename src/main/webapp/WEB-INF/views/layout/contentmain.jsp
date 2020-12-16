@@ -150,16 +150,20 @@ th{
 
 
 .container{
-	padding-bottom:4%;
-}			
+	padding-bottom:3%;
+}
 .panel-heading{
 	padding-left:10px;
-	padding-top:3px;
 	background-color:#6495ED; 
 	border:2px solid lightgray; 
 	border-radius:5px; 
 	height:36px;	
 }			
+.divtitle{
+	color:white;
+	font-size:15px;
+	font-weight:bold;
+}	
 </style>
 	 				
 
@@ -175,7 +179,7 @@ th{
 					    <div class="panel panel-default">
 					      <div class="panel-heading">
 					        <h4 class="panel-title">			
-					          <a data-toggle="collapse" href="#collapse1" style="color:white;">참여중인 프로젝트</a>
+					          <a data-toggle="collapse" href="#collapse1" class="divtitle">참여중인 프로젝트</a>
 					        </h4>	
 					      </div> 	
 					      <div id="collapse1" class="panel-collapse collapse">
@@ -199,7 +203,7 @@ th{
 													<td>${project.reqId}</td>
 													<td>${project.percent}</td>
 													<td>${fn:substring(project.regDt,0,10)}</td>
-													<td>	
+													<td>
 														<c:choose>
 															<c:when test="${not empty project.reqId}">
 																<a href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
@@ -233,7 +237,7 @@ th{
 					    <div class="panel panel-default">
 					      <div class="panel-heading">
 					        <h4 class="panel-title">
-					          <a data-toggle="collapse" href="#collapse2" style="color:white">내가 PL인 프로젝트</a>
+					          <a data-toggle="collapse" href="#collapse2" class="divtitle">내가 PL인 프로젝트</a>
 					        </h4>
 					      </div>			
 					      <div id="collapse2" class="panel-collapse collapse show">
@@ -289,7 +293,7 @@ th{
 					    <div class="panel panel-default">
 					      <div class="panel-heading">
 					        <h4 class="panel-title">
-					          <a data-toggle="collapse" href="#collapse3" style="color:white;">프로젝트 관리(PM)</a>
+					          <a data-toggle="collapse" href="#collapse3" class="divtitle">프로젝트 관리(PM)</a>
 					        </h4>
 					      </div>			
 					      <div id="collapse3" class="panel-collapse collapse">
