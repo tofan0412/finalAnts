@@ -195,6 +195,13 @@ public class ProjectController {
 		model.addAttribute("dbfilevo", dbfilevo);
 		model.addAttribute("dbreplyvo", dbreplyvo);
 		model.addAttribute("dbsuggestvo", dbsuggestvo);
+		System.out.println(dbreqvo);
+		System.out.println(dbprojectvo);
+		System.out.println(dbpromemvo);
+		System.out.println(dbvotevo);
+		System.out.println(dbfilevo);
+		System.out.println(dbreplyvo);
+		System.out.println(dbsuggestvo);
 		return "tiles/layout/outline";
 	}
 }

@@ -355,5 +355,15 @@
 			ORDER BY todo_level
 		</select>
 		
+		<select id="getTodolog" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoLogVo">
+			SELECT
+    			before_id,
+    			after_id
+			FROM
+    			todolog
+			WHERE todo_id = #{todoId}
+			ORDER BY log_id desc
+		</select>
+		
 		
 </mapper>

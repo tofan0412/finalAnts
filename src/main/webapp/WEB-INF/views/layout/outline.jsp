@@ -137,8 +137,11 @@ text-align: right;
                     <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%;" >
                      	경과시간 대비 진행율
                       <div class="progress progress-md">
+                      <c:if test="${pro.elepsedTime ne 0 }">
                       <fmt:parseNumber value="${pro.percent/pro.elepsedTime }" var="timecalc"/>
-                        <div class="progress-bar bg-warning" style="width:<c:out value="${timecalc}" />%"></div>
+                        <div class="progress-bar bg-warning" style="width:<c:out value="${timecalc}" />%"></div></c:if>
+                        <c:if test="${pro.elepsedTime eq 0 }">
+                        <div class="progress-bar bg-warning" style="width:<c:out value="${pro.percent}" />%"></div></c:if>
                       </div>
                     </div>
                		 <div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; ">

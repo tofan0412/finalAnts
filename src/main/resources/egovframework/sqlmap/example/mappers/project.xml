@@ -130,7 +130,7 @@
 			TO_CHAR(p.reg_dt,'yyyy-mm-dd') as reg_dt,
 			p.del,
 	        TO_CHAR((p.reg_dt + r.req_period),'yyyy-mm-dd') as endDt,
-	        TRUNC(sysdate-to_date(to_char(p.reg_dt, 'yyyymmdd'),'yyyymmdd')) as elepsedTime
+	        nvl(TRUNC(sysdate-to_date(to_char(p.reg_dt, 'yyyymmdd'),'yyyymmdd')),0) as elepsedTime
 		FROM (select * from REQLIST) r,
 			project p
 		where r.req_id = p.req_id
@@ -152,14 +152,14 @@
 	<select id="getoutlinefiles" parameterType="java.lang.String"
 		resultType="ants.com.file.model.PublicFileVo">
 		 SELECT
-		   round(sum(pub_size)) as pub_size
+		   nvl(round(sum(pub_size)),0) as pub_size
 		FROM
 		    publicfile
 		where req_id=#{reqId}
 	</select>
 	<select id="getoutlinevote" parameterType="java.lang.String"
 		resultType="ants.com.board.vote.model.VoteVo">
-		    SELECT round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)) as votepercent
+		    SELECT nvl(round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)),0) as votepercent
 				FROM vote a, member b
 				WHERE a.mem_id = b.mem_id
 				AND a.req_id = #{reqId}
