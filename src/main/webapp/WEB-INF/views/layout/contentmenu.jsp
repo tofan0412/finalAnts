@@ -212,11 +212,14 @@
 	align: center;
 	height: 35px;
 }
+.nav-link{
+	padding-bottom: 0px;
+}
 </style>
 <body class="hold-transition sidebar-mini accent-teal">
 
 	<section class="content-header"
-		style="border-bottom: 1px solid #dee2e6; background-color:aliceblue; margin-bottom: 15px; padding-bottom: 0px;" >
+		style="border-bottom: 1px solid #dee2e6; background-color:#f2f2f2; margin-bottom: 15px; padding-bottom: 0px;" >
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
@@ -225,7 +228,7 @@
 						<i class="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;${projectNAME}
 					</h1>
 					<p class="text-sm">
-						Project Leader <b>${projectVo.memId }</b>
+						Project Leader <b>&nbsp;${projectVo.memId }</b>
 					</p>
 				</div>
 				<div class="col-sm-6">
@@ -240,7 +243,7 @@
 					</ol>
 				</div>
 				<!-- Main content -->
-				<section class="content">
+				<section class="content jg">
 					<div class="col-13 col-sm-13">
 						<div>
 							<div class="card-header p-0 pt-1 border-bottom-0">
