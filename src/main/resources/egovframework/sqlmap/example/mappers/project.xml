@@ -13,6 +13,7 @@
 		WHERE
 			projectmember.req_id = project.req_id
 		and projectmember.mem_id = #{memId}
+		and projectmember.promem_status='IN'
 	</select>
 
 	<select id="plInProjectList" parameterType="String"
@@ -27,6 +28,7 @@
 		WHERE
 			reqlist.req_id = project.req_id
 		AND reqlist.pl_id= #{memId}
+		AND reqlist.status ='ACCEPT'
 	</select>
 
 	<select id="pmInProjectList" parameterType="String"
