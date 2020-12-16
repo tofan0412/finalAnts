@@ -106,6 +106,7 @@ text-align: right;
                     <div style="position: relative; top: -110px; left:20%; color: white; font-size:x-large; font-weight: bold;">Active</div>
                     <div style="position: relative; top: -100px; left:20%; color: white; font-size: large; font-weight: bold;">${pro.regDt }</div>
                   </div>
+                   
                   <div class="col-6 col-md-3 text-center">
                     <div style="display:inline;width:100px;height:100px;">
                     <canvas width="100" height="100"></canvas>
