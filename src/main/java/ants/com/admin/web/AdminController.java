@@ -70,8 +70,8 @@ public class AdminController {
 			session.setAttribute("SADMIN", dbAdmin);
 			
 			
-//			return "admin.tiles/admin/adcontentmain";
-				return "redirect:/admin/noticelist";
+			return "admin.tiles/admin/adcontentmain";
+//				return "redirect:/admin/noticelist";
 		} else {
 			return "redirect:/admin/adloginView";
 		}
@@ -105,8 +105,8 @@ public class AdminController {
 	// 화면 상단 로고 클릭 시 메인 페이지로 이동
 	@RequestMapping("/adMainView")
 	public String adMainView() {
-//		return "admin.tiles/admin/adcontentmain";
-		return "redirect:/admin/noticelist";
+		return "admin.tiles/admin/adcontentmain";
+//		return "redirect:/admin/noticelist";
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////관리자 로그인 끝	
 	
