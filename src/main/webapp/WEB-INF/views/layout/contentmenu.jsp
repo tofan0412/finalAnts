@@ -194,23 +194,23 @@ $(function(){
 		<div class="row mb-2">
 			<div class="col-sm-6">
 				<c:set var="projectNAME" value="${projectVo.proName}"></c:set>
-				<h1 class="jg">${projectNAME}</h1>
+				<h1 class="jg"><i class="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;${projectNAME}</h1>
+				<p class="text-sm">Project Leader
+                  <b class="d-block">${projectVo.memId }</b>
+                </p>
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item san"><a href="#">Home</a></li>&nbsp;&nbsp;
-
 					<c:if test="${projectVo.memId == SMEMBER.memId}">
-						<li><button class="btn btn-success inviteBtn" style="float: right;">멤버
-								초대</button></li>
+						<li>
+							<button class="btn btn-app inviteBtn">
+			                  <i class="fas fa-user-plus"></i> 멤버 초대
+			                </button>
+						</li>
 					</c:if>
 				</ol>
 			</div>
 
-		</div>
-		<div class="row mb-2">
-			<p style="color: lightslategray;">프로젝트 설명을 입력하세요.컬럼 만들어야 하나..
-				회의하자!</p>
 		</div>
 	</div>
 	<!-- /.container-fluid --> </section>
