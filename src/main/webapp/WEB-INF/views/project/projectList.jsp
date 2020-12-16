@@ -27,6 +27,24 @@ th, td {
 #userSearch{
 	z-index: 50;
 }
+.inputBox{
+	border : none;
+	background-color : #ebf1f5;
+	border-radius: 0.3rem;
+	height : 30px;
+	font-size : 1.15em;
+}
+.addedMemId{
+	border : 2px solid #faff69;
+	background-color : #faff69;
+	border-radius : 0.5rem;
+	height : 40px;
+	font-size : 1.5em;
+	display: inline-block;	
+}
+.xBtn{
+	 cursor: pointer;
+}
 </style>
 <script>
 	$(function() {
@@ -188,7 +206,7 @@ th, td {
 		})
 		
 		// 사용자가 아이디를 누르는 경우 제거한다. 
-		$('.MemList').on('click', '.addedMemId', function(){
+		$('.MemList').on('click', '.xBtn', function(){
 			var memId = $(this).attr('memId');
 			delMember(memId);
 		})
@@ -203,7 +221,12 @@ th, td {
 		function listMember(inviteMemList){
 			$('.MemList').empty();
 			for (i = 0 ; i < inviteMemList.length ; i++){
-				$('.MemList').append("<div class=\'addedMemId jg\' memId='"+inviteMemList[i]+"'>"+inviteMemList[i]+"</div>");	
+				$('.MemList').append(
+					"<div class=\'addedMemId jg\'>"
+						+inviteMemList[i]
+					+"</div>&nbsp;"+
+					"<span class=\'xBtn fas fa-window-close icon\' memId=\'"+ inviteMemList[i] +"\'>"
+					+"</span>&nbsp;&nbsp;");	
 			}	
 		}
 		
@@ -351,44 +374,49 @@ th, td {
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+				
 				<div class="modal-body" style="width : 100%; height : 100%;">
 					<!-- 프로젝트 정보 입력란. -->
 					<input class="reqId" type="text" value="" hidden="hidden">
 					<input class="memId" type="text" value="${SMEMBER.memId }" hidden="hidden">
 					
-					<div class="mkPjtContent" style="width : 600px; height : 300px; background-color : lightgreen;">
-						<div style="float : left">
-						<label class="jg">요구사항정의서 이름</label><br>
-						<input type="text" class="reqTitle"  value="" readonly><br><br>
-						<label class="jg">프로젝트 이름</label><br>
-						<input type="text" class="projectName" placeholder="프로젝트 이름을 입력해 주세요 .." >
-						<br>
-						
-						<!-- 프로젝트 이름 입력 안했을 때 나오는 에러 문구.. with JSR303 -->
-						<span class="error" style="color : red;">
-							<form:errors path="projectVo.proName" class="jg"/>
-						</span>
-						<br><br>
-						
-						<label class="jg">프로젝트 초대 멤버</label><br>
-						<input type="text" id="userSearch">
-						<button class="btn btn-success addMemBtn" type="button">추가</button>
-						<div class="warning jg" style="color : red; "></div>
+					<div>
+						<div style="float : left; width : 50%; height : 300px;">
+							<h5 class="jg">요구사항정의서 이름</h5>
+							<input type="text" class="reqTitle inputBox jg" readonly><br><br>
+							<h5 class="jg">프로젝트 이름</h5>
+							<input type="text" class="projectName inputBox jg" 
+							placeholder='프로젝트 이름을 입력해 주세요 ..'>
+							<br>
+							
+							<!-- 프로젝트 이름 입력 안했을 때 나오는 에러 문구.. with JSR303 -->
+							<span class="error" style="color : red;">
+								<form:errors path="projectVo.proName" class="jg"/>
+							</span>
+							<br>
+							<h5 class="jg">멤버 검색하기</h5>
+							<input type="text" id="userSearch" class="inputBox jg">
+							<button class="btn btn-success addMemBtn" type="button">추가</button>
+							<div class="warning jg" style="color : red; "></div>
 						</div>
-						<label class="jg">프로젝트 멤버 목록</label><br>
-						<div class="MemList" style="height : 100%; overflow : scroll;">
+						
+						<!-- 초대 리스트 -->
+						<div class="MemList" style="float : right; 
+						width : 50%; height : 300px; border-radius : 0.35rem;
+						padding : 10px 10px 10px 10px; line-height : 45px;
+						background-color : #F3F6F9;">
+							<label class="jg">프로젝트 멤버 목록</label><br>
 							<span class="jg addedMemId"></span>
 						</div>
 					</div>
-					
-					<!-- 프로젝트 생성 버튼 -->
-					<br>
-					<div class="col-md-6" style="float : bottom-right;">
-						<button id="mkProjectBtn">프로젝트 생성</button>
-					</div>
-
 				</div>
-				<div class="modal-footer"></div>
+				
+				<div class="modal-footer">
+					<!-- 프로젝트 생성 버튼 -->				
+					<button id="mkProjectBtn" class="btn btn-primary jg"
+					style="width : 80%; height : 50px; margin : 0 auto;
+					font-size : 1.5em;">프로젝트 생성</button>
+				</div>
 			</div>
 		</div>
 	</div>

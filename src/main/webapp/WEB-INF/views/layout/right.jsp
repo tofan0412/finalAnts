@@ -36,7 +36,6 @@
 </style>
 <script>
 $(function(){
-	
 	readChatList();
 	
 	// 프로젝트에 참여하고 있는 회원 목록 불러오기

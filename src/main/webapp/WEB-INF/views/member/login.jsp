@@ -74,8 +74,11 @@
 	position : absolute;
 	top : 0;
 	left : 0;
-	background-image : url('${pageContext.request.contextPath}/resources/img/background.jpg');
-	filter : brightness(80%);
+/* 	background-image : url('${pageContext.request.contextPath}/resources/dist/loginimage.png'); */
+	-webkit-animation: fadein 1.5s; /* Safari and Chrome */
+	filter : brightness(100%);
+	background-size: 105%;
+	background-color: #F3F6F9;
 }
 
 @-webkit-keyframes fadein { /* Safari and Chrome */
@@ -213,7 +216,8 @@
 <body class="loginContainer fadein">
 	
 	<div class="imgBox">
-	ㅋㅋㅋ
+		<img alt="img" src="${pageContext.request.contextPath}/resources/dist/loginimage.png"
+		style="width : 100%; padding-top : 10%;">
 	</div>
 	<div class="loginBox">
 		<div>
