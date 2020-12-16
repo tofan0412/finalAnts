@@ -43,10 +43,8 @@
   ChannelIO('boot', {
     "pluginKey": "9fecedd4-d5c5-4ee5-bdcc-ddf8f29b6c2e"
   });
-</script>
-<!-- End Channel Plugin -->
-		
-<script>
+  
+  	
 	$(function(){
 		// 메뉴를 선택하면 배경색이 변한다. 
 		$('.selectable').click(function(){
@@ -71,46 +69,46 @@
 	<img src="/dist/img/antslogo.png" class="brand-image" style="float: none;width: 46px;margin: 15px 8px 10px 7px;height: 50px;">
 	<img src="/dist/img/ants.png" style="width: 100px;">
 	</a>
-		
+	
 	<!-- Sidebar -->
-	<div class="sidebar" style="font-size: 0.8em;">
+	<div class="sidebar">
 		<!-- Sidebar Menu -->
-		<nav class="mt-2">
-			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+		<nav class="mt-2 jg" >
+			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
 				<li class="nav-item has-treeview menu-open">
 		            <a href="#" class="nav-link active">
 		              <i class="nav-icon fas fa-newspaper"></i>
 						<p class="jg">전체정보<i class="fas fa-angle-left right"></i></p>
 		            </a>
-		            <ul class="nav nav-treeview" style="display: block;">
+		            <ul class="nav nav-treeview" style="display: block; font-size: 0.8em">
 		              <li class="nav-item">
 		                <a href="/alarmList" class="nav-link">
 		                 <i class="nav-icon fas fa-bullhorn"></i>
-							<p class="selectable jg">새로운 소식</p>
+							<p class="selectable">새로운 소식</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/bookmark/getallbookmark" class="nav-link">
 						<i class="nav-icon fas fa-bookmark"></i>
-						<p class="selectable jg">내 북마크</p>
+						<p class="selectable">내 북마크</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/projectMember/myissuelist" class="nav-link">
 						<i class="nav-icon far fa-lightbulb"></i>
-						<p class="selectable jg">내가 작성한 이슈</p>
+						<p class="selectable">내가 작성한 이슈</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/schedule/MyclendarView" class="nav-link">
 		                <i class="nav-icon far fa-calendar-alt"></i>
-						<p class="selectable jg">개인 캘린더</p>
+						<p class="selectable">개인 캘린더</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/privatefile/privatefileView" class="nav-link">
 		                <i class="nav-icon fas fa-folder-open"></i>
-						<p class="selectable jg">내 파일함</p>
+						<p class="selectable">내 파일함</p>
 		                </a>
 		              </li>
 		              
@@ -123,7 +121,7 @@
 							<a href="#"	class="nav-link active"><i class="nav-icon fa fa-check"></i>
 								<p class="jg">요구사항공간<i class="fas fa-angle-left right"></i></p>
 							</a>
-							<ul class="nav nav-treeview">
+							<ul class="nav nav-treeview" style="font-size: 0.8em;">
 								<li class="nav-item">
 									<a href="/req/reqList" class="nav-link"><i class=" nav-icon fas fa-clipboard-list"></i>
 										<p class="jg">요구사항정의서 관리</p>
@@ -140,7 +138,7 @@
 							<a href="#"	class="nav-link active"><i class="nav-icon fa fa-check"></i>
 								<p class="jg">협업공간<i class="fas fa-angle-left right"></i></p>
 							</a>	
-							<ul class="nav nav-treeview">
+							<ul class="nav nav-treeview" style="font-size: 0.8em;">
 								<li class="nav-item">
 									<a href="#" class="nav-link"><i	class="nav-icon fa fa-plus-square"></i>
 										<p class="selectable mkPjtBtn jg">프로젝트  생성하기</p>
@@ -160,7 +158,7 @@
 							<p class="jg">참여중인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
 							
-					    <ul class="nav nav-treeview" style="display: block;">
+					    <ul class="nav nav-treeview" style="display: block; font-size: 0.8em;">
 					    	<c:forEach items="${memInProjectList}" var="project">
 					    		<c:if test="${project.memId != SMEMBER.memId }">
 							    	<li class="nav-item">
@@ -180,7 +178,7 @@
 				        	<i class="nav-icon fas fa-poll-h"></i>
 							<p class="jg">내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
-					    <ul class="nav nav-treeview" >
+					    <ul class="nav nav-treeview" style="font-size: 0.8em;">
 					    	<c:forEach items="${plInProjectList}" var="project">
 					    		<c:if test="${project.proName != '' and project.proName != null}">
 							    	<li class="nav-item">
@@ -200,7 +198,7 @@
 				        	<i class="nav-icon fas fa-poll-h"></i>
 							<p class="jg">프로젝트관리<i class="fas fa-angle-left right"></i></p>
 						</a>
-					    <ul class="nav nav-treeview" >
+					    <ul class="nav nav-treeview" style="font-size: 0.8em;">
 					    	<c:forEach items="${pmInProjectList}" var="project">
 					    		<c:if test="${project.proName != '' and project.proName != null}">
 							    	<li class="nav-item">
