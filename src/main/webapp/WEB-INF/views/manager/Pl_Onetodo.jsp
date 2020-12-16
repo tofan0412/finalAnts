@@ -60,7 +60,8 @@
 				var i = 0;
 				var html = "";
 				var res ="";
-				var log ="";
+				var todaylog = '<label class="control-label" >오늘&nbsp;&nbsp;변경&nbsp;&nbsp;내역</label><br>';
+				var daylog = '<label class="control-label" >과거&nbsp;&nbsp;변경&nbsp;&nbsp;내역</label><br>';
 				for (var i = 0; i < data.todoVo.length; i++) {
 					var todo = data.todoVo[i];
 					if("${param.todoId}"==todo.todoId){
@@ -95,24 +96,26 @@
 					}
 				for(var i=0; i<data.dbtodolog.length; i++){
 					var todolog = data.dbtodolog[i];
-					if(todolog.elapsedDay =='0'){
-							log += '<label class="control-label" >오늘&nbsp;&nbsp;변경&nbsp;&nbsp;내역</label><br>';
-						if(todolog.elapsedTime =='0'){							
-							log += ' <p style="padding-left: 2%;">'+todolog.elapsedTime+'분&nbsp;&nbsp;전 &nbsp;&nbsp;<span class="bef">'+todolog.beforeId+'</span>에서&nbsp;&nbsp;<span class="aft">'+todolog.afterId+'</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p><br>';
-						} 
-					     
-						else if(todolog.elapsedTime !='0'){
-							log += ' <p style="padding-left: 2%;">'+todolog.elapsedTime+'시간&nbsp;&nbsp;'+todolog.elapsedTime+'분&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">'+todolog.beforeId+'</span>에서&nbsp;&nbsp;<span class="aft">'+todolog.afterId+'</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p><br>';
+					if(todolog.elapsedDay =='0' && todolog.elapsedTime =='0'){
+						todaylog += ' <p style="padding-left: 2%;">'+todolog.elapsedMin+'분&nbsp;&nbsp;전 &nbsp;&nbsp;<span class="bef">'+todolog.beforeId+'</span>에서&nbsp;&nbsp;<span class="aft">'+todolog.afterId+'</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>';
+					}
+					else if(todolog.elapsedDay =='0' && todolog.elapsedTime !='0'){
+						todaylog += ' <p style="padding-left: 2%;">'+todolog.elapsedTime+'시간&nbsp;&nbsp;'+todolog.elapsedMin+'분&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">'+todolog.beforeId+'</span>에서&nbsp;&nbsp;<span class="aft">'+todolog.afterId+'</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>';
 						}
+					
+					else if(todolog.elapsedDay !='0'){
+						daylog += '<p style="padding-left: 2%;">'+todolog.elapsedDay+'일&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">'+todolog.beforeId+'</span>에서&nbsp;&nbsp;<span class="aft">'+todolog.afterId+'</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p><br>';
 					}
-					else{
-						log += '<label class="control-label" >'+todolog.elapsedDay+'일&nbsp;&nbsp;전&nbsp;&nbsp;변경&nbsp;&nbsp;내역</label><br>';
-						log += '<p style="padding-left: 2%;"><span class="bef">'+todolog.beforeId+'</span>에서&nbsp;&nbsp;<span class="aft">'+todolog.afterId+'</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p><br>';
-					}
-					log += '<br>';
+				}
+				if(data.dbtodolog.length ==0){
+					todaylog += ' <p style="padding-left: 2%;">변경&nbsp;&nbsp;내역&nbsp;&nbsp;없음</p>';
+					daylog += ' <p style="padding-left: 2%;">변경&nbsp;&nbsp;내역&nbsp;&nbsp;없음</p>';
 					
 				}
-				$("#todolog").html(log);
+				todaylog +='<br>';
+				daylog +='<br>';
+				$("#todolog").html(todaylog);
+				$("#daylog").html(daylog);
 				if(data.filelist.length == 0){
 					res += '<label class="control-label" >[ 첨부파일이 없습니다. ]</label>';
 					$("#filediv").html(res);
@@ -228,7 +231,8 @@
             </div>
             <div class="card-body" style="display: none;">
               <div class="form-group" id ="todolog">
-               
+              </div>
+              <div class="form-group" id ="daylog">
               </div>
             </div>
             <!-- /.card-body -->

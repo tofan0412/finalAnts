@@ -168,6 +168,8 @@ public class TodoController {
 		PublicFileVo pfv = new PublicFileVo("1", todoId, reqId);
 		filecontroller.getfiles(pfv, model);
 		model.addAttribute("dbtodolog", dbtodolog);
+		System.out.println(dbtodolog);
+		System.out.println("asdasd");
 		return "jsonView";
 	}
 
