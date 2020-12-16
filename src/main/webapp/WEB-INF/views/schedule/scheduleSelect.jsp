@@ -36,9 +36,11 @@
 }
 </style>
 <body>
-<div id="map" style="width:100%;height:400px;"></div>
-<div id="value"></div>
-	
+	<c:if test="${not empty scheduleVo.juso}">
+		<div id="map" style="width:100%;height:400px;"></div>
+		<!-- <div id="value"></div> -->
+	</c:if>
+			
 	<div id="map" style="width:100%;height:400px; display:none;">
 		<input type="hidden" id="xVal" name="xVal" type="text" value="${scheduleVo.xVal }"> <br>
 		<input type="hidden" id="yVal" name="yVal" type="text" value="${scheduleVo.yVal }"> <br>
