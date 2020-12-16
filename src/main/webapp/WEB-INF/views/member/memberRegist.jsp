@@ -61,9 +61,9 @@
 			<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
 			<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 				<div id="pictureView" style="border: 1px solid green; height: 200px; width: 200px; margin: 0 auto;">
-					<img src="http://localhost/profile/user-0.png" id="pictureViewImg" style="width: 100%; height: 100%;" />
+					<img src="http://192.168.44.76/profile/user-0.png" id="pictureViewImg" style="width: 100%; height: 100%;" />
 				</div>
-				<div class="content">
+				<div class="content">	
 					<button id="basicimg" type="button">기본이미지</button>
 					<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px;" />
 				</div>
@@ -368,16 +368,16 @@ function unityPW(){
 			})
 			
 			
-			
+				
 			$('#img0').click(function(){
 				// 기본이미지 선택하면 파일 값 날리기
 				var picture = document.getElementById('picture');
 				picture.value = null;
 
 				// 0번 이미지 경로 가져오기
-				/* imgsrc = document.getElementById('img0').src */
-				
-				$('#clickmsg').append(imgsrc);		 		// 이미지 경로 미리보기
+				imgsrc = document.getElementById('img0').src
+					
+				/* $('#clickmsg').append(imgsrc); */		 		// 이미지 경로 미리보기
 				$('#pictureViewImg').attr('src', imgsrc); 		// 이미지 뷰어에 보이기
 				$('#imgname').attr('value', imgsrc);			// input 태그에 value값으로 경로 추가
 				/* 

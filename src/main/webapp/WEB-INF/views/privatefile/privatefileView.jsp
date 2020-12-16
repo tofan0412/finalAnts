@@ -11,7 +11,6 @@
 <style>
 body{
 	min-width: 1000px;
-	min-height: 1000px;
 }
 .uploadifive-button {
 	float: left;
