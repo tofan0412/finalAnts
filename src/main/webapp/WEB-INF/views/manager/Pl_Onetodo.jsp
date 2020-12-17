@@ -160,7 +160,6 @@
 
 
 </style>
-<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 <br>

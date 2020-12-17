@@ -212,9 +212,7 @@
 	align: center;
 	height: 35px;
 }
-.nav-link{
-	padding-bottom: 0px;
-}
+
 </style>
 <body class="hold-transition sidebar-mini accent-teal">
 

@@ -11,7 +11,6 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		todoDetail("${param.todoId}");
-
 		
 		//진행도 수정
 		$(document).on('click','#modalBtn', function(){
@@ -87,7 +86,6 @@
 	margin-left: 10px;
 	}
 </style>
-<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 </head>
 
 <%@include file="../layout/contentmenu.jsp"%>
@@ -130,10 +128,15 @@
 			</td>
         </tr>
         </table>
-	              	<div id="btnMenu" class="float-right">
-						<button type="button" class="btn btn-default jg" data-toggle="modal" data-target="#myModal">진행도 수정</button>	
-						<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>	
-					</div>
+        <br>
+	              	<div id="btnMenu">
+					 <button type="button" class="btn btn-default jg" id="">이슈 작성</button>
+					 <button type="button" class="btn btn-default jg" id="">건의 작성</button>
+					 <div class="float-right">
+					 <button type="button" class="btn btn-default jg" data-toggle="modal" data-target="#myModal">진행도 수정</button>	
+						<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>   
+				 	 </div>
+				 </div>
               
             </div>
           </div>
