@@ -215,8 +215,7 @@
 <body class="loginContainer fadein">
 	
 	<div class="imgBox">
-		<img alt="img" src="${pageContext.request.contextPath}/resources/dist/img/loginimage.png"
-		style="width : 100%; padding-top : 10%;">
+		<img alt="img" src="${pageContext.request.contextPath}/resources/dist/img/loginimage.png" style="width : 100%; padding-top : 30%;">
 	</div>
 	<div class="loginBox">
 		<div>

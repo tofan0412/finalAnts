@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 	
 <!-- Channel Plugin Scripts -->
 <script>
@@ -64,23 +66,25 @@
 
 
 <aside class="main-sidebar sidebar-light-teal elevation-4">
-	<!-- Brand Logo -->		
-	<a href="/mainpage/mainreconnection?memId=${SMEMBER.memId}" class="brand-link" style="border-bottom: none"> 
-	<img src="/dist/img/antslogo.png" class="brand-image" style="float: none;width: 46px;margin: 15px 8px 10px 7px;height: 50px;">
-	<img src="/dist/img/ants.png" style="width: 100px;">
+	<!-- Brand Logo -->
+	<div style="margin: 20px 20px 20px 3px; min-width: max-content;">
+	<a href="/mainpage/mainreconnection?memId=${SMEMBER.memId}"  style="border-bottom: none"> 
+		<img src="/dist/img/logo.png"  style="float: none;width: 60px;margin: 15px 8px 10px 7px;height: 50px;">
+		<img src="/dist/img/ants.png" style="width: 100px;">
 	</a>
+	</div>		
 	
 	<!-- Sidebar -->
 	<div class="sidebar">
 		<!-- Sidebar Menu -->
-		<nav class="mt-2 jg" >
+		<nav class="mt-2" style="font-size: 0.8em" >
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
-				<li class="nav-item has-treeview menu-open">
-		            <a href="#" class="nav-link active">
+				<li class="nav-item treeview menu-open">
+		            <a href="#" class="nav-link" >
 		              <i class="nav-icon fas fa-newspaper"></i>
-						<p class="jg">전체정보<i class="fas fa-angle-left right"></i></p>
+						<p>전체정보<i class="fas fa-angle-left right"></i></p>
 		            </a>
-		            <ul class="nav nav-treeview" style="display: block; font-size: 0.8em">
+		            <ul class="nav nav-treeview" style="display: block;">
 		              <li class="nav-item">
 		                <a href="/alarmList" class="nav-link">
 		                 <i class="nav-icon fas fa-bullhorn"></i>
@@ -118,30 +122,30 @@
 				<li class="nav-item has-treeview menu-open">
 					<c:choose>
 						<c:when test="${SMEMBER.memType eq 'PM' }">
-							<a href="#"	class="nav-link active"><i class="nav-icon fa fa-check"></i>
-								<p class="jg">요구사항공간<i class="fas fa-angle-left right"></i></p>
+							<a href="#"	class="nav-link active" style="background-color: skyblue"><i class="nav-icon fa fa-check"></i>
+								<p >요구사항공간<i class="fas fa-angle-left right"></i></p>
 							</a>
-							<ul class="nav nav-treeview" style="font-size: 0.8em;">
+							<ul class="nav nav-treeview" >
 								<li class="nav-item">
-									<a href="/req/reqList" class="nav-link"><i class=" nav-icon fas fa-clipboard-list"></i>
-										<p class="jg">요구사항정의서 관리</p>
+									<a href="/req/reqList" class="nav-link" style="color: currentcolor"><i class=" nav-icon fas fa-clipboard-list" style="color: cornflowerblue"></i>
+										<p >요구사항정의서 관리</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="/req/reqInsertView" class="nav-link"><i	class="nav-icon fa fa-plus-square"></i>
-										<p class="jg">요구사항정의서  생성하기</p>
+									<a href="/req/reqInsertView" class="nav-link" style="color: currentcolor"><i class="nav-icon fa fa-plus-square" style="color: cornflowerblue"></i>
+										<p >요구사항정의서  생성하기</p>
 									</a>
 								</li>
 							</ul>	
 						</c:when>
 						<c:when test="${SMEMBER.memType ne 'PM' }">
-							<a href="#"	class="nav-link active"><i class="nav-icon fa fa-check"></i>
-								<p class="jg">협업공간<i class="fas fa-angle-left right"></i></p>
+							<a href="#"	class="nav-link active" style="background-color: skyblue"><i class="nav-icon fa fa-check" ></i>
+								<p >협업공간<i class="fas fa-angle-left right"></i></p>
 							</a>	
-							<ul class="nav nav-treeview" style="font-size: 0.8em;">
+							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="#" class="nav-link"><i	class="nav-icon fa fa-plus-square"></i>
-										<p class="selectable mkPjtBtn jg">프로젝트  생성하기</p>
+									<a href="#" class="nav-link" style="color: currentcolor"><i	class="nav-icon fa fa-plus-square" style="color: cornflowerblue"></i>
+										<p class="selectable mkPjtBtn ">새 프로젝트 만들기</p>
 									</a>
 								</li>
 							</ul>
@@ -152,17 +156,17 @@
 				
 				<!-- memType이 MEM일때  -->
 				 <c:if test="${not empty memInProjectList}">
-					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link active">
+					<li class="nav-item" style="background: white;">
+			            <a href="#" class="nav-link" style="background: white;">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p class="jg">참여중인 프로젝트<i class="fas fa-angle-left right"></i></p>
+							<p >참여중인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
 							
-					    <ul class="nav nav-treeview" style="display: block; font-size: 0.8em;">
+					    <ul class="nav nav-treeview" >
 					    	<c:forEach items="${memInProjectList}" var="project">
 					    		<c:if test="${project.memId != SMEMBER.memId }">
 							    	<li class="nav-item">
-										<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
+										<a class="nav-link " href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
 									 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
 									 	</a>
 									</li>
@@ -173,17 +177,22 @@
 				 </c:if>
 				 <!-- memType이 PL일때 -->
 				 <c:if test="${not empty plInProjectList}">
-					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link active">
+					<li class="nav-item">
+			            <a href="#" class="nav-link" style="background: white;">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p class="jg">내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
+							<p >내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
-					    <ul class="nav nav-treeview" style="font-size: 0.8em;">
+					    <ul class="nav nav-treeview">
 					    	<c:forEach items="${plInProjectList}" var="project">
 					    		<c:if test="${project.proName != '' and project.proName != null}">
 							    	<li class="nav-item">
-										<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-									 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+										<a class="nav-link " href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
+									 		<i class="nav-icon fas fa-layer-group"></i>
+									 		<c:choose>
+									 			<c:when test="${fn:length(project.proName) > 14 }"><p>${fn:substring(project.proName,0,12)}...</p></c:when>
+									 			<c:otherwise><p>${project.proName}</p></c:otherwise>
+									 		</c:choose>
+									 		
 									 	</a>
 									</li>
 								</c:if>
@@ -194,16 +203,20 @@
 				 <!-- memType이 PM일때 -->
 				 <c:if test="${not empty pmInProjectList}">
 					<li class="nav-item has-treeview menu-open">
-			            <a href="#" class="nav-link active">
+			            <a href="#" class="nav-link">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p class="jg">프로젝트관리<i class="fas fa-angle-left right"></i></p>
+							<p >프로젝트관리<i class="fas fa-angle-left right"></i></p>
 						</a>
-					    <ul class="nav nav-treeview" style="font-size: 0.8em;">
+					    <ul class="nav nav-treeview">
 					    	<c:forEach items="${pmInProjectList}" var="project">
 					    		<c:if test="${project.proName != '' and project.proName != null}">
 							    	<li class="nav-item">
-										<a class="nav-link jg" href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}" >
-									 		<i class="nav-icon fas fa-layer-group"></i><p>${project.proName}</p>
+										<a class="nav-link " href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}" >
+									 		<i class="nav-icon fas fa-layer-group"></i>
+									 		<c:choose>
+									 			<c:when test="${fn:length(project.proName) > 14 }"><p>${fn:substring(project.proName,0,12)}...</p></c:when>
+									 			<c:otherwise><p>${project.proName}</p></c:otherwise>
+									 		</c:choose>
 									 	</a>
 									</li>
 								</c:if>
@@ -217,7 +230,7 @@
 					<li class="nav-item has-treeview menu-close">
 			            <a href="#" class="nav-link">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p class="jg">참여중인 프로젝트가 없습니다</p>
+							<p >참여중인 프로젝트가 없습니다</p>
 						</a>
 				 </c:if>
 			</ul>
