@@ -12,45 +12,38 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style type="text/css">
-#pagenum a {
-	display: inline-block;
-	text-align: center;
-	width: 30px;
-}
+	#pagenum a{
+		 display: inline-block;
+		 text-align: center;
+		 width : auto;	 
+		 border: none; 
+	
+	}
+	
+	li strong{
+		display: inline-block;
+		text-align: center;
+		width: 30px;
+	}
+	
+	.pagingui{
+		 display: inline-block;
+		 text-align: center;
+		 width: 30px;
+		 
+	}
+	#paging{
+		 display: inline-block;
+		 width:auto; float:left; margin:0 auto; text-align:center;"
+		 
+	}
+	
+	.option{
+		height: 50px;
+		width: 150px;
+		padding: 5px;
+	}
 
-li strong {
-	display: inline-block;
-	text-align: center;
-	width: 30px;
-}
-
-.pagingui {
-	display: inline-block;
-	text-align: center;
-	width: 30px;
-}
-
-#paging {
-	display: inline-block;
-	/* 		 text-align: center; */
-	width: auto;
-	float: left;
-	margin: 0 auto;
-	text-align: center;
-	"
-}
-
-#searchBtn {
-	color: #fff;
-	background-color: #007bffab;
-	border-color: #007bff;
-	box-shadow: none;
-}
-
-.noticeMain {
-	margin: 9px 9px 9px 9px;
-	padding: 9px 9px 9px 9px;
-}
 </style>
 
 <script type="text/javascript">
@@ -90,79 +83,65 @@ li strong {
 
 
 <body>
-	<form:form commandName="noticeVo" id="listForm" name="listForm"
-		method="post">
-
-		<!-- Content Header (Page header) -->
-
-		<section class="content">
-		<div class="card noticeMain">
-			<div class="container-fluid">
-				<div class="row mb-2">
-					<div class="col-sm-6">
-						<h1 class="jg">공지사항</h1>
-					</div>
-					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right"
-							style="background-color: white">
-							<li class="breadcrumb-item san"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active">공지사항</li>
-						</ol>
-					</div>
-				</div>
-			</div>
-
-			<!-- 검색창라인 -->
-			<div class="card-header  ">
-				<div id="keyword" class="card-tools float-right"
-					style="width: 450px;">
-					<div class="input-group row">
-						<label for="searchCondition" style="visibility: hidden;"></label>
-
-
-						<form:select path="searchCondition" cssClass="use"
-							class="form-control col-md-3" style="width: 100px;">
-							<form:option value="1" label="제목" />
-						</form:select>
-
-
-						<label for="searchKeyword"
-							style="visibility: hidden; display: none;"></label>
-						<form:input style="width: 300px;" path="searchKeyword"
-							cssClass="txt" placeholder="검색어를 입력하세요." class="form-control" />
-						<!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
-						<span class="input-group-append">
-							<button class="btn btn-primary" type="button" id="searchBtn"
-								onclick="search()">
-								<i class="fa fa-fw fa-search"></i>
-							</button>
-						</span>
-
-						<!-- end : search bar -->
-					</div>
-					<br>
-				</div>
-
-
-			</div>
-			<!-- /.container-fluid -->
-		</div>
-		</section>
-
-
-
-
-		<!-- 		 	<h3>협업이슈 리스트</h3> -->
-		<!-- 				<input type= "button" value="작성하기" id="insertissue"> -->
-
-		<section class="content">
+<form:form commandName="noticeVo" id="listForm" name="listForm" method="post">
+		
+	<section class="content" >
 		<div class="col-12 col-sm-12">
-			<div class="card" style="border-radius: inherit; padding: 2px;">
+			<div class="card" style="border-radius: inherit; padding : 2px; margin-top: 10px">
+				<!-- 헤더 부분 -->
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<br>
+						<div class="col-sm-6">
+							<br>
+							<h1 class="jg" style="padding-left: 10px;">공지사항</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right" style="background: white">
+								<li class="breadcrumb-item san jg"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active jg">공지사항</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 검색창 라인 -->
+				<div class="card-header  ">
+					<div id="keyword" class="card-tools float-right"
+						style="width: 450px;">
+						<div class="input-group row">
+							<label for="searchCondition" style="visibility: hidden;"></label>
 
 
-				<div class="card-body p-0">
-					<table class="table">
-						<thead>
+							<form:select path="searchCondition"
+								class="form-control col-md-3 jg" style="width: 100px;">
+								<form:option value="1" class="jg" label="제목" />
+							</form:select>
+
+
+							<label for="searchKeyword"
+								style="visibility: hidden; display: none;" class="jg"></label>
+							<form:input style="width: 300px;" path="searchKeyword"
+								placeholder="검색어를 입력하세요." class="form-control jg" />
+							<!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
+							<span class="input-group-append">
+								<button class="btn btn-default" type="button" id="searchBtn"
+									onclick="search()">
+									<i class="fa fa-fw fa-search"></i>
+								</button>
+							</span>
+
+							<!-- end : search bar -->
+						</div>
+						<br>
+					</div>
+				</div><!-- 검색창 라인 끝 -->
+				
+				<!-- 리스트 부분 시작 -->
+	            <div class="card-body p-0">
+	            	<table class="table">
+	            		<!-- 헤더부분  -->
+	            		<thead>
 							<tr>
 								<th style="width: 150px; padding-left: 50px;">No.</th>
 								<th style="padding-left: 30px;">제목</th>
@@ -171,11 +150,11 @@ li strong {
 								<th></th>
 							</tr>
 						</thead>
+						
+						<!-- 리스트부분 -->
 						<tbody>
-
 							<c:forEach items="${noticelist }" var="notice" varStatus="status">
 								<tr>
-
 									<td style="width: 150px; padding-left: 50px;"><c:out
 											value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />.</td>
 
@@ -191,29 +170,21 @@ li strong {
 								<td colspan="7" style="text-align: center;"><br> <strong>
 										[ 결과가 없습니다. ] </strong></td>
 							</c:if>
-
-
-
 						</tbody>
-					</table>
-				</div>
-
-
+	            	</table>
+	            </div><!-- 리스트 부분 끝 -->
+	            
 				<br>
+				<!-- 페이징,등록 부분 시작 -->
 				<div id="paging" class="card-tools">
-					<ul class="pagination pagination-sm" id="pagingui">
-
-						<li class="page-item" id="pagenum">
-							<%-- 		        		<input type="button" value="#{paginationInfo}" > --%>
-							<!-- 						<li class="page-item"><a class="page-link" href="#">«</a></li> -->
-							<ui:pagination paginationInfo="${paginationInfo}" type="image"
-								jsFunction="fn_egov_link_page" />
-						</li>
-						<form:hidden path="pageIndex" />
-						<!-- 		        		<li class="page-item"><a class="page-link" href="#"> »</a></li> -->
-
-					</ul>
-				</div>
+	              	<ul class="pagination pagination-sm jg" id ="pagingui">
+	              	
+		        		<li  class="page-item jg" id ="pagenum" >	
+		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
+		        		<form:hidden path="pageIndex" />		        		
+                    
+	                 </ul>
+        		  </div>
 				<br>
 				<div class="card-footer clearfix">
 					<button id="insertnotice" type="button"
@@ -221,17 +192,11 @@ li strong {
 						<i class="fas fa-plus"></i>등 록
 					</button>
 				</div>
+				<!-- 페이징,등록 부분 끝 -->
 
-
-
-				<!-- /.card-body -->
-			</div>
+			</div><!-- /.card-body -->
 		</div>
-		</section>
-
-
-
-	</form:form>
-	<!-- </div> -->
+	</section>	
+</form:form>
 </body>
 </html>

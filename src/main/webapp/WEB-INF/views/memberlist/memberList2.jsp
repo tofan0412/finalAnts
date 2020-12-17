@@ -82,131 +82,114 @@ $(function(){
 <body>
 <!-- 	<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 <form:form commandName="memberVo" id="listForm" name="listForm" method="post">
-
-		<!-- Content Header (Page header) -->
-		<section class="content">
-		<div class="card memlistMain">
-			<div class="container-fluid">
-				<div class="row mb-2">
-					<div class="col-sm-6">
-						<h1 class="jg">회원 리스트</h1>
-					</div>
-					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right"
-							style="background-color: white">
-							<li class="breadcrumb-item san"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active">회원리스트</li>
-						</ol>
+	<section class="content" >
+		<div class="col-12 col-sm-12">
+			<div class="card" style="border-radius: inherit; padding : 2px; margin-top: 10px">
+				<!-- 헤더 부분 -->
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<br>
+						<div class="col-sm-6">
+							<br>
+							<h1 class="jg" style="padding-left: 10px;">회원 리스트</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right" style="background: white">
+								<li class="breadcrumb-item san jg"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active jg">회원 리스트</li>
+							</ol>
+						</div>
 					</div>
 				</div>
-			</div>
-
-			<!-- 검색창라인 -->
-			<div class="card-header  ">
-				<div id="keyword" class="card-tools float-right"
-					style="width: 450px;">
-					<div class="input-group row">
-						<label for="searchCondition" style="visibility: hidden;"></label>
-
-
-						<form:select path="searchCondition" cssClass="use"
-							class="form-control col-md-3" style="width: 100px;">
-							<form:option value="1" label="이메일" />
-							<form:option value="2" label="이름" />
-							<form:option value="3" label="타입" />
-						</form:select>
+				<!-- 헤더 부분 끝 -->
+				
+				<!-- 검색창 라인 -->
+				<div class="card-header  ">
+					<div id="keyword" class="card-tools float-right"
+						style="width: 450px;">
+						<div class="input-group row">
+							<label for="searchCondition" style="visibility: hidden;"></label>
 
 
-						<label for="searchKeyword"
-							style="visibility: hidden; display: none;"></label>
-						<form:input style="width: 300px;" path="searchKeyword"
-							cssClass="txt" placeholder="검색어를 입력하세요." class="form-control" />
-						<!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
-						<span class="input-group-append">
-							<button class="btn btn-primary" type="button" id="searchBtn"
-								onclick="search()">
-								<i class="fa fa-fw fa-search"></i>
-							</button>
-						</span>
+							<form:select path="searchCondition"
+								class="form-control col-md-3 jg" style="width: 100px;">
+								<form:option value="1" class="jg" label="이메일" />
+								<form:option value="2" class="jg" label="이름" />
+								<form:option value="3" class="jg" label="타입" />
+							</form:select>
 
-						<!-- end : search bar -->
+
+							<label for="searchKeyword"
+								style="visibility: hidden; display: none;" class="jg"></label>
+							<form:input style="width: 300px;" path="searchKeyword"
+								placeholder="검색어를 입력하세요." class="form-control jg" />
+							<!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
+							<span class="input-group-append">
+								<button class="btn btn-default" type="button" id="searchBtn"
+									onclick="search()">
+									<i class="fa fa-fw fa-search"></i>
+								</button>
+							</span>
+
+							<!-- end : search bar -->
+						</div>
+						<br>
 					</div>
-					<br>
 				</div>
-
-
-			</div>
-			<!-- /.container-fluid -->
-		</div>
-		</section>
-
-
-
-
-
-		<section class="content" >
-		      <div class="col-12 col-sm-12">
-			      <div class="card" style="border-radius: inherit; padding : 2px;">
-			      
-		        
-	              <div class="card-body p-0">
-	                <table class="table">
-	                  <thead>
-	                    <tr>
-	                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-	                     	<th  style="padding-left: 30px; text-align: center;">  이메일</th> 
-							<th style="text-align: center;">   이름 </th>
-<!-- 							<th style="text-align: center;">   비번   </th> -->
-							<th style="text-align: center;">   전화번호   </th>
-							<th style="text-align: center;"> 타입 </th>
-							<th style="text-align: center;"> 알람 </th>
-	                      <th></th>
-	                    </tr>
-	                  </thead>
-	                  <tbody>
-	                      
-                       <c:forEach items = "${memberlist }" var ="member" varStatus="status">
+				<!-- 검색창 라인 끝 -->
+				
+				<!-- 리스트 부분 시작 -->
+	            <div class="card-body p-0">
+	            	<table class="table">
+	            		<!-- 헤더부분  -->
+						<thead>
 							<tr>
-			                 
-			                    <td  style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((memberVo.pageIndex-1) * memberVo.pageUnit + (status.index+1))}"/>.</td>
-							
-								<td  style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/admin/memlistprofile?memId=${member.memId}"> ${member.memId }</a> </td>
-								<td style="text-align: center;"> ${member.memName }</td>
-<%-- 								<td style="text-align: center;"> ${member.memPass }</td> --%>
-								<td style="text-align: center;"> ${member.memTel }</td>
-								<td style="text-align: center;"> ${member.memType }</td>
-								<td style="text-align: center;"> ${member.memAlert }</td>
-								
+								<th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
+								<th style="padding-left: 30px; text-align: center;">이메일</th>
+								<th style="text-align: center;">이름</th>
+								<th style="text-align: center;">전화번호</th>
+								<th style="text-align: center;">타입</th>
+								<th style="text-align: center;">알람</th>
 							</tr>
-						 </c:forEach> 
-						 <c:if test="${memberlist.size() == 0}">
-							<td colspan="7" style="text-align: center;"><br><strong> [ 결과가 없습니다. ] </strong></td>
-						 </c:if>
-
-	                  </tbody>
-	                </table>
-	              </div>
- 
-	              
-	              <br>
-	              <div id="paging" class="card-tools">
-	              	<ul class="pagination pagination-sm" id ="pagingui">
-	              	
-		        		<li  class="page-item" id ="pagenum" >	
-		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
-		        		<form:hidden path="pageIndex" />		        		
-                    
-	                 </ul>
-        		  </div>
-        		  <br>
-	              <!-- /.card-body -->
+						</thead>
+						<tbody>
+							<c:forEach items="${memberlist }" var="member" varStatus="status">
+								<tr>
+									<td style="width: 150px; padding-left: 50px; text-align: center;">
+										<c:out value="${  ((memberVo.pageIndex-1) * memberVo.pageUnit + (status.index+1))}" />.</td>
+									<td style="padding-left: 30px; text-align: center;">
+										<a href="${pageContext.request.contextPath}/admin/memlistprofile?memId=${member.memId}">
+											${member.memId }</a></td>
+									<td style="text-align: center;">${member.memName }</td>
+									<td style="text-align: center;">${member.memTel }</td>
+									<td style="text-align: center;">${member.memType }</td>
+									<td style="text-align: center;">${member.memAlert }</td>
+								</tr>
+							</c:forEach>
+							<c:if test="${memberlist.size() == 0}">
+								<td colspan="7" style="text-align: center;"><br>
+								<strong> [ 결과가 없습니다. ] </strong></td>
+							</c:if>
+						</tbody>
+					</table>
 	            </div>
-             </div>
-		    </section>
-			<br>
-		
-
+	            <!-- 리스트 부분 끝 -->
+	            
+	            <br>
+				<!-- 페이징,등록 부분 시작 -->
+				<div id="paging" class="card-tools">
+					<ul class="pagination pagination-sm jg" id="pagingui">
+						<li class="page-item jg" id="pagenum">
+							<ui:pagination paginationInfo="${paginationInfo}" type="image"
+							jsFunction="fn_egov_link_page" />
+						</li>
+						<form:hidden path="pageIndex" />
+					</ul>
+				</div>
+				<br>
+			</div>
+		</div>
+	</section>
 </form:form>	
-<!-- </div> -->
 </body>
 </html>
