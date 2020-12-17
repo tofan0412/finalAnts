@@ -93,8 +93,6 @@
 	           <div >
 	                <button id="todoinsert" type="button" class="btn btn-default jg"><i class="fas fa-edit"></i>일감 등록</button>
 	              </div>
-	              
-<%-- 				차트	<a class="btn btn-default " href="${pageContext.request.contextPath }/todo/chartView"><i class="fas fa-edit"></i>차트</a> --%>
 			   </c:if>
 		<br>
 		    <div class="card-header ">

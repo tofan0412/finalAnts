@@ -179,7 +179,7 @@ text-align: right;
 	                    	</div>
 	               		
 	               		 	<div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-top: 7%; margin-right: 10%;">
-								<a href="#">차트 보러가기</a>
+								<a href="${pageContext.request.contextPath }/todo/chartView">차트 보러가기</a>
 	                    	</div>
                     
 						</div>
