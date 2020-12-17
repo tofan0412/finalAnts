@@ -142,10 +142,12 @@ th{
     border: none;
 }	
 .inbt{		
+	border: 1px solid;
 	background-color:white;
 	border-radius: 15px;
 	outline:none;	
-}
+	font-size: 6px;	
+}		
 .fc-sat, .fc-sun, .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri {width:10px;} 
 
 
@@ -164,9 +166,12 @@ th{
 	font-size:15px;
 	font-weight:bold;
 }	
+body{
+	min-width:1000px;
+}
 </style>
 	 				
-
+<body>
 <div>	
 	<div class="top" style="margin-left:1.5%;"><h4>프로젝트 현황</h4>
 		<div class="mt-2" style="padding-top:2%;">
@@ -187,23 +192,30 @@ th{
 						       	
 						        <table class="todoTable" style="margin-left:3%">
 									<tr>
-										<th style="padding-left:47px;">프로젝트명</th>
-										<th>상태</th>
+										<th style="width:43.5%;">프로젝트명</th>
 										<th>완료율</th>	
-										<th>생성일</th>		
-										<th></th>	
-									</tr>  		
+										<th>생성일</th>			
+										<th></th>		
+									</tr>  								
 									<tbody id=memInProjectList> 	
 										<c:forEach items="${memInProjectList}" var="project" varStatus="sts" >
 											<c:if test="${project.memId != SMEMBER.memId }">
-											    <tr "data-privid="${project.reqId}">
+											    <tr "data-privid="${project.reqId}" style="height:27px;">
 													<td>	
 														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}&proName=${project.proName}">${project.proName}</a>
-													</td> 
-													<td>${project.reqId}</td>
-													<td>${project.percent}</td>
-													<td>${fn:substring(project.regDt,0,10)}</td>
+													</td>  
 													<td>
+														<c:choose>
+															<c:when test="${not empty project.percent}">
+																${project.percent} % 
+															</c:when>
+															<c:otherwise>
+																0 % 
+															</c:otherwise>
+														</c:choose> 
+													</td>	
+													<td>${fn:substring(project.regDt,0,10)}</td>
+													<td>	
 														<c:choose>
 															<c:when test="${not empty project.reqId}">
 																<a href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
@@ -214,7 +226,7 @@ th{
 																<a>참여중인 프로젝트가 없습니다.</a>
 															</c:otherwise>
 														</c:choose> 
-		
+		 
 													</td>	
 												</tr>
 											</c:if>
@@ -245,21 +257,28 @@ th{
 					       
 						      <table class="todoTable" style="margin-left:3%">
 									<tr>
-										<th style="padding-left:47px;">프로젝트명</th>
-										<th>상태</th>
+										<th style="width:43.5%;">프로젝트명</th>
 										<th>완료율</th>
 										<th>생성일</th>
-										<th></th>		
+										<th></th>			
 									</tr> 		
 									<tbody id=plInProjectList> 
 										<c:forEach items="${plInProjectList}" var="project" varStatus="sts" >
 											<c:if test="${project.proName != '' and project.proName != null}">
-											    <tr "data-privid="${project.reqId}">
-													<td>
+											    <tr "data-privid="${project.reqId}" style="height:27px;">
+													<td>	
 														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}&proName=${project.proName}">${project.proName}</a>
+													</td>	
+													<td>	  						
+														<c:choose>		
+															<c:when test="${not empty project.percent}">
+																${project.percent} % 
+															</c:when>
+															<c:otherwise>
+																0 % 
+															</c:otherwise>
+														</c:choose> 
 													</td>
-													<td>${project.reqId}</td>
-													<td>${project.percent}</td>
 													<td>${fn:substring(project.regDt,0,10)}</td>
 													<td>
 														<c:choose>
@@ -285,7 +304,7 @@ th{
 					  </div>
 					</div>
 				 </c:if>
-				 	
+				 		
 				 <!-- memType이 PM일때 -->
 				 <c:if test="${not empty pmInProjectList}">
 					<div class="container">
@@ -296,26 +315,33 @@ th{
 					          <a data-toggle="collapse" href="#collapse3" class="divtitle">프로젝트 관리(PM)</a>
 					        </h4>
 					      </div>			
-					      <div id="collapse3" class="panel-collapse collapse">
+					      <div id="collapse3" class="panel-collapse collapse show">
 					        <div class="panel-body">
 					       
 							  <table class="todoTable" style="margin-left:3%">
 									<tr>
-										<th style="padding-left:47px;">프로젝트명</th>
-										<th>상태</th>
+										<th  style="width:43.5%;">프로젝트명</th>
 										<th>완료율</th>
 										<th>생성일</th>
 										<th></th>
-									</tr>
+									</tr>		
 									<tbody id=pmInProjectList> 
 										<c:forEach items="${pmInProjectList}" var="project" varStatus="sts" >
 											<c:if test="${project.proName != '' and project.proName != null}">
-											    <tr "data-privid="${project.reqId}">
+											    <tr "data-privid="${project.reqId}" style="height:27px;">
 													<td>
 														<a href="${pageContext.request.contextPath}/mainpage/maindata?reqId=${project.reqId}&proName=${project.proName}">${project.proName}</a> 
 													</td> 		
-													<td>${project.reqId}</td>	
-													<td>${project.percent}</td>	
+													<td>		
+														<c:choose>
+															<c:when test="${not empty project.percent}">
+																${project.percent} % 
+															</c:when>
+															<c:otherwise>
+																0 % 
+															</c:otherwise>
+														</c:choose> 
+													</td>	
 													<td>${fn:substring(project.regDt,0,10)}</td>	
 													<td>
 														<c:choose> 
@@ -420,3 +446,4 @@ th{
         	<div id="calendar"></div>
 		</div>	
 </div>
+</body>
