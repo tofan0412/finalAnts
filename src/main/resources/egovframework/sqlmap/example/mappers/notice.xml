@@ -35,7 +35,7 @@
 					</if>
 					ORDER BY notice_id desc
 				) a
-		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE RNUM > #{firstIndex}]]>
+		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE c.RNUM > #{firstIndex}]]>
 	</select>
 	
 	<!-- 각 공지사항게시글 내용 가져오기 -->

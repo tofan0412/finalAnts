@@ -45,7 +45,7 @@ function readRecentIpList(){
 	})
 }
 </script>
-<div class="card ipMain" style="margin-top : 50px;">
+<div class="card ipMain" >
 	<!-- contentMenuBar -->
 	<%@ include file="/WEB-INF/views/admin/ipContentMenu.jsp" %>
 	<!-- /contentMenuBar -->

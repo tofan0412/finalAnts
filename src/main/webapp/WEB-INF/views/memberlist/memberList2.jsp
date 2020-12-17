@@ -17,7 +17,7 @@
 		 text-align: center;
 		 width : auto;	 
 		 border: none; 
-		background: transparent;
+	
 	}
 	
 	li strong{
@@ -34,20 +34,14 @@
 	}
 	#paging{
 		 display: inline-block;
-/* 		 text-align: center; */
 		 width:auto; float:left; margin:0 auto; text-align:center;"
 		 
 	}
-	#searchBtn {
-	    color: #fff;
-	    background-color: #007bffab;
-	    border-color: #007bff;
-	    box-shadow: none;
-	}	
 	
-	.memlistMain{
-		margin: 9px 9px 9px 9px;
-		padding: 9px 9px 9px 9px;
+	.option{
+		height: 50px;
+		width: 150px;
+		padding: 5px;
 	}
 </style>
 
@@ -77,15 +71,9 @@ $(function(){
  }
  
  function search(){
-// 	    var issuekind =  $("#issueKind option").val();
-// 	    alert(issuekind);
-// 	    document.listForm.issueKind = issuekind;
 	 	document.listForm.action = "<c:url value='/admin/memberlist'/>";
 	    document.listForm.submit();
 }
- 
- 
- 
 	 
 </script>
 </head>

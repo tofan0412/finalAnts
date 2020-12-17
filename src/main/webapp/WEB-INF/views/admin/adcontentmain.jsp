@@ -5,7 +5,7 @@
 .conB {
 	padding-top: 100px;
 	padding-bottom: 150px;
-	background-color: rgba(242, 242, 242, 1);
+/* 	background-color: rgba(242, 242, 242, 1); */
 }
 
 .conB_title {
@@ -15,7 +15,7 @@
 }
 
 .conB_container {
-	display: flex;
+ 	display: flex; 
 	justify-content: center;
 }
 
@@ -90,7 +90,7 @@
 				</div>
 				<div class="conB_content">
 					<h3>보안기능</h3>
-					<p>자료보안?<br> Ants가 책임집니다.</p>
+					<p>자료보안?<br> Ants 가 책임집니다.</p>
 				</div>
 			</div>
 		</div>

@@ -9,9 +9,9 @@
 	<%@include file="../layout/commonLib.jsp"%>
 	<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 <style>
-.content-wrapper{
-	margin-top : 15px;
-}
+/* .content-wrapper{ */
+/* 	margin-top : 15px; */
+/* } */
 </style>
 </head>
 <title>관리자 협업관리</title>
