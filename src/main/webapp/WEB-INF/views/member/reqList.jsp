@@ -57,6 +57,9 @@
 .dropdown:hover .dropbtn {
 	background-color: #3e8e41;
 }
+td{
+		padding: 12px 5px 5px 12px !important;
+	}
 </style>
 
 </head>
@@ -64,7 +67,7 @@
 <c:if test="${SMEMBER.memType == 'PM' }">
 
 <form:form commandName="reqVo" id="listForm" name="listForm"
-	method="post">
+	method="post" >
 	<form:hidden path="memId" />
 	<input type="hidden" name="selectedId" />
 
@@ -76,7 +79,7 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1 class="jg">요구사항 정의서</h1>
+				<h3 class="jg">요구사항 정의서</h3>
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
@@ -89,13 +92,13 @@
 	<!-- /.container-fluid --> </section>
 
 	<!-- Main content -->
-	<section class="content">
+	<section class="content" >
 	<div class="col-md-12">
 		<div class="card" style="border-radius: inherit;">
 			<div class="card-header">
 				<h3 class="card-title"></h3>
 					<div class="input-group mb-3 ">
-						<select class="form-control col-md-4" name="searchCondition"
+						<select class="form-control col-md-1" name="searchCondition"
 							id="searchCondition" style="font-size: 0.7em;">
 							<option value="0">제목</option>
 							<option value="1">기간</option>
@@ -103,46 +106,37 @@
 							<option value="3">응답상태</option>
 						</select>
 						<!-- /btn-group -->
-						<form:input path="searchKeyword" class="form-control" />
+						<form:input path="searchKeyword" class="form-control col-md-2" />
 						<a href="javascript:fn_egov_reqList();">
-							<button type="button" class="btn-default" style="height: 100%;">
+							<button type="button" class="btn-default " style="height: 100%; ">
 								<i class="fa fa-search"></i>
 							</button>
 						</a>
 					</div>
-
 				
-
-				<div class="card-tools">
-					<ul class="pagination pagination-sm float-right">
-						<li class="page-item"><a class="page-link" href="#">«</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">»</a></li>
-					</ul>
-				</div>
 			</div>
 			<!-- /.card-header -->
 			<div class="card-body p-0">
-				<table class="table">
+				<table class="table" style="font-size: 0.9em;">
 					<thead>
 						<tr>
 							<th style="width: 100px;">No.</th>
 							<th>제목</th>
-							<th>기간</th>
-							<th style="text-align: center;">담당자</th>
-							<th style="text-align: center;">응답 상태</th>
-							<th>진행도</th>
-							<th>#</th>
+							<th style="width: 100px;">기간</th>
+							<th style="width: 150px; text-align: center;">담당자</th>
+							<th style="width: 150px; text-align: center;">응답 상태</th>
+							<th style="width: 300px;">진행도</th>
+							<th style="width: 100px;"></th>
+							<th style="width: 300px;"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${reqList }" var="req" varStatus="sts">
 							<tr>
-								<td><c:out
+								<td style="padding-left: 24px!important"><c:out
 										value="${paginationInfo.totalRecordCount - ((reqVo.pageIndex-1) * reqVo.pageUnit + sts.index)}" />.
-									<form:hidden path="reqId" /></td>
+									<form:hidden path="reqId" />
+								</td>
 								<td>${req.reqTitle }</td>
 								<td>${req.reqPeriod }일</td>
 								<c:choose>
@@ -175,7 +169,8 @@
 										<c:when test="${req.status eq 'ACCEPT' }">
 											<span class="badge badge-success">수락</span>
 										</c:when>
-									</c:choose></td>
+									</c:choose>
+								</td>
 								<!-- 프로젝트가 생성되지 않았을 때 -->
 								<td><c:choose>
 										<c:when test="${req.proId eq null}">
@@ -191,13 +186,13 @@
 														style="width: <c:out value="${NUM+1}" />%"></div>
 												</c:if>
 												<c:if
-													test="${req.proPercent+0 >= 30+0 and req.proPercent+0 <= 59+0}">
-													<div class="progress-bar bg-danger"
+													test="${req.proPercent+0 != 0  and req.proPercent+0 <= 59+0}">
+													<div class="progress-bar bg-warning"
 														style="width: <c:out value="${NUM+1}" />%"></div>
 												</c:if>
 												<c:if
 													test="${req.proPercent+0 >=60+0 and req.proPercent+0 <= 99+0}">
-													<div class="progress-bar bg-danger"
+													<div class="progress-bar bg-primary"
 														style="width: <c:out value="${NUM+1}" />%"></div>
 												</c:if>
 												<c:if test="${req.proPercent eq '100'}">
@@ -206,15 +201,17 @@
 												</c:if>
 											</div>
 										</c:when>
-									</c:choose></td>
-								<td class="project-actions text-right" style="opacity: .9;">
-									<a class="btn btn-primary btn-sm" href="javascript:reqDetail('<c:out value="${req.reqId }"/>');">
+									</c:choose>
+								</td>
+								<td class="project-actions text-center">${req.proPercent }</td>
+								<td class="project-actions text-right" style="opacity: .9; padding-right: 50px!important;">
+									<a class="btn btn-default btn-xs" href="javascript:reqDetail('<c:out value="${req.reqId }"/>');">
 										<i class="fas fa-folder"></i> 보기 
 									</a> 
-									<a class="btn btn-info btn-sm" href="javascript:reqUpdate(${req.reqId });"> 
+									<a class="btn btn-success btn-xs" href="javascript:reqUpdate(${req.reqId });"> 
 										 <i class="fas fa-pencil-alt"></i> 수정
 									</a>
-									<a class="btn btn-danger btn-sm" href="javascript:reqDelete(${req.reqId });"> 
+									<a class="btn btn-danger btn-xs" href="javascript:reqDelete(${req.reqId });"> 
 										<i class="fas fa-trash"></i> 삭제
 									</a>
 								</td>
@@ -234,7 +231,7 @@
 			</div>
 
 			<div class="card-footer clearfix">
-				<button type="button" class="btn btn-default" id="back">뒤로가기</button>
+				<button type="button" class="btn btn-default btn-flat ns" id="back">뒤로가기</button>
 				<a class="btn btn-app float-right"
 					href="javascript:fn_egov_reqInsert();"> <i class="fas fa-edit"></i>
 					작성하기
