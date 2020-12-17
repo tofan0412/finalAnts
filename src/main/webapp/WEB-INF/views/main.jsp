@@ -163,9 +163,9 @@
 				scEnd = 0;
 			}
 		})
-	})()
-	ChannelIO('boot', {
-		"pluginKey" : "9fecedd4-d5c5-4ee5-bdcc-ddf8f29b6c2e"
+		ChannelIO('boot', {
+			"pluginKey" : "9fecedd4-d5c5-4ee5-bdcc-ddf8f29b6c2e"
+		});
 	});
 </script>
 <!-- End Channel Plugin -->
@@ -251,10 +251,10 @@
 			<br>
 			<h1>Ants 데모영상</h1>
 		</div>
-		<iframe width="1189" height="669" src="https://www.youtube.com/embed/0DFkIP59sj0" 
+		<iframe width="50%" height="520px" src="https://www.youtube.com/embed/0DFkIP59sj0" 
 			frameborder="0" allow="accelerometer; autoplay; 
 			clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-			allowfullscreen style="position: absolute; top:25%; left:25%;">
+			allowfullscreen style="margin-left : 25%;">
 		</iframe>
 		
 	</div>
