@@ -147,17 +147,27 @@
 	      	SELECT ROWNUM RNUM , 
 	           	   S.*
 		      FROM (
-				 SELECT c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt ,
-						 c.issue_kind, c.book_id as issue_del , e.req_title as mem_id
-				  FROM
-					  (select a.issue_id , a.issue_title , a.issue_cont , a.reg_dt ,
-							  a.issue_kind, b.book_id , a.issue_del , a.req_id , a.mem_id
+			    select c.issue_id , c.issue_title , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt , e.req_title as proName,
+                        c.issue_kind, case when c.bookmem = #{memId} then c.book_id else null end bookmark , d.mem_name as mem_name
+				  from
+					  (select a.issue_id , a.issue_title , a.reg_dt , a.req_id,
+							  a.issue_kind, b.book_id , a.mem_id as issuemem, b.mem_id as bookmem , a.issue_del
 						 from issue a 
-						 left outer join bookmark b 
-						 on a.issue_id = b.issue_id ) c , member d, reqlist e
-				  WHERE d.mem_id = c.mem_id AND c.issue_del = 'N'  
-				  		AND c.req_id = e.req_id
-					    AND d.mem_id = #{memId}
+						 left outer join  ( select *
+                                            from bookmark  						
+                         
+                                            minus 
+                         
+                                            select *
+                                            from bookmark  						
+                                            where mem_id<![CDATA[ <> ]]> #{memId}
+                                          ) b
+						 on a.issue_id = b.issue_id     
+						) c , member d  , reqlist e
+				  where d.mem_id = c.issuemem and c.issue_del = 'N' 
+                    and c.issuemem = #{memId}
+                    and e.req_id = c.req_id
+                       
 					<if test="searchKeyword != null and searchKeyword != ''">
 				        <choose>
 				         	<when test="searchCondition == 1">

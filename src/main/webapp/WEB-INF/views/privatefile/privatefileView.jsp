@@ -9,10 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
 
 <style>
-body{
-	min-width: 1000px;
-	min-height: 1000px;
-}
+
 .uploadifive-button {
 	float: left;
 	margin-right: 10px;
@@ -313,8 +310,8 @@ var id;
 	        <div class="row mb-2">
 	     
 	          <div class="col-sm-6">
-	          <br><br>
-	            <h1 class="jg" style=" padding-left : 10px;">개인 파일함</h1>
+	          <br>
+	            <h2 class="jg" style=" padding-left : 10px;">개인 파일함</h2>
 	          </div>
 	          <div class="col-sm-6">
 	          <br>
@@ -381,12 +378,12 @@ var id;
 		<div class="card-body p-0">
 		<table id="todoTable">
 			<tr>
+				
 				<th class="jg" style="width: 150px;  text-align: center;">No.</th> 
 				<th class="jg" style="padding-left:60px;">파일명</th>
 				<th class="jg" width="200px"  >파일사이즈</th>
 				<th class="jg" width="150px " >확장자</th>
 				<th class="jg" width="200px" style="padding-right:30px;">수정한 날짜</th>
-<!-- 				<th class="jg" width="110px" style="padding-left:20px;">삭제</th> -->
 			
 			</tr> 
 			<tbody id="privatefileList"> 
@@ -397,7 +394,22 @@ var id;
 						<c:set var="nameLength" value="${fn:length(orginalName)}"/>
 						<c:set var="cutName" value="${fn:substring(orginalName, nameLength-5, nameLength)}"/>
 						<c:set var="filename" value="${fn:substringAfter(cutName,'.')}"/>
-						
+					<tr>
+						<c:if test="${sts.index >= 0 and sts.index <= 5}">
+						<td data-privid="${privatefile.privId}" title="시퀸스 : ${privatefile.privId} <br>
+																	수정한 날짜: ${privatefile.regDt } <br>
+																	파일이름 : ${privatefile.privFilename } <br>
+																	파일경로 : ${privatefile.privFilepath} <br>
+																	파일사이즈 : ${privatefile.privSize } KB<br>
+																	확장자: ${filename} <br>
+																	작성자 : ${privatefile.memId} <br>
+																	"/>
+						</c:if>
+					</tr>
+					
+					
+					
+					
 				    <tr data-privid="${privatefile.privId}" title="시퀸스 : ${privatefile.privId} <br>
 																	수정한 날짜: ${privatefile.regDt } <br>
 																	파일이름 : ${privatefile.privFilename } <br>

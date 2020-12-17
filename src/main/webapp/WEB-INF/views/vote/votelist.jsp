@@ -34,13 +34,7 @@
 		 width:auto; float:left; margin:0 auto; text-align:center;"
 		 
 	}
-	#searchBtn {
-	    color: #fff;
-	    background-color: #007bffab;
-	    border-color: #007bff;
-	    box-shadow: none;
-	}	
-	
+
 	.badge{
 		height: 20px;
 	}
@@ -281,23 +275,24 @@ function itemdetail(voteid){
 		      <div class="col-12 col-sm-12">
 			      <div class="card" style="border-radius: inherit; padding : 2px;">
 			      
-			    <div class="container-fluid">
-		        <div class="row mb-2">
-		         <br>
-		          <div class="col-sm-6">
-		          <br>
-		            <h1 class="jg" style=" padding-left : 10px;">투표</h1>
-		          </div>
-		          <div class="col-sm-6">
-		            <ol class="breadcrumb float-sm-right"  style="background : white">
-		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active jg">투표</li>
-		            </ol>
-		          </div>
-		        </div>
-		        </div>
+<!-- 			    <div class="container-fluid"> -->
+<!-- 		        <div class="row mb-2"> -->
+<!-- 		         <br> -->
+<!-- 		          <div class="col-sm-6"> -->
+<!-- 		          <br> -->
+<!-- 		            <h2 class="jg" style=" padding-left : 10px;">투표</h2> -->
+<!-- 		          </div> -->
+<!-- 		          <div class="col-sm-6"> -->
+<!-- 		            <ol class="breadcrumb float-sm-right"  style="background : white"> -->
+<!-- 		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li> -->
+<!-- 		              <li class="breadcrumb-item active jg">투표</li> -->
+<!-- 		            </ol> -->
+<!-- 		          </div> -->
+<!-- 		        </div> -->
+<!-- 		        </div> -->
 		        
 		        <div class="card-header  ">
+		        <br>
 				<div id="keyword" class="card-tools float-right" style="width: 450px;">
 					<div class="input-group row">
 						<label for="searchCondition" style="visibility:hidden;"></label>
@@ -313,7 +308,7 @@ function itemdetail(voteid){
 	                    <form:input style="width: 300px;" path="searchKeyword" placeholder="검색어를 입력하세요." class="form-control jg"/>
 <!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
 						<span class="input-group-append">							
-							<button class="btn btn-primary" type="button" id="searchBtn" onclick="search()" >
+							<button class="btn btn-default" type="button" id="searchBtn" onclick="search()" >
 								<i class="fa fa-fw fa-search"></i>
 							</button>
 						</span>

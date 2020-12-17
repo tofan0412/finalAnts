@@ -13,7 +13,7 @@
     SELECT  reply_id,
 		    some_id,
 		    reply_cont,
-		    to_char(reg_dt,'yyyy-mm-dd hh:mm') as reg_dt ,
+		    to_char(reg_dt,'yyyy-mm-dd hh24:mm') as reg_dt ,
 		    del,
 		    category_id,
 		    req_id,
@@ -22,7 +22,7 @@
     WHERE some_id = #{someId}
       and req_id = #{reqId}
       and category_id = #{categoryId}
-    order by reg_dt
+    order by reg_dt desc, to_number(reply_id) desc
   </select>
   
   
@@ -55,7 +55,7 @@
 								) VALUES (
 								    BOOK_SEQ.nextval,
 								    #{issueId},
-								    #{reqId},
+								    (select req_id from issue where issue_id =#{issueId}),
 								    #{memId}
 								)
 	</insert>
@@ -64,8 +64,8 @@
 	<delete id="removebookmark" parameterType="ants.com.board.memBoard.model.BookmarkVo">
 		DELETE FROM bookmark
 		WHERE issue_id = #{issueId}
-		    AND   req_id = #{reqId}
-		    AND   mem_id = #{memId}
+		  	AND req_id = (select req_id from issue where issue_id =#{issueId})	   
+		    AND mem_id = #{memId}
 	</delete>
 	
 	
@@ -81,7 +81,7 @@
 						 c.issue_kind, c.book_id , d.mem_name , c.mem_id
 				  from
 					  (select a.issue_id , a.issue_title , a.issue_cont , a.reg_dt ,
-							  a.issue_kind, b.book_id , a.mem_id , a.issue_del
+							  a.issue_kind, b.book_id , b.mem_id , a.issue_del
 						 from issue a 
 						 left outer join bookmark b 
 						 on a.issue_id = b.issue_id

@@ -2,6 +2,7 @@ package ants.com.board.memBoard.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,8 +23,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ants.com.board.manageBoard.model.TodoVo;
+import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.model.SuggestVo;
 import ants.com.board.memBoard.service.SuggestService;
+import ants.com.board.memBoard.service.memBoardService;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.service.FileService;
 import ants.com.member.model.MemberVo;
@@ -38,6 +41,9 @@ public class SuggestController {
 	
 	@Resource(name ="fileService")
 	private FileService fileService;
+	
+	@Resource(name="memBoardService")
+	memBoardService memBoardService;
 	
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
@@ -109,13 +115,22 @@ public class SuggestController {
 	}
 	
 	@RequestMapping("/suggestDetail")
-	public String suggestDetail(SuggestVo suggestVo, Model model) {
+	public String suggestDetail(SuggestVo suggestVo, Model model, HttpSession session) throws SQLException, IOException {
+		
+		String reqId = (String)session.getAttribute("projectId");
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		
 		SuggestVo result = suggestService.suggestDetail(suggestVo);
 		result.setMemId(suggestVo.getMemId());
 		
 		// 파일 목록 불러오기
 		List<PublicFileVo> suggestFileList = suggestService.suggestFileList(suggestVo);
+				
+		ReplyVo replyVo = new ReplyVo(suggestVo.getSgtId(), "4", reqId,memId);	//댓글 조회
+		List<ReplyVo> replylist= memBoardService.replylist(replyVo);
 		
+		model.addAttribute("replylist", replylist);		
 		model.addAttribute("suggestVo",result);
 		model.addAttribute("suggestFileList",suggestFileList );
 		return "tiles/suggest/suggestDetail";

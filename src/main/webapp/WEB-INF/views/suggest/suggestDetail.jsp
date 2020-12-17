@@ -5,6 +5,14 @@
 
 <script type="text/javascript">
 $(function(){
+	
+	$('.writeCon').each(function () {	
+		  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+	}).on('input', function () {
+		  this.style.height = 'auto';
+		  this.style.height = (this.scrollHeight) + 'px';
+	});	
+	
 	todoSearchList = [];
 	$('#todoDetail').hide();
 	removeList = [];
@@ -91,6 +99,8 @@ $(function(){
 	$('#replybtn2').on('click', function(){
 		replyinsert();
 	})
+	
+	// 댓글 작성하기 삭제 버튼
 	$('#replydiv').on('click','#replydelbtn', function(){
 		var someid = $(this).prev().val();
 		var replyid = $(this).prev().prev().val();
@@ -103,10 +113,27 @@ $(function(){
 			   method : "get",
 			   success :function(data){	
 				   console.log(data)
-				   $(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+issueid);				
+				   $(location).attr('href', '${pageContext.request.contextPath}/suggest/suggestDetail?sgtId='+someid);				
 			 }
 		})
 	})
+	
+	
+	// 답글 글자수 계산
+	$('#re_con').keyup(function (e){
+	    var content = $(this).val();
+	  
+	    console.log(content)
+		
+	    $('#counter').html("('+content.length+' / 최대 300자)");    //글자수 실시간 카운팅	  
+		$('#count').html(content.length);
+		
+	    if (content.length > 300){
+	        alert("최대 300자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 300));
+	        $('#counter').html("(200 / 최대 300자)");
+	    }
+	});
 	
 	// 수정하기 버튼 클릭시..
 	$('#modBtn').click(function(){
@@ -230,19 +257,19 @@ function todoDetail(todoId) {
 
 // 댓글 작성
 function replyinsert() {
-		someId : '${issuevo.issueId }';
+
 	$.ajax({
-	
 		url : "${pageContext.request.contextPath}/reply/insertreply",
-		method : "get",
+		method : "post",
 		data : {
-			someId :  '${issuevo.issueId }',
-			categoryId : '${issuevo.categoryId}',
+			someId :  '${suggestVo.sgtId }',
+			categoryId : '4',
 			replyCont : $('#re_con').val()
 			
 		},
 		success : function(data) {
 			saveMsg();
+			$(location).attr('href', '${pageContext.request.contextPath}/suggest/suggestDetail?sgtId='+data.someId);
 		}
 	});
 }
@@ -335,7 +362,7 @@ label{
 }
 </style>
 <%@include file="/WEB-INF/views/layout/contentmenu.jsp"%>
-<div class="col-12 col-sm-9">
+<div class="col-12 col-sm-12">
 	<div class="card card-teal ">
 		<!-- 이슈 상세보기 -->
 		<div class="card-body" id="detailDiv">
@@ -399,41 +426,50 @@ label{
 				</div>
 
 
-				<form class="form-horizontal" role="form" id="frm" method="post"
-					action="${pageContext.request.contextPath}/reply/insertreply">
-					<div class="form-group">
-						<hr>
-						<label for="pass" class="col-sm-2 control-label">댓글</label>
-						<div class="col-sm-12" id="replydiv">
-							<c:forEach items="${replylist }" var="replylist">
-								<c:if test="${replylist.del == 'N'}">
-									<textarea disabled class="writeCon">${replylist.replyCont}</textarea>
-								[ ${replylist.memId } / ${replylist.regDt} ] 	
+			<form class="form-horizontal" role="form" id ="frm" method="post" action="${pageContext.request.contextPath}/reply/insertreply">	
+				<div class="form-group">
+				<hr>
+					<label for="pass" class="col-sm-2 control-label jg">댓글</label>
+					<div class="col-sm-12" id="replydiv">	
 								
-								<c:if
-										test="${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">
-										<input type="hidden" value="${replylist.replyId}">
-										<input type="hidden" value="${replylist.someId}">
-										<input id="replydelbtn" type="button" class="btn btn-default"
-											value="삭제" />
-									</c:if>
-
-								</c:if>
-								<c:if test="${replylist.del == 'Y'}">
-									<textarea disabled class="writeCon"> [삭제된 댓글입니다.]	</textarea>
-								</c:if>
-								<hr>
-							</c:forEach>
-							<br> <input type="hidden" name="someId"
-								value="${issuevo.issueId }"> <input type="hidden"
-								name="categoryId" value="${issuevo.categoryId}"> <input
-								type="hidden" name="reqId" value="${issuevo.reqId }"> <input
-								type="hidden" name="memId" value="${issuevo.memId }">
-							<textarea name="replyCont" id="re_con"></textarea>
-							&nbsp;<input id="replybtn2" type="button" class="btn btn-default"
-								value="댓글작성"><br> <span id="count"> 0</span>
-							&nbsp;자 / 500 자
-
+						<c:forEach items="${replylist }" var="replylist">
+							<div id="replydiv" style="padding-left: 40px;">			
+							<c:if test= "${replylist.del == 'N'}">
+								<label class="jg">${replylist.memId }</label>
+									
+								<textarea style="width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
+								
+<!-- 								</div> -->
+								[ ${replylist.regDt} ] 	
+									
+								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">		
+									<input type="hidden" value="${replylist.replyId}">
+									<input type="hidden" value="${replylist.someId}">																							
+									<input id ="replydelbtn" type="button" class="btn btn-default jg" value ="삭제"/>						
+								</c:if>		
+											
+							</c:if>		 														
+							<c:if test= "${replylist.del == 'Y'}">			
+												
+								<p>[ 삭제된 댓글입니다. ]</p>		
+								
+							</c:if>	
+							</div>	 														
+							<hr>	
+						</c:forEach>
+						<br>
+						<div id="replyinsertdiv" style="padding-left: 30px;">		
+							 <input type="hidden" name="someId" value="${issuevo.issueId }">
+							 <input type="hidden" name="categoryId" value="${issuevo.categoryId}">
+							 <input type="hidden" name="reqId" value="${issuevo.reqId }">
+							 <input type="hidden" name="memId" value="${issuevo.memId }">
+							
+							 <textarea name = "replyCont" id ="re_con" onkeyup="resize(this)" ></textarea><br>
+							 <div style="width: 700px;">
+								 <span>0</span> &nbsp;자 / 300 자		
+								 <input id="replybtn2" type = "button" class="btn btn-default float-right jg" value = "댓글작성"><br>				
+							 </div>
+						 </div>
 						</div>
 					</div>
 				</form>
@@ -476,11 +512,14 @@ label{
 						class="control-label" id="todoEnd"></label>
 				</div>
 
+
 				<div class="card-footer clearfix">
 					<button type="button" class="btn btn-default" id="todoback">뒤로가기</button>
 				</div>
+				
 			</div>
 		</div>
+			
 		<!-- 일감 상세보기   끝-->
 	</div>
 </div>

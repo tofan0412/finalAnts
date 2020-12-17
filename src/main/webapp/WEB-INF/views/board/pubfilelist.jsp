@@ -193,23 +193,24 @@ function pubfilecopy(){
 		      <div class="col-12 col-sm-12">
 			      <div class="card" style="border-radius: inherit; padding : 2px;">
 			      
-				    <div class="container-fluid">
-				        <div class="row mb-2">
-				         <br>
-				          <div class="col-sm-6">
-				          <br>
-				            <h1 class="jg" style=" padding-left : 10px;">파일함</h1>
-				          </div>
-				          <div class="col-sm-6">
-				            <ol class="breadcrumb float-sm-right"  style="background : white">
-				              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
-				              <li class="breadcrumb-item active jg">파일함</li>
-				            </ol>
-				          </div>
-				        </div>
-			        </div>
+<!-- 				    <div class="container-fluid"> -->
+<!-- 				        <div class="row mb-2"> -->
+<!-- 				         <br> -->
+<!-- 				          <div class="col-sm-6"> -->
+<!-- 				          <br> -->
+<!-- 				            <h2 class="jg" style=" padding-left : 10px;">파일함</h2> -->
+<!-- 				          </div> -->
+<!-- 				          <div class="col-sm-6"> -->
+<!-- 				            <ol class="breadcrumb float-sm-right"  style="background : white"> -->
+<!-- 				              <li class="breadcrumb-item san jg"><a href="#">Home</a></li> -->
+<!-- 				              <li class="breadcrumb-item active jg">파일함</li> -->
+<!-- 				            </ol> -->
+<!-- 				          </div> -->
+<!-- 				        </div> -->
+<!-- 			        </div> -->
 		        
 		        <div class="card-header  ">
+		        <br>
 				<div id="keyword" class="card-tools float-right" style="width: 450px;">
 					<div class="input-group row">
 						<label for="searchCondition" style="visibility:hidden;"></label>
@@ -253,7 +254,7 @@ function pubfilecopy(){
 	                <table class="table">
 	                  <thead>
 	                    <tr>
-	                        <th style="width: 250px;  text-align: center;" class="jg">No.</th>
+	                        <th style="width: 200px;  text-align: center;" class="jg">No.</th>
 	                     	<th style="padding-left: 150px; width: 400px; " class="jg"> 파일명</th> 
 							<th style="text-align: center;" class="jg"> 소유자 </th>
 							<th style="text-align: center;" class="jg"> 날짜   </th>
@@ -267,10 +268,10 @@ function pubfilecopy(){
 	                      
 	                       <c:forEach items = "${pubfilelist  }" var ="file" varStatus="status">
 								<tr data-pubfileid="${file.pubId }" data-pubfilename="${file.pubFilename}">
-				                 	<td class="jg" style="width: 250px;  text-align: center;"><c:out value="${  ((publicFileVo.pageIndex-1) * publicFileVo.pageUnit + (status.index+1))}"/>.</td>
+				                 	<td class="jg" style="width: 200px;  text-align: center;"><c:out value="${  ((publicFileVo.pageIndex-1) * publicFileVo.pageUnit + (status.index+1))}"/>.</td>
 									
 										
-									<td class="jg" style="padding-left: 70px; text-align: left; width: 400px;">
+									<td class="jg" style="padding-left: 50px; text-align: left; width: 400px;">
 									<input type="hidden" id="${file.pubId}" name="${file.pubId}">		
 									<input type="hidden" id="${file.pubFilename}" name="${file.pubFilename}">		
 										

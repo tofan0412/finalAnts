@@ -1,5 +1,7 @@
 package ants.com.board.vote.web;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.board.memBoard.model.ReplyVo;
+import ants.com.board.memBoard.service.memBoardService;
 import ants.com.board.vote.model.VoteItemVo;
 import ants.com.board.vote.model.VoteResultVo;
 import ants.com.board.vote.model.VoteVo;
@@ -30,6 +34,10 @@ public class VoteController{
 	
 	@Resource(name ="voteService")
 	private VoteService voteService;
+	
+	@Resource(name="memBoardService")
+	memBoardService memBoardService;
+	
 	
 	// 나의 이슈리스트 출력
 	@RequestMapping("/votelist")
@@ -105,8 +113,9 @@ public class VoteController{
 	
 	// 해당 투표조회(상세보기)
 	@RequestMapping("/voteDetail")
-	public String voteDetail(VoteVo voteVo, Model model, HttpSession session){
+	public String voteDetail(VoteVo voteVo, Model model, HttpSession session) throws SQLException, IOException{
 		
+		String reqId = (String)session.getAttribute("projectId");
 		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
 		String memId = memberVo.getMemId();
 		voteVo.setMemId(memId);
@@ -114,6 +123,11 @@ public class VoteController{
 		List<VoteItemVo> itemlist = voteService.voteitemDetail(voteVo);
 		VoteVo dbvoteVo = voteService.voteDetail(voteVo);
 		VoteResultVo voteres = voteService.voteresDetail(voteVo);
+		
+		ReplyVo replyVo = new ReplyVo(voteVo.getVoteId(), "10", reqId, memId);	//댓글 조회
+		List<ReplyVo> replylist= memBoardService.replylist(replyVo);
+		
+		model.addAttribute("replylist", replylist);
 		
 		model.addAttribute("itemlist", itemlist);
 		model.addAttribute("voteVo", dbvoteVo);

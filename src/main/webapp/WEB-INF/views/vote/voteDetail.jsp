@@ -62,14 +62,66 @@ $(function(){
 		window.history.back();
 	})
 	
+	// 답글 글자수 계산
+	$('#re_con').keyup(function (e){
+	    var content = $(this).val();
+	  
+	    console.log(content)
+		
+	    $('#counter').html("('+content.length+' / 최대 300자)");    //글자수 실시간 카운팅	  
+		$('#count').html(content.length);
+		
+	    if (content.length > 300){
+	        alert("최대 300자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 300));
+	        $('#counter').html("(200 / 최대 300자)");
+	    }
+	});
+	
+	// 댓글 작성
+	$('#replybtn2').on('click', function(){
+		replyinsert();
+	})
+	
 })
+
+// 댓글작성시 작동 증가
+function resize(obj) {
+	  obj.style.height = "1px";
+	  obj.style.height = (12+obj.scrollHeight)+"px";
+}
+
+
+//댓글 작성
+function replyinsert() {
+		
+	$.ajax({
+	
+		url : "${pageContext.request.contextPath}/reply/insertreply",
+		method : "post",
+		data : {
+			someId :  '${voteVo.voteId }',
+			categoryId : '10',
+			replyCont : $('#re_con').val()
+			
+		},
+		success : function(data) {
+			
+				console.log(data.someId)
+				$(location).attr('href', '${pageContext.request.contextPath}/vote/voteDetail?voteId='+data.someId);
+		}
+
+	});
+
+}
+
+
 </script>
 
 
 <style type="text/css">
 	label{
 		width : 100px auto;
-		font-size: 1.2em;
 		padding: 2px;
 	}
 	.labels{
@@ -118,6 +170,22 @@ $(function(){
 		display: inline-block;
 	}
 	
+	.writeCon{
+	width:100%; overflow:visible; background-color:transparent; border:none;
+  		resize :none; 
+	}
+	
+	#re_con{
+		width: 700px;
+		display :inline-block;
+      	resize: none;
+      	padding: 1.1em; /* prevents text jump on Enter keypress */
+      	padding-bottom: 0.2em;
+      	line-height: 1.6;
+      	overflow-y:hidden;
+	}	
+ 	#re_con.autosize { min-height: 60px; } 
+	
 </style>
 
 <%@include file="../layout/contentmenu.jsp"%>
@@ -128,7 +196,7 @@ $(function(){
 	    <!-- 일감 상세보기 -->
 	    <div id="todoDetail" class="card-body">
 	    
-	    	<h3 class="jg">투표 상세보기</h3>
+	    	<h3 class="jg">${voteVo.voteTitle }</h3>
 	    	<c:if test="${voteVo.remain > 1000 and voteVo.voteStatus=='ing'}">
 				<td style="text-align: center;"> 
 				 	<span class="badge badge-success">진행중</span>
@@ -148,11 +216,6 @@ $(function(){
 		
 			<input type="hidden" id="todoId">
 			
-			<div class="div">
-				<label for="voteTitle" class="control-label labels jg">제목</label>
-				<label class="control-label jg" id="voteTitle">${voteVo.voteTitle }</label>
-			</div>
-			<br>
 			<div class="div">
 <!-- 				<label for="voteitemName" class="control-label labels" id="votesort"  style=" float : left;">투표항목</label>				 -->
 				<c:forEach items="${itemlist }" var="item" varStatus="status">
@@ -186,6 +249,7 @@ $(function(){
 			
 			<br>
 			<div class="div">
+				<input type="hidden" value="${voteVo.voteId}" id="voteid">
 				<label for="voteTotalno" class="control-label labels jg">투표인원</label>
 				
 				<label class="control-label jg" id="voteTotalno">${voteVo.votedNo}명 / ${voteVo.voteTotalno}명  </label> 
@@ -223,11 +287,57 @@ $(function(){
 				</c:if>			
 				
 			</div>
+			
+			
+			 <form class="form-horizontal" role="form" id ="frm" method="post" action="${pageContext.request.contextPath}/reply/insertreply">	
+				<div class="form-group">
+				<hr>
+					<label for="pass" class="col-sm-2 control-label jg">댓글</label>
+					<div class="col-sm-12" id="replydiv">	
+								
+						<c:forEach items="${replylist }" var="replylist">
+							<div id="replydiv" style="padding-left: 40px;">			
+							<c:if test= "${replylist.del == 'N'}">
+								<label class="jg">${replylist.memId }</label>
+									
+								<textarea style="width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
+								
+<!-- 								</div> -->
+								[ ${replylist.regDt} ] 	
+									
+								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">		
+									<input type="hidden" value="${replylist.replyId}">
+									<input type="hidden" value="${replylist.someId}">																							
+									<input id ="replydelbtn" type="button" class="btn btn-default jg" value ="삭제"/>						
+								</c:if>		
+											
+							</c:if>		 														
+							<c:if test= "${replylist.del == 'Y'}">			
+												
+								<p>[ 삭제된 댓글입니다. ]</p>		
+								
+							</c:if>	
+							</div>	 														
+							<hr>	
+						</c:forEach>
+						<br>
+						<div id="replyinsertdiv" style="padding-left: 30px;">		
+						
+							
+							 <textarea name = "replyCont" id ="re_con" onkeyup="resize(this)" ></textarea><br>
+							 <div style="width: 700px;">
+								 <span>0</span> &nbsp;자 / 300 자		
+								 <input id="replybtn2" type = "button" class="btn btn-default float-right jg" value = "댓글작성"><br>				
+							 </div>
+						 </div>
+						</div>
+					</div>
+				
+			</form>
 		
 		</div>
-	    
 	          
-	   </div>
+	  </div>
 	     
 </div>
 

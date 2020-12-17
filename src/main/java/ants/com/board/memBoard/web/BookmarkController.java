@@ -69,12 +69,15 @@ public class BookmarkController {
 	@RequestMapping(path ="/removebookmark")
 	public String removebookmark(BookmarkVo bookmarkVo, Model model, HttpSession session) throws SQLException, IOException {
 		
-		String reqId = (String)session.getAttribute("projectId");
-		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
-		String memId = memberVo.getMemId();
+
+		if(session.getAttribute("projectId") != null) {
+			String reqId = (String)session.getAttribute("projectId");
+			bookmarkVo.setReqId(reqId);			
+		}
 		
+		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();		
 		bookmarkVo.setMemId(memId);
-		bookmarkVo.setReqId(reqId);		
 		
 		memBoardService.removebookmark(bookmarkVo);
 		

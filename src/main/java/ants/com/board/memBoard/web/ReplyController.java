@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.service.memBoardService;
+import ants.com.member.model.MemberVo;
 
 @RequestMapping("/reply")
 @Controller
@@ -30,22 +31,19 @@ public class ReplyController {
 	public String insertapply(ReplyVo replyVo, Model model, HttpSession session
 								,RedirectAttributes ra, HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		
-//		
-//		MemberVo membervo = (MemberVo) session.getAttribute("SMEMBER");
-		
-//		ReplyVo replyvo = new ReplyVo();		
-//		replyvo.setMemId(membervo.getMemId());
-		
-		replyVo.setMemId("pl1");
-		replyVo.setCategoryId("3");		
-		replyVo.setReqId("1");
+		String reqId = (String)session.getAttribute("projectId");
+		MemberVo membervo = (MemberVo) session.getAttribute("SMEMBER");
+				
+		replyVo.setMemId(membervo.getMemId());		
+		replyVo.setCategoryId(replyVo.getCategoryId());		
+		replyVo.setReqId(reqId);
 		
 		System.out.println("replyvo : " + replyVo );
 		
 		
 		memBoardService.insertreply(replyVo);
 		
-		model.addAttribute("issueId", replyVo.getSomeId());
+		model.addAttribute("someId", replyVo.getSomeId());
 	
 		return "jsonView";
 //		return this.controller.geteachissue(replyVo.getSomeId(), session, model);

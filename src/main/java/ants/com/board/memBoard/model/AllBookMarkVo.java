@@ -12,6 +12,7 @@ public class AllBookMarkVo extends BaseVo{
 	private String issueKind;
 	private String regDt;
 	private String memName;
+	
 	public String getBookId() {
 		return bookId;
 	}

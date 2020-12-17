@@ -14,6 +14,14 @@
 <script type="text/javascript">
 $(function(){
 	
+	$('.writeCon').each(function () {	
+		  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+	}).on('input', function () {
+		  this.style.height = 'auto';
+		  this.style.height = (this.scrollHeight) + 'px';
+	});
+
+	
 	$('#todoDetaildiv').hide();
 	
 	$("#modissue").on('click', function(){
@@ -72,7 +80,6 @@ $(function(){
 		 $('#detailDiv').hide();
 		console.log('일감 링크')
 			
-// 		 todoDetail(todoId)
 	})
 	
 	// 댓글 작성
@@ -98,18 +105,26 @@ $(function(){
 		})
 	})
 	
+	// 답글 글자수 계산
+	$('#re_con').keyup(function (e){
+	    var content = $(this).val();
+	  
+	    console.log(content)
+		
+	    $('#counter').html("('+content.length+' / 최대 300자)");    //글자수 실시간 카운팅	  
+		$('#count').html(content.length);
+		
+	    if (content.length > 300){
+	        alert("최대 300자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 300));
+	        $('#counter').html("(200 / 최대 300자)");
+	    }
+	});
+	
+
 })
 
 
-function resizeIt() {
-// 	 $('.writeCon').on( 'keyup', 'textarea', function (e){
-	        $('.writeCon').css('height', 'auto' );
-	        $('.writeCon').height(  $('.writeCon').scrollHeight );
-// 	     });
-
-
-
-};
 	
 //일감 상세보기
 function todo(){
@@ -180,7 +195,7 @@ function replyinsert() {
 	$.ajax({
 	
 		url : "${pageContext.request.contextPath}/reply/insertreply",
-		method : "get",
+		method : "post",
 		data : {
 			someId :  '${issuevo.issueId }',
 			categoryId : '${issuevo.categoryId}',
@@ -189,9 +204,9 @@ function replyinsert() {
 		},
 		success : function(data) {
 			
-// 				alert(data.issueId);
 				saveMsg();
-				//$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.issueId);
+				console.log(data.someId)
+				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.someId);
 		}
 
 	});
@@ -227,6 +242,11 @@ function saveMsg(){
 
 
 
+// 댓글작성시 작동 증가
+function resize(obj) {
+	  obj.style.height = "1px";
+	  obj.style.height = (12+obj.scrollHeight)+"px";
+}
 
 
 
@@ -236,36 +256,28 @@ function saveMsg(){
 	label{
 	
 		width : auto;
-/* 		height : 30px; */
-		font-size: 1.2em;
+
 	}
 	#issuecont{
 		display: inline-block;
 		float: left;
 	}
 	
-/*  	.writeCon.autosize { min-height: 50px; }  */
-	
 	.writeCon{
- 		resize :none;
-/* 		background-color:transparent; */
-		width: 500px  ;
-  		height: 100px; 
-/* 		min-height: 50px; */  
-/*   		overflow: visible;  */
-/*   		overflow-y:hidden; */
-
+	width:100%; overflow:visible; background-color:transparent; border:none;
+  		resize :none; 
 	}
 	
 	#re_con{
-		width: 500px;
-		height: 100px;
+		width: 700px;
+		display :inline-block;
       	resize: none;
-/*       	background-color:transparent; */
       	padding: 1.1em; /* prevents text jump on Enter keypress */
       	padding-bottom: 0.2em;
       	line-height: 1.6;
+      	overflow-y:hidden;
 	}	
+ 	#re_con.autosize { min-height: 60px; } 
 	
 	#filediv{
 		display: inline-block;
@@ -389,34 +401,49 @@ function saveMsg(){
 				<div class="form-group">
 				<hr>
 					<label for="pass" class="col-sm-2 control-label jg">댓글</label>
-					<div class="col-sm-12" id="replydiv">					
-						<c:forEach items="${replylist }" var="replylist">
-							<c:if test= "${replylist.del == 'N'}">								
-								<textarea disabled class ="writeCon">${replylist.replyCont}</textarea>
-								[ ${replylist.memId } / ${replylist.regDt} ] 	
+					<div class="col-sm-12" id="replydiv">	
 								
+						<c:forEach items="${replylist }" var="replylist">
+							<div id="replydiv" style="padding-left: 40px;">			
+							<c:if test= "${replylist.del == 'N'}">
+								<label class="jg">${replylist.memId }</label>
+									
+								<textarea style="width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
+								
+<!-- 								</div> -->
+								[ ${replylist.regDt} ] 	
+									
 								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">		
 									<input type="hidden" value="${replylist.replyId}">
 									<input type="hidden" value="${replylist.someId}">																							
 									<input id ="replydelbtn" type="button" class="btn btn-default jg" value ="삭제"/>						
 								</c:if>		
+											
+							</c:if>		 														
+							<c:if test= "${replylist.del == 'Y'}">			
 												
-							</c:if>		 														
-							<c:if test= "${replylist.del == 'Y'}">								
-								<textarea disabled class ="writeCon"> [삭제된 댓글입니다.]	</textarea>					
-							</c:if>		 														
+								<p>[ 삭제된 댓글입니다. ]</p>		
+								
+							</c:if>	
+							</div>	 														
 							<hr>	
 						</c:forEach>
 						<br>
-						 <input type="hidden" name="someId" value="${issuevo.issueId }">
-						 <input type="hidden" name="categoryId" value="${issuevo.categoryId}">
-						 <input type="hidden" name="reqId" value="${issuevo.reqId }">
-						 <input type="hidden" name="memId" value="${issuevo.memId }">
-						 <textarea name = "replyCont" id ="re_con"  ></textarea>&nbsp;<input id="replybtn2" type = "button" class="btn btn-default jg" value = "댓글작성"><br>
-						 <span id="count"> 0</span> &nbsp;자 / 300 자 
+						<div id="replyinsertdiv" style="padding-left: 30px;">		
+							 <input type="hidden" name="someId" value="${issuevo.issueId }">
+							 <input type="hidden" name="categoryId" value="${issuevo.categoryId}">
+							 <input type="hidden" name="reqId" value="${issuevo.reqId }">
+							 <input type="hidden" name="memId" value="${issuevo.memId }">
 							
+							 <textarea name = "replyCont" id ="re_con" onkeyup="resize(this)" ></textarea><br>
+							 <div style="width: 700px;">
+								 <span>0</span> &nbsp;자 / 300 자		
+								 <input id="replybtn2" type = "button" class="btn btn-default float-right jg" value = "댓글작성"><br>				
+							 </div>
+						 </div>
+						</div>
 					</div>
-				</div>
+				
 			</form>
 	    </div>
 		<!-- 이슈 상세보기 끝-->  

@@ -131,24 +131,25 @@ $(function(){
 		      <div class="col-12 col-sm-12">
 			      <div class="card" style="border-radius: inherit; padding : 2px;">
 			      
-			    <div class="container-fluid">
-		        <div class="row mb-2">
-		         <br>
-		          <div class="col-sm-6">
-		          <br>
-		            <h1 class="jg" style=" padding-left : 10px;">현업이슈 리스트</h1>
-		          </div>
-		          <div class="col-sm-6">
-		            <ol class="breadcrumb float-sm-right"  style="background : white">
-		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active jg">현업이슈 리스트</li>
-		            </ol>
-		          </div>
-		        </div>
-		        </div>
+<!-- 			    <div class="container-fluid"> -->
+<!-- 		        <div class="row mb-2"> -->
+<!-- 		         <br> -->
+<!-- 		          <div class="col-sm-6"> -->
+<!-- 		          <br> -->
+<!-- 		            <h2 class="jg" style=" padding-left : 10px;">현업이슈 리스트</h2> -->
+<!-- 		          </div> -->
+<!-- 		          <div class="col-sm-6"> -->
+<!-- 		            <ol class="breadcrumb float-sm-right"  style="background : white"> -->
+<!-- 		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li> -->
+<!-- 		              <li class="breadcrumb-item active jg">현업이슈 리스트</li> -->
+<!-- 		            </ol> -->
+<!-- 		          </div> -->
+<!-- 		        </div> -->
+<!-- 		        </div> -->
 		    
 		        
 		        <div class="card-header  ">
+		        <br>
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">
 						<label for="searchCondition" style="visibility:hidden;"></label>

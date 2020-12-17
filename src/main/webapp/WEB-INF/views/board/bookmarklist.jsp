@@ -31,7 +31,7 @@
 	//북마크 클릭시
 	$(".area-desc").click(function() { 
 		var arrowImage = $(this).children("span").children("img"); 
-		
+		console.log('클릭')
 		arrowImage.attr("src", function(index, attr){ 
 			issueid = arrowImage.attr('name')
 			if(attr.match('black')){ 
@@ -99,10 +99,9 @@
 			      
 			    <div class="container-fluid">
 		        <div class="row mb-2">
-		         <br>
 		          <div class="col-sm-6">
-		          <br><br>
-		            <h1 class="jg" style=" padding-left : 10px;"><img src="/resources/dist/img/bookmark-black.png" width="30" height="30" name ="${bookmark.issueId}"/>&nbsp;북마크</h1>
+		          <br>
+		            <h2 class="jg" style=" padding-left : 10px;"><img src="/resources/dist/img/bookmark-black.png" width="30" height="30" name ="${bookmark.issueId}"/>&nbsp;북마크</h2>
 		          </div>
 		          <div class="col-sm-6">
 		          <br>
@@ -178,7 +177,7 @@
 									<c:if test="${bookmark.issueKind == 'notice'}">
 										<td class="jg" style="text-align: center;"> 공지사항</td>										
 									</c:if>
-									<td class="jg" style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${bookmark.issueId}"/></span></td>											
+									<td style="text-align: center;" class = "area-desc jg"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${bookmark.issueId}"/></span></td>											
 <%-- 									</c:forEach>  --%>
 			                      	<td style="text-align: center;">
 									 

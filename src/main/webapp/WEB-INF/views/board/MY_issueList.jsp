@@ -36,10 +36,10 @@
 	}
 	#paging{
 		 display: inline-block;
-/* 		 text-align: center; */
 		 width:auto; float:left; margin:0 auto; text-align:center;"
 		 
-	}	
+	}
+		
 	
 </style>
 
@@ -130,10 +130,9 @@ $(function(){
 			      
 			    <div class="container-fluid">
 		        <div class="row mb-2">
-		         <br> 
 		          <div class="col-sm-6">
-		         <br><br>
-		            <h1 class="jg" style=" padding-left : 10px;">내가 작성한 이슈</h1>
+		         <br>
+		            <h2 class="jg" style=" padding-left : 10px;">내가 작성한 이슈</h2>
 		          </div>
 		          <div class="col-sm-6">
 		          <br>
@@ -202,7 +201,7 @@ $(function(){
 				                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
 								
 									<td class="jg" style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${issue.reqId}"> ${issue.issueTitle }</a> </td>
-									<td class="jg" style="text-align: center;"> ${issue.memId }</td>
+									<td class="jg" style="text-align: center;"> ${issue.proName }</td>
 									<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
 									<c:if test="${issue.issueKind == 'issue'}">
 										<td class="jg" style="text-align: center;"> 이슈</td>										
@@ -215,11 +214,11 @@ $(function(){
 	<!-- 									<td><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name="bookmark_toggle_01" -->
 	<!-- 													OnClick="toggle_img_src( 'bookmark_toggle_01', '/resources/dist/img/bookmark-white.png', '/resources/dist/img/bookmark-black.png');" style="cursor:pointer"></td> -->
 										<c:choose>
-											<c:when test="${issue.issueDel == '' || issue.issueDel == null }">
-												<td class="jg" style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
+											<c:when test="${issue.bookmark == '' || issue.bookmark == null }">
+												<td style="text-align: center;" class = "area-desc jg"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
 											</c:when>
 											<c:otherwise>
-												<td class="jg" style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
+												<td style="text-align: center;" class = "area-desc jg"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
 											</c:otherwise>
 										</c:choose>
 										
