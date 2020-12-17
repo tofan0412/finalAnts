@@ -4,13 +4,29 @@
 
 <select id="readSuggestList" parameterType="ants.com.board.memBoard.model.SuggestVo" resultType="ants.com.board.memBoard.model.SuggestVo">
 	SELECT A.SGT_ID, A.SGT_TITLE, A.SGT_CONT, 
-           A.REG_DT, A.SGT_STATUS, A.CATEGORY_ID,
-           A.DEL, A.TODO_ID,  B.MEM_ID, B.REQ_ID
+           to_char(A.REG_DT,'yyyy-mm-dd hh24:mm') as REG_DT, A.SGT_STATUS, A.CATEGORY_ID,
+           A.DEL, A.TODO_ID, c.mem_name, b.mem_id, B.REQ_ID
 	  FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
 	                     FROM TODO 
-	                    WHERE REQ_ID = #{reqId}) B
+	                    WHERE REQ_ID = #{reqId}) B, member c
 	 WHERE A.TODO_ID = B.TODO_ID
 	   AND A.DEL = 'N'
+	   AND B.mem_id = c.mem_id
+	   <if test="searchKeyword != null and searchKeyword != ''">
+	        <choose>
+	         	<when test="searchCondition == 1">
+					AND	c.mem_name LIKE '%' || #{searchKeyword} || '%'
+				</when>
+	            <when test="searchCondition == 2">
+					AND	a.sgt_title LIKE '%' || #{searchKeyword} || '%'
+				</when>
+	            <when test="searchCondition == 3">
+					AND	a.sgt_cont LIKE '%' || #{searchKeyword} || '%'
+				</when>
+	     
+			</choose>
+		</if>
+	   
 	 ORDER BY A.REG_DT DESC
 </select>
 
@@ -35,9 +51,25 @@ INSERT INTO suggest (sgt_id,sgt_title,sgt_cont,
 </insert>
 
 <select id="suggestDetail" parameterType="ants.com.board.memBoard.model.SuggestVo" resultType="ants.com.board.memBoard.model.SuggestVo">
-	SELECT * 
-	  FROM SUGGEST
-	 WHERE SGT_ID = #{sgtId}
+	    
+	SELECT b.mem_name,  
+	        c.sgt_id,
+			c.sgt_title,
+			c.sgt_cont,
+			to_char(c.REG_DT,'yyyy-mm-dd hh24:mm') as REG_DT,
+			c.sgt_status,
+			c.category_id,
+			c.todo_id,
+			c.del
+	FROM        
+		(select mem_id, todo_id
+		from todo a
+		where a.todo_id = todo_id) a , member b, suggest c
+	WHERE a.mem_id = b.mem_id
+	  and a.todo_id = c.todo_id
+	  and c.sgt_id = #{sgtId}
+	  and c.del ='N'
+	
 </select>
 
 <update id="suggestMod" parameterType="ants.com.board.memBoard.model.SuggestVo">

@@ -5,6 +5,13 @@
 <script type="text/javascript">
 $(function(){
 
+	$('.writeCon').each(function () {	
+		  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+	}).on('input', function () {
+		  this.style.height = 'auto';
+		  this.style.height = (this.scrollHeight) + 'px';
+	});
+	
 	$("#pagenum a").addClass("page-link");  
 	
 	console.log("뭔뎅")
@@ -69,12 +76,12 @@ $(function(){
 	    console.log(content)
 		
 	    $('#counter').html("('+content.length+' / 최대 300자)");    //글자수 실시간 카운팅	  
-		$('#count').html(content.length);
+		$('span').html(content.length);
 		
 	    if (content.length > 300){
 	        alert("최대 300자까지 입력 가능합니다.");
 	        $(this).val(content.substring(0, 300));
-	        $('#counter').html("(200 / 최대 300자)");
+	        $('span').html("(200 / 최대 300자)");
 	    }
 	});
 	
@@ -228,9 +235,9 @@ function replyinsert() {
 						
 						
 						<div class="control-label float-left">		
-							<label class="control-label jg float-left">${status.index+1 } . &nbsp; ${item.voteitemName }</label><br>
+							<label class="control-label float-left">${status.index+1 } . &nbsp; ${item.voteitemName }</label><br>
 						
-                      		<label class="control-label jg float-left per"  style=" float : left;">
+                      		<label class="control-label  float-left per"  style=" float : left;">
 	                         	<progress   value="${item.voteCount }" max="${voteVo.voteTotalno}"></progress>                        
 								&nbsp; ${item.voteCount }명 	
 								<c:if test="${item.voteCount == 0}">
@@ -252,14 +259,14 @@ function replyinsert() {
 				<input type="hidden" value="${voteVo.voteId}" id="voteid">
 				<label for="voteTotalno" class="control-label labels jg">투표인원</label>
 				
-				<label class="control-label jg" id="voteTotalno">${voteVo.votedNo}명 / ${voteVo.voteTotalno}명  </label> 
+				<label class="control-label" id="voteTotalno">${voteVo.votedNo}명 / ${voteVo.voteTotalno}명  </label> 
 				
 			</div>
 			<br>
 			<div class="div">
 				<label for="voteTotalno" class="control-label labels jg">투표율</label>
 		
-				<label class="control-label jg" id="votePercent">	
+				<label class="control-label" id="votePercent">	
 					<fmt:formatNumber value="${voteVo.votedNo/voteVo.voteTotalno}" type="percent"></fmt:formatNumber> 		
 				</label>
 				
@@ -267,17 +274,17 @@ function replyinsert() {
 			<br>
 			<div class="div">
 				<label for="voteDeadline" class="control-label labels jg">종료일</label>
-				<label class="control-label jg" id="voteDeadline">${voteVo.voteDeadline}</label>
+				<label class="control-label" id="voteDeadline">${voteVo.voteDeadline}</label>
 			</div>
 			<br>
 			<div class="div">
 				<label for="memId" class="control-label labels jg">개시자</label>
-				<label class="control-label jg" id="memId">${voteVo.memName }</label>
+				<label class="control-label" id="memId">${voteVo.memName }</label>
 			</div>
 			<hr>
 			
 			<div class="card-footer clearfix" id="btndiv" >
-				<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>		
+				<button type="button" class="btn btn-default jg" id="back">목록으로</button>		
 				투표자 : ${voteres.memId} / 로그인한 사람 : ${SMEMBER.memId }	
 				<c:if test="${voteVo.memId == SMEMBER.memId }">		
 					<button type="button" class="btn btn-default float-right jg" id="votedelbtn">삭제하기</button>

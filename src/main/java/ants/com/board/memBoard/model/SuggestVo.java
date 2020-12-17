@@ -1,7 +1,5 @@
 package ants.com.board.memBoard.model;
 
-import java.util.Date;
-
 import ants.com.base.model.BaseVo;
 
 public class SuggestVo extends BaseVo{
@@ -9,7 +7,7 @@ public class SuggestVo extends BaseVo{
 	private String sgtId;
 	private String sgtTitle;
 	private String sgtCont;
-	private Date regDt;
+	private String regDt;
 	private String sgtStatus;
 	private String categoryId;
 	private String del;
@@ -17,7 +15,7 @@ public class SuggestVo extends BaseVo{
 	private String memId;
 	private String reqId;
 	private String acceptpercent;
-	
+	private String memName;
 	
 	
 	public String getAcceptpercent() {
@@ -56,10 +54,10 @@ public class SuggestVo extends BaseVo{
 	public void setSgtCont(String sgtCont) {
 		this.sgtCont = sgtCont;
 	}
-	public Date getRegDt() {
+	public String getRegDt() {
 		return regDt;
 	}
-	public void setRegDt(Date regDt) {
+	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
 	public String getSgtStatus() {
@@ -85,6 +83,13 @@ public class SuggestVo extends BaseVo{
 	}
 	public void setDel(String del) {
 		this.del = del;
+	}
+	
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
 	}
 	@Override
 	public String toString() {

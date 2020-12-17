@@ -148,8 +148,12 @@ $(function(){
 <!-- 		        </div> -->
 		    
 		        
-		        <div class="card-header  ">
 		        <br>
+		        <div class="card-header  ">
+		        <div id="keyword" class="card-tools float-left"
+						style="width: 450px;">
+						<h3 class="jg" style="padding-left: 10px;">현업이슈 리스트</h3>
+				</div>
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">
 						<label for="searchCondition" style="visibility:hidden;"></label>
@@ -247,9 +251,9 @@ $(function(){
                     
 	                 </ul>
         		  </div>
-        		  <br>
+        	
         		  <div class="card-footer clearfix">
-	                <button id="insertissue" type="button" class="btn btn-default float-right jg" onclick="issueInsert()"><i class="fas fa-plus "></i>등 록</button>
+	                <button id="insertissue" type="button" class="btn btn-default float-left jg" onclick="issueInsert()"><i class="fas fa-plus "></i>등 록</button>
 	              </div>
         		 
         		  

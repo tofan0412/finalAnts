@@ -209,8 +209,12 @@ function pubfilecopy(){
 <!-- 				        </div> -->
 <!-- 			        </div> -->
 		        
-		        <div class="card-header  ">
 		        <br>
+		        <div class="card-header  ">
+		        <div id="keyword" class="card-tools float-left"
+						style="width: 450px;">
+						<h3 class="jg" style="padding-left: 10px;">파일함</h3>
+				</div>	
 				<div id="keyword" class="card-tools float-right" style="width: 450px;">
 					<div class="input-group row">
 						<label for="searchCondition" style="visibility:hidden;"></label>

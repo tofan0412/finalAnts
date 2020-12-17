@@ -62,22 +62,6 @@
 	     	   
 	        })
 	        
-         $('#addbtn').on('click', function(){
-    	 
-			   fileSlotCnt++;
-	    	   console.log("click!!");
-	    	   var html = '<br><input type="file" name="file" id="fileBtn">'
-	    	   				+'<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">'
-								+'<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>'
-							+'</button>';
-	    	   $(this).next().next().append(html);  
-	    	   
-	    	   if(fileSlotCnt >= maxFileSlot){
-	    		   $(this).hide();
- 	    		   alert("파일은 총 "+maxFileSlot+"개 까지만 첨부가능합니다.");
-	    	   }
-    	   
-     	 })
      	 
      	 $('#kindselect').on('change', function(){
      		 
@@ -142,11 +126,7 @@
      	     		if($('#issueTitle').val() != ''){		     	     		
      					$('#todoselect').val() != '' ? $('#frm').submit() : alert('선택해주세요');	    					    			
      				}
-     			}else if($('#kindselect').val() == 'notice'){
-     				if($('#issueTitle').val() != ''){					
-     					$('#frm').submit();
-     				}
-     			}	
+     			}
      		// 업드로할 파일이 존재할 시
      		}else{
      			$('#file_upload').uploadifive('upload');
@@ -168,29 +148,6 @@
  	
 
  	
- 	// 로그인한 사람의 todolist출력
- 	function mytodolist(){
-	 	$.ajax({url :"${pageContext.request.contextPath}/projectMember/mytodolist",
-				 method : "get",
-				 success :function(data){	
-					 console.log(data.todolist)
-					
-					 
-					 html  =  '<label for="todoId" class="col-sm-2 control-label jg">일감 </label>'
-				     html +=  '<select name="todoId" id="todoselect"  class ="col-sm-4" required>'		
-				     html +=  '<option value="">선택</option>'
-				     for( i = 0 ; i< data.todolist.length; i++){		
-					     html +=  '	 <option value='+data.todolist[i].todoId+'>'+data.todolist[i].todoTitle+'</option>'	
-				     }
-				     html +=  '	</select>'
-				     
-				     
-				    	
-				     
-				     $("#todolist").html(html);
-				 }
-		 	})
-	}
 	
 	
 </script>
@@ -241,25 +198,19 @@
 	<div class="card card-teal ">
 	  <div class="card-body">
 		<div style="padding-left: 30px;">
-			<h3 class="jg">협업이슈 작성하기</h3>
+			<h4 class="jg">협업이슈 작성하기</h4>
 			<br>
 			<form id="frm" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/insertissue"   >	
 				
 			<input type="hidden" name="issueId" value="${issueSeq }">
+			<input type="hidden" name="todoId" value="${todoVo.todoId }">
+			<input type="hidden" name="issueKind" value="issue">
+				
 			
-			 <div class="form-group">
-					<label for="issueKind" class="col-sm-2 control-label jg">이슈종류</label> 
-					<select name="issueKind" id="kindselect" class ="col-sm-3" required>
-					    <option value="">선택</option>
-					    <option  value="issue">이슈</option>
-					    <option  value="notice">공지사항</option>
-					</select>
+				<div class="form-group">
+					<label for="issueTitle" class="col-sm-2 control-label jg">이슈제목</label>
+					<input type="text" name="todoId" style="background-color:transparent; border:none;" value="${todoVo.todoTitle }" disabled>
 				</div>
-				
-				<div class="form-group" id="todolist">
-
-				</div>
-				
 				<div class="form-group">
 					<label for="issueTitle" class="col-sm-2 control-label jg">이슈제목</label>
 					<input type="text" name="issueTitle" style="width: 70%;" id="issueTitle" required>
