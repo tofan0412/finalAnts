@@ -2,10 +2,17 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
 <script type="text/javascript">
 $(function(){
 	
+	todo(); // 일감 불러오기
+	
+	// 일감내역 숨기기
+	$('#todoDetaildiv').hide();
+	
+	// 댓글 자동 높이 
 	$('.writeCon').each(function () {	
 		  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
 	}).on('input', function () {
@@ -51,6 +58,21 @@ $(function(){
 		
 	})
 	
+ 	// 건의사항에서 뒤로가기
+	$(document).on('click','#back', function(){
+		$("#listform").attr("action", "${pageContext.request.contextPath}/suggest/readSuggestList");
+		listform.submit();		
+	})
+	
+	// todo에서 뒤로가기
+	$(document).on('click','#todoback', function(){
+		$('#todoDetaildiv').hide();
+		$('#detailDiv').show();
+		window.history.back();
+	})
+	
+	
+	
 	// 일감 검색을 위해 키워드를 작성한 경우 자동완성
 	$('#todoIdModal').keyup(function(){
 		var keyword = $(this).val();
@@ -87,12 +109,13 @@ $(function(){
 	
 	// 일감링크
 	$(document).on('click','#todolink', function(){
-		 todoId = $(this).data("todoid")
+		 console.log('일감 링크')
+		 todoId = $('#todoId').val()
 		 
-		 $('#todoDetail').show();
+		 $('#todoDetaildiv').show();
 		 $('#detailDiv').hide();
+		console.log('일감 링크')
 			
-		 todoDetail(todoId)
 	})
 	
 	// 댓글 작성
@@ -123,15 +146,15 @@ $(function(){
 	$('#re_con').keyup(function (e){
 	    var content = $(this).val();
 	  
-	    console.log(content)
+// 	    console.log(content)
 		
 	    $('#counter').html("('+content.length+' / 최대 300자)");    //글자수 실시간 카운팅	  
-		$('#count').html(content.length);
+		$('span').html(content.length);
 		
 	    if (content.length > 300){
 	        alert("최대 300자까지 입력 가능합니다.");
 	        $(this).val(content.substring(0, 300));
-	        $('#counter').html("(200 / 최대 300자)");
+	        $('span').html("(200 / 최대 300자)");
 	    }
 	});
 	
@@ -198,19 +221,20 @@ function autoComplete(todoSearchList){
 function todo(){
 
  	$.ajax({url :"/todo/myonetodo",
-		   data :{todoId : "${issuevo.todoId}"},
+		   data :{todoId : "${suggestVo.todoId}"},
 		   method : "get",
 		   success :function(data){	
-				console.log(data.todoVo)	
+				console.log(data.todoVo.memId)	
 			 
-				html = '<label for="todoId" class="col-sm-2 control-label">일감</label>'
-				html += '<label id ="todoId" class="control-label"><a  data-todoid='+data.todoVo.todoId+' id="todolink" href="#">'+data.todoVo.todoTitle+'</a></label>'
+				html = '<th class="success jg">일감</th>';
+				html += '<td colspan="3" id ="todo">';		  
+				html += '<label id ="todoId" class="control-label"><a  data-todoid='+data.todoVo.todoId+' id="todolink" href="#">'+data.todoVo.todoTitle+'</a></label></td>'
 
 				$('#todo').html(html);
 				
 				$("#todoTitle").html(data.todoVo.todoTitle);
 				$("#todoCont").html(data.todoVo.todoCont);
-				$("#memId").html(data.todoVo.memId);
+				$("#todoMemId").html(data.todoVo.memName);
 				
 				if(data.todoVo.todoImportance =='gen'){
 					$("#todoImportance").html('일반');
@@ -220,40 +244,10 @@ function todo(){
 				$("#todoStart").html(data.todoVo.todoStart);
 				$("#todoEnd").html(data.todoVo.todoEnd);
 				$("#todoId").val(data.todoVo.todoId);
+				
 		 }
 	})
 }
-
-// 일감 상세보기
-function todoDetail(todoId) {
-	$.ajax({
-		url : "/todo/myonetodo",
-		method : "get",
-		data : {
-			todoId : todoId
-		},
-		success : function(data) {
-			console.log(data)
-			
-			$('#todoDetail').show();
-			$('#detailDiv').hide();
-			
-			$("#todoTitle").html(data.todoVo.todoTitle);
-			$("#todoCont").html(data.todoVo.todoCont);
-			$("#memId").html(data.todoVo.memId);
-			if(data.todoVo.todoImportance =='gen'){
-				$("#todoImportance").html('일반');
-			}else if(data.todoVo.todoImportance =='emg'){
-				$("#todoImportance").html('긴급');
-			}
-			
-			$("#todoStart").html(data.todoVo.todoStart);
-			$("#todoEnd").html(data.todoVo.todoEnd);
-			$("#todoId").val(data.todoVo.todoId);
-		}
-	});
-}
-
 
 // 댓글 작성
 function replyinsert() {
@@ -322,30 +316,41 @@ function saveMsg(){
 			}
 	});
 }
+
+
+//댓글작성시 작동 증가
+function resize(obj) {
+	  obj.style.height = "1px";
+	  obj.style.height = (12+obj.scrollHeight)+"px";
+}
+
 </script>
 
 <style type="text/css">
 label{
 	width : auto;
-	font-size: 1.2em;
+
 }
 #issuecont{
 	display: inline-block;
 	float: left;
 }
 .writeCon{
-	resize :none;
-	width: 500px  ;
-	height: 100px; 
+width:100%; overflow:visible; background-color:transparent; border:none;
+ 		resize :none; 
 }
+
 #re_con{
-	width: 500px;
-	height: 100px;
-   	resize: none;
-   	padding: 1.1em; /* prevents text jump on Enter keypress */
-   	padding-bottom: 0.2em;
-   	line-height: 1.6;
+	width: 700px;
+	display :inline-block;
+     	resize: none;
+     	padding: 1.1em; /* prevents text jump on Enter keypress */
+     	padding-bottom: 0.2em;
+     	line-height: 1.6;
+     	overflow-y:hidden;
 }	
+#re_con.autosize { min-height: 60px; } 
+
 #filediv{
 	display: inline-block;
 }
@@ -360,69 +365,106 @@ label{
 	margin-bottom: 10px;
 	padding: 0 3px 3px;
 }
+.form-control:disabled, .form-control[readonly] {
+  background-color: white;
+}
+.success{
+	background-color: #f6f6f6;
+	width: 10%;
+	text-align: center;
+}
+
+
 </style>
 <%@include file="/WEB-INF/views/layout/contentmenu.jsp"%>
 <div class="col-12 col-sm-12">
 	<div class="card card-teal ">
 		<!-- 이슈 상세보기 -->
 		<div class="card-body" id="detailDiv">
-			<h3>건의사항 상세내역</h3>
+			<form id="listform" action="${pageContext.request.contextPath}/projectMember/issuelist" method="post">
+			    <input type="hidden" value="${searchCondition }" name="searchCondition">
+			    <input type="hidden" value="${searchKeyword }" name="searchKeyword">
+			    <input type="hidden" value="${pageIndex }" name="pageIndex">
+			</form>
+		
 			<br>
-			<div class="form-group" id="todo"></div>
-
-			<div class="form-group">
-				<label for="memId" class="col-sm-2 control-label">작성자</label> 
-				<label id="memId" class="control-label">${suggestVo.memId }</label>
-				
-				<div class="form-group">
-					<label for="regDt" class="col-sm-2 control-label">작성일</label> 
-					<label id="regDt" class="control-label">${suggestVo.regDt }</label>
-				</div>
-				
-				<div class="form-group">
-					<label for="sgtTitle" class="col-sm-2 control-label">제목</label>
-					<label id="sgtTitle" class="control-label">${suggestVo.sgtTitle}</label>
-				</div>
-				
-				<div class="form-group">
-					<label for="todoId" class="col-sm-2 control-label">일감 번호</label>
-					<label id="todoId" class="control-label"><a href="#">${suggestVo.todoId}</a></label>
-				</div>
-
-				<div class="form-group">
-					<label id="sgtCont" for="sgtCont" class="col-sm-2 control-label">내용</label>
-					<c:if test="${suggestVo.sgtCont == ''}">
-					[ 내용이 없습니다. ]
-				</c:if>
-					<c:if test="${suggestVo.sgtCont == null}">
-					[ 내용이 없습니다. ]
-				</c:if>
-					<label id="sgtCont" class="control-label">${suggestVo.sgtCont }</label>
-				</div>
-				<br>
-				
-				<!-- 파일 목록 출력하기  -->
-				<label class="col-sm-2 control-label" >첨부 파일 목록</label>
-				<div class="form-group">
-					<c:forEach items="${suggestFileList }" var="file" >
-						<div class="fileListOrigin" pubId="${file.pubId }"><a href="/suggest/suggestFileDownload?pubId=${file.pubId }">${file.pubFilename } (${file.pubSize }KB)</a>
-						</div>						
-					</c:forEach>
-					<c:if test="${suggestFileList eq null }">
-						<span class="jg">첨부한 파일이 없습니다.</span>
-					</c:if>
-				</div>
-				
+			<h4 class="jg">건의사항 상세내역</h4>
+			<br>
+			
+			<table class="table" >
+		        <tr class="stylediff">
+		            <th class="success jg">제목</th>
+		         	<td colspan="3">		
+		         		<label id="sgtTitle" class="control-label">${suggestVo.sgtTitle}</label>
+		         	</td>						        
+		        </tr> 
+		        
+		        <tr class="stylediff" id ="todo" >
+		           
+		        </tr>
+		        
+		        <tr class="stylediff">
+		            <th class="success jg">작성자</th>
+		            <td style="padding-left: 20px; width: 700px;">
+		            	<label id="memId" class="control-label" >${suggestVo.memName }</label>
+		            </td>
+		          	
+		       
+		            <th class="success jg">작성일</th>		            
+		            <td style="padding-left: 20px; width: 700px;">
+		            	<label id="regDt" class="control-label" >${suggestVo.regDt }</label>
+		            </td>
+		        </tr>  
+		         
+		        <tr>
+		            <th class="success jg" style="height: 300px;">내용</th>
+		            <td colspan="3">
+			            <c:if test="${suggestVo.sgtCont == ''}">
+							[ 내용이 없습니다. ]
+						</c:if>
+						<c:if test="${suggestVo.sgtCont == null}">
+							[ 내용이 없습니다. ]
+						</c:if>
+						<label id="sgtCont" class="control-label">${suggestVo.sgtCont }</label>
+			           
+		            </td>
+		        </tr>
+		        <tr>
+		        	<th class="success jg" style="height: 150px;">첨부파일</th>
+		            <td colspan="3">
+			            <div id = "filediv">
+							<c:if test="${suggestFileList.size() == 0}">
+								<label class="jg">	[ 첨부파일이 없습니다. ] </label>
+							
+							</c:if>
+							
+							<c:forEach items="${suggestFileList }" var="files" begin ="0" varStatus="vs" end="${suggestFileList.size() }" step="1" >
+																	 					
+								<a href="${cp }/file/publicfileDown?pubId=${files.pubId}">
+									<button id ="files${vs.index}" class="btn btn-default jg" name="${files.pubId}">
+										<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
+										 ${files.pubFilename} 다운로드
+									</button>
+								
+								</a>
+								<br>
+							</c:forEach>
+						</div>
+					</td>
+		        
+		        </tr>
+		    </table>
+		   
 				<div class="card-footer clearfix">
 					<c:if test="${suggestVo.memId == SMEMBER.memId}">
-						<input type="button" value="삭제하기" id="delSuggest"
+						<input type="button" value="삭제하기" id="delSuggest"							
+							class="btn btn-default float-right jg">
 							
-							class="btn btn-default float-right">
 						<input type="button" value="수정하기" id="modSuggest"
-							class="btn btn-default float-right" style="margin-right: 5px;">
+							class="btn btn-default float-right jg" style="margin-right: 5px;">
 					</c:if>
 						<input type="button" value="목록으로" id="back"
-							class="btn btn-default float-left">
+							class="btn btn-default float-left jg">
 				</div>
 
 
@@ -439,7 +481,6 @@ label{
 									
 								<textarea style="width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
 								
-<!-- 								</div> -->
 								[ ${replylist.regDt} ] 	
 									
 								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">		
@@ -475,52 +516,56 @@ label{
 				</form>
 
 			</div>
-			<!-- 이슈 상세보기 끝-->
+			<!-- 건의사항 상세보기 끝-->
 
-			<!-- 일감 상세보기 -->
-			<div id="todoDetail" class="card-body">
-
-				<h3>일감 상세보기</h3>
-				<br> <input type="hidden" id="todoId">
-				<div class="form-group">
-					<label for="todoTitle" class="col-sm-2 control-label">제목</label> <label
-						class="control-label" id="todoTitle"></label>
-				</div>
-
-				<div class="form-group">
-					<label for="todoCont" class="col-sm-2 control-label">할일</label> <label
-						class="control-label" id="todoCont"></label>
-				</div>
-				<div class="form-group">
-					<label for="memId" class="col-sm-2 control-label">담당자</label> <label
-						class="control-label" id="memId"></label>
-				</div>
-
-				<div class="form-group">
-					<label for="todoImportance" class="col-sm-2 control-label">우선순위</label>
-
-					<label class="control-label" id="todoImportance"></label>
-				</div>
-
-				<div class="form-group">
-					<label for="todoStart" class="col-sm-2 control-label">시작 일</label>
-					<label class="control-label" id="todoStart"></label>
-				</div>
-
-				<div class="form-group">
-					<label for="todoEnd" class="col-sm-2 control-label">종료 일</label> <label
-						class="control-label" id="todoEnd"></label>
-				</div>
-
-
-				<div class="card-footer clearfix">
-					<button type="button" class="btn btn-default" id="todoback">뒤로가기</button>
-				</div>
-				
+		<!-- 일감 상세보기 -->
+	    <div id="todoDetaildiv" class="card-body">
+	    	
+	    	<br>
+	    	<h4 class="jg">일감 상세보기</h4><br>
+			<input type="hidden" id="todoId">
+			
+			<table class="table" >
+		        <tr class="stylediff">
+		            <th class="success jg">제목</th>
+		         	<td colspan="3">		
+		         		<label class="control-label" id="todoTitle"></label>	  
+		         	</td>						        
+		        </tr> 
+		        <tr class="stylediff">
+		            <th class="success jg">담당자</th>
+		            <td>
+		            	<label class="control-label" id="todoMemId"></label>
+		            </td>
+		          	
+		       
+		            <th class="success jg">우선순위</th>		            
+		            <td >
+		            	<label class="control-label " id="todoImportance"></label>
+		            </td>
+		        </tr>
+		         
+		         <tr class="stylediff">
+		            <th class="success jg">기간</th>
+		            <td colspan="3">
+		            	<label class="control-label" id="todoStart"></label> 
+		            	<label class="control-label"> ~ </label><label class="control-label" id="todoEnd"></label>
+		            </td>
+		        </tr>
+         
+		        <tr>
+		            <th class="success jg" style="height: 300px;">할일</th>
+		            <td colspan="3">
+			           <label class="control-label " id="todoCont"></label>
+		            </td>
+		        </tr>
+		    </table>  
+		    <div class="card-footer clearfix" >
+				<button type="button" class="btn btn-default float-left jg" id="todoback">뒤로가기</button>					
 			</div>
-		</div>
 			
 		<!-- 일감 상세보기   끝-->
+	</div>
 	</div>
 </div>
 

@@ -75,6 +75,13 @@ public class SuggestController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
+		if(suggestVo.getSearchKeyword() != null) {			
+			session.setAttribute("searchKeyword", suggestVo.getSearchKeyword());
+			session.setAttribute("searchCondition",suggestVo.getSearchCondition());
+			session.setAttribute("pageIndex", suggestVo.getPageIndex());
+		}
+		
+		
 		return "tiles/suggest/suggestList";
 	}
 	

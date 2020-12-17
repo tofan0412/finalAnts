@@ -217,7 +217,7 @@ function insertvoteItem(voteitems){
 			 
 // 		    alert('투표아이템 테이블 등록');
 		   
-			$(location).attr('href', '${pageCContext.request.contextPath}/voCte/votelist');
+			$(location).attr('href', '${pageCContext.request.contextPath}/vote/votelist');
 		 }
 	})
 }
@@ -291,8 +291,12 @@ function itemdetail(voteid){
 <!-- 		        </div> -->
 <!-- 		        </div> -->
 		        
-		        <div class="card-header  ">
 		        <br>
+		        <div class="card-header  ">
+		        <div id="keyword" class="card-tools float-left"
+						style="width: 450px;">
+						<h3 class="jg" style="padding-left: 10px;">투표 리스트</h3>
+				</div>
 				<div id="keyword" class="card-tools float-right" style="width: 450px;">
 					<div class="input-group row">
 						<label for="searchCondition" style="visibility:hidden;"></label>
@@ -385,9 +389,9 @@ function itemdetail(voteid){
                     
 	                 </ul>
         		  </div>
-        		  <br>
+        		  
         		  <div class="card-footer clearfix">
-	                <button id="insertvote" type="button" class="btn btn-default float-right jg"><i class="fas fa-plus"></i>등 록</button>
+	                <button id="insertvote" type="button" class="btn btn-default float-left jg"><i class="fas fa-plus"></i>등 록</button>
 	              </div>
         		 
         		  

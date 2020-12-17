@@ -23,6 +23,18 @@
 			window.history.back();
 		})
 		
+		// 이슈작성 버튼
+		$('#issuebtn').on('click', function(){
+			title = $('#todoTitle').html();
+			id = $('#todoId').val();
+			
+			$('#todoid').val(id)
+			$('#todotitle').val(title)		
+			
+			$('#issuefrm').submit();	
+			
+		})
+		
 	})
 	function todoDetail(todoId) {
 		$.ajax({
@@ -89,6 +101,12 @@
 </head>
 
 <%@include file="../layout/contentmenu.jsp"%>
+
+<form id="issuefrm" method="post" action="${pageContext.request.contextPath}/projectMember/insertmytodoissueView">
+	 <input type="hidden" id="todoid" name="todoId" value="">
+	 <input type="hidden" id="todotitle"name=todoTitle value="">
+</form>	
+
 <br>
 	<div class="col-md-12 ns">
 		<div class="card card-primary card-outline" id="cardTodo">
@@ -129,8 +147,8 @@
         </tr>
         </table>
         <br>
-	              	<div id="btnMenu">
-					 <button type="button" class="btn btn-default jg" id="">이슈 작성</button>
+	            <div id="btnMenu">
+					 <button type="button" class="btn btn-default jg" id="issuebtn">이슈 작성</button>
 					 <button type="button" class="btn btn-default jg" id="">건의 작성</button>
 					 <div class="float-right">
 					 <button type="button" class="btn btn-default jg" data-toggle="modal" data-target="#myModal">진행도 수정</button>	

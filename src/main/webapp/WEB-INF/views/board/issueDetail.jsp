@@ -14,6 +14,7 @@
 <script type="text/javascript">
 $(function(){
 	
+	// 댓글 높이 자동 맞춤
 	$('.writeCon').each(function () {	
 		  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
 	}).on('input', function () {
@@ -21,13 +22,15 @@ $(function(){
 		  this.style.height = (this.scrollHeight) + 'px';
 	});
 
-	
+	// 일감내역 숨기기
 	$('#todoDetaildiv').hide();
 	
+	// 수정하기 버튼
 	$("#modissue").on('click', function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/updateissueView?issueId=${issuevo.issueId}');
 	})
 	
+	// 삭제하기 버튼
 	$("#delissue").on('click', function(){
         if(confirm("정말 삭제하시겠습니까 ?") == true){
 			$(location).attr('href', '${pageContext.request.contextPath}/projectMember/delissue?issueId=${issuevo.issueId}');
@@ -73,7 +76,7 @@ $(function(){
 	
 	// 일감링크
 	$(document).on('click','#todolink', function(){
-		console.log('일감 링크')
+		 console.log('일감 링크')
 		 todoId = $('#todoId').val()
 		 
 		 $('#todoDetaildiv').show();
@@ -109,15 +112,15 @@ $(function(){
 	$('#re_con').keyup(function (e){
 	    var content = $(this).val();
 	  
-	    console.log(content)
+// 	    console.log(content)
 		
 	    $('#counter').html("('+content.length+' / 최대 300자)");    //글자수 실시간 카운팅	  
-		$('#count').html(content.length);
+		$('span').html(content.length);
 		
 	    if (content.length > 300){
 	        alert("최대 300자까지 입력 가능합니다.");
 	        $(this).val(content.substring(0, 300));
-	        $('#counter').html("(200 / 최대 300자)");
+	        $('span').html("(200 / 최대 300자)");
 	    }
 	});
 	
@@ -135,8 +138,9 @@ function todo(){
 		   success :function(data){	
 				console.log(data.todoVo)	
 			 
-				html = '<label for="todoId" class="col-sm-2 control-label">일감</label>'
-				html += '<label id ="todoId" class="control-label"><a  data-todoid='+data.todoVo.todoId+' id="todolink" href="#">'+data.todoVo.todoTitle+'</a></label>'
+				html = '<th class="success jg">일감</th>';
+				html += '<td colspan="3" id ="todo">';		  
+				html += '<label id ="todoId" class="control-label"><a  data-todoid='+data.todoVo.todoId+' id="todolink" href="#">'+data.todoVo.todoTitle+'</a></label></td>'
 
 				$('#todo').html(html);
 				
@@ -155,37 +159,6 @@ function todo(){
 				
 		 }
 	})
-}
-
-// 일감 상세보기
-function todoDetail(todoId) {
-	$.ajax({
-		url : "/todo/myonetodo",
-		method : "get",
-		data : {
-			todoId : todoId
-		},
-		success : function(data) {
-			console.log(data)
-
-			$("#todoTitle").html(data.todoVo.todoTitle);
-			$("#todoCont").html(data.todoVo.todoCont);
-			$("#memId").html(data.todoVo.memId);
-			if(data.todoVo.todoImportance =='gen'){
-				$("#todoImportance").html('일반');
-			}else if(data.todoVo.todoImportance =='emg'){
-				$("#todoImportance").html('긴급');
-			}
-			
-			$("#todoStart").html(data.todoVo.todoStart);
-			$("#todoEnd").html(data.todoVo.todoEnd);
-			$("#todoId").val(data.todoVo.todoId);
-			
-		
-		}
-
-	});
-
 }
 
 
@@ -286,6 +259,15 @@ function resize(obj) {
 	#filelabel{
 		float: left;
 	}
+	
+	.form-control:disabled, .form-control[readonly] {
+   background-color: white;
+   }
+  .success{
+  background-color: #f6f6f6;
+  width: 10%;
+  text-align: center;
+  }
 </style>
 
 </head>
@@ -321,71 +303,149 @@ function resize(obj) {
 			<!-- 북마크, 내가작성한 이슈일 경우 프로젝트명을 찍어주기위함 -->
 			
 			
-			<h3 class="jg">협업이슈 상세내역</h3>
 			<br>
-			<div class="form-group">
-				<label for="issueKind" class="col-sm-2 control-label jg">종류</label>
-				<label id ="issueKind" class="control-label jg"></label> 							
-			</div>
-			
-			<div class="form-group jg" id ="todo">
-				
-			</div>
-			
-
-			<div class="form-group">
-				<label for="memid" class="col-sm-2 control-label jg">작성자</label>
-				<label id ="memid" class="control-label jg">${issuevo.memName }</label> 
-			</div>
-
-			<div class="form-group">
-				<label for="regDt" class="col-sm-2 control-label jg">작성일</label>
-				<label id ="regDt" class="control-label jg">${issuevo.regDt }</label> 
-			</div>
+			<h4 class="jg">협업이슈 상세내역</h4>
+			<br>
+			<table class="table" >
+		        <tr class="stylediff">
+		            <th class="success jg">이슈제목</th>
+		         	<td colspan="3">			  
+		         		<label class="control-label" id="issueTitle">${issuevo.issueTitle}</label>
+		         	</td>
+		        </tr>
 	
-			<div class="form-group">
-				<label for="issueTitle" class="col-sm-2 control-label jg">이슈제목</label>
-				<label id ="issueTitle" class="control-label jg">${issuevo.issueTitle}</label>
-			</div>
-
-			<div class="form-group">
-				<label id="issuecont" for="issueCont" class="col-sm-2 control-label jg">이슈 내용</label>
-			
-				<c:if test="${issuevo.issueCont == '<p><br></p>'}">
-					<label class="jg">[ 내용이 없습니다. ] </label>
-				</c:if>
-				<c:if test="${issuevo.issueCont == null}">
-					<label class="jg">[ 내용이 없습니다. ] </label>
-				</c:if>
 				
-				<label id ="issueCont" class="control-label jg">${issuevo.issueCont }</label>
-			</div>	
+			
+		        <tr class="stylediff" id ="todo" >
+		           
+		        </tr>
+		     
+		        
+		         
+		        <tr class="stylediff">
+		            <th class="success jg">작성자</th>
+		            <td style="padding-left: 20px; width: 700px;">
+		            	<label class="control-label" id="memid">${issuevo.memName }</label>
+		            </td>
+		          	
+		       
+		            <th class="success jg">작성일</th>		            
+		            <td style="padding-left: 20px; width: 700px;">
+		            	<label class="control-label" id="regDt">${issuevo.regDt }</label>
+		            </td>
+		        </tr>
+		         
+		        <tr class="stylediff">
+		            <th class="success jg">종류</th>
+		            <td colspan="3">
+		            	<label id ="issueKind" class="control-label"></label> 		
+		            </td>
+		           
+		        </tr>
+         
+		        <tr>
+		            <th class="success jg" style="height: 300px;">이슈 내용</th>
+		            <td colspan="3">
+			           	<c:if test="${issuevo.issueCont == '<p><br></p>'}">
+							<label >[ 내용이 없습니다. ] </label>
+						</c:if>
+						<c:if test="${issuevo.issueCont == null}">
+							<label >[ 내용이 없습니다. ] </label>
+						</c:if>
+				
+						<label id ="issueCont" class="control-label">${issuevo.issueCont }</label>
+		            </td>
+		        </tr>
+		        <tr>
+		            <th class="success jg" style="height: 150px;">첨부파일</th>
+		            <td colspan="3">
+			            <div id = "filediv">
+							<c:if test="${filelist.size() == 0}">
+								<label class="jg">	[ 첨부파일이 없습니다. ] </label>
+							
+							</c:if>
+							
+							<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
+																	 					
+								<a href="${cp }/file/publicfileDown?pubId=${files.pubId}">
+									<button id ="files${vs.index}" class="btn btn-default jg" name="${files.pubId}">
+										<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
+										 ${files.pubFilename} 다운로드
+									</button>
+								
+								</a>
+								<br>
+							</c:forEach>
+						</div>
+					</td>
+		        </tr>
+	        </table>
+	        
+	        
+	        
+	        
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="issueKind" class="col-sm-2 control-label jg">종류</label> -->
+<!-- 				<label id ="issueKind" class="control-label jg"></label> 							 -->
+<!-- 			</div> -->
+			
+<!-- 			<div class="form-group jg" id ="todo"> -->
+				
+<!-- 			</div> -->
 			
 
-			<div class="form-group">
-				<label id="filelabel" for="File" class="col-sm-2 control-label jg">첨부파일</label>
-				<div id = "filediv">
-					<c:if test="${filelist.size() == 0}">
-						<label class="jg">	[ 첨부파일이 없습니다. ] </label>
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="memid" class="col-sm-2 control-label jg">작성자</label> -->
+<%-- 				<label id ="memid" class="control-label jg">${issuevo.memName }</label>  --%>
+<!-- 			</div> -->
+
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="regDt" class="col-sm-2 control-label jg">작성일</label> -->
+<%-- 				<label id ="regDt" class="control-label jg">${issuevo.regDt }</label>  --%>
+<!-- 			</div> -->
+	
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="issueTitle" class="col-sm-2 control-label jg">이슈제목</label> -->
+<%-- 				<label id ="issueTitle" class="control-label jg">${issuevo.issueTitle}</label> --%>
+<!-- 			</div> -->
+
+<!-- 			<div class="form-group"> -->
+<!-- 				<label id="issuecont" for="issueCont" class="col-sm-2 control-label jg">이슈 내용</label> -->
+			
+<%-- 				<c:if test="${issuevo.issueCont == '<p><br></p>'}"> --%>
+<!-- 					<label class="jg">[ 내용이 없습니다. ] </label> -->
+<%-- 				</c:if> --%>
+<%-- 				<c:if test="${issuevo.issueCont == null}"> --%>
+<!-- 					<label class="jg">[ 내용이 없습니다. ] </label> -->
+<%-- 				</c:if> --%>
+				
+<%-- 				<label id ="issueCont" class="control-label jg">${issuevo.issueCont }</label> --%>
+<!-- 			</div>	 -->
+			
+
+<!-- 			<div class="form-group"> -->
+<!-- 				<label id="filelabel" for="File" class="col-sm-2 control-label jg">첨부파일</label> -->
+<!-- 				<div id = "filediv"> -->
+<%-- 					<c:if test="${filelist.size() == 0}"> --%>
+<!-- 						<label class="jg">	[ 첨부파일이 없습니다. ] </label> -->
 					
-					</c:if>
+<%-- 					</c:if> --%>
 					
-					<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
+<%-- 					<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" > --%>
 															 					
-						<a href="${cp }/file/publicfileDown?pubId=${files.pubId}">
-							<button id ="files${vs.index}" class="btn btn-default jg" name="${files.pubId}">
-								<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
-								 ${files.pubFilename} 다운로드
-							</button>
+<%-- 						<a href="${cp }/file/publicfileDown?pubId=${files.pubId}"> --%>
+<%-- 							<button id ="files${vs.index}" class="btn btn-default jg" name="${files.pubId}"> --%>
+<%-- 								<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;"> --%>
+<%-- 								 ${files.pubFilename} 다운로드 --%>
+<!-- 							</button> -->
 						
-						</a>
-						<br>
-					</c:forEach>
-				</div>
-			</div>
+<!-- 						</a> -->
+<!-- 						<br> -->
+<%-- 					</c:forEach> --%>
+<!-- 				</div> -->
+<!-- 			</div> -->
 			
-			
-			<br>	
+				
 			<div class="card-footer clearfix" >
 				
 		 			<c:if test="${issuevo.memId == memId}">
@@ -404,13 +464,12 @@ function resize(obj) {
 					<div class="col-sm-12" id="replydiv">	
 								
 						<c:forEach items="${replylist }" var="replylist">
-							<div id="replydiv" style="padding-left: 40px;">			
+							<div id="replydiv" style="padding-left: 50px;">			
 							<c:if test= "${replylist.del == 'N'}">
 								<label class="jg">${replylist.memId }</label>
 									
 								<textarea style="width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
 								
-<!-- 								</div> -->
 								[ ${replylist.regDt} ] 	
 									
 								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">		
@@ -429,7 +488,7 @@ function resize(obj) {
 							<hr>	
 						</c:forEach>
 						<br>
-						<div id="replyinsertdiv" style="padding-left: 30px;">		
+						<div id="replyinsertdiv" style="padding-left: 50px;">		
 							 <input type="hidden" name="someId" value="${issuevo.issueId }">
 							 <input type="hidden" name="categoryId" value="${issuevo.categoryId}">
 							 <input type="hidden" name="reqId" value="${issuevo.reqId }">
@@ -451,41 +510,102 @@ function resize(obj) {
 	
 	    <!-- 일감 상세보기 -->
 	    <div id="todoDetaildiv" class="card-body">
-	    
-	    	<h3 class="jg">일감 상세보기</h3><br>
-		
+	    	
+	    	<br>
+	    	<h4 class="jg">일감 상세보기</h4><br>
 			<input type="hidden" id="todoId">
-			<div class="form-group">
-				<label for="todoTitle" class="col-sm-2 control-label jg">제목</label>
-				<label class="control-label jg" id="todoTitle"></label>
-			</div>
 			
-			<div class="form-group">
-				<label for="todoCont" class="col-sm-2 control-label jg">할일</label>
-				<label class="control-label jg" id="todoCont"></label>
-			</div>
-			<div class="form-group">
-				<label for="memId" class="col-sm-2 control-label jg">담당자</label>
-				<label class="control-label jg" id="memId"></label>
-			</div>
+			<table class="table" >
+		        <tr class="stylediff">
+		            <th class="success jg">제목</th>
+		         	<td colspan="3">		
+		         		<label class="control-label " id="todoTitle"></label>	  
+		         	</td>						        
+		        </tr> 
+		        <tr class="stylediff">
+		            <th class="success jg">담당자</th>
+		            <td>
+		            	<label class="control-label " id="memId"></label>
+		            </td>
+		          	
+		       
+		            <th class="success jg">우선순위</th>		            
+		            <td >
+		            	<label class="control-label " id="todoImportance"></label>
+		            </td>
+		        </tr>
+		         
+		         <tr class="stylediff">
+		            <th class="success jg">기간</th>
+		            <td colspan="3">
+		            	<label class="control-label" id="todoStart"></label> 
+		            	<label class="control-label"> ~ </label><label class="control-label" id="todoEnd"></label>
+		            </td>
+		        </tr>
+         
+		        <tr>
+		            <th class="success jg" style="height: 300px;">할일</th>
+		            <td colspan="3">
+			           <label class="control-label " id="todoCont"></label>
+		            </td>
+		        </tr>
+<!-- 		        <tr> -->
+<!-- 		            <th class="success jg" style="height: 150px;">첨부파일</th> -->
+<!-- 		            <td colspan="3"> -->
+<!-- 			            <div id = "filediv"> -->
+<%-- 							<c:if test="${filelist.size() == 0}"> --%>
+<!-- 								<label class="jg">	[ 첨부파일이 없습니다. ] </label> -->
+							
+<%-- 							</c:if> --%>
+							
+<%-- 							<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" > --%>
+																	 					
+<%-- 								<a href="${cp }/file/publicfileDown?pubId=${files.pubId}"> --%>
+<%-- 									<button id ="files${vs.index}" class="btn btn-default jg" name="${files.pubId}"> --%>
+<%-- 										<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;"> --%>
+<%-- 										 ${files.pubFilename} 다운로드 --%>
+<!-- 									</button> -->
+								
+<!-- 								</a> -->
+<!-- 								<br> -->
+<%-- 							</c:forEach> --%>
+<!-- 						</div> -->
+<!-- 					</td> -->
+<!-- 		        </tr> -->
+			 </table>
 			
-			<div class="form-group">
-				<label for="todoImportance" class="col-sm-2 control-label jg">우선순위</label>				
-				<label class="control-label jg" id="todoImportance"></label>
-			</div>
 			
-			<div class="form-group">
-				<label for="todoStart" class="col-sm-2 control-label jg">시작 일</label>
-				<label class="control-label jg" id="todoStart"></label>
-			</div>
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="todoTitle" class="col-sm-2 control-label jg">제목</label> -->
+<!-- 				<label class="control-label jg" id="todoTitle"></label> -->
+<!-- 			</div> -->
 			
-			<div class="form-group">
-				<label for="todoEnd" class="col-sm-2 control-label jg">종료 일</label>
-				<label class="control-label jg" id="todoEnd"></label>
-			</div>
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="todoCont" class="col-sm-2 control-label jg">할일</label> -->
+<!-- 				<label class="control-label jg" id="todoCont"></label> -->
+<!-- 			</div> -->
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="memId" class="col-sm-2 control-label jg">담당자</label> -->
+<!-- 				<label class="control-label jg" id="memId"></label> -->
+<!-- 			</div> -->
+			
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="todoImportance" class="col-sm-2 control-label jg">우선순위</label>				 -->
+<!-- 				<label class="control-label jg" id="todoImportance"></label> -->
+<!-- 			</div> -->
+			
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="todoStart" class="col-sm-2 control-label jg">시작 일</label> -->
+<!-- 				<label class="control-label jg" id="todoStart"></label> -->
+<!-- 			</div> -->
+			
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="todoEnd" class="col-sm-2 control-label jg">종료 일</label> -->
+<!-- 				<label class="control-label jg" id="todoEnd"></label> -->
+<!-- 			</div> -->
 			
 			<div class="card-footer clearfix" >
-				<button type="button" class="btn btn-default jg" id="todoback">뒤로가기</button>					
+				<button type="button" class="btn btn-default float-left jg" id="todoback">뒤로가기</button>					
 			</div>
 		
 		</div>

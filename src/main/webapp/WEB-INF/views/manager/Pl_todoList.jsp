@@ -20,12 +20,12 @@
 			});
 		
 		$("#pagenum a").addClass("page-link");  
-		});
+		
 	
 		$("#todoinsert").on('click', function(){
 			$(location).attr('href', '${pageContext.request.contextPath}/todo/todoInsertView');
 		})
-	
+	});
 	function fn_egov_link_page(pageNo){
 		document.listForm.pageIndex.value = pageNo;
 		document.listForm.action = "<c:url value='/todo/todoList'/>";
