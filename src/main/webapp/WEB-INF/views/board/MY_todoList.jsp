@@ -15,6 +15,15 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
+$(document).ready(function(){
+	$("#todoList tr").on("click",function(){
+		var todoId = $(this).data("todoid");
+ 		$(location).attr('href', '${pageContext.request.contextPath}/todo/myonetodoView?todoId='+todoId);
+		});
+	
+	$("#pagenum a").addClass("page-link");  
+	});
+
 	
 	// 페이징처리
 	function fn_egov_link_page(pageNo){
@@ -23,18 +32,6 @@
 	   	document.listForm.submit();
 	}
 	
-	// 상세 보기
-	function todoDetail(todoId){
-	   	document.location = "/todo/myonetodoView?todoId="+todoId;
-	}
-	
-	// 이슈 작성
-	function todoInsert(todoId){
-	}
-	
-	// 건의사항 작성
-	function suggestInsert(todoId){
-	}
 	
 	 function search(){
 		document.listForm.action = "<c:url value='/todo/MytodoList'/>";
@@ -44,15 +41,40 @@
 </script>
 <style type="text/css"> 
 #todoTable{
-	width : 1300px;
+	width : 100%;
     border-top: 1px solid #444444;
     border-collapse: collapse;
+    text-align: center;
   }
   th, td {
     border-bottom: 1px solid #444444;
     padding: 10px;
   }
-  
+  #pagenum a{
+		 display: inline-block;
+		 text-align: center;
+		 width : auto;	 
+		 border: none; 
+	
+	}
+	
+	li strong{
+		display: inline-block;
+		text-align: center;
+		width: 30px;
+	}
+	
+	.pagingui{
+		 display: inline-block;
+		 text-align: center;
+		 width: 30px;
+		 
+	}
+	#paging{
+		 display: inline-block;
+		 width:auto; float:left; margin:0 auto; text-align:center;
+		 
+	}
 
 </style>
 </head>
@@ -60,18 +82,18 @@
 	<%@include file="../layout/contentmenu.jsp"%>
 	
 	<form:form commandName="todoVo" id="listForm" name="listForm" method="post">
-	<div style="padding-left: 30px; background-color: white;">
-		<br>
-		    <div class="card-header with-border">
+	<<div class="col-12 col-sm-12">
+	<div class="card" style="border-radius: inherit; padding : 2px;">
+		    <div class="card-header">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">						
-        				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3" style="width: 100px;">
+        				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3 jg" style="width: 100px;">
 							<form:option value="1" label="담당자"/>
 							<form:option value="2" label="내용"/>
 							<form:option value="3" label="제목"/>
 						</form:select> 
 							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                         <input type="text" class="form-control" name="searchKeyword" value="${todoVo.searchKeyword }">
+	                         <input type="text" class="form-control jg" name="searchKeyword" value="${todoVo.searchKeyword }">
 		                  <a href="javascript:search();">
 		                  	<button type="button" class="btn-default" style="height: 100%;">
                                <i class="fa fa-search"></i>
@@ -80,10 +102,10 @@
 					</div>
 		        </div>
 		      </div>
-		
-		<table id="todoTable">
+		<div class="card-body p-0">
+		<table id="todoTable" class="jg">
 			<tr>
-				<th>No.</th>
+				<th style="padding-left: 10px;">No.</th>
 				<th>상태</th>
 				<th>제목</th>
 				<th>담당자</th>
@@ -91,24 +113,19 @@
 				<th>진행도</th>
 				<th>진행일</th>
 				<th>마감일</th>
-				<th></th>
+				
 			</tr>
 			<tbody id="todoList">
 				<c:forEach items="${todoList }" var="todo" varStatus="sts" >
-				    <tr>
+				  	 <tr data-todoid="${todo.todoId}">
 					<td><c:out value="${paginationInfo.totalRecordCount - ((todoVo.pageIndex-1) * todoVo.pageUnit + sts.index)}"/>. 
 					<input type="hidden" id="${todo.reqId }" name="${todo.reqId }">
 					</td>			
 					<td>
-					<c:if test="${todo.todoImportance eq 'gen'}"><span class="badge badge-success">일반</span></c:if>
-					<c:if test="${todo.todoImportance eq 'emg'}"><span class="badge badge-danger">긴급</span></c:if>
+					<c:if test="${todo.todoImportance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
+					<c:if test="${todo.todoImportance eq 'emg'}"><span class="badge badge-danger ns">긴급</span></c:if>
 					</td>
-					<c:if test="${todo.todoLevel ne '1'}">
-					<td style="padding-left: 20px;">➜${todo.todoTitle}</td>
-					</c:if>
-					<c:if test="${todo.todoLevel eq '1'}">
 					<td>${todo.todoTitle}</td>
-					</c:if>
 					<td>${todo.memId}</td>
 					<c:if test= "${todo.todoPercent eq '0'}">
 						<td>
@@ -117,7 +134,7 @@
 	                          <div class="progress-bar bg-danger" style="width: <c:out value="${NUM+1}" />%"></div>
 	                        </div>
 	                    </td>
-	                    <td><span class="badge bg-danger">${todo.todoPercent}%</span></td>   
+	                    <td>${todo.todoPercent}%</td>   
                     </c:if>   
 					<c:if test= "${todo.todoPercent+0 >=30+0 and todo.todoPercent+0 <=59+0}">
                         <td>
@@ -126,7 +143,7 @@
 	                          <div class="progress-bar bg-primary" style="width: <c:out value="${NUM}" />%"></div>
 	                        </div>
 	                    </td>    
-	                    <td><span class="badge bg-primary">${todo.todoPercent}%</span></td>
+	                    <td>${todo.todoPercent}%</td>
                      </c:if>   
 					<c:if test= "${todo.todoPercent+0 >=60+0 and todo.todoPercent+0 <=99+0}">
                         <td>
@@ -135,7 +152,7 @@
 	                          <div class="progress-bar bg-warning" style="width: <c:out value="${NUM}" />%"></div>
 	                        </div>
 	                     </td>   
-	                     <td><span class="badge bg-warning">${todo.todoPercent}%</span></td>
+	                     <td>${todo.todoPercent}%</td>
                     </c:if>   
 					<c:if test= "${todo.todoPercent eq '100'}">
                     	<td>
@@ -144,32 +161,29 @@
 	                          <div class="progress-bar bg-success" style="width: <c:out value="${NUM}" />%"></div>
 	                        </div>
 	                     </td>
-	                     <td><span class="badge bg-success">${todo.todoPercent}%</span></td>   
+	                     <td>${todo.todoPercent}%</td>   
                      </c:if>   
 					<td>${todo.todoStart}일</td>
 					<td>${todo.todoEnd}</td>
-					<td class="project-actions text-right" style="opacity: .9;">
-				        <a class="btn btn-primary btn-sm" href="javascript:todoDetail(${todo.todoId });">
-				        	<i class="fas fa-folder"></i>상세보기</a>
-						<a class="btn btn-info btn-sm" href="javascript:todoInsert(${todo.todoId });">
-				        	<i class="fas fa-pencil-alt"></i>이슈 작성</a>
-						<a class="btn btn-danger btn-sm" href="javascript:suggestInsert(${todo.todoId });">
-				        	<i class="fas fa-pencil-alt"></i>건의사항 작성</a>
-			        </td>
+					
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		
-		<div id="paging" class="card-tools">
-		    <ul class="pagination pagination-sm float-right">
-		   		<li class="page-item"><a class="page-link" href="#">«</a></li>
-				<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page"  />
-				<form:hidden path="pageIndex" />
-			    <li class="page-item"><a class="page-link" href="#">»</a></li>
-		    </ul>
-        </div>
-	</div>
-		</form:form>		
+		</div>
+		   <br>
+	              <div id="paging" class="card-tools">
+	              	<ul class="pagination pagination-sm jg" id ="pagingui">
+		        		<li  class="page-item jg" id ="pagenum" >	
+		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
+		        		<form:hidden path="pageIndex" />		        		
+                    
+	                 </ul>
+        		  </div>
+        		  <br>
+	          
+           </div>
+       </div>
+</form:form>		
 </body>
 </html>

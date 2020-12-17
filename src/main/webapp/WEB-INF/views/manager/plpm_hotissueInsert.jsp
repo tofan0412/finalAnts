@@ -167,7 +167,6 @@
 
 	
 </script>
-<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 <style type="text/css">
 #fileBtn{
 		 display: inline-block;
