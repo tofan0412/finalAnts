@@ -154,8 +154,9 @@ public class AdminController {
 		int totCnt = adminService.noticePagingListCnt(noticeVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-		
+				
 		return "admin.tiles/notice/noticelist2";
+		
 	}
 	
 	// 각 공지사항 상세보기
