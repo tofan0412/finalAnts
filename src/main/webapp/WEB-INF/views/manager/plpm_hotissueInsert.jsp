@@ -27,7 +27,20 @@
 	
 <script type="text/javascript">
 	$(document).ready(function(){
-	 	$('#summernote').summernote();
+		 $('#summernote').summernote({
+		        placeholder: 'Hello stand alone ui',
+		        tabsize: 2,
+		        height: 300,
+		        toolbar: [
+		          ['style', ['style']],
+		          ['font', ['bold', 'underline', 'clear']],
+		          ['color', ['color']],
+		          ['para', ['ul', 'ol', 'paragraph']],
+		          ['table', ['table']],
+		          ['insert', ['link', 'picture', 'video']],
+		          ['view', ['fullscreen', 'codeview', 'help']]
+		        ]	      
+		 })
 	 	
 	 	//파일
  		fileSlotCnt = 1;
@@ -154,6 +167,7 @@
 
 	
 </script>
+<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 <style type="text/css">
 #fileBtn{
 		 display: inline-block;
@@ -185,38 +199,33 @@
 
 		<%@include file="../layout/contentmenu.jsp"%>
 			
-		<div style="padding-left: 30px; padding-right: 30px;">
-		<form method="post" action="${pageContext.request.contextPath }/hotIssue/hissueInsert" id="hissueform"  >    
+		<div class="col-md-12 ns">
 			<div class="card card-primary card-outline">
               <div class="card-header">
-                <h3 class="card-title"><c:out value="${projectVo.proName}"/></h3>
+                <h3 class="card-title jg"><c:out value="${projectVo.proName}"/></h3>
               </div>
               <div class="card-body">
                 <div class="form-group">
+				<form method="post" action="${pageContext.request.contextPath }/hotIssue/hissueInsert" id="hissueform" >    
                 <input type="hidden" name="hissueId" value="${hissueSeq }">
-                  <input class="form-control" placeholder="Subject:" name="hissueTitle" id="hissueTitle">
+                  <input class="form-control" placeholder="Subject:" name="hissueTitle" id="hissueTitle"><br>
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
                   <input type="hidden" name="hissueParentid" value="${hissueParentid}">
-                </div>
-                <div class="form-group">
                 <textarea id="summernote" name="hissuetCont"></textarea>
-                </div>
-         
-              
-        </form>
+       			 </form>
+              	</div>
              
-		<form>
-		    <label for="file" class="col-sm-2 control-label">첨부파일</label>
-			<div id="queue"></div>
-			<input id="file_upload" name="file" type="file" multiple="true"/>
-						<br><br>
-		        <div class="card-footer">
-		        	<div class="float-center">
-		        	
-				        <button type="button" class="btn btn-default" id="regBtn">등록</button>
-				        <button type="button" class="btn btn-default" id="back">뒤로가기</button>
-		        	</div>
-		        </div>
-			</form>
-</div>
+				 <form style="padding-left: 2%;">
+				    <label  for="file" class="col-sm-2 control-label ns">첨부파일</label>
+					<div id="queue"></div>
+					<input id="file_upload" name="file" type="file" multiple="true"/>
+								<br><br>
+				        	<div class="float-right">
+						        <button type="button" class="btn btn-default jg" id="regBtn">등록</button>
+						        <button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
+				        	</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </html>

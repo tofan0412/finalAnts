@@ -28,7 +28,20 @@
 	 	$(document).ready(function(){
 	 		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
 	 		
-	 		$('#summernote').summernote();
+	 		 $('#summernote').summernote({
+			        placeholder: 'Hello stand alone ui',
+			        tabsize: 2,
+			        height: 300,
+			        toolbar: [
+			          ['style', ['style']],
+			          ['font', ['bold', 'underline', 'clear']],
+			          ['color', ['color']],
+			          ['para', ['ul', 'ol', 'paragraph']],
+			          ['table', ['table']],
+			          ['insert', ['link', 'picture', 'video']],
+			          ['view', ['fullscreen', 'codeview', 'help']]
+			        ]	      
+			 })
 	 		
 	 		//파일
 	 		fileSlotCnt = 1;
@@ -164,45 +177,44 @@
 		height: 30px;
 	}
 </style>
+<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 <br>
-<div style="padding-left: 30px; padding-right: 30px;"><h3>일감등록</h3><br>
-				
-    <form method="post" action="${pageContext.request.contextPath }/todo/todoInsert" id="todoform" enctype="multipart/form-data" >
-    <input type="hidden" name="todoId" value="${todoSeq }">
-			
-    	<div class="card card-primary card-outline"> 
-    		<div class="card-header">
-               <h3 class="card-title"><c:out value="${projectVo.proName}"/></h3>
+	<div class="col-md-12 ns">
+		<div class="card card-primary card-outline"> 	
+			<div class="card-header">
+               <h3 class="card-title jg"><c:out value="${projectVo.proName}"/></h3>
             </div>
+	    <form method="post" action="${pageContext.request.contextPath }/todo/todoInsert" id="todoform" enctype="multipart/form-data" >
+	   		<input type="hidden" name="todoId" value="${todoSeq }">
         <div class="card-body">
                 <div class="form-group">
-                  <input class="form-control" placeholder="Subject:" name="todoTitle">
+                  <input class="form-control " placeholder="Subject:" name="todoTitle">
                 </div>
                 <div class="form-group">
                 <textarea id="summernote" name="todoCont" placeholder="할일:"></textarea>
                 </div>
                 <div class="form-group">
-                <label for="mem-select" class="col-sm-1 control-label">담당자</label>
+                <label for="mem-select" class="col-sm-1 _control-label ns">담당자</label>
         			<select name="memId" id="mem-select">
-            			<option value="">담당자를 선택해 주세요</option>
+            			<option class="jg" value="">담당자 선택</option>
             			<c:forEach items="${promemList}" var="mem">
-                		<option value="${mem.memId}">${mem.memName}</option>
+                		<option class="jg" value="${mem.memId}">${mem.memName}</option>
             			</c:forEach>
        				 </select>
                 </div>
                 <div class="form-group">
-                <label for="status-select" class="col-sm-1 control-label">우선순위</label>
+                <label for="status-select" class="col-sm-1 control-label ns">우선순위</label>
         			<select name="todoImportance" id="status-select">
-           			 <option value="gen">보통</option>
-           			 <option value="emg">긴급</option>
+           			 <option class="jg" value="gen">보통</option>
+           			 <option class="jg" value="emg">긴급</option>
         			</select>
                 </div>
                 <div class="form-group">
-                <label for="currentDate" class="col-sm-1 control-label">시작 일</label>
+                <label for="currentDate" class="col-sm-1 control-label ns">시작 일</label>
         			<input type='date' id='currentDate' name="todoStart"/><br><br>
-        			<label for="todoEnd" class="col-sm-1 control-label">종료 일</label>
+        			<label for="todoEnd" class="col-sm-1 control-label ns">종료 일</label>
         			<input type='date' id='todo_end' name="todoEnd"/>
                 </div>
                 <div class="form-group" hidden="hidden">
@@ -216,22 +228,21 @@
                 </div>
         </div>   
     </form>
-    <form>
-    <label for="file" class="col-sm-2 control-label">첨부파일</label>
+    <form style="padding-left: 2%;">
+    <label for="file" class="col-sm-2 control-label ns">첨부파일</label>
 	<div id="queue"></div>
 	<input id="file_upload" name="file" type="file" multiple="true"/>
 				<br><br>
-        <div class="card-footer">
-        	<div class="float-center">
+        	<div class="float-right">
         		<input type="hidden" value="3" name="categoryId">
         	
-		        <button type="button" class="btn btn-default" id="regBtn">등록</button>
+		        <button type="button" class="btn btn-default jg" id="regBtn">등록</button>
 		        <c:if test="${ empty todoVo.todoParentid}">
-		        <button type="button" class="btn btn-default" id="creatChildBtn">등록하고 하위일감 생성하러 가기</button>
+		        <button type="button" class="btn btn-default jg" id="creatChildBtn">등록 후 하위일감 생성</button>
 		        </c:if>
-		        <button type="button" class="btn btn-default" id="back">뒤로가기</button>
+		        <button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
         	</div>
-        </div>
 	</form>
+</div>
 </div>
 </html>

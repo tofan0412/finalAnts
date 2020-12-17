@@ -27,7 +27,19 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-	 	$('#summernote').summernote();
+		$('#summernote').summernote({
+	        tabsize: 2,
+	        height: 300,
+	        toolbar: [
+	          ['style', ['style']],
+	          ['font', ['bold', 'underline', 'clear']],
+	          ['color', ['color']],
+	          ['para', ['ul', 'ol', 'paragraph']],
+	          ['table', ['table']],
+	          ['insert', ['link', 'picture', 'video']],
+	          ['view', ['fullscreen', 'codeview', 'help']]
+	        ]	      
+	 })
 	 	
 	 	//파일
 		fileSlotCnt = "${filelist.size() }";
@@ -181,15 +193,16 @@
 		height: 30px;
 	}
 
-</style> 		
+</style> 	
+<%@include file="/WEB-INF/views/layout/fonts.jsp"%>	
 </head>
 
 		<%@include file="../layout/contentmenu.jsp"%>
 			
-		<div style="padding-left: 30px; padding-right: 30px;">
+		<div class="col-md-12 ns">
 			<div class="card card-primary card-outline">
               <div class="card-header">
-                <h3 class="card-title"><c:out value="${projectVo.proName}"/></h3>
+                <h3 class="card-title jg"><c:out value="${projectVo.proName}"/></h3>
               </div>
               <div class="card-body">
 				<form method="post" action="${pageContext.request.contextPath }/hotIssue/updatehissue" id="hissueform"  >    
@@ -204,10 +217,10 @@
                 </div>
                
                <div class="form-group">
-					<label id ="filelabel" for="files" class="col-sm-2 control-label">첨부파일</label>		
+					<label id ="filelabel" for="files" class="col-sm-2 control-label ns">첨부파일</label>		
 					<div id ="file" class="col-sm-10">
 						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
-							<input type="search" name="${files.hissuefId}" value="${files.hissuefFilename}" disabled >
+							<input class="jg" type="search" name="${files.hissuefId}" value="${files.hissuefFilename}" disabled >
 		   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">
 								<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i> 
 							</button><br>
@@ -217,13 +230,13 @@
 				</div>
         </form>
 		
-	<form>
+ <form style="padding-left: 2%;">
 		<div id="queue"></div>
 			<input id="file_upload" name="file" type="file" multiple="true"/>
 		<br><br>
-		<div class="card-footer clearfix " >		
-			<input type="button" class="btn btn-default float-right" id="updatebtn" value="수정하기">
-			<button type="button" class="btn btn-default" id="back">뒤로가기</button>
+		<div class="float-right" >		
+			<input type="button" class="btn btn-default jg" id="updatebtn" value="수정하기">
+			<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
 		</div>
 	</form>
 		</div>

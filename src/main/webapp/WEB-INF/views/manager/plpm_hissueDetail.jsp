@@ -54,10 +54,10 @@
 			success : function(data) {
 				var res ="";
 			
-				$("#hissueTitle").val(data.hotIssueVo.hissueTitle);
+				$("#hissueTitle").html(data.hotIssueVo.hissueTitle);
 				$("#hissuetCont").html(data.hotIssueVo.hissuetCont);
-				$("#regDt").val(data.hotIssueVo.regDt);
-				$("#writer").val(data.hotIssueVo.writer);
+				$("#regDt").html(data.hotIssueVo.regDt);
+				$("#writer").html(data.hotIssueVo.writer);
 				
 				$("#hissueId").val(data.hotIssueVo.hissueId);
 				$("#hissueParentid").val(data.hotIssueVo.hissueParentid);
@@ -65,12 +65,12 @@
 				
 
 				if(data.filelist.length == 0){
-					res += '<p>[ 첨부파일이 없습니다. ]</p>';
+					res += '<div class="jg" >[ 첨부파일이 없습니다. ]</div>';
 					$("#filediv").html(res);
 				}
 				if(data.filelist.length != 0) {
 					for( i = 0 ; i< data.filelist.length; i++){	
- 						res += '<a href="${pageContext.request.contextPath}/hotissueFile/hotfileDown?hissuefId='+data.filelist[i].hissuefId+'"><input id ="files"  type="button" class="btn btn-default" name="'+ data.filelist[i].hissuefId+'" value="'+data.filelist[i].hissuefFilename+'" ></a>  ';
+ 						res += '<a href="${pageContext.request.contextPath}/hotissueFile/hotfileDown?hissuefId='+data.filelist[i].hissuefId+'"><input id ="files"  type="button" class="btn btn-default jg" name="'+ data.filelist[i].hissuefId+'" value="'+data.filelist[i].hissuefFilename+'" ></a>  ';
 						
  						$("#filediv").html(res);
 					}	
@@ -80,51 +80,56 @@
 	}
 </script>
 <style type="text/css">
-.form-control:disabled, .form-control[readonly] {
-   background-color: white;
-   }
+  .success{
+  background-color: #f6f6f6;
+  width: 10%;
+  text-align: center;
+  }
 </style>
+<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 <br>
-<div style="padding-left: 30px; padding-right: 410px;">
-	<div class="card card-primary">
+<div class="col-md-12 ns">
+	<div class="card card-primary card-outline">
 		<div class="card-header">
-        	<h3 class="card-title">PM-PL 이슈 상세보기</h3>
+        	<h3 class="card-title jg">PM-PL 이슈 상세보기</h3>
         </div>
         <div class="card-body">
 			<input type="hidden" id="hissueId">
 			<input type="hidden" id="hissueParentid">
 			<input type="hidden" id="hissueLevel">
-		 <div class="form-group">
-			<label for="hissueTitle">제목</label>
-			<input type="text" id="hissueTitle" class="form-control" readonly="readonly">
-		</div>
-		 <div class="form-group">
-			<label for="hissuetCont">내용</label>
-			<div id="hissuetCont" class="form-control" style="margin-top: 0px; margin-bottom: 0px; overflow-y :scroll; height: 180px;"></div>
-		</div>
-		 <div class="form-group">
-			<label for="writer">작성자</label>
-			<input type="text" id="writer" class="form-control" readonly="readonly">
-		</div>
-		 <div class="form-group">
-			<label for="regDt">작성일</label>
-			<input type="text" id="regDt" class="form-control" readonly="readonly">
-		</div>
-		<div class="form-group">
-				<label id="filelabel" for="File" class="col-sm-2 control-label">첨부파일 다운로드</label>
-				<div id = "filediv">
-					
-				</div>
+		 <table class="table" >
+		 <tr class="stylediff">
+            <th class="success ">작성자</th>
+            <td style="padding-left: 20px; width: 700px; "><div class="jg" id="writer"></div></td>
+            <th class="success ">작성일</th>
+            <td style="padding-left: 20px;"><div class="jg" id="regDt"></div></td>
+        </tr>
+        <tr class="stylediff">
+            <th class="success ">제목</th>
+         	<td colspan="3" style="padding-left: 20px;"><div class="jg" id="hissueTitle"></div></td>
+        </tr>
+		<tr>
+            <th class="success">내용</th>
+            <td colspan="3" style="padding-left: 20px;"><div class="jg" id="hissuetCont"></div></td>
+        </tr>
+        <tr>
+            <th class="success">첨부파일</th>
+            <td colspan="3" style="padding-left: 20px;"><div id = "filediv"></div>
+			</td>
+        </tr>
+        </table>
+		<br>
+		<div id="btnMenu">
+		<button type="button" class="btn btn-default jg" id="updateBtn">수정</button>
+		<button type="button" class="btn btn-default jg" id="deleteBtn">삭제</button>
+		<div class="float-right">
+		<button type="button" class="btn btn-default jg" id="creatChildBtn">답글 작성</button>
+		<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
+		</div>	
 		</div>
 	</div>
-		<div id="btnMenu">
-		<button type="button" class="btn btn-default" id="updateBtn">수정</button>
-		<button type="button" class="btn btn-default" id="deleteBtn">삭제</button>
-		<button type="button" class="btn btn-default" id="creatChildBtn">답글 작성</button>
-		<button type="button" class="btn btn-default" id="back">뒤로가기</button>	
-		</div>
 </div>
 </div>
 
