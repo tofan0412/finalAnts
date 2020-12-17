@@ -59,7 +59,7 @@
 				<a href="/schedule/scheduleDelete?scheId=${scheduleVo.scheId}"><input type="button" class="btn btn-primary" value="삭제"></a><br>
 			</div>
 				제목 <input id="scheId" name="scheId" value="${scheduleVo.scheTitle}" style="border:none;" readonly> <br>
-				아이디 <input id="memId" name="memId" type="text" value="${scheduleVo.memId }" style="border:none;" readonly> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				아이디 <input id="memId" name="memId" type="text" value="${scheduleVo.memName }" style="border:none;" readonly> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 				등록일<input id="regDt" name="regDt" type="text" value="${scheduleVo.regDt }" style="border:none;" readonly> <br>
 			<h3 class="card-title" style="display:none;">
 				<c:out value="${projectVo.proName}" />

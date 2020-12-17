@@ -11,7 +11,7 @@
 	#pagenum a{
 		 display: inline-block;
 		 text-align: center;
-		 width : auto;	 
+		 padding : 6px; 
 		 border: none; 
 		background: transparent;
 	}
@@ -19,7 +19,7 @@
 	li strong{
 		display: inline-block;
 		text-align: center;
-		width: 30px;
+		 padding : 6px; 
 	}
 	
 	.pagingui{
@@ -45,7 +45,6 @@
 <script type="text/javascript">
 $(function(){
 
-	$("#pagenum a").addClass("page-link");  
 	
 	
 	$('#insertvote').on('click', function(){
@@ -273,24 +272,7 @@ function itemdetail(voteid){
 	
 			<section class="content" >
 		      <div class="col-12 col-sm-12">
-			      <div class="card" style="border-radius: inherit; padding : 2px;">
-			      
-<!-- 			    <div class="container-fluid"> -->
-<!-- 		        <div class="row mb-2"> -->
-<!-- 		         <br> -->
-<!-- 		          <div class="col-sm-6"> -->
-<!-- 		          <br> -->
-<!-- 		            <h2 class="jg" style=" padding-left : 10px;">투표</h2> -->
-<!-- 		          </div> -->
-<!-- 		          <div class="col-sm-6"> -->
-<!-- 		            <ol class="breadcrumb float-sm-right"  style="background : white"> -->
-<!-- 		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li> -->
-<!-- 		              <li class="breadcrumb-item active jg">투표</li> -->
-<!-- 		            </ol> -->
-<!-- 		          </div> -->
-<!-- 		        </div> -->
-<!-- 		        </div> -->
-		        
+			    <div class="card" style="border-radius: inherit; padding : 2px;">
 		        <br>
 		        <div class="card-header  ">
 		        <div id="keyword" class="card-tools float-left"

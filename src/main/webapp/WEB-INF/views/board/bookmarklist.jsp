@@ -101,7 +101,7 @@
 		        <div class="row mb-1">
 		          <div class="col-sm-6">
 		          <br>
-		            <h3 class="jg" style=" padding-left : 10px;"><img src="/resources/dist/img/bookmark-black.png" width="30" height="30" name ="${bookmark.issueId}"/>&nbsp;북마크</h3>
+		            <h3 class="jg" style=" padding-left : 10px;"><li class="nav-icon fas fa-bookmark"></li>&nbsp;북마크</h3>
 		          </div>
 		          <div class="col-sm-6">
 		          	

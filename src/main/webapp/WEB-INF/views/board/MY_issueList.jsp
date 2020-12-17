@@ -132,7 +132,7 @@ $(function(){
 		        <div class="row mb-1">
 		          <div class="col-sm-6">
 		         <br>
-		            <h3 class="jg" style=" padding-left : 10px;"><li class="nav-icon far fa-lightbulb"></li>내가 작성한 이슈</h3>
+		            <h3 class="jg" style=" padding-left : 10px;"><li class="nav-icon far fa-lightbulb"></li>&nbsp;내가 작성한 이슈</h3>
 		          </div>
 		          <div class="col-sm-6">
 		         

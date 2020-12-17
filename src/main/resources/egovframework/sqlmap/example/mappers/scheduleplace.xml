@@ -15,11 +15,14 @@
 		  FROM (
 		   SELECT ROWNUM rnum, a.* 
 			 FROM (
-			     SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, to_char(START_DT,'YYYY-MM-DD') as START_DT, to_char(END_DT,'YYYY-MM-DD') as END_DT, JUSO, CALENDARCSS
-			     FROM SCHEDULE
-			     WHERE category_id = #{categoryId} AND
-				 req_id = #{reqId} AND
-				 del = 'N'
+			 	
+				 SELECT a.SCHE_ID, a.SCHE_TITLE, a.SCHE_CONT, to_char(a.REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, a.X_VAL, a.Y_VAL, a.CATEGORY_ID, a.REQ_ID, b.mem_name, a.mem_id,
+				         a.DEL, to_char(a.START_DT,'YYYY-MM-DD') as START_DT, to_char(a.END_DT,'YYYY-MM-DD') as END_DT, a.JUSO, a.CALENDARCSS
+				   FROM SCHEDULE a, member b
+				  WHERE category_id = #{categoryId}
+				    AND a.req_id = #{reqId}
+				    AND a.del = 'N'
+				    AND a.mem_id = b.mem_id
 			     ORDER BY REG_DT DESC) a
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
 	</select>
@@ -36,10 +39,12 @@
 	
 	
 	<!-- 일정 상세페이지 -->
-	<select id="scheduleSelect" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">
-		SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD hh:mm') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, to_char(START_DT,'YYYY-MM-DD') as START_DT, to_char(END_DT,'YYYY-MM-DD') as END_DT, JUSO, CALENDARCSS
-		  FROM SCHEDULE
-		 WHERE sche_id = #{scheId}
+	<select id="scheduleSelect" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">	
+		SELECT a.SCHE_ID, a.SCHE_TITLE, a.SCHE_CONT, to_char(a.REG_DT,'YYYY-MM-DD hh:mm') as REG_DT, a.X_VAL, a.Y_VAL, a.CATEGORY_ID, a.REQ_ID, 
+		        b.mem_name, a.mem_id, a.DEL, to_char(a.START_DT,'YYYY-MM-DD') as START_DT, to_char(a.END_DT,'YYYY-MM-DD') as END_DT, a.JUSO, a.CALENDARCSS
+		FROM SCHEDULE a, member b
+		WHERE sche_id = #{scheId}
+		  and a.mem_id = b.mem_id
 	</select>
 	
 	

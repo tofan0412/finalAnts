@@ -19,7 +19,7 @@
 	#pagenum a{
 		 display: inline-block;
 		 text-align: center;
-		 width : auto;	 
+		  padding : 6px; 	 
 		 border: none; 
 		background: transparent;
 	}
@@ -27,7 +27,7 @@
 	li strong{
 		display: inline-block;
 		text-align: center;
-		width: 30px;
+		 padding : 6px; 
 	}
 	
 	.pagingui{
@@ -94,7 +94,7 @@ $(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/insertissueView');
 	})
 	
-	$("#pagenum a").addClass("page-link");  
+	  
 
 	$("#pubfileList tr").on("mousedown", function(e){
 			console.log('click')

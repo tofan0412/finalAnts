@@ -126,6 +126,9 @@ li strong{
 .contextmenu li:hover a {
   color: black;
 }
+.card-header{
+ border-bottom: none;
+}
 </style>
 
 
@@ -332,12 +335,11 @@ var id;
 	<div style="padding-left: 30px; background-color: white;">
 			
 		<div class="float-left">
-		    <div class="card-header">				
+		    <div class="card-header" style="border-bottom: none;">				
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">		
 						<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">				
 							<form:option value="1" label="파일명"/>
-							<form:option value="2" label="날짜"/>
 						</form:select> 
 						
 							 <label for="searchKeyword" style="visibility:hidden; display:none;"></label>
@@ -357,7 +359,7 @@ var id;
 		</div>
 		<div class="float-right">
 		    <div class="card-header with-border">
-						<label class="jg">사용량 : 
+						<label class="jg" style="padding-right: 10px;">사용량 : 
 							<c:set var = "total" value = "0" />
 							<c:forEach items="${totalSize}" var="totalSize" varStatus="sts" >
 								<c:set var= "total" value="${total + totalSize}"/> 

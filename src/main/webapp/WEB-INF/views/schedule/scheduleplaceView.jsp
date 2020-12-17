@@ -14,30 +14,20 @@ body{
 	min-width: 1000px;
 	
 } 
-#todoTable{
-	width: 98%;
-    border-top: 1px solid #444444;
-    border-collapse: collapse;
-  }
-  th, td {
-    border-bottom: 1px solid #444444;
-    padding: 10px;
-  } 	
-#bt{
-	margin-top : 10px;
-	margin-bottom : 20px;
-}
+
+	
+
 	#pagenum a{
 		 display: inline-block;
 		 text-align: center;
-		 width : auto;	 
+		 padding : 6px;
 		 border: none; 
 	}
 		
 	li strong{
 		display: inline-block;
 		text-align: center;
-		width: 30px;
+		padding : 6px;
 	}
 	
 	.pagingui{
@@ -51,7 +41,7 @@ body{
 		 float:left; 
 		 margin:0 auto; 
 		 text-align:center;
-		 margin-top:40px;	
+		 margin-top:20px;	
 		 margin-left:45%;		
 	}	
 </style>
@@ -72,44 +62,76 @@ $(document).ready(function(){
 </script>
 <body>	
 
-	<%@include file="../layout/contentmenu.jsp"%>
-		
-	<br>
-	<form:form commandName="scheduleVo" id="listForm" name="listForm" method="post">
-	<div style="padding-left: 30px; background-color: white; margin-bottom:100px;">
-		<table id="todoTable">
-			<tr>
-				<a href="/schedule/scheduleInsertview"><input type="button" id="bt" class="btn btn-primary" value="일정등록"></a>
-				<th id="1">No.</th>
-				<th id="2">제목</th>
-				<th id="3">작성자</th>
-				<th id="4">등록일</th>
+<%@include file="../layout/contentmenu.jsp"%>
+	
+<form:form commandName="scheduleVo" id="listForm" name="listForm" method="post">
+	<section class="content" >
+	      <div class="col-12 col-sm-12">
+		    <div class="card" style="border-radius: inherit; padding : 2px;">
+	        <br>
+	        <div class="card-header  ">
+	        <div id="keyword" class="card-tools float-left" style="width: 450px;">
+					<h3 class="jg" style="padding-left: 10px;">일정 리스트</h3>
+			</div>
+			<div id="keyword" class="card-tools float-right" style="width: 450px;">
+				<div class="input-group row">
+					<label for="searchCondition" style="visibility:hidden;"></label>
+			
+       				<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
+						<form:option value="1" label="제목"/>
+						<form:option value="2" label="작성자"/>
+					</form:select> 					
+					
+					<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
+                    <form:input style="width: 300px;" path="searchKeyword" placeholder="검색어를 입력하세요." class="form-control jg"/>
+<!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
+					<span class="input-group-append">							
+						<button class="btn btn-default" type="button" id="searchBtn" onclick="search()" >
+							<i class="fa fa-fw fa-search"></i>
+						</button>
+					</span>
+					
+					<!-- end : search bar -->
+				</div>
+				<br>
+	        </div>
+		        
+		      </div><!-- /.container-fluid -->
+
+
+	 <div class="card-body p-0">
+		<table id="todoTable" class="table">
+			<tr>				
+				<th class="jg" style="text-align: center;" id="1">No.</th>
+				<th class="jg" style="text-align: center;" id="2">제목</th>
+				<th class="jg" style="text-align: center;" id="3">작성자</th>
+				<th class="jg" style="text-align: center;" id="4">등록일</th>
 			</tr>
  	
 			<tbody id="schedulelist">
 				<c:forEach items="${schedulelist}" var="schedule" varStatus="sts" >
 				    <tr data-scheid="${schedule.scheId}">
-						<td><c:out value="${paginationInfo.totalRecordCount - ((scheduleVo.pageIndex-1) * scheduleVo.pageUnit + sts.index)}"/>. 
-							<input type="hidden" id="${schedule.scheId }" name="${schedule.scheId }">
-						</td>	
-						<td>
+						
+						<td class="jg" style="width: 200px; text-align: center;"><c:out value="${  ((scheduleVo.pageIndex-1) * scheduleVo.pageUnit + (sts.index+1))}"/>.</td>
+					
+						<td style="text-align: center;">
 							${schedule.scheTitle}
 						</td>
-						<td>
-							${schedule.memId }
+						<td style="text-align: center;">
+							${schedule.memName }
 						</td>
-						<td>
+						<td style="text-align: center;">
 							${schedule.regDt }
 						</td>
 					</tr>
 				</c:forEach> 
 			</tbody>
 		</table>
+	  </div>
 
 
 		<div id="paging" class="card-tools">
-			<ul class="pagination pagination-sm jg" id="pagingui">
-
+			<ul class="pagination pagination-sm jg" id="pagingui" style="margin-bottom: 0px;">
 				<li class="page-item jg" id="pagenum">
 					<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_egov_link_page" />
 				</li>
@@ -117,8 +139,20 @@ $(document).ready(function(){
 
 			</ul>
 		</div>
+		
 	
-	</div>
-	</form:form>
+		<div class="card-footer">
+			
+			<a href="/schedule/scheduleInsertview" style="padding-left: 10px;">
+				<button id="bt" class="btn btn-default jg"><i class="fas fa-plus"></i>등록</button>
+			</a>
+		</div>
+<!-- /.card-body -->
+	
+       </div>
+    </div>
+  </section>
+  <br>
+</form:form>
 </body>
 </html>

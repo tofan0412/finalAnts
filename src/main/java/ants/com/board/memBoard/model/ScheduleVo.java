@@ -19,6 +19,7 @@ public class ScheduleVo extends BaseVo {
 	private String endDt;
 	private String juso;
 	private String calendarcss;
+	private String memName;
 	
 	
 	public String getCalendarcss() {
@@ -104,6 +105,13 @@ public class ScheduleVo extends BaseVo {
 	}
 	public void setJuso(String juso) {
 		this.juso = juso;
+	}
+	
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
 	}
 	@Override
 	public String toString() {
