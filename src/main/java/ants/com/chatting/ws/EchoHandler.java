@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import ants.com.member.model.MemberVo;
+import edu.emory.mathcs.backport.java.util.concurrent.ConcurrentHashMap;
 
 @RequestMapping("/echo")
 public class EchoHandler extends TextWebSocketHandler {
@@ -29,22 +29,28 @@ public class EchoHandler extends TextWebSocketHandler {
 		Map<String, Object> httpSession = session.getAttributes();
 		MemberVo SMEMBER = (MemberVo) httpSession.get("SMEMBER");
 		
-		LOGGER.info("{} 연결 됨\n", SMEMBER.getMemId());
-		
+		LOGGER.info("{} 연결 됨\n. 현재 채팅방 번호 : {}", SMEMBER.getMemId(), httpSession.get("cgroupId"));
 		sessionList.add(session);
+		
 	}
-
+	
 	@Override
 	protected void handleTextMessage(
 			WebSocketSession session, TextMessage message) throws Exception {
 		Map<String, Object> httpSession = session.getAttributes();
 		MemberVo SMEMBER = (MemberVo) httpSession.get("SMEMBER");
+		String cgroupId = (String) httpSession.get("cgroupId");
 		
-		LOGGER.info("{}로부터 \'{}\' 받음\n", SMEMBER.getMemId(), message.getPayload()); 
+		LOGGER.info("{}로부터 \'{}\' 받음\n", SMEMBER.getMemId(), message.getPayload());
+		LOGGER.info("채팅방 번호 : {}", cgroupId);
 		
 		// sessionList에 존재하는 모든 사용자에게 메시지 뿌리기 ..
 		for(WebSocketSession sess : sessionList) {
-			sess.sendMessage(new TextMessage(SMEMBER.getMemId() + "$$$$" + message.getPayload()));
+			sess.sendMessage(
+					new TextMessage(
+							cgroupId + "$$$$" +
+							SMEMBER.getMemId() + "$$$$" 
+							+ message.getPayload()));
 		}
 	}
 

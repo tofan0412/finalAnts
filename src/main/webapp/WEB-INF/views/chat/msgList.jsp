@@ -8,14 +8,9 @@
 <fmt:formatDate value="${currTime }" var="currTime" pattern="yyyy-MM-dd HH:mm:ss" />
 <script>
 	// sockJS 선언하기. 만약 기존에 선언된 경우 선언을 생략한다.
-	if (typeof sockMsg == "undefined"){
-    	sockMsg = new SockJS("/echo");
-    	sockMsg.onmessage = onMessage;
-    	sockMsg.onclose = onClose;
-	}else{
-		sockMsg.onmessage = onMessage;
-    	sockMsg.onclose = onClose;
-	}
+	sockMsg = new SockJS("/echo");
+   	sockMsg.onmessage = onMessage;
+   	sockMsg.onclose = onClose;
 	
 	$('#sendMsg').on('click',function(){
 		// 공백인 경우 전송하지 않는다.
@@ -44,6 +39,10 @@
 		}
 	})	
 	
+	$('.returnBtn').click(function(){
+		sockMsg.close();
+	})
+	
 	// 메시지 전송
 	function sendMessage() {
 		sockMsg.send($("#sendChatCont").val());
@@ -52,9 +51,18 @@
 	function onMessage(msg) {
 		var data = msg.data;
 		var arr = data.split("$$$$");
-		var id = arr[0];
-		var chatCont = arr[1];
-	
+		
+		var cgroupId = arr[0];
+		var id = arr[1];
+		var chatCont = arr[2];
+		
+		console.log("채팅방 번호 : "+cgroupId+", 발신인 : "+id+", 내용 : "+chatCont);
+		
+		// 현재 내가 있는 채팅방이 아닌 경우, 메시지를 메신저에 표시하지 않는다.
+		if ("${cgroupId}" != cgroupId){
+			return; 
+		}
+		
 		// 내가 전송한 글인 경우 ..
 		if (id == '${SMEMBER.memId}'){
 			var memId = "<br><div class=\'myMemId memId\'>"+ id + "</div>";
@@ -178,7 +186,6 @@ width:16px;height:16px;background:#d2d6de;}
 
 /* 메시지 전송바 스타일 */
 .form-control {
-    position: absolute;
     display: block;
     float : left;
     width: 180px;

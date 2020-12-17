@@ -8,14 +8,14 @@
 		<div class="jg cgroupName" cgroupId="${chat.cgroupId }"
 			style="height: 40px; padding: 10px 10px 10px; color: black;">
 			<a href="#" class="link" style="color: black;">
-				${chat.cgroupName }&nbsp;&nbsp;&nbsp;(${chatList.size() })
+				${chat.cgroupName }&nbsp;&nbsp;&nbsp;
 			</a>
 		</div>
 	</c:forEach>
 
 	<!-- 요구사항 정의서가 null은 아니지만, 열린 채팅방이 없는 경우 .. -->
 	<c:if test="${chatList.size() < 1 }">
-		<div style="text-align : center; padding-top : 80px;">
+		<div style="text-align : center; padding-top : 170px;">
 			<span class="jg">현재 참여중인<br> 채팅이 없습니다.</span>
 		</div>
 		<br>

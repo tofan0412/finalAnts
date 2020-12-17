@@ -171,6 +171,7 @@
 			<mvc:exclude-mapping path="/member/loginView" />
 			<mvc:exclude-mapping path="/member/memberRegist" />
 			<mvc:exclude-mapping path="/member/memberRegistview" />
+			<mvc:exclude-mapping path="/member/mainView" />
 			<mvc:exclude-mapping path="/admin/*" />
 			<bean class="ants.com.config.interceptor.IpCheckInterceptor"/>
 		</mvc:interceptor>
@@ -180,6 +181,7 @@
 			<mvc:mapping path="/admin/**"/>
 			<mvc:exclude-mapping path="/admin/adloginView" />
 			<mvc:exclude-mapping path="/admin/adloginFunc" />
+			<mvc:exclude-mapping path="/member/mainView" />
 			<mvc:exclude-mapping path="/admin/adlogout" />
 			<bean class="ants.com.config.interceptor.AdminLoginCheckInterceptor"/>
 		</mvc:interceptor>

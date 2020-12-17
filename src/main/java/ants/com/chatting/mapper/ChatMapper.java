@@ -10,7 +10,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("chatMapper")
 public interface ChatMapper {
-	public List<ChatGroupVo> readChatList(String reqId);
+	public List<ChatGroupVo> readChatList(ChatGroupVo chatGroupVo);
 	
 	public ChatGroupVo readCgroupName(String cgroupId);
 	
