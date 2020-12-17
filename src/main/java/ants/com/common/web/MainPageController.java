@@ -87,7 +87,7 @@ public class MainPageController {
 		scheduleVo.setReqId(reqId);
 		List<ScheduleVo> showCalendar = memBoardService.showCalendar(scheduleVo);
 		model.addAttribute("showSchedule", showCalendar);
-		return "tiles/layout/contentmain";
+		return "main/layout/contentmain";
 	}
 	
 	
@@ -189,7 +189,7 @@ public class MainPageController {
 		// 공지사항 전송
 		model.addAttribute("issuelist", resultList);
 
-		return "tiles/layout/contentmain";
+		return "main/layout/contentmain";
 		
 	}
 

@@ -100,9 +100,9 @@ public class MemberController {
 	// 메인 페이지로 이동
 	@RequestMapping("/projectMainView")
 	public String projectMainView() {
-		return "tiles/layout/contentmain";
+		return "main/layout/contentmain";
 	}
-		
+				
 	// 로그인 로직
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
@@ -224,12 +224,12 @@ public class MemberController {
 			// 공지사항 전송 
 			model.addAttribute("issuelist", resultList);
 				
-			return "tiles/layout/contentmain";
+			return "main/layout/contentmain";
 		} else {
 			return "redirect:/member/loginView";
 		}
 	}
-	
+		
 	// 로그인 체크 ajax
 	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
 	public String logincheck(MemberVo memberVo, Model model) {

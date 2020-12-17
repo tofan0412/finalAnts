@@ -78,8 +78,6 @@ $(document).ready(function(){
 	<form:form commandName="scheduleVo" id="listForm" name="listForm" method="post">
 	<div style="padding-left: 30px; background-color: white; margin-bottom:100px;">
 		<table id="todoTable">
-		<div class="float-right">
-		</div>	
 			<tr>
 				<a href="/schedule/scheduleInsertview"><input type="button" id="bt" class="btn btn-primary" value="일정등록"></a>
 				<th id="1">No.</th>
