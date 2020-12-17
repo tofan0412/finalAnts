@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.apache.http.RequestLine;
 import org.springframework.stereotype.Service;
 
+import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ReplyVo;
@@ -96,5 +97,10 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	// 개요페이지 건의사항 ACCEPT율 가져오기
 	public SuggestVo getoutlinsuggest(String reqId) {
 		return mapper.getoutlinsuggest(reqId);
+	}
+	
+	// 개요페이지 마감임박 할일 가져오기
+	public List<TodoVo> getoutlindeadline(String reqId) {
+		return mapper.getoutlindeadline(reqId);
 	}
 }

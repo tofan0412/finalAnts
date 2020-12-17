@@ -212,4 +212,26 @@
 			        FROM    dual
         
 	</select>
+	<select id="getoutlindeadline" parameterType="java.lang.String"
+		resultType="ants.com.board.manageBoard.model.TodoVo">
+			<![CDATA[             SELECT
+                    TODO_TITLE,
+                    todo_id,
+					member.mem_name AS mem_id,
+                    to_char(todo_end, 'YYYY-MM-dd') as todoEnd
+				FROM( select *
+					from member)member, todo todo
+				WHERE
+					member.mem_id = todo.mem_id
+				AND
+					todo.del = 'N'
+				AND todo.req_id = #{reqId}
+                AND ROWNUM <= 5
+                and todo.TODO_PERCENT !='100'
+                AND (Round(TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
+					To_date(to_char(todo.todo_end,'yyyymmdd')),0)>=-7 and Round(TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
+					To_date(to_char(todo.todo_end,'yyyymmdd')),0)<=0)
+				order by todo_end asc]]> 
+        
+	</select>
 </mapper>

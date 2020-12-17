@@ -2,6 +2,7 @@ package ants.com.member.mapper;
 
 import java.util.List;
 
+import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.model.CategoryVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ReplyVo;
@@ -60,5 +61,8 @@ public interface ProjectMapper {
 
 	// 개요 프로젝트 건의사항 accept율 조회
 	public SuggestVo getoutlinsuggest(String reqId);
+	
+	// 개요 프로젝트 마감임박할일 조회
+	public List<TodoVo> getoutlindeadline(String reqId);
 
 }

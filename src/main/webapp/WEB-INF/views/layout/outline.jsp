@@ -6,6 +6,7 @@
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +88,12 @@ text-align: right;
     })
     /* END JQUERY KNOB */
 
-   
+  
+	// 상세일감 보러가기
+	$("#todoList tr").on("click",function(){
+		var todoId = $(this).data("todoid");
+		$(location).attr('href', '${pageContext.request.contextPath}/todo/onetodoView?todoId='+todoId);
+		});
   })
 
 </script>
@@ -96,7 +102,7 @@ text-align: right;
 <body class="jg">
 <%@include file="../layout/contentmenu.jsp"%>
 					<br><br>
-                	<div class="row jg" style="width: 65%;  float:left;">
+                	<div class="row jg" style="width: 65%;  float:left; margin-top: 3%;">
                   		<div class="col-6 col-md-3 text-center taskStats clearfix">
                   			<div class="circle" id="STATUS">
                 				<div id="statusBall" style="border-radius: 100%; margin: 0px auto; position: relative; display: table; background-color: rgb(100, 149, 237); color: rgb(255, 255, 255); width: 156px; height: 156px;">
@@ -241,6 +247,27 @@ text-align: right;
 	                    	<td>${pro.memId }</td>
                     	</c:if>
                     </c:forEach>
+                   </tbody>
+              	  </table>
+                    <!-- /.users-list -->
+              		
+              </div>
+              <div class="row jg" style="width: 25%; float:left; margin-left:5%;  border-bottom: 1px solid gray; margin-top: 40px;" > 
+              	   <h3>deadline</h3>
+              	   <table class="table table-sm">
+              	   <tbody id="todoList" >
+              	   	<c:forEach items="${dbtodovo }" var="todo" varStatus="sts">
+              	   	<tr data-todoid="${todo.todoId}">
+              	   		<c:choose>
+						<c:when test="${fn:length(todo.todoTitle) > 9 }"><td> ${fn:substring(todo.todoTitle,0,8)}...</td></c:when>
+						<c:otherwise><td> ${todo.todoTitle} </td></c:otherwise>
+						</c:choose>
+              	   		<td> ${todo.memId} </td>
+              	   		<td> ${todo.todoEnd} </td>
+              	   	
+              	   	</tr>
+              	   	</c:forEach>
+
                    </tbody>
               	  </table>
                     <!-- /.users-list -->

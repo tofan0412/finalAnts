@@ -1,3 +1,4 @@
+
 package ants.com.member.web;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
 import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.model.SuggestVo;
@@ -188,6 +190,7 @@ public class ProjectController {
 		PublicFileVo dbfilevo = projectService.getoutlinefiles(reqId);
 		ReplyVo dbreplyvo = projectService.getoutlinereply(reqId);
 		SuggestVo dbsuggestvo = projectService.getoutlinsuggest(reqId);
+		List<TodoVo> dbtodovo = projectService.getoutlindeadline(reqId);
 		model.addAttribute("req", dbreqvo);
 		model.addAttribute("pro", dbprojectvo);
 		model.addAttribute("promem", dbpromemvo);
@@ -195,6 +198,7 @@ public class ProjectController {
 		model.addAttribute("dbfilevo", dbfilevo);
 		model.addAttribute("dbreplyvo", dbreplyvo);
 		model.addAttribute("dbsuggestvo", dbsuggestvo);
+		model.addAttribute("dbtodovo", dbtodovo);
 		
 		return "tiles/layout/outline";
 	}
