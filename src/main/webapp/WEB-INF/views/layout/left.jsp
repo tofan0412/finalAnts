@@ -88,7 +88,10 @@
 		              <li class="nav-item">
 		                <a href="/alarmList" class="nav-link">
 		                 <i class="nav-icon fas fa-bullhorn"></i>
-							<p class="selectable">새로운 소식</p>
+							<p class="selectable">새로운 소식
+								<c:if test="${alarmCnt.totalCnt > 0 }"><span class="right badge badge-warning">New</span></c:if>
+							
+							</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">

@@ -44,7 +44,9 @@ import ants.com.admin.service.AdminService;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.board.memBoard.service.memBoardService;
+import ants.com.common.model.AlarmVo;
 import ants.com.common.model.IpHistoryVo;
+import ants.com.common.service.AlarmService;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.service.MemberService;
@@ -75,6 +77,9 @@ public class MemberController {
 	
 	@Resource(name="promemService")
 	ProjectmemberService promemService;
+	
+	@Resource(name="alarmService")
+	private AlarmService alarmService;
 	
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
@@ -223,6 +228,13 @@ public class MemberController {
 			model.addAttribute("showSchedule", showCalendar);
 			// 공지사항 전송 
 			model.addAttribute("issuelist", resultList);
+			
+			//alarm
+			AlarmVo alarmVo = new AlarmVo();
+			alarmVo.setMemId(dbMember.getMemId());
+			alarmVo = alarmService.alarmCount(alarmVo);
+			
+			session.setAttribute("alarmCnt", alarmVo);
 				
 			return "tiles/layout/contentmain";
 		} else {
