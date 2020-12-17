@@ -93,7 +93,7 @@
 	<div class="col-md-12">
 		<div class="card" style="border-radius: inherit;">
 			<div class="card-header">
-				<h3 class="card-title">
+				<h3 class="card-title"></h3>
 					<div class="input-group mb-3 ">
 						<select class="form-control col-md-4" name="searchCondition"
 							id="searchCondition" style="font-size: 0.7em;">
@@ -111,7 +111,7 @@
 						</a>
 					</div>
 
-				</h3>
+				
 
 				<div class="card-tools">
 					<ul class="pagination pagination-sm float-right">
