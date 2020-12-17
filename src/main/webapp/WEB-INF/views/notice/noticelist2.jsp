@@ -107,35 +107,27 @@
 				
 				<!-- 검색창 라인 -->
 				<div class="card-header  ">
-					<div id="keyword" class="card-tools float-right"
-						style="width: 450px;">
-						<div class="input-group row">
-							<label for="searchCondition" style="visibility: hidden;"></label>
-
-
-							<form:select path="searchCondition"
-								class="form-control col-md-3 jg" style="width: 100px;">
-								<form:option value="1" class="jg" label="제목" />
-							</form:select>
-
-
-							<label for="searchKeyword"
-								style="visibility: hidden; display: none;" class="jg"></label>
-							<form:input style="width: 300px;" path="searchKeyword"
-								placeholder="검색어를 입력하세요." class="form-control jg" />
-							<!--  						    <input id="content" class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">  -->
-							<span class="input-group-append">
-								<button class="btn btn-default" type="button" id="searchBtn"
-									onclick="search()">
-									<i class="fa fa-fw fa-search"></i>
-								</button>
-							</span>
-
-							<!-- end : search bar -->
-						</div>
-						<br>
+					<div id="keyword" class="card-tools float-right" style="width: 450px;">
+	
+							<div class="input-group row">		
+								<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">				
+									<form:option value="1" label="제목"/>
+									<form:option value="2" label="날짜"/>
+								</form:select> 
+									
+								<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
+								<form:input style="width: 300px;" path="searchKeyword"  placeholder="검색어를 입력하세요." class="form-control jg"/>
+				                 
+					            <span class="input-group-append">							
+									<button class="btn btn-default" type="button" id="searchBtn" onclick="search()" >
+										<i class="fa fa-fw fa-search"></i>
+									</button>
+								</span>
+							</div><br>
+							
 					</div>
-				</div><!-- 검색창 라인 끝 -->
+				</div>
+				<!-- 검색창 라인 끝 -->
 				
 				<!-- 리스트 부분 시작 -->
 	            <div class="card-body p-0">
