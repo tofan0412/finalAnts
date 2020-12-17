@@ -217,7 +217,7 @@
 <body class="hold-transition sidebar-mini accent-teal">
 
 	<section class="content-header"
-		style="border-bottom: 1px solid #dee2e6; background-color:#f2f2f2; margin-bottom: 15px; padding-bottom: 0px;" >
+		style="border-bottom: 1px solid #dee2e6; background-color:#f2f2f2; padding-bottom: 0px;" >
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
