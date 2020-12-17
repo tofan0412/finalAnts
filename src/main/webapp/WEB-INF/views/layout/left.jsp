@@ -202,7 +202,7 @@
 				 </c:if>
 				 <!-- memType이 PM일때 -->
 				 <c:if test="${not empty pmInProjectList}">
-					<li class="nav-item has-treeview menu-open">
+					<li class="nav-item">
 			            <a href="#" class="nav-link">
 				        	<i class="nav-icon fas fa-poll-h"></i>
 							<p >프로젝트관리<i class="fas fa-angle-left right"></i></p>
