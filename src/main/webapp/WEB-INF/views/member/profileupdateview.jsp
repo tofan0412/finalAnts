@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -11,8 +8,7 @@
 
 <style>
 	body{
-	    min-width: 1100px;
-	    min-height: 1100px;
+	    min-width: 1000px;
 	}
 	#butt{
 	}
@@ -24,9 +20,9 @@
 		padding-bottom: 6%;
 	}
 	.content{
-		margin-left:43%;
+		margin-left:42.1%;	
 	}
-	.input{ 
+	.input{ 		
 		padding : 10px;
 		padding-left : 20px;
 		width: 330px;
@@ -37,7 +33,9 @@
 	#basicimg{
 		height : 30px;
 		width : 150px;	
-	}
+		background-color: #00a495;
+		color:white;
+	}	
 	.imgc{
 		width: 80px; 
 		height: 56px; 
@@ -46,18 +44,25 @@
 	#checkbtn{
 		height : 42px;
 	}
-
+	.indiv{
+		margin-left: 20px;
+	}
+	.phoneNumber{
+		padding : 10px;
+		padding-left : 20px;
+		width: 330px;
+		height : 50px;
+		border-radius: 80px;	
+		outline: none;
+	} 		
 </style>	
 </head>
 
-<title>정보 수정</title>
 <body>
 	<div class="card">
+			<!-- 경로 미리보기용 <div id="clickmsg">경로 : </div> 
+			<hr>  -->
 			
-				<!-- 경로 미리보기용 -->
-			<!-- <div id="clickmsg">경로 : </div> 
-			<hr> 
-			-->
 			<form id="fmin" role="form" class="form-horizontal" action="/member/profileupdate" method="POST" enctype="multipart/form-data">
 			<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 				<div id="pictureView" style="border: 1px solid green; height: 200px; width: 200px; margin: 0 auto;">
@@ -76,11 +81,10 @@
 					<div id="idcheck">
 						<input class="input" name="memId" type="email" id="memId" placeholder="회원 id" value="${memberVo.memId}" readonly/>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<div class="check_font" id="checkMsg"></div>
 					</div>
 				</div>
-					
-				<div class="content">
+				  	
+				<br><div class="content">
 					<label for="name" style="font-size: 0.9em;">
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>이 름
 					</label>
@@ -89,32 +93,36 @@
 					</div>
 				</div>
 
-				<div class="content">
+				<br><div class="content">
 					<label for="pwd" style="font-size: 0.9em;">
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드1
 					</label>
 					<div>
-						<input class="input" name="memPass" type="password" id="memPass" placeholder="패스워드1" value="${memberVo.memPass}"/>
+						<input class="input" name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합" value="${memberVo.memPass}"/>
+						<div id="checkPass1" class="indiv" style="float:left; margin-top:15px;"></div>
 					</div>
 				</div>
-				
-				
-				<div class="content">
+							
+				<br><div class="content">
+					<br><br>
 					<label for="pwd" style="font-size: 0.9em;">
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드2
 					</label>
 					<div>
-						<input class="input" type="password" id="memPass2" placeholder="패스워드2" value="${memberVo.memPass}"/>
-					</div>
-				</div>
-
-				<div class="content">
-						&nbsp;&nbsp;&nbsp;&nbsp;<label for="alias" style="font-size: 0.9em;">전화번호</label>
-					<div>
-						<input class="input" name="memTel" type="tel" id="memTel" placeholder="전화번호( '-' 없이 작성해주세요)" value="${memberVo.memTel}"/>
+						<input class="input" type="password" style="float:left" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" value="${memberVo.memPass}"/>
+						<div id="checkPass2" class="indiv" style="float:left; margin-top:15px;"></div>	
 					</div>
 				</div>
 				
+				<br><div class="content">
+					<br><br>
+						&nbsp;&nbsp;&nbsp;&nbsp;<label for="alias" style="font-size: 0.9em;">전화번호</label>
+					<div>																			<!-- onkeyup="isMobile()" -->
+						<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력" value="${memberVo.memTel}"/>
+						<div id="checkTel" class="indiv"></div>
+					</div>
+				</div>		
+		
 				
 				<!-- style="display: none" -->
 				<div class="content" style="display: none">
@@ -202,6 +210,51 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
+//핸드폰 번호 정규식
+$(document).on("keyup", ".phoneNumber", function() { 
+	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+});
+	
+// 비밀번호 정규식
+function chkPW(){
+	
+	 var pw = document.getElementById('memPass').value;
+	 var num = pw.search(/[0-9]/g);
+	 var eng = pw.search(/[a-z]/ig);
+	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+ 	
+	 if(pw.length < 8 || pw.length > 20){
+	  $('#checkPass1').html('<p style="color:red">8자리 ~ 20자리 이내로 입력해주세요.</p>');
+	  return false;
+	 } 
+	 else if(pw.search(/\s/) != -1){
+	  $('#checkPass1').html('<p style="color:red">비밀번호는 공백 없이 입력해주세요.</p>');
+	  return false;
+	 }
+	 else if(num < 0 || eng < 0 || spe < 0 ){
+	  $('#checkPass1').html('<p style="color:red">영문,숫자, 특수문자를 혼합하여 입력해주세요.</p>');
+	  return false;
+	 }
+	 else {
+	  $('#checkPass1').html('<p style="color:blue">사용 가능한 비밀번호 입니다.</p>');
+	    return true;
+	 }
+
+}
+	
+// 비밀번호 일치 확인
+function unityPW(){
+	var pw1 = document.getElementById('memPass').value;
+	var pw2 = document.getElementById('memPass2').value;
+	
+	if(pw1 != pw2){ 
+		$('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
+	} else { 
+		$('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
+	}
+	
+} 
+ 
 		
 		$(document).ready(function(){
 			
@@ -273,9 +326,12 @@
 				if (memId.value == "" || memName.value == "" || memPass.value == "") {
 					alert("필수입력 사항을 입력해주세요")
 				}
-				
+				else if(!chkPW()){
+					alert("다시 확인해주세요.")
+				}
+				  
 				// 누락없을때
-				else {
+				else if(chkPW()) {
 					
 					// 비밀번호 일치시 
 					if(newpass1.value == newpass2.value){
@@ -288,9 +344,8 @@
 		         
 			})
 		})
-		
-		
-		
+		 
+
 		
 		
 		
@@ -662,8 +717,3 @@
 			})
 		})	
 </script>
-	
-
-
-
-</html>

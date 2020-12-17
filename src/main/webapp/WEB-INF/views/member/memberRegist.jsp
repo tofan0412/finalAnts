@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -12,7 +9,6 @@
 <style>
 	body{
 	    min-width: 1000px;
-	    min-height: 1000px;
 	}
 	#butt{
 	}
@@ -24,14 +20,15 @@
 		padding-bottom: 6%;
 	}
 	.content{
-		margin-left:43%;
-	}
-	.input{ 
+		margin-left:43.4%;
+	}	
+	.input{ 	
 		padding : 10px;
 		padding-left : 20px;
 		width: 330px;
 		height : 50px;
-		border-radius: 80px
+		border-radius: 80px;	
+		outline: none;
 	}
 	#basicimg{
 		height : 30px;
@@ -48,14 +45,20 @@
 	.indiv{
 		margin-left: 20px;
 	} 
+	.phoneNumber{
+		padding : 10px;
+		padding-left : 20px;
+		width: 330px;
+		height : 50px;
+		border-radius: 80px;	
+		outline: none;
+	}
 </style>	
 </head>
 
-
-<title>회원 등록</title>
 <body>
 	<div class="card">
-			<!-- <div id="clickmsg">경로 : </div>	경로 미리보기용
+			<!-- 경로 미리보기용 <div id="clickmsg">경로 : </div>	
 			<hr>  -->
 			
 			<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
@@ -81,7 +84,7 @@
 					</div>
 				</div>
 				  
-				<div class="content">
+				<br><div class="content">
 					<label for="name" style="font-size: 0.9em;">
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>이 름
 					</label>
@@ -90,34 +93,36 @@
 					</div>
 				</div>
 
-				<div class="content">
+				<br><div class="content">
 					<label for="pwd" style="font-size: 0.9em;">
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드1
 					</label>
 					<div>
-						<input class="input" name="memPass" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합"/>
-						<div id="checkPass1" class="indiv">비밀번호1</div>
+						<input class="input" name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합"/>
+						<div id="checkPass1" class="indiv" style="float:left; margin-top:15px;"></div>
 					</div>
 				</div>
-				
-				<div class="content">
+							
+				<br><div class="content">
+					<br><br>
 					<label for="pwd" style="font-size: 0.9em;">
 						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드2
 					</label>
 					<div>
-						<input class="input" type="password" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" />
-						<div id="checkPass2" class="indiv">비밀번호2</div>
+						<input class="input" type="password" style="float:left" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" />
+						<div id="checkPass2" class="indiv" style="float:left; margin-top:15px;"></div>	
 					</div>
 				</div>
-
-				<div class="content">
+				
+				<br><div class="content">
+					<br><br>
 						&nbsp;&nbsp;&nbsp;&nbsp;<label for="alias" style="font-size: 0.9em;">전화번호</label>
-					<div>
-						<input class="input" name="memTel" type="tel" id="memTel" placeholder="ex)010-1234-5678" onkeyup="isMobile()"/>
-						<div id="checkTel" class="indiv">전화번호</div>
+					<div>																			<!-- onkeyup="isMobile()" -->
+						<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력"/>
+						<div id="checkTel" class="indiv"></div>
 					</div>
-				</div>
- 
+				</div>		
+ 				
 				<div class="content" style="display: none">
 					<br>알람 : <input  name="memAlert" type="text" id="memAlert" placeholder="알람"><br> 
 					삭제여부: <input class="form-control" name="del" type="text" id="del" placeholder="삭제여부"><br> 
@@ -208,19 +213,24 @@
 } */
  
 // 핸드폰 번호 정규식
-function isMobile() { 
+
+$(document).on("keyup", ".phoneNumber", function() { 
+	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+});
+
+/* function isMobile() {
 	var name = document.getElementById('memTel').value;
 	document.getElementById("checkTel").innerText = name;
 	
-	var regExp =/(01[016789])-([1-9]{1}[0-9]{2,3})-([0-9]{4})$/; 
-		
+	var regExp =/(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/; 
+				
 	if(!regExp.exec(name)){ 
 		$('#checkTel').html('<p style="color:red">사용불가능</p>'); 
 	} else { 
 		$('#checkTel').html('<p style="color:blue">사용가능</p>'); 
 	}
-}  
-
+}  	
+ */
 // 비밀번호 정규식
 function chkPW(){
 	
@@ -790,4 +800,3 @@ function unityPW(){
 
 
 
-</html>
