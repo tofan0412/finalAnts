@@ -157,21 +157,24 @@
 			resultType="ants.com.board.manageBoard.model.TodoVo">
 			<![CDATA[
 			SELECT
-			    todo.todo_id,
-			    TO_CHAR(todo.todo_start,'yyyy/mm/dd') as todo_start,
-			    TO_CHAR(todo.todo_end,'yyyy/mm/dd') as todo_end,
-			    todo.todo_cont,
-			    todo.todo_title,
-			    todo.todo_percent,
-			    todo_importance,
-			    todo_level,
-			    todo.req_id,
-			    todo.todo_parentid,
-			    todo.del,
-			    todo.mem_id
-			FROM todo todo
-			WHERE todo.todo_id = #{todoId}
-			AND todo.del = 'N'
+				    todo.todo_id,
+				    TO_CHAR(todo.todo_start,'yyyy/mm/dd') as todo_start,
+				    TO_CHAR(todo.todo_end,'yyyy/mm/dd') as todo_end,
+				    todo.todo_cont,
+				    todo.todo_title,
+				    todo.todo_percent,
+				    todo_importance,
+				    todo_level,
+				    todo.req_id,
+				    todo.todo_parentid,
+				    todo.del,
+				    todo.mem_id,
+	                b.mem_name
+				FROM todo todo , member b
+				WHERE todo.todo_id = #{todoId}
+				AND todo.del = 'N'
+	            AND todo.mem_id = b.mem_id
+		
 			]]>
 		</select>
 
