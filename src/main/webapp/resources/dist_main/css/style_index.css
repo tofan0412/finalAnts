@@ -4,14 +4,10 @@
 	height: 400px;
 }
 
-
 .img1 {
-	background-image: url(../img/main1.jpg);
 	text-align: center;
+	background-image : url(../img/main1.jpg);
 }
-
-
-
 
 .conB {
 	padding-top: 100px;

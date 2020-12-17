@@ -3,6 +3,7 @@ package ants.com.chatting.web;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,16 +26,24 @@ public class ChatController {
 	
 	// 내가 참여하고 있는 모든 채팅방 목록을 불러온다. 
 	@RequestMapping("/readChatList")
-	public String readChatList(String memId, Model model) {
+	public String readChatList(ChatGroupVo chatGroupVo, Model model) {
 		
-		List<ChatGroupVo> chatList = chatService.readChatList(memId);
+		List<ChatGroupVo> chatList = chatService.readChatList(chatGroupVo);
 		
 		model.addAttribute("chatList", chatList);
 		return "chat/chatList";
 	}
 	
+	// 채팅방 이름을 누르면, 해당 채팅방 PK를 세션에 저장한다.
+	@RequestMapping("/changeCgroupSession")
+	public String changeCgroupSession(String cgroupId, HttpSession session) {
+		session.setAttribute("cgroupId", cgroupId);
+		return "success";
+	}
+	
 	@RequestMapping("/readMessages")
-	public String readMessages(String cgroupId, Model model) {
+	public String readMessages(String cgroupId, Model model, HttpSession session) {
+		
 		// 채팅방 번호에 맞는 메시지를 모두 불러온다 !
 		List<ChatVo> msgList = chatService.readMessages(cgroupId);
 		
@@ -50,7 +59,8 @@ public class ChatController {
 	// 전송한 메시지를 DB에 저장한다..
 	@RequestMapping("/sendMessage")
 	@ResponseBody
-	public String sendMessage(ChatVo chatVo) {
+	public String sendMessage(ChatVo chatVo, HttpSession session) {
+		
 		int result = chatService.sendMessage(chatVo);
 		if (result > 0) {
 			return "yes";

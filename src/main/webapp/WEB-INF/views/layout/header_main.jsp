@@ -5,6 +5,7 @@
 header{
 	position : fixed;
 	top: 0;
+	background-color : white;
   	/* width: 100% */
   	left: 0;
   	right: 0;
@@ -16,8 +17,6 @@ $(function(){
 	$('#login').on('click', function(){
 		$(location).attr('href', '/member/loginView');
 	})
-	
-	$()
 })
 </script>
 

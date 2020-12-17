@@ -5,19 +5,25 @@
 <style>
 .chatTitle{
 	color : black;
-	padding-top : 10px;
+	padding-top : 15px;
 	padding-left : 5px;
 	font-size : 1.2em; 
 	background-color : white;
 	border-bottom : 1px solid #d2d6de;
-	box-shadow : 5px 5px #20C997;
+	box-shadow : 5px 5px lightgrey;
+	margin-bottom : 10px;
+	margin-top : 30px;
 	height : 50px;
 	text-align : center;
+	border-radius: 0.35rem;
 }
 .chatList{
+	padding-top : 10px;
+	padding-left : 5px;
 	background-color : white;
-	height : 300px;
-	box-shadow : 5px 5px #20C997;
+	height : 450px;
+	box-shadow : 5px 5px lightgrey;
+	border-radius: 0.35rem;
 	/* x위치 y위치 블러정도 그림자크기 색 */
 }
 .mkNewChat{
@@ -25,7 +31,7 @@
 	height : 40px;
 	border-radius : .25rem;
 	text-align : center;
-	background-color : #20C997;
+	background-color : skyblue;
 	color : black;
 	font-size : 1.2em;
 	padding-top : 7px;
@@ -36,7 +42,14 @@
 </style>
 <script>
 $(function(){
-	readChatList();
+	reqId = "${projectId}";
+	if (typeof reqId == ""){
+	// 만약 reqId가 존재하지 않는경우에는 실행해선 안된다.
+		$('.chatList').html("아직 프로젝트를 선택하지 않았습니다.");	
+	}else{
+		readChatList();	
+	}
+	
 	
 	// 프로젝트에 참여하고 있는 회원 목록 불러오기
 	$('.mkNewChat').on('click',function(){
@@ -59,8 +72,9 @@ $(function(){
 	// 해당 프로젝트에 존재하는 모든 채팅방 목록 불러오기.
 	function readChatList(){
 		var memId = '${SMEMBER.memId}';	
+		var reqId = '${projectId}';
 		$.ajax({
-			url : "/chat/readChatList?memId="+memId,
+			url : "/chat/readChatList?memId="+memId+"&reqId="+reqId,
 			method : "GET",
 			success : function(res){
 				var html = res.split("$$$$$$$");
@@ -77,9 +91,17 @@ $(function(){
 		
 		$(".chatList").css('color', '#A9E2F3');
 		var cgroupId = $(this).attr("cgroupId");
-
-// 		alert(cgroupId);
-
+		
+		// 채팅방 PK를 session에 저장해야 한다. 
+		$.ajax({
+			url : "/chat/changeCgroupSession",
+			data : {cgroupId : cgroupId},
+			method : "POST",
+			success : function(res){
+				console.log("현재 채팅방 번호 : "+cgroupId);
+			}
+		})		
+		
 		$(".chatList").empty();
 		$(".chatList").css('font-color', 'black');
 		$.ajax({
@@ -115,9 +137,12 @@ $(function(){
 	
 });
 </script>
-<aside class="control-sidebar control-sidebar-dark">
+<aside class="control-sidebar control-sidebar-white" 
+	style="border : 3px solid grey;
+		   border-top-left-radius : 0.8rem;
+		   border-bottom-left-radius : 0.8rem;">
 	<!-- Control sidebar content goes here -->
-	<div class="p-3" style="margin-top: 10%;">
+	<div class="p-3" style="background-color : white;">
 		<h5 class="jg">
 			<i class="far fa-comments">&nbsp;</i>채팅
 		</h5>

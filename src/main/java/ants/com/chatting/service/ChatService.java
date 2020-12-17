@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import ants.com.chatting.mapper.ChatMapper;
@@ -20,8 +18,8 @@ public class ChatService{
 	@Resource(name="chatMapper")
 	private ChatMapper mapper;
 
-	public List<ChatGroupVo> readChatList(String memId){
-		return mapper.readChatList(memId);
+	public List<ChatGroupVo> readChatList(ChatGroupVo chatGroupVo){
+		return mapper.readChatList(chatGroupVo);
 	}
 	
 	public List<ChatVo> readMessages(String cgroupId){

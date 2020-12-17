@@ -18,12 +18,15 @@
 body{
  overflow-x: hidden;
 }
+
 </style>
 
 </head>
 
 <title>Ants - 협업관리 프로젝트 툴</title>
+
 <body class="hold-transition sidebar-mini">
+	<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 	<div class="wrapper">
 		<!-- main_header -->
 		<tiles:insertAttribute name="header" />

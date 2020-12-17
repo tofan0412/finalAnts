@@ -2,15 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ants.com.chatting.mapper.ChatMapper">
 	
-<select id="readChatList" resultType="ants.com.chatting.model.ChatGroupVo" parameterType="java.lang.String">
-<!-- SELECT *  -->
-<!--   FROM CHATGROUP -->
-<!--  WHERE REQ_ID = #{reqId} -->
-SELECT B.CGROUP_ID, B.CGROUP_NAME, B.REQ_ID
-  FROM (SELECT *
-          FROM CHATMEMBER
-         WHERE MEM_ID = #{memId}) A, CHATGROUP B
- WHERE A.CGROUP_ID = B.CGROUP_ID
+<select id="readChatList" resultType="ants.com.chatting.model.ChatGroupVo" parameterType="ants.com.chatting.model.ChatGroupVo">
+	SELECT *
+      FROM (SELECT B.CGROUP_ID, B.CGROUP_NAME, B.REQ_ID
+              FROM (SELECT *
+                      FROM CHATMEMBER
+                     WHERE MEM_ID = #{memId}) A, CHATGROUP B
+             WHERE A.CGROUP_ID = B.CGROUP_ID) C
+     WHERE C.REQ_ID = #{reqId}
 </select>
 
 <select id="readCgroupName" resultType="ants.com.chatting.model.ChatGroupVo" parameterType="java.lang.String">
