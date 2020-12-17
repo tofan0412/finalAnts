@@ -28,7 +28,7 @@ function stackedbarchart() {
 		var percent=[];
 		var percent2=[];
 		for(i=0; i<data.size; i++){
-		num.push(data.todoVoList[i].memId);	
+		num.push(data.todoVoList[i].memName);	
 		percent.push(data.todoVoList[i].todoPercent);
 		if(data.todoVoList[i].todoPercent == '0'){
 		percent2.push(100);	
@@ -53,7 +53,7 @@ function stackedbarchart() {
 				          data                : percent 
 				        },
 				        {
-				          label               : '남은 할일',
+				          label               : '남은 진행도',
 				          backgroundColor     : 'rgba(210, 214, 222, 1)',
 				          borderColor         : 'rgba(210, 214, 222, 1)',
 				          pointRadius         : false,
@@ -95,7 +95,7 @@ function donutChart() {
 		var dnum = [];
 		var dpercent=[];
 		for(i=0; i<data.dsize; i++){
-		dnum.push(data.donutChartList[i].memId);	
+		dnum.push(data.donutChartList[i].memName);	
 		dpercent.push(data.donutChartList[i].todoPercent);
 		
 		}

@@ -323,23 +323,28 @@
 		</select>
 		
 		<select id="todostackchart" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoVo">
-			SELECT
-			    mem_id,
-			    round(sum(todo_percent)/count(mem_id)) as todo_percent
-			FROM todo
-			WHERE del = 'N'
+		    SELECT
+			    todo.mem_id as memId,
+			    round(sum(todo.todo_percent)/count(todo.mem_id)) as todo_percent,
+                member.z as memName
+			FROM  todo todo,(select mem_name as z, mem_id as z2 from member)member
+			WHERE todo.mem_id = member.z2
+            AND del = 'N'
 	   		AND  req_id = #{reqId}
-		    group by mem_id
+		    GROUP BY mem_id, todo.mem_id, member.z
+		    
 		</select>
 		
 		<select id="donutChart" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoVo">
-			SELECT
-			    mem_id,
-			    count(todo_id) as todo_percent
-			FROM todo
-			WHERE del = 'N'
+			 SELECT
+			    todo.mem_id as memId,
+			    count(todo.todo_id) as todo_percent,
+                member.z as memName
+			FROM todo todo,(select mem_name as z, mem_id as z2 from member)member
+			WHERE todo.mem_id = member.z2
+            AND del = 'N'
 	   		AND  req_id = #{reqId}
-		    group by mem_id
+		    GROUP BY mem_id, todo.mem_id, member.z
 		</select>
 		
 		<select id="getAllTodo" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoVo">

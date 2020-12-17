@@ -199,7 +199,8 @@ public class ProjectController {
 		model.addAttribute("dbreplyvo", dbreplyvo);
 		model.addAttribute("dbsuggestvo", dbsuggestvo);
 		model.addAttribute("dbtodovo", dbtodovo);
-		
 		return "tiles/layout/outline";
 	}
+	
+	
 }

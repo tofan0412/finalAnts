@@ -40,7 +40,6 @@ public class TodoController {
 	// 차트 뷰
 	@RequestMapping("/chartView")
 	public String chartView(Model model, TodoVo todoVo, HttpSession session ) {
-		
 		return "tiles/chart/baniChart";
 	}
 	
