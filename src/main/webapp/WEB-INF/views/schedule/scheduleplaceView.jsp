@@ -12,8 +12,7 @@
 <style>
 body{
 	min-width: 1000px;
-	min-height: 1000px;
-}
+} 
 #todoTable{
 	width: 98%;
     border-top: 1px solid #444444;

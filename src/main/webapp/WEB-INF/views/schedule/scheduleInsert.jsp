@@ -32,7 +32,7 @@
 <div id="map" style="width:100%;height:400px;"></div>
 
 <br><br>
-  
+
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -70,7 +70,7 @@ var y = 0;
 var contentString = '송촌동 우리집';
 
 var map = new naver.maps.Map('map', {
-    center: new naver.maps.LatLng(36.3621284, 127.4379089),
+    center: new naver.maps.LatLng(36.350365, 127.3853066),
     zoom: 17,	//지도의 초기 줌 레벨
     minZoom: 1,	//지도의 최소 줌 레벨
     zoomControl: true,	//줌 컨트롤의 표시 여부
@@ -224,7 +224,7 @@ function initGeocoder() {
         searchAddressToCoordinate($('#address').val());
     });
     
-    searchAddressToCoordinate('대전광역시');
+    //searchAddressToCoordinate('대전광역시');	초기 마커 표시
 }
 
 function makeAddress(item) {

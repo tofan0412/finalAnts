@@ -28,7 +28,7 @@
 </style>
 </head>
  
-<body>
+<body>	
 	
 	<%@include file="../layout/contentmenu.jsp"%>
 	
@@ -37,17 +37,16 @@
 		<input id="juso" name="juso" type="text" value="${scheduleVo.juso }"> <br>
 	</div>
 	
-	
 <input type="text" id="address" value="">
 <button type="button" id="submit">주소검색</button>
 <div id="map" style="width:100%;height:400px;"></div>
-
+	
 <br><br>
-     
- 
+
+
 <script type="text/javascript">
 	$(document).ready(function(){
-		
+	
 	  	$('#summernote').summernote({
 			  height: 250,                 // 에디터 높이
 			  minHeight: 250,             // 최소 높이
@@ -77,7 +76,7 @@ var y = 0;
 var contentString = '송촌동 우리집';
 
 var map = new naver.maps.Map('map', {
-    center: new naver.maps.LatLng(36.3621284, 127.4379089),
+    center: new naver.maps.LatLng(36.350365, 127.3853066),
     zoom: 17,	//지도의 초기 줌 레벨
     minZoom: 1,	//지도의 최소 줌 레벨
     zoomControl: true,	//줌 컨트롤의 표시 여부
@@ -96,8 +95,8 @@ naver.maps.Event.addListener(map, 'click', function(e){
 	
 	// 지도를 클릭하면 아래 내용이 실행됩니다.
 	$("#value").text(x + ', ' + y); 
-	$("#xVal").val(x); 
-	$("#yVal").val(y); 
+	$("#x").val(x); 
+	$("#y").val(y); 
 	marker.setPosition(e.latlng)	// 클릭한 지점으로 마커 이동
 	// e 는 클릭시 넘어오는 이벤트 (네이밍은 원하는 대로 하셔도 됩니다)
 	// e 에서 필요한 것을 꺼내서 쓰면 됩니다.
@@ -106,11 +105,11 @@ naver.maps.Event.addListener(map, 'click', function(e){
 });
 
 var marker = new naver.maps.Marker({
-    position: new naver.maps.LatLng($("#xVal").val(x), $("#yVal").val(y)),
+    position: new naver.maps.LatLng($("#x").val(x), $("#y").val(y)),
     map: map
 });
 
-
+	
 /* var marker = new naver.maps.Marker({
 	position : new naver.maps.LatLng(x,y),
 	title:contentString,
@@ -310,7 +309,6 @@ function hasAddition (addition) {
 
 naver.maps.onJSContentLoaded = initGeocoder;
 naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
-
 </script>
 			
 	<div style="padding-left: 30px; padding-right: 30px;"><h3>일정 수정</h3>

@@ -38,11 +38,9 @@
 				$("#todoCont").html(data.todoVo.todoCont);
 				$("#memId").html(data.todoVo.memId);
 				if(data.todoVo.todoImportance =='emg'){
-					document.getElementById("cardTodo").className = "card card-danger";
 					$("#todoImportance").html('긴급');
 				}
 				if(data.todoVo.todoImportance =='gen'){
-					document.getElementById("cardTodo").className = "card card-primary";
 					$("#todoImportance").html('일반');
 				}
 				$("#todoStart").html(data.todoVo.todoStart);
@@ -159,6 +157,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="modalBtn">등록</button>
+    
       </div>
     </div>
   </div>

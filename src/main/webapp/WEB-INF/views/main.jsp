@@ -9,6 +9,8 @@
 <!-- 		</ul> -->
 <!-- </div> -->
 
+<!-- ytp-large-play-button ytp-button : youtube 실행 버튼 -->
+
 <style>
 #main-left{
 	float : left; 
@@ -69,18 +71,26 @@
 .content-text-left{
 	float : left; 
 	padding-top : 50px;
-	padding-left : 300px;
+	padding-left : 200px;
 	font-size : 1.3em;
 }
 .content-text-right{
 	float : right; 
 	padding-top : 50px;
-	padding-right : 300px;
+	padding-right : 200px;
 	font-size : 1.3em;
+}
+.img{
+	width : 600px;
+	height : 400px;
+}
+.introText{
+	padding-top : 200px;
 }
 </style>
 	
 <!-- Channel Plugin Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(function() {
 		var w = window;
@@ -118,15 +128,6 @@
 			window.addEventListener('load', l, false);
 		}
 
-		//  // 특정 DIV 스크롤에서 이벤트 진행    
-		//  var isVisible = false;
-		//  $(window).on('scroll', function(){
-		//      if (checkVisible($('#statistics'))&&!isVisible) {
-		//          alert("Visible!!!");
-		//          isVisible=true;
-		//      }
-		//  });
-
 		sc16 = 1;
 		sc21 = 1;
 		sc27 = 1;
@@ -135,26 +136,41 @@
 		$(window).on('scroll', function() {
 			$('#scrollVal').val(window.scrollY);
 			if ($('#scrollVal').val() >= 1600 && sc16 == 1) { // 한 눈에 볼 수 있는 프로젝트 진행도
+				setTimeout(function(){
+					$('#statisticsImg').css("-webkit-animation", "fadein 2.5s");
+				}, 2000);
 				sc16 = 0;
 			}
 
 			if ($('#scrollVal').val() >= 2100 && sc21 == 1) { // 팀원간 대화를 간편하게
+				setTimeout(function(){
+					$('#chattingImg').css("-webkit-animation", "fadein 2.5s");
+				}, 2000);
 				sc21 = 0;
 			}
 
 			if ($('#scrollVal').val() >= 2700 && sc27 == 1) { // 간편한 일정 공유
+				setTimeout(function(){
+					$('#calendarImg').css("-webkit-animation", "fadein 2.5s");
+				}, 2000);
 				sc27 = 0;
 			}
 
 			if ($('#scrollVal').val() >= 3200 && sc32 == 1) { // 편리한 공용 파일함
+				setTimeout(function(){
+					$('#fileHamImg').css("-webkit-animation", "fadein 2.5s");
+				}, 2000);
 				sc32 = 0;
 			}
 
 			if ($('#scrollVal').val() >= 3440 && scEnd == 1) { // 마지막 부분
+				setTimeout(function(){
+					
+				}, 2000);
 				scEnd = 0;
 			}
 		})
-	})();
+	})()
 	ChannelIO('boot', {
 		"pluginKey" : "9fecedd4-d5c5-4ee5-bdcc-ddf8f29b6c2e"
 	});
@@ -179,12 +195,11 @@
 		
 		<div class="conA main-right">
 			<div class="img1" style="overflow : hidden;">
-				<img class="shadow-pop-tr" src="${pageContext.request.contextPath }/resources/dist_main/img/main_right_img.png"
-					res=""></img>
+				<img class="shadow-pop-tr" 
+					src="${pageContext.request.contextPath }/resources/dist_main/img/main_right_img.png"/>
 			</div>
 		</div>
 	</div>
-
 
 	<div class="conB" style="float : bottom; ">
 		<div class="conB_title">
@@ -196,8 +211,8 @@
 				<div class="conB_icon">
 					<i class="fas fa-chart-bar icon"></i>
 				</div>
-                <div class="conB_content" id="statistics">
-					<h3>통계</h3>
+                <div class="conB_content">
+					<h3>GANTT 및 통계</h3>
 					<p>프로젝트를 한 눈에 <br>살펴볼 수 있습니다.</p>
 				</div>
 			</div>
@@ -206,27 +221,17 @@
 				<div class="conB_icon">
 					<i class="fas fa-users icon"></i>
 				</div>
-                <div class="conB_content" id="chatting">
+                <div class="conB_content">
 					<h3>대화방</h3>
 					<p>팀원끼리 빠르게<br>메시지를 보내보세요</p>
 				</div>
 			</div>
 			
-<!-- 			<div class="conB_small_container"> -->
-<!-- 				<div class="conB_icon"> -->
-<!-- 					<i class="fas fa-address-book icon"></i> -->
-<!-- 				</div> -->
-<!-- 				<div class="conB_content"> -->
-<!-- 					<h3>강력한 관리자 기능</h3> -->
-<!-- 					<p>팀원 관리를 간편하고 강력하게</p> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-			
 			<div class="conB_small_container">
 				<div class="conB_icon">
 					<i class="fas fa-calendar icon"></i>
 				</div>
-                <div class="conB_content" id="calendar">
+                <div class="conB_content">
 					<h3>간편한 일정 공유</h3>
 					<p>서로의 일정을<br> 한 눈에 확인할 수 있습니다.</p>
 				</div>
@@ -236,7 +241,7 @@
 				<div class="conB_icon">
 					<i class="fas fa-file-download icon"></i>
 				</div>
-                <div class="conB_content" id="fileHam">
+                <div class="conB_content">
 					<h3>편리한 공용 파일함</h3>
 					<p>필요한 파일이 있으면<br> 언제든지</p>
 				</div>
@@ -251,8 +256,7 @@
 			<br>
 			<h1>Ants 데모영상</h1>
 		</div>
-		<iframe width="853" height="480" 
-			src="https://www.youtube.com/embed/lhovFTBky78" 
+		<iframe width="1189" height="669" src="https://www.youtube.com/embed/0DFkIP59sj0" 
 			frameborder="0" allow="accelerometer; autoplay; 
 			clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 			allowfullscreen style="position: absolute; top:25%; left:25%;">
@@ -266,10 +270,10 @@
 		</div>
 		
 		<div class="content-text-left">
-			<img alt="통계 페이지" src="#">
+			<img class="img" id="statisticsImg" alt="간트차트 페이지" src="${pageContext.request.contextPath }/resources/dist_main/img/mainIntroImg/GANTT.png">
 		</div>
 		
-		<div class="content-text-right">
+		<div class="content-text-right introText" id="statistics">
        		월별 관리부터 현재 프로젝트의 진행 상황 등 GANTT 차트와<br> 
            	다양한 통계를 통해 프로젝트를 보다 효과적으로 관리할 수 있습니다.
 		</div>
@@ -282,13 +286,13 @@
 			<h1>팀원 간 대화를 간편하게</h1>
 		</div>
 
-		<div class="content-text-left">
+		<div class="content-text-left introText" id="chatting">
 			메신저를 사용하지 않아도 프로젝트를 진행하면서<br>
 			간편하게 팀원 간 메시지를 주고 받을 수 있습니다.
 		</div>
 		
 		<div class="content-text-right">
-			<img alt="메시지 이미지" src="#">
+			<img class="img" id="chattingImg" alt="메시지 이미지" src="${pageContext.request.contextPath }/resources/dist_main/img/mainIntroImg/chatting.png">
 		</div>
 		
 	</div>
@@ -299,13 +303,13 @@
 			<h1>간편한 일정 공유</h1>
 		</div>
 
-		<div class="content-text-left">
+		<div class="content-text-left introText" id="calendar">
 			공용 캘린더를 통해 팀원 간의 일정을 <br>
 			손쉽게 확인할 수 있습니다.
 		</div>
 		
 		<div class="content-text-right">
-			<img alt="메시지 이미지" src="#">
+			<img class="img" id="calendarImg" alt="캘린더 이미지" src="${pageContext.request.contextPath }/resources/dist_main/img/mainIntroImg/calendar.png">
 		</div>
 	</div>
 	<br>
@@ -316,10 +320,10 @@
 		</div>
 
 		<div class="content-text-left">
-			<img alt="파일함 이미지" src="#">
+			<img class="img" id="fileHamImg" alt="파일함 이미지" src="${pageContext.request.contextPath }/resources/dist_main/img/mainIntroImg/fileHam.png">
 		</div>
 		
-		<div class="content-text-right">
+		<div class="content-text-right introText" id="fileHam">
 			외부 드라이브 서비스를 이용하지 않아도<br>
 			서로 파일을 쉽게 주고받을 수 있습니다.
 		</div>

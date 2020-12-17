@@ -162,10 +162,14 @@ public class TodoController {
 		List<TodoVo> dbtodoVo = manageBoardService.getTodo(todoVo);
 		model.addAttribute("todoVo", dbtodoVo);
 		String todoId = todoVo.getTodoId();
+		List<TodoLogVo> dbtodolog = manageBoardService.getTodolog(todoId);
 		String reqId = (String) session.getAttribute("projectId");
 		todoVo.setReqId(reqId);
 		PublicFileVo pfv = new PublicFileVo("1", todoId, reqId);
 		filecontroller.getfiles(pfv, model);
+		model.addAttribute("dbtodolog", dbtodolog);
+		System.out.println(dbtodolog);
+		System.out.println("asdasd");
 		return "jsonView";
 	}
 

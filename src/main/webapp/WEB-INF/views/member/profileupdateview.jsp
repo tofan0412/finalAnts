@@ -310,9 +310,9 @@
 				picture.value = null;
 
 				// 0번 이미지 경로 가져오기
-				/* imgsrc = document.getElementById('img0').src */
+				imgsrc = document.getElementById('img0').src 
 				
-				$('#clickmsg').append(imgsrc);		 		// 이미지 경로 미리보기
+				/* $('#clickmsg').append(imgsrc); */		 		// 이미지 경로 미리보기
 				$('#pictureViewImg').attr('src', imgsrc); 		// 이미지 뷰어에 보이기
 				$('#imgname').attr('value', imgsrc);			// input 태그에 value값으로 경로 추가
 				/* 

@@ -29,7 +29,7 @@
 <%
 	List<ScheduleVo> list = (ArrayList<ScheduleVo>)request.getAttribute("showSchedule");
 %>
-<script>	
+<script>
 $(function(){
 	// 메뉴를 선택하면 배경색이 변한다. 
 	$('.selectable').click(function(){

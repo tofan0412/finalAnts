@@ -10,6 +10,10 @@
 
 <style>
 
+body{
+	min-width: 1000px;
+}
+
 .uploadifive-button {
 	float: left;
 	margin-right: 10px;

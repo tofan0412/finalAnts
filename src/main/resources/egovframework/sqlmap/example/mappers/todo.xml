@@ -287,7 +287,7 @@
 				#{logComment},
 				#{beforeId},
 				#{afterId},
-				sysdate
+				TO_DATE(to_char(sysdate,'yyyymmddhh24miss'),'yyyymmddhh24miss')
 			)
 		</insert>
 		
@@ -357,12 +357,19 @@
 		
 		<select id="getTodolog" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoLogVo">
 			SELECT
-    			before_id,
-    			after_id
+			    todo_id,
+			    log_id,
+			    log_comment,
+			    before_id,
+			    after_id,
+			    to_char(reg_dt, 'YYYY-MM-DD hh24:mi') as regDt,
+			    TRUNC(sysdate-to_date(to_char(reg_dt, 'YYYY-MM-DD'),'YYYY-MM-DD')) as elapsedDay,
+			    trunc(mod((to_date(to_char(sysdate, 'yyyymmddhh24miss'),'yyyymmddhh24miss')-to_date(to_char(reg_dt,'yyyymmddhh24miss'),'yyyymmddhh24miss')),1)*24)  as elapsedTime,
+			    trunc(mod((to_date(to_char(sysdate, 'yyyymmddhh24miss'),'yyyymmddhh24miss')-to_date(to_char(reg_dt,'yyyymmddhh24miss'),'yyyymmddhh24miss'))*24,1)*60)  as elapsedMin 
 			FROM
     			todolog
-			WHERE todo_id = #{todoId}
-			ORDER BY log_id desc
+			WHERE todo_id= #{todoId}
+			ORDER BY elapsedDay asc
 		</select>
 		
 		
