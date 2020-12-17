@@ -29,6 +29,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,16 +39,20 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.board.memBoard.service.memBoardService;
+import ants.com.common.model.AlarmVo;
 import ants.com.common.model.IpHistoryVo;
+import ants.com.common.service.AlarmService;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.service.MemberService;
 import ants.com.member.service.ProjectService;
 import ants.com.member.service.ProjectmemberService;
+import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
@@ -73,6 +78,13 @@ public class MemberController {
 	@Resource(name="promemService")
 	ProjectmemberService promemService;
 	
+	@Resource(name="alarmService")
+	private AlarmService alarmService;
+	
+	/** EgovPropertyService */
+	@Resource(name = "propertiesService")
+	protected EgovPropertyService propertiesService;
+	
 	@RequestMapping("/mainView")
 	public String mainView() {
 		return "main.tiles/main";
@@ -93,9 +105,9 @@ public class MemberController {
 	// 메인 페이지로 이동
 	@RequestMapping("/projectMainView")
 	public String projectMainView() {
-		return "tiles/layout/contentmain";
+		return "main/layout/contentmain";
 	}
-	
+				
 	// 로그인 로직
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
@@ -216,13 +228,20 @@ public class MemberController {
 			model.addAttribute("showSchedule", showCalendar);
 			// 공지사항 전송 
 			model.addAttribute("issuelist", resultList);
+			
+			//alarm
+			AlarmVo alarmVo = new AlarmVo();
+			alarmVo.setMemId(dbMember.getMemId());
+			alarmVo = alarmService.alarmCount(alarmVo);
+			
+			session.setAttribute("alarmCnt", alarmVo);
 				
-			return "tiles/layout/contentmain";
+			return "main/layout/contentmain";
 		} else {
 			return "redirect:/member/loginView";
 		}
 	}
-	
+		
 	// 로그인 체크 ajax
 	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
 	public String logincheck(MemberVo memberVo, Model model) {
@@ -558,5 +577,47 @@ public class MemberController {
 		model.addAttribute("memberVo", memberVo);
 		return "tiles/member/memberProfile";
 	}
+		
+	
+	// 공지사항리스트 출력
+	// admin 인터셉터 때문에 관리자로 로그인 안하면 admin url을 탈수 없기 때문에 따로 만듦
+	@RequestMapping("/noticelistmemview")
+	public String noticelistmemview(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model) throws Exception{
+			
+		/** EgovPropertyService.sample */
+		noticeVo.setPageUnit(propertiesService.getInt("pageUnit"));
+		noticeVo.setPageSize(propertiesService.getInt("pageSize"));
+		
+		/** pageing setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(noticeVo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(noticeVo.getPageUnit());
+		paginationInfo.setPageSize(noticeVo.getPageSize());
+
+		noticeVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		noticeVo.setLastIndex(paginationInfo.getLastRecordIndex());
+		noticeVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		List<NoticeVo> resultList = adminService.noticelist(noticeVo);
+		model.addAttribute("noticelist", resultList);
+
+		int totCnt = adminService.noticePagingListCnt(noticeVo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
+					
+		return "main.tiles/notice/noticelistmemview";
+	}
+			
+		
+	// 각 공지사항 상세보기
+	@RequestMapping("/noticedetailmemview")
+	public String noticedetailmemview(String noticeId, HttpSession session, Model model) {
+			
+		NoticeVo noticevo = adminService.geteachnotice(noticeId);
+		model.addAttribute("noticevo", noticevo);
+		
+		return "main.tiles/notice/noticedetailmemview";
+	}
+		
 	
 }

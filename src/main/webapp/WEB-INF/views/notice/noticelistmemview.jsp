@@ -4,20 +4,23 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style type="text/css">
+	body{
+		min-width:1000px;	
+		padding-top:3%;
+		z-index:1;
+	}	
+				
 	#pagenum a{
 		 display: inline-block;
 		 text-align: center;
 		 width : auto;	 
 		 border: none; 
-	
 	}
 	
 	li strong{
@@ -37,48 +40,31 @@
 		 width:auto; float:left; margin:0 auto; text-align:center;"
 		 
 	}
-	
-	.option{
+	.option{	
 		height: 50px;
 		width: 150px;
 		padding: 5px;
+	}
+	#searchBtn{
+		height: 38px;
 	}
 
 </style>
 
 <script type="text/javascript">
-	$(function() {
-		$("#insertnotice")
-				.on(
-						'click',
-						function() {
-
-							$(location)
-									.attr('href',
-											'${pageContext.request.contextPath}/admin/insertnoticeView');
-						})
-
-		$("#pagenum a").addClass("page-link");
-
-	})
-
 	/* pagination 페이지 링크 function */
 	function fn_egov_link_page(pageNo) {
 		document.listForm.pageIndex.value = pageNo;
-		document.listForm.action = "<c:url value='/admin/noticelist'/>";
+		document.listForm.action = "<c:url value='/member/noticelistmemview'/>";
 		document.listForm.submit();
 	}
-
-	function noticeInsert() {
-		document.listForm.action = "<c:url value='${pageContext.request.contextPath}/admin/insertnoticeView'/>";
+	
+	 function search(){
+		document.listForm.pageIndex.value = 1;
+		document.listForm.action = "<c:url value='/member/noticelistmemview'/>";
 		document.listForm.submit();
-	}
-
-	function search() {
-		document.listForm.action = "<c:url value='/admin/noticelist'/>";
-		document.listForm.submit();
-	}
-</script>
+	}	
+</script>	
 </head>
 
 
@@ -98,7 +84,6 @@
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right" style="background: white">
-								<li class="breadcrumb-item san jg"><a href="#">Home</a></li>
 								<li class="breadcrumb-item active jg">공지사항</li>
 							</ol>
 						</div>
@@ -150,9 +135,11 @@
 									<td style="width: 150px; padding-left: 50px;"><c:out
 											value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />.</td>
 
-									<td style="padding-left: 30px;"><a
-										href="${pageContext.request.contextPath}/admin/eachnoticeDetail?noticeId=${notice.noticeId}">
-											${notice.noticeTitle }</a></td>
+									<td style="padding-left: 30px;">
+									
+									<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}">${notice.noticeTitle }</a>
+											
+									</td>
 									<td>${notice.adminId }</td>
 									<td>${notice.regDt }</td>
 									<td style="text-align: center;">
@@ -178,17 +165,10 @@
 	                 </ul>
         		  </div>
 				<br>
-				<div class="card-footer clearfix">
-					<button id="insertnotice" type="button"
-						class="btn btn-default float-right" onclick="noticeInsert()">
-						<i class="fas fa-plus"></i>등 록
-					</button>
-				</div>
-				<!-- 페이징,등록 부분 끝 -->
+			
 
 			</div><!-- /.card-body -->
 		</div>
 	</section>	
 </form:form>
 </body>
-</html>

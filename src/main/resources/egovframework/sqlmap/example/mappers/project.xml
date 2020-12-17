@@ -7,7 +7,7 @@
 		resultType="ants.com.member.model.ProjectVo">
 		SELECT
 			project.req_id, project.mem_id, project.pro_name,
-			project.pro_percent, project.reg_dt
+			project.pro_percent as percent, project.reg_dt
 		FROM(select * from project)project,
 			projectmember projectmember
 		WHERE
@@ -21,8 +21,8 @@
 		SELECT
 			DISTINCT project.req_id, project.pro_name,
 			project.mem_id,
-			project.pro_percent, project.reg_dt
-		FROM(select * from
+			project.pro_percent as percent, project.reg_dt
+		FROM(select * from	
 			project)project,
 			reqlist reqlist
 		WHERE
@@ -30,13 +30,14 @@
 		AND reqlist.pl_id= #{memId}
 		AND reqlist.status ='ACCEPT'
 	</select>
-
+	
+	
 	<select id="pmInProjectList" parameterType="String"
 		resultType="ants.com.member.model.ProjectVo">
 		SELECT
 			DISTINCT project.req_id, project.pro_name,
 			project.mem_id,
-			project.pro_percent, project.reg_dt
+			project.pro_percent as percent, project.reg_dt
 			FROM	(select * from
 					project)project,
 					reqlist reqlist

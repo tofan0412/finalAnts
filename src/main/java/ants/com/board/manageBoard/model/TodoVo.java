@@ -16,6 +16,7 @@ public class TodoVo extends BaseVo{
 	private String memId;
 	private String todoParentid;
 	private String del;
+	private String memName;
 	
 	public String getTodoId() {
 		return todoId;
@@ -90,6 +91,13 @@ public class TodoVo extends BaseVo{
 	}
 	public void setTodoPercent(String todoPercent) {
 		this.todoPercent = todoPercent;
+	}
+	
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
 	}
 	@Override
 	public String toString() {

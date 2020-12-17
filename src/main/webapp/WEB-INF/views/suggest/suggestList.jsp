@@ -6,42 +6,32 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <style type="text/css">
-#pagenum a {
-	display: inline-block;
-	text-align: center;
-	width: auto;
-	border: none;
-	background: transparent;
+#pagenum a{
+	 display: inline-block;
+	 text-align: center;
+	 width : auto;	 
+	 border: none; 
+
 }
 
-li strong {
-	display: inline-block;
-	text-align: center;
-	width: 30px;
-}
-
-.pagingui {
+li strong{
 	display: inline-block;
 	text-align: center;
 	width: 30px;
 }
 
-#paging {
-	display: inline-block;
-	/* 		 text-align: center; */
-	width: auto;
-	float: left;
-	margin: 0 auto;
-	text-align: center;
-	"
+.pagingui{
+	 display: inline-block;
+	 text-align: center;
+	 width: 30px;
+	 
 }
+#paging{
+	 display: inline-block;
+	 width:auto; float:left; margin:0 auto; text-align:center;"
+	 
+	}
 
-#searchBtn {
-	color: #fff;
-	background-color: #007bffab;
-	border-color: #007bff;
-	box-shadow: none;
-}
 th,td{
 	text-align : center;
 }
@@ -161,7 +151,13 @@ $(function(){
 /* pagination 페이지 링크 function */
 	function fn_egov_link_page(pageNo){
 		document.listForm.pageIndex.value = pageNo;
-		document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
+		document.listForm.action = "<c:url value='/suggest/readSuggestList'/>";
+	    document.listForm.submit();
+	}
+	
+	function search(){
+	 	document.listForm.pageIndex.value = 1;
+	 	document.listForm.action = "<c:url value='/suggest/readSuggestList'/>";
 	    document.listForm.submit();
 	}
 	
@@ -195,31 +191,35 @@ $(function(){
 <form:form commandName="suggestVo" id="listForm" name="listForm" method="post">
 	<section class="content">
 		<div class="col-12 col-sm-12">
-			<div class="card" style="border-radius: inherit; padding: 2px;">
-				<div class="container-fluid">
-					<div class="row mb-2">
-						<br>
-						<div class="col-sm-6">
-							<br>
-							<h1 class="jg" style="padding-left: 10px;">건의 사항 리스트</h1>
-						</div>
-						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right" style="background: white">
-								<li class="breadcrumb-item san"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">건의 사항 리스트</li>
-							</ol>
-						</div>
-					</div>
-				</div>
-
+			<div class="card" style="border-radius: inherit;">
+<!-- 				<div class="container-fluid"> -->
+<!-- 					<div class="row mb-2"> -->
+<!-- 						<br> -->
+<!-- 						<div class="col-sm-6"> -->
+<!-- 							<br> -->
+<!-- 							<h1 class="jg" style="padding-left: 10px;">건의 사항 리스트</h1> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-sm-6"> -->
+<!-- 							<ol class="breadcrumb float-sm-right" style="background: white"> -->
+<!-- 								<li class="breadcrumb-item san"><a href="#">Home</a></li> -->
+<!-- 								<li class="breadcrumb-item active">건의 사항 리스트</li> -->
+<!-- 							</ol> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+				<br>
 				<div class="card-header">
+				<div id="keyword" class="card-tools float-left"
+						style="width: 450px;">
+						<h3 class="jg" style="padding-left: 10px;">건의 사항 리스트</h3>
+				</div>		
 					<div id="keyword" class="card-tools float-right"
-						style="width: 550px;">
+						style="width: 450px;">
 						<div class="input-group row">
 							<label for="searchCondition" style="visibility: hidden;"></label>
 
-							<form:select path="searchCondition" cssClass="use"
-								class="form-control col-md-3" style="width: 100px;">
+							<form:select path="searchCondition" 
+								class="form-control col-md-3 jg" style="width: 100px;">
 								<form:option value="1" label="작성자" />
 								<form:option value="2" label="제목" />
 								<form:option value="3" label="내용" />
@@ -228,9 +228,9 @@ $(function(){
 							<label for="searchKeyword"
 								style="visibility: hidden; display: none;"></label>
 							<form:input style="width: 300px;" path="searchKeyword"
-								cssClass="txt" placeholder="검색어를 입력하세요." class="form-control" />
+								placeholder="검색어를 입력하세요." class="form-control jg" />
 							<span class="input-group-append">
-								<button class="btn btn-primary" type="button" id="searchBtn"
+								<button class="btn btn-default" type="button" id="searchBtn"
 									onclick="search()">
 									<i class="fa fa-fw fa-search"></i>
 								</button>
@@ -248,37 +248,37 @@ $(function(){
 					<table class="table">
 						<thead>
 							<tr>
-								<th style="width: 150px; padding-left: 50px;">No.</th>
-								<th style="padding-left: 30px;">건의사항 제목</th>
-								<th>작성자</th>
-								<th>날짜</th>
-								<th>해당일감</th>
-								<th>처리현황</th>
+								<th class="jg" style="width: 150px; padding-left: 50px;">No.</th>
+								<th class="jg"  style="padding-left: 30px;">건의사항 제목</th>
+								<th class="jg" >작성자</th>
+								<th class="jg" >날짜</th>
+								<th class="jg" >해당일감</th>
+								<th class="jg" >처리현황</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach items="${suggestList }" var="suggest" varStatus="status">
 								<tr>
 
-									<td style="width: 150px; padding-left: 50px;"><c:out
+									<td class="jg"  style="width: 150px; padding-left: 50px;"><c:out
 											value="${  ((suggest.pageIndex-1) * suggest.pageUnit + (status.index+1))}" />.</td>
 
-									<td style="padding-left: 30px;">
+									<td class="jg"  style="padding-left: 30px;">
 										<a href="/suggest/suggestDetail?sgtId=${suggest.sgtId }&memId=${suggest.memId }">${suggest.sgtTitle }</a>
 									</td>
 											
-									<td>${suggest.memId }</td>
-									<td>${suggest.regDt }</td>
-									<td>${suggest.todoId }</td>
+									<td class="jg" >${suggest.memName }</td>
+									<td class="jg" >${suggest.regDt }</td>
+									<td class="jg" >${suggest.todoId }</td>
 									<!-- 건의사항 상태 : 대기, 승인, 반려에 따른 출력 -->
 									<c:if test="${'WAIT' == suggest.sgtStatus }">
-										<td>대기</td>
+										<td class="jg" >대기</td>
 									</c:if>
 									<c:if test="${'Y' == suggest.sgtStatus }">
-										<td>승인</td>
+										<td class="jg" >승인</td>
 									</c:if>
 									<c:if test="${'N' == suggest.sgtStatus }">
-										<td>반려</td>
+										<td class="jg" >반려</td>
 									</c:if>
 								</tr>
 							</c:forEach>
@@ -287,20 +287,19 @@ $(function(){
 				</div>
 
 				<br>
-				<div id="paging" class="card-tools">
-					<ul class="pagination pagination-sm" id="pagingui">
-
-						<li class="page-item" id="pagenum"><ui:pagination
-								paginationInfo="${paginationInfo}" type="image"
-								jsFunction="fn_egov_link_page" /></li>
-						<form:hidden path="pageIndex" />
-
-					</ul>
-				</div>
-				<br>
+				 <div id="paging" class="card-tools">
+	              	<ul class="pagination pagination-sm jg" id ="pagingui">
+	              	
+		        		<li  class="page-item jg" id ="pagenum" >	
+		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
+		        		<form:hidden path="pageIndex" />		        		
+                    
+	                 </ul>
+        		  </div>
+			
 				<div class="card-footer clearfix">
 					<button id="insertSuggestBtn" type="button"
-						class="btn btn-default float-right">
+						class="btn btn-default float-left jg">
 						<i class="fas fa-plus"></i>등 록
 					</button>
 				</div>

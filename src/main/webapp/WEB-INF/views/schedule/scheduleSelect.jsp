@@ -34,7 +34,8 @@
 #juso{
 	width : 100%;
 }
-</style>
+</style>	
+<%@include file="../layout/contentmenu.jsp"%>
 <body>
 	<c:if test="${not empty scheduleVo.juso}">
 		<div id="map" style="width:100%;height:400px;"></div>
@@ -52,7 +53,6 @@
 	
 	<div class="card card-primary card-outline">
 
-	
 		<div class="card-header"><h3>일정 상세내역</h3>
 			<div class="float-right">
 				<a href="/schedule/scheduleUpdateView?scheId=${scheduleVo.scheId}"><input type="button" class="btn btn-primary" value="수정"></a> 
@@ -61,11 +61,11 @@
 				제목 <input id="scheId" name="scheId" value="${scheduleVo.scheTitle}" style="border:none;" readonly> <br>
 				아이디 <input id="memId" name="memId" type="text" value="${scheduleVo.memId }" style="border:none;" readonly> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 				등록일<input id="regDt" name="regDt" type="text" value="${scheduleVo.regDt }" style="border:none;" readonly> <br>
-			<h3 class="card-title">
+			<h3 class="card-title" style="display:none;">
 				<c:out value="${projectVo.proName}" />
 			</h3>
 		</div>
-		
+			
 		
 		<div class="card-body">
 			<div class="form-group">
@@ -90,7 +90,7 @@
 
  
 	
-	<script type="text/javascript">
+<script type="text/javascript">
 		var x = 0;
 		var y = 0;
 		var contentString = '송촌동 우리집';
@@ -289,7 +289,16 @@
 
 		naver.maps.onJSContentLoaded = initGeocoder;
 		naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
-	</script>
+		
+			
+	$(document).ready(function(){
+		// 뒤로가기
+		$("#back").on("click", function() {
+			window.history.back();
+		});
+		 	
+	});
+</script>
 
 </body>
 </html>

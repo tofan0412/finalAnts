@@ -31,10 +31,9 @@
 }
 
 .login {
-	height: 50px;
 	background-color: #F3F6F9;
 	border-color: #F3F6F9;
-	height: auto !important;
+	height: 60px !important;
 	padding: 1.5rem !important;
 	border-radius: 0.85rem !important;
 }
@@ -59,17 +58,17 @@
 
 .loginBox{
 	background-color : white;
-	width : 35%; 
+	width : 30%; 
 	height : 100%;
 	float : right;
-	margin-right : 10%;
-	padding : 15px; 15px; 35px; 35px;
+	margin-right : 15%;
+	padding : 15px 15px 35px 35px;
 	-webkit-animation: fadein 1s; /* Safari and Chrome */
 	border-radius: 0.7rem;
 }
 .imgBox{
 	float : left;
-	width : 45%;
+	width : 40%;
 	height : 100%;
 	position : absolute;
 	top : 0;
@@ -216,8 +215,7 @@
 <body class="loginContainer fadein">
 	
 	<div class="imgBox">
-		<img alt="img" src="${pageContext.request.contextPath}/resources/dist/loginimage.png"
-		style="width : 100%; padding-top : 10%;">
+		<img alt="img" src="${pageContext.request.contextPath}/resources/dist/img/loginimage.png" style="width : 100%; padding-top : 30%;">
 	</div>
 	<div class="loginBox">
 		<div>

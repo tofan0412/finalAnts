@@ -186,7 +186,6 @@
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge" id="alarmCount"></span>
-          
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header alarmCount">개의 알림이 있습니다.</span>
@@ -200,7 +199,7 @@
           </a>
           <div class="dropdown-divider"></div>
           <a href="${pageContext.request.contextPath}/alarmList?searchCondition=3" class="dropdown-item" id="postsCnt" style="font-size: 0.9em">
-            <i class="fas fa-reply mr-2" ></i> 
+            <i class="fas fa-replyd mr-2" ></i> 
           </a>
           <div class="dropdown-divider"></div>
           <a href="${pageContext.request.contextPath}/alarmList" class="dropdown-item dropdown-footer">모든 알림 보기</a>
@@ -229,12 +228,7 @@
         </div>
           
       </li>
-      
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+	
     </ul>
   </nav>
   <!-- /.navbar -->

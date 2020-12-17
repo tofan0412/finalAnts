@@ -38,7 +38,7 @@ body{
 }
 th, td {
 	padding: 10px;
-	style="border:none;"
+	border:none;
 }
 th{
 	border-bottom: 1px solid #444444;
@@ -315,7 +315,7 @@ var id;
 	     
 	          <div class="col-sm-6">
 	          <br>
-	            <h2 class="jg" style=" padding-left : 10px;">개인 파일함</h2>
+	            <h3 class="jg" style=" padding-left : 10px;"><li class="nav-icon fas fa-folder-open"></li>&nbsp;개인 파일함</h3>
 	          </div>
 	          <div class="col-sm-6">
 	          <br>
@@ -330,10 +330,9 @@ var id;
     
         
 	<div style="padding-left: 30px; background-color: white;">
-	
-		<br>
+			
 		<div class="float-left">
-		    <div class="card-header">
+		    <div class="card-header">				
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">		
 						<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">				
@@ -397,22 +396,7 @@ var id;
 						<c:set var="orginalName" value="${privatefile.privFilename}"/>
 						<c:set var="nameLength" value="${fn:length(orginalName)}"/>
 						<c:set var="cutName" value="${fn:substring(orginalName, nameLength-5, nameLength)}"/>
-						<c:set var="filename" value="${fn:substringAfter(cutName,'.')}"/>
-					<tr>
-						<c:if test="${sts.index >= 0 and sts.index <= 5}">
-						<td data-privid="${privatefile.privId}" title="시퀸스 : ${privatefile.privId} <br>
-																	수정한 날짜: ${privatefile.regDt } <br>
-																	파일이름 : ${privatefile.privFilename } <br>
-																	파일경로 : ${privatefile.privFilepath} <br>
-																	파일사이즈 : ${privatefile.privSize } KB<br>
-																	확장자: ${filename} <br>
-																	작성자 : ${privatefile.memId} <br>
-																	"/>
-						</c:if>
-					</tr>
-					
-					
-					
+						<c:set var="filename" value="${fn:substringAfter(cutName,'.')}"/>		
 					
 				    <tr data-privid="${privatefile.privId}" title="시퀸스 : ${privatefile.privId} <br>
 																	수정한 날짜: ${privatefile.regDt } <br>

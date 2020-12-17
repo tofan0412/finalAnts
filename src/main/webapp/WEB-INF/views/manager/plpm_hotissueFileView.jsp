@@ -8,8 +8,6 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 
 <script type="text/javascript">
 var id;
@@ -42,6 +40,13 @@ var id;
 		 $(document).click(function(){
 			    $(".contextmenu").hide();
 			 });
+		 
+			$("#pagenum a").addClass("page-link");
+			
+			$("#hotissueview").on('click', function(){
+				$(location).attr('href', '${pageContext.request.contextPath}/hotIssue/hissueList');
+			})
+			
 	});
 		
 	function hotfiledown(){
@@ -65,9 +70,10 @@ var id;
 </script>
 <style type="text/css"> 
 #todoTable{
-	width : 1300px;
+	width : 100%;
     border-top: 1px solid #444444;
     border-collapse: collapse;
+    text-align: center;
   }
   th, td {
     border-bottom: 1px solid #444444;
@@ -109,33 +115,58 @@ var id;
 .contextmenu li:hover a {
   color: black;
 }
-
+	#pagenum a{
+		 display: inline-block;
+		 text-align: center;
+		 width : auto;	 
+		 border: none; 
+	
+	}
+	
+	li strong{
+		display: inline-block;
+		text-align: center;
+		width: 30px;
+	}
+	
+	.pagingui{
+		 display: inline-block;
+		 text-align: center;
+		 width: 30px;
+		 
+	}
+	#paging{
+		 display: inline-block;
+		 width:auto; float:left; margin:0 auto; text-align:center;
+		 
+	}
+	
 </style>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 <%@include file="../layout/contentmenu.jsp"%>
-<div style="padding-left: 30px; background-color: white;">
-<a class="btn btn-default " href="${pageContext.request.contextPath}/hotIssue/hissueList"><i class="fas fa-edit"></i>PM-PL 이슈게시판</a>
-<div id="tlqkf">
+<div id="hhidde">
 <ul class="contextmenu">
-  <li><a href="#"><i class="fa fa-folder" style="padding-right: 20px;"></i>Folder</a></li>
-  <li><a href="javascript:hotfiledown();"><i class="fas fa-download"  style="padding-right: 20px;"></i>Download</a></li>
-  <li><a href="javascript:hotfiledel();"><i class="fas fa-trash"  style="padding-right: 20px;"></i>Delete</a></li>
+  <li class="jg"><a href="#"><i class="fa fa-folder" style="padding-right: 20px;"></i>Folder</a></li>
+  <li class="jg"><a href="javascript:hotfiledown();"><i class="fas fa-download"  style="padding-right: 20px;"></i>Download</a></li>
+  <li class="jg"><a href="javascript:hotfiledel();"><i class="fas fa-trash"  style="padding-right: 20px;"></i>Delete</a></li>
 </ul>
 </div>	
  
 <form:form commandName="hotIssueFileVo" id="listForm" name="listForm" method="post">
 <div class="col-12 col-sm-12">
-	<div style="padding-left: 30px; background-color: white;">
-		<div class="float-left">
-		    <div class="card-header with-border">
+	<div class="card" style="border-radius: inherit; padding : 2px;">
+	<div>
+	<button id="hotissueview" type="button" class="btn btn-default jg"><i class="fas fa-edit"></i>PM-PL 이슈게시판</button>
+	</div>
+		 <div class="card-header ">
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">		
-						<select name="searchCondition" class="form-control col-md-3" style="width: 100px;">
+						<select name="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
 							<option value="1" label="파일명"/>
 						</select> 
 							 <label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                         <input type="text" class="form-control" name="searchKeyword" value="${hotIssueFileVo.searchKeyword }">
+	                         <input type="text" class="form-control jg" name="searchKeyword" value="${hotIssueFileVo.searchKeyword }">
 		                  <a href="javascript:search();">
 		                  	<button type="button" class="btn-default" style="height: 100%;">
                                <i class="fa fa-search"></i>
@@ -143,27 +174,15 @@ var id;
                           </a>
 					</div>
 		        </div>
-		    </div>
 		</div>
-		<table id="todoTable">
+		<div class="card-body p-0">
+		<table id="todoTable" class="jg">
 			<tr>
-				<th width="80px">No.</th> 
-				<th style="padding-left:45px;">파일명</th>
-				<th></th>  
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th width="200px">수정한 날짜</th>
-				<th width="200px">유형</th>
-				<th width="200px">크기</th>
+				<th style="width: 200px;">No.</th>
+	            <th style="padding-left: 150px; width: 400px; " > 파일명</th> 
+				<th> 날짜   </th>
+				<th> 확장자   </th>
+				<th> 용량   </th>
 			</tr> 
 			<tbody id="hotissuefileList"> 
 				<c:forEach items="${hotissuefileList}" var="hotissueFile" varStatus="sts" >
@@ -171,182 +190,45 @@ var id;
 					<td><c:out value="${paginationInfo.totalRecordCount - ((privatefileVo.pageIndex-1) * privatefileVo.pageUnit + sts.index)}"/>. 
 						<input type="hidden" id="${hotissueFile.hissuefId }" name="${hotissueFile.hissuefId }">
 					</td>	
-					<td>
-						<c:choose>
-							<c:when test="${hotissueFile.hissuefExtension eq '3ds'}">
-									<img src="/fileFormat/3ds.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'aac'}">
-									<img src="/fileFormat/aac.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'ai'}">
-									<img src="/fileFormat/ai.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'avi'}">
-									<img src="/fileFormat/avi.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'bmp'}">
-									<img src="/fileFormat/bmp.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'cad'}">
-									<img src="/fileFormat/cad.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'cdr'}">
-									<img src="/fileFormat/cdr.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'css'}">
-									<img src="/fileFormat/css.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'dat'}">
-									<img src="/fileFormat/dat.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'dll'}">
-									<img src="/fileFormat/dll.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'dmg'}">
-									<img src="/fileFormat/dmg.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'doc'}">
-									<img src="/fileFormat/doc.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'eps'}">
-									<img src="/fileFormat/eps.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'fla'}">
-									<img src="/fileFormat/fla.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'flv'}">
-									<img src="/fileFormat/flv.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'gif'}">
-									<img src="/fileFormat/gif.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'html'}">
-									<img src="/fileFormat/html.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'hwp'}">
-									<img src="/fileFormat/hwp.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'indd'}">
-									<img src="/fileFormat/indd.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'iso'}">
-									<img src="/fileFormat/iso.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'jpg'}">
-									<img src="/fileFormat/jpg.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'js'}">
-									<img src="/fileFormat/js.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'midi'}">
-									<img src="/fileFormat/midi.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'mov'}">
-									<img src="/fileFormat/mov.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'mp3'}">
-									<img src="/fileFormat/mp3.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'mpg'}">
-									<img src="/fileFormat/mpg.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'pdf'}">
-									<img src="/fileFormat/pdf.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'php'}">
-									<img src="/fileFormat/php.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'png'}">
-									<img src="/fileFormat/png.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'ppt'}">
-									<img src="/fileFormat/ppt.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'pptx'}">
-									<img src="/fileFormat/ppt.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'ps'}">
-									<img src="/fileFormat/ps.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'psd'}">
-									<img src="/fileFormat/psd.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'raw'}">
-									<img src="/fileFormat/raw.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'sql'}">
-									<img src="/fileFormat/sql.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'svg'}">
-									<img src="/fileFormat/svg.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'tif'}">
-									<img src="/fileFormat/tif.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'txt'}">
-									<img src="/fileFormat/txt.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'wmv'}">
-									<img src="/fileFormat/wmv.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'xls'}">
-									<img src="/fileFormat/xls.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'xlsx'}">
-									<img src="/fileFormat/xls.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:when test="${hotissueFile.hissuefExtension eq 'xml'}">
-									<img src="/fileFormat/xml.png" style="width:30px; height:30px;">
-							</c:when> 
-							<c:when test="${hotissueFile.hissuefExtension eq 'zip'}">
-									<img src="/fileFormat/zip.png" style="width:30px; height:30px;">
-							</c:when>
-							<c:otherwise>
-								<img src="/fileFormat/not.png" style="width:30px; height:30px;">
-							</c:otherwise>
-						</c:choose>
-						${hotissueFile.hissuefFilename }
+					<td class="jg" style="padding-left: 180px; text-align: left; width: 400px;">
+					<img name="link" src="/fileFormat/${fn:toLowerCase(hotissueFile.hissuefExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">										 																	
+					${hotissueFile.hissuefFilename }
 					</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					
 					<td > 
 						${hotissueFile.regDt }
 					</td>
 					<td > 
-						${hotissueFile.hissuefExtension}
+					 ${fn:toUpperCase(hotissueFile.hissuefExtension) }
 					</td>
-					<td > 
-						${hotissueFile.hissuefSize }
-					</td>
+					<c:set var="balance" value="${hotissueFile.hissuefSize }" />
+					<fmt:parseNumber var="i" type="number" value="${balance}" />
+					<!-- 용량이 1024KB를 초과했을 시 MB로 표시 -->
+					<c:if test="${i >= 1024}">
+					<td class="jg" style="text-align: center;"> <fmt:formatNumber value="${i/1024}" pattern=".00" /> MB</td>
+					</c:if>
+					<!-- 용량이 1024KB 이하일때 KB로 표시 -->
+					<c:if test="${i < 1024}">
+					<td class="jg" style="text-align: center;"> ${i} KB</td>
+					</c:if>
 					</tr>
 					
 				</c:forEach> 
 			</tbody>
 		</table>
 		</div>  
-		  
-		<div id="paging" class="card-tools" style="padding-right:2%">
-		    <ul class="pagination pagination-sm float-right">
-		   		<li class="page-item"><a class="page-link" href="#">«</a></li>
-				<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page"  />
-				<form:hidden path="pageIndex" />
-			    <li class="page-item"><a class="page-link" href="#">»</a></li>
-		    </ul>
-        </div>
-	</div>
-</form:form>
-</div>	
+	 <br>
+	              <div id="paging" class="card-tools">
+	              	<ul class="pagination pagination-sm jg" id ="pagingui">
+		        		<li  class="page-item jg" id ="pagenum" >	
+		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
+		        		<form:hidden path="pageIndex" />		        		
+                    
+	                 </ul>
+        		  </div>
+        		  <br>
+	          
+           </div>
+       </div>
+</form:form>		
 </body>
 </html>

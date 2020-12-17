@@ -12,6 +12,7 @@
 <style>
 body{
 	min-width: 1000px;
+	
 } 
 #todoTable{
 	width: 98%;
@@ -21,11 +22,38 @@ body{
   th, td {
     border-bottom: 1px solid #444444;
     padding: 10px;
-  } 
+  } 	
 #bt{
 	margin-top : 10px;
 	margin-bottom : 20px;
 }
+	#pagenum a{
+		 display: inline-block;
+		 text-align: center;
+		 width : auto;	 
+		 border: none; 
+	}
+		
+	li strong{
+		display: inline-block;
+		text-align: center;
+		width: 30px;
+	}
+	
+	.pagingui{
+		 display: inline-block;
+		 text-align: center;
+		 width: 30px;
+	}		
+	#paging{
+		 display: inline-block;
+		 width:auto; 
+		 float:left; 
+		 margin:0 auto; 
+		 text-align:center;
+		 margin-top:40px;	
+		 margin-left:45%;		
+	}	
 </style>
 <script  type="text/javascript">
 $(document).ready(function(){
@@ -34,18 +62,22 @@ $(document).ready(function(){
 			$(location).attr('href', '${pageContext.request.contextPath}/schedule/scheduleSelect?scheId='+scheId);
 	});
 })   
-</script>
-<body>
-
-	일정장소 게시판
-	<%@include file="../layout/contentmenu.jsp"%>
 	
+/* pagination 페이지 링크 function */
+ function fn_egov_link_page(pageNo){
+ 	document.listForm.pageIndex.value = pageNo;
+ 	document.listForm.action = "<c:url value='/schedule/scheduleplaceView'/>";
+    document.listForm.submit();
+ }
+</script>
+<body>	
+
+	<%@include file="../layout/contentmenu.jsp"%>
+		
 	<br>
 	<form:form commandName="scheduleVo" id="listForm" name="listForm" method="post">
-	<div style="padding-left: 30px; background-color: white;">
+	<div style="padding-left: 30px; background-color: white; margin-bottom:100px;">
 		<table id="todoTable">
-		<div class="float-right">
-		</div>
 			<tr>
 				<a href="/schedule/scheduleInsertview"><input type="button" id="bt" class="btn btn-primary" value="일정등록"></a>
 				<th id="1">No.</th>
@@ -73,16 +105,20 @@ $(document).ready(function(){
 				</c:forEach> 
 			</tbody>
 		</table>
-		 
+
+
 		<div id="paging" class="card-tools">
-		    <ul class="pagination pagination-sm float-right">
-		   		<li class="page-item"><a class="page-link" href="#">«</a></li>
-				<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page"  />
+			<ul class="pagination pagination-sm jg" id="pagingui">
+
+				<li class="page-item jg" id="pagenum">
+					<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_egov_link_page" />
+				</li>
 				<form:hidden path="pageIndex" />
-			    <li class="page-item"><a class="page-link" href="#">»</a></li>
-		    </ul>
-        </div>
-    </div>
+
+			</ul>
+		</div>
+	
+	</div>
 	</form:form>
 </body>
 </html>

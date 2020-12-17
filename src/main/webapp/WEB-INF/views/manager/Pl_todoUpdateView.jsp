@@ -197,69 +197,69 @@
 
 </style>
 </head>
-<%@include file="../layout/contentmenu.jsp"%>
-<br>
-<div style="padding-left: 30px; padding-right: 30px;">
+
+		<%@include file="../layout/contentmenu.jsp"%>
+			
 		<div class="card card-primary card-outline">
 			<div class="card-header">
-	                <h3 class="card-title">일감 수정</h3>
+	                <h3 class="card-title jg">일감 수정</h3>
 	        </div>
 	        <div class="card-body">
 			<form method="post" action="${pageContext.request.contextPath }/todo/updatetodo" id="todoform"  enctype="multipart/form-data">	
 		        <div class="form-group">
 				<input type="hidden" name="todoId" value="${todoVo.todoId }">
-				<label for="todoTitle" class="col-sm-1 control-label">제목</label>
-				<input type="text" name="todoTitle" style="width: 580px;" id="todoTitle" value="${todoVo.todoTitle }"><br><br>
+				<label for="todoTitle" class="col-sm-1 control-label ns">제목</label>
+				<input  class="ns" type="text" name="todoTitle" style="width: 580px;" id="todoTitle" value="${todoVo.todoTitle }"><br><br>
 				
 				<div style="width: 80%;">
-				<label for="todoCont" class="col-sm-1 control-label">할일</label>
+				<label for="todoCont" class="col-sm-1 control-label ns">할일</label>
 				<textarea id="summernote" name="todoCont" id="todoCont">${todoVo.todoCont }</textarea>
 				</div>
 				<br><br>
-				<label for="mem-select" class="col-sm-1 control-label">담당자</label>
-				<input type="text" id="mem-select" name="memId" value="${todoVo.memId }" readonly="readonly">
-				<input type="button" id="memChange" value="인수인계">
+				<label for="mem-select" class="col-sm-1 control-label ns">담당자</label>
+				<input  class="ns" type="text" id="mem-select" name="memId" value="${todoVo.memId }" readonly="readonly">
+				<input  class="ns" type="button" id="memChange" value="인수인계">
 				
 				<div id="memChangecomment">
-				<label for="memChangeComment" class="col-sm-1 control-label">인수인계 내용</label>
-				<input type="text" id="memChangeComment" name ="logComment"/>
+				<label for="memChangeComment" class="col-sm-1 control-label ns">인수인계 내용</label>
+				<input  class="ns" type="text" id="memChangeComment" name ="logComment"/>
 				
-				<label for="mem-select" class="col-sm-1 control-label">변경 담당자</label>
+				<label for="mem-select" class="col-sm-1 control-label ns">변경 담당자</label>
 				<select name="memId" id="mem-select2">
 				<c:forEach items="${promemList}" var="mem">
 					<c:if test="${mem.memName ne todoVo.memId }">
-				<option value="${mem.memId}">${mem.memName}</option></c:if>
+				<option  class="ns" value="${mem.memId}">${mem.memName}</option></c:if>
 		 		</c:forEach>
 		 		</select>
 				</div>
 				<br><br>
 				<input type="hidden" name="changemem" id="changemem" />
-				<label for="status-select" class="col-sm-1 control-label">우선순위</label>
-				<select name="todoImportance" id="status-select">
+				<label for="status-select" class="col-sm-1 control-label ns">우선순위</label>
+				<select class="ns" name="todoImportance" id="status-select">
 				    <c:if test="${todoVo.todoImportance eq 'gen' }">
-				    <option value="gen">보통</option>
-				    <option value="emg">긴급</option>
+				    <option class="jg" value="gen">보통</option>
+				    <option class="jg" value="emg">긴급</option>
 				    </c:if>
 				    <c:if test="${todoVo.todoImportance eq 'emg' }">
-				    <option value="emg">긴급</option>
-				    <option value="gen">보통</option>
+				    <option class="jg"  value="emg">긴급</option>
+				    <option class="jg" value="gen">보통</option>
 				    </c:if>
 				</select><br><br>
 				
-				<label for="todoPercent" class="col-sm-1 control-label">진행도</label>
-				<input type="text" id="todoPercent" name="todoPercent" value="${todoVo.todoPercent }" readonly="readonly"/><br><br>
+				<label for="todoPercent" class="col-sm-1 control-label ns">진행도</label>
+				<input class="ns" type="text" id="todoPercent" name="todoPercent" value="${todoVo.todoPercent }" readonly="readonly"/><br><br>
 				
-				<label for="todoStart" class="col-sm-1 control-label">시작 일</label>
-				<input type='date' id='todoStart' name="todoStart"/><br><br>
+				<label for="todoStart" class="col-sm-1 control-label ns">시작 일</label>
+				<input class="ns" type='date' id='todoStart' name="todoStart"/><br><br>
 				<input type="hidden" id='todo_start' value="${todoVo.todoStart}"/>
 				
-				<label for="todoEnd" class="col-sm-1 control-label">종료 일</label>
-				<input type='date' id='todoEnd' name="todoEnd"/><br><br>
+				<label for="todoEnd" class="col-sm-1 control-label ns">종료 일</label>
+				<input class="ns" type='date' id='todoEnd' name="todoEnd"/><br><br>
 				<input type="hidden" id='todo_end' value="${todoVo.todoEnd}"/>
 				</div>
 				
 				<div class="form-group">
-					<label id ="filelabel" for="files" class="col-sm-2 control-label">첨부파일</label>		
+					<label id ="filelabel" for="files" class="col-sm-2 control-label ns">첨부파일</label>		
 					<div id ="file" class="col-sm-10">
 					
 						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
@@ -274,13 +274,13 @@
 				</div>
 	</form>
 	
-	<form>
+ <form style="padding-left: 2%;">
 		<div id="queue"></div>
 			<input id="file_upload" name="file" type="file" multiple="true"/>
 		<br><br>
-		<div class="card-footer clearfix " >		
-			<input type="button" class="btn btn-default float-right" id="updatebtn" value="수정하기">
-				<button type="button" class="btn btn-default" id="back">뒤로가기</button>
+		<div class="float-right" >		
+			<input type="button" class="btn btn-default jg" id="updatebtn" value="수정하기">
+				<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
 		</div>
 	</form>
 		</div>

@@ -197,6 +197,18 @@ public class ProjectMemberController {
 
 	}
 	
+	// 내 이슈 작성 View
+	@RequestMapping("/insertmytodoissueView")
+	public String insertmytodoissueView(TodoVo todoVo, HttpSession session, Model model) {
+		System.out.println("왔니");
+		String issueSeq = promemService.getissueid();
+		model.addAttribute("issueSeq", issueSeq);
+		model.addAttribute("todoVo", todoVo);
+		
+		return "tiles/board/issueInsert3";
+	}
+	
+	
 	
 	// 이슈 글 작성시 mytodolist ajax호출
 	@RequestMapping("/mytodolist")

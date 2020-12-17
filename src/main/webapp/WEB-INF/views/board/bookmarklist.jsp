@@ -98,13 +98,13 @@
 			      <div class="card" style="border-radius: inherit; padding : 2px;">
 			      
 			    <div class="container-fluid">
-		        <div class="row mb-2">
+		        <div class="row mb-1">
 		          <div class="col-sm-6">
 		          <br>
-		            <h2 class="jg" style=" padding-left : 10px;"><img src="/resources/dist/img/bookmark-black.png" width="30" height="30" name ="${bookmark.issueId}"/>&nbsp;북마크</h2>
+		            <h3 class="jg" style=" padding-left : 10px;"><img src="/resources/dist/img/bookmark-black.png" width="30" height="30" name ="${bookmark.issueId}"/>&nbsp;북마크</h3>
 		          </div>
 		          <div class="col-sm-6">
-		          <br>
+		          	
 		            <ol class="breadcrumb float-sm-right"  style="background : white">
 		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
 		              <li class="breadcrumb-item active jg">북마크</li>
@@ -115,6 +115,7 @@
    				
 		        
 		        <div class="card-header  ">
+				
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">
 						<label for="searchCondition" style="visibility:hidden;"></label>

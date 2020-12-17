@@ -17,23 +17,25 @@
 		SELECT * FROM NOTICE where del = 'N'
 		order by notice_id desc 
 		 -->
-		 
+		
 		SELECT c.*
 			FROM (
 				SELECT ROWNUM RNUM, a.*
 				FROM (
-					SELECT *
+					SELECT NOTICE_ID, NOTICE_TITLE, NOTICE_CONT, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, ADMIN_ID, DEL
 					FROM NOTICE
 					WHERE DEL = 'N'
-					
+							
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>
 							<when test="searchCondition == 1">
-								AND notice_cont LIKE '%' || #{searchKeyword} || '%'
+								AND notice_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 2">
 							</when>
 						</choose>
 					</if>
-					ORDER BY notice_id desc
+					ORDER BY reg_dt desc, notice_id desc
 				) a
 		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE c.RNUM > #{firstIndex}]]>
 	</select>
@@ -41,13 +43,13 @@
 	<!-- 각 공지사항게시글 내용 가져오기 -->
 	<select id="geteachnotice"  resultType ="ants.com.admin.model.NoticeVo" parameterType="String">
 			
-			SELECT notice_id, notice_title, notice_cont, TO_CHAR(reg_dt, 'YYYY-MM-DD') as reg_dt,
+			SELECT notice_id, notice_title, notice_cont, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT,
 					admin_id, del
 			FROM notice
 			WHERE notice_id = #{noticeId} and del = 'N'
 
 	</select>
-	
+		
 	<!-- 공지사항 작성하기 -->
 	<insert id="insertnotice" parameterType="ants.com.admin.model.NoticeVo">
 		

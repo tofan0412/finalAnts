@@ -9,7 +9,7 @@
 <html>
 <style>
  a{
- 	color : gray;
+ 	color : darkslategray;
  }
  
  	.pagingui{
@@ -24,6 +24,9 @@
 		 width:auto; float:left; margin:0 auto; text-align:center;"
 		 
 	}	
+	td{
+		padding: 10px 5px 10px 7px !important;
+	}
 </style>
 <script>
 toastr.options = {
@@ -140,7 +143,7 @@ toastr.options = {
 											background: white;">
 		      <div class="container-fluid">
 		        <div class="row mb-2">
-		          <div class="col-sm-6" style="color: dimgray">
+		          <div class="col-sm-6">
 		            <h4 class="jg"><i class="nav-icon fas fa-bullhorn"></i>&nbsp;&nbsp;새로운 소식</h4>
 		          </div>
 		          <div class="col-sm-6">
@@ -194,19 +197,20 @@ toastr.options = {
 							        </div>
 							      </div>
 		                  	</c:if>
-		                <table class="table table-hover">
+		                <table class="table table-hover" style="font-size: 1em;">
 		                  <tbody>
+		                  	
 		                    <c:forEach items="${alarmList }" var="a" varStatus="i">
-		                      <c:if test="${a.alarmStatus eq 'N' }"><tr class="alarm-row" ></c:if>
-		                      <c:if test="${a.alarmStatus eq 'Y' }"><tr class="alarm-row" style="background-color: rgba(0,0,0,.075)"></c:if>
+		                      <c:if test="${a.alarmStatus eq 'N' }"><tr class="alarm-row" style="height: 30px; width: 100%;"></c:if>
+		                      <c:if test="${a.alarmStatus eq 'Y' }"><tr class="alarm-row" style="background-color: rgba(0,0,0,.03); height: 30px; width: 100%;"></c:if>
 			                  
-			                    <td>
+			                    <td style="width: 30px; ">
 			                      <div class="icheck-primary">
 			                        <input type="checkbox" value="${a.alarmId }" class="check1" name= "alarmDel">
 			                        <label for="check1"></label>
 			                      </div>
 			                    </td>
-			                    <td class="mailbox-star">
+			                    <td class="mailbox-star" style="width: 60px; text-align: center;">
 				                    <c:choose>
 				                    	<c:when test="${a.alarmType eq 'req-pl' or a.alarmType eq 'res-pl' or a.alarmType eq 'req-pro'}">
 				                    		<c:if test="${a.alarmStatus eq 'N' }"><i class="far fa-envelope text-default"></i></c:if>
@@ -222,8 +226,8 @@ toastr.options = {
 				                    	</c:when>
 				                    </c:choose>
 			                    </td>
-			                    <td class="mailbox-name"><a href="read-mail.html">${fn:split(a.alarmCont,'&&')[2]}(${fn:split(a.alarmCont,'&&')[1]})</a></td>
-			                    <td class="mailbox-subject" style="width: 70%;">
+			                    <td class="mailbox-name" style="width: 200px;"><a href="read-mail.html">${fn:split(a.alarmCont,'&&')[1]}(${fn:substring(fn:split(a.alarmCont,'&&')[2],0,10)})</a></td>
+			                    <td class="mailbox-subject">
 				                    <c:choose>
 				                    	<c:when test="${a.alarmType eq 'req-pl' or 'res-pl' }"><b>PL 요청</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]}</a>
@@ -232,7 +236,7 @@ toastr.options = {
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'reply'}"><b>댓글</b>
-					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }',${fn:split(a.alarmCont,'&&')[0]})">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
+					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }',${fn:split(a.alarmCont,'&&')[0]})">${fn:substring(fn:split(a.alarmCont,'&&')[4],0,70)}</a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'posts'}"><b>게시물</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>

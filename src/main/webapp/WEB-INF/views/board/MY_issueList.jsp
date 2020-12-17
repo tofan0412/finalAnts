@@ -129,13 +129,13 @@ $(function(){
 			      <div class="card" style="border-radius: inherit; padding : 2px;">
 			      
 			    <div class="container-fluid">
-		        <div class="row mb-2">
+		        <div class="row mb-1">
 		          <div class="col-sm-6">
 		         <br>
-		            <h2 class="jg" style=" padding-left : 10px;">내가 작성한 이슈</h2>
+		            <h3 class="jg" style=" padding-left : 10px;"><li class="nav-icon far fa-lightbulb"></li>내가 작성한 이슈</h3>
 		          </div>
 		          <div class="col-sm-6">
-		          <br>
+		         
 		            <ol class="breadcrumb float-sm-right"  style="background : white">
 		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
 		              <li class="breadcrumb-item active jg">내가 작성한 이슈</li>
