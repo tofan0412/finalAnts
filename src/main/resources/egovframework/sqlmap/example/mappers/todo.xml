@@ -83,6 +83,7 @@
 				AND
 					todo.del = 'N'
 				AND todo.req_id = #{reqId} 
+				AND todo.todo_parentid is null
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>
 							<when test="searchCondition == 1">
@@ -109,6 +110,7 @@
 					FROM todo
 					WHERE req_id = #{reqId}
 					AND del = 'N'
+					AND todo_parentid is null
 		    ]]>
 		</select>
 		
