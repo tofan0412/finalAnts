@@ -162,6 +162,12 @@
 			<mvc:exclude-mapping path="/member/memberRegistview"/>
 			<mvc:exclude-mapping path="/member/noticelistmemview"/>
 			<mvc:exclude-mapping path="/member/noticedetailmemview"/>
+				
+			<mvc:exclude-mapping path="/member/mailsender"/>
+			<mvc:exclude-mapping path="/member/passupdateemail"/>
+			<mvc:exclude-mapping path="/member/passupdate"/>
+			<mvc:exclude-mapping path="/member/sendSms"/>
+			
 			<mvc:exclude-mapping path="/member/mainView" />
 			<mvc:exclude-mapping path="/admin/*" />
 			<bean class="ants.com.config.interceptor.LoginCheckInterceptor"/>

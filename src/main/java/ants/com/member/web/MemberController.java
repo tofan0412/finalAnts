@@ -353,9 +353,9 @@ public class MemberController {
 
 		// POP3/IMAP 설정시 네이버에서 알려줌
 		final String username = "noylit"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
-		final String password = "1234b5678"; // 네이버 이메일 비밀번호를 입력해주세요.
+		final String password = "1234c5678"; // 네이버 이메일 비밀번호를 입력해주세요.
 		int port = 465; // 포트번호
-
+		
 		String uuid = UUID.randomUUID().toString();
 		model.addAttribute("uuid", uuid);
 		model.addAttribute("memId", memberVo.getMemId());
