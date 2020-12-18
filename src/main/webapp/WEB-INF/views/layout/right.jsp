@@ -138,7 +138,7 @@ $(function(){
 });
 </script>
 <aside class="control-sidebar control-sidebar-white" 
-	style="border : 3px solid grey;
+	style="border : 5px solid white;
 		   border-top-left-radius : 0.8rem;
 		   border-bottom-left-radius : 0.8rem;">
 	<!-- Control sidebar content goes here -->
