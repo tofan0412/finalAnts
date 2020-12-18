@@ -19,6 +19,9 @@ public interface ChatMapper {
 	public int sendMessage(ChatVo chatVo);
 	
 	public List<ProjectMemberVo> readChatMembers(String reqId);
+
+	// 하나의 채팅방에 참여하고 있는 회원 리스트 뽑아오기
+	public List<ChatMemberVo> readCgroupMembers(String cgroupId);
 	
 	// 먼저, 채팅방을 개설한다.
 	public int insertChatGroup(ChatGroupVo chatGroupVo);

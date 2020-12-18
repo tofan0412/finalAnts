@@ -138,12 +138,16 @@ $(function(){
 });
 </script>
 <aside class="control-sidebar control-sidebar-white" 
-	style="border : 5px solid white;
-		   border-top-left-radius : 0.8rem;
-		   border-bottom-left-radius : 0.8rem;">
+		style="margin-top : 18px;
+		margin-right : 18px;">
 	<!-- Control sidebar content goes here -->
-	<div class="p-3" style="background-color : white;">
-		<h5 class="jg">
+	<div class="p-3" 
+		style="background-color : white;
+		border : 5px solid skyblue;
+	    border-radius : 0.8rem;
+	   	border-bottom-left-radius : 0.8rem;
+		">
+		<h5 class="jg" style="background-color : ">
 			<i class="far fa-comments">&nbsp;</i>채팅
 		</h5>
 		

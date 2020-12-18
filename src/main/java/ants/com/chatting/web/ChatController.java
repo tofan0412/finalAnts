@@ -1,5 +1,6 @@
 package ants.com.chatting.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -29,6 +30,14 @@ public class ChatController {
 	public String readChatList(ChatGroupVo chatGroupVo, Model model) {
 		
 		List<ChatGroupVo> chatList = chatService.readChatList(chatGroupVo);
+		List<List<ChatMemberVo>> eachChatMemList = new ArrayList<>();
+		
+		// 각각의 채팅방에 대해, 채팅방 참여 멤버도 뽑아온다.
+		for(int i = 0 ; i < chatList.size() ; i++) {
+			List<ChatMemberVo> chatMemList = 
+					chatService.readCgroupMembers(chatList.get(i).getCgroupId());
+			eachChatMemList.add(chatMemList);
+		}
 		
 		model.addAttribute("chatList", chatList);
 		return "chat/chatList";
