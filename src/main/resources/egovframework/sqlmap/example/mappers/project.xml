@@ -213,31 +213,31 @@
         
 	</select>
 	
-<!-- 	<select id="getoutlinsuggestreject" parameterType="java.lang.String" -->
-<!-- 		resultType="ants.com.board.memBoard.model.SuggestVo"> -->
-<!-- 			SELECT  case when nvl((SELECT count(A.SGT_ID) -->
-<!-- 				  FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID -->
-<!-- 				                     FROM TODO  -->
-<!-- 				                    WHERE REQ_ID = #{reqId}) B -->
-<!-- 				  WHERE A.TODO_ID = B.TODO_ID -->
-<!-- 				   AND A.DEL = 'N'),0)>0 THEN -->
-<!-- 						ROUND(((SELECT count(A.SGT_ID) -->
-<!-- 				  			FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID -->
-<!-- 				                     FROM TODO  -->
-<!-- 				                    WHERE REQ_ID = #{reqId}) B -->
-<!-- 				 						WHERE A.TODO_ID = B.TODO_ID -->
-<!-- 									    AND A.DEL = 'N' -->
-<!-- 								        AND A.SGT_STATUS ='REJECT' -->
-<!-- 			            		)/( -->
-<!-- 			            		SELECT count(A.SGT_ID) -->
-<!-- 				  					FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID -->
-<!-- 				                    	FROM TODO  -->
-<!-- 				                    	WHERE REQ_ID = #{reqId}) B -->
-<!-- 										WHERE A.TODO_ID = B.TODO_ID -->
-<!-- 				   						AND A.DEL = 'N'))*100) -->
-<!-- 			            ELSE 0 end as acceptpercent -->
-<!-- 			        FROM    dual -->
-<!-- 	</select> -->
+	<select id="getoutlinsuggestreject" parameterType="java.lang.String"
+		resultType="ants.com.board.memBoard.model.SuggestVo">
+			SELECT  case when nvl((SELECT count(A.SGT_ID)
+				  FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+				                     FROM TODO 
+				                    WHERE REQ_ID = #{reqId}) B
+				  WHERE A.TODO_ID = B.TODO_ID
+				   AND A.DEL = 'N'),0)>0 THEN
+						ROUND(((SELECT count(A.SGT_ID)
+				  			FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+				                     FROM TODO 
+				                    WHERE REQ_ID = #{reqId}) B
+				 						WHERE A.TODO_ID = B.TODO_ID
+									    AND A.DEL = 'N'
+								        AND A.SGT_STATUS ='REJECT'
+			            		)/(
+			            		SELECT count(A.SGT_ID)
+				  					FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+				                    	FROM TODO 
+				                    	WHERE REQ_ID = #{reqId}) B
+										WHERE A.TODO_ID = B.TODO_ID
+				   						AND A.DEL = 'N'))*100)
+			            ELSE 0 end as acceptpercent
+			        FROM    dual
+	</select>
 	<select id="getoutlindeadline" parameterType="java.lang.String"
 		resultType="ants.com.board.manageBoard.model.TodoVo">
 			<![CDATA[             SELECT

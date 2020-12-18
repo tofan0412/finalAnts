@@ -17,6 +17,8 @@
 $(document).ready(function() {
 	stackedbarchart();
 	donutChart();
+	donutSuggetstReject();
+	donutSuggestAccept();
   });
   
 function stackedbarchart() {
@@ -76,7 +78,7 @@ function stackedbarchart() {
 			        }]
 			      }
 			    };
-		var ctx = document.getElementById('stackedBarChart').getContext('2d');
+		var ctx = document.getElementById('stackedBarChartTodo').getContext('2d');
 		var stackedBarChartData = $.extend(true, {}, barChartData);
 		var stackedBarChart = new Chart(ctx, {
 		      type: 'bar',
@@ -86,6 +88,8 @@ function stackedbarchart() {
 		}
 	});
 }
+
+
 
 function donutChart() {
 	$.ajax({
@@ -112,7 +116,66 @@ function donutChart() {
 			      maintainAspectRatio : false,
 			      responsive : true,
 			    }
-		var dctx = document.getElementById('donutChart').getContext('2d');
+		var dctx = document.getElementById('donutChartTodo').getContext('2d');
+		var donutChart = new Chart(dctx, {
+		      type: 'doughnut',
+		      data: donutChartData,
+		      options: donutOptions
+		    });
+		}
+	});
+}
+
+function donutSuggestAccept() {
+	$.ajax({
+		url : "/project/donutSuggestAccept",
+		method : "get",
+		success : function(data) {
+		var dpercent=[];
+		dpercent.push(data.acceptpercent);
+		var donutChartData = {
+				labels : ['ACCEPT'],
+				 datasets: [
+				        {
+				          data: dpercent,
+				          backgroundColor : ['#f56954'],
+				        }
+				      ]
+		};
+		 var donutOptions     = {
+			      maintainAspectRatio : false,
+			      responsive : true,
+			    }
+		var dctx = document.getElementById('donutSuggetstAccept').getContext('2d');
+		var donutChart = new Chart(dctx, {
+		      type: 'doughnut',
+		      data: donutChartData,
+		      options: donutOptions
+		    });
+		}
+	});
+}
+function donutSuggetstReject() {
+	$.ajax({
+		url : "/project/donutSuggetstReject",
+		method : "get",
+		success : function(data) {
+		var dpercent=[];
+		dpercent.push(data.acceptpercent);
+		var donutChartData = {
+				labels : ['REJECT'],
+				 datasets: [
+				        {
+				          data: dpercent,
+				          backgroundColor : ['#f56954'],
+				        }
+				      ]
+		};
+		 var donutOptions     = {
+			      maintainAspectRatio : false,
+			      responsive : true,
+			    }
+		var dctx = document.getElementById('donutSuggetstReject').getContext('2d');
 		var donutChart = new Chart(dctx, {
 		      type: 'doughnut',
 		      data: donutChartData,
@@ -156,7 +219,7 @@ function donutChart() {
 			<!-- PIE CHART -->
             <div class="card card-info card-outline collapsed-card">
               <div class="card-header jg">
-                <h3 class="card-title">건의사항 수용</h3>
+                <h3 class="card-title">건의사항 수용 & 거절</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -166,8 +229,10 @@ function donutChart() {
             
                 </div>
               </div>
-              <div class="card-body ns" style="display: none;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
+              <div class="card-body ns" style="display: none;">
+              <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas id="donutSuggetstAccept" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
+                <canvas id="donutSuggetstReject" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
               </div>
               <!-- /.card-body -->
             </div>
@@ -186,8 +251,9 @@ function donutChart() {
                  
                 </div>
               </div>
-              <div class="card-body ns" style="display: none;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
+              <div class="card-body ns" style="display: none;">
+              <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas id="donutChartTodo" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
               </div>
             </div>
             <!-- /.card -->
@@ -218,7 +284,7 @@ function donutChart() {
             <!-- BAR CHART -->
             <div class="card card-info card-outline collapsed-card">
               <div class="card-header jg">
-                <h3 class="card-title">건의 사항 거절</h3>
+                <h3 class="card-title">멤버별 건의사항 </h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -252,7 +318,7 @@ function donutChart() {
               </div>
               <div class="card-body ns" style="display: none;">
                 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                  <canvas id="stackedBarChart" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+                  <canvas id="stackedBarChartTodo" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
                 </div>
               </div>
             </div>

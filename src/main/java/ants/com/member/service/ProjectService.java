@@ -99,10 +99,10 @@ public class ProjectService extends EgovAbstractServiceImpl {
 		return mapper.getoutlinsuggest(reqId);
 	}
 	
-//	// 개요페이지 건의사항 reject율 가져오기
-//	public SuggestVo getoutlinsuggestreject(String reqId) {
-//		return mapper.getoutlinsuggestreject(reqId);
-//	}
+	// 개요페이지 건의사항 reject율 가져오기
+	public SuggestVo getoutlinsuggestreject(String reqId) {
+		return mapper.getoutlinsuggestreject(reqId);
+	}
 	
 	// 개요페이지 마감임박 할일 가져오기
 	public List<TodoVo> getoutlindeadline(String reqId) {
