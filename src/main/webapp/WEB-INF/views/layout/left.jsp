@@ -48,6 +48,8 @@
   
   	
 	$(function(){
+		
+		alarmCount("${SMEMBER.memId}");
 		// 메뉴를 선택하면 배경색이 변한다. 
 		$('.selectable').click(function(){
 // 			alert($(this).text());
@@ -62,6 +64,30 @@
 		
 		
 	})
+	
+	/* 알림 총 개수*/
+	function alarmCount(memId){
+		
+		$.ajax({
+			url:'/alarmCount',
+			data:{memId : memId},
+			type:'POST',
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+				var alarmVo = data.alarmVo;
+				if(alarmVo.totalCnt == '0'){
+				}else{
+					$('#newalarm').text('New');
+				}
+				
+			},
+			error:function(err){
+				alert(err);
+			}
+		});
+	}		
+
 </script>
 
 
@@ -88,9 +114,8 @@
 		              <li class="nav-item">
 		                <a href="/alarmList" class="nav-link">
 		                 <i class="nav-icon fas fa-bullhorn"></i>
-							<p class="selectable">새로운 소식
-								<c:if test="${alarmCnt.totalCnt > 0 }"><span class="right badge badge-warning">New</span></c:if>
-							
+							<p class="selectable" >새로운 소식
+								<span id="newalarm" class="right badge badge-warning"></span>
 							</p>
 		                </a>
 		              </li>
