@@ -21,7 +21,7 @@
 	padding-top : 10px;
 	padding-left : 5px;
 	background-color : white;
-	height : 450px;
+	height : 75%;
 	box-shadow : 5px 5px lightgrey;
 	border-radius: 0.35rem;
 	/* x위치 y위치 블러정도 그림자크기 색 */
@@ -139,10 +139,12 @@ $(function(){
 </script>
 <aside class="control-sidebar control-sidebar-white" 
 		style="margin-top : 18px;
+		width : 450px;
 		margin-right : 18px;">
 	<!-- Control sidebar content goes here -->
 	<div class="p-3" 
 		style="background-color : white;
+		height : 100%;
 		border : 5px solid skyblue;
 	    border-radius : 0.8rem;
 	   	border-bottom-left-radius : 0.8rem;
@@ -150,7 +152,6 @@ $(function(){
 		<h5 class="jg" style="background-color : ">
 			<i class="far fa-comments">&nbsp;</i>채팅
 		</h5>
-		
 		<!--  Header -->
 		<div class="chatTitle jg">프로젝트 채팅 목록</div>
 		
@@ -161,6 +162,5 @@ $(function(){
 		<c:if test="${projectId ne null }">
 			<div class="mkNewChat jg">새로운 채팅방 만들기</div>
 		</c:if>
-		
 	</div>
 </aside>

@@ -37,6 +37,7 @@ INSERT INTO chat (cgroup_id,chat_id,mem_id,chat_cont,reg_dt
 SELECT * 
   FROM PROJECTMEMBER
  WHERE REQ_ID = #{reqId}
+   AND PROMEM_STATUS = 'IN'
 </select>
 
 
@@ -59,4 +60,9 @@ INSERT INTO CHATMEMBER (
 ) VALUES (CHATMEM_SEQ.NEXTVAL,#{cgroupId},#{memId})
 
 </insert>
+<select id="readCgroupMembers" parameterType="java.lang.String" resultType="ants.com.chatting.model.ChatMemberVo">
+SELECT * 
+  FROM CHATMEMBER
+ WHERE CGROUP_ID = #{cgroupId}
+</select>
 </mapper>

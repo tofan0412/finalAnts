@@ -65,25 +65,25 @@
 		
 		// 내가 전송한 글인 경우 ..
 		if (id == '${SMEMBER.memId}'){
-			var memId = "<div class=\'memId mine\'>"+ id + "</div>";
-			var timeCode = "<div class='regDt mine'>";
+			var memId = "<br><div class=\'myMemId memId\'>"+ id + "</div>";
+			var timeCode = "<div class='myRegDt'>";
 			timeCode += "<c:out value='${currTime}'/></div>";
 			
 			$('#msgArea').append("<div class=\'oneMsg\'>");
 			$('#msgArea').append(memId);
-			$("#msgArea").append("<div class=\"chatCont mine\"><span class=\'spaan\'>&nbsp;"+ chatCont + "&nbsp;</span></div>");
+			$("#msgArea").append("<div class=\'myChatCont chatCont\'>"+ chatCont + "</div><br>");
 			$("#msgArea").append(timeCode);
 			$('#msgArea').append("</div>");
 			$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);	
 		}
 		else{
-			var memId = "<div class=\'memId yours\'>"+ id + "</div>";
-			var timeCode = "<div class='regDt yours'>";
+			var memId = "<br><div class=\'yourMemId memId\'>"+ id + "</div>";
+			var timeCode = "<div class='yourRegDt'>";
 			timeCode += "<c:out value='${currTime}'/></div>";
 			
 			$('#msgArea').append("<div class=\'oneMsg\'>");
 			$('#msgArea').append(memId);
-			$("#msgArea").append("<div class=\"chatCont yours\"><span class=\'spaan\'>&nbsp;"+ chatCont + "&nbsp;</span></div>");
+			$("#msgArea").append("<div class=\'yourChatCont chatCont\'>"+ chatCont + "</div><br>");
 			$("#msgArea").append(timeCode);
 			$('#msgArea').append("</div>");
 			$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);
@@ -105,54 +105,64 @@
 	padding-top : 15px;
 	color : black;
 	padding-left : 10px;
-	border-bottom : 2px solid lightgrey;	
+	border-bottom : 1px solid #d2d6de;
+	box-shadow : 5px 5px #20C997;
 }
 /* 메시지 출력 부분 */
 #msgArea{
 	overflow-y : scroll;
 	padding : 5px;
-	height : 100%;
+	height : 300px;
 	background-color : white;
+	box-shadow : 5px 5px #20C997;
 }
 .chatCont{
 	color : #444;
+	background-color : #d2d6de;
 	border-radius: 0.3rem !important;
 	padding : 5px;
 }
+.myChatCont{
+	float : right;
+	margin-left : 60px;
+	font-size : 1em;
+}
+.yourChatCont{
+	float : left;
+	margin-right : 60px;
+	font-size : 1em;
+}
 
-.regDt{
+.myRegDt{
+	font-size : 0.7em;
+	color : lightgrey; 
+	float : right;
+	text-align : right;
+}
+.yourRegDt{
 	font-size : 0.7em;
 	color : lightgrey;
+	float : left;
+	text-align : left; 
 }
 
 .memId{
 	color : black;
 	font-size : 0.8em;
+	padding-top : 10px;
 }
-
-.mine{
+.myMemId{
 	text-align : right;	
-	align : right;
 }
-
-.yours{
+.yourMemId{
 	text-align : left;
-	align : left;
 }
 
 .oneMsg{
-	margin-top : 15px;
-	margin-bottom : 15px;
-	color : black;
+	margin-top : 30px;
+	margin-bottom : 30px;
 }
-.spaan{
-	background-color : #d2d6de;
-	height : 100%;
-	display:inline-block;
-	border-radius : 0.4rem;
-	text-align : left;
-	padding : 2px 2px 4px 4px;
-}
+
 /* 스크롤바 스타일 */
 #msgArea::-webkit-scrollbar {width: 16px;}
 #msgArea::-webkit-scrollbar-track {background-color:#f1f1f1;} 
@@ -175,14 +185,32 @@ width:16px;height:16px;background:#d2d6de;}
 }
 
 /* 메시지 전송바 스타일 */
-.sendMsgTextbar {
-    width: 100%;
-    height: 7%;
-    margin-top : 5px;
+.form-control {
+    display: block;
+    float : left;
+    width: 180px;
+    height: 35px;
+    padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
-    border: 2px solid skyblue;
-    border-radius: .4rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 2px solid white;
+    border-radius: .25rem;
+    box-shadow: inset 0 0 0 transparent;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.input-group-append {
+    position: relative;
+    margin-left: 155px;
+    display : flex;
+    height : 35px;
+}
+.btn{
+	border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 </style>
 <!-- 채팅방 이름을 표시한다. -->
@@ -208,28 +236,29 @@ width:16px;height:16px;background:#d2d6de;}
 			
 		<!-- 접속한 사용자의 아이디와 일치하는 경우, 우측 배열 -->
 		<c:if test="${msg.memId eq SMEMBER.memId }">
-			<div class="oneMsg">
-				<div class="memId mine">${msg.memId }</div>
-				<div class="chatCont mine">
-					<span class="spaan">&nbsp;${msg.chatCont }&nbsp;</span>
-				</div>
-				<div class="regDt mine">${msg.regDt }</div>
-			</div>
+		<div class="oneMsg">
+			<div class="myMemId memId">${msg.memId }</div>
+			<div class="myChatCont chatCont">${msg.chatCont }</div><br>
+			<div class="myRegDt">${msg.regDt }</div>
+		</div>
 		</c:if>
+		
 		<!-- 접속한 사용자가 보낸 메시지가 아닌 경우, 좌측 배열 -->
 		<c:if test="${msg.memId ne SMEMBER.memId }">
 			<div class="oneMsg">
-				<div class="memId yours">${msg.memId }</div>
-				<div class="chatCont yours">
-					<span class="spaan">&nbsp;${msg.chatCont }&nbsp;</span>
-				</div>
-				<div class="regDt yours">${msg.regDt }</div>
+				<div class="yourMemId memId">${msg.memId }</div>
+				<div class="yourChatCont chatCont">${msg.chatCont }</div><br>
+				<div class="yourRegDt">${msg.regDt }</div>
 			</div>
 		</c:if>
 	</c:forEach>
 </div>
 
 <!-- 텍스트 전송 부분 .. -->
-<input type="text" class="sendMsgTextbar" id='sendChatCont' placeholder="Message.."/>
-<button id="sendMsg" class="btn btn-success" type="button" style="width : 100%;">Send</button>
+<div style="float : left; margin-top : 13px;">
+	<input type="text" class="form-control" id='sendChatCont' placeholder="Message.."/>
+	<span class="input-group-append">
+		<button id="sendMsg" class="btn btn-success" type="button">Send</button>
+	</span>
+</div>
 $$$$$$$
