@@ -254,7 +254,7 @@ $(function(){
         		  </div>
         	
         		  <div class="card-footer clearfix">
-	                <button id="insertissue" type="button" class="btn btn-default float-left jg" onclick="issueInsert()"><i class="fas fa-plus "></i>등 록</button>
+	                <button id="insertissue" type="button" class="btn btn-default float-left jg" onclick="issueInsert()"><i class="fas fa-edit "></i>등 록</button>
 	              </div>
         		 
         		  

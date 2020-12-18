@@ -91,8 +91,15 @@
 
 
 </style>
-<script>
+<script>	
+	
+		
  	$(document).ready(function(){
+ 		$('#mailsub').on('click',function(){
+ 			alert('메일을 확인해 주세요');
+ 			$('#mailform').submit();
+ 		});			
+ 			
  		loginAlert = '${flashAlert}';
  		if (loginAlert != ''){
  			alert(loginAlert);
@@ -147,7 +154,7 @@
 			// 원하는 쿠키가 없는 경우
 			return "";
 		}	
- 
+ 	
 		// 쿠키 날짜 설정
 		function setCookie(cookieName, cookieValue, expires){
 			//"USERNM=brown; path=/; expries=Wed, 07 Oct 2020 00:38:35 GMT;"
@@ -295,7 +302,7 @@
 								<div id="collapse1" class="panel-collapse collapse in">
 									<div class="panel-body">
 
-										<form role="form" action="/member/mailsender">
+										<form id="mailform" role="form" action="/member/mailsender">
 
 											<div class="form-group">
 												<label for="usrname"><span
@@ -304,7 +311,7 @@
 													placeholder="Enter email">
 											</div>
 
-											<input type="submit" value="확인">
+											<input id="mailsub" type="button" value="확인">
 											<button type="button" data-dismiss="modal">취소</button>
 										</form>
 

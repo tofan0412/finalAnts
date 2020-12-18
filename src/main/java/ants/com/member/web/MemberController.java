@@ -229,13 +229,6 @@ public class MemberController {
 			// 공지사항 전송 
 			model.addAttribute("issuelist", resultList);
 			
-			//alarm
-			AlarmVo alarmVo = new AlarmVo();
-			alarmVo.setMemId(dbMember.getMemId());
-			alarmVo = alarmService.alarmCount(alarmVo);
-			
-			session.setAttribute("alarmCnt", alarmVo);
-				
 			return "main/layout/contentmain";
 		} else {
 			return "redirect:/member/loginView";
@@ -361,9 +354,9 @@ public class MemberController {
 		model.addAttribute("memId", memberVo.getMemId());
 		// 메일 내용
 		String recipient = memberVo.getMemId(); // 받는 사람의 메일주소를 입력해주세요.
-		String subject = "비밀번호 변경(URL)"; // 메일 제목 입력해주세요.
-		String body = "http://localhost/member/passupdateemail?memId=" + memberVo.getMemId().replace("@", "%40"); // 메일 내용 입력해주세요.
-
+		String subject = "Ants - 비밀번호 변경요청(URL)"; // 메일 제목 입력해주세요.
+		String body = "비밀번호 변경 페이지로 이동 \n http://localhost/member/passupdateemail?memId=" + memberVo.getMemId().replace("@", "%40"); // 메일 내용 입력해주세요.
+		
 		Properties props = System.getProperties(); // 정보를 담기 위한 객체 생성
 
 		// SMTP 서버 정보 설정
@@ -468,7 +461,7 @@ public class MemberController {
 		params.put("to", memberVo.getMemTel()); // 수신번호
 		params.put("from", "01049057321"); // 발신번호
 		params.put("type", "SMS"); // Message type ( SMS, LMS, MMS, ATA )
-		params.put("text", "인증번호 : " + validatenumber); // 문자내용
+		params.put("text", "[Ants 본인확인] \n인증번호 [" + validatenumber + "]를 입력해주세요"); // 문자내용
 		params.put("app_version", "JAVA SDK v1.2"); // application name and version
 		
 		model.addAttribute("uuid", validatenumber);

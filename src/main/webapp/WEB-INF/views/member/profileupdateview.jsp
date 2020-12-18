@@ -5,7 +5,7 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+	
 <style>
 	body{
 	    min-width: 1000px;
@@ -54,98 +54,120 @@
 		height : 50px;
 		border-radius: 80px;	
 		outline: none;
-	} 		
+	} 	
+	
+		/* 말풍선 */
+span.tip {
+    position: relative;
+}
+
+span.tip span {
+    position: absolute;
+    z-index: 1;
+    width:150px;		
+    font-size:11px;				
+    background: white;	
+    border: 1px solid black;	
+    color: black;  
+    -moz-border-radius: 15px; /* 파폭 박스 둥근 정도 */
+    -webkit-border-radius: 60px 60px 80px 20px; /* 사파리 박스 둥근 정도 */ 	
+}	 	
 </style>	
 </head>
-
-<body>
-	<div class="card">
-			<!-- 경로 미리보기용 <div id="clickmsg">경로 : </div> 
-			<hr>  -->
-			
-			<form id="fmin" role="form" class="form-horizontal" action="/member/profileupdate" method="POST" enctype="multipart/form-data">
-			<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
-				<div id="pictureView" style="border: 1px solid green; height: 200px; width: 200px; margin: 0 auto;">
-					<img id="pictureViewImg" style="width: 100%; height: 100%;" />
-				</div>
-				<div class="content">
-					<button id="basicimg" type="button">기본이미지</button>
-					<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px;"/>
-				</div>
-				
-				<br><br>
-				<div class="content"> 
-					<label for="id" style="font-size: 0.9em;">
-						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>아이디
-					</label>
-					<div id="idcheck">
-						<input class="input" name="memId" type="email" id="memId" placeholder="회원 id" value="${memberVo.memId}" readonly/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					</div>
-				</div>
-				  	
-				<br><div class="content">
-					<label for="name" style="font-size: 0.9em;">
-						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>이 름
-					</label>
-					<div>
-						<input class="input" name="memName" type="text" id="memName" placeholder="이름" value="${memberVo.memName}"/>
-					</div>
-				</div>
-
-				<br><div class="content">
-					<label for="pwd" style="font-size: 0.9em;">
-						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드1
-					</label>
-					<div>
-						<input class="input" name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합" value="${memberVo.memPass}"/>
-						<div id="checkPass1" class="indiv" style="float:left; margin-top:15px;"></div>
-					</div>
-				</div>
-							
-				<br><div class="content">
-					<br><br>
-					<label for="pwd" style="font-size: 0.9em;">
-						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red; font-weight: bold;">*</span>패스워드2
-					</label>
-					<div>
-						<input class="input" type="password" style="float:left" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" value="${memberVo.memPass}"/>
-						<div id="checkPass2" class="indiv" style="float:left; margin-top:15px;"></div>	
-					</div>
-				</div>
-				
-				<br><div class="content">
-					<br><br>
-						&nbsp;&nbsp;&nbsp;&nbsp;<label for="alias" style="font-size: 0.9em;">전화번호</label>
-					<div>																			<!-- onkeyup="isMobile()" -->
-						<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력" value="${memberVo.memTel}"/>
-						<div id="checkTel" class="indiv"></div>
-					</div>
-				</div>		
 		
+<body>
+<div class="wrapperdd" style="margin-left:25%; margin-right:25%; margin-top:25px;">
+	<div class="register-card-body">	
 				
-				<!-- style="display: none" -->
-				<div class="content" style="display: none">
-					<br>알람 : <input class="form-control" name="memAlert" type="text" id="memAlert" placeholder="알람" value="${memberVo.memAlert}" readonly><br> 
+		<div class="login-logo">
+			<b>프로필 수정</b>
+		</div>		
+										
+		<div class="card card-primary card-outline">
+			<div class="card-body box-profile">
+				
+				<form id="fmin" role="form" class="form-horizontal" action="/member/profileupdate" method="POST" enctype="multipart/form-data">
+				<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
+				
+				<div class="text-center">
+					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border: 1px solid white; height: 200px; width:140px; margin: 0 auto;">
+						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;"/>
+						<span class="tip">
+							<span>이미지를 클릭하면 변경할 수 있어요!</span>
+						</span>
+					</div><br>		 
+					<div class="content">
+						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left;" />	
+					</div>
+				</div> 	
+						
+							
+				<h3 class="profile-username text-center">
+					<!-- 경로 미리보기용 <div id="clickmsg">경로 : </div>	<hr>  -->
+					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none" readonly/>
+				</h3>
+				<p class="text-muted text-right">
+					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none" readonly/>
+				</p>
+					
+									
+				<ul class="list-group list-group-unbordered mb-3"> 
+					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>아이디</b>  	
+						<a class="float-right">
+							<input class="input" name="memId" type="email" id="memId" placeholder="회원 id" value="${memberVo.memId}" readonly/>
+							<div id="checkMsg" class="indiv"></div>
+						</a>	
+					</li>
+						
+					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>이름</b> 
+						<a class="float-right">
+							<input class="input" name="memName" type="text" id="memName" placeholder="이름" value="${memberVo.memName}"/>
+						</a>
+					</li> 
+					
+					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b>
+						<a class="float-right">
+							<input class="input" name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합" value="${memberVo.memPass}"/>
+							<div id="checkPass1" class="indiv"></div>
+						</a>
+					</li>			
+								
+					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b> 
+						<a class="float-right">
+							<input class="input" type="password" style="float:left" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" value="${memberVo.memPass}"/>
+							<div id="checkPass2" class="indiv"></div>	
+						</a>
+					</li>	
+								
+					<li class="list-group-item">	<b>전화번호</b> 
+						<a class="float-right">
+							<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력" value="${memberVo.memTel}"/>
+							<div id="checkTel" class="indiv"></div>
+						</a>
+					</li>
+				</ul>
+						
+				<div style="float:right;">				
+					<button type="button" style="height:40px; margin-right:20px;" id="registBtn">등록</button>
+					<button type="button" style="height:40px;" id="cancelBtn" onclick="window.history.back()">취소</button>
+				</div>	
+					
+				<div style="display:none;">					
+					알람 : <input class="form-control" name="memAlert" type="text" id="memAlert" placeholder="알람" value="${memberVo.memAlert}" readonly><br> 
 					삭제여부:   <input class="form-control" name="del" type="text" id="del" placeholder="삭제여부" value="${memberVo.del}" readonly><br> 
 					멤버구분 :  <input class="form-control" name="memType" type="text" id="memType" placeholder="멤버구분" value="${memberVo.memType}" readonly><br>
 					이미지 경로: <input class="form-control" name="imgname" type="text" id="imgname" placeholder="파일경로" value="${memberVo.memFilepath}" readonly>
 					사진 : <img id="pict" style="width: 30px; height: 30px;" src="/profileImgView?memId=${memberVo.memId}" />
 					기본이미지 : <img id="imge" style="width: 30px; height: 30px;" src="${memberVo.memFilepath}" /><br>
-				</div>
-				
-				<div id="row1">
-					<br><br><br>
-					<div class="content" id="butt">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="button" id="registBtn" class="btn btn-info">등록</button>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="button" id="cancelBtn" class="btn btn-info" onclick="window.history.back()">&nbsp;&nbsp;&nbsp;취 &nbsp;&nbsp; 소 &nbsp;&nbsp;&nbsp;</button>
-					</div>
-				</div>
-			</form>
+				</div>	
+		
+			
+				</form>	
+					 
+			</div>
+		</div>
 	</div>
-	
+</div>	
 	
 	
 <div class="container">
@@ -222,7 +244,17 @@ function chkPW(){
 	 var num = pw.search(/[0-9]/g);
 	 var eng = pw.search(/[a-z]/ig);
 	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
- 	
+	 		
+	 // 비밀번호 일치 확인
+	 var pw1 = document.getElementById('memPass').value;
+	 var pw2 = document.getElementById('memPass2').value;
+	
+	 if(pw1 != pw2){ 
+		 $('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
+	 } else { 
+	 	 $('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
+	 }
+	 	
 	 if(pw.length < 8 || pw.length > 20){
 	  $('#checkPass1').html('<p style="color:red">8자리 ~ 20자리 이내로 입력해주세요.</p>');
 	  return false;
@@ -239,9 +271,8 @@ function chkPW(){
 	  $('#checkPass1').html('<p style="color:blue">사용 가능한 비밀번호 입니다.</p>');
 	    return true;
 	 }
-
 }
-	
+			
 // 비밀번호 일치 확인
 function unityPW(){
 	var pw1 = document.getElementById('memPass').value;
@@ -353,7 +384,7 @@ function unityPW(){
 		
 		// 기본이미지 모달창 띄으기
 		$(document).ready(function(){
-			$('#basicimg').click(function(){
+			$('#pictureView').click(function(){
 				$("#myModal").modal();
 			})
 			

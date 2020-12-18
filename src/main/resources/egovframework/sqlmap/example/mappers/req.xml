@@ -14,6 +14,7 @@
                         FROM (SELECT * 
                         		FROM reqlist
                         	   WHERE mem_id = #{memId}
+                        	     AND del = 'N'
 		                        <if test="searchKeyword != null and searchKeyword != ''">
 							        <choose>
 							            <when test="searchCondition == 0">
@@ -98,7 +99,8 @@
 					 ,MEM_ID
 					 ,STATUS
 					 ,PL_ID
-					 ,CATEGORY_ID)
+					 ,CATEGORY_ID
+					 ,DEL)
 				VALUES
 				     (#{reqId}
 					 ,#{reqTitle}
@@ -109,7 +111,8 @@
 					 ,#{memId}
 					 ,#{status, jdbcType=VARCHAR}
 					 ,#{plId, jdbcType=VARCHAR}
-					 ,'7')
+					 ,'7'
+					 ,'N')
 	</insert>
 	
 	<update id="reqUpdate" parameterType="ants.com.member.model.ReqVo">
@@ -135,10 +138,10 @@
 </update>
 
 	<delete id="reqDelete" parameterType="String">
-		DELETE 
-		  FROM reqlist
-		 WHERE req_id = #{reqId} 
-	</delete>
+UPDATE reqlist
+      SET del = 'Y' 
+WHERE req_id = #{reqId}
+</delete>
 	
 	
 	

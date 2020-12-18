@@ -204,7 +204,7 @@ public class ProjectController {
 	// 차트 뷰
 	@RequestMapping("/chartView")
 	public String chartView(Model model, TodoVo todoVo, HttpSession session) {
-		return "tiles/chart/baniChart";
+		return "tiles/chart/chartmain";
 	}
 
 	// 차트 뷰
@@ -230,5 +230,29 @@ public class ProjectController {
 		model.addAttribute("dsize", Size);
 		return "jsonView";
 	}
-
+	
+	// 차트 뷰
+	@RequestMapping("/donutSuggestAccept")
+	public String donutSuggestAccept(Model model, SuggestVo suggestVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		SuggestVo dAccept = projectService.getoutlinsuggest(reqId);
+		SuggestVo dReject= projectService.getoutlinsuggestreject(reqId);
+		SuggestVo dbsuggestvo = new SuggestVo();
+		dbsuggestvo.setAcceptpercent(dAccept.getAcceptpercent());
+		dbsuggestvo.setRejectpercent(dReject.getRejectpercent());
+		model.addAttribute("dbsuggestvo", dbsuggestvo);
+		return "jsonView";
+	}
+	
+	@RequestMapping("/barchartSuggestCnt")
+	public String chartsuggestcnt(Model model, SuggestVo suggestVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<SuggestVo> suggestlist= projectService.chartsuggestcnt(reqId);
+		int size = suggestlist.size();
+		model.addAttribute("suggestlist", suggestlist);
+		model.addAttribute("dbsize", size);
+		return "jsonView";
+	}
+	
+	
 }

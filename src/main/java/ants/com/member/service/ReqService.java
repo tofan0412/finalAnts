@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import ants.com.member.mapper.ProjectMapper;
 import ants.com.member.mapper.ReqMapper;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ReqVo;
@@ -16,6 +17,9 @@ public class ReqService{
 	
 	@Resource(name="reqMapper")
 	private ReqMapper mapper;
+	
+	@Resource(name="projectMapper")
+	private ProjectMapper proMapper;
 	
 	/**
 	 * 요구사항정의서 목록가져오기
@@ -59,7 +63,10 @@ public class ReqService{
 	 * @return 성공:1 실패:0
 	 */
 	public int reqDelete(String reqId) {
-		return mapper.reqDelete(reqId);
+		int cnt = 0;
+		cnt += mapper.reqDelete(reqId);
+		cnt += proMapper.deleteProject(reqId);
+		return cnt;
 	}
 	
 	/**

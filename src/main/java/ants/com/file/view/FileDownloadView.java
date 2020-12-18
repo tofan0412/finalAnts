@@ -1,5 +1,6 @@
 package ants.com.file.view;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.net.URLEncoder;
 import java.util.Map;
@@ -29,7 +30,8 @@ public class FileDownloadView extends AbstractView{
 		// 경로 확인 후 파일 입출력을 통해 응답 생성
 		// 1. 파일 읽기   
 		// 2. 응답 생성
-		if(filepath != null) {
+		File f = new File(filepath);
+		if(f.exists()) {		
 			FileInputStream fis = new FileInputStream(filepath);
 			ServletOutputStream sos = response.getOutputStream();
 			

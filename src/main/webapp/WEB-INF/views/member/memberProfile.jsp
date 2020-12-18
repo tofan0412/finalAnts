@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<head>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 
-<!-- Font Awesome Icons -->
-<!-- Theme style -->
 <style>
 body{
 	min-width: 1100px;
@@ -12,9 +9,9 @@ body{
 }	
 .memvar{
 	margin-left : 150px;
-}
+}	
 
-								/* 알람 스타일 */
+								/* 알람 토글(on/off) 스타일 */
 .switch {
   position: relative;
   display: inline-block;
@@ -38,7 +35,7 @@ body{
   -webkit-transition: .4s;
   transition: .4s;
 }
-
+	
 .slider:before {
   position: absolute;
   content: "";
@@ -73,12 +70,11 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-
-
-							/* 알람 스타일 */
+							/* 알람 토글(on/off) 스타일 */
 
 </style>
-<script>	
+
+<script>		
 
 							/*  알람 토글(on/off) 기능     */
 function toggle(element){
@@ -105,8 +101,8 @@ function toggle(element){
         error : function(error) {
         }
 	}) 
-} 
- 
+} 	
+							/*  알람 토글(on/off) 기능     */
 
 $(document).ready(function(){
 		 
@@ -117,7 +113,7 @@ $(document).ready(function(){
 	imge = document.getElementById('imge').src	// display none 에 숨어있는 기본이미지의 src속성값 가져옴
 												// src="${memberVo.memFilepath}"
 	
-												
+	/* 이미지 경로가 http 로시작할때만 기본이미지 불러옴 http가 아니면 파일경로로 인식*/					
 	picval = pict.split('/')[0].indexOf('profileImgView') // 아이디 값으로 memFilepath의 속성을 가져오기 때문에 항상
 								// 값이 동일하다 -> http://localhost/profileImgView?memId=noylit@naver.com
 								// 값이 동일하기 때문에 비교대상에 필요 없음 x
@@ -139,9 +135,9 @@ $(document).ready(function(){
 	
 })
 </script>
-</head>
+</head>	
 <body class="hold-transition sidebar-mini">	
-	<div class="wrapperdd">
+	<div class="wrapperdd" style="margin-left:25%; margin-right:25%;">
 		<div class="register-card-body">
 			
 			<div class="login-logo">
@@ -163,30 +159,30 @@ $(document).ready(function(){
 					<p class="text-muted text-center">
 						<input class="text-muted text-center" name="memId" type="text" class="form-control" id="memId" placeholder="(아이디)" value="${memberVo.memId}" style="border: none" readonly>
 					</p>
-					
 						
-					<ul class="list-group list-group-unbordered mb-3">
-						<li class="list-group-item"><b>전화번호</b> 
+					<ul class="list-group list-group-unbordered mb-3"> 
+						<li class="list-group-item"><b>전화번호</b>  	
 							<a class="float-right">
-								<input class="" name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border:none" readonly />
-							</a>
+								<input name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border:none; width:105px;" readonly />
+							</a>	
 						</li>
 						<li class="list-group-item"><b>알람</b> 
 							<a class="float-right">
-								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none; width:115px;" readonly>
+								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none; width:40px;" readonly>
 								<!-- 알람 토글 버튼 -->	
 								<label class="switch">											<!-- 알람 토글 기본 y : y아닐땐 off -->
 									<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>	
 									<span class="slider round"></span>	
 								</label>
 							</a>
-						</li>	
+						</li>			
 						<li class="list-group-item"><b>타입</b>
 							<a class="float-right">
-								<input name="memType" type="text" class="" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border: none" readonly>
+								<input name="memType" type="text" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border:none; width:105px;" readonly>
 							</a>
 						</li>
 					</ul>
+					
 				</div>
 			</div>
 				

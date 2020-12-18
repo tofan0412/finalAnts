@@ -300,7 +300,7 @@ $(function(){
 				<div class="card-footer clearfix">
 					<button id="insertSuggestBtn" type="button"
 						class="btn btn-default float-left jg">
-						<i class="fas fa-plus"></i>등 록
+						<i class="fas fa-edit"></i>등 록
 					</button>
 				</div>
 

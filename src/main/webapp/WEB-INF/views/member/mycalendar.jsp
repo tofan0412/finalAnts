@@ -3,7 +3,6 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <html>
 <head>
 <%@include file="/WEB-INF/views/layout/fonts.jsp"%>
@@ -230,7 +229,39 @@ document.addEventListener('DOMContentLoaded', function() {
 	        'border-color'    : currColor
 	      })
 	    })
-	    
+		
+	$("#add-new-event").on("click", function() {
+		var addcalendar = $("#new-event").val();
+		if (addcalendar.length == 0) {
+	        return
+	      }
+		var event = $('<div />')
+		event.css({
+        'background-color': currColor,
+        'border-color'    : currColor,
+        'color'           : '#fff'
+      }).addClass('external-event')
+      event.text(addcalendar)
+      $('#external-events').prepend(event)
+      
+	  $('#new-event').val('');
+      $(".external-event").draggable({stop: function(){
+    	  var x = $(".external-event").position().top;
+    	  var y = $(".external-event").position().left;
+    	  if(x!=null && y!=null){
+        	  $(".external-event").remove();
+        	  $('.fc-day').mouseover( function () {
+        	       var sel = $(this).closest('.fc-day');
+        	       var strDate_yyyy_mm_dd = sel.data('date');
+        	       calendar.addEvent( {'title':addcalendar, 'start':strDate_yyyy_mm_dd, 'backgroundColor':currColor}); 
+        	  		calendarInsert(addcalendar, strDate_yyyy_mm_dd, currColor);
+        	     }).mouseout(function(){
+        	    	 $(".fc-day").unbind("mouseover");
+        	     });
+    	  }
+      }});
+	})
+	
 	$("#updateBtn").on("click", function () {
 		 $('#befUpdate').hide();
 		 $('#aftUpdate').show();
@@ -256,38 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	    })
 	    
 	    
-		
-	$("#add-new-event").on("click", function() {
-		var addcalendar = $("#new-event").val();
-		if (addcalendar.length == 0) {
-	        return
-	      }
-		var event = $('<div />')
-		event.css({
-        'background-color': currColor,
-        'border-color'    : currColor,
-        'color'           : '#fff'
-      }).addClass('external-event')
-      event.text(addcalendar)
-      $('#external-events').prepend(event)
-      
-	  $('#new-event').val('')
-      $(".external-event").draggable({stop: function(){
-    	  var x = $(".external-event").position().top;
-    	  var y = $(".external-event").position().left;
-    	  if(x!=null && y!=null){
-        	  $(".external-event").remove();
-        	  $('.fc-day').mouseover( function () {
-        	       var sel = $(this).closest('.fc-day');
-        	       var strDate_yyyy_mm_dd = sel.data('date');
-        	       calendar.addEvent( {'title':addcalendar, 'start':strDate_yyyy_mm_dd, 'backgroundColor':currColor}); 
-        	  		calendarInsert(addcalendar, strDate_yyyy_mm_dd, currColor);
-        	     }).mouseout(function(){
-        	    	 $(".fc-day").unbind("mouseover");
-        	     });
-    	  }
-      }});
-	})
+	
 });
   
   
@@ -316,6 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
     box-shadow: inset 0 0 0 transparent;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
 
 </style>
 </head>
@@ -406,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="card card-primary">
               <div class="card-body p-0">
                 <!-- THE CALENDAR -->
-                <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-bootstrap">
+                <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-bootstrap ns">
               </div>
               <!-- /.card-body -->
             </div>

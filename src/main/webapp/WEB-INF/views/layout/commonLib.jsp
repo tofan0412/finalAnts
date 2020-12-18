@@ -12,17 +12,19 @@
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
 	rel="stylesheet">
 
-<!-- js -->
+<!-- jquery -->
 <script src="/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- toastr -->
+<script src="/plugins/toastr/toastr.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+<script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- ChartJS -->
 <script src="/plugins/chart.js/Chart.min.js"></script>
 <!-- knob -->
 <script src="/plugins/jquery-knob/jquery.knob.min.js"></script>
-<script src="/plugins/toastr/toastr.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/dist/js/adminlte.min.js"></script>
 <!-- fullcalendar -->
 <script src="/plugins/moment/moment.min.js"></script>
 <script src="/plugins/fullcalendar/main.js"></script>

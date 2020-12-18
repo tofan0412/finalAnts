@@ -11,14 +11,14 @@
 	    	sock = new SockJS('/alarm');
 	    	socket = sock;
 	    	
-	    	sock.onopen = function(){
+	    	socket.onopen = function(){
 	    		console.log('info: connection opened');
 	    	};
 	    	
 	    	//데이터전달 받았을 때
-	    	sock.onmessage = onMessage;
+	    	socket.onmessage = onMessage;
 	    	//소켓연결 끊겼을 때
-	    	sock.onclose = onClose;
+	    	socket.onclose = onClose;
     	}
     	
     	alarmCount('${SMEMBER.memId}');
