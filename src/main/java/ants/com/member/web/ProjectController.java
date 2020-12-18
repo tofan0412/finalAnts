@@ -244,5 +244,15 @@ public class ProjectController {
 		return "jsonView";
 	}
 	
+	@RequestMapping("/barchartSuggestCnt")
+	public String chartsuggestcnt(Model model, SuggestVo suggestVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<SuggestVo> suggestlist= projectService.chartsuggestcnt(reqId);
+		int size = suggestlist.size();
+		model.addAttribute("suggestlist", suggestlist);
+		model.addAttribute("dbsize", size);
+		return "jsonView";
+	}
+	
 	
 }

@@ -71,4 +71,6 @@ public interface ProjectMapper {
 	// 프로젝트 삭제
 	public int deleteProject(String reqId);
 
+	public List<SuggestVo> chartsuggestcnt(String reqId);
+
 }

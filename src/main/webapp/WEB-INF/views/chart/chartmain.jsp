@@ -18,59 +18,9 @@ $(document).ready(function() {
 	stackedbarchart();
 	donutChart();
 	donutSuggestAccept();
-
- $('.knob').knob({
-  
-      draw: function () {
-
-        // "tron" case
-        if (this.$.data('skin') == 'tron') {
-
-          var a   = this.angle(this.cv)  // Angle
-            ,
-              sa  = this.startAngle          // Previous start angle
-            ,
-              sat = this.startAngle         // Start angle
-            ,
-              ea                            // Previous end angle
-            ,
-              eat = sat + a                 // End angle
-            ,
-              r   = true
-
-          this.g.lineWidth = this.lineWidth
-
-          this.o.cursor
-          && (sat = eat - 0.3)
-          && (eat = eat + 0.3)
-
-          if (this.o.displayPrevious) {
-            ea = this.startAngle + this.angle(this.value)
-            this.o.cursor
-            && (sa = ea - 0.3)
-            && (ea = ea + 0.3)
-            this.g.beginPath()
-            this.g.strokeStyle = this.previousColor
-            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false)
-            this.g.stroke()
-          }
-
-          this.g.beginPath()
-          this.g.strokeStyle = r ? this.o.fgColor : this.fgColor
-          this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false)
-          this.g.stroke()
-
-          this.g.lineWidth = 2
-          this.g.beginPath()
-          this.g.strokeStyle = this.o.fgColor
-          this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false)
-          this.g.stroke()
-
-          return false
-        }
-      }
-  });
+	barchartSuggestCnt();
 });
+
 function stackedbarchart() {
 	$.ajax({
 		url : "/project/stackedbarchart",
@@ -101,6 +51,7 @@ function stackedbarchart() {
 				          pointStrokeColor    : 'rgba(60,141,188,1)',
 				          pointHighlightFill  : '#fff',
 				          pointHighlightStroke: 'rgba(60,141,188,1)',
+				          barThickness: 100,
 				          data                : percent 
 				        },
 				        {
@@ -112,6 +63,7 @@ function stackedbarchart() {
 				          pointStrokeColor    : '#c1c7d1',
 				          pointHighlightFill  : '#fff',
 				          pointHighlightStroke: 'rgba(220,220,220,1)',
+				          barThickness: 100,
 				          data                : percent2
 				        }]
 		};
@@ -210,6 +162,62 @@ function donutSuggestAccept() {
 		});
 	}
 	
+function barchartSuggestCnt() {
+	$.ajax({
+		url : "/project/barchartSuggestCnt",
+		method : "get",
+		success : function(data) {
+			var num = [];
+			var percent=[];
+			for(i=0; i<data.dbsize; i++){
+			num.push(data.suggestlist[i].memName);	
+			percent.push(data.suggestlist[i].chartcnt);
+			}
+			var barChartData = {
+					labels : num,
+					 datasets: [
+					        {
+					          label               : '건의사항 작성 수',
+					          backgroundColor     : 'rgba(60,141,188,0.9)',
+					          borderColor         : 'rgba(60,141,188,0.8)',
+					          pointRadius          : false,
+					          pointColor          : '#3b8bba',
+					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointHighlightFill  : '#fff',
+					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          data                : percent ,					 
+					          barThickness: 100
+					         
+					        }]
+			};
+			var barChartOptions = {
+				      responsive              : true,
+				      maintainAspectRatio     : false,
+				      datasetFill  			  : false,
+				      scales: {
+					        xAxes: [{
+					          display : true
+					        }],
+					        yAxes: [{
+					        	ticks: {
+					                  stepSize: 10,
+					                  suggestedMax: 50, 
+					                  beginAtZero: true
+					          }
+					        }]
+					      }
+				    };
+			var ctx = document.getElementById('chartsuggestCnt').getContext('2d');
+			var stackedBarChartData = $.extend(true, {}, barChartData);
+			var stackedBarChart = new Chart(ctx, {
+			      type: 'bar',
+			      data: barChartData,
+			      options: barChartOptions
+			    });
+			}
+		});
+	}
+	
 </script>
 
 <body>
@@ -254,8 +262,11 @@ function donutSuggestAccept() {
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab">
                      	 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-	              		 		<canvas id="donutChartsuggest" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
-	              		 	</div>
+	              		 	<canvas id="donutChartsuggest" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
+	              		 </div>
+	              		 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+	              		 	<canvas id="chartsuggestCnt" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+	              		 </div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-suggest" role="tabpanel" aria-labelledby="custom-tabs-three-suggest-tab">
                       	ㅋ

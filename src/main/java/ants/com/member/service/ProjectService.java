@@ -108,4 +108,10 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	public List<TodoVo> getoutlindeadline(String reqId) {
 		return mapper.getoutlindeadline(reqId);
 	}
+	
+	public List<SuggestVo> chartsuggestcnt(String reqId) {
+		return mapper.chartsuggestcnt(reqId);
+	}
+	
+	
 }

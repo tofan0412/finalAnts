@@ -267,5 +267,17 @@
 		 WHERE req_id = #{reqId} 
 	</update>
 	
+	<select id="chartsuggestcnt" parameterType="java.lang.String"
+		resultType="ants.com.board.memBoard.model.SuggestVo">
+		SELECT count(A.SGT_ID) as chartcnt,
+	       c.mem_name as memName
+		  FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+		                     FROM TODO 
+		                    WHERE REQ_ID = #{reqId}) B, member c
+		 WHERE A.TODO_ID = B.TODO_ID
+		   AND A.DEL = 'N'
+		   AND B.mem_id = c.mem_id 
+	       group by c.mem_name
+	</select>
 	
 </mapper>
