@@ -34,61 +34,109 @@
 #juso{
 	width : 100%;
 }
+.form-control:disabled, .form-control[readonly] {
+   background-color: white;
+   }
+  .success{
+  background-color: #f6f6f6;
+  width: 10%;
+  text-align: center;
+  }
 </style>	
 <%@include file="../layout/contentmenu.jsp"%>
 <body>
-	<c:if test="${not empty scheduleVo.juso}">
-		<div id="map" style="width:100%;height:400px;"></div>
-		<!-- <div id="value"></div> -->
-	</c:if>
-			
-	<div id="map" style="width:100%;height:400px; display:none;">
-		<input type="hidden" id="xVal" name="xVal" type="text" value="${scheduleVo.xVal }"> <br>
-		<input type="hidden" id="yVal" name="yVal" type="text" value="${scheduleVo.yVal }"> <br>
-		<input type="hidden" id="categoryId" name="categoryId" type="text" value="${scheduleVo.categoryId }"> <br>
-		<input type="hidden" id="reqId" name="reqId" type="text" value="${scheduleVo.reqId }"> <br>
-		<input type="hidden" id="del" name="del" type="text" value="${scheduleVo.del }"> <br>
-	</div>
+<div class="col-12 col-sm-12">
+	<div class="card card-teal ">
+	 
 	
 	
-	<div class="card card-primary card-outline">
-
-		<div class="card-header"><h3>일정 상세내역</h3>
-			<div class="float-right">
-				<a href="/schedule/scheduleUpdateView?scheId=${scheduleVo.scheId}"><input type="button" class="btn btn-primary" value="수정"></a> 
-				<a href="/schedule/scheduleDelete?scheId=${scheduleVo.scheId}"><input type="button" class="btn btn-primary" value="삭제"></a><br>
-			</div>
-				제목 <input id="scheId" name="scheId" value="${scheduleVo.scheTitle}" style="border:none;" readonly> <br>
-				아이디 <input id="memId" name="memId" type="text" value="${scheduleVo.memName }" style="border:none;" readonly> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-				등록일<input id="regDt" name="regDt" type="text" value="${scheduleVo.regDt }" style="border:none;" readonly> <br>
-			<h3 class="card-title" style="display:none;">
-				<c:out value="${projectVo.proName}" />
-			</h3>
-		</div>
+	<div class="card-body" id="detailDiv">	
+	
+			<br>
+			<h4 class="jg">일정 상세내역</h4>
+			<br>
+			<table class="table" >
+		        <tr class="stylediff">
+		            <th class="success jg">제목</th>
+		         	<td colspan="3">			  
+		         		<label class="control-label" id="issueTitle">${scheduleVo.scheTitle}</label>
+		         	</td>
+		        </tr>
+	
+	
+		         
+		        <tr class="stylediff">
+		            <th class="success jg">작성자</th>
+		            <td style=" width: 40%;">
+		            	<label class="control-label">${scheduleVo.memName }</label>
+		            </td>
+		          	
+		       
+		            <th class="success jg">등록일</th>		            
+		            <td style="width: 40%;">
+		            	<label class="control-label" >${scheduleVo.regDt }</label>
+		            </td>
+		        </tr>
+		         
+		        <tr class="stylediff">
+		            <th class="success jg">시작일</th>
+		            <td style="width: 40%;">
+		            	<label class="control-label">${scheduleVo.startDt }</label> 		
+		            </td>
+		            
+		            <th class="success jg">종료일</th>
+		            <td style="width: 40%;">
+		            	<label class="control-label">${scheduleVo.endDt }</label> 		
+		            </td>
+		           
+		        </tr>		        
+		        <tr>
+		            <th class="success jg" style="height: 300px;">내용</th>
+		            <td colspan="3">
+			           	<c:if test="${scheduleVo.scheCont == '<p><br></p>'}">
+							<label >[ 내용이 없습니다. ] </label>
+						</c:if>
+						<c:if test="${scheduleVo.scheCont == null}">
+							<label >[ 내용이 없습니다. ] </label>
+						</c:if>				
+						<label id ="issueCont" class="control-label">${scheduleVo.scheCont }</label>
+		            </td>
+		        </tr>
+		        <tr class="stylediff" id="place">
+<%-- 			      <c:if test="${not empty scheduleVo.juso}"> --%>
+					
+						<th class="success jg" style="height: 300px;"  >장소</th>
+						<td  colspan="3">
+							<label id ="issueKind" class="control-label">${scheduleVo.juso }</label> 	
+							<div id="map" style="width:100%;height:400px;"></div>
+							
+									
+							<div id="map" style="width:100%;height:400px; display:none;">
+								<input type="hidden" id="xVal" name="xVal" type="text" value="${scheduleVo.xVal }"> <br>
+								<input type="hidden" id="yVal" name="yVal" type="text" value="${scheduleVo.yVal }"> <br>
+								<input type="hidden" id="categoryId" name="categoryId" type="text" value="${scheduleVo.categoryId }"> <br>
+								<input type="hidden" id="reqId" name="reqId" type="text" value="${scheduleVo.reqId }"> <br>
+								<input type="hidden" id="del" name="del" type="text" value="${scheduleVo.del }"> <br>
+							</div>
+						</td>
+						
+<%-- 			        </c:if> --%>
+		         </tr>
+	        </table>
+	        
+	    <div class="card-footer clearfix">
+			<input type= "button" value="목록으로" id ="back" class="btn btn-default float-left jg" >
 			
-		
-		<div class="card-body">
-			<div class="form-group">
-			</div> 
-			<div class="form-group">
-				시작일 : <input id="startDt" name="startDt" type="text" value="${scheduleVo.startDt }" style="border:none;" readonly> <br>
-				종료일 : <input id="endDt" name="endDt" type="text" value="${scheduleVo.endDt }" style="border:none;" readonly> <br><br>
-				장소 : <input id="juso" name="juso" type="text" value="${scheduleVo.juso }" style="border:none;" readonly>
-			</div> 
-			<br>  
-			<div class="form-group"> 
-				<h4>내용</h4><br>
-				<textarea id="scheCont" name="scheCont" value="${scheduleVo.scheCont }" style="border:1px solid;" readonly>${scheduleVo.scheCont }</textarea>
-			</div>
-		</div> 
-		<div class="card-footer">
-			<button type="button" class="btn btn-default" id="back">
-				<i class="fas fa-times"></i> 취소
-			</button>
+	    	<c:if test="${scheduleVo.memId == SMEMBER.memId}">
+				<input type= "button" value="삭제하기" id="delsche"  class="btn btn-default float-right jg" >			
+				<input type= "button" value="수정하기" id ="modsche" class="btn btn-default float-right jg" style="margin-right: 5px;">
+			</c:if>
 		</div>
+	
+	
 	</div>
-
- 
+</div>
+</div>	
 	
 <script type="text/javascript">
 		var x = 0;
@@ -108,21 +156,7 @@
 
 		});
 
-		//클릭이벤트를 적용하여 경고창으로 위도 경도를 봅니다.
-		naver.maps.Event.addListener(map, 'click', function(e) {
-			x = e.coord.lat();
-			y = e.coord.lng();
-
-			// 지도를 클릭하면 아래 내용이 실행됩니다.
-			$("#value").text(x + ', ' + y);
-			$("#x").val(x);
-			$("#y").val(y);
-			marker.setPosition(e.latlng) // 클릭한 지점으로 마커 이동
-			// e 는 클릭시 넘어오는 이벤트 (네이밍은 원하는 대로 하셔도 됩니다)
-			// e 에서 필요한 것을 꺼내서 쓰면 됩니다.
-			// e.coord.lat() 는 위도 (Latitude)  보통 약어로 lat
-			// e.coord.lng() 는 경도 (Longitude) 보퉁 약어로 lng
-		});
+		
 
 		var marker = new naver.maps.Marker(
 				{
@@ -292,10 +326,31 @@
 		
 			
 	$(document).ready(function(){
+		
+		if('${scheduleVo.juso}' == '' || '${scheduleVo.juso}' == null ){
+			$('#place').hide();
+		}
+		
 		// 뒤로가기
 		$("#back").on("click", function() {
+			console.log("뒤로가기")
 			window.history.back();
 		});
+		
+		// 수정하기 버튼
+		$("#modsche").on('click', function(){
+			console.log("수정버튼")
+			$(location).attr('href', '${pageContext.request.contextPath}/schedule/scheduleUpdateView?scheId=${scheduleVo.scheId}');
+		})
+		
+		// 삭제하기 버튼
+		$("#delsche").on('click', function(){
+	        if(confirm("정말 삭제하시겠습니까 ?") == true){
+				$(location).attr('href', '/schedule/scheduleDelete?scheId=${scheduleVo.scheId}');
+	        }else{
+	        	return;
+	        }
+		})
 		 	
 	});
 </script>

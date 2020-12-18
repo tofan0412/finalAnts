@@ -229,13 +229,6 @@ public class MemberController {
 			// 공지사항 전송 
 			model.addAttribute("issuelist", resultList);
 			
-			//alarm
-			AlarmVo alarmVo = new AlarmVo();
-			alarmVo.setMemId(dbMember.getMemId());
-			alarmVo = alarmService.alarmCount(alarmVo);
-			
-			session.setAttribute("alarmCnt", alarmVo);
-				
 			return "main/layout/contentmain";
 		} else {
 			return "redirect:/member/loginView";

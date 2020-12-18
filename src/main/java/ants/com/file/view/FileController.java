@@ -42,7 +42,7 @@ public class FileController {
 		
 		model.addAttribute("pubFilename" ,filevo.getPubFilename());
 		model.addAttribute("pubFilepath" ,filevo.getPubFilepath());
-
+		
 		return "FileDownloadView";
 	}
 		

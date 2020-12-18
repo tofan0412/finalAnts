@@ -15,9 +15,23 @@ public class SuggestVo extends BaseVo{
 	private String memId;
 	private String reqId;
 	private String acceptpercent;
+	private String rejectpercent;
 	private String memName;
+	private String chartcnt;
 	
 	
+	public String getChartcnt() {
+		return chartcnt;
+	}
+	public void setChartcnt(String chartcnt) {
+		this.chartcnt = chartcnt;
+	}
+	public String getRejectpercent() {
+		return rejectpercent;
+	}
+	public void setRejectpercent(String rejectpercent) {
+		this.rejectpercent = rejectpercent;
+	}
 	public String getAcceptpercent() {
 		return acceptpercent;
 	}
@@ -95,8 +109,10 @@ public class SuggestVo extends BaseVo{
 	public String toString() {
 		return "SuggestVo [sgtId=" + sgtId + ", sgtTitle=" + sgtTitle + ", sgtCont=" + sgtCont + ", regDt=" + regDt
 				+ ", sgtStatus=" + sgtStatus + ", categoryId=" + categoryId + ", del=" + del + ", todoId=" + todoId
-				+ ", memId=" + memId + ", reqId=" + reqId + ", acceptpercent=" + acceptpercent + "]";
+				+ ", memId=" + memId + ", reqId=" + reqId + ", acceptpercent=" + acceptpercent + ", rejectpercent="
+				+ rejectpercent + ", memName=" + memName + ", chartcnt=" + chartcnt + "]";
 	}
-
+	
+	
 	
 }

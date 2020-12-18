@@ -21,50 +21,125 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"	rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
-
-<body>
-
-	<%@include file="../layout/contentmenu.jsp"%>
-	
-<input type="text" id="address" value="">
-<button type="button" id="submit">주소검색</button>
-<!-- display:none; -->
-<div id="map" style="width:100%;height:400px;"></div>
-
-<br><br>
-
+	<%@include file="../layout/contentmenu.jsp"%>	
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		
-		document.getElementById('startDt').value = new Date().toISOString().substring(0, 10);
-		document.getElementById('endDt').value = new Date().toISOString().substring(0, 10);
-		
-		$('#summernote').summernote({
-			  height: 250,                 // 에디터 높이
-			  minHeight: 250,             // 최소 높이
-			  maxHeight: 500,             // 최대 높이
-			  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-			  lang: "ko-KR",					// 한글 설정
-		});  
-	 	
-	 	// 등록
-	 	$("#regBtn").on("click", function() {
-			$("#sform").submit();
-		});
-	 	
-	 	// 뒤로가기
-		$("#back").on("click", function() {
-			window.history.back();
-		});
-	 	
-		$("#map1").on("click", function() {
-			document.getElementById('map').style.display="block";
-		});
-	 	
-	 	
+
+$(document).ready(function(){
+	
+	document.getElementById('startDt').value = new Date().toISOString().substring(0, 10);
+	document.getElementById('endDt').value = new Date().toISOString().substring(0, 10);
+	
+	$('#summernote').summernote({
+		  height: 250,                 // 에디터 높이
+		  minHeight: 250,             // 최소 높이
+		  maxHeight: 500,             // 최대 높이
+		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+		  lang: "ko-KR",					// 한글 설정
+	});  
+ 	
+ 	// 등록
+ 	$("#regBtn").on("click", function() {
+ 		console.log('인서트')
+		$("#sform").submit();
+	});
+ 	
+ 	// 뒤로가기
+	$("#back").on("click", function() {
+		window.history.back();
+	});
+ 	
+	$("#map1").on("click", function() {
+		document.getElementById('map').style.display="block";
 	});
 	
+	
+	function scheInsert(){
+		console.log('인서트')
+		$("#sform").submit();
+	}
+ 	
+});
+
+
+</script>
+
+<body>
+	<br>
+	<div style="padding-left: 30px; padding-right: 30px;">
+	<form method="post" action="${pageContext.request.contextPath }/schedule/scheduleInsert" id="sform" id="sform">    
+			<div class="card card-primary card-outline">
+              <div class="card-header">
+                <h3 class="card-title jg"><c:out value="${projectVo.proName}"/></h3>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <input class="form-control" id="til" name="scheTitle" placeholder="제목">
+                  <input type="hidden" name="writer" value="${SMEMBER.memId }">
+                  <input type="hidden" name="hissueParentid" value="${hissueP }">
+                </div>
+                <div class="form-group">
+                <textarea id="summernote" name="scheCont" placeholder="내용"></textarea>
+				
+                </div>
+                
+                <div class="form-group">
+					<label class="jg">시작일 &nbsp;</label>
+	                <input class="form-control jg" style="display:inline-block; width: 200px;" type='date' id="startDt" name="startDt"/><br>
+					<label class="jg">종료일 &nbsp;</label>
+	                <input class="form-control jg" style="display:inline-block; width: 200px;" type='date' id="endDt" name="endDt"/><br>
+                </div>
+                <br>
+ 
+                 
+                <!-- style="display:none" -->
+                <div class="form-group" style="display:none">
+				<div class="float-left">
+					<input type='button' id="map1" value="지도+" /><br>
+				</div>
+	                x
+	                <input type='text' id="x" name="xVal" value="36.3621643"/><br>
+					y
+	                <input type='text' id="y" name="yVal" value="127.437912"/><br>
+                	 categoryId : 
+					 <input type='text' name="categoryId" value="6"/><br>
+					 reqId : 
+					 <input type='text' name="reqId" value="${projectId}"/><br>
+					 memId : 
+					 <input type='text' name="memId" value="${SMEMBER.memId }"/><br>
+					 del : 
+					 <input type='text' name="del" value="N"/><br>
+					 주소 :
+					 <input type='text' id="juso7" name="juso" value=""/><br>
+                </div>
+                <div id="keyword" class="card-tools float-left" style="width: 400px;">
+	                <div class="input-group row">
+		                <input type="text" id="address" value="" class="form-control" placeholder="검색어를 입력하세요.">
+		               	<span class="input-group-append">		
+							<button type="button" id="submit" class="btn btn-default jg" style="width: 120px;">
+								<i class="fa fa-fw fa-search"></i>주소검색</button>
+						</span>
+						<!-- display:none; -->
+					</div>
+				</div>
+				<br>
+				<div id="map" style="width:100%;height:400px;"></div>
+				<br>
+                 
+              </div>
+              <div class="card-footer clearfix"> 
+                  <input type="submit" class="btn btn-default float-left jg" id="regBtn" value="등록"> 
+<!--                   <button type="button" class="btn btn-default float-left jg" id="regBtn" onclick="scheInsert()"><i class="fas fa-pencil-alt"></i> 작성</button> -->
+ 				 
+                
+              </div>
+            </div>
+        </form>
+	</div>
+		
+
+<script type="text/javascript">
+
 var x = 0;
 var y = 0;
 var contentString = '송촌동 우리집';
@@ -304,66 +379,6 @@ function hasAddition (addition) {
 naver.maps.onJSContentLoaded = initGeocoder;
 naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
 </script>
-			
-		<div style="padding-left: 30px; padding-right: 30px;"><h3>일정 등록</h3>
-		<form method="post" action="${pageContext.request.contextPath }/schedule/scheduleInsert" id="sform">    
-			<div class="card card-primary card-outline">
-              <div class="card-header">
-                <h3 class="card-title"><c:out value="${projectVo.proName}"/></h3>
-              </div>
-              <div class="card-body">
-                <div class="form-group">
-                  <input class="form-control" id="til" name="scheTitle" placeholder="제목">
-                  <input type="hidden" name="writer" value="${SMEMBER.memId }">
-                  <input type="hidden" name="hissueParentid" value="${hissueP }">
-                </div>
-                <div class="form-group">
-                <textarea id="summernote" name="scheCont" placeholder="내용"></textarea>
-				
-                </div>
-                
-                <div class="form-group">
-					시작일
-	                <input type='date' id="startDt" name="startDt"/><br>
-					종료일
-	                <input type='date' id="endDt" name="endDt"/><br>
-                </div>
-                <br>
- 
-
-					<br> 
-                 
-                <!-- style="display:none" -->
-                <div class="form-group" style="display:none">
-				<div class="float-left">
-					<input type='button' id="map1" value="지도+" /><br>
-				</div>
-	                x
-	                <input type='text' id='x' name="xVal" value="36.3621643"/><br>
-					y
-	                <input type='text' id='y' name="yVal" value="127.4379127"/><br>
-                	 categoryId : 
-					 <input type='text' name="categoryId" value="6"/><br>
-					 reqId : 
-					 <input type='text' name="reqId" value="${projectId}"/><br>
-					 memId : 
-					 <input type='text' name="memId" value="${SMEMBER.memId }"/><br>
-					 del : 
-					 <input type='text' name="del" value="N"/><br>
-					 주소 :
-					 <input type='text' id="juso7" name="juso" value=""/><br>
-                </div>
-                 
-              </div>
-              <div class="card-footer">
-                <div class="float-right">
-                  <button type="button" class="btn btn-default" id="back"><i class="fas fa-times"></i> 취소</button>
-                  <button type="button" class="btn btn-primary" id="regBtn"><i class="far fa-pencil-alt"></i> 작성</button>
-                </div>
-              </div>
-            </div>
-        </form>
-		</div>
 
 </body>
 </html>

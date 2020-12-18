@@ -447,11 +447,11 @@ function resize(obj) {
 			
 				
 			<div class="card-footer clearfix" >
+					<input type= "button" value="목록으로" id ="back" class="btn btn-default float-left jg" >
 				
-		 			<c:if test="${issuevo.memId == memId}">
+		 			<c:if test="${issuevo.memId == SMEMBER.memId}">
 						<input type= "button" value="삭제하기" id="delissue"  class="btn btn-default float-right jg" >			
 						<input type= "button" value="수정하기" id ="modissue" class="btn btn-default float-right jg" style="margin-right: 5px;">
-						<input type= "button" value="목록으로" id ="back" class="btn btn-default float-left jg" >
 					</c:if>
 				
             </div>

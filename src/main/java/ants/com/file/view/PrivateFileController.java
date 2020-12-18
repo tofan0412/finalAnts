@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,31 +161,33 @@ public class PrivateFileController {
         //복사될 파일경로
         String copyFilePath = "C:\\profile\\"+filename+"."+extension;
         
-        //파일객체생성
-        File oriFile = new File(oriFilePath);
-        //복사파일객체생성
-        File copyFile = new File(copyFilePath);
-        
-            
-        FileInputStream fis = new FileInputStream(oriFile); //읽을파일
-        FileOutputStream fos = new FileOutputStream(copyFile); //복사할파일
-        
-        fis.close();
-        fos.close();
-        
-        
-        PrivateFileVo privateVo = new PrivateFileVo();
-        MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
-		privateVo.setMemId(memberVo.getMemId());
-		
-        privateVo.setPrivFilepath(copyFilePath);
-		privateVo.setPrivFilename(filevo.getPubFilename());
-		privateVo.setPrivSize(String.valueOf(filevo.getPubSize()));
-		
-		list.add(privateVo);
-		
-		fileService.privateInsert(list);	
-
+    	File f = new File(copyFilePath);
+		if(f.exists()) {	
+	        //파일객체생성
+	        File oriFile = new File(oriFilePath);
+	        //복사파일객체생성
+	        File copyFile = new File(copyFilePath);
+	        
+	            
+	        FileInputStream fis = new FileInputStream(oriFile); //읽을파일
+	        FileOutputStream fos = new FileOutputStream(copyFile); //복사할파일
+	        
+	        fis.close();
+	        fos.close();
+	        
+	        
+	        PrivateFileVo privateVo = new PrivateFileVo();
+	        MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+			privateVo.setMemId(memberVo.getMemId());
+			
+	        privateVo.setPrivFilepath(copyFilePath);
+			privateVo.setPrivFilename(filevo.getPubFilename());
+			privateVo.setPrivSize(String.valueOf(filevo.getPubSize()));
+			
+			list.add(privateVo);
+			
+			fileService.privateInsert(list);	
+		}
 		return "redirect:/file/publicfileview";
 	}
 	

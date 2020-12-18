@@ -10,8 +10,21 @@
 
 </head>
 <title>협업관리프로젝트</title>
-	<form:form commandName="reqVo" id="DetailForm" name="DetailForm" method="post">
 
+	<script type="text/javascript">
+		$(function(){
+			
+		})
+		/* 요구사항정의서 수정페이지보기 */
+		function reqUpdate() {
+			document.DetailForm.action = "<c:url value = '/req/reqUpdateView'/>";
+			document.DetailForm.submit();
+		}
+	</script>
+
+	<form:form commandName="reqVo" id="DetailForm" name="DetailForm" method="post">
+		<form:hidden path="reqId"/>
+		
 		    <!-- Content Header (Page header) -->
 		    <section class="content-header" style="
 											border-bottom: 1px solid #dee2e6;
@@ -183,8 +196,7 @@
 		                </c:forEach>
 		              </ul>
 		              <div class="text-center mt-5 mb-3">
-		                <a href="#" class="btn btn-sm btn-primary">Add files</a>
-		                <a href="#" class="btn btn-sm btn-warning">Report contact</a>
+		                <a href="javascript:reqUpdate();" class="btn btn-sm btn-primary">파일 추가</a>
 		              </div>
 		            </div>
 		          </div>

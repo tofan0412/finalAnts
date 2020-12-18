@@ -48,11 +48,6 @@ $(document).ready(function(){
 		var scheId = $(this).data("scheid");
 			$(location).attr('href', '${pageContext.request.contextPath}/schedule/scheduleSelect?scheId='+scheId);
 	});
-	
-	$('#bt').on('click', function(){
-		console.log('클릭')
-		$(location).attr('href', '${pageContext.request.contextPath}/schedule/scheduleInsert');		
-	})
 })   
 	
 function scheInsert(){
