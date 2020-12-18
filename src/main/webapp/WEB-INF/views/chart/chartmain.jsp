@@ -17,10 +17,60 @@
 $(document).ready(function() {
 	stackedbarchart();
 	donutChart();
-// 	donutSuggetstReject();
-// 	donutSuggestAccept();
-  });
+	donutSuggestAccept();
+
+ $('.knob').knob({
   
+      draw: function () {
+
+        // "tron" case
+        if (this.$.data('skin') == 'tron') {
+
+          var a   = this.angle(this.cv)  // Angle
+            ,
+              sa  = this.startAngle          // Previous start angle
+            ,
+              sat = this.startAngle         // Start angle
+            ,
+              ea                            // Previous end angle
+            ,
+              eat = sat + a                 // End angle
+            ,
+              r   = true
+
+          this.g.lineWidth = this.lineWidth
+
+          this.o.cursor
+          && (sat = eat - 0.3)
+          && (eat = eat + 0.3)
+
+          if (this.o.displayPrevious) {
+            ea = this.startAngle + this.angle(this.value)
+            this.o.cursor
+            && (sa = ea - 0.3)
+            && (ea = ea + 0.3)
+            this.g.beginPath()
+            this.g.strokeStyle = this.previousColor
+            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false)
+            this.g.stroke()
+          }
+
+          this.g.beginPath()
+          this.g.strokeStyle = r ? this.o.fgColor : this.fgColor
+          this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false)
+          this.g.stroke()
+
+          this.g.lineWidth = 2
+          this.g.beginPath()
+          this.g.strokeStyle = this.o.fgColor
+          this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false)
+          this.g.stroke()
+
+          return false
+        }
+      }
+  });
+});
 function stackedbarchart() {
 	$.ajax({
 		url : "/project/stackedbarchart",
@@ -34,7 +84,6 @@ function stackedbarchart() {
 		percent.push(data.todoVoList[i].todoPercent);
 		if(data.todoVoList[i].todoPercent == '0'){
 		percent2.push(100);	
-			
 		}
 		if(data.todoVoList[i].todoPercent != '0'){
 		percent2.push(100 - data.todoVoList[i].todoPercent);				
@@ -101,7 +150,6 @@ function donutChart() {
 		for(i=0; i<data.dsize; i++){
 		dnum.push(data.donutChartList[i].memName);	
 		dpercent.push(data.donutChartList[i].todoPercent);
-		
 		}
 		var donutChartData = {
 				labels : dnum,
@@ -131,59 +179,36 @@ function donutSuggestAccept() {
 		url : "/project/donutSuggestAccept",
 		method : "get",
 		success : function(data) {
-		var dpercent=[];
-		dpercent.push(data.acceptpercent);
-		var donutChartData = {
-				labels : ['ACCEPT'],
-				 datasets: [
-				        {
-				          data: dpercent,
-				          backgroundColor : ['#f56954'],
-				        }
-				      ]
-		};
-		 var donutOptions     = {
-			      maintainAspectRatio : false,
-			      responsive : true,
-			    }
-		var dctx = document.getElementById('donutSuggetstAccept').getContext('2d');
-		var donutChart = new Chart(dctx, {
-		      type: 'doughnut',
-		      data: donutChartData,
-		      options: donutOptions
-		    });
-		}
-	});
-}
-function donutSuggetstReject() {
-	$.ajax({
-		url : "/project/donutSuggetstReject",
-		method : "get",
-		success : function(data) {
-		var dpercent=[];
-		dpercent.push(data.acceptpercent);
-		var donutChartData = {
-				labels : ['REJECT'],
-				 datasets: [
-				        {
-				          data: dpercent,
-				          backgroundColor : ['#f56954'],
-				        }
-				      ]
-		};
-		 var donutOptions     = {
-			      maintainAspectRatio : false,
-			      responsive : true,
-			    }
-		var dctx = document.getElementById('donutSuggetstReject').getContext('2d');
-		var donutChart = new Chart(dctx, {
-		      type: 'doughnut',
-		      data: donutChartData,
-		      options: donutOptions
-		    });
-		}
-	});
-}
+			var dpercent=[];
+			dpercent.push(data.dbsuggestvo.acceptpercent);
+			dpercent.push(data.dbsuggestvo.rejectpercent);
+			var a=data.dbsuggestvo.acceptpercent*1;
+			var b=data.dbsuggestvo.rejectpercent*1;
+			var c = 100-(a+b)+0;
+			var d = c+"";
+			dpercent.push(d);
+			var donutChartData = {
+					labels : ['ACCEPT','REJECT','WAIT'],
+					 datasets: [
+					        {
+					          data: dpercent,
+					          backgroundColor : ['#00a65a', '#f39c12', '#00c0ef'],
+					        }
+					      ]
+			};
+			 var donutOptions     = {
+				      maintainAspectRatio : false,
+				      responsive : true,
+				    }
+			var dctx = document.getElementById('donutChartsuggest').getContext('2d');
+			var donutChart = new Chart(dctx, {
+			      type: 'doughnut',
+			      data: donutChartData,
+			      options: donutOptions
+			    });
+			}
+		});
+	}
 	
 </script>
 
@@ -228,10 +253,9 @@ function donutSuggetstReject() {
               		 	</div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab">
-                      	<div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-              		 		<canvas id="donutSuggetstAccept" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
-                      		<canvas id="donutSuggetstReject" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
-                      	</div>
+                     	 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+	              		 		<canvas id="donutChartsuggest" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
+	              		 	</div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-suggest" role="tabpanel" aria-labelledby="custom-tabs-three-suggest-tab">
                       	ㅋ

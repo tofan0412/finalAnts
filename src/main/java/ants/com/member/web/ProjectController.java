@@ -236,17 +236,13 @@ public class ProjectController {
 	public String donutSuggestAccept(Model model, SuggestVo suggestVo, HttpSession session) {
 		String reqId = (String) session.getAttribute("projectId");
 		SuggestVo dAccept = projectService.getoutlinsuggest(reqId);
-		model.addAttribute("dAccept", dAccept);
+		SuggestVo dReject= projectService.getoutlinsuggestreject(reqId);
+		SuggestVo dbsuggestvo = new SuggestVo();
+		dbsuggestvo.setAcceptpercent(dAccept.getAcceptpercent());
+		dbsuggestvo.setRejectpercent(dReject.getRejectpercent());
+		model.addAttribute("dbsuggestvo", dbsuggestvo);
 		return "jsonView";
 	}
 	
-	// 차트 뷰
-	@RequestMapping("/donutSuggetstReject")
-	public String donutSuggetstReject(Model model, SuggestVo suggestVo, HttpSession session) {
-		String reqId = (String) session.getAttribute("projectId");
-		SuggestVo dReject= projectService.getoutlinsuggestreject(reqId);
-		model.addAttribute("dReject", dReject);
-		return "jsonView";
-	}
-
+	
 }
