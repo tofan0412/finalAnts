@@ -235,7 +235,7 @@
 				                    	WHERE REQ_ID = #{reqId}) B
 										WHERE A.TODO_ID = B.TODO_ID
 				   						AND A.DEL = 'N'))*100)
-			            ELSE 0 end as acceptpercent
+			            ELSE 0 end as rejectpercent
 			        FROM    dual
 	</select>
 	<select id="getoutlindeadline" parameterType="java.lang.String"
