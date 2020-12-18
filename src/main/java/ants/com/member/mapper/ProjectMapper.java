@@ -67,5 +67,8 @@ public interface ProjectMapper {
 	
 	// 개요 프로젝트 마감임박할일 조회
 	public List<TodoVo> getoutlindeadline(String reqId);
+	
+	// 프로젝트 삭제
+	public int deleteProject(String reqId);
 
 }

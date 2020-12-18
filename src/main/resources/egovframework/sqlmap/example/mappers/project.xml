@@ -68,9 +68,9 @@
 	<insert id="insertProject"
 		parameterType="ants.com.member.model.ProjectVo">
 		INSERT INTO PROJECT 
-			(REQ_ID,MEM_ID,PRO_NAME,REG_DT)
+			(REQ_ID,MEM_ID,PRO_NAME,REG_DT,DEL)
 		VALUES
-			(#{reqId},#{memId,jdbcType=VARCHAR},#{proName,jdbcType=VARCHAR},SYSDATE)
+			(#{reqId},#{memId,jdbcType=VARCHAR},#{proName,jdbcType=VARCHAR},SYSDATE,'N')
 	</insert>
 
 	<select id="userSearch" parameterType="java.lang.String"
@@ -260,4 +260,12 @@
 				order by todo_end asc]]> 
         
 	</select>
+	
+	<update id="deleteProject" parameterType="java.lang.String">
+		UPDATE project
+		   SET del = 'Y'
+		 WHERE req_id = #{reqId} 
+	</update>
+	
+	
 </mapper>

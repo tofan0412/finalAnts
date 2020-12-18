@@ -19,6 +19,7 @@ public class AlarmVo extends BaseVo{
 	private int totalCnt;
 	private String reqStatus;
 	private String[] memIds;
+	private String del;
 	
 	public AlarmVo() {
 		
@@ -97,12 +98,19 @@ public class AlarmVo extends BaseVo{
 	public void setMemIds(String[] memIds) {
 		this.memIds = memIds;
 	}
+	
+	public String getDel() {
+		return del;
+	}
+	public void setDel(String del) {
+		this.del = del;
+	}
 	@Override
 	public String toString() {
 		return "AlarmVo [alarmId=" + alarmId + ", alarmCont=" + alarmCont + ", alarmStatus=" + alarmStatus + ", memId="
 				+ memId + ", alarmType=" + alarmType + ", reqPl=" + reqPl + ", resPl=" + resPl + ", reply=" + reply
 				+ ", posts=" + posts + ", totalCnt=" + totalCnt + ", reqStatus=" + reqStatus + ", memIds="
-				+ Arrays.toString(memIds) + "]";
+				+ Arrays.toString(memIds) + ", del=" + del + "]";
 	}
 	
 	

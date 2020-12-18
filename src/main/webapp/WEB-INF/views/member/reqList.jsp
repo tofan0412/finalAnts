@@ -99,7 +99,7 @@ td{
 				<h3 class="card-title"></h3>
 					<div class="input-group mb-3 ">
 						<select class="form-control col-md-1" name="searchCondition"
-							id="searchCondition" style="font-size: 0.7em;">
+							id="searchCondition">
 							<option value="0">제목</option>
 							<option value="1">기간</option>
 							<option value="2">담당자</option>
@@ -117,23 +117,23 @@ td{
 			</div>
 			<!-- /.card-header -->
 			<div class="card-body p-0">
-				<table class="table" style="font-size: 0.9em;">
+				<table class="table jg">
 					<thead>
 						<tr>
-							<th style="width: 100px;">No.</th>
-							<th>제목</th>
-							<th style="width: 100px;">기간</th>
-							<th style="width: 150px; text-align: center;">담당자</th>
-							<th style="width: 150px; text-align: center;">응답 상태</th>
-							<th style="width: 300px;">진행도</th>
-							<th style="width: 100px;"></th>
-							<th style="width: 300px;"></th>
+							<th style="width: 10%; text-align: center; ">No.</th>
+							<th style="">제목</th>
+							<th style="width: 5%;">기간</th>
+							<th style="width: 10%; text-align: center;">담당자</th>
+							<th style="width: 10%; text-align: center;">응답 상태</th>
+							<th style="width: 15%;">진행도</th>
+							<th style="width: 3%;"></th>
+							<th style="width: 20%;"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${reqList }" var="req" varStatus="sts">
 							<tr>
-								<td style="padding-left: 24px!important"><c:out
+								<td style="padding-left: 24px!important; text-align: center;"><c:out
 										value="${paginationInfo.totalRecordCount - ((reqVo.pageIndex-1) * reqVo.pageUnit + sts.index)}" />.
 									<form:hidden path="reqId" />
 								</td>
@@ -159,7 +159,7 @@ td{
 										</td>
 									</c:otherwise>
 								</c:choose>
-								<td style="text-align: center;"><c:choose>
+								<td style="text-align: center;" class="ns"><c:choose>
 										<c:when test="${req.status eq 'WAIT' }">
 											<span class="badge badge-warning">대기</span>
 										</c:when>
@@ -203,17 +203,20 @@ td{
 										</c:when>
 									</c:choose>
 								</td>
-								<td class="project-actions text-center">${req.proPercent }</td>
-								<td class="project-actions text-right" style="opacity: .9; padding-right: 50px!important;">
+								<c:if test="${req.proPercent eq '0' or req.proPercent eq null }"></c:if>
+								<td class="project-actions text-center">${req.proPercent }<c:if test="${req.proPercent eq '0' or req.proPercent eq null }">0</c:if> %</td>
+								<td class="project-actions text-right" style="opacity: .9; padding-right: 60px!important;">
 									<a class="btn btn-default btn-xs" href="javascript:reqDetail('<c:out value="${req.reqId }"/>');">
 										<i class="fas fa-folder"></i> 보기 
 									</a> 
 									<a class="btn btn-success btn-xs" href="javascript:reqUpdate(${req.reqId });"> 
 										 <i class="fas fa-pencil-alt"></i> 수정
 									</a>
-									<a class="btn btn-danger btn-xs" href="javascript:reqDelete(${req.reqId });"> 
-										<i class="fas fa-trash"></i> 삭제
-									</a>
+									<c:if test="${req.plId eq null and req.status != 'ACCEPT'}">
+										<a class="btn btn-danger btn-xs" href="javascript:reqDelete(${req.reqId });"> 
+											<i class="fas fa-trash"></i> 삭제
+										</a>
+									</c:if>
 								</td>
 							</tr>
 						</c:forEach>
@@ -443,23 +446,28 @@ td{
 
 	/* 요구사항정의서 삭제하기 */
 	function reqDelete(id) {
-		if (confirm("삭제한 정보는 복구할 수 없습니다. 정말 삭제하시겠습니까?")) {
-			document.listForm.selectedId.value = id;
-			document.listForm.action = "<c:url value = '/req/reqDelete'/>";
-			document.listForm.submit();
-		} else {
-
+		//pm이면 삭제 아니면 불가
+		if(${SMEMBER.memType == 'PM'}){
+			if (confirm("삭제한 정보는 복구할 수 없습니다. 정말 삭제하시겠습니까?")) {
+				document.listForm.selectedId.value = id;
+				document.listForm.action = "<c:url value = '/req/reqDelete'/>";
+				document.listForm.submit();
+			}
+		}else{
+			alert("삭제 권한이 없습니다.");
 		}
 	}
 
 	/* pl 삭제하기 */
 	function plDelete(id) {
-		if (confirm("pl삭제시 복구 할 수 없으며 재등록을 해야합니다. 삭제하시겠습니까?")) {
-			document.listForm.selectedId.value = id;
-			document.listForm.action = "<c:url value = '/req/plDelete'/>";
-			document.listForm.submit();
-		} else {
-
+		if(${SMEMBER.memType == 'PM'}){
+			if (confirm("pl삭제시 복구 할 수 없으며 재등록을 해야합니다. 삭제하시겠습니까?")) {
+				document.listForm.selectedId.value = id;
+				document.listForm.action = "<c:url value = '/req/plDelete'/>";
+				document.listForm.submit();
+			}
+		}else{
+			alert("삭제권한이 없습니다.");
 		}
 	}
 
