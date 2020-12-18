@@ -31,22 +31,110 @@
 <body>	
 	
 	<%@include file="../layout/contentmenu.jsp"%>
-	
-	<!-- style="display:none" -->
-	<div class="form-group" style="display:none">
-		<input id="juso" name="juso" type="text" value="${scheduleVo.juso }"> <br>
+
+<br>
+	<div style="padding-left: 30px; padding-right: 30px;">
+	<form method="post" action="${pageContext.request.contextPath }/schedule/scheduleUpdate" id="sform" id="sform">    
+			<div class="card card-primary card-outline">
+              <div class="card-header">
+                <h3 class="card-title jg"><c:out value="${projectVo.proName}"/></h3>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+            		<input class="form-control" name="scheTitle" placeholder="제목" value="${scheduleVo.scheTitle}">
+                </div>
+                <div class="form-group">
+                <textarea id="summernote" name="scheCont" placeholder="내용">${scheduleVo.scheCont}</textarea>
+				
+                </div>
+                
+                <div class="form-group">
+					<label class="jg">시작일 &nbsp;</label>
+	                <input class="form-control jg" style="display:inline-block; width: 200px;" type='date' id="startDt" name="startDt" value="${scheduleVo.startDt}"/><br>
+					<label class="jg">종료일 &nbsp;</label>
+	                <input class="form-control jg" style="display:inline-block; width: 200px;" type='date' id="endDt" name="endDt" value="${scheduleVo.endDt}"/><br>
+                </div>
+<!--                 <div class="form-group" id="addDiv"> -->
+<!-- 					<input type="submit" class="btn btn-default float-left jg" id="addbtn" value="장소 추가">  -->
+<!--                 </div> -->
+                <br>
+ 
+                 
+                <!-- style="display:none" -->
+                <div class="form-group" style="display:none">
+				<div class="float-left">
+					<input type='button' id="map1" value="지도+" /><br>
+				</div>
+					scheId : 
+                	<input type='text' name="scheId" value="${scheduleVo.scheId}"/><br>
+	                x
+	                <input type='text' id='x' name="xVal" value="${scheduleVo.xVal}"/><br>
+					y
+	                <input type='text' id='y' name="yVal" value="${scheduleVo.yVal}"/><br>
+                	 categoryId : 
+					 <input type='text' name="categoryId" value="6"/><br>
+					 reqId : 
+					 <input type='text' name="reqId" value="${projectId}"/><br>
+					 memId : 
+					 <input type='text' name="memId" value="${SMEMBER.memId }"/><br>
+					 del : 
+					 <input type='text' name="del" value="N"/><br>
+<!-- 					 주소 : -->
+					 <input type='text' id="juso7" name="juso" value="${scheduleVo.juso }"/><br>
+                </div>
+                
+              <div id="mapdiv">
+                <div id="keyword" class="card-tools float-left" style="width: 400px;">
+	                <div class="input-group row">
+		                <input type="text" id="address" value="" class="form-control" placeholder="검색어를 입력하세요.">
+		               	<span class="input-group-append">		
+							<button type="button" id="submit" class="btn btn-default jg" style="width: 120px;">
+								<i class="fa fa-fw fa-search"></i>주소검색</button>
+						</span>
+						<!-- display:none; -->
+					</div>
+				</div>
+				<br>
+				<!-- style="display:none" -->
+				<div class="form-group" style="display:none">
+					<input id="juso" name="juso2" type="text" value="${scheduleVo.juso }"> <br>
+				</div>
+				
+				<div id="map" style="width:100%;height:400px;"></div>
+		       </div>
+			
+				<br>
+                 
+              </div>
+              <div class="card-footer clearfix"> 
+                  <input type="submit" class="btn btn-default float-left jg" id="regBtn" value="수정"> 
+<!--                   <button type="button" class="btn btn-default float-left jg" id="regBtn" onclick="scheInsert()"><i class="fas fa-pencil-alt"></i> 작성</button> -->
+ 				 
+                
+              </div>
+            </div>
+        </form>
 	</div>
-	
-<input type="text" id="address" value="">
-<button type="button" id="submit">주소검색</button>
-<div id="map" style="width:100%;height:400px;"></div>
-	
-<br><br>
+
+
+
+
 
 
 <script type="text/javascript">
 	$(document).ready(function(){
 	
+
+		if('${scheduleVo.juso}' == '' || '${scheduleVo.juso}' == null ){
+			$('#mapdiv').hide();
+		}
+		
+// 		$('#addbtn').on('click', function(){
+// 	 		$('#addDiv').hide();
+// 	 		$('#mapdiv').show();
+// 	 	})
+		
+		
 	  	$('#summernote').summernote({
 			  height: 250,                 // 에디터 높이
 			  minHeight: 250,             // 최소 높이
@@ -76,7 +164,7 @@ var y = 0;
 var contentString = '송촌동 우리집';
 
 var map = new naver.maps.Map('map', {
-    center: new naver.maps.LatLng(36.350365, 127.3853066),
+//     center: new naver.maps.LatLng(36.350365, 127.3853066),
     zoom: 17,	//지도의 초기 줌 레벨
     minZoom: 1,	//지도의 최소 줌 레벨
     zoomControl: true,	//줌 컨트롤의 표시 여부
@@ -105,7 +193,8 @@ naver.maps.Event.addListener(map, 'click', function(e){
 });
 
 var marker = new naver.maps.Marker({
-    position: new naver.maps.LatLng($("#x").val(x), $("#y").val(y)),
+	
+//     position: new naver.maps.LatLng($("#x").val(x), $("#y").val(y)),
     map: map
 });
 
@@ -311,60 +400,60 @@ naver.maps.onJSContentLoaded = initGeocoder;
 naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
 </script>
 			
-	<div style="padding-left: 30px; padding-right: 30px;"><h3>일정 수정</h3>
-		<form method="post" action="${pageContext.request.contextPath }/schedule/scheduleUpdate" id="sform">    
-			<div class="card card-primary card-outline">
-              <div class="card-header">
-                <h3 class="card-title"><c:out value="${projectVo.proName}"/></h3>
-              </div>
-              <div class="card-body">
-                <div class="form-group">
-                  <input class="form-control" name="scheTitle" placeholder="제목" value="${scheduleVo.scheTitle}">
-                </div>
-                <div class="form-group">
-                <textarea id="summernote" name="scheCont" value="${scheduleVo.scheCont}">${scheduleVo.scheCont}</textarea>
+<!-- 	<div style="padding-left: 30px; padding-right: 30px;"><h3>일정 수정</h3> -->
+<%-- 		<form method="post" action="${pageContext.request.contextPath }/schedule/scheduleUpdate" id="sform">     --%>
+<!-- 			<div class="card card-primary card-outline"> -->
+<!--               <div class="card-header"> -->
+<%--                 <h3 class="card-title"><c:out value="${projectVo.proName}"/></h3> --%>
+<!--               </div> -->
+<!--               <div class="card-body"> -->
+<!--                 <div class="form-group"> -->
+<%--                   <input class="form-control" name="scheTitle" placeholder="제목" value="${scheduleVo.scheTitle}"> --%>
+<!--                 </div> -->
+<!--                 <div class="form-group"> -->
+<%--                 <textarea id="summernote" name="scheCont" value="${scheduleVo.scheCont}">${scheduleVo.scheCont}</textarea> --%>
 				
-                </div>
+<!--                 </div> -->
                 
-                <div class="form-group">
-					시작일 &nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp; 
-	                <input type='date' id='startDt' name="startDt" value="${scheduleVo.startDt}"/><br>
-					종료일 &nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp;
-	                <input type='date' id='endDt' name="endDt" value="${scheduleVo.endDt}"/><br>
-                </div>
+<!--                 <div class="form-group"> -->
+<!-- 					시작일 &nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp;  -->
+<%-- 	                <input type='date' id='startDt' name="startDt" value="${scheduleVo.startDt}"/><br> --%>
+<!-- 					종료일 &nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp; -->
+<%-- 	                <input type='date' id='endDt' name="endDt" value="${scheduleVo.endDt}"/><br> --%>
+<!--                 </div> -->
   				
                  
-                <br> 
+<!--                 <br>  -->
                  
-                <!-- style="display:none" -->
-                <div class="form-group" style="display:none">
-                	scheId : 
-                	<input type='text' name="scheId" value="${scheduleVo.scheId}"/><br>
-	                x : 
-	                <input type='text' id='xVal' name="xVal" value="${scheduleVo.xVal}"/><br>
-					y: 
-	                <input type='text' id='yVal' name="yVal" value="${scheduleVo.yVal}"/><br>
-                	categoryId : 
-					<input type='text' name="categoryId" value="6"/><br>
-					reqId : 
-					<input type='text' name="reqId" value="${projectId}"/><br>
-					memId : 
-					<input type='text' name="memId" value="${SMEMBER.memId }"/><br>
-					del : 
-					<input type='text' name="del" value="N"/><br>
-					주소 :
-					<input type='text' id="juso7" name="juso" value="${scheduleVo.juso}"/><br>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="float-right">
-                  <button type="button" class="btn btn-default" id="back"><i class="fas fa-times"></i> 취소</button>
-                  <button type="button" class="btn btn-primary" id="regBtn"><i class="far fa-pencil-alt"></i> 작성</button>
-                </div>
-              </div>
-            </div>
-        </form>
-		</div>
+<!--                 style="display:none" -->
+<!--                 <div class="form-group" style="display:none"> -->
+<!--                 	scheId :  -->
+<%--                 	<input type='text' name="scheId" value="${scheduleVo.scheId}"/><br> --%>
+<!-- 	                x :  -->
+<%-- 	                <input type='text' id='xVal' name="xVal" value="${scheduleVo.xVal}"/><br> --%>
+<!-- 					y:  -->
+<%-- 	                <input type='text' id='yVal' name="yVal" value="${scheduleVo.yVal}"/><br> --%>
+<!--                 	categoryId :  -->
+<!-- 					<input type='text' name="categoryId" value="6"/><br> -->
+<!-- 					reqId :  -->
+<%-- 					<input type='text' name="reqId" value="${projectId}"/><br> --%>
+<!-- 					memId :  -->
+<%-- 					<input type='text' name="memId" value="${SMEMBER.memId }"/><br> --%>
+<!-- 					del :  -->
+<!-- 					<input type='text' name="del" value="N"/><br> -->
+<!-- 					주소 : -->
+<%-- 					<input type='text' id="juso7" name="juso" value="${scheduleVo.juso}"/><br> --%>
+<!--                 </div> -->
+<!--               </div> -->
+<!--               <div class="card-footer"> -->
+<!--                 <div class="float-right"> -->
+<!--                   <button type="button" class="btn btn-default" id="back"><i class="fas fa-times"></i> 취소</button> -->
+<!--                   <button type="button" class="btn btn-primary" id="regBtn"><i class="far fa-pencil-alt"></i> 작성</button> -->
+<!--                 </div> -->
+<!--               </div> -->
+<!--             </div> -->
+<%--         </form> --%>
+<!-- 		</div> -->
 
 </body>
 </html>
