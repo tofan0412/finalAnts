@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set value="<%=new Date() %>" var="currTime" ></c:set>
-<fmt:formatDate value="${currTime }" var="currTime" pattern="yyyy-MM-dd HH:mm" />
+<fmt:formatDate value="${currTime }" var="currTime" pattern="yyyy-MM-dd HH:mm:ss" />
 <script>
 	// sockJS 선언하기. 만약 기존에 선언된 경우 선언을 생략한다.
 	sockMsg = new SockJS("/echo");
@@ -65,25 +65,25 @@
 		
 		// 내가 전송한 글인 경우 ..
 		if (id == '${SMEMBER.memId}'){
-			var memId = "<div class=\'mine memId\'>"+ id + "</div>";
+			var memId = "<div class=\'memId mine\'>"+ id + "</div>";
 			var timeCode = "<div class='regDt mine'>";
 			timeCode += "<c:out value='${currTime}'/></div>";
 			
 			$('#msgArea').append("<div class=\'oneMsg\'>");
 			$('#msgArea').append(memId);
-			$("#msgArea").append("<div class=\'mine chatCont\'>"+ chatCont + "</div>");
+			$("#msgArea").append("<div class=\"chatCont mine\"><span class=\'spaan\'>&nbsp;"+ chatCont + "&nbsp;</span></div>");
 			$("#msgArea").append(timeCode);
 			$('#msgArea').append("</div>");
 			$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);	
 		}
 		else{
-			var memId = "<div class=\'yours memId\'>"+ id + "</div>";
+			var memId = "<div class=\'memId yours\'>"+ id + "</div>";
 			var timeCode = "<div class='regDt yours'>";
 			timeCode += "<c:out value='${currTime}'/></div>";
 			
 			$('#msgArea').append("<div class=\'oneMsg\'>");
 			$('#msgArea').append(memId);
-			$("#msgArea").append("<div class=\'yours chatCont\'>"+ chatCont + "</div>");
+			$("#msgArea").append("<div class=\"chatCont yours\"><span class=\'spaan\'>&nbsp;"+ chatCont + "&nbsp;</span></div>");
 			$("#msgArea").append(timeCode);
 			$('#msgArea').append("</div>");
 			$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);
@@ -145,7 +145,14 @@
 	margin-bottom : 15px;
 	color : black;
 }
-
+.spaan{
+	background-color : #d2d6de;
+	height : 100%;
+	display:inline-block;
+	border-radius : 0.4rem;
+	text-align : left;
+	padding : 2px 2px 4px 4px;
+}
 /* 스크롤바 스타일 */
 #msgArea::-webkit-scrollbar {width: 16px;}
 #msgArea::-webkit-scrollbar-track {background-color:#f1f1f1;} 
@@ -204,14 +211,7 @@ width:16px;height:16px;background:#d2d6de;}
 			<div class="oneMsg">
 				<div class="memId mine">${msg.memId }</div>
 				<div class="chatCont mine">
-					<span style="
-						background-color : #d2d6de;
-						height : 30px;
-						display:inline-block;
-						border-radius : 0.4rem;
-						padding-top : 2px;
-						padding-bottom : 2px;
-						">&nbsp;${msg.chatCont }&nbsp;</span>
+					<span class="spaan">&nbsp;${msg.chatCont }&nbsp;</span>
 				</div>
 				<div class="regDt mine">${msg.regDt }</div>
 			</div>
@@ -221,14 +221,7 @@ width:16px;height:16px;background:#d2d6de;}
 			<div class="oneMsg">
 				<div class="memId yours">${msg.memId }</div>
 				<div class="chatCont yours">
-					<span style="
-						background-color : #d2d6de;
-						height : 30px;
-						display:inline-block;
-						border-radius : 0.4rem;
-						padding-top : 2px;
-						padding-bottom : 2px;
-						">&nbsp;${msg.chatCont }&nbsp;</span>
+					<span class="spaan">&nbsp;${msg.chatCont }&nbsp;</span>
 				</div>
 				<div class="regDt yours">${msg.regDt }</div>
 			</div>

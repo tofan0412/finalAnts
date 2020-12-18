@@ -241,7 +241,7 @@ function listMember(MemListArr){
 	</div>
 </div>
 <br>
-<span class="jg">선택된 멤버</span>&nbsp;&nbsp;<span class="warning"></span>
+<span class="jg" style="color : black;">선택된 멤버</span>&nbsp;&nbsp;<span class="warning"></span>
 
 <div style="height : 12%; width : 97%; overflow-y : auto;">
 	<div class="selectedMemList" style="float : left;"></div>
