@@ -30,8 +30,8 @@
 <aside class="main-sidebar sidebar-light-teal elevation-4" >
 	<!-- Brand Logo -->
 	<a href="/admin/adMainView" class="brand-link"> 
-	<img src="/dist/img/AdminLoginImage.png" class="brand-image "style="float: none; margin: 15px 0px 10px 12px;">
-	<img src="/dist/img/ants.png" style="width: 100px; margin: 0px 0px 0px 18px" >
+	<img src="/dist/img/adminicon.png"  style="float: none;width: 60px;margin: 15px 8px 10px 0px;height: 50px; background-color: white">
+	<img src="/dist/img/ants.png" style="width: 100px;">
 	</a>
 
 	<!-- Sidebar -->
