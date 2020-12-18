@@ -65,6 +65,7 @@ public class ScheduleController {
 	// 일정장소 등록 페이지이동
 	@RequestMapping("/scheduleInsertview")
 	public String scheduleInsertview() {
+		System.out.println("인서트으으");
 		return "tiles/schedule/scheduleInsert";
 	}
 

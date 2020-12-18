@@ -14,9 +14,6 @@ body{
 	min-width: 1000px;
 	
 } 
-
-	
-
 	#pagenum a{
 		 display: inline-block;
 		 text-align: center;
@@ -51,7 +48,17 @@ $(document).ready(function(){
 		var scheId = $(this).data("scheid");
 			$(location).attr('href', '${pageContext.request.contextPath}/schedule/scheduleSelect?scheId='+scheId);
 	});
+	
+	$('#bt').on('click', function(){
+		console.log('클릭')
+		$(location).attr('href', '${pageContext.request.contextPath}/schedule/scheduleInsert');		
+	})
 })   
+	
+function scheInsert(){
+ 	document.listForm.action = "<c:url value='${pageContext.request.contextPath}/schedule/scheduleInsertview'/>";
+ 	document.listForm.submit();
+ }	
 	
 /* pagination 페이지 링크 function */
  function fn_egov_link_page(pageNo){
@@ -96,7 +103,7 @@ $(document).ready(function(){
 				<br>
 	        </div>
 		        
-		      </div><!-- /.container-fluid -->
+		  </div><!-- /.container-fluid -->
 
 
 	 <div class="card-body p-0">
@@ -114,13 +121,13 @@ $(document).ready(function(){
 						
 						<td class="jg" style="width: 200px; text-align: center;"><c:out value="${  ((scheduleVo.pageIndex-1) * scheduleVo.pageUnit + (sts.index+1))}"/>.</td>
 					
-						<td style="text-align: center;">
+						<td style="text-align: center;" class="jg">
 							${schedule.scheTitle}
 						</td>
-						<td style="text-align: center;">
+						<td style="text-align: center;" class="jg">
 							${schedule.memName }
 						</td>
-						<td style="text-align: center;">
+						<td style="text-align: center;" class="jg">
 							${schedule.regDt }
 						</td>
 					</tr>
@@ -130,7 +137,7 @@ $(document).ready(function(){
 	  </div>
 
 
-		<div id="paging" class="card-tools">
+	  <div id="paging" class="card-tools">
 			<ul class="pagination pagination-sm jg" id="pagingui" style="margin-bottom: 0px;">
 				<li class="page-item jg" id="pagenum">
 					<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_egov_link_page" />
@@ -141,12 +148,10 @@ $(document).ready(function(){
 		</div>
 		
 	
-		<div class="card-footer">
-			
-			<a href="/schedule/scheduleInsertview" style="padding-left: 10px;">
-				<button id="bt" class="btn btn-default jg"><i class="fas fa-plus"></i>등록</button>
-			</a>
-		</div>
+	  <div class="card-footer clearfix">
+        	<button id="insertissue" type="button" class="btn btn-default float-left jg" onclick="scheInsert()"><i class="fas fa-edit "></i>등 록</button>
+      </div>
+		
 <!-- /.card-body -->
 	
        </div>
