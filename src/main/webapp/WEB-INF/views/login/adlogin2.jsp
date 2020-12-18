@@ -29,13 +29,13 @@
 }
 
 .center {
-/* 	padding: 30%; */
-	padding: 10%;
-	color: white;
+ 	padding: 30%; 
+/* 	padding: 10%; */
+/* 	color: white; */
 }
 
 .login {
-	height: 50px;
+/*  	height: 50px;  */
 	background-color: #F3F6F9;
 	border-color: #F3F6F9;
 	height: auto !important;
@@ -62,13 +62,13 @@
 }
 
 .loginBox{
-	background-color : #000000;
-	color: white;
+	background-color : #FAFAFA;
 	width : 35%; 
 	height : 100%;
 	float : right;
 	margin-right : 10%;
-	padding : 15px; 15px; 35px; 35px;
+	margin-top: 6%;
+	padding : 50px; 15px; 35px; 35px;
 	-webkit-animation: fadein 1s; /* Safari and Chrome */
 	border-radius: 0.7rem;
 }
@@ -79,8 +79,13 @@
 	position : absolute;
 	top : 0;
 	left : 0;
-	background-image : url('${pageContext.request.contextPath}/resources/img/admin1.jpg');
-	filter : brightness(80%);
+/* 	background-image : url('${pageContext.request.contextPath}/resources/dist/loginimage.png'); */
+	-webkit-animation: fadein 1.5s; /* Safari and Chrome */
+	filter : brightness(100%);
+	background-size: 105% ;
+	background-color: #F3F6F9;
+	
+ 	
 }
 
 @-webkit-keyframes fadein { /* Safari and Chrome */
@@ -219,7 +224,7 @@ $(document).ready(function(){
 		         	$('#lform').submit();
 		        },  
 		        error : function(error) {
-		        	$('#sp').html('No matching administrator information found.'); 
+		        	$('#sp').html('일치하는 관리자정보가 없습니다.'); 
 		        }
 			}) 
 // 			return false;
@@ -235,29 +240,23 @@ $(document).ready(function(){
 </head>
 
 <title>Ants - 관리자로그인</title>
-<body class="loginContainer fadein" style="background-color: #000000">
+<body class="loginContainer fadein" style="background-color: #FAFAFA">
 
 	<!-- 왼쪽 이미지화면 -->
 	<div class="imgBox">
-	메롱
+		<img alt="이미지" src="${pageContext.request.contextPath}/resources/dist/img/addpl2.png"
+		style="width: 100%; padding-top: 22%">
+		
 	</div>
 	
 	<div class="loginBox">
 		<div>
-			<h2 class="jg" style="line-height: 25px;">
-				Welcome Admin!
+			<h2 class="jg" style="line-height: 25px;color: #0BB783">
+				Ants 
 			</h2>
-			<h4 class="jg">
-				I don't have anything to say,<br>
-				so I'm writing anything to make it look fun.<br>
-				I don't think I can use this much,<br>
-				so I have to write more, but I don't know what to say.<br>
-				Thank you for your hard work on the final project.<br>
-				This is the administrator login page.<br>
-				<br><br>
-				ants1000@ants.com<br>
-				010-1000-1001<br>
-			</h4>
+			<h3 class="jg">
+				관리자 페이지 입니다.
+			</h3>
 		</div>	
 		<br>
 		
@@ -265,7 +264,7 @@ $(document).ready(function(){
 		<form id="lform" action="/admin/adloginFunc" method="POST" >
 			<div class="form-group has-feedback">
 					<header class="jg" style="font-size: 1.2em;">
-						Please enter admin ID<br>
+						ID<br>
 					</header>
 					<input type="email" class="form-control login" id="adminId" name="adminId" value="" style="border: 0; outline: 0;">
 			</div>
@@ -283,7 +282,7 @@ $(document).ready(function(){
 				<div class="col-sm-8">
 					<div class="checkbox icheck">
 						<label> <input type="checkbox" id="rememberMe"
-							name="rememberMe" value=""> RememberMe
+							name="rememberMe" value=""> 아이디 기억하기
 						</label>
 					</div>
 				</div>
