@@ -33,7 +33,7 @@
 .dropdown-content {
 	display: none;
 	position: absolute;
-	background-color: #f1f1f1;
+	background-color: white;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 	min-width: 200px;
 	z-index: 1;
@@ -468,7 +468,7 @@ td{
 			}
 		}else{
 			alert("삭제권한이 없습니다.");
-		}
+		};
 	}
 
 	/* 요구사항정의서 수정페이지보기 */
