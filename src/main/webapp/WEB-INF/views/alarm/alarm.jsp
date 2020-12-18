@@ -23,7 +23,20 @@
 /* 		 text-align: center; */
 		 width:auto; float:left; margin:0 auto; text-align:center;"
 		 
+	}
+	#pagenum a{
+		 display: inline-block;
+		 text-align: center;
+		 padding : 6px; 
+		 border: none; 
+	
 	}	
+	li strong{
+		display: inline-block;
+		text-align: center;
+
+		padding : 6px; 
+	}
 	td{
 		padding: 10px 5px 10px 7px !important;
 	}
@@ -47,7 +60,7 @@ toastr.options = {
   	  "hideMethod": "fadeOut"
   	}  	
   $(function () {
-	  
+	
 	var searchCondition = "${alarmVo.searchCondition}";
 		if (searchCondition != "") {
 			$('#searchCondition').val("" + searchCondition + "").attr("selected","selected");
@@ -144,7 +157,7 @@ toastr.options = {
 		      <div class="container-fluid">
 		        <div class="row mb-2">
 		          <div class="col-sm-6">
-		            <h4 class="jg"><i class="nav-icon fas fa-bullhorn"></i>&nbsp;&nbsp;새로운 소식</h4>
+		            <h3 class="jg" style="padding-left: 6%;"><i class="nav-icon fas fa-bullhorn"></i>&nbsp;&nbsp;새로운 소식</h3>
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right">
@@ -159,7 +172,7 @@ toastr.options = {
 
     		<!-- Main content -->
 		    <section class="content nmc" >
-		    	<div class="col-md-12" >
+		    	<div class="col-md-11" style="margin: auto;">
 		          <div class="card card-outline" style="border-radius: inherit; margin-top: 15px;">
 		            
 		            <!-- /.card-header -->
@@ -197,20 +210,20 @@ toastr.options = {
 							        </div>
 							      </div>
 		                  	</c:if>
-		                <table class="table table-hover" style="font-size: 1em;">
+		                <table class="table table-hover ns" style="font-size: 1em;">
 		                  <tbody>
 		                  	
 		                    <c:forEach items="${alarmList }" var="a" varStatus="i">
 		                      <c:if test="${a.alarmStatus eq 'N' }"><tr class="alarm-row" style="height: 30px; width: 100%;"></c:if>
 		                      <c:if test="${a.alarmStatus eq 'Y' }"><tr class="alarm-row" style="background-color: rgba(0,0,0,.03); height: 30px; width: 100%;"></c:if>
 			                  
-			                    <td style="width: 30px; ">
+			                    <td style="width: 6%; text-align: right; ">
 			                      <div class="icheck-primary">
 			                        <input type="checkbox" value="${a.alarmId }" class="check1" name= "alarmDel">
 			                        <label for="check1"></label>
 			                      </div>
 			                    </td>
-			                    <td class="mailbox-star" style="width: 60px; text-align: center;">
+			                    <td class="mailbox-star" style="width: 6%; text-align: center;">
 				                    <c:choose>
 				                    	<c:when test="${a.alarmType eq 'req-pl' or a.alarmType eq 'res-pl' or a.alarmType eq 'req-pro'}">
 				                    		<c:if test="${a.alarmStatus eq 'N' }"><i class="far fa-envelope text-default"></i></c:if>
@@ -226,11 +239,12 @@ toastr.options = {
 				                    	</c:when>
 				                    </c:choose>
 			                    </td>
-			                    <td class="mailbox-name" style="width: 200px;"><a href="read-mail.html">${fn:split(a.alarmCont,'&&')[1]}(${fn:substring(fn:split(a.alarmCont,'&&')[2],0,10)})</a></td>
+			                    <td class="mailbox-name" style="width: 15%; "><a href="read-mail.html">${fn:split(a.alarmCont,'&&')[1]}(${fn:substring(fn:split(a.alarmCont,'&&')[2],0,10)})</a></td>
 			                    <td class="mailbox-subject">
 				                    <c:choose>
 				                    	<c:when test="${a.alarmType eq 'req-pl' or 'res-pl' }"><b>PL 요청</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]}</a>
+					                    	   <a class="btn btn-sm" href="/project/readReqList" style="color: #0099ff;"><i class="fas fa-sign-in-alt" style="color: #0099ff;"></i> 응답 </a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'res-pl' }"><b>PL 응답</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
@@ -243,11 +257,6 @@ toastr.options = {
 				                    	</c:when>
 				                    </c:choose>
 			                    </td>
-			                    <td class="project-actions text-right" style="opacity: .9;">
-			                      <c:if test="${a.alarmType eq 'req-pl' }">
-									<a class="btn btn-default btn-sm" href="/project/readReqList"><i class="fas fa-sign-in-alt"></i> 응답 </a>
-			                      </c:if>
-								</td>
 			                  </tr>
 		                    </c:forEach>
 		                  </tbody>
@@ -256,6 +265,7 @@ toastr.options = {
 		              </div>
 		              <!-- /.mail-box-messages -->
 		            </div>
+		            
 		            <!-- /.card-body -->
 		          	<input type="hidden" name="alarmId" value=""> 
 		            <div class="card-footer p-0">
@@ -302,17 +312,14 @@ toastr.options = {
 		                </div>
 		                <!-- /.float-right -->
 		              </div>
-		                  <div id="paging" class="card-tools">
-							<ul class="pagination pagination-sm jg" id="pagingui">
-								<ui:pagination paginationInfo="${paginationInfo}" type="image"
-									jsFunction="fn_egov_link_page" />
-								<form:hidden path="pageIndex" />
-							</ul>
-						  </div>
-						  
-						  
-						  
 		            </div>
+		            <div id="paging" class="card-tools">
+			           	<ul class="pagination pagination-sm jg" id ="pagingui">
+					       	<li  class="page-item jg" id ="pagenum" >	
+					       	<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
+					       	<form:hidden path="pageIndex" />		        		
+			            </ul>
+		        	</div>
 		          </div>
           <!-- /.card -->
         	</div>
