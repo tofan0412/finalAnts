@@ -317,6 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+
 </style>
 </head>
 <body class="ns">
@@ -406,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="card card-primary">
               <div class="card-body p-0">
                 <!-- THE CALENDAR -->
-                <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-bootstrap">
+                <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-bootstrap ns">
               </div>
               <!-- /.card-body -->
             </div>

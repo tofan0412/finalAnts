@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="card card-primary">
               <div class="card-body p-0">
                 <!-- THE CALENDAR -->
-                <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-bootstrap">
+                <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-bootstrap ns">
               </div>
               <!-- /.card-body -->
             </div>
