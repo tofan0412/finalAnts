@@ -21,7 +21,7 @@ $(document).ready(function() {
   
 function stackedbarchart() {
 	$.ajax({
-		url : "/todo/stackedbarchart",
+		url : "/project/stackedbarchart",
 		method : "get",
 		success : function(data) {
 		var num = [];
@@ -89,7 +89,7 @@ function stackedbarchart() {
 
 function donutChart() {
 	$.ajax({
-		url : "/todo/donutChart",
+		url : "/project/donutChart",
 		method : "get",
 		success : function(data) {
 		var dnum = [];

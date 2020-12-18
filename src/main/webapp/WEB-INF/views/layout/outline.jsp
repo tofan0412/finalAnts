@@ -185,7 +185,7 @@ text-align: right;
 	                    	</div>
 	               		
 	               		 	<div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-top: 7%; margin-right: 10%;">
-								<a href="${pageContext.request.contextPath }/todo/chartView">차트 보러가기</a>
+								<a href="${pageContext.request.contextPath }/project/chartView">차트 보러가기</a>
 	                    	</div>
                     
 						</div>
@@ -234,15 +234,12 @@ text-align: right;
               	   	<tr>
               	   		<th style="border: none">PL : ${req.plId }</th>
               	   	</tr>
-<!--                         <img src="../userprofile/user-0.png" alt="User Image"> -->
                     <c:forEach items="${promem }" var="pro" varStatus="sts">
                     	<c:if test="${sts.index%3 eq 0 and sts.index != 0}">
 	                    	<tr>
 	                    		<td>${pro.memId }</td>
 	                    	</tr>
                     	</c:if>
-<!--                          <img src="../userprofile/user-4.png" alt="User Image"> -->
-                        	
                         <c:if test="${sts.index%3 != 0 or sts.index eq 0}">
 	                    	<td>${pro.memId }</td>
                     	</c:if>
@@ -270,7 +267,6 @@ text-align: right;
 
                    </tbody>
               	  </table>
-                    <!-- /.users-list -->
               		
               </div>
 </body>
