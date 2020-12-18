@@ -106,18 +106,20 @@ span.tip span {
 					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none" readonly/>
 				</h3>
 				<p class="text-muted text-right">
-					<button type="submit" id="checkbtn" class="btn btn-default">중복확인</button>
 				</p>
-					
-								
+						
+										
 				<ul class="list-group list-group-unbordered mb-3"> 
 					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>아이디</b>  	
 						<a class="float-right">
-							<input class="input" name="memId" type="email" id="memId" placeholder="회원 id"/>
-							<div id="checkMsg" class="indiv"></div>
-						</a>	
-					</li>
-						
+							<input class="input" name="memId" type="email" id="memId" placeholder="회원 id"/><br>
+							<div style="margin-top:10px;">
+								<div id="checkMsg" class="indiv" style="float:left;"></div>	
+								<button type="submit" id="checkbtn" style="float:right; height:30px; width:120px; background:white; color:black; border:1px solid black; font-size:14px; margin-right:20px;">중복확인</button>
+							</div>		
+						</a>	 			 		
+					</li>	   			
+						 		   	 					
 					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>이름</b> 
 						<a class="float-right">
 							<input class="input" name="memName" type="text" id="memName" placeholder="이름"/>
@@ -390,8 +392,8 @@ function unityPW(){
 							btn = document.getElementById('registBtn')
 							btn.disabled = false;
 						}else{ 
-							$('#checkMsg').html('<p style="color:red">사용불가능</p>'); 
-						}
+							$('#checkMsg').html('<p style="color:red">사용불가</p>'); 
+						}	
 					}
 				}); //end ajax 
 				return false;	/* 페이지 새로고침 막기 */

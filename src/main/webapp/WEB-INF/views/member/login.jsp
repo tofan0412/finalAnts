@@ -201,18 +201,23 @@
 		 	var memPass = $('#memPass').val();
 		 		
 			$.ajax({
-				type : "GET",
+				type : "GET",	
 		        url : "/member/logincheck",
-	 	        data: { "memId" : $('#memId').val(),
-		        		"memPass" : $('#memPass').val()},
-		        dataType : "text",
-		        success : function(data) {
-		         	$('#lform').submit();
+	 	        data: { 'memId' : $('#memId').val(),	
+		        		'memPass' : $('#memPass').val()},
+		        dataType : "json",	
+		        async: false,	// false로 설정하게되면 동기식방식으로 이제 ajax를 호출하여 서버에서 응답을 기다렸다가 응답을 모두 완료한 후 다음 로직을 실행하는 동기식으로 변경
+		        success : function(data) {	
+		         	if(data.memId == $('#memId').val()){
+			        	$('#lform').submit();			
+		         	}else{
+			        	$('#sp').html('일치하는 회원정보가 없습니다.'); 
+		         	}
 		        },  
 		        error : function(error) {
 		        	$('#sp').html('일치하는 회원정보가 없습니다.'); 
 		        }
-			}) 
+			})
 			//return false;
 		});
 	})
