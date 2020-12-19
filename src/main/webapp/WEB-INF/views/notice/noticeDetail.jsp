@@ -30,16 +30,47 @@ $(function(){
 
 <style type="text/css">
 	label{
-		width : 76%;
-/* 		height : 30px; */
-		font-size: 1.2em;
+	
+		width : auto;
+
 	}
-	/*
- 	.col-sm-2{ 
- 		font-size: 1.3em; 
- 		font-weight: bold; 
- 	} 
- 	*/
+	#issuecont{
+		display: inline-block;
+		float: left;
+	}
+	
+	.writeCon{
+	width:100%; overflow:visible; background-color:transparent; border:none;
+  		resize :none; 
+	}
+	
+	#re_con{
+		width: 700px;
+		display :inline-block;
+      	resize: none;
+      	padding: 1.1em; /* prevents text jump on Enter keypress */
+      	padding-bottom: 0.2em;
+      	line-height: 1.6;
+      	overflow-y:hidden;
+	}	
+ 	#re_con.autosize { min-height: 60px; } 
+	
+	#filediv{
+		display: inline-block;
+		
+	}
+	#filelabel{
+		float: left;
+	}
+	
+	.form-control:disabled, .form-control[readonly] {
+   background-color: white;
+   }
+  .success{
+  background-color: #f6f6f6;
+  width: 10%;
+  text-align: center;
+  }
 </style>
 
 </head>
@@ -50,46 +81,74 @@ $(function(){
 
 <body>
 
-<div class="col-12 col-sm-9">
+<div class="col-12 col-sm-12">
 	<div class="card card-teal ">
-	  <div class="card-body">
-<!-- 		<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
-			<h3>공지사항  상세내역</h3>
+		<div class="card-body" id="detailDiv">
 			<br>
-			
-			<label for="noticeTitle" class="col-sm-2 control-label">제목</label>
-			<label id ="noticeTitle" class="control-label">${noticevo.noticeTitle}</label>
-			
-			
+			<h4 class="jg">공지사항  상세내역</h4>
 			<br>
-			<label for="noticeCont" class="col-sm-2 control-label">내용</label>
-			<div>
-			<label id ="noticeCont" class="control-label" >${noticevo.noticeCont }</label>
-			</div>
-			<br><br>
-			<div>
-			<label for="adminId" class="col-sm-2 control-label">작성자</label>
-			<label id ="adminId" class="control-label" >${noticevo.adminId }</label>
-			</div>
-			<br>
-			<label for="regDt" class="col-sm-2 control-label">작성일</label>
-			<label id ="regDt" class="control-label">${noticevo.regDt }</label>
-			<br>
+			<table class="table" >
 			
+				<tr class="stylediff">
+					<th class="success jg">제목</th>
+			         	<td colspan="3">			  
+			         		<label class="control-label" id="noticeTitle">${noticevo.noticeTitle}</label>
+			         	</td>
+			    </tr>
+			    
+			    <tr class="stylediff">
+		            <th class="success jg">작성자</th>
+		            <td style="padding-left: 20px; width: 700px;">
+		            	<label class="control-label" id="adminid">${noticevo.adminId }</label>
+		            </td>
+		          	
+		       
+		            <th class="success jg">작성일</th>		            
+		            <td style="padding-left: 20px; width: 700px;">
+		            	<label class="control-label" id="regDt">${noticevo.regDt }</label>
+		            </td>
+		        </tr>
+		        
+		        <tr>
+		            <th class="success jg" style="height: 300px;">내용</th>
+		            <td colspan="3">
+			           	<c:if test="${noticevo.noticeCont == '<p><br></p>'}">
+							<label >[ 내용이 없습니다. ] </label>
+						</c:if>
+						<c:if test="${noticevo.noticeCont == null}">
+							<label >[ 내용이 없습니다. ] </label>
+						</c:if>
+				
+						<label id ="noticeCont" class="control-label">${noticevo.noticeCont }</label>
+		            </td>
+		        </tr>
+			</table>
 			
+			<div class="card-footer clearfix" >
+					<input type= "button" value="목록으로" id ="back" class="btn btn-default float-left jg" >
+				
+		 			<c:if test="${noticevo.adminId == adminId}">
+						<input type= "button" value="삭제하기" id="delnotice"  class="btn btn-default float-right jg" >			
+						<input type= "button" value="수정하기" id ="modnotice" class="btn btn-default float-right jg" style="margin-right: 5px;">
+					</c:if>
+				
+            </div>
+            
+            
+		</div>
+	</div>
+</div>
+
+
+
+<!-- 
 			<br><br>
 			<c:if test="${noticevo.adminId == adminId}">
 				<input type= "button" value="수정" id ="modnotice" class="btn btn-info">
 				<input type= "button" value="목록" id="back"  class="btn btn-success">			
 				<input type= "button" value="삭제" id="delnotice"  class="btn btn-danger">			
 			</c:if>
-				
-
-
-	    </div>      
-	   </div>
-<!-- 	 </div>       -->
-</div>
-
+ -->
+ 
 </body>
 </html>
