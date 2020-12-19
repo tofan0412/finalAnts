@@ -140,7 +140,7 @@ function todo(){
 			 
 				html = '<th class="success jg">일감</th>';
 				html += '<td colspan="3" id ="todo">';		  
-				html += '<label id ="todoId" class="control-label"><a  data-todoid='+data.todoVo.todoId+' id="todolink" href="#">'+data.todoVo.todoTitle+'</a></label></td>'
+				html += '<label  id ="todoId" class="control-label"><a  data-todoid='+data.todoVo.todoId+' id="todolink" href="#">'+data.todoVo.todoTitle+'</a></label></td>'
 
 				$('#todo').html(html);
 				
@@ -239,6 +239,7 @@ function resize(obj) {
 	.writeCon{
 	width:100%; overflow:visible; background-color:transparent; border:none;
   		resize :none; 
+  			padding-left:40px;
 	}
 	
 	#re_con{
@@ -249,6 +250,7 @@ function resize(obj) {
       	padding-bottom: 0.2em;
       	line-height: 1.6;
       	overflow-y:hidden;
+      
 	}	
  	#re_con.autosize { min-height: 60px; } 
 	
@@ -282,7 +284,7 @@ function resize(obj) {
 		<c:if test="${categoryId == 8 or categoryId == 9}">
 			<br>
 			<c:set var="projectNAME" value="${issuevo.proName}"></c:set>
-			<h1 class="jg" style="padding-left:10px;">${projectNAME}</h1> 
+			<h3 class="jg" style="padding-left:10px;">${projectNAME}</h3> 
 			<hr><br>
 		</c:if>
 	  <!-- 이슈 상세보기 -->
@@ -380,71 +382,7 @@ function resize(obj) {
 					</td>
 		        </tr>
 	        </table>
-	        
-	        
-	        
-	        
-<!-- 			<div class="form-group"> -->
-<!-- 				<label for="issueKind" class="col-sm-2 control-label jg">종류</label> -->
-<!-- 				<label id ="issueKind" class="control-label jg"></label> 							 -->
-<!-- 			</div> -->
-			
-<!-- 			<div class="form-group jg" id ="todo"> -->
-				
-<!-- 			</div> -->
-			
 
-<!-- 			<div class="form-group"> -->
-<!-- 				<label for="memid" class="col-sm-2 control-label jg">작성자</label> -->
-<%-- 				<label id ="memid" class="control-label jg">${issuevo.memName }</label>  --%>
-<!-- 			</div> -->
-
-<!-- 			<div class="form-group"> -->
-<!-- 				<label for="regDt" class="col-sm-2 control-label jg">작성일</label> -->
-<%-- 				<label id ="regDt" class="control-label jg">${issuevo.regDt }</label>  --%>
-<!-- 			</div> -->
-	
-<!-- 			<div class="form-group"> -->
-<!-- 				<label for="issueTitle" class="col-sm-2 control-label jg">이슈제목</label> -->
-<%-- 				<label id ="issueTitle" class="control-label jg">${issuevo.issueTitle}</label> --%>
-<!-- 			</div> -->
-
-<!-- 			<div class="form-group"> -->
-<!-- 				<label id="issuecont" for="issueCont" class="col-sm-2 control-label jg">이슈 내용</label> -->
-			
-<%-- 				<c:if test="${issuevo.issueCont == '<p><br></p>'}"> --%>
-<!-- 					<label class="jg">[ 내용이 없습니다. ] </label> -->
-<%-- 				</c:if> --%>
-<%-- 				<c:if test="${issuevo.issueCont == null}"> --%>
-<!-- 					<label class="jg">[ 내용이 없습니다. ] </label> -->
-<%-- 				</c:if> --%>
-				
-<%-- 				<label id ="issueCont" class="control-label jg">${issuevo.issueCont }</label> --%>
-<!-- 			</div>	 -->
-			
-
-<!-- 			<div class="form-group"> -->
-<!-- 				<label id="filelabel" for="File" class="col-sm-2 control-label jg">첨부파일</label> -->
-<!-- 				<div id = "filediv"> -->
-<%-- 					<c:if test="${filelist.size() == 0}"> --%>
-<!-- 						<label class="jg">	[ 첨부파일이 없습니다. ] </label> -->
-					
-<%-- 					</c:if> --%>
-					
-<%-- 					<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" > --%>
-															 					
-<%-- 						<a href="${cp }/file/publicfileDown?pubId=${files.pubId}"> --%>
-<%-- 							<button id ="files${vs.index}" class="btn btn-default jg" name="${files.pubId}"> --%>
-<%-- 								<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;"> --%>
-<%-- 								 ${files.pubFilename} 다운로드 --%>
-<!-- 							</button> -->
-						
-<!-- 						</a> -->
-<!-- 						<br> -->
-<%-- 					</c:forEach> --%>
-<!-- 				</div> -->
-<!-- 			</div> -->
-			
 				
 			<div class="card-footer clearfix" >
 					<input type= "button" value="목록으로" id ="back" class="btn btn-default float-left jg" >
@@ -466,9 +404,11 @@ function resize(obj) {
 						<c:forEach items="${replylist }" var="replylist">
 							<div id="replydiv" style="padding-left: 50px;">			
 							<c:if test= "${replylist.del == 'N'}">
-								<label class="jg">${replylist.memId }</label>
+								<img class="circle" src="/resources/littleryan.jpg" style="width: 30px; height: 30px;   border-radius: 70%;">
+								<label style="display: inline-block;" class="jg">${replylist.memName }</label>
+								<label >( ${replylist.memId } )</label>
 									
-								<textarea style="width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
+								<textarea style=" width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
 								
 								[ ${replylist.regDt} ] 	
 									

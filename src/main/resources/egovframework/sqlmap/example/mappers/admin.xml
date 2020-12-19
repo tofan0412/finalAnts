@@ -83,6 +83,26 @@ INSERT INTO IPHISTORY (IPHIST_IDX,MEM_ID,IP_ADDR,IPHIST_DATE)
 VALUES (IPHIST_SEQ.NEXTVAL,#{memId},#{ipAddr},SYSDATE)
 </insert>
 
+	<!-- 프로젝트 리스트 -->
+	<select id="getProjectList" resultType="ants.com.member.model.ProjectVo" parameterType="ants.com.member.model.ProjectVo">
+		SELECT * 
+		  FROM PROJECT
+		 WHERE DEL != 'Y'
+	</select>
+	
+	<!-- 1개 프로젝트 가져와 -->
+	<select id="getProject" parameterType="ants.com.member.model.ProjectVo" resultType="ants.com.member.model.ProjectVo">
+		SELECT * 
+		  FROM PROJECT
+		 WHERE REQ_ID = #{reqId}
+	</select>
+	
+	<!-- 프로젝트 삭제하기 -->
+	<update id="delproject" parameterType="ants.com.member.model.ProjectVo" >
+		UPDATE PROJECT
+			SEL DEL = 'Y'
+		WHERE req_id = #{reqId}
+	</update>
 
 
 </mapper>

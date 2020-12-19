@@ -4,6 +4,7 @@
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,7 +16,14 @@
 <script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
 <style>
- 
+ 	input[type=search]{
+		display : inline-block;
+		border: none; 
+		background: transparent;
+		padding-bottom:  .5em;
+		padding-top:  .5em;
+		width: 350px;
+	}
 
 	#fileBtn{
 		 display: inline-block;
@@ -43,6 +51,14 @@
 		height: 30px;
 	}
 	
+	#dragdiv {
+		text-align: center;
+		color: darkgray;
+		line-height: 170px;
+	}
+	#reqPeriod{
+		width: 200px;
+	}
 }
 
 </style>
@@ -53,7 +69,8 @@
 		window.history.back();
 	});
 	
-	uploadCnt = 0;
+	var uploadCnt = 0;
+    var QueueCnt = 0;
 	
 	$(function (){
 	  	// Summernote
@@ -89,9 +106,17 @@
 					delfiles();
 				 }
 			},
-			'onCancel': function (file) {
-				alert('실패')
-			} // 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
+			'onCancel': function (file) {// 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
+// 				alert('취소')
+				QueueCnt--;
+				if(QueueCnt == 0){
+					$('#dragdiv').show();
+				}
+			}, 
+			'onAddQueueItem'   : function(file) { // 대기열에 추가되는 각 파일에 대해 트리거됩니다.
+				QueueCnt++;
+				$('#dragdiv').hide();
+			}
 		});
 	  
 		fileSlotCnt = 1;
@@ -249,7 +274,7 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-		<div class="row">
+		<div class="row" style="padding-left: 20px; padding-right:20px;">
 	        <div class="col-md-12">
 	          <div class="card card-outline card-info">
 				<form:form commandName="reqVo" id="saveForm" name="saveForm">
@@ -271,7 +296,7 @@
 		                    <div class="input-group-prepend">
 		                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
 		                    </div>
-		                    <form:input path="reqPeriod" class="form-control" id="reqPeriod" placeholder="60일이면 60만 적으세요."/>
+		                    <form:input path="reqPeriod"  class="form-control" id="reqPeriod" placeholder="60일이면 60만 적으세요."/>
 		                  </div>
 		                  <!-- /.input group -->
 		               </div>
@@ -283,11 +308,12 @@
 					</div>
 				</form:form>
 				<c:if test="${registerFlag == 'modify' }">
-					<div class="form-group">
+					<div class="form-group" style="padding-left: 15px;">
 						<label id ="filelabel" for="files" class="col-sm-2 control-label">첨부파일</label>		
 						<div id ="file" class="col-sm-10">
 						
 							<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
+							<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
 								<input type="search" name="${files.pubId}" value="${files.pubFilename}" disabled >
 			   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">
 									<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i> 
@@ -304,20 +330,21 @@
 				
 				
 				<form>
-					<label for="file" class="col-sm-2 control-label">첨부파일</label>
-					<div id="queue"></div>
-					<input id="file_upload" name="file" type="file" multiple="true"/>
-		<!-- 				<input id="submit" type="button" onClick="javascript:$('#file_upload').uploadifive('upload')" value="제출"/> -->
-					
-					<br><br>
-					<div class="card-footer clearfix " >
-						<input type="hidden" value="7" name="categoryId">
-						<input type="hidden" value="${reqVo.reqId }" name="reqId">
+					<div style="padding-left: 20px;">
+						<c:if test="${registerFlag == 'create' }">
+							<label  for="file" class="col-sm-2 control-label">첨부파일</label>
+						</c:if>
+						<div id="queue">
+							<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
+						</div>
+						<input id="file_upload" name="file" type="file" multiple="true"/>
 						
 					</div>
-				</form>
-	            </div>
-	            <div class="card-footer">
+					<br><br>
+					<input type="hidden" value="7" name="categoryId">
+					<input type="hidden" value="${reqVo.reqId }" name="reqId">
+					<br>	
+					<div class="card-footer">
 				     <div class="row">
 					     <div class="col-12">
 					       <a href="#" class="btn btn-secondary" id="back">취소</a>
@@ -332,6 +359,11 @@
 					     </div>
 					 </div>
 	            </div>
+					
+					
+				</form>
+	            </div>
+	            
 	          </div>
 	        </div>
 	        <!-- /.col-->

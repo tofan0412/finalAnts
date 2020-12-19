@@ -87,7 +87,7 @@ public class MainPageController {
 		scheduleVo.setReqId(reqId);
 		List<ScheduleVo> showCalendar = memBoardService.showCalendar(scheduleVo);
 		model.addAttribute("showSchedule", showCalendar);
-		return "main/layout/contentmain";
+		return "tiles/layout/contentmain";
 	}
 	
 	

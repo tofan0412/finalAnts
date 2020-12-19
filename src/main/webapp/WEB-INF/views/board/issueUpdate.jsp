@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,13 +13,10 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
+<script src="/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="/plugins/summernote/lang/summernote-ko-KR.js"></script>
+
 	
 <script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
@@ -38,8 +36,13 @@
 		          ['table', ['table']],
 		          ['insert', ['link', 'picture']],
 		          ['view', [ 'help']]
-		        ]	      
-		})
+		        ],
+		  
+			  minHeight: null,             				// 최소 높이
+			  maxHeight: null,             				// 최대 높이
+			  focus: true,                  			// 에디터 로딩후 포커스를 맞출지 여부
+			  lang: "ko-KR",							// 한글 설정
+	})
 		
 		if('${issueVo.issueKind }' == 'issue'){
 			$("#kindselect").val('이슈')
@@ -190,7 +193,7 @@
 					  }
 					 
 					 html  =  '<label for="todoId" class="col-sm-2 control-label jg">일감 </label>'
-				     html +=  '<select name="todoId" id="todoselect"  class ="col-sm-4" required>'		
+				     html +=  '<select name="todoId" id="todoselect" style=" display: inline-block;" class ="col-sm-4 form-control" required>'		
 				     
 					 for( i = 0 ; i< data.todolist.length; i++){
 							 html +=  '	<option value='+data.todolist[i].todoId+'>'+data.todolist[i].todoTitle+'</option>'	
@@ -217,6 +220,7 @@
 		background: transparent;
 		 padding-bottom:  .5em;
 		 padding-top:  .5em;
+		 width: 350px;
 	}
 	#filelabel{
 		display: inline-block;
@@ -266,17 +270,17 @@
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 
-<div class="col-12 col-sm-9">
+<div class="col-12 col-sm-12">
 	<div class="card card-teal ">
 	  <div class="card-body">
 		<div style="padding-left: 30px;">
-			<h3>협업이슈 수정하기</h3>
+			<h4 class="jg">협업이슈 수정하기</h4>
 			<br>
 			<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/projectMember/updateissue" id="updateform"  >	
 			
 				<div class="form-group" >
 					<label for="issueTitle" class="col-sm-2 control-label jg">이슈종류 </label>
-					<input type="text" class="jg" name="issueKind" id="kindselect" disabled>
+					<input class="form-control col-md-3" style="display: inline-block; "  type="text" class="jg" name="issueKind" id="kindselect" disabled>
 				</div>	
 				   
 				<div class="form-group jg" id="todolist" >
@@ -287,7 +291,7 @@
 				<div class="form-group" >
 				
 					<label for="issueTitle" class="col-sm-2 control-label jg">이슈제목 </label>
-					<input type="text" class="jg" name="issueTitle" style="width: 450px;" value="${issueVo.issueTitle }" id="issueTitle">
+					<input class="form-control col-sm-8" type="text" class="jg" name="issueTitle" style=" display: inline-block; " value="${issueVo.issueTitle }" id="issueTitle">
 					
 				</div>
 				
@@ -303,6 +307,7 @@
 					<div id ="file" class="col-sm-10">
 					
 						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
+						<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
 							<input type="search" class="jg" name="${files.pubId}" value="${files.pubFilename}" disabled >
 		   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn jg" style="margin-left: 5px; outline: 0; border: 0;">
 								<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i> 

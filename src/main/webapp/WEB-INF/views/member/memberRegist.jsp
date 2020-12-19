@@ -112,14 +112,15 @@ span.tip span {
 				<ul class="list-group list-group-unbordered mb-3"> 
 					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>아이디</b>  	
 						<a class="float-right">
-							<input class="input" name="memId" type="email" id="memId" placeholder="회원 id"/><br>
-							<div style="margin-top:10px;">
-								<div id="checkMsg" class="indiv" style="float:left;"></div>	
+							<input class="input" name="memId" type="email" id="memId" placeholder="회원 id" onkeyup="chkID()"/><br>
+							<div style="margin-top:10px;">	
+								<div id="checkMsg" class="indiv" style="float:left;"></div>
+								<div id="checkid" class="indiv" ></div>	
 								<button type="submit" id="checkbtn" style="float:right; height:30px; width:120px; background:white; color:black; border:1px solid black; font-size:14px; margin-right:20px;">중복확인</button>
 							</div>		
 						</a>	 			 		
-					</li>	   			
-						 		   	 					
+					</li>		   						
+								
 					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>이름</b> 
 						<a class="float-right">
 							<input class="input" name="memName" type="text" id="memName" placeholder="이름"/>
@@ -155,10 +156,10 @@ span.tip span {
 					
 				<div style="display:none;">					
 					<input class="input" type="text" name="memAlert" value="Y" placeholder="알람" /><br>
-					<input class="input" type="text" name="del" value="DEL" placeholder="삭제" /><br>
+					<input class="input" type="text" name="del" value="N" placeholder="삭제" /><br>
 					<input class="input" type="text" name="memType" value="MEM" placeholder="타입" /><br>
 				</div>	
-		
+			
 				</form>	
 					 
 			</div>
@@ -228,35 +229,30 @@ span.tip span {
 <script src="/resources/bootstrap/dist/js/adminlte.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-	
-// 실시간 입력된 문자 띄우기
-/* function printName()  {
-	  var name = document.getElementById('memTel').value;
-	  document.getElementById("checkTel").innerText = name;
-} */
- 
-// 핸드폰 번호 정규식
 
+// 이메일 형식 정규식
+function chkID(){
+	var emailRule = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+			
+	if($('#memId').val() == null || $('#memId').val() == '') {          
+		 $('#checkMsg').html('<p></p>');
+		 return false;
+	} else if(!emailRule.test($('#memId').val())){
+		 $('#checkMsg').html('<p style="color:red">이메일 형식이 맞지 <br>않습니다.</p>');
+		 return false;
+	} else {	
+		 $('#checkMsg').html('<p></p>'); 
+		return true;
+	}	
+}			
+		
+// 핸드폰 번호 정규식
 $(document).on("keyup", ".phoneNumber", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
 });
 
-/* function isMobile() {
-	var name = document.getElementById('memTel').value;
-	document.getElementById("checkTel").innerText = name;
-	
-	var regExp =/(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/; 
-				
-	if(!regExp.exec(name)){ 
-		$('#checkTel').html('<p style="color:red">사용불가능</p>'); 
-	} else { 
-		$('#checkTel').html('<p style="color:blue">사용가능</p>'); 
-	}
-}  	
- */
 // 비밀번호 정규식
 function chkPW(){
-	
 	 var pw = document.getElementById('memPass').value;
 	 var num = pw.search(/[0-9]/g);
 	 var eng = pw.search(/[a-z]/ig);
@@ -268,29 +264,32 @@ function chkPW(){
 	
 	 if(pw1 != pw2){ 
 		 $('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
-	 } else { 
+	 } else if(pw2 == null || pw2 == ''){
+		 $('#checkPass2').html('<p></p>'); 
+		 if(pw1 == null || pw1 == ''){
+			 $('#checkPass1').html('<p></p>'); 
+		 }
+	 } else { 	
 	 	 $('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
-	 }	
-	 
+	 }		
+	 				
 	 if(pw.length < 8 || pw.length > 20){
-	  $('#checkPass1').html('<p style="color:red">8자리 ~ 20자리 이내로 입력해주세요.</p>');
-	  return false;
+	 	$('#checkPass1').html('<p style="color:red">8자리 ~ 20자리 이내로 입력해주세요.</p>');
+	 	return false;
 	 } 
 	 else if(pw.search(/\s/) != -1){
-	  $('#checkPass1').html('<p style="color:red">비밀번호는 공백 없이 입력해주세요.</p>');
-	  return false;
+	 	$('#checkPass1').html('<p style="color:red">비밀번호는 공백 없이 입력해주세요.</p>');
+	 	return false;
 	 }
 	 else if(num < 0 || eng < 0 || spe < 0 ){
-	  $('#checkPass1').html('<p style="color:red">영문,숫자, 특수문자를 혼합하여 입력해주세요.</p>');
-	  return false;
+	 	$('#checkPass1').html('<p style="color:red">영문,숫자, 특수문자를 혼합하여 입력해주세요.</p>');
+	 	return false;
 	 }
 	 else {
-	  $('#checkPass1').html('<p style="color:blue">사용 가능한 비밀번호 입니다.</p>');
+	 	$('#checkPass1').html('<p style="color:blue">사용 가능한 비밀번호 입니다.</p>');
 	    return true;
 	 }
-	 	
-
-}
+}	
 
 // 비밀번호 일치 확인
 function unityPW(){
@@ -299,108 +298,87 @@ function unityPW(){
 	
 	if(pw1 != pw2){ 
 		$('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
+	} else if(pw2 == null || pw2 == ''){
+		 $('#checkPass2').html('<p></p>'); 
+		 if(pw1 == null || pw1 == ''){
+			 $('#checkPass1').html('<p></p>'); 
+		 }
 	} else { 
 		$('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
-	}
-	
-} 
- 
-  
-		$(document).ready(function(){
-			
-				// 기본이미지 선택하면 파일 값 날리기
-				var picture = document.getElementById('picture');
-				picture.value = null;
-			// picture input의 파일 변경시 이벤트 
-			$("#picture").change(function(){
-				
-				readURL(this);
-			});
-		});
+	}	
+}
+ 	
+//등록버튼시 미입력 된것 있으면 경고창
+$(document).ready(function() {
+	$("#registBtn").on('click', function() {
+		var memId = document.getElementById('memId');
+		var memName = document.getElementById('memName');
+		var memPass = document.getElementById('memPass');
 		
-		
-		function readURL(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-			  
-				reader.onload = function (e) {
-					$('#pictureViewImg').attr('src', e.target.result);  
-				}
-				reader.readAsDataURL(input.files[0]);
+		// 누락있을때
+		if (memId.value == "" || memName.value == "" || memPass.value == "") {
+			alert("필수입력 사항을 입력해주세요.")
+		} else if(!chkPW() && !chkID()){
+			alert("다시 확인해주세요.")
+		} else if(chkPW() && chkID()) {	// 누락없을때		
+			// 비밀번호 일치시 
+			if(newpass1.value == newpass2.value){
+				$('#fmin').submit();
+			}else{
+				alert("비밀번호가 일치하지 않습니다.");
 			}
 		}
-		
-		
-		$(document).ready(function(){
-			/* 
-				$('#mem_id').val("hsj2@thousandOfAnts.com");
-				$('#mem_name').val("한상진");
-				$('#mem_pass').val("123");
-				$('#mem_tel').val("010-1111-2222");
-			*/
-				$('#memAlert').val("Y");
-				$('#del').val("N");
-				$('#memType').val("MEM");
-			})
-			
-			
-		var newpass1 = document.getElementById('memPass');
-		var newpass2 = document.getElementById('memPass2');
-		
-		// 등록버튼시 미입력 된것 있으면 경고창
-		$(document).ready(function() {
-			$("#registBtn").on('click', function() {
-				var memId = document.getElementById('memId');
-				var memName = document.getElementById('memName');
-				var memPass = document.getElementById('memPass');
-				
-				// 누락있을때
-				if (memId.value == "" || memName.value == "" || memPass.value == "") {
-					alert("필수입력 사항을 입력해주세요.")
-				}
-					
-				else if(!chkPW()){
-					alert("다시 확인해주세요.")
-				}
-				  
-				// 누락없을때
-				else if(chkPW()) {
-					
-					// 비밀번호 일치시 
-					if(newpass1.value == newpass2.value){
-						$('#fmin').submit();
-					}else{
-						alert("비밀번호가 일치하지 않습니다.")
-					}
-					
-				}
-		         
-			})
-		})
-		 	
-		 
-		// 중복검사
-		$(document).ready(function(){ 
-			$('#checkbtn').on('click', function(){ 
-				$.ajax({ type: 'POST', 
-					url: '/member/checkSignup', 
-					dataType : 'json',
-					data: { "memId" : $('#memId').val() }, 
-					success: function(data){
-						if($.trim(data) == 0 && $('#memId').val() != "" ){ 
-							$('#checkMsg').html('<p style="color:blue">사용가능</p>'); 
-							btn = document.getElementById('registBtn')
-							btn.disabled = false;
-						}else{ 
-							$('#checkMsg').html('<p style="color:red">사용불가</p>'); 
-						}	
-					}
-				}); //end ajax 
-				return false;	/* 페이지 새로고침 막기 */
-			}); //end on 
-		}); 
-		
+	})
+})	
 	
+// 중복검사
+var newpass1 = document.getElementById('memPass');
+var newpass2 = document.getElementById('memPass2');
+$(document).ready(function(){ 
+	$('#checkbtn').on('click', function(){ 
+		$.ajax({ type: 'POST', 
+			url: '/member/checkSignup', 
+			dataType : 'json',
+			data: { "memId" : $('#memId').val() }, 
+			success: function(data){
+				if($.trim(data) == 0 && $('#memId').val() != "" && chkID()){ 
+					$('#checkMsg').html('<p style="color:blue">사용가능</p>'); 
+					btn = document.getElementById('registBtn')
+					btn.disabled = false;
+				}else{ 
+					$('#checkMsg').html('<p style="color:red">사용불가</p>'); 
+				}	
+			}	
+		}); //end ajax 
+		return false;	/* 페이지 새로고침 막기 */
+	}); //end on 
+}); 
+	
+
+// 기본이미지 - 파일 중 1선택 
+$(document).ready(function(){
+			
+	// 기본이미지 선택하면 파일 값 날리기
+	var picture = document.getElementById('picture');
+	picture.value = null;
+	// picture input의 파일 변경시 이벤트 
+	$("#picture").change(function(){
+		readURL(this);
+	});
+});
+// 파일의 경로 읽어서 이미지뷰에 보이게 하기
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+			  
+		reader.onload = function (e) {
+			$('#pictureViewImg').attr('src', e.target.result);  
+		}
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+			
 	
 		
 												/* 기본이미지 선택  */

@@ -252,7 +252,7 @@
 			<h1>Ants 데모영상</h1>
 		</div>
 		
-		<iframe width="50%" height="520px" src="https://www.youtube.com/embed/lUrN33Y8imE" 
+		<iframe width="50%" height="520px" src="https://www.youtube.com/embed/7EUgq6Qle4M" 
 			frameborder="0" allow="accelerometer; autoplay; 
 			clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 			allowfullscreen style="margin-left : 25%;">
@@ -336,9 +336,9 @@
 	</div>
 	
 	<div style="height: 90px; background-color: #000000;color:#FFFFFF ; text-align: center;" >
-		<div onclick="location.href='/admin/adloginView';" style="padding-top: 20px">
-			Ant's
+		<div style="padding-top: 20px">
+			ANTS
 		</div>
-		© 2020-2020 Ants Lab, Inc. (주)개미랩 | 대전광역시 중구 중앙로 76 | 대덕인재개발원 | 404호
+		© 2020-2021 Ants, Inc. (주)개미 | 대전광역시 중구 중앙로 76 | 대덕인재개발원 | 404호
 	</div>
 </div>

@@ -100,14 +100,14 @@ toastr.options = {
     /* pagination 페이지 링크 function */
 	function fn_egov_link_page(pageNo) {
 		document.alarmForm.pageIndex.value = pageNo;
-		document.alarmForm.action = "<c:url value='/alarmList'/>";
+		document.alarmForm.action = "<c:url value='${pageContext.request.contextPath}/alarmList'/>";
 		document.alarmForm.submit();
 	}
   
    
 	/* 글 목록 화면 function */
 	function alarmList() {
-		document.alarmForm.action = "<c:url value='/alarmList'/>";
+		document.alarmForm.action = "<c:url value='${pageContext.request.contextPath}/alarmList'/>";
 		document.alarmForm.submit();
 	}
   	
@@ -242,11 +242,18 @@ toastr.options = {
 			                    <td class="mailbox-name" style="width: 15%; "><a href="read-mail.html">${fn:split(a.alarmCont,'&&')[1]}(${fn:substring(fn:split(a.alarmCont,'&&')[2],0,10)})</a></td>
 			                    <td class="mailbox-subject">
 				                    <c:choose>
-				                    	<c:when test="${a.alarmType eq 'req-pl' or 'res-pl' }"><b>PL 요청</b>
+				                    	<c:when test="${a.alarmType eq 'req-pl'}"><b>PL 요청</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]}</a>
 					                    	   <a class="btn btn-sm" href="/project/readReqList" style="color: #0099ff;"><i class="fas fa-sign-in-alt" style="color: #0099ff;"></i> 응답 </a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'res-pl' }"><b>PL 응답</b>
+					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
+				                    	</c:when>
+				                    	<c:when test="${a.alarmType eq 'req-pro' }"><b>프로젝트 초대</b>
+					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]}</a>
+					                    	   <a class="btn btn-sm" href="/project/readReqList" style="color: #0099ff;"><i class="fas fa-sign-in-alt" style="color: #0099ff;"></i> 응답 </a>
+				                    	</c:when>
+				                    	<c:when test="${a.alarmType eq 'res-pro' }"><b>프로젝트초대 응답</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'reply'}"><b>댓글</b>

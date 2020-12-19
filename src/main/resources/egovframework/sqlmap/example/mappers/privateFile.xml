@@ -17,8 +17,9 @@
 							AND PRIV_FILENAME LIKE '%' || #{searchKeyword} || '%'
 						</when>
 						<when test="searchCondition == 2">
+							AND PRIV_FILENAME LIKE '%' || #{searchKeyword} || '%'
 						</when>
-					</choose>
+					</choose>	
 				</if>
 			     ORDER BY REG_DT DESC, PRIV_ID DESC) a
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
@@ -43,7 +44,7 @@
 	
 	<!-- 파일등록  privateInsert -->
 	<insert id="privateInsert" parameterType="ants.com.file.model.PrivateFileVo">
-		INSERT INTO PRIVATEFILE ( PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, REG_DT, MEM_ID ) 
+		INSERT INTO PRIVATEFILE ( PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, REG_DT, MEM_ID, PRIV_EXTENSION ) 
 			SELECT PRIV_SEQ.NEXTVAL as PRIV_ID, T.*
 			FROM(
 				<foreach collection="list" item="item" index="index" separator="union all"> 
@@ -51,10 +52,11 @@
 						 , #{item.privFilename} as PRIV_FILENAME
 						 , #{item.privSize} as PRIV_SIZE
 						 , SYSDATE as REG_DT
-						 , #{item.memId} as MEM_ID
+						 , #{item.memId} as MEM_ID		
+						 , #{item.privExtension} as PRIV_EXTENSION
 					FROM dual
-				</foreach> 
-				) T
+				</foreach> 	
+				) T	
 	</insert>
 	
 	

@@ -28,6 +28,7 @@ import ants.com.admin.service.AdminService;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectVo;
 import ants.com.member.service.MemberService;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
@@ -43,12 +44,6 @@ public class AdminController {
 	@Resource(name="memberService")
 	MemberService memberService;
 	
-//	@RequestMapping("/adminproject")
-//	public String projectmain(HttpSession session) {
-//		
-//		session.setAttribute("noticeId", "1");
-//		return "admin.tiles/admin/adcontentmenu";
-//	}
 	
 	////////////////////////////////////////////////관리자 로그인
 	
@@ -463,6 +458,31 @@ public class AdminController {
 	@ResponseBody
 	public List<IpHistoryVo> loginLogList() {
 		return adminService.loginLogList();
+	}
+	
+	////////////////////////////////////////////////프로젝트할곳..
+	
+	// 프로젝트 리스트 전체 가져오기 -> 차단 리스트 또는 허용 리스트
+	@RequestMapping("/getProjectList")
+	public String getProjectList(Model model) {
+		List<ProjectVo> projectList = adminService.getProjectList();
+		model.addAttribute("projectList", projectList);
+		return "admin.tiles/admin/projectlist";
+		
+	}
+	
+	// 프로젝트 하나만 가져오기
+	@RequestMapping("/getProject")
+	public String getProject(ProjectVo projectVo) {
+		ProjectVo result = adminService.getProject(projectVo);
+		return "admin.tiles/admin/projectDetail";
+	}
+	
+	// 프로젝트 삭제하기
+	@RequestMapping("/delproject")
+	public String delproject(ProjectVo projectVo) {
+		int result = adminService.delproject(projectVo);
+		return "redirect:/admin/getProjectList";
 	}
 	
 }

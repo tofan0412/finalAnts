@@ -83,6 +83,13 @@
 					 <input type='text' id="juso7" name="juso" value="${scheduleVo.juso }"/><br>
                 </div>
                 
+              <div id="addDiv">
+              	
+              		<button type="button" class="btn btn-default float-left jg" id="addbtn"><i class="fas fa-plus"></i>장소추가</button>    
+<!--               	<input type="button" class="btn btn-default float-left jg" id="addbtn" value="장소추가">     -->
+              </div>  
+              <br>
+              
               <div id="mapdiv">
                 <div id="keyword" class="card-tools float-left" style="width: 400px;">
 	                <div class="input-group row">
@@ -107,6 +114,7 @@
                  
               </div>
               <div class="card-footer clearfix"> 
+            
                   <input type="submit" class="btn btn-default float-left jg" id="regBtn" value="수정"> 
 <!--                   <button type="button" class="btn btn-default float-left jg" id="regBtn" onclick="scheInsert()"><i class="fas fa-pencil-alt"></i> 작성</button> -->
  				 
@@ -122,17 +130,26 @@
 
 
 <script type="text/javascript">
+
+var x = 0;
+var y = 0;
+var add = "";
 	$(document).ready(function(){
 	
 
 		if('${scheduleVo.juso}' == '' || '${scheduleVo.juso}' == null ){
 			$('#mapdiv').hide();
+			add= "on";
+		}else if('${scheduleVo.juso}' != '' || '${scheduleVo.juso}' != null ){
+			$('#mapdiv').show();
+			add= "off";
 		}
 		
-// 		$('#addbtn').on('click', function(){
-// 	 		$('#addDiv').hide();
-// 	 		$('#mapdiv').show();
-// 	 	})
+		$('#addbtn').on('click', function(){
+	 		$('#addDiv').hide();
+	 		$('#mapdiv').show();
+	 		
+	 	})
 		
 		
 	  	$('#summernote').summernote({
@@ -158,15 +175,13 @@
 	 	
 	 	
 	});
-	
-var x = 0;
-var y = 0;
+
 var contentString = '송촌동 우리집';
 
 var map = new naver.maps.Map('map', {
-//     center: new naver.maps.LatLng(36.350365, 127.3853066),
+    center: new naver.maps.LatLng(36.350365, 127.3853066),
     zoom: 17,	//지도의 초기 줌 레벨
-    minZoom: 1,	//지도의 최소 줌 레벨
+    minZoom: 7,	//지도의 최소 줌 레벨
     zoomControl: true,	//줌 컨트롤의 표시 여부
     zoomControlOptions: {
     position: naver.maps.Position.LEFT_BOTTOM
@@ -192,11 +207,18 @@ naver.maps.Event.addListener(map, 'click', function(e){
 	// e.coord.lng() 는 경도 (Longitude) 보퉁 약어로 lng
 });
 
-var marker = new naver.maps.Marker({
+if(add == "off"){
 	
-//     position: new naver.maps.LatLng($("#x").val(x), $("#y").val(y)),
-    map: map
-});
+	var marker = new naver.maps.Marker({	
+		
+		map: map 
+	});
+}else if(add="on"){
+	var marker = new naver.maps.Marker({	
+		position : new naver.maps.LatLng(x,y),
+		map: map 
+	});
+}
 
 	
 /* var marker = new naver.maps.Marker({

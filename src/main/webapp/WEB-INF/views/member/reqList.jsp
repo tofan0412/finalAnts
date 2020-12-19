@@ -60,6 +60,40 @@
 td{
 		padding: 12px 5px 5px 12px !important;
 	}
+	
+	
+#pagenum a{
+	 display: inline-block;
+	 text-align: center;
+	 padding : 6px; 
+	 border: none; 
+	
+}
+	
+li strong{
+	display: inline-block;
+	text-align: center;
+
+	padding : 6px; 
+}
+	
+.pagingui{
+	 display: inline-block;
+	 text-align: center;
+	 width: 30px;
+	 
+}
+#paging{
+	 display: inline-block;
+	 width:auto; float:left; margin:0 auto; text-align:center;"
+	 
+}
+	
+.option{
+	height: 50px;
+	width: 150px;
+	padding: 5px;
+}
 </style>
 
 </head>
@@ -98,7 +132,7 @@ td{
 			<div class="card-header">
 				<h3 class="card-title"></h3>
 					<div class="input-group mb-3 ">
-						<select class="form-control col-md-1" name="searchCondition"
+						<select class="form-control col-md-1" name="searchCondition" style="font-size: 0.8em;"
 							id="searchCondition">
 							<option value="0">제목</option>
 							<option value="1">기간</option>
@@ -106,7 +140,7 @@ td{
 							<option value="3">응답상태</option>
 						</select>
 						<!-- /btn-group -->
-						<form:input path="searchKeyword" class="form-control col-md-2" />
+						<form:input path="searchKeyword" class="form-control col-md-2" style="font-size: 0.8em;" />
 						<a href="javascript:fn_egov_reqList();">
 							<button type="button" class="btn-default " style="height: 100%; ">
 								<i class="fa fa-search"></i>
@@ -151,9 +185,20 @@ td{
 										<td class="plDelete" style="text-align: center;">
 											<div class="dropdown">
 												<button class="dropbtn btn btn-default btn-sm">${req.plName }</button>
-												<div class="dropdown-content " style="text-align: left;">
-													<a href="#">${req.plId }</a> <a
-														href="javascript:plDelete(${req.reqId });">삭제</a>
+												<div class="dropdown-content " style="text-align: left; width: max-content; font-size: 0.8em;">
+												  <a class="">
+													<div class="media">
+										              <img src="/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-32 mr-3 img-circle">
+										              <div class="media-body">
+										                <h3 class="dropdown-item-title">
+										                  ${req.plName }
+										                </h3>
+										                <span class="text-sm">${req.plId }</span>
+										              </div>
+										            </div>
+												  </a>
+												  <div class="dropdown-divider"></div>
+												  <a class="" href="javascript:plDelete(${req.reqId });">삭제</a>
 												</div>
 											</div>
 										</td>
@@ -226,15 +271,15 @@ td{
 			</div>
 			<!-- paging -->
 			<div id="paging" class="card-tools">
-				<ul class="pagination pagination-sm float-right">
-					<ui:pagination paginationInfo="${paginationInfo}" type="image"
-						jsFunction="fn_egov_link_page" />
-					<form:hidden path="pageIndex" />
-				</ul>
-			</div>
+	           	<ul class="pagination pagination-sm jg" id ="pagingui">
+		     		<li  class="page-item jg" id ="pagenum" >	
+		     		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
+		     		<form:hidden path="pageIndex" />		        		
+	            </ul>
+        	</div>
 
 			<div class="card-footer clearfix">
-				<button type="button" class="btn btn-default btn-flat ns" id="back">뒤로가기</button>
+				<button type="button" class="btn btn-default btn-flat" style="font-size: 0.7em;" id="back">뒤로가기</button>
 				<a class="btn btn-app float-right"
 					href="javascript:fn_egov_reqInsert();"> <i class="fas fa-edit"></i>
 					작성하기
@@ -450,12 +495,12 @@ td{
 		if(${SMEMBER.memType == 'PM'}){
 			if (confirm("삭제한 정보는 복구할 수 없습니다. 정말 삭제하시겠습니까?")) {
 				document.listForm.selectedId.value = id;
-				document.listForm.action = "<c:url value = '/req/reqDelete'/>";
+				document.listForm.action = "<c:url value = '${pageContext.request.contextPath}/req/reqDelete'/>";
 				document.listForm.submit();
 			}
 		}else{
 			alert("삭제 권한이 없습니다.");
-		}
+		};
 	}
 
 	/* pl 삭제하기 */
@@ -463,7 +508,7 @@ td{
 		if(${SMEMBER.memType == 'PM'}){
 			if (confirm("pl삭제시 복구 할 수 없으며 재등록을 해야합니다. 삭제하시겠습니까?")) {
 				document.listForm.selectedId.value = id;
-				document.listForm.action = "<c:url value = '/req/plDelete'/>";
+				document.listForm.action = "<c:url value = '${pageContext.request.contextPath}/req/plDelete'/>";
 				document.listForm.submit();
 			}
 		}else{
@@ -474,33 +519,33 @@ td{
 	/* 요구사항정의서 수정페이지보기 */
 	function reqUpdate(id) {
 		document.listForm.selectedId.value = id;
-		document.listForm.action = "<c:url value = '/req/reqUpdateView'/>";
+		document.listForm.action = "<c:url value = '${pageContext.request.contextPath}/req/reqUpdateView'/>";
 		document.listForm.submit();
 	}
 
 	/* 요구사항정의서 상세보기 */
 	function reqDetail(id) {
 		document.listForm.selectedId.value = id;
-		document.listForm.action = "<c:url value ='/req/reqDetail'/>";
+		document.listForm.action = "<c:url value ='${pageContext.request.contextPath}/req/reqDetail'/>";
 		document.listForm.submit();
 	}
 
 	/* 글 등록 화면 function */
 	function fn_egov_reqInsert() {
-		document.listForm.action = "<c:url value='/req/reqInsertView'/>";
+		document.listForm.action = "<c:url value='${pageContext.request.contextPath}/req/reqInsertView'/>";
 		document.listForm.submit();
 	}
 
 	/* 글 목록 화면 function */
 	function fn_egov_reqList() {
-		document.listForm.action = "<c:url value='/req/reqList'/>";
+		document.listForm.action = "<c:url value='${pageContext.request.contextPath}/req/reqList'/>";
 		document.listForm.submit();
 	}
 
 	/* pagination 페이지 링크 function */
 	function fn_egov_link_page(pageNo) {
 		document.listForm.pageIndex.value = pageNo;
-		document.listForm.action = "<c:url value='/req/reqList'/>";
+		document.listForm.action = "<c:url value='${pageContext.request.contextPath}/req/reqList'/>";
 		document.listForm.submit();
 	}
 

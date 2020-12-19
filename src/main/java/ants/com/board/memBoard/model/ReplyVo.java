@@ -12,6 +12,8 @@ public class ReplyVo {
 	private String reqId;
 	private String memId;
 	private String replypercent;
+	private String memName;
+	private String memFilepath;
 	
 	public ReplyVo() {
 		// TODO Auto-generated constructor stub
@@ -81,6 +83,21 @@ public class ReplyVo {
 	}
 	public void setMemId(String memId) {
 		this.memId = memId;
+	}
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
+	
+
+	public String getMemFilepath() {
+		return memFilepath;
+	}
+
+	public void setMemFilepath(String memFilepath) {
+		this.memFilepath = memFilepath;
 	}
 
 	@Override

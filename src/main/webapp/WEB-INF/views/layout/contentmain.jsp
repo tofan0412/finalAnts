@@ -373,51 +373,49 @@ body{
 		
 	<!-- 위 오른쪽 공지사항 -->
 	<div class="top" style="margin-left:1%;"><h4>공지사항( ${proName} )</h4>
-		<div style="padding-top:7%; width:100%; height:90%">
+		<div style="padding-top:3%; width:100%; height:90%">
 			<table class="table"> 
 				<thead>						
-					<tr>							
-						<th style="width: 150px; padding-left: 50px; text-align: center;">최신글</th>
-						<th style="padding-left: 30px; text-align: center;" class="jg">  이슈 제목</th> 
+					<tr>				
+						<th style="text-align: center;" class="jg">  이슈 제목</th> 
 						<th style="text-align: center;" class="jg">   작성자 </th>
 						<th style="text-align: center; width: 200px;" class="jg">   날짜   </th>
 					</tr>
-				</thead>	
-			<tbody>			 	
-				<c:forEach items = "${issuelist }" var ="issue" varStatus="status" end="6">
-					<c:set var="issueDt1" value="${fn: replace(issue.regDt,'-','')}"/> 		
+				</thead>					
+			<tbody>			 				
+				<c:forEach items = "${issuelist }" var ="issue" varStatus="status" end="7">
+					<c:set var="issueDt1" value="${fn: replace(issue.regDt,'-','')}"/> 				
 						<c:set var="issueDt2" value="${fn: substringBefore(issueDt1,' ')}"/> 	
 						<fmt:parseNumber var="issueDt3" value="${issueDt2 + 3}" integerOnly="true"/>
-							
+						
 						<jsp:useBean id="now" class="java.util.Date"/>
 						<fmt:formatDate var="today1" value="${now}" pattern="yyyyMMdd"/>
 						<c:set var="today2" value="${fn: replace(today1,'-','')}"/> 	
 						<fmt:parseNumber var="today3" value="${today2}" integerOnly="true"/>
-						
+							
 						<c:set var="day" value="${issueDt3 - today2}"/>	
 								
-					<c:if test="${day >= 0}">
-						<tr>	
-							<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
-								<img src="../dist/img/new.png" class="blink-image">
-								<%-- <c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>. --%>
-							</td>
-							<td class="jg"  style="padding-left: 30px; text-align: center;">
-								<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${reqId}"> ${issue.issueTitle }</a> 
-							</td>
+							<tr>				
+								<td class="jg"  style="border:; text-align: center;">
+									<c:if test="${day >= 0}">
+										<img src="../dist/img/new.png" class="blink-image" style="float:left;">
+										<%-- <c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>. --%>
+									</c:if>		
+									<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${reqId}"> ${issue.issueTitle }</a> 
+								</td>
+										
+								<td class="jg" style="text-align: center;"> ${issue.memId }</td>
+								<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
 									
-							<td class="jg" style="text-align: center;"> ${issue.memId }</td>
-							<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
-								
-							<c:if test="${issue.issueKind == 'issue'}">
-								<td style="text-align: center;" class="jg"> 이슈</td>										
-							</c:if>
-						</tr>
-					</c:if>
+								<c:if test="${issue.issueKind == 'issue'}">
+									<td style="text-align: center;" class="jg"> 이슈</td>										
+								</c:if>
+							</tr>
 				</c:forEach> 
-					<c:if test="${issuelist.size() == 0}">
-						<td colspan="7" style="text-align: center;"  class="jg"><br> [ 결과가 없습니다. ] </td>
-					</c:if>
+				<c:if test="${issuelist.size() == 0}">
+					<td colspan="7" style="text-align: center;"  class="jg"><br> [ 결과가 없습니다. ] </td>
+				</c:if>
+									
 			</tbody>
 			</table>
 		</div>
