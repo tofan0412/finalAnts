@@ -235,22 +235,24 @@ public class MemberController {
 		}
 	}
 		
-//	// 로그인 체크 ajax
-//	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
-//	public String logincheck(MemberVo memberVo, Model model) {
-//		
-//		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
-//		
-//		MemberVo dbMember = memberService.logincheck(memberVo);
-//		
-//		logger.debug("logincheck rowcount : {}", dbMember);
-//		
-//		
-//		model.addAttribute("memId", dbMember.getMemId());
-//		model.addAttribute("memPass", dbMember.getMemPass());
-//		
-//		return "member/login";
-//	}
+	// 로그인 체크 ajax
+	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
+	public String logincheck(MemberVo memberVo, Model model) {
+		
+		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
+		
+		MemberVo dbMember = memberService.logincheck(memberVo);
+		
+        try {
+            model.addAttribute("memId", dbMember.getMemId());
+            model.addAttribute("memPass", dbMember.getMemPass());
+            logger.debug("logincheck rowcount : {}", dbMember);
+        }catch(NullPointerException e) {
+            logger.debug("## 예외처리 - 로그인 체크 ## (NullPointerException) 일치하는 회원정보 없음 : {}", dbMember);
+        }    
+        
+        return "jsonView";
+	}
 
 	// 회원가입 페이지 이동
 	@RequestMapping(path = "/memberRegistview", method = RequestMethod.GET)
