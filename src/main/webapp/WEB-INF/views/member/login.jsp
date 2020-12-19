@@ -1,15 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<!DOCTYPE html>
 <%@include file="/WEB-INF/views/layout/fonts.jsp"%>
-<html>
-<head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/dist/js/js.cookie-2.2.1.min.js"></script>
+
 <style>
 .ff {
 	width: 100vw;
@@ -88,109 +84,66 @@
         opacity:1;
     }
 }
-
-
 </style>
-<script>	
-	
-		
+
+<script>
  	$(document).ready(function(){
+													/* 쿠키 설정 */		
+		// 로그인했다가 뒤로 가기 하면 아이디 값 남아있는것 제거 
+		$("#memId").val('');		
+		
+		// rememberMe cookie 값 남아 있는지 확인, 남아있으면 가져옴		
+		if(Cookies.get("rememberMe")=="Y"){
+			$("#rememberMe").prop("checked",true);	// rememberMe 체크
+			$("#memId").val(Cookies.get("SMEMBER"));// SMEMBER 쿠키값 가져옴
+		}
+				
+		// 로그인 버튼 클릭시	쿠키 설정
+		$('#loginBtn').on('click',function(){						
+			if($('input:checkbox[id="rememberMe"]').is(":checked") == true){	// 아이디 기억하기 체크 되있으면
+				setCookie("rememberMe", "Y", 7);				// rememberMe 값 Y로	7일간 저장
+				setCookie("SMEMBER", $("#memId").val(), 7);	// SMEMBER 저장		7일간 저장
+			}else{	// 체크 안되있을때	// 쿠키값 삭제
+				Cookies.remove("rememberMe");	
+				Cookies.remove("SMEMBER");
+			}		
+		});	
+				
+		// 쿠키 날짜 설정		SMEMBER		noylit		07 Oct 2020 00:38:35 GMT
+		function setCookie(cookieName, cookieValue, expires){
+			var today = new Date();
+			today.setDate(today.getDate() + expires);	// 현재 날짜에서 미래로  + expires 만큼 한 날짜 구하기
+										  							   // expires= 가 쿠키 날짜 저장 변수이름임
+			document.cookie = cookieName + "=" + cookieValue + "; path=/; expires=" + today.toGMTString(); // toGMTString 표준시를 사용하여 문자열로 변환된 일자를 반환
+															   // path=/; 값은 작동할  url 주소 값임 / 로 저장하면 모든 url에서 쿠키 사용가능
+		}
+		
+				
+		// 메일 전송시 알림창
  		$('#mailsub').on('click',function(){
  			alert('메일을 확인해 주세요');
  			$('#mailform').submit();
  		});			
- 			
+ 		
+ 		// ??? 뭐지?
  		loginAlert = '${flashAlert}';
  		if (loginAlert != ''){
  			alert(loginAlert);
  		}
  		
+ 		// 엔터버튼으로 전송
  		$("body").keyup(function(e){
  			if(e.keyCode == 13){
  				$('#loginBtn').trigger("click");
  			}
  		})
  		
- 		// 모달창 열기
+ 		// 비밀번호 변경 모달창 열기
 		$("#myBtn").click(function(){
 	    	$("#myModal").modal();
 	    });
-		
-		$(function(){ 
-			// remember me cookie 확인
-			if(Cookies.get("rememberMe")=="Y"){
-				$("input[type=checkbox]").prop("checked",true);
-				//$("input[type=checkbox]").attr("checked","checked");
-				$("#memId").val(Cookies.get("SMEMBER"))
-				//console.log("체크");
-			} 
-			
-			// sign in b버튼이 클릭 되엇을때 이벤크 핸들러
-			$("button").on('click',function(){
-				console.log("button_click");
-			
-				if($("input[type=checkbox]").prop("checked") == true){
-					Cookies.set("rememberMe","Y");
-					Cookies.set("SMEMBER", $("#memId").val());
-				}else{
-					Cookies.remove("rememberMe");
-					Cookies.remove("memId");
-				}
-			})
-		})
-		// 엔터키 인식
-		
-		function getCookieValues(cookieName){
-			
-			var cookieString = document.cookie.split("; ")
-			for(var i=0; i< cookies.length; i++){
-				var cookie = cookies[i];
-				var cookieArr = cookie.splie("=");
-
-				if(cookieName == cookieArr[0]){
-					return cookieArr[1];
-				}
-			}
-			// 원하는 쿠키가 없는 경우
-			return "";
-		}	
- 	
-		// 쿠키 날짜 설정
-		function setCookie(cookieName, cookieValue, expires){
-			//"USERNM=brown; path=/; expries=Wed, 07 Oct 2020 00:38:35 GMT;"
-			var today = new Date();
-			// 현재 날짜에서 미래로  + expires 만큼 한 날짜 구하기
-			today.setDate( today.getDate() + expires );
-			
-			document.cookie = cookieName + "=" + cookieValue + "; path=/; expires=" + today.toGMTString();
-			console.log(document.cookie);
-		}
-		
-		// 해당 쿠키의 expires 속성을 과거 날짜로 변경
-		function deleteCookie(cookieName){
-			setCookie(cookieName, "", -1);	
-		}
-		
-	    if($("#memId").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
-	        $("#rememberMe").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
-	    }
-	    
-	    $("#rememberMe").change(function(){ // 체크박스에 변화가 있다면,
-	        if($("#rememberMe").is(":checked")){ // ID 저장하기 체크했을 때,
-	            setCookie("key", $("#memId").val(), 7); // 7일 동안 쿠키 보관 
-	        }else{ // ID 저장하기 체크 해제 시,
-	            deleteCookie("key");
-	        }
-	    });
-	    
-	    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
-	    $("#memId").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
-	        if($("#rememberMe").is(":checked")){ // ID 저장하기를 체크한 상태라면,
-	            setCookie("key", $("#memId").val(), 7); // 7일 동안 쿠키 보관 
-	        }
-	    });
-	    
-		//로그인시 회원가입 안한 멤버 거르기
+ 		
+ 		//로그인시 회원가입 안한 멤버 거르기
 		/* action="/member/loginFunc" method="POST" */
 		$('#loginBtn').click(function(e) {
 			
@@ -222,10 +175,8 @@
 		});
 	})
 </script>
-</head>
-<title>Ants - 로그인</title>
-<body class="loginContainer fadein">
 	
+<body class="loginContainer fadein">
 	<div class="imgBox">
 		<img alt="img" src="${pageContext.request.contextPath}/resources/dist/img/loginimage.png" style="width : 100%; padding-top : 30%;">
 	</div>
@@ -366,4 +317,3 @@
 		</div>
 	</div>
 </body>
-</html>
