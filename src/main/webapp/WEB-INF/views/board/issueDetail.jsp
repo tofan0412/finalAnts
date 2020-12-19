@@ -140,7 +140,7 @@ function todo(){
 			 
 				html = '<th class="success jg">일감</th>';
 				html += '<td colspan="3" id ="todo">';		  
-				html += '<label id ="todoId" class="control-label"><a  data-todoid='+data.todoVo.todoId+' id="todolink" href="#">'+data.todoVo.todoTitle+'</a></label></td>'
+				html += '<label  id ="todoId" class="control-label"><a  data-todoid='+data.todoVo.todoId+' id="todolink" href="#">'+data.todoVo.todoTitle+'</a></label></td>'
 
 				$('#todo').html(html);
 				
@@ -282,7 +282,7 @@ function resize(obj) {
 		<c:if test="${categoryId == 8 or categoryId == 9}">
 			<br>
 			<c:set var="projectNAME" value="${issuevo.proName}"></c:set>
-			<h1 class="jg" style="padding-left:10px;">${projectNAME}</h1> 
+			<h3 class="jg" style="padding-left:10px;">${projectNAME}</h3> 
 			<hr><br>
 		</c:if>
 	  <!-- 이슈 상세보기 -->
