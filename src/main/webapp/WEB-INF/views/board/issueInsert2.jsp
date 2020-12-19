@@ -231,7 +231,7 @@
 		line-height: 170px;
 	}
 	
-}
+
 
 </style>
 </head>
