@@ -4,6 +4,7 @@
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,7 +16,14 @@
 <script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
 <style>
- 
+ 	input[type=search]{
+		display : inline-block;
+		border: none; 
+		background: transparent;
+		padding-bottom:  .5em;
+		padding-top:  .5em;
+		width: 350px;
+	}
 
 	#fileBtn{
 		 display: inline-block;
@@ -300,11 +308,12 @@
 					</div>
 				</form:form>
 				<c:if test="${registerFlag == 'modify' }">
-					<div class="form-group">
+					<div class="form-group" style="padding-left: 15px;">
 						<label id ="filelabel" for="files" class="col-sm-2 control-label">첨부파일</label>		
 						<div id ="file" class="col-sm-10">
 						
 							<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
+							<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
 								<input type="search" name="${files.pubId}" value="${files.pubFilename}" disabled >
 			   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">
 									<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i> 
@@ -322,7 +331,9 @@
 				
 				<form>
 					<div style="padding-left: 20px;">
-						<label  for="file" class="col-sm-2 control-label">첨부파일</label>
+						<c:if test="${registerFlag == 'create' }">
+							<label  for="file" class="col-sm-2 control-label">첨부파일</label>
+						</c:if>
 						<div id="queue">
 							<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
 						</div>
