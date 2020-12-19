@@ -14,8 +14,7 @@
 					todo.todo_id,
 					ABS(TO_DATE(TO_CHAR(todo.todo_start, 'YYYYMMDD')) -
 					To_date(to_char(SYSDATE,'yyyymmdd'))) as todo_start,
-					TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
-					To_date(to_char(todo.todo_end,'yyyymmdd')) as todo_end,
+					to_char(todo.todo_end,'yyyy-mm-dd') as todo_end,
 					todo.todo_cont,
 					todo_title,
 					todo.todo_percent,
@@ -65,8 +64,7 @@
 					todo.todo_id,
 					ABS(TO_DATE(TO_CHAR(todo.todo_start, 'YYYYMMDD')) -
 					To_date(to_char(SYSDATE,'yyyymmdd'))) as todo_start,
-					TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
-					To_date(to_char(todo.todo_end,'yyyymmdd')) as todo_end,
+					to_char(todo.todo_end,'yyyy-mm-dd') as todo_end,
 					todo.todo_cont,
 					todo_title,
 					todo.todo_percent,
@@ -232,10 +230,7 @@
 				#{todoParentid, jdbcType=VARCHAR},
 				'N'
 			)
-			
-			<selectKey keyProperty="todoId" resultType="String">
-			select todo_seq.currval from dual
-		</selectKey>
+		
 		</insert>
 
 

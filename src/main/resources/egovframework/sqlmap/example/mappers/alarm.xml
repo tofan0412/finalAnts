@@ -65,6 +65,20 @@
 		    	SELECT COUNT(*)
 				  FROM alarm
 				 WHERE mem_id = #{memId}
+				 <if test="searchCondition != null and searchCondition != ''">
+							    <choose>
+							        <when test="searchCondition == 1">
+										AND	alarm_type = 'req-pl'
+										 OR alarm_type = 'res-pl'
+									</when>
+							        <when test="searchCondition == 2">
+										AND	alarm_type = 'reply'
+									</when>
+							        <when test="searchCondition == 3">
+										AND	alarm_type = 'posts'
+									</when>
+								</choose>
+				 </if>
 	
 	</select>
 	

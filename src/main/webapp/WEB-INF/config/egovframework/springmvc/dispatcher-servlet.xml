@@ -158,6 +158,7 @@
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/member/loginView" />
 			<mvc:exclude-mapping path="/member/loginFunc" />
+			<mvc:exclude-mapping path="/member/logincheck" />	
 			<mvc:exclude-mapping path="/member/memberRegist" />
 			<mvc:exclude-mapping path="/member/memberRegistview"/>
 			<mvc:exclude-mapping path="/member/noticelistmemview"/>

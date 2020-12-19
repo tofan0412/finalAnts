@@ -118,9 +118,7 @@
 			    #{writer}
 			    )
 			    </if>
-			<selectKey keyProperty="hissueId" resultType="String">
-			select hissue_seq.currval from dual
-		</selectKey>
+			
 		</insert>
 		
 		<!-- Id 조회 (파일 ajax로 등록하기위함) -->

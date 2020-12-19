@@ -143,15 +143,15 @@ $(document).ready(function(){
 			<div class="login-logo">
 				<b>Profile</b>
 			</div>	
-				
-			<div class="card card-primary card-outline">
-				<div class="card-body box-profile">
-					<div class="text-center">
-						<div class="mailbox-attachment-icon has-img" id="pictureView" style=" height: 200px; width: 140px; margin: 0 auto;">
-							<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" alt="User profile picture"/>
-						</div>
-					</div>
 					
+			<div class="card card-primary card-outline">	
+				<div class="card-body box-profile">					
+					<div class="text-center">	 	
+						<div class="mailbox-attachment-icon has-img" id="pictureView" style="display:inline-block; border: 1px solid white; height:200px; width:140px; margin: 0 auto;">
+							<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;"/>
+						</div>
+					</div>		
+											
 					<h3 class="profile-username text-center">
 						<input class="profile-username text-center" name="memName" type="text" class="form-control" id="memName" placeholder="(이름)" value="${memberVo.memName}" style="border: none" readonly />
 					</h3>

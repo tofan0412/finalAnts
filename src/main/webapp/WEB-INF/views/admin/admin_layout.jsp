@@ -26,7 +26,7 @@
 
 		<!-- Main content -->
 		<div class="wrapper">
-			<div class="content-wrapper">
+			<div class="content-wrapper" style="background-color: white">
 				<tiles:insertAttribute name="adcontent" />
 			</div>
 		</div>

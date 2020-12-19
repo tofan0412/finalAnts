@@ -76,11 +76,7 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-.float-right{
-	margin-right: 660px;
-}
 
-							/* 알람 스타일 */
 </style>
 <script>	
 
@@ -145,8 +141,8 @@ $(document).ready(function(){
 </script>
 </head>
 
-<body class="hold-transition sidebar-mini">	
-	<div class="wrapperdd">
+<body class="hold-transition sidebar-mini" >	
+	<div class="wrapperdd" style="margin-left:25%; margin-right:25%;">
 		<div class="register-card-body">
 			
 			<div class="login-logo">
@@ -171,22 +167,23 @@ $(document).ready(function(){
 					
 						
 					<ul class="list-group list-group-unbordered mb-3">
-						<li class="list-group-item"><b>전화번호</b> 
+						<li class="list-group-item "><b>전화번호 </b> 
 							<a class="float-right">
 								<input class="" name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border:none;outline: none;" readonly />
 							</a>
 						</li>
 						<li class="list-group-item"><b>알람</b> 
 							<a class="float-right">
-								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none; width:115px;outline: none;" readonly>
-								<!-- 알람 토글 버튼 -->	
-								<label class="switch">											<!-- 알람 토글 기본 y : y아닐땐 off -->
+								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none;outline: none;" readonly>
+								<!-- 알람 토글 버튼 	
+								<label class="switch">										
 									<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>	
 									<span class="slider round"></span>	
 								</label>
+								-->
 							</a>
 						</li>	
-						<li class="list-group-item"><b>타입</b>
+						<li class="list-group-item "><b>타입</b>
 							<a class="float-right">
 								<input name="memType" type="text" class="" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border: none;outline: none;" readonly>
 							</a>
@@ -198,8 +195,8 @@ $(document).ready(function(){
 			<div class="card-footer" style="background-color: white">
 				<div class="row">
 					<div class="col-sm-6">
-						<a href="/admin/memlistprofileupdate?memId=${memberVo.memId}"><button type="button" id="registBtn" class="btn btn-info">수정</button></a>
 						<a href="/admin/memberlist"><button type="button" id="registBtn" class="btn btn-success">목록</button></a>
+						<a href="/admin/memlistprofileupdate?memId=${memberVo.memId}"><button type="button" id="registBtn" class="btn btn-info ">수정</button></a>
 						<a href="/admin/delmemlist?memId=${memberVo.memId }"><button type="button" id="delmemlist" class="btn btn-danger">삭제</button></a>
 					</div>
 					 

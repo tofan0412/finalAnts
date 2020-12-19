@@ -406,7 +406,6 @@ var id;
 																	파일경로 : ${privatefile.privFilepath} <br>
 																	파일사이즈 : ${privatefile.privSize } KB<br>
 																	확장자: ${filename} <br>
-																	작성자 : ${privatefile.memId} <br>
 																	">
 																	
 					<td style="width: 150px;  text-align: center;" class="jg"><c:out value="${((privatefileVo.pageIndex-1) * privatefileVo.pageUnit + sts.index+1)}"/>. 
