@@ -196,6 +196,7 @@
 				success : function(res) {
 					if (res == "success") {
 						// 해당 요구사항 정의서의 상태를 변경해야 한다.
+						saveReqMsg();
 						alert("초대를 완료하였습니다.");
 					} else {
 						console.log("인원 초대 실패..")
@@ -204,7 +205,32 @@
 			})
 
 		})
-	})
+		
+		function saveReqMsg(){
+			var alarmData = {
+					"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId=" + reqId + "&&${projectVo.proName}" ,
+					"memIds"	: inviteMemListBanner,
+					"alarmType" : "req-pro"
+			}
+			
+			$.ajax({
+				url : "/alarmInsert",
+				data : JSON.stringify(alarmData),
+				type : 'POST',
+				contentType : "application/json; charset=utf-8",
+				dataType : 'text',
+				success : function(data){
+					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memIds +"&&"+ alarmData.alarmType;
+					socket.send(socketMsg);
+				},
+				error : function(err){
+					console.log(err);
+				}
+			});
+			console.log(alarmData);
+		}
+		
+	});//function
 </script>
 <style>
 #userSearch_banner {
