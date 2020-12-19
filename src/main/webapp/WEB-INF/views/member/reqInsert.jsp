@@ -43,6 +43,14 @@
 		height: 30px;
 	}
 	
+	#dragdiv {
+		text-align: center;
+		color: darkgray;
+		line-height: 170px;
+	}
+	#reqPeriod{
+		width: 200px;
+	}
 }
 
 </style>
@@ -53,7 +61,8 @@
 		window.history.back();
 	});
 	
-	uploadCnt = 0;
+	var uploadCnt = 0;
+    var QueueCnt = 0;
 	
 	$(function (){
 	  	// Summernote
@@ -89,9 +98,17 @@
 					delfiles();
 				 }
 			},
-			'onCancel': function (file) {
-				alert('실패')
-			} // 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
+			'onCancel': function (file) {// 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
+// 				alert('취소')
+				QueueCnt--;
+				if(QueueCnt == 0){
+					$('#dragdiv').show();
+				}
+			}, 
+			'onAddQueueItem'   : function(file) { // 대기열에 추가되는 각 파일에 대해 트리거됩니다.
+				QueueCnt++;
+				$('#dragdiv').hide();
+			}
 		});
 	  
 		fileSlotCnt = 1;
@@ -249,7 +266,7 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-		<div class="row">
+		<div class="row" style="padding-left: 20px; padding-right:20px;">
 	        <div class="col-md-12">
 	          <div class="card card-outline card-info">
 				<form:form commandName="reqVo" id="saveForm" name="saveForm">
@@ -271,7 +288,7 @@
 		                    <div class="input-group-prepend">
 		                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
 		                    </div>
-		                    <form:input path="reqPeriod" class="form-control" id="reqPeriod" placeholder="60일이면 60만 적으세요."/>
+		                    <form:input path="reqPeriod"  class="form-control" id="reqPeriod" placeholder="60일이면 60만 적으세요."/>
 		                  </div>
 		                  <!-- /.input group -->
 		               </div>
@@ -304,20 +321,19 @@
 				
 				
 				<form>
-					<label for="file" class="col-sm-2 control-label">첨부파일</label>
-					<div id="queue"></div>
-					<input id="file_upload" name="file" type="file" multiple="true"/>
-		<!-- 				<input id="submit" type="button" onClick="javascript:$('#file_upload').uploadifive('upload')" value="제출"/> -->
-					
-					<br><br>
-					<div class="card-footer clearfix " >
-						<input type="hidden" value="7" name="categoryId">
-						<input type="hidden" value="${reqVo.reqId }" name="reqId">
+					<div style="padding-left: 20px;">
+						<label  for="file" class="col-sm-2 control-label">첨부파일</label>
+						<div id="queue">
+							<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
+						</div>
+						<input id="file_upload" name="file" type="file" multiple="true"/>
 						
 					</div>
-				</form>
-	            </div>
-	            <div class="card-footer">
+					<br><br>
+					<input type="hidden" value="7" name="categoryId">
+					<input type="hidden" value="${reqVo.reqId }" name="reqId">
+					<br>	
+					<div class="card-footer">
 				     <div class="row">
 					     <div class="col-12">
 					       <a href="#" class="btn btn-secondary" id="back">취소</a>
@@ -332,6 +348,11 @@
 					     </div>
 					 </div>
 	            </div>
+					
+					
+				</form>
+	            </div>
+	            
 	          </div>
 	        </div>
 	        <!-- /.col-->

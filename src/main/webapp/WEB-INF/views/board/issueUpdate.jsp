@@ -12,13 +12,9 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
+<script src="/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="/plugins/summernote/lang/summernote-ko-KR.js"></script>
 	
 <script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
@@ -38,8 +34,13 @@
 		          ['table', ['table']],
 		          ['insert', ['link', 'picture']],
 		          ['view', [ 'help']]
-		        ]	      
-		})
+		        ],
+		  
+			  minHeight: null,             				// 최소 높이
+			  maxHeight: null,             				// 최대 높이
+			  focus: true,                  			// 에디터 로딩후 포커스를 맞출지 여부
+			  lang: "ko-KR",							// 한글 설정
+	})
 		
 		if('${issueVo.issueKind }' == 'issue'){
 			$("#kindselect").val('이슈')
