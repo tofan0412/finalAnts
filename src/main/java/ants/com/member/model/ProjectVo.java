@@ -1,5 +1,6 @@
 package ants.com.member.model;
 
+
 public class ProjectVo {
 	private String reqId;
 	private String memId;
