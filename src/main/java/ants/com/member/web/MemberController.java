@@ -229,28 +229,28 @@ public class MemberController {
 			// 공지사항 전송 
 			model.addAttribute("issuelist", resultList);
 			
-			return "main/layout/contentmain";
+			return "tiles/layout/contentmain";
 		} else {
 			return "redirect:/member/loginView";
 		}
 	}
 		
-	// 로그인 체크 ajax
-	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
-	public String logincheck(MemberVo memberVo, Model model) {
-		
-		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
-		
-		MemberVo dbMember = memberService.logincheck(memberVo);
-		
-		logger.debug("logincheck rowcount : {}", dbMember);
-		
-		
-		model.addAttribute("memId", dbMember.getMemId());
-		model.addAttribute("memPass", dbMember.getMemPass());
-		
-		return "member/login";
-	}
+//	// 로그인 체크 ajax
+//	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
+//	public String logincheck(MemberVo memberVo, Model model) {
+//		
+//		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
+//		
+//		MemberVo dbMember = memberService.logincheck(memberVo);
+//		
+//		logger.debug("logincheck rowcount : {}", dbMember);
+//		
+//		
+//		model.addAttribute("memId", dbMember.getMemId());
+//		model.addAttribute("memPass", dbMember.getMemPass());
+//		
+//		return "member/login";
+//	}
 
 	// 회원가입 페이지 이동
 	@RequestMapping(path = "/memberRegistview", method = RequestMethod.GET)

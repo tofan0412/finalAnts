@@ -133,17 +133,18 @@
 .mine{
 	text-align : right;	
 	align : right;
+	margin-left : 30%;
 }
 
 .yours{
 	text-align : left;
 	align : left;
+	margin-right : 30%;
 }
 
 .oneMsg{
 	margin-top : 15px;
 	margin-bottom : 15px;
-	color : black;
 }
 .spaan{
 	background-color : #d2d6de;
@@ -230,6 +231,6 @@ width:16px;height:16px;background:#d2d6de;}
 </div>
 
 <!-- 텍스트 전송 부분 .. -->
-<input type="text" class="sendMsgTextbar" id='sendChatCont' placeholder="Message.."/>
+<input type="text" class="sendMsgTextbar" id='sendChatCont' placeholder="Message.." autocomplete="off" />
 <button id="sendMsg" class="btn btn-success" type="button" style="width : 100%;">Send</button>
 $$$$$$$

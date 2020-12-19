@@ -189,7 +189,7 @@ public class MainPageController {
 		// 공지사항 전송
 		model.addAttribute("issuelist", resultList);
 
-		return "main/layout/contentmain";
+		return "tiles/layout/contentmain";
 		
 	}
 

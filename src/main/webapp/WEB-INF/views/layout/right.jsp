@@ -89,7 +89,6 @@ $(function(){
 		$('.chatTitle').css('display', 'none');
 		$('.mkNewChat').css('display', 'none');
 		
-		$(".chatList").css('color', '#A9E2F3');
 		var cgroupId = $(this).attr("cgroupId");
 		
 		// 채팅방 PK를 session에 저장해야 한다. 
@@ -103,7 +102,6 @@ $(function(){
 		})		
 		
 		$(".chatList").empty();
-		$(".chatList").css('font-color', 'black');
 		$.ajax({
 			url : "/chat/readMessages",
 			data : {cgroupId : cgroupId},

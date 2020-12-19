@@ -122,18 +122,21 @@ public class ChatController {
 	// 사용자가 생성한 채팅 그룹에 대한 멤버를 DB에 저장한다.
 	@RequestMapping("/insertChatMembers")
 	@ResponseBody // view를 생성하는 것이 아니라, Object 또는 JSON 을 전송할 수 있다.
-	public int insertChatMembers(@RequestParam(value = "memList[]") String[] memList,
+	public String insertChatMembers(@RequestParam(value = "memList[]") String[] memList,
 			@RequestParam(value = "cgroupId") String cgroupId) {
 
-		int result = 0;
+		int cnt = 0;
 		for (int i = 0; i < memList.length; i++) {
 
 			ChatMemberVo chatMemberVo = new ChatMemberVo();
 			chatMemberVo.setMemId(memList[i]);
 			chatMemberVo.setCgroupId(cgroupId);
 
-			result += chatService.insertChatMembers(chatMemberVo);
+			cnt += chatService.insertChatMembers(chatMemberVo);
 		}
+		// cnt : 개설한 채팅방에 초대한 인원을 나타낸다.
+		String result = cgroupId.concat("$$").concat(Integer.toString(cnt));
+		
 		return result;
 	}
 }

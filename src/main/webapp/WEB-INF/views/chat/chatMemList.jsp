@@ -94,10 +94,15 @@ $(function(){
 						data 			: ajaxArr,
 						method 			: "POST",
 						success 		: function(res){
-							alert("채팅방을 개설하였습니다.");
+							arr = res.split("$$");
+							var cgroupId = arr[0];
+							var cnt = arr[1];
+							alert(cgroupId+"채팅방 개설 완료 : " + cnt +"명을 초대하는 데 성공했습니다..");
 							
-							// 다시 채팅방 리스트 불러오기 ...
-							$(location).attr("href", "/project/projectGetReq?reqId="+projectId);
+							$('.chatList').empty();
+							
+							
+							
 						}
 					})
 				}
@@ -177,7 +182,7 @@ function listMember(MemListArr){
 <!-- 바깥은 chatList라는 DIV가 여전히 감싸고 있다. -->
 <div style="height : 70%; color : black;" >
 	<div style="float : left; width : 30%;">
-		<span class="jg">이름</span><br>
+		<span class="jg">Keyword</span><br>
 		<input type="text" id="keyword" 
 			style="border-radius : 1.0rem;
 			width : 100px;"/>
