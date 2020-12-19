@@ -147,7 +147,6 @@ var id;
 <%@include file="../layout/contentmenu.jsp"%>
 <div id="hhidde">
 <ul class="contextmenu">
-  <li class="jg"><a href="#"><i class="fa fa-folder" style="padding-right: 20px;"></i>MyFiles</a></li>
   <li class="jg"><a href="javascript:hotfiledown();"><i class="fas fa-download"  style="padding-right: 20px;"></i>Download</a></li>
   <li class="jg"><a href="javascript:hotfiledel();"><i class="fas fa-trash"  style="padding-right: 20px;"></i>Delete</a></li>
 </ul>
