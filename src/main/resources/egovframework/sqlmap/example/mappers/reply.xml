@@ -10,19 +10,22 @@
 
   <!-- 댓글목록 가져오기 -->
   <select id="replylist" resultType="ants.com.board.memBoard.model.ReplyVo" parameterType="String">
-    SELECT  reply_id,
-		    some_id,
-		    reply_cont,
-		    to_char(reg_dt,'yyyy-mm-dd hh24:mm') as reg_dt ,
-		    del,
-		    category_id,
-		    req_id,
-		    mem_id
-    FROM reply
+    SELECT  a.reply_id,
+		    a.some_id,
+		    a.reply_cont,
+		    to_char(a.reg_dt,'yyyy-mm-dd hh24:mm') as reg_dt ,
+		    a.del,
+		    a.category_id,
+		    a.req_id,
+		    a.mem_id,
+		    b.mem_name,
+		    b.mem_filepath
+    FROM reply a, member b
     WHERE some_id = #{someId}
       and req_id = #{reqId}
       and category_id = #{categoryId}
-    order by reg_dt desc, to_number(reply_id) desc
+      and a.mem_id = b.mem_id
+    order by reg_dt, to_number(reply_id)
   </select>
   
   
