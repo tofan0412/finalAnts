@@ -65,4 +65,34 @@ SELECT *
   FROM CHATMEMBER
  WHERE CGROUP_ID = #{cgroupId}
 </select>
+
+<insert id="insertChatHistory" parameterType="ants.com.chatting.model.ChatHistoryVo">
+INSERT INTO CHATHISTORY (CHATHIST_IDX, CGROUP_ID, MEM_ID) 
+VALUES (CHATHIST_SEQ.NEXTVAL,#{cgroupId},#{memId})
+</insert>
+
+<update id="updateChatHistory" parameterType="ants.com.chatting.model.ChatHistoryVo">
+UPDATE CHATHISTORY
+   SET CHAT_ID = #{chatId}
+ WHERE CGROUP_ID = #{cgroupId}
+   AND MEM_ID = #{memId}
+</update>
+
+<select id="recentMsg" parameterType="java.lang.String" resultType="java.lang.String">
+SELECT *
+  FROM (SELECT CHAT_CONT
+          FROM CHAT
+         WHERE CGROUP_ID = #{cgroupId}
+         ORDER BY REG_DT DESC)
+ WHERE ROWNUM = 1
+</select>
+
+
+
+
+<delete id="exitChat" parameterType="ants.com.chatting.model.ChatMemberVo">
+DELETE FROM CHATMEMBER
+WHERE CGROUP_ID = #{cgroupId}
+    AND MEM_ID = #{memId}
+</delete>
 </mapper>

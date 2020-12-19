@@ -17,6 +17,9 @@ $(function(){
 	$('#login').on('click', function(){
 		$(location).attr('href', '/member/loginView');
 	})
+	$('#admin').on('click', function(){
+		$(location).attr('href', '/admin/adloginView');
+	})
 })
 </script>
 
@@ -31,6 +34,7 @@ $(function(){
 
 			<div class="login_container">
 				<ul class="login" style="padding-top : 13px;">
+					<button class="jg" id="admin" style="height : 45px; padding-top : 5px;">관리자</button>
 					<button class="jg" id="login" style="height : 45px; padding-top : 5px;">로그인</button>
 				</ul>
 			</div>

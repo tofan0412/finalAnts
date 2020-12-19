@@ -58,58 +58,6 @@ $(function(){
 		listMember(MemListArr);
 	})
 	
-	// 초대하기 버튼을 누를때
-	$(".NewBtn").on('click', function(){
-		var chk = 0;
-				
-		$('.warning').text("");
-		if (MemListArr.length == 0){
-			$('.warning').text("최소 초대 인원은 1명입니다.");
-			chk++;
-			return;
-		}
-		if ($('#cgroupName').val() == ""){
-			$('.warning').text("그룹 채팅방 이름을 설정해 주세요.");
-			chk++;
-		}
-		
-		// 동일한 이름을 갖는 채팅방이 존재하는지 확인해야 한다.
-		
-		if (chk == 0){
-			// 먼저, 해당 projectId와 이름을 갖는, chatGroup을 하나 입력한다.
-			var projectId = '${projectId}';
-			var cgroupName = $('#cgroupName').val();
-			// 데이터를 넣기 전에, 초대할 리스트에 당사자 아이디를 추가한다.
-			MemListArr.push('${SMEMBER.memId}');
-			
-			$.ajax({
-				url : "/chat/insertChatGroup",
-				data : {reqId : projectId, cgroupName : cgroupName},
-				method : "POST",
-				success : function(res){
-					var ajaxArr = {"memList" : MemListArr, "cgroupId" : res}; 
-					// 이후 해당 채팅방을 사용할 유저를 CHATMEMBER 테이블에 등록한다. 
-					$.ajax({
-						url : "/chat/insertChatMembers",
-						data 			: ajaxArr,
-						method 			: "POST",
-						success 		: function(res){
-							arr = res.split("$$");
-							var cgroupId = arr[0];
-							var cnt = arr[1];
-							alert(cgroupId+"채팅방 개설 완료 : " + cnt +"명을 초대하는 데 성공했습니다..");
-							
-							$('.chatList').empty();
-							
-							
-							
-						}
-					})
-				}
-			})
-		}
-	})
-	
 	// 사용자가 검색을 시작하면, 해당하는 프로젝트 멤버를 chatMemList에 출력한다.
 	$('#keyword').keyup(function(){
 		var keyword = $(this).val();
@@ -178,14 +126,14 @@ function listMember(MemListArr){
 	style="width : 97%;
 		   border-radius : 1.0rem;
 		   margin-bottom : 4px;
-	 ">
+	 " autocomplete="off" >
 <!-- 바깥은 chatList라는 DIV가 여전히 감싸고 있다. -->
 <div style="height : 70%; color : black;" >
 	<div style="float : left; width : 30%;">
 		<span class="jg">Keyword</span><br>
 		<input type="text" id="keyword" 
 			style="border-radius : 1.0rem;
-			width : 100px;"/>
+			width : 100px;" autocomplete="off" />
 		<br><br>
 		<span class="jg">검색 조건</span><br>
 		<select id="MemSearchOption"

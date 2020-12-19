@@ -12,8 +12,7 @@
 				</a>
 				<div class="jg" style="color : grey; font-size : 0.9em; float : right;">
 				${eachChatMemList[i].size() }명 참여중
-				</div> 
-				<br>
+				</div>
 			</div>
 	</c:forEach>
 

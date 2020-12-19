@@ -6,14 +6,16 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ants.com.chatting.model.ChatGroupVo;
+import ants.com.chatting.model.ChatHistoryVo;
 import ants.com.chatting.model.ChatMemberVo;
 import ants.com.chatting.model.ChatVo;
 import ants.com.chatting.service.ChatService;
@@ -24,6 +26,7 @@ import ants.com.member.service.MemberService;
 @RequestMapping("/chat")
 @Controller
 public class ChatController {
+	private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 	@Resource(name = "chatService")
 	ChatService chatService;
 
@@ -36,13 +39,18 @@ public class ChatController {
 
 		List<ChatGroupVo> chatList = chatService.readChatList(chatGroupVo);
 		List<List<ChatMemberVo>> eachChatMemList = new ArrayList<>();
-
+		List<String> recentMsgList = new ArrayList<>();
+		
 		// 각각의 채팅방에 대해, 채팅방 참여 멤버도 뽑아온다.
 		for (int i = 0; i < chatList.size(); i++) {
 			List<ChatMemberVo> chatMemList = chatService.readCgroupMembers(chatList.get(i).getCgroupId());
 			eachChatMemList.add(chatMemList);
+			// 각각의 채팅방 최신 메시지를 뽑아오기 위해, 메시지 리스트도 뽑아온다.  
+			String recentMsg = chatService.recentMsg(chatList.get(i).getCgroupId());
+			recentMsgList.add(recentMsg);
 		}
-
+		
+		model.addAttribute("recentMsgList", recentMsgList);
 		model.addAttribute("eachChatMemList", eachChatMemList);
 		model.addAttribute("chatList", chatList);
 		return "chat/chatList";
@@ -64,6 +72,21 @@ public class ChatController {
 		// 채팅방 이름을 불러오기 위해, cgroupId PK를 이용하여 객체를 불러온다.
 		ChatGroupVo cgroup = chatService.readCgroupName(cgroupId);
 
+		// 채팅방에 참여하고 있는 회원 리스트를 불러온다.
+		List<ChatMemberVo> chatMemList = chatService.readCgroupMembers(cgroupId);
+		
+		// 유저 이름을 알기 위해, 회원 정보 또한 출력해 온다.
+		List<MemberVo> memInfoList = new ArrayList<>();
+		for (int i = 0; i < chatMemList.size(); i++) {
+			MemberVo memInfo = new MemberVo();
+			memInfo.setMemId(chatMemList.get(i).getMemId());
+
+			MemberVo memberVo = memberService.getMember(memInfo);
+			memInfoList.add(memberVo);
+		}
+		
+		model.addAttribute("memInfoList", memInfoList);
+		model.addAttribute("chatMemList", chatMemList);
 		model.addAttribute("msgList", msgList);
 		model.addAttribute("cgroup", cgroup);
 
@@ -133,10 +156,39 @@ public class ChatController {
 			chatMemberVo.setCgroupId(cgroupId);
 
 			cnt += chatService.insertChatMembers(chatMemberVo);
+			
+			// 회원별로, 해당 채팅방에서 마지막으로 읽은 메시지 인덱스가 몇번인지를 저장해야 한다.
+			ChatHistoryVo chatHistoryVo = new ChatHistoryVo();
+			chatHistoryVo.setCgroupId(cgroupId);
+			chatHistoryVo.setMemId(memList[i]);
+			
+			chatService.insertChatHistory(chatHistoryVo);
 		}
+		
 		// cnt : 개설한 채팅방에 초대한 인원을 나타낸다.
 		String result = cgroupId.concat("$$").concat(Integer.toString(cnt));
-		
 		return result;
 	}
+	
+	// 사용자가 한 채팅방에서 읽은 최신 메시지 번호를 기록해 둔다.
+	@RequestMapping("/updateChatHistory")
+	@ResponseBody
+	public int updateChatHistory(String memId, String cgroupId, String chatId) {
+		
+		ChatHistoryVo chatHistoryVo = new ChatHistoryVo();
+		chatHistoryVo.setMemId(memId);
+		chatHistoryVo.setCgroupId(cgroupId);
+		chatHistoryVo.setChatId(chatId);
+		int result = chatService.updateChatHistory(chatHistoryVo);
+		return result;
+	}
+	
+	@RequestMapping("/exitChat")
+	@ResponseBody
+	public int exitChat(ChatMemberVo chatMemberVo) {
+		int result = chatService.exitChat(chatMemberVo);
+		return result;
+	}
+	
+	
 }

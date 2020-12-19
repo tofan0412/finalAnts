@@ -13,6 +13,7 @@ import ants.com.admin.model.NoticeVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("adminService")
@@ -126,6 +127,22 @@ public class AdminService extends EgovAbstractServiceImpl{
 	public List<IpHistoryVo> loginLogList(){
 		return mapper.loginLogList();
 	}
+
+	// 프로젝트 리스트
+	public List<ProjectVo> getProjectList() {
+		return mapper.getProjectList();
+	}
+	//1개? 프로젝트 가져오기
+	public ProjectVo getProject(ProjectVo projectVo) {
+		return mapper.getProject(projectVo);
+	}
+	//프로젝트 삭제하기
+	public int delproject(ProjectVo projectVo) {
+		return mapper.delproject(projectVo);
+	}
+
+
+	
 	
 
 	

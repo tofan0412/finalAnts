@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style>
 
 
@@ -38,7 +39,9 @@
 	<div class="sidebar" style="font-size: 0.8em;">
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">
+		
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+			
 				<li class="nav-item has-treeview menu-open" >
 		            <a href="#" class="nav-link active">
 		              <i class="nav-icon fas fa-newspaper"></i>
@@ -65,8 +68,25 @@
 		              </li>
 					</ul>
 				</li><br>
-
+				
+				<!-- 프로젝트 관리할곳 -->
+				<li class="nav-item has-treeview menu-open" >
+					<a href="#" class="nav-link active">
+		              <i class="nav-icon fas fa-newspaper"></i>
+						<p class="jg">프로젝트<i class="fas fa-angle-left right"></i></p>
+		            </a>
+		            
+		            <ul class="nav nav-treeview" style="display: block;">
+		            <li class="nav-item">
+		                <a href="${pageContext.request.contextPath}/admin/getProjectList" class="nav-link" >
+		                 <i class="nav-icon fas fa-clipboard-list"></i>
+							<p class="selectable jg">프로젝트 목록</p>
+		                </a>
+		            </li>
+				</li>
+				 
 			</ul>
+			
 		</nav>
 		<!-- /.sidebar-menu -->
 	</div>

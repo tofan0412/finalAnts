@@ -113,6 +113,76 @@ $(function(){
 		})
 	})
 	
+	
+	// 채팅방 생성 버튼을 눌렀을 때
+	$(".chatList").on('click','.NewBtn', function(){
+		var chk = 0;
+				
+		$('.warning').text("");
+		if (MemListArr.length == 0){
+			$('.warning').text("최소 초대 인원은 1명입니다.");
+			chk++;
+			return;
+		}
+		if ($('#cgroupName').val() == ""){
+			$('.warning').text("그룹 채팅방 이름을 설정해 주세요.");
+			chk++;
+		}
+		
+		// 동일한 이름을 갖는 채팅방이 존재하는지 확인해야 한다.
+		
+		if (chk == 0){
+			// 먼저, 해당 projectId와 이름을 갖는, chatGroup을 하나 입력한다.
+			var projectId = '${projectId}';
+			var cgroupName = $('#cgroupName').val();
+			// 데이터를 넣기 전에, 초대할 리스트에 당사자 아이디를 추가한다.
+			MemListArr.push('${SMEMBER.memId}');
+			
+			$.ajax({
+				url : "/chat/insertChatGroup",
+				data : {reqId : projectId, cgroupName : cgroupName},
+				method : "POST",
+				success : function(res){
+					var ajaxArr = {"memList" : MemListArr, "cgroupId" : res}; 
+					// 이후 해당 채팅방을 사용할 유저를 CHATMEMBER 테이블에 등록한다. 
+					$.ajax({
+						url : "/chat/insertChatMembers",
+						data 			: ajaxArr,
+						method 			: "POST",
+						success 		: function(res){
+							arr = res.split("$$");
+							var cgroupId = arr[0];
+							var cnt = arr[1];
+							alert(cgroupId+"채팅방 개설 완료 : " + cnt +"명을 초대하는 데 성공했습니다..");
+							// 채팅방과, 채팅방 멤버를 DB저장 완료하였다..
+							// WebSocket 설정 위해, 새롭게 만든 채팅방 번호를 세선에 저장한다.
+							$.ajax({
+								url : "/chat/changeCgroupSession",
+								data : {cgroupId : cgroupId},
+								method : "POST",
+								success : function(res){
+									console.log("현재 채팅방 번호 : "+cgroupId);
+									$('.chatList').empty();
+								}
+							})
+							
+							$('.chatList').empty();
+							$.ajax({
+								url : "/chat/readMessages",
+								data : {cgroupId : cgroupId},
+								method : "POST", 
+								success : function(res){
+									var html = res.split("$$$$$$$");
+									$('.chatList').html(html);
+								}
+							})
+						}
+					})
+				}
+			})
+		}
+	})
+	
 	// 사용자가 뒤로 가기 버튼을 누르면, 숨겨뒀던 헤더 div와 채팅 생성버튼을 다시 보이게 하고, 다시 채팅 목록을 불러온다.
 	$('.chatList').on('click', '.returnBtn', function(){
 		$('.chatTitle').css('display', 'block');
@@ -122,15 +192,42 @@ $(function(){
 		readChatList();
 	})
 	
-	
 	// 팝업창 관련 스크립트
 	$('.chatList').on('click', '.usersBtn',function(){
-		$('.pop').css('display', 'block');
+		if ($('.pop').css('display') == 'none'){
+			$('.pop').css('display', 'block');	
+		}else{
+			$('.pop').css('display', 'none');
+		}
 	})
-	// 팝업창 스크립트
-	$('.chatList').on('click', '.popCloseBtn',function(){
-		$('.pop').css('display', 'none');
-	});	
+	
+	// 사용자가 채팅방 나가기 버튼을 클릭할 때 ..
+	$('.chatList').on('click','.exitBtn',function(){
+		var factor = confirm("채팅방을 나가시겠습니까?");
+		if(factor){
+			// 채팅방에서 해당 회원을 나가게 한다.
+			var memId = '${SMEMBER.memId}';
+			var cgroupId = '${cgroup.cgroupId}';
+			// 이대로 두면, 채팅방 번호가 바뀌지 않는다..!
+			
+			alert("삭제할려고 하는 채팅방 번호 : " + cgroupId);
+			
+// 			$.ajax({
+// 				url : "/chat/exitChat",
+// 				data : {memId : memId, cgroupId : cgroupId},
+// 				success : function(res){
+// 					if (res > 0){
+// 						alert("처리되었습니다.");
+// 						$('.chatTitle').css('display', 'block');
+// 						$('.mkNewChat').css('display', 'block');
+						
+// 						$('.chatList').empty();
+// 						readChatList();
+// 					}
+// 				}
+// 			})
+		}
+	})
 	
 	
 });
@@ -154,7 +251,11 @@ $(function(){
 		<div class="chatTitle jg">프로젝트 채팅 목록</div>
 		
 		<!-- 채팅목록이 출력된다. -->
-		<div class="chatList jg"></div>
+		<div class="chatList jg">
+			<c:if test="${projectId eq null }">
+				<span class="jg">프로젝트를 먼저 선택해 주세요..</span>
+			</c:if>
+		</div>
 		
 		<!-- 선택한 프로젝트가 존재하는 경우에만 채팅방 개설하기 버튼을 표시한다. -->
 		<c:if test="${projectId ne null }">

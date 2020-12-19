@@ -93,6 +93,15 @@
 	function onClose(evt) {
 		$("#msgArea").append("서버 연결 끊김..");
 	}
+	$(function(){
+		// 문서 로딩이 끝나면 최 하단으로 내린다...
+		$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);	
+		
+		
+		
+		
+		
+	})
 </script>
 <style>
 /* 채팅방 제목 부분 */
@@ -154,6 +163,9 @@
 	text-align : left;
 	padding : 2px 2px 4px 4px;
 }
+.announce{
+	text-align : center;
+}
 /* 스크롤바 스타일 */
 #msgArea::-webkit-scrollbar {width: 16px;}
 #msgArea::-webkit-scrollbar-track {background-color:#f1f1f1;} 
@@ -166,13 +178,17 @@ width:16px;height:16px;background:#d2d6de;}
 	cursor : pointer;
 }
 .pop{
-	width : 130px; 
-	height : 100px;
-	background-color : yellow;
+	width : 250px; 
+	height : 400px;
+	overflow-y : auto;
+	background-color : white;
+	border : 2px solid black;
+	border-radius : 0.4rem;
 	color : black;
 	position : absolute;
-	top : 100px;
-	left : 50px;
+	top : 13%;
+	left : 48%;
+	padding : 10px 10px 10px 10px;
 }
 
 /* 메시지 전송바 스타일 */
@@ -192,15 +208,19 @@ width:16px;height:16px;background:#d2d6de;}
 	<span class="returnBtn fas fa-undo icon" style="float : right; padding-right : 10px;"></span>
 	<!-- 회원 목록 확인하기 -->
 	<span class="usersBtn fas fa-user icon" style="float : right; padding-right : 10px;"></span>
-	<!-- 회원 목록 버튼을 누르면 나올 팝업창 -->
+	<!-- 채팅방 나가기 버튼 -->
+	<span class="exitBtn fas fa-door-open icon" style="float : right; padding-right : 10px;"></span>
 </div>
 
 <!-- 팝업창  -->
-<div class="pop" style="display : none; z-index : 1;"> 
-	회원 1<br> 회원2<br> 회원3
-	<div class="popCloseBtn" style="width : 50px; margin : auto; ">
-		닫기버튼 DIV
-	</div>
+<div class="pop" style="display : none; z-index : 1; overflow-y : auto;"> 
+	<label class="jg" style="padding-top : 10px;"><h4>채팅방 회원 목록</h4></label><hr>
+	<c:forEach var="i" begin="0" end="${chatMemList.size() }" >
+		<div style="height : 10%; folat : left;">${chatMemList[i].memId }	
+			<br><span style="color : blue;">${memInfoList[i].memName }</span>
+		</div>
+		<br>
+	</c:forEach>
 </div>
 
 <!-- 채팅 메시지 목록 부분  -->
@@ -209,7 +229,7 @@ width:16px;height:16px;background:#d2d6de;}
 			
 		<!-- 접속한 사용자의 아이디와 일치하는 경우, 우측 배열 -->
 		<c:if test="${msg.memId eq SMEMBER.memId }">
-			<div class="oneMsg">
+			<div class="oneMsg" chatId="${msg.chatId}" >
 				<div class="memId mine">${msg.memId }</div>
 				<div class="chatCont mine">
 					<span class="spaan">&nbsp;${msg.chatCont }&nbsp;</span>
@@ -219,7 +239,7 @@ width:16px;height:16px;background:#d2d6de;}
 		</c:if>
 		<!-- 접속한 사용자가 보낸 메시지가 아닌 경우, 좌측 배열 -->
 		<c:if test="${msg.memId ne SMEMBER.memId }">
-			<div class="oneMsg">
+			<div class="oneMsg" chatId="${msg.chatId}" >
 				<div class="memId yours">${msg.memId }</div>
 				<div class="chatCont yours">
 					<span class="spaan">&nbsp;${msg.chatCont }&nbsp;</span>
