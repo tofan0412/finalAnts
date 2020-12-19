@@ -130,6 +130,7 @@ public class PrivateFileController {
 				logger.debug("---------------------통과-------------------");
 				
 				
+				privateVo.setPrivExtension(extension);	
 				privateVo.setPrivFilepath(Filepath);
 				privateVo.setPrivFilename(Filename);
 				privateVo.setPrivSize(Filesize);
@@ -222,8 +223,9 @@ public class PrivateFileController {
 				try {
 					files.get(i).transferTo(uploadFile);
 				} catch (IllegalStateException | IOException e) {
-				}
+				}	
 				
+				privateVo.setPrivExtension(extension);
 				privateVo.setPrivFilepath(Filepath);
 				privateVo.setPrivFilename(realfilename);
 				privateVo.setPrivSize(String.valueOf(filesize));

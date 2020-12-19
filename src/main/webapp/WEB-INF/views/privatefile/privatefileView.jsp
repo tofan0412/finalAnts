@@ -340,6 +340,7 @@ var id;
 					<div class="input-group row">		
 						<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">				
 							<form:option value="1" label="파일명"/>
+							<form:option value="2" label="확장자"/>
 						</form:select> 
 						
 							 <label for="searchKeyword" style="visibility:hidden; display:none;"></label>
@@ -355,7 +356,7 @@ var id;
                          
 					</div>
 		        </div>
-		    </div>
+		    </div>	
 		</div>
 		<div class="float-right">
 		    <div class="card-header with-border">
