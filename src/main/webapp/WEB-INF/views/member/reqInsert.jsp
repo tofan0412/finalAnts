@@ -15,7 +15,14 @@
 <script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
 <style>
- 
+ 	input[type=search]{
+		display : inline-block;
+		border: none; 
+		background: transparent;
+		padding-bottom:  .5em;
+		padding-top:  .5em;
+		width: 350px;
+	}
 
 	#fileBtn{
 		 display: inline-block;
@@ -300,7 +307,7 @@
 					</div>
 				</form:form>
 				<c:if test="${registerFlag == 'modify' }">
-					<div class="form-group">
+					<div class="form-group" style="padding-left: 15px;">
 						<label id ="filelabel" for="files" class="col-sm-2 control-label">첨부파일</label>		
 						<div id ="file" class="col-sm-10">
 						
@@ -322,7 +329,9 @@
 				
 				<form>
 					<div style="padding-left: 20px;">
-						<label  for="file" class="col-sm-2 control-label">첨부파일</label>
+						<c:if test="${registerFlag == 'create' }">
+							<label  for="file" class="col-sm-2 control-label">첨부파일</label>
+						</c:if>
 						<div id="queue">
 							<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
 						</div>
