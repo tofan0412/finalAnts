@@ -232,10 +232,7 @@
 				#{todoParentid, jdbcType=VARCHAR},
 				'N'
 			)
-			
-			<selectKey keyProperty="todoId" resultType="String">
-			select todo_seq.currval from dual
-		</selectKey>
+		
 		</insert>
 
 
