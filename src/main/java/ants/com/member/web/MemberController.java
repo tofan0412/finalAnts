@@ -105,9 +105,9 @@ public class MemberController {
 	// 메인 페이지로 이동
 	@RequestMapping("/projectMainView")
 	public String projectMainView() {
-		return "main/layout/contentmain";
+		return "tiles/layout/contentmain";
 	}
-				
+	
 	// 로그인 로직
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
