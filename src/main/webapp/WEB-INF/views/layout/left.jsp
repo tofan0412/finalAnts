@@ -49,7 +49,7 @@
   	
 	$(function(){
 		
-		alarmCount("${SMEMBER.memId}");
+		alarmCnt("${SMEMBER.memId}");
 		// 메뉴를 선택하면 배경색이 변한다. 
 		$('.selectable').click(function(){
 // 			alert($(this).text());
@@ -66,7 +66,7 @@
 	})
 	
 	/* 알림 총 개수*/
-	function alarmCount(memId){
+	function alarmCnt(memId){
 		
 		$.ajax({
 			url:'/alarmCount',
