@@ -41,8 +41,8 @@
                         <if test="searchCondition != null and searchCondition != ''">
 							    <choose>
 							        <when test="searchCondition == 1">
-										AND	alarm_type = 'req-pl'
-										 OR alarm_type = 'res-pl'
+										AND	(alarm_type = 'req-pl'
+										 OR alarm_type = 'res-pl')
 									</when>
 							        <when test="searchCondition == 2">
 										AND	alarm_type = 'reply'
@@ -68,8 +68,8 @@
 				 <if test="searchCondition != null and searchCondition != ''">
 							    <choose>
 							        <when test="searchCondition == 1">
-										AND	alarm_type = 'req-pl'
-										 OR alarm_type = 'res-pl'
+										AND	(alarm_type = 'req-pl'
+										 OR alarm_type = 'res-pl')
 									</when>
 							        <when test="searchCondition == 2">
 										AND	alarm_type = 'reply'

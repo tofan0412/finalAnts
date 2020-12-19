@@ -195,9 +195,11 @@
 						  </li>
 		                </c:forEach>
 		              </ul>
-		              <div class="text-center mt-5 mb-3">
-		                <a href="javascript:reqUpdate();" class="btn btn-sm btn-primary">파일 추가</a>
-		              </div>
+		              <c:if test="${SMEMBER.memType == 'PM' }">
+			              <div class="text-center mt-5 mb-3">
+			                <a href="javascript:reqUpdate();" class="btn btn-sm btn-primary">파일 추가</a>
+			              </div>
+		              </c:if>
 		            </div>
 		          </div>
 		        </div>
