@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ants.com.chatting.mapper.ChatMapper;
 import ants.com.chatting.model.ChatGroupVo;
+import ants.com.chatting.model.ChatHistoryVo;
 import ants.com.chatting.model.ChatMemberVo;
 import ants.com.chatting.model.ChatVo;
 import ants.com.member.model.ProjectMemberVo;
@@ -52,8 +53,24 @@ public class ChatService{
 	public int insertChatMembers(ChatMemberVo chatMemberVo) {
 		return mapper.insertChatMembers(chatMemberVo);
 	}
+	
+	// 사용자가 채팅방에서 메시지를 어디까지 읽었는지를 저장해야 한다.
+	public int insertChatHistory(ChatHistoryVo chatHistoryVo) {
+		return mapper.insertChatHistory(chatHistoryVo);
+	}
 
+	// 가장 마지막에 읽은 메시지 번호를 수정한다.
+	public int updateChatHistory(ChatHistoryVo chatHistoryVo) {
+		return mapper.updateChatHistory(chatHistoryVo);
+	}
 	
+	// 가장 최근의 메시지를 가져온다.
+	public String recentMsg(String cgroupId) {
+		return mapper.recentMsg(cgroupId);
+	}
 	
-	
+	// 채팅방에서 나가기
+	public int exitChat(ChatMemberVo chatMemberVo) {
+		return mapper.exitChat(chatMemberVo);
+	}
 }

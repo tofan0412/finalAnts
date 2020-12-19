@@ -44,7 +44,6 @@ import ants.com.admin.service.AdminService;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.board.memBoard.service.memBoardService;
-import ants.com.common.model.AlarmVo;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.common.service.AlarmService;
 import ants.com.member.model.MemberVo;
