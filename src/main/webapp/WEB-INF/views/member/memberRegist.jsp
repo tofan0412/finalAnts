@@ -234,15 +234,18 @@ span.tip span {
 function chkID(){
 	var emailRule = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 			
-	if(!emailRule.test($('#memId').val())) {            
-		 $('#checkMsg').html('<p style="color:red">이메일 형식이 맞지 않습니다.</p>');
+	if($('#memId').val() == null || $('#memId').val() == '') {          
+		 $('#checkMsg').html('<p></p>');
 		 return false;
-	}else { 	
-		 $('#checkMsg').html('<p style="color:blue"></p>'); 
+	} else if(!emailRule.test($('#memId').val())){
+		 $('#checkMsg').html('<p style="color:red">이메일 형식이 맞지 <br>않습니다.</p>');
+		 return false;
+	} else {	
+		 $('#checkMsg').html('<p></p>'); 
 		return true;
 	}	
-}	
-
+}			
+		
 // 핸드폰 번호 정규식
 $(document).on("keyup", ".phoneNumber", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
@@ -262,11 +265,14 @@ function chkPW(){
 	 if(pw1 != pw2){ 
 		 $('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
 	 } else if(pw2 == null || pw2 == ''){
-		 $('#checkPass2').html('<p style="color:blue"></p>'); 
-	 } else { 
+		 $('#checkPass2').html('<p></p>'); 
+		 if(pw1 == null || pw1 == ''){
+			 $('#checkPass1').html('<p></p>'); 
+		 }
+	 } else { 	
 	 	 $('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
-	 }	
-	 		
+	 }		
+	 				
 	 if(pw.length < 8 || pw.length > 20){
 	 	$('#checkPass1').html('<p style="color:red">8자리 ~ 20자리 이내로 입력해주세요.</p>');
 	 	return false;
@@ -293,11 +299,14 @@ function unityPW(){
 	if(pw1 != pw2){ 
 		$('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
 	} else if(pw2 == null || pw2 == ''){
-		$('#checkPass2').html('<p style="color:blue"></p>'); 
+		 $('#checkPass2').html('<p></p>'); 
+		 if(pw1 == null || pw1 == ''){
+			 $('#checkPass1').html('<p></p>'); 
+		 }
 	} else { 
 		$('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
 	}	
-} 
+}
  	
 //등록버튼시 미입력 된것 있으면 경고창
 $(document).ready(function() {
