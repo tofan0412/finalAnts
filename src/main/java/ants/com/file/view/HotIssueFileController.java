@@ -1,7 +1,10 @@
 package ants.com.file.view;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +25,7 @@ import ants.com.board.manageBoard.model.HotIssueVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.file.mapper.FileMapper;
 import ants.com.file.model.HotIssueFileVo;
+import ants.com.file.model.PrivateFileVo;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.service.FileService;
 import ants.com.member.model.MemberVo;
@@ -150,5 +154,5 @@ public class HotIssueFileController {@Resource(name = "fileService")
 		 
 		 return "jsonView";
 	 }
-
+	
 }
