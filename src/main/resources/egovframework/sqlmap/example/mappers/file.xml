@@ -80,7 +80,11 @@
 							</when>
 							<when test="searchCondition == 2">
 								AND b.mem_name LIKE '%' || #{searchKeyword} || '%'
-							</when>			     
+							</when>	
+							<when test="searchCondition == 3">
+								AND a.PUB_EXTENSION LIKE lower('%' || #{searchKeyword} || '%')
+							</when>	
+									     
 						</choose>
 					</if>
 				    <if test = "pubExtension != null and pubExtension != ''">
@@ -124,7 +128,10 @@
 					</when>
 		            <when test="searchCondition == 2">
 						AND b.mem_name LIKE '%' || #{searchKeyword} || '%'
-					</when>	         
+					</when>
+					<when test="searchCondition == 3">
+						AND a.PUB_EXTENSION LIKE lower('%' || #{searchKeyword} || '%')
+					</when>		         
 				</choose>
 		</if>		
 		<if test = "pubExtension != null and pubExtension != ''">
