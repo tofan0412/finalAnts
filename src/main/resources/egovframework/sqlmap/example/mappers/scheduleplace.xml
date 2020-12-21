@@ -99,7 +99,7 @@
 				#{calendarcss})
 				</if>
 				<if test="endDt == null">
-				NULL, 
+				#{startDt}, 
 				NULL,
 				#{calendarcss})
 				</if>
