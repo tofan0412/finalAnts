@@ -24,6 +24,9 @@ $(document).ready(function() {
 	chartfilesmonth();
 	chartfilesday();
 	chartfilesextension();
+	chartIssuesmonth();
+	chartIssuesday();
+	chartIssuesCnt();
 });
 
 function stackedbarchart() {
@@ -471,6 +474,166 @@ function chartfilesextension() {
 			}
 		});
 	}
+	
+function chartIssuesday() {
+	$.ajax({
+		url : "/project/chartIssuesday",
+		method : "get",
+		success : function(data) {
+			var num = [];
+			var percent=[];
+			for(i=0; i<data.dbsize; i++){
+			num.push(data.issueList[i].regDt);	
+			percent.push(data.issueList[i].issueId);
+			}
+			var lineChartData = {
+					labels : num,
+					 datasets: [
+					        {
+					          label               : '일별',
+					          backgroundColor     : 'rgba(60,141,188,0.9)',
+					          borderColor         : 'rgba(60,141,188,0.8)',
+					          pointRadius          : false,
+					          pointColor          : '#3b8bba',
+					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointHighlightFill  : '#fff',
+					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          data                : percent 				 
+					        }]
+			};
+			 var lineChartOptions     = {
+					  responsive              : true,
+				      maintainAspectRatio     : false,
+				      datasetFill  			  : false,
+				      scales: {
+					        xAxes: [{
+					          display : true
+					        }],
+					        yAxes: [{
+					        	ticks: {
+					                  stepSize: 10,
+					                  suggestedMax: 50, 
+					                  beginAtZero: true
+					          }
+					        }]
+					      }
+				    };
+			var dctx = document.getElementById('chartIssuesday').getContext('2d');
+			var lineChart = new Chart(dctx, {
+				  type: 'line',
+				  data: lineChartData,
+				  options: lineChartOptions
+			    });
+			}
+		});
+	}
+	
+function chartIssuesmonth() {
+	$.ajax({
+		url : "/project/chartIssuesmonth",
+		method : "get",
+		success : function(data) {
+			var num = [];
+			var percent=[];
+			for(i=0; i<data.dbsize; i++){
+			num.push(data.issueList[i].regDt);	
+			percent.push(data.issueList[i].issueId);
+			}
+			var lineChartData = {
+					labels : num,
+					 datasets: [
+					        {
+					          label               : '월별',
+					          backgroundColor     : 'rgba(60,141,188,0.9)',
+					          borderColor         : 'rgba(60,141,188,0.8)',
+					          pointRadius          : false,
+					          pointColor          : '#3b8bba',
+					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointHighlightFill  : '#fff',
+					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          data                : percent,
+					          barThickness: 100
+					        }]
+			};
+			 var lineChartOptions     = {
+					 responsive              : true,
+				      maintainAspectRatio     : false,
+				      datasetFill  			  : false,
+				      scales: {
+					        xAxes: [{
+					          display : true
+					        }],
+					        yAxes: [{
+					        	ticks: {
+					                  stepSize: 10,
+					                  suggestedMax: 100, 
+					                  beginAtZero: true
+					          }
+					        }]
+					      }
+				    };
+			var dctx = document.getElementById('chartIssuesmonth').getContext('2d');
+			var lineChart = new Chart(dctx, {
+				  type: 'bar',
+				  data: lineChartData,
+				  options: lineChartOptions
+			    });
+			}
+		});
+	}
+	
+function chartIssuesCnt() {
+	$.ajax({
+		url : "/project/chartIssuesCnt",
+		method : "get",
+		success : function(data) {
+			var num = [];
+			var percent=[];
+			for(i=0; i<data.dbsize; i++){
+			num.push(data.issueList[i].memName);	
+			percent.push(data.issueList[i].issueId);
+			}
+			var barChartData = {
+					labels : num,
+					 datasets: [
+					        {
+					          label               : 'cnt',
+					          backgroundColor     : 'rgba(60,141,188,0.9)',
+					          borderColor         : 'rgba(60,141,188,0.8)',
+					          pointRadius          : false,
+					          pointColor          : '#3b8bba',
+					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointHighlightFill  : '#fff',
+					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          data                : percent,
+					          barThickness: 100
+					        }]
+			};
+			 var barChartOptions     = {
+					 responsive              : true,
+				      maintainAspectRatio     : false,
+				      datasetFill  			  : false,
+				      scales: {
+					        xAxes: [{
+					          display : true
+					        }],
+					        yAxes: [{
+					        	ticks: {
+					                  stepSize: 10,
+					                  beginAtZero: true
+					          }
+					        }]
+					      }
+				    };
+			var dctx = document.getElementById('chartIssuesCnt').getContext('2d');
+			var barChart = new Chart(dctx, {
+				  type: 'bar',
+				  data: barChartData,
+				  options: barChartOptions
+			    });
+			}
+		});
+	}
 
 		
 
@@ -498,9 +661,6 @@ function chartfilesextension() {
                       <li class="nav-item">
                         <a class="nav-link" id="custom-tabs-three-mywork-tab" data-toggle="pill" href="#custom-tabs-three-mywork" role="tab" aria-controls="custom-tabs-three-mywork" aria-selected="false">파일함 관련</a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-files-tab" data-toggle="pill" href="#custom-tabs-three-files" role="tab" aria-controls="custom-tabs-three-files" aria-selected="false">test</a>
-                      </li>
                     </ul>
                   </div>
                   <!-- 내용 -->
@@ -510,50 +670,65 @@ function chartfilesextension() {
                           메인차트
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-gantt" role="tabpanel" aria-labelledby="custom-tabs-three-gantt-tab">
+                      	<h4 class="baniChart">팀원별 할일 진행율</h4>
                       	<div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                   			<canvas id="stackedBarChartTodo" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
                 		</div>
+                      	<h4 class="baniChart">팀원별 할일 비중도</h4>
                 		<div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
               		 		<canvas id="donutChartTodo" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
               		 	</div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab">
+                      	<h4 class="baniChart">건의사항  수용, 대기, 거절 비율</h4>
                      	 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="donutChartsuggest" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
 	              		 </div>
+                      	<h4 class="baniChart">팀원별 건의사항 작성 수</h4>
 	              		 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartsuggestCnt" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-suggest" role="tabpanel" aria-labelledby="custom-tabs-three-suggest-tab">
+                      	<h4 class="baniChart">전체 투표 참여율</h4>
                       	 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartvotetotal" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div>
 	              		 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                      	<h4 class="baniChart">팀원별 투표 참여율</h4>
 	              		 	<canvas id="chartvoteindi" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div> 
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-calendar" role="tabpanel" aria-labelledby="custom-tabs-three-calendar-tab">
-                         이슈
+                      	<h4 class="baniChart">월별 이슈 작성 수</h4>
+                         <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+	              		 	<canvas id="chartIssuesmonth" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+	              		 </div> 
+                      	<h4 class="baniChart">일별 이슈 작성 수</h4>
+                         <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+	              		 	<canvas id="chartIssuesday" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+                         </div>
+                      	<h4 class="baniChart">팀원별 이슈 작성 수</h4>
+                         <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+	              		 	<canvas id="chartIssuesCnt" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+	              		 </div> 
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-mywork" role="tabpanel" aria-labelledby="custom-tabs-three-mywork-tab">
-                         <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                      	<h4 class="baniChart">월별 파일 업로드 용량</h4>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartfilesmonth" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div> 
+                      	<h4 class="baniChart">일별 파일 업로드 용량</h4>
+                         <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartfilesday" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
-	              		 </div> 
+                         </div>
+                      	<h4 class="baniChart">확장자별 업로드 수</h4>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartfilesextension" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div> 
                       </div>
-                      <div class="tab-pane fade" id="custom-tabs-three-files" role="tabpanel" aria-labelledby="custom-tabs-three-files-tab">
-                          ㅇ
-                      </div>
                     </div>
                   </div>
-                  <!-- /.card -->
-              
                
 </body>
 </html>

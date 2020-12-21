@@ -125,6 +125,15 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	public List<PublicFileVo> chartfilesextension(String reqId) {
 		return mapper.chartfilesextension(reqId);
 	}
+	public List<IssueVo> chartIssuesday(String reqId) {
+		return mapper.chartIssuesday(reqId);
+	}
+	public List<IssueVo> chartIssuesmonth(String reqId) {
+		return mapper.chartIssuesmonth(reqId);
+	}
+	public List<IssueVo> chartIssuesCnt(String reqId) {
+		return mapper.chartIssuesCnt(reqId);
+	}
 	
 	
 	

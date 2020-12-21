@@ -299,25 +299,27 @@
 	<select id="chartfilesday" parameterType="java.lang.String"
 		resultType="ants.com.file.model.PublicFileVo">
 		 <![CDATA[ SELECT
-		   nvl(round(sum(pub_size)/1024),0) as pub_size,
-           to_char(REG_DT, 'yyyy-mm-dd')as reg_dt
+		   nvl(round(sum(pub_size)/1024),0) as pubSize,
+           to_char(REG_DT, 'yyyy-mm-dd')as regDt
 		FROM
 		    publicfile
 		where req_id=#{reqId}
         And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
-        group by to_char(reg_dt, 'yyyy-mm-dd')]]> 
+        group by to_char(reg_dt, 'yyyy-mm-dd')
+        order by regDt asc ]]> 
 	</select>
 	
 	<select id="chartfilesmonth" parameterType="java.lang.String"
 		resultType="ants.com.file.model.PublicFileVo">
 		 <![CDATA[ SELECT
-		   nvl(round(sum(pub_size)/1024),0) as pub_size,
-           to_char(REG_DT, 'yyyy-mm')as reg_dt
+		   nvl(round(sum(pub_size)/1024),0) as pubSize,
+           to_char(REG_DT, 'yyyy-mm')as regDt
 		FROM
 		    publicfile
 		where req_id=#{reqId}
         And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
         group by to_char(reg_dt, 'yyyy-mm')
+        order by regDt asc
         ]]> 
 	</select>
 	
@@ -325,11 +327,54 @@
 		resultType="ants.com.file.model.PublicFileVo">
 		SELECT
 		  count(PUB_ID) as pubId,
-           PUB_EXTENSION
+           PUB_EXTENSION as pubExtension
 		FROM
 		    publicfile
 		where req_id= #{reqId}
-        group by PUB_EXTENSION
+        group by pubExtension
+	</select>
+	
+	<select id="chartIssuesday" parameterType="java.lang.String"
+		resultType="ants.com.board.memBoard.model.IssueVo">
+		 <![CDATA[ 
+		 SELECT
+		    count(issue_id) as issueId,
+		     to_char(REG_DT, 'yyyy-mm-dd')as regDt
+		FROM
+		    issue
+		where req_id = #{reqId}
+		 And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
+		group by to_char(reg_dt, 'yyyy-mm-dd')
+		order by regDt asc
+		 
+		 ]]> 
+	</select>
+	
+	<select id="chartIssuesmonth" parameterType="java.lang.String"
+		resultType="ants.com.board.memBoard.model.IssueVo">
+		 <![CDATA[
+		SELECT
+		    count(issue_id) as issueId,
+		     to_char(REG_DT, 'yyyy-mm')as regDt
+		FROM
+		    issue
+		where req_id = #{reqId}
+		 And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
+		group by to_char(reg_dt, 'yyyy-mm')
+		order by regDt asc
+        ]]> 
+	</select>
+	
+	<select id="chartIssuesCnt" parameterType="java.lang.String"
+		resultType="ants.com.board.memBoard.model.IssueVo">
+		SELECT
+		   count(a.issue_id) as issueId,
+		   b.mem_name as memName
+		FROM
+		    issue a, (select * from member)b
+		where a.mem_id = b.mem_id
+		and req_id=#{reqId} 
+		group by b.mem_name
 	</select>
 	
 	

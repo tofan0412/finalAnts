@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
+import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.model.SuggestVo;
 import ants.com.board.vote.model.VoteVo;
@@ -299,6 +300,36 @@ public class ProjectController {
 		List<PublicFileVo> publicFileList = projectService.chartfilesextension(reqId);
 		int size = publicFileList.size();
 		model.addAttribute("publicFileList", publicFileList);
+		model.addAttribute("dbsize", size);
+		return "jsonView";
+	}
+	
+	@RequestMapping("/chartIssuesday")
+	public String chartIssuesday(Model model,IssueVo issueVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<IssueVo> issueList = projectService.chartIssuesday(reqId);
+		int size = issueList.size();
+		model.addAttribute("issueList", issueList);
+		model.addAttribute("dbsize", size);
+		return "jsonView";
+	}
+	
+	@RequestMapping("/chartIssuesmonth")
+	public String chartIssuesmonth(Model model, IssueVo issueVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<IssueVo> issueList = projectService.chartIssuesmonth(reqId);
+		int size = issueList.size();
+		model.addAttribute("issueList", issueList);
+		model.addAttribute("dbsize", size);
+		return "jsonView";
+	}
+	
+	@RequestMapping("/chartIssuesCnt")
+	public String chartIssuesCnt(Model model, IssueVo issueVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<IssueVo> issueList = projectService.chartIssuesCnt(reqId);
+		int size = issueList.size();
+		model.addAttribute("issueList", issueList);
 		model.addAttribute("dbsize", size);
 		return "jsonView";
 	}

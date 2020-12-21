@@ -81,5 +81,11 @@ public interface ProjectMapper {
 
 	public List<PublicFileVo> chartfilesextension(String reqId);
 
+	public List<IssueVo> chartIssuesday(String reqId);
+
+	public List<IssueVo> chartIssuesmonth(String reqId);
+
+	public List<IssueVo> chartIssuesCnt(String reqId);
+
 
 }
