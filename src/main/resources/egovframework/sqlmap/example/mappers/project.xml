@@ -327,11 +327,11 @@
 		resultType="ants.com.file.model.PublicFileVo">
 		SELECT
 		  count(PUB_ID) as pubId,
-           PUB_EXTENSION as pubExtension
+        PUB_EXTENSION 
 		FROM
 		    publicfile
 		where req_id= #{reqId}
-        group by pubExtension
+        group by PUB_EXTENSION
 	</select>
 	
 	<select id="chartIssuesday" parameterType="java.lang.String"
