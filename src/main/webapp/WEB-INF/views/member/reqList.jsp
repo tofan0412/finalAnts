@@ -497,10 +497,11 @@ li strong{
 				document.listForm.selectedId.value = id;
 				document.listForm.action = "<c:url value = '${pageContext.request.contextPath}/req/reqDelete'/>";
 				document.listForm.submit();
+			}else{
 			}
 		}else{
 			alert("삭제 권한이 없습니다.");
-		};
+		}
 	}
 
 	/* pl 삭제하기 */
@@ -510,10 +511,11 @@ li strong{
 				document.listForm.selectedId.value = id;
 				document.listForm.action = "<c:url value = '${pageContext.request.contextPath}/req/plDelete'/>";
 				document.listForm.submit();
+			}else{
 			}
 		}else{
 			alert("삭제권한이 없습니다.");
-		};
+		}
 	}
 
 	/* 요구사항정의서 수정페이지보기 */

@@ -84,7 +84,20 @@
 		FROM MEMBER
 		WHERE MEM_ID = #{memId}
 	</select>
-
+	
+	<!-- 초대된 프로젝트 리스트 -->
+	<select id="requestPjtMember" resultType="ants.com.member.model.ProjectMemberVo" parameterType="ants.com.member.model.MemberVo">
+		SELECT * 
+		  FROM(
+				SELECT a.req_id, a.promem_id, a.mem_id, a.promem_status, b.pro_name as title, c.mem_name as pl_name
+				  FROM projectmember a, project b, member c
+				 WHERE a.req_id = b.req_id
+				   AND b.mem_id = c.mem_id
+		  	   )
+	     WHERE mem_id = #{memId}
+	       AND promem_status = 'WAIT'
+	</select>
+	
 	<insert id="insertPjtMember"
 		parameterType="ants.com.member.model.ProjectMemberVo">
 		INSERT INTO PROJECTMEMBER 
@@ -92,6 +105,18 @@
 		VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL, #{memId},#{promemStatus})
 
 	</insert>
+	
+	<update id="updatePjtMember" parameterType="ants.com.member.model.ProjectMemberVo">
+		UPDATE PROJECTMEMBER
+		   SET promem_status = #{promemStatus}
+		 WHERE req_id = #{reqId}
+		   AND mem_id = #{memId}
+	</update>
+	
+	<delete id="deletePjtMember">
+		DELETE PROJECTMEMBER
+		 WHERE promem_id = #{promemId}
+	</delete>
 
 	<!-- 진행도 update -->
 	<update id="propercentChange"

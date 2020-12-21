@@ -58,7 +58,9 @@ toastr.options = {
   	  "hideEasing": "linear",
   	  "showMethod": "fadeIn",
   	  "hideMethod": "fadeOut"
-  	}  	
+} 
+
+
   $(function () {
 	
 	var searchCondition = "${alarmVo.searchCondition}";
@@ -93,6 +95,8 @@ toastr.options = {
 		    alarmDelete(selectData);
 	    }
     });
+    
+    
 
     
   }); //function
@@ -113,16 +117,18 @@ toastr.options = {
   	
 	/* 알림삭제 */
 	function alarmDelete(selectData){
-		$.ajax({
-				url : "/alarmDelete",
-				data : JSON.stringify(selectData),
-				method : "post",
-				contentType : "application/json; charset=utf-8",
-				dataType : "text",
-				success : function(data){
-					alarmList();
-				}
-		});
+		if (confirm("정말 삭제하시겠습니까?")) {
+			$.ajax({
+					url : "/alarmDelete",
+					data : JSON.stringify(selectData),
+					method : "post",
+					contentType : "application/json; charset=utf-8",
+					dataType : "text",
+					success : function(data){
+						alarmList();
+					}ㄴ
+			});
+		}
 	}
 	
 	function readAlarm(url,alarmId,alarmType,reqId){
@@ -244,14 +250,14 @@ toastr.options = {
 				                    <c:choose>
 				                    	<c:when test="${a.alarmType eq 'req-pl'}"><b>PL 요청</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]}</a>
-					                    	   <a class="btn btn-sm" href="/project/readReqList" style="color: #0099ff;"><i class="fas fa-sign-in-alt" style="color: #0099ff;"></i> 응답 </a>
+					                    	   <a class="btn btn-sm" href="${pageContext.request.contextPath}/project/readReqList" style="color: #0099ff;"><i class="fas fa-sign-in-alt" style="color: #0099ff;"></i> 응답 </a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'res-pl' }"><b>PL 응답</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'req-pro' }"><b>프로젝트 초대</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]}</a>
-					                    	   <a class="btn btn-sm" href="/project/readReqList" style="color: #0099ff;"><i class="fas fa-sign-in-alt" style="color: #0099ff;"></i> 응답 </a>
+					                    	   <a class="btn btn-sm" href="${pageContext.request.contextPath}/project/requestPjtMember" style="color: #0099ff;"><i class="fas fa-sign-in-alt" style="color: #0099ff;"></i> 응답 </a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'res-pro' }"><b>프로젝트초대 응답</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>

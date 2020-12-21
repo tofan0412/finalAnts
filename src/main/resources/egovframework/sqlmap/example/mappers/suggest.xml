@@ -3,43 +3,66 @@
 <mapper namespace="ants.com.board.memBoard.mapper.SuggestMapper">
 
 <select id="readSuggestList" parameterType="ants.com.board.memBoard.model.SuggestVo" resultType="ants.com.board.memBoard.model.SuggestVo">
-	SELECT A.SGT_ID, A.SGT_TITLE, A.SGT_CONT, 
-           to_char(A.REG_DT,'yyyy-mm-dd hh24:mm') as REG_DT, A.SGT_STATUS, A.CATEGORY_ID,
-           A.DEL, A.TODO_ID, c.mem_name, b.mem_id, B.REQ_ID
-	  FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
-	                     FROM TODO 
-	                    WHERE REQ_ID = #{reqId}) B, member c
-	 WHERE A.TODO_ID = B.TODO_ID
-	   AND A.DEL = 'N'
-	   AND B.mem_id = c.mem_id
-	   <if test="searchKeyword != null and searchKeyword != ''">
-	        <choose>
-	         	<when test="searchCondition == 1">
-					AND	c.mem_name LIKE '%' || #{searchKeyword} || '%'
-				</when>
-	            <when test="searchCondition == 2">
-					AND	a.sgt_title LIKE '%' || #{searchKeyword} || '%'
-				</when>
-	            <when test="searchCondition == 3">
-					AND	a.sgt_cont LIKE '%' || #{searchKeyword} || '%'
-				</when>
-	     
-			</choose>
-		</if>
-	   
-	 ORDER BY A.REG_DT DESC
+SELECT E.*	
+  FROM (SELECT ROWNUM RNUM, D.*	
+	      FROM (SELECT A.SGT_ID, A.SGT_TITLE, A.SGT_CONT, 
+                       to_char(A.REG_DT,'yyyy-mm-dd hh24:mm') as REG_DT, A.SGT_STATUS, A.CATEGORY_ID,
+                       A.DEL, A.TODO_ID, c.MEM_NAME, B.MEM_ID, B.REQ_ID
+	              FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+	                                 FROM TODO 
+	                                WHERE REQ_ID = #{reqId}) B, MEMBER C
+		         WHERE A.TODO_ID = B.TODO_ID
+		           AND A.DEL = 'N'
+		           AND B.MEM_ID = C.MEM_ID
+				   <if test="searchKeyword != null and searchKeyword != ''">
+				        <choose>
+				         	<when test="searchCondition == 1">
+								AND	C.mem_name LIKE '%' || #{searchKeyword} || '%'
+							</when>
+				            <when test="searchCondition == 2">
+								AND	A.sgt_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+				            <when test="searchCondition == 3">
+								AND	A.sgt_cont LIKE '%' || #{searchKeyword} || '%'
+							</when>
+				     
+						</choose>
+				   </if>
+	            ORDER BY A.REG_DT DESC) D
+        WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex}
+   ) E 
+   <![CDATA[WHERE E.RNUM > #{firstIndex}]]>
 </select>
 
 <select id="searchTodo" parameterType="ants.com.board.manageBoard.model.TodoVo" resultType="ants.com.board.manageBoard.model.TodoVo">
-	SELECT * 
+SELECT * 
 	  FROM TODO
-		<if test="todoTitle =='%%'">
 	 WHERE MEM_ID = #{memId}
-		</if>
-		<if test="todoTitle != '%%'">
-	 WHERE MEM_ID = #{memId}
-	   AND TODO_TITLE LIKE #{todoTitle}	
-		</if>
+   	    AND REQ_ID = #{reqId}
+	
+</select>
+
+<select id="suggestPagingListCnt" parameterType="ants.com.board.memBoard.model.SuggestVo" resultType="java.lang.Integer">
+SELECT COUNT(*) 
+  FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+                     FROM TODO 
+                    WHERE REQ_ID = #{reqId}) B, MEMBER C
+ WHERE A.TODO_ID = B.TODO_ID 
+   AND A.DEL = 'N'
+   AND B.MEM_ID = C.MEM_ID
+   <if test="searchKeyword != null and searchKeyword != ''">
+      	<choose>
+       		<when test="searchCondition == 1">
+			AND	C.mem_name LIKE '%' || #{searchKeyword} || '%'
+		</when>
+           <when test="searchCondition == 2">
+			AND	A.sgt_title LIKE '%' || #{searchKeyword} || '%'
+		</when>
+           <when test="searchCondition == 3">
+			AND	A.sgt_cont LIKE '%' || #{searchKeyword} || '%'
+		</when>
+	</choose>
+   </if>
 </select>
 
 <insert id="suggestInsert" parameterType="ants.com.board.memBoard.model.SuggestVo">
@@ -110,6 +133,22 @@ SELECT *
 DELETE FROM PUBLICFILE
  WHERE PUB_ID = #{pubId} 
 </delete>
+
+
+<update id="acceptOrReject" parameterType="ants.com.board.memBoard.model.SuggestVo">
+UPDATE SUGGEST
+	<set>
+		<if test="sgtStatus == 'ACCEPT'">
+			SGT_STATUS = 'ACCEPT'
+		</if>
+		<if test="sgtStatus == 'REJECT'">
+			SGT_STATUS = 'REJECT'
+		</if>
+	</set>
+ WHERE SGT_ID = #{sgtId} 
+</update>
+
+
 
 
 </mapper>

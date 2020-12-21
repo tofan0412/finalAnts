@@ -298,7 +298,7 @@
 			    todo_hid,
 			    todo_id,
 			    reg_dt,
-			    percent,
+			    hpercent,
 			    mem_id,
 			    req_id
 			) VALUES (
@@ -316,14 +316,14 @@
 				    todo_hid,
 				    todo_id,
 				    reg_dt,
-				    percent,
+				    hpercent,
 				    mem_id,
 				    req_id
 				) VALUES (
 				    TODOHISTORY_SEQ.NEXTVAL,
 				    #{todoId},
 				   sysdate,
-				    #{percent},
+				    #{hpercent},
 				    #{memId},
 				    #{reqId}
 				)

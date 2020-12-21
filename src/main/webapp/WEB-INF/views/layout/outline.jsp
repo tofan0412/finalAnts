@@ -234,14 +234,12 @@ text-align: right;
               	   	<tr>
               	   		<th style="border: none">PL : ${req.plId }</th>
               	   	</tr>
+              	   	<tr>
                     <c:forEach items="${promem }" var="pro" varStatus="sts">
+	                    <td>${pro.memId }</td>
                     	<c:if test="${sts.index%3 eq 0 and sts.index != 0}">
-	                    	<tr>
-	                    		<td>${pro.memId }</td>
-	                    	</tr>
-                    	</c:if>
-                        <c:if test="${sts.index%3 != 0 or sts.index eq 0}">
-	                    	<td>${pro.memId }</td>
+                    	</tr>
+                    	<tr>
                     	</c:if>
                     </c:forEach>
                    </tbody>
