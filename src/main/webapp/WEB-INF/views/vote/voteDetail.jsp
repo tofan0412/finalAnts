@@ -78,7 +78,7 @@ $(function(){
 	
 	// 뒤로가기
 	$(document).on('click','#back', function(){		
-		$("#listform").attr("action", "${pageContext.request.contextPath}/vote/votelist");
+// 		$("#listform").attr("action", "${pageContext.request.contextPath}/vote/votelist");
 		listform.submit();	
 	})
 	
@@ -447,7 +447,7 @@ function chart() {
 <div class="col-12 col-sm-12">
 	<div class="card card-teal ">
 	
-	    <form id="listform" action="${pageContext.request.contextPath}/vote/votelist" method="post">
+	    	<form id="listform" action="${pageContext.request.contextPath}/vote/votelist" method="post">
 			    <input type="hidden" value="${searchCondition }" name="searchCondition">
 			    <input type="hidden" value="${searchKeyword }" name="searchKeyword">
 			    <input type="hidden" value="${pageIndex }" name="pageIndex">

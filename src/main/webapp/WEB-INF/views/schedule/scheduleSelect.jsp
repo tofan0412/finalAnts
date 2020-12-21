@@ -48,7 +48,11 @@
 <div class="col-12 col-sm-12">
 	<div class="card card-teal ">
 	 
-	
+	    <form id="listform" action="${pageContext.request.contextPath}/schedule/scheduleplaceView" method="post">
+		    <input type="hidden" value="${searchCondition }" name="searchCondition">
+		    <input type="hidden" value="${searchKeyword }" name="searchKeyword">
+		    <input type="hidden" value="${pageIndex }" name="pageIndex">
+		</form>
 	
 	<div class="card-body" id="detailDiv">	
 	
@@ -333,8 +337,8 @@
 		
 		// 뒤로가기
 		$("#back").on("click", function() {
-			console.log("뒤로가기")
-			window.history.back();
+// 			$("#listform").attr("action", "${pageContext.request.contextPath}/vote/votelist");
+			listform.submit();	
 		});
 		
 		// 수정하기 버튼

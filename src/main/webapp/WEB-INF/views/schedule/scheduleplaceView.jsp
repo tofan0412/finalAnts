@@ -81,7 +81,8 @@ function scheInsert(){
 			
        				<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
 						<form:option value="1" label="제목"/>
-						<form:option value="2" label="작성자"/>
+						<form:option value="2" label="내용"/>
+						<form:option value="3" label="작성자"/>
 					</form:select> 					
 					
 					<label for="searchKeyword" style="visibility:hidden; display:none;"></label>

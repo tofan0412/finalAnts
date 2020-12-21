@@ -23,6 +23,21 @@
 				    AND a.req_id = #{reqId}
 				    AND a.del = 'N'
 				    AND a.mem_id = b.mem_id
+				    
+				    <if test="searchKeyword != null and searchKeyword != ''">
+				        <choose>
+				         	<when test="searchCondition == 1">
+								AND	a.sche_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+				            <when test="searchCondition == 2">
+								AND	a.SCHE_CONT LIKE '%' || #{searchKeyword} || '%'
+							</when>	
+							<when test="searchCondition == 3">
+								AND	b.mem_name LIKE '%' || #{searchKeyword} || '%'
+							</when>				    
+						</choose>
+					</if>
+				    
 			     ORDER BY REG_DT DESC) a
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
 	</select>
@@ -30,11 +45,25 @@
 	
 	<!-- 일정 갯수  -->
 	<select id="schedulelistCount" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="int">
-		SELECT COUNT(*)
-		  FROM SCHEDULE
-		 WHERE category_id = #{categoryId} AND
-		 req_id = #{reqId} AND
-		 del = 'N'
+			SELECT COUNT(*)
+		      FROM SCHEDULE a, member b 
+		     WHERE a.category_id = #{categoryId}
+		       AND a.req_id = #{reqId} 
+		       AND a.del = 'N'
+		       AND a.mem_id = b.mem_id
+		 <if test="searchKeyword != null and searchKeyword != ''">
+         	<choose>
+	         	<when test="searchCondition == 1">
+					AND	a.sche_title LIKE '%' || #{searchKeyword} || '%'
+				</when>
+	            <when test="searchCondition == 2">
+					AND	a.SCHE_CONT LIKE '%' || #{searchKeyword} || '%'
+				</when>	
+				<when test="searchCondition == 3">
+					AND	b.mem_name LIKE '%' || #{searchKeyword} || '%'
+				</when>				    
+			</choose>			    
+		</if>
 	</select>
 	
 	
