@@ -54,6 +54,8 @@ public class SuggestController {
 			HttpSession session, Model model) {
 		
 		String reqId = (String) session.getAttribute("projectId");
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		
 		suggestVo.setReqId(reqId);
 		suggestVo.setPageUnit(propertiesService.getInt("pageUnit"));
 		suggestVo.setPageSize(propertiesService.getInt("pageSize"));
@@ -71,7 +73,15 @@ public class SuggestController {
 		List<SuggestVo> suggestList = suggestService.readSuggestList(suggestVo);
 		model.addAttribute("suggestList", suggestList);
 		
-		int totCnt = suggestList.size();
+		// 내가 이 프로젝트에서 맡은 일감도 검색한다. 
+		TodoVo todoVo = new TodoVo();
+		todoVo.setReqId(reqId);
+		todoVo.setMemId(memberVo.getMemId());
+		
+		List<TodoVo> myTodoList = suggestService.searchTodo(todoVo);
+		model.addAttribute("myTodoList", myTodoList);
+		
+		int totCnt = suggestService.suggestPagingListCnt(suggestVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
@@ -107,9 +117,7 @@ public class SuggestController {
 		
 		// todoId를 먼저 가공해야 한다.
 		String[] todoArr = suggestVo.getTodoId().split(":");
-		todoArr[0] = todoArr[0].replace("@", "");
-		todoArr[0] = todoArr[0].replace("[", "");
-		todoArr[0] = todoArr[0].replace("]", "");
+		
 		suggestVo.setTodoId(todoArr[0]);
 		suggestVo.setCategoryId("4");
 		suggestVo.setDel("N");
@@ -123,7 +131,6 @@ public class SuggestController {
 	
 	@RequestMapping("/suggestDetail")
 	public String suggestDetail(SuggestVo suggestVo, Model model, HttpSession session) throws SQLException, IOException {
-		
 		String reqId = (String)session.getAttribute("projectId");
 		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
 		String memId = memberVo.getMemId();
@@ -137,6 +144,14 @@ public class SuggestController {
 		ReplyVo replyVo = new ReplyVo(suggestVo.getSgtId(), "4", reqId,memId);	//댓글 조회
 		List<ReplyVo> replylist= memBoardService.replylist(replyVo);
 		
+		// 일감을 수정할 수 있으므로, 내 일감 목록도 불러와야 한다.
+		TodoVo todoVo = new TodoVo();
+		todoVo.setReqId(reqId);
+		todoVo.setMemId(memberVo.getMemId());
+		
+		List<TodoVo> myTodoList = suggestService.searchTodo(todoVo);
+		model.addAttribute("myTodoList", myTodoList);
+		
 		model.addAttribute("replylist", replylist);		
 		model.addAttribute("suggestVo",result);
 		model.addAttribute("suggestFileList",suggestFileList );
@@ -148,11 +163,8 @@ public class SuggestController {
 							HttpSession session, RedirectAttributes ra ) {
 		// todoId를 먼저 가공해야 한다.
 		String[] todoArr = suggestVo.getTodoId().split(":");
-		todoArr[0] = todoArr[0].replace("@", "");
-		todoArr[0] = todoArr[0].replace("[", "");
-		todoArr[0] = todoArr[0].replace("]", "");
+
 		suggestVo.setTodoId(todoArr[0]);
-		
 		int result = suggestService.suggestMod(suggestVo);
 		
 		// 수정하기, 삭제하기 버튼 표시 위해 memId를 세션에서 가져온다.
@@ -271,5 +283,12 @@ public class SuggestController {
 		model.addAttribute("pubFilepath" ,filevo.getPubFilepath());
 		
 		return "FileDownloadView";
+	}
+	
+	// 관리자 : 건의사항 수락 또는 반려한다.
+	@RequestMapping("/acceptOrReject")
+	@ResponseBody
+	public int acceptOrReject(SuggestVo suggestVo) {
+		return suggestService.acceptOrReject(suggestVo);
 	}
 }

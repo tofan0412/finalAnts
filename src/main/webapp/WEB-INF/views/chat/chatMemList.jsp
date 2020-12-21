@@ -62,7 +62,6 @@ $(function(){
 	$('#keyword').keyup(function(){
 		var keyword = $(this).val();
 		
-		var size = '${chatMemList.size()}';
 		// 1. 검색 조건이 아이디인 경우
 		if ( $('#MemSearchOption').val() == "아이디"){
 			for (var i = 0 ; i < $('.singleMem').length ; i++){

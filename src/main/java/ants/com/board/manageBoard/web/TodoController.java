@@ -17,6 +17,7 @@ import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.manageBoard.model.todoHistoryVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
+import ants.com.board.memBoard.service.SuggestService;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.view.FileController;
 import ants.com.member.model.MemberVo;
@@ -31,12 +32,14 @@ public class TodoController {
 	@Resource(name = "manageBoardService")
 	private ManageBoardService manageBoardService;
 
+	@Resource(name ="suggestService")
+	private SuggestService suggestService;
+	
 	@Autowired
 	FileController filecontroller;
 
 	@Autowired
 	ProjectController projectController;
-
 
 	
 	// 일감 등록 화면 출력 메서드
