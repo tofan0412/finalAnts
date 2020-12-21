@@ -73,4 +73,13 @@ public interface ProjectMapper {
 
 	public List<SuggestVo> chartsuggestcnt(String reqId);
 
+	public List<VoteVo> barchartvoteindi(String reqId);
+
+	public List<PublicFileVo> chartfilesday(String reqId);
+
+	public List<PublicFileVo> chartfilesmonth(String reqId);
+
+	public List<PublicFileVo> chartfilesextension(String reqId);
+
+
 }

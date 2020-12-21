@@ -113,5 +113,19 @@ public class ProjectService extends EgovAbstractServiceImpl {
 		return mapper.chartsuggestcnt(reqId);
 	}
 	
+	public List<VoteVo> barchartvoteindi(String reqId) {
+		return mapper.barchartvoteindi(reqId);
+	}
+	public List<PublicFileVo> chartfilesday(String reqId) {
+		return mapper.chartfilesday(reqId);
+	}
+	public List<PublicFileVo> chartfilesmonth(String reqId) {
+		return mapper.chartfilesmonth(reqId);
+	}
+	public List<PublicFileVo> chartfilesextension(String reqId) {
+		return mapper.chartfilesextension(reqId);
+	}
+	
+	
 	
 }

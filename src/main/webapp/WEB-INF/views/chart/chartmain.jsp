@@ -19,6 +19,11 @@ $(document).ready(function() {
 	donutChart();
 	donutSuggestAccept();
 	barchartSuggestCnt();
+	barchartvoteindi();
+	donutchartvotetotal();
+	chartfilesmonth();
+	chartfilesday();
+	chartfilesextension();
 });
 
 function stackedbarchart() {
@@ -217,7 +222,259 @@ function barchartSuggestCnt() {
 			}
 		});
 	}
+
+function donutchartvotetotal() {
+	$.ajax({
+		url : "/project/donutchartvotetotal",
+		method : "get",
+		success : function(data) {
+			var dpercent=[];
+			dpercent.push(data.voteVo.votepercent);
+			var a=data.voteVo.votepercent*1;
+			var c = 100-a+0;
+			var d = c+"";
+			dpercent.push(d);
+			var donutChartData = {
+					labels : ['참여 율','불참여 율'],
+					 datasets: [
+					        {
+					          data: dpercent,
+					          backgroundColor : ['#00a65a', '#f39c12'],
+					        }
+					      ]
+			};
+			 var donutOptions     = {
+				      maintainAspectRatio : false,
+				      responsive : true,
+				    }
+			var dctx = document.getElementById('chartvotetotal').getContext('2d');
+			var donutChart = new Chart(dctx, {
+			      type: 'doughnut',
+			      data: donutChartData,
+			      options: donutOptions
+			    });
+			}
+		});
+	}
 	
+function barchartvoteindi() {
+	$.ajax({
+		url : "/project/barchartvoteindi",
+		method : "get",
+		success : function(data) {
+			var num = [];
+			var percent=[];
+			for(i=0; i<data.dbsize; i++){
+			num.push(data.VoteList[i].memName);	
+			percent.push(data.VoteList[i].votepercent);
+			}
+			var barChartData = {
+					labels : num,
+					 datasets: [
+					        {
+					          label               : '투표 참여율',
+					          backgroundColor     : 'rgba(60,141,188,0.9)',
+					          borderColor         : 'rgba(60,141,188,0.8)',
+					          pointRadius          : false,
+					          pointColor          : '#3b8bba',
+					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointHighlightFill  : '#fff',
+					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          data                : percent ,					 
+					          barThickness: 100
+					         
+					        }]
+			};
+			var barChartOptions = {
+				      responsive              : true,
+				      maintainAspectRatio     : false,
+				      datasetFill  			  : false,
+				      scales: {
+					        xAxes: [{
+					          display : true
+					        }],
+					        yAxes: [{
+					        	ticks: {
+					                  stepSize: 10,
+					                  suggestedMax: 100, 
+					                  beginAtZero: true
+					          }
+					        }]
+					      }
+				    };
+			var ctx = document.getElementById('chartvoteindi').getContext('2d');
+			var stackedBarChartData = $.extend(true, {}, barChartData);
+			var stackedBarChart = new Chart(ctx, {
+			      type: 'bar',
+			      data: barChartData,
+			      options: barChartOptions
+			    });
+			}
+		});
+	}
+	
+function chartfilesday() {
+	$.ajax({
+		url : "/project/chartfilesday",
+		method : "get",
+		success : function(data) {
+			var num = [];
+			var percent=[];
+			for(i=0; i<data.dbsize; i++){
+			num.push(data.publicFileList[i].regDt);	
+			percent.push(data.publicFileList[i].pubSize);
+			}
+			var lineChartData = {
+					labels : num,
+					 datasets: [
+					        {
+					          label               : '일별(MB)',
+					          backgroundColor     : 'rgba(60,141,188,0.9)',
+					          borderColor         : 'rgba(60,141,188,0.8)',
+					          pointRadius          : false,
+					          pointColor          : '#3b8bba',
+					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointHighlightFill  : '#fff',
+					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          data                : percent 				 
+					        }]
+			};
+			 var lineChartOptions     = {
+					  responsive              : true,
+				      maintainAspectRatio     : false,
+				      datasetFill  			  : false,
+				      scales: {
+					        xAxes: [{
+					          display : true
+					        }],
+					        yAxes: [{
+					        	ticks: {
+					                  stepSize: 10,
+					                  suggestedMax: 100, 
+					                  beginAtZero: true
+					          }
+					        }]
+					      }
+				    };
+			var dctx = document.getElementById('chartfilesday').getContext('2d');
+			var lineChart = new Chart(dctx, {
+				  type: 'line',
+				  data: lineChartData,
+				  options: lineChartOptions
+			    });
+			}
+		});
+	}
+	
+function chartfilesmonth() {
+	$.ajax({
+		url : "/project/chartfilesmonth",
+		method : "get",
+		success : function(data) {
+			var num = [];
+			var percent=[];
+			for(i=0; i<data.dbsize; i++){
+			num.push(data.publicFileList[i].regDt);	
+			percent.push(data.publicFileList[i].pubSize);
+			}
+			var lineChartData = {
+					labels : num,
+					 datasets: [
+					        {
+					          label               : '월별(MB)',
+					          backgroundColor     : 'rgba(60,141,188,0.9)',
+					          borderColor         : 'rgba(60,141,188,0.8)',
+					          pointRadius          : false,
+					          pointColor          : '#3b8bba',
+					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointHighlightFill  : '#fff',
+					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          data                : percent,
+					          barThickness: 100
+					        }]
+			};
+			 var lineChartOptions     = {
+					 responsive              : true,
+				      maintainAspectRatio     : false,
+				      datasetFill  			  : false,
+				      scales: {
+					        xAxes: [{
+					          display : true
+					        }],
+					        yAxes: [{
+					        	ticks: {
+					                  stepSize: 10,
+					                  suggestedMax: 80, 
+					                  beginAtZero: true
+					          }
+					        }]
+					      }
+				    };
+			var dctx = document.getElementById('chartfilesmonth').getContext('2d');
+			var lineChart = new Chart(dctx, {
+				  type: 'bar',
+				  data: lineChartData,
+				  options: lineChartOptions
+			    });
+			}
+		});
+	}
+function chartfilesextension() {
+	$.ajax({
+		url : "/project/chartextension",
+		method : "get",
+		success : function(data) {
+			var num = [];
+			var percent=[];
+			for(i=0; i<data.dbsize; i++){
+			num.push(data.publicFileList[i].pubExtension);	
+			percent.push(data.publicFileList[i].pubId);
+			}
+			var barChartData = {
+					labels : num,
+					 datasets: [
+					        {
+					          label               : 'cnt',
+					          backgroundColor     : 'rgba(60,141,188,0.9)',
+					          borderColor         : 'rgba(60,141,188,0.8)',
+					          pointRadius          : false,
+					          pointColor          : '#3b8bba',
+					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointHighlightFill  : '#fff',
+					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          data                : percent,
+					          barThickness: 100
+					        }]
+			};
+			 var barChartOptions     = {
+					 responsive              : true,
+				      maintainAspectRatio     : false,
+				      datasetFill  			  : false,
+				      scales: {
+					        xAxes: [{
+					          display : true
+					        }],
+					        yAxes: [{
+					        	ticks: {
+					                  stepSize: 10,
+					                  beginAtZero: true
+					          }
+					        }]
+					      }
+				    };
+			var dctx = document.getElementById('chartfilesextension').getContext('2d');
+			var barChart = new Chart(dctx, {
+				  type: 'bar',
+				  data: barChartData,
+				  options: barChartOptions
+			    });
+			}
+		});
+	}
+
+		
+
+
 </script>
 
 <body>
@@ -233,13 +490,13 @@ function barchartSuggestCnt() {
                         <a class="nav-link" id="custom-tabs-three-messages-issue" data-toggle="pill" href="#custom-tabs-three-issue" role="tab" aria-controls="custom-tabs-three-issue" aria-selected="false">건의사항관련</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-settings-suggest" data-toggle="pill" href="#custom-tabs-three-suggest" role="tab" aria-controls="custom-tabs-three-suggest" aria-selected="false">몰라</a>
+                        <a class="nav-link" id="custom-tabs-three-settings-suggest" data-toggle="pill" href="#custom-tabs-three-suggest" role="tab" aria-controls="custom-tabs-three-suggest" aria-selected="false">투표관련</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-calendar-tab" data-toggle="pill" href="#custom-tabs-three-calendar" role="tab" aria-controls="custom-tabs-three-calendar" aria-selected="false">차트</a>
+                        <a class="nav-link" id="custom-tabs-three-calendar-tab" data-toggle="pill" href="#custom-tabs-three-calendar" role="tab" aria-controls="custom-tabs-three-calendar" aria-selected="false">이슈관련</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-mywork-tab" data-toggle="pill" href="#custom-tabs-three-mywork" role="tab" aria-controls="custom-tabs-three-mywork" aria-selected="false">test</a>
+                        <a class="nav-link" id="custom-tabs-three-mywork-tab" data-toggle="pill" href="#custom-tabs-three-mywork" role="tab" aria-controls="custom-tabs-three-mywork" aria-selected="false">파일함 관련</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" id="custom-tabs-three-files-tab" data-toggle="pill" href="#custom-tabs-three-files" role="tab" aria-controls="custom-tabs-three-files" aria-selected="false">test</a>
@@ -269,16 +526,29 @@ function barchartSuggestCnt() {
 	              		 </div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-suggest" role="tabpanel" aria-labelledby="custom-tabs-three-suggest-tab">
-                      	ㅋ
+                      	 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+	              		 	<canvas id="chartvotetotal" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+	              		 </div>
+	              		 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+	              		 	<canvas id="chartvoteindi" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+	              		 </div> 
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-calendar" role="tabpanel" aria-labelledby="custom-tabs-three-calendar-tab">
-                          캘린더입니다
+                         이슈
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-mywork" role="tabpanel" aria-labelledby="custom-tabs-three-mywork-tab">
-                          내일감 입니다.
+                         <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                         <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+	              		 	<canvas id="chartfilesmonth" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+	              		 </div> 
+	              		 	<canvas id="chartfilesday" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+	              		 </div> 
+                         <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+	              		 	<canvas id="chartfilesextension" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+	              		 </div> 
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-files" role="tabpanel" aria-labelledby="custom-tabs-three-files-tab">
-                          파일함 입니다.
+                          ㅇ
                       </div>
                     </div>
                   </div>

@@ -230,29 +230,77 @@ public class ProjectController {
 		model.addAttribute("dsize", Size);
 		return "jsonView";
 	}
-	
+
 	// 차트 뷰
 	@RequestMapping("/donutSuggestAccept")
 	public String donutSuggestAccept(Model model, SuggestVo suggestVo, HttpSession session) {
 		String reqId = (String) session.getAttribute("projectId");
 		SuggestVo dAccept = projectService.getoutlinsuggest(reqId);
-		SuggestVo dReject= projectService.getoutlinsuggestreject(reqId);
+		SuggestVo dReject = projectService.getoutlinsuggestreject(reqId);
 		SuggestVo dbsuggestvo = new SuggestVo();
 		dbsuggestvo.setAcceptpercent(dAccept.getAcceptpercent());
 		dbsuggestvo.setRejectpercent(dReject.getRejectpercent());
 		model.addAttribute("dbsuggestvo", dbsuggestvo);
 		return "jsonView";
 	}
-	
+
 	@RequestMapping("/barchartSuggestCnt")
 	public String chartsuggestcnt(Model model, SuggestVo suggestVo, HttpSession session) {
 		String reqId = (String) session.getAttribute("projectId");
-		List<SuggestVo> suggestlist= projectService.chartsuggestcnt(reqId);
+		List<SuggestVo> suggestlist = projectService.chartsuggestcnt(reqId);
 		int size = suggestlist.size();
 		model.addAttribute("suggestlist", suggestlist);
 		model.addAttribute("dbsize", size);
 		return "jsonView";
 	}
+
+	// 차트 뷰
+	@RequestMapping("/donutchartvotetotal")
+	public String donutchartvotetotal(Model model, VoteVo voteVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		voteVo = projectService.getoutlinevote(reqId);
+		model.addAttribute("voteVo", voteVo);
+		return "jsonView";
+	}
+
+	@RequestMapping("/barchartvoteindi")
+	public String barchartvoteindi(Model model, VoteVo voteVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<VoteVo> VoteList = projectService.barchartvoteindi(reqId);
+		int size = VoteList.size();
+		model.addAttribute("VoteList", VoteList);
+		model.addAttribute("dbsize", size);
+		return "jsonView";
+	}
 	
+	@RequestMapping("/chartfilesday")
+	public String chartfilesday_mb(Model model, PublicFileVo publicFileVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<PublicFileVo> publicFileList = projectService.chartfilesday(reqId);
+		int size = publicFileList.size();
+		model.addAttribute("publicFileList", publicFileList);
+		model.addAttribute("dbsize", size);
+		return "jsonView";
+	}
+	
+	@RequestMapping("/chartfilesmonth")
+	public String chartfilesmonth(Model model, PublicFileVo publicFileVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<PublicFileVo> publicFileList = projectService.chartfilesmonth(reqId);
+		int size = publicFileList.size();
+		model.addAttribute("publicFileList", publicFileList);
+		model.addAttribute("dbsize", size);
+		return "jsonView";
+	}
+	
+	@RequestMapping("/chartextension")
+	public String chartfilesextension(Model model, PublicFileVo publicFileVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<PublicFileVo> publicFileList = projectService.chartfilesextension(reqId);
+		int size = publicFileList.size();
+		model.addAttribute("publicFileList", publicFileList);
+		model.addAttribute("dbsize", size);
+		return "jsonView";
+	}
 	
 }

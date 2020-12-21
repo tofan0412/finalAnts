@@ -137,6 +137,7 @@
 		where r.req_id = p.req_id
         AND r.req_id =#{reqId}
 	</select>
+	
 	<select id="getoutlinepromem" parameterType="java.lang.String"
 		resultType="ants.com.member.model.ProjectMemberVo">
 		SELECT
@@ -150,6 +151,7 @@
 		AND req_id = #{reqId}
 		AND PROMEM_STATUS ='IN'
 	</select>
+	
 	<select id="getoutlinefiles" parameterType="java.lang.String"
 		resultType="ants.com.file.model.PublicFileVo">
 		 SELECT
@@ -158,6 +160,7 @@
 		    publicfile
 		where req_id=#{reqId}
 	</select>
+	
 	<select id="getoutlinevote" parameterType="java.lang.String"
 		resultType="ants.com.board.vote.model.VoteVo">
 		    SELECT nvl(round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)),0) as votepercent
@@ -167,6 +170,7 @@
 				AND a.del = 'N'
 			
 	</select>
+	
 	<select id="getoutlinereply" parameterType="java.lang.String"
 		resultType="ants.com.board.memBoard.model.ReplyVo">
 			SELECT CASE WHEN nvl((
@@ -238,6 +242,7 @@
 			            ELSE 0 end as rejectpercent
 			        FROM    dual
 	</select>
+	
 	<select id="getoutlindeadline" parameterType="java.lang.String"
 		resultType="ants.com.board.manageBoard.model.TodoVo">
 			<![CDATA[             SELECT
@@ -279,5 +284,53 @@
 		   AND B.mem_id = c.mem_id 
 	       group by c.mem_name
 	</select>
+	
+	<select id="barchartvoteindi" parameterType="java.lang.String"
+		resultType="ants.com.board.vote.model.VoteVo">
+		    SELECT nvl(round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)),0) as votepercent,
+       				 b.mem_name as memName
+				FROM vote a, member b
+				WHERE a.mem_id = b.mem_id
+				AND a.req_id = #{reqId}
+				AND a.del = 'N'
+                group by b.mem_name
+	</select>
+	
+	<select id="chartfilesday" parameterType="java.lang.String"
+		resultType="ants.com.file.model.PublicFileVo">
+		 <![CDATA[ SELECT
+		   nvl(round(sum(pub_size)/1024),0) as pub_size,
+           to_char(REG_DT, 'yyyy-mm-dd')as reg_dt
+		FROM
+		    publicfile
+		where req_id=#{reqId}
+        And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
+        group by to_char(reg_dt, 'yyyy-mm-dd')]]> 
+	</select>
+	
+	<select id="chartfilesmonth" parameterType="java.lang.String"
+		resultType="ants.com.file.model.PublicFileVo">
+		 <![CDATA[ SELECT
+		   nvl(round(sum(pub_size)/1024),0) as pub_size,
+           to_char(REG_DT, 'yyyy-mm')as reg_dt
+		FROM
+		    publicfile
+		where req_id=#{reqId}
+        And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
+        group by to_char(reg_dt, 'yyyy-mm')
+        ]]> 
+	</select>
+	
+	<select id="chartfilesextension" parameterType="java.lang.String"
+		resultType="ants.com.file.model.PublicFileVo">
+		SELECT
+		  count(PUB_ID) as pubId,
+           PUB_EXTENSION
+		FROM
+		    publicfile
+		where req_id= #{reqId}
+        group by PUB_EXTENSION
+	</select>
+	
 	
 </mapper>
