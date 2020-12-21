@@ -78,7 +78,7 @@
 		            
 		            <ul class="nav nav-treeview" style="display: block;">
 		            <li class="nav-item">
-		                <a href="${pageContext.request.contextPath}/admin/getProjectList" class="nav-link" >
+		                <a href="/admin/projectlist" class="nav-link" >
 		                 <i class="nav-icon fas fa-clipboard-list"></i>
 							<p class="selectable jg">프로젝트 목록</p>
 		                </a>

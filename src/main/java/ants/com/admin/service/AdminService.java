@@ -128,17 +128,32 @@ public class AdminService extends EgovAbstractServiceImpl{
 		return mapper.loginLogList();
 	}
 
+//	// 프로젝트 리스트
+//	public List<ProjectVo> getProjectList() {
+//		return mapper.getProjectList();
+//	}
+//	//1개? 프로젝트 가져오기
+//	public ProjectVo getProject(ProjectVo projectVo) {
+//		return mapper.getProject(projectVo);
+//	}
+//	//프로젝트 삭제하기
+//	public int delproject(ProjectVo projectVo) {
+//		return mapper.delproject(projectVo);
+//	}
+	
 	// 프로젝트 리스트
-	public List<ProjectVo> getProjectList() {
-		return mapper.getProjectList();
+	public List<ProjectVo> projectlist(ProjectVo projectVo) {
+		return mapper.projectlist(projectVo);
 	}
-	//1개? 프로젝트 가져오기
-	public ProjectVo getProject(ProjectVo projectVo) {
-		return mapper.getProject(projectVo);
+	
+	//카테고리 검색 리스트
+	public int projectPagingListCnt(ProjectVo projectVo) {
+		return mapper.projectPagingListCnt(projectVo);
 	}
+	
 	//프로젝트 삭제하기
-	public int delproject(ProjectVo projectVo) {
-		return mapper.delproject(projectVo);
+	public int delproject(String reqId) {
+		return mapper.delproject(reqId);
 	}
 
 

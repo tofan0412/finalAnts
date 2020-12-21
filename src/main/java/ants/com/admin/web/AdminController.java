@@ -2,7 +2,6 @@ package ants.com.admin.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +24,6 @@ import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
-import ants.com.board.memBoard.model.IssueVo;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
@@ -463,27 +461,55 @@ public class AdminController {
 	////////////////////////////////////////////////프로젝트할곳..
 	
 	// 프로젝트 리스트 전체 가져오기 -> 차단 리스트 또는 허용 리스트
-	@RequestMapping("/getProjectList")
-	public String getProjectList(Model model) {
-		List<ProjectVo> projectList = adminService.getProjectList();
-		model.addAttribute("projectList", projectList);
+	@RequestMapping("/projectlist")
+	public String getprojectlist(@ModelAttribute("projectVo") ProjectVo projectVo, HttpSession session, Model model) throws Exception {
+		
+		String reqId = (String)session.getAttribute("reqId");
+		
+		projectVo.setReqId(reqId);
+		
+		/* EgovPropertyService.sample */
+		projectVo.setPageUnit(propertiesService.getInt("pageUnit"));
+		projectVo.setPageSize(propertiesService.getInt("pageSize"));
+		
+		/* pageing setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(projectVo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(projectVo.getPageUnit());
+		paginationInfo.setPageSize(projectVo.getPageSize());
+
+		projectVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		projectVo.setLastIndex(paginationInfo.getLastRecordIndex());
+		projectVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		List<ProjectVo> resultList = adminService.projectlist(projectVo);
+		model.addAttribute("projectlist", resultList);
+
+		int totCnt = adminService.projectPagingListCnt(projectVo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
+		
 		return "admin.tiles/admin/projectlist";
 		
 	}
 	
-	// 프로젝트 하나만 가져오기
-	@RequestMapping("/getProject")
-	public String getProject(ProjectVo projectVo) {
-		ProjectVo result = adminService.getProject(projectVo);
-		return "admin.tiles/admin/projectDetail";
+	// 프로젝트 delete 
+	@RequestMapping("/delproject")
+	public String delproject(String reqId, HttpSession session, Model model) {		
+		int delCnt = adminService.delproject(reqId);
+		if(delCnt>0) {		
+			return "redirect:/admin/projectlist";
+		}else {
+			return "redirect:/admin/eachprojectDetail?reqId="+reqId;
+		}
 	}
 	
-	// 프로젝트 삭제하기
-	@RequestMapping("/delproject")
-	public String delproject(ProjectVo projectVo) {
-		int result = adminService.delproject(projectVo);
-		return "redirect:/admin/getProjectList";
-	}
+//	// 프로젝트 하나만 가져오기
+//	@RequestMapping("/getProject")
+//	public String getProject(ProjectVo projectVo) {
+//		ProjectVo result = adminService.getProject(projectVo);
+//		return "admin.tiles/admin/projectDetail";
+//	}
 	
 }
 
