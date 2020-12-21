@@ -368,5 +368,23 @@ public class ProjectController {
 		model.addAttribute("dbsize", size);
 		return "jsonView";
 	}
-	
+	// 일별 프로젝트 진행도
+		@RequestMapping("/chartproday")
+		public String chartproday(Model model, ProjectVo projectVo, HttpSession session) {
+			String reqId = (String) session.getAttribute("projectId");
+			List<ProjectVo> projectList = projectService.chartproday(reqId);
+			int size = projectList.size();
+			model.addAttribute("projectList", projectList);
+			model.addAttribute("dbsize", size);
+			return "jsonView";
+		}
+		
+		//  프로젝트 진행도
+		@RequestMapping("/donutChartproper")
+		public String donutChartproper(Model model, ProjectVo projectVo, HttpSession session) {
+			String reqId = (String) session.getAttribute("projectId");
+			projectVo = projectService.getoutlinepro(reqId);
+			model.addAttribute("projectVo", projectVo);
+			return "jsonView";
+		}
 }

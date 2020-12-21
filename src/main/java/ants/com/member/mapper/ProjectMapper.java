@@ -93,5 +93,6 @@ public interface ProjectMapper {
 
 	public int deletePjtMember(ProjectMemberVo projectMemberVo);
 
+	public List<ProjectVo> chartproday(String reqId);
 
 }

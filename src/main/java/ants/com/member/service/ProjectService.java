@@ -153,4 +153,8 @@ public class ProjectService extends EgovAbstractServiceImpl {
 		return mapper.deletePjtMember(projectMemberVo);
 	}
 
+
+	public List<ProjectVo> chartproday(String reqId) {
+		return mapper.chartproday(reqId);
+	}
 }
