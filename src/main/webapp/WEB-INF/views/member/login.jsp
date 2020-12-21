@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/dist/js/js.cookie-2.2.1.min.js"></script>
-
+<script type="text/javascript" src="/resources/dist/js/js.cookie-2.2.1.min.js"></script>
+		<!-- 정적자원 매핑처리 하지 말것 	 resources -> ${pageContext.request.contextPath} 바꾸면 서버 실행 초기에 쿠키 못찾음 -->
 <style>
 .ff {
 	width: 100vw;
@@ -15,7 +15,7 @@
 .col-sm-4 {
 	height: 100vh;
 	width: 40vw;
-}
+}	
 
 .col-sm-6 {
 	height: 100vh;
@@ -85,19 +85,21 @@
     }
 }
 </style>
-
-<script>
+	
+<script>	
  	$(document).ready(function(){
 													/* 쿠키 설정 */		
 		// 로그인했다가 뒤로 가기 하면 아이디 값 남아있는것 제거 
 		$("#memId").val('');		
 		
 		// rememberMe cookie 값 남아 있는지 확인, 남아있으면 가져옴		
-		if(Cookies.get("rememberMe")=="Y"){
+		if(Cookies.get("rememberMe") == "Y"){
 			$("#rememberMe").prop("checked",true);	// rememberMe 체크
 			$("#memId").val(Cookies.get("SMEMBER"));// SMEMBER 쿠키값 가져옴
+		}else{
+			$("#rememberMe").prop("checked",false);
 		}
-				
+			
 		// 로그인 버튼 클릭시	쿠키 설정
 		$('#loginBtn').on('click',function(){						
 			if($('input:checkbox[id="rememberMe"]').is(":checked") == true){	// 아이디 기억하기 체크 되있으면
