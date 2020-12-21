@@ -27,6 +27,8 @@ $(document).ready(function() {
 	chartIssuesmonth();
 	chartIssuesday();
 	chartIssuesCnt();
+	chartproday();
+	donutChartproper();
 });
 
 function stackedbarchart() {
@@ -634,8 +636,93 @@ function chartIssuesCnt() {
 			}
 		});
 	}
+	
+function chartproday() {
+	$.ajax({
+		url : "/project/chartproday",
+		method : "get",
+		success : function(data) {
+			var num = [];
+			var percent=[];
+			for(i=0; i<data.dbsize; i++){
+			num.push(data.projectList[i].regDt);	
+			percent.push(data.projectList[i].percent);
+			}
+			var lineChartData = {
+					labels : num,
+					 datasets: [
+					        {
+					          label               : '일별 진행도',
+					          backgroundColor     : 'rgba(60,141,188,0.9)',
+					          borderColor         : 'rgba(60,141,188,0.8)',
+					          pointRadius          : false,
+					          pointColor          : '#3b8bba',
+					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointHighlightFill  : '#fff',
+					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          data                : percent
+					        }]
+			};
+			 var lineChartOptions     = {
+					 responsive              : true,
+				      maintainAspectRatio     : false,
+				      datasetFill  			  : false,
+				      scales: {
+					        xAxes: [{
+					          display : true
+					        }],
+					        yAxes: [{
+					        	ticks: {
+					                  stepSize: 10,
+					                  suggestedMax: 50, 
+					                  beginAtZero: true
+					          }
+					        }]
+					      }
+				    };
+			var dctx = document.getElementById('chartproday').getContext('2d');
+			var lineChart = new Chart(dctx, {
+				  type: 'line',
+				  data: lineChartData,
+				  options: lineChartOptions
+			    });
+			}
+		});
+	}
 
-		
+function donutChartproper() {
+	$.ajax({
+		url : "/project/donutChartproper",
+		method : "get",
+		success : function(data) {
+			var dpercent=[];
+			dpercent.push(data.projectVo.percent);
+			var a=data.projectVo.percent*1;
+			var c = 100-a+0;
+			var d = c+"";
+			dpercent.push(d);
+			var donutChartData = {
+					labels : ['완료','진행'],
+					 datasets: [
+					        {
+					          data: dpercent,
+					          backgroundColor : ['#00a65a', '#f39c12'],
+					        }
+					      ]
+			};
+			 var donutOptions     = {
+				      maintainAspectRatio : false,
+				      responsive : true,
+				    }
+			var dctx = document.getElementById('donutChartproper').getContext('2d');
+			var donutChart = new Chart(dctx, {
+			      type: 'doughnut',
+			      data: donutChartData,
+			      options: donutOptions
+			    });
+			}
+		});
+	}		
 
 
 </script>
@@ -667,7 +754,14 @@ function chartIssuesCnt() {
                   <div class="card-body">
                     <div class="tab-content" id="custom-tabs-three-tabContent">
                       <div class="tab-pane fade active show" id="custom-tabs-three-work" role="tabpanel" aria-labelledby="custom-tabs-three-work-tab">
-                          메인차트
+                          <h4 class="baniChart">프로젝트 진행도</h4>
+                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+	              		 	<canvas id="donutChartproper" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
+	              		 </div>
+	              		 <h4 class="baniChart">일별 프로젝트 진행율</h4>
+                         <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+	              		 	<canvas id="chartproday" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+                         </div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-gantt" role="tabpanel" aria-labelledby="custom-tabs-three-gantt-tab">
                       	<h4 class="baniChart">팀원별 할일 진행율</h4>

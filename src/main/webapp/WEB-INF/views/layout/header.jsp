@@ -106,7 +106,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/member/noticelistmemview" class="nav-link">공지사항</a>
+        <a href="/member/noticelistview" class="nav-link">공지사항</a>
       </li>
     </ul>
 			

@@ -105,7 +105,10 @@ public class FileController {
 				double filesize = Math.round(size *100)/100.0;
 
 				String filename = UUID.randomUUID().toString();
-				String extension = files.get(i).getOriginalFilename().split("\\.")[1];
+			
+				String originName = files.get(i).getOriginalFilename();
+//				String extension = files.get(i).getOriginalFilename().split("\\.")[1];
+				String extension = originName.substring(originName.lastIndexOf(".")+1);
 				String filepath = "C:\\profile\\" + filename +"."+ extension;
 				File uploadFile = new File(filepath);
 				try {

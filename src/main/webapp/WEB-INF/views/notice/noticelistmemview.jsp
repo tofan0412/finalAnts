@@ -12,7 +12,6 @@
 <style type="text/css">
 	body{
 		min-width:1000px;	
-		padding-top:3%;
 		z-index:1;
 	}	
 				
@@ -79,6 +78,7 @@
 					<div class="row mb-2">
 						<br>
 						<div class="col-sm-6">
+							<br>
 							<br>
 							<h1 class="jg" style="padding-left: 10px;">공지사항</h1>
 						</div>

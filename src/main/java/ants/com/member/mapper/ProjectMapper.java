@@ -87,5 +87,12 @@ public interface ProjectMapper {
 
 	public List<IssueVo> chartIssuesCnt(String reqId);
 
+	public int updatePjtMember(ProjectMemberVo projectMemberVo);
+
+	public List<ProjectMemberVo> requestPjtMember(MemberVo memberVo);
+
+	public int deletePjtMember(ProjectMemberVo projectMemberVo);
+
+	public List<ProjectVo> chartproday(String reqId);
 
 }

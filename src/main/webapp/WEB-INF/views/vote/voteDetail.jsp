@@ -3,8 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript">
-$(function(){
 
+var itemName = [];
+var itemCnt = []
+<c:forEach items="${itemlist }" var="item" varStatus="status">
+	itemName[${status.index}] = '${item.voteitemName}';
+	itemCnt[${status.index}] = '${item.voteCount}'
+</c:forEach>
+
+$(function(){
+	
+	$('#dchart').hide();
+	$('#chart').hide();
+	$('#charttd').hide();
+
+	    
 	$('.writeCon').each(function () {	
 		  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
 	}).on('input', function () {
@@ -64,9 +77,9 @@ $(function(){
 	})
 	
 	// 뒤로가기
-	$(document).on('click','#back', function(){
-		
-		window.history.back();
+	$(document).on('click','#back', function(){		
+// 		$("#listform").attr("action", "${pageContext.request.contextPath}/vote/votelist");
+		listform.submit();	
 	})
 	
 	// 답글 글자수 계산
@@ -85,9 +98,54 @@ $(function(){
 	    }
 	});
 	
+	// 댓글 작성하기 삭제 버튼
+	$('#replydiv').on('click','#replydelbtn', function(){
+		var someid = $(this).prev().val();
+		var replyid = $(this).prev().prev().val();
+		issueid = '${issuevo.issueId }'
+		console.log(replyid)
+		console.log(someid)
+		$.ajax({url :"/reply/delreply",
+			   data :{replyId: replyid,
+				       someId: someid },
+			   method : "get",
+			   success :function(data){	
+				   console.log(data)
+				   $(location).attr('href', '${pageContext.request.contextPath}/vote/voteDetail?voteId='+someid);				
+			 }
+		})
+	})
+	
 	// 댓글 작성
 	$('#replybtn2').on('click', function(){
 		replyinsert();
+	})
+	
+	// 원그래프 버튼
+	$('#dchartbtn').on('click', function(){
+		doughnutchart(); // 원그래프
+		$('#chart').hide();
+		$('#pertd').hide();
+		$('#charttd').show();
+		$('#dchart').show();
+	})
+	
+	// 막대 차트 버튼
+	$('#chartbtn').on('click', function(){
+		chart(); // 막대그래프
+		$('#dchart').hide();
+		$('#pertd').hide();
+		$('#chart').show();
+		$('#charttd').show();
+	})
+	
+	// 내 차트
+	$('#mychartbtn').on('click', function(){
+		chart(); // 막대그래프
+		$('#dchart').hide();
+		$('#charttd').hide();
+		$('#chart').show();
+		$('#pertd').show();
 	})
 	
 })
@@ -121,6 +179,189 @@ function replyinsert() {
 	});
 
 }
+
+function doughnutchart(){
+	var dnum = [];
+	var dpercent=[];
+	for(i=0; i<itemName.length; i++){
+		dnum.push(itemName[i]);	
+		dpercent.push(Math.round(itemCnt[i]/'${voteVo.votedNo}' *100));
+	}
+	var donutChartData = {
+			 labels : dnum,
+			 datasets: [
+			        {
+			          data: dpercent,
+			          backgroundColor : [
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(255, 159, 64, 1)',
+							'rgba(153, 102, 255, 1)'
+						]
+			        }
+			      ],
+			      
+				
+	}
+	var donutOptions = { 
+			cutoutPercentage: 30, //도넛두께 : 값이 클수록 얇아짐 
+			legend: {position:'bottom', 
+					 padding:5, 
+					 labels: {pointStyle:'circle', 
+						 		usePointStyle:true}
+			} 
+	};
+
+
+	 
+	var dctx = document.getElementById('dchart').getContext('2d');
+	var donutChart = new Chart(dctx, {
+	      type: 'doughnut',
+	      data: donutChartData,
+	      options: donutOptions
+	    });
+}
+
+function chart2(){
+	var num = [];
+	var percent=[];
+	for(i=0; i<itemName.length; i++){
+		num.push(itemName[i]);	
+		percent.push(itemCnt[i]);
+	}
+
+	var barChartData = {
+			 labels : num,
+			 datasets: [
+			        {
+			          label               : '득표수',
+			          borderColor: "rgba(255, 201, 14, 1)",
+			          backgroundColor: "rgba(255, 201, 14, 0.5)",
+			          pointRadius          : false,
+			          pointColor          : '#3b8bba',
+			          pointHighlightFill  : '#fff',
+			          data                : percent ,					 
+			          barThickness: 30
+			         
+			        }]
+	};
+	var barChartOptions = {
+			
+		      responsive              : true,
+		      maintainAspectRatio     : false,
+		      datasetFill  			  : false,
+		      tooltips: {
+		            mode: 'index',
+		            intersect: false,
+		        },
+		        hover: {
+		            mode: 'nearest',
+		            intersect: true
+		        },
+		      scales: {
+		          xAxes: [{
+		                display: true,
+		                ticks: {
+			                  stepSize: 1,
+			                  suggestedMax: '${voteVo.voteTotalno}', 
+			                  beginAtZero: true
+			           }
+		          
+		        
+		            }],
+		            yAxes: [{
+		                display: true,
+		                ticks: {
+		                	beginAtZero:true
+		                  },
+			          
+		               
+		            }]
+			      }
+		    };
+	var ctx = document.getElementById('chart').getContext('2d');
+	var stackedBarChartData = $.extend(true, {}, barChartData);
+	var stackedBarChart = new Chart(ctx, {
+	      type: 'horizontalBar',
+	      data: barChartData,
+	      options: barChartOptions
+	});
+}
+
+
+
+function chart() {
+	
+	var num = [];
+	var percent=[];
+	for(i=0; i<itemName.length; i++){
+		num.push(itemName[i]);	
+		percent.push(itemCnt[i]);
+	}
+
+	var barChartData = {
+			labels : num,
+			 datasets: [
+			        {
+			          label               : '득표수',
+			          backgroundColor: [ 
+			        	  'rgba(255, 99, 132, 0.5)', 
+			        	  'rgba(54, 162, 235, 0.5)', 
+			        	  'rgba(255, 206, 86, 0.5)', 
+			        	  'rgba(75, 192, 192, 0.5)', 
+			        	  'rgba(153, 102, 255, 0.5)', 
+			        	  'rgba(255, 159, 64, 0.5)'
+			          ], 
+			          borderColor: [
+			        	  'rgb(255, 99, 132,1.5)', 
+			        	  'rgba(54, 162, 235, 1.5)', 
+			        	  'rgba(255, 206, 86, 1.5)', 
+			        	  'rgba(75, 192, 192, 1.5)', 
+			        	  'rgba(153, 102, 255, 1.5)', 
+			        	  'rgba(255, 159, 64, 1.5)'
+			          ],
+
+			          
+			       
+			          pointRadius          : false,
+			          fill: false,
+			          data                : percent ,					 
+			          barThickness: 40
+			         
+			        }]
+	};
+	var barChartOptions = {
+		      responsive              : true,
+		      maintainAspectRatio     : false,
+		      datasetFill  			  : false,
+		      scales: {
+			        xAxes: [{
+			          display : true
+			        }],
+			        yAxes: [{
+			        	ticks: {
+			                  stepSize: 1,
+			                  suggestedMax: '${voteVo.voteTotalno}', 
+			                  beginAtZero: true
+			          }
+			        }]
+			      }
+		    };
+	var ctx = document.getElementById('chart').getContext('2d');
+	var stackedBarChartData = $.extend(true, {}, barChartData);
+	var stackedBarChart = new Chart(ctx, {
+	      type: 'bar',
+	      data: barChartData,
+	      options: barChartOptions
+	});
+			
+	
+}
+
+
+
+
 
 
 </script>
@@ -173,10 +414,6 @@ function replyinsert() {
 		height: 200px auto;
 	}
 	
-	h3{
-		display: inline-block;
-	}
-	
 	.writeCon{
 	width:100%; overflow:visible; background-color:transparent; border:none;
   		resize :none; 
@@ -191,101 +428,143 @@ function replyinsert() {
       	line-height: 1.6;
       	overflow-y:hidden;
 	}	
- 	#re_con.autosize { min-height: 60px; } 
+ 	#re_con.autosize { min-height: 56px; } 
 	
+	.form-control:disabled, .form-control[readonly] {
+   background-color: white;
+   }
+  .success{
+  background-color: #f6f6f6;
+  width: 10%;
+  text-align: center;
+  }
+	
+ 
 </style>
 
 <%@include file="../layout/contentmenu.jsp"%>
 
 <div class="col-12 col-sm-12">
 	<div class="card card-teal ">
+	
+	    	<form id="listform" action="${pageContext.request.contextPath}/vote/votelist" method="post">
+			    <input type="hidden" value="${searchCondition }" name="searchCondition">
+			    <input type="hidden" value="${searchKeyword }" name="searchKeyword">
+			    <input type="hidden" value="${pageIndex }" name="pageIndex">
+			</form>
 	    
-	    <!-- 일감 상세보기 -->
-	    <div id="todoDetail" class="card-body">
+	    <div class="card-body">
 	    
-	    	<h3 class="jg">${voteVo.voteTitle }</h3>
+	    	<h4 class="jg" style="display: inline-block;">${voteVo.voteTitle }</h4>
 	    	<c:if test="${voteVo.remain > 1000 and voteVo.voteStatus=='ing'}">
-				<td style="text-align: center;"> 
+				
 				 	<span class="badge badge-success">진행중</span>
-				</td>
+				
 			</c:if>
 			<c:if test="${(voteVo.remain <= 1000 and voteVo.remain > 0) and voteVo.voteStatus == 'ing'}">
-				<td style="text-align: center;"> 
+				
 				 	<span class="badge badge-warning">임박</span>
-				</td>
+				
 			</c:if>
 			<c:if test="${voteVo.remain <= 0 or voteVo.voteStatus== 'finish'}">
-				<td style="text-align: center;" >
+			
 					<span class="badge badge-danger"> 완료 </span>
-				</td>
+				
 			</c:if>
-	    	<hr> <br>
+	    	<br><br>
 		
 			<input type="hidden" id="todoId">
 			
 			<div class="div">
-<!-- 				<label for="voteitemName" class="control-label labels" id="votesort"  style=" float : left;">투표항목</label>				 -->
-				<c:forEach items="${itemlist }" var="item" varStatus="status">
-						
-						<label for="voteitemName" class="control-label labels jg" id="votesort"  style=" float : left;">
-							<c:if test="${status.index == 0}">				
-								투표항목	
-							</c:if>
-						</label>
-						
-						
-						<div class="control-label float-left">		
-							<label class="control-label float-left">${status.index+1 } . &nbsp; ${item.voteitemName }</label><br>
-						
-                      		<label class="control-label  float-left per"  style=" float : left;">
-	                         	<progress   value="${item.voteCount }" max="${voteVo.voteTotalno}"></progress>                        
-								&nbsp; ${item.voteCount }명 	
-								<c:if test="${item.voteCount == 0}">
-										( 0% )
+				<table class="table" style="margin-bottom: 0px;">
+				
+					<tr class="stylediff">
+			            <th class="success jg">개시자</th>
+			            <td style="width: 700px;">
+			            	<label class="control-label" id="memid">${voteVo.memName }</label>
+			            </td>
+			          	
+			       
+			            <th class="success jg">종료일</th>		            
+			            <td style=" width: 700px;">
+			            	<label class="control-label" id="regDt">${voteVo.voteDeadline}</label>
+			            </td>
+		        	</tr>
+				
 					
-								</c:if>
-								<c:if test="${item.voteCount > 0}">
-									( <fmt:formatNumber value="${item.voteCount/voteVo.votedNo }" type="percent"></fmt:formatNumber> )
-								</c:if>
-							</label>		
+					<tr class="stylediff">
+			            <th class="success jg per">투표율</th>
+			            <td colspan="3" class="jg" >
+			            	<fmt:formatNumber value="${voteVo.votedNo/voteVo.voteTotalno}" type="percent"></fmt:formatNumber> 	
+			            </td>
+		           
+		        	</tr>
+				
+				
+					
+			        <tr class="stylediff" id="pertr" >
+				
+			        	
+				            <th class="success jg" >투표항목 <br><br>	
+				            	<c:if test="${voteVo.votedNo > 0}">
+				            	
+						            <button id="mychartbtn" class="btn btn-default"><i class="fas fa-align-left"></i></button>
+						            <button id="dchartbtn" class="btn btn-default"><i class="fas fa-chart-pie"></i></button>
+					            	<button id="chartbtn" class="btn btn-default"><i class="fas fa-chart-bar"></i></button>
+				            	</c:if>	                 	
+				            </th>
+				            
+			        	
+		        	         
+			        	<c:if test="${status.index > 0}">
+			        	 	<th class="success jg" style="border-top: none;"></th>
+			        	 	<br>
+						</c:if>	
+						<td id="charttd">							
+			            	<canvas id="dchart" style=" min-height: 300px; height: 300px; max-width: 300px; max-height: 300px; display: inline-block; float : left; width: 300px; float" width="300 " height="300" class="chartjs-render-monitor"></canvas>
+							<canvas id="chart" style="min-height: 300px; height: 300px; max-width: 100%; max-height: 300px; display: inline-block; float : left; width: 347px; float" width="347" height="300" class="chartjs-render-monitor"></canvas>
+			            
+						</td>
+						
+					    <td id="pertd" > 
+				  		<c:forEach items="${itemlist }" var="item" varStatus="status">
+				  		
+						<div class="control-label" style="padding-left: 20px;" >	
+							<label class="control-label">${status.index+1 } . &nbsp; ${item.voteitemName }</label><br>
+	                        <progress   value="${item.voteCount }" max="${voteVo.voteTotalno}" ></progress>                        
+							&nbsp; ${item.voteCount }명 	
+							<c:if test="${item.voteCount == 0}">
+									( 0% )
+				
+							</c:if>
+							<c:if test="${item.voteCount > 0}">
+								( <fmt:formatNumber value="${item.voteCount/voteVo.votedNo }" type="percent"></fmt:formatNumber> )
+							</c:if>
 						</div>
-						<br>	
-				</c:forEach>
-			</div>
-			<br>
+							<br>
+						</c:forEach>
+			         	</td>
+			        </tr>
+					
+					<tr class="stylediff" >
+			            <th class="success jg">투표인원</th>
+			            <td colspan="3" >
+			            	<label class="control-label" id="voteTotalno"><i class="fas fa-user"></i> &nbsp; ${voteVo.votedNo}명 참여  </label>
+			            </td>
+		           
+		        	</tr>
+		        	
+					
+
+		       
+       
+	        </table>
 			
-			<br>
-			<div class="div">
-				<input type="hidden" value="${voteVo.voteId}" id="voteid">
-				<label for="voteTotalno" class="control-label labels jg">투표인원</label>
-				
-				<label class="control-label" id="voteTotalno">${voteVo.votedNo}명 / ${voteVo.voteTotalno}명  </label> 
-				
-			</div>
-			<br>
-			<div class="div">
-				<label for="voteTotalno" class="control-label labels jg">투표율</label>
 		
-				<label class="control-label" id="votePercent">	
-					<fmt:formatNumber value="${voteVo.votedNo/voteVo.voteTotalno}" type="percent"></fmt:formatNumber> 		
-				</label>
-				
-			</div>
-			<br>
-			<div class="div">
-				<label for="voteDeadline" class="control-label labels jg">종료일</label>
-				<label class="control-label" id="voteDeadline">${voteVo.voteDeadline}</label>
-			</div>
-			<br>
-			<div class="div">
-				<label for="memId" class="control-label labels jg">개시자</label>
-				<label class="control-label" id="memId">${voteVo.memName }</label>
-			</div>
-			<hr>
 			
 			<div class="card-footer clearfix" id="btndiv" >
 				<button type="button" class="btn btn-default jg" id="back">목록으로</button>		
-				투표자 : ${voteres.memId} / 로그인한 사람 : ${SMEMBER.memId }	
+<%-- 				투표자 : ${voteres.memId} / 로그인한 사람 : ${SMEMBER.memId }	 --%>
 				<c:if test="${voteVo.memId == SMEMBER.memId }">		
 					<button type="button" class="btn btn-default float-right jg" id="votedelbtn">삭제하기</button>
 				</c:if>			
@@ -303,13 +582,14 @@ function replyinsert() {
 					<div class="col-sm-12" id="replydiv">	
 								
 						<c:forEach items="${replylist }" var="replylist">
-							<div id="replydiv" style="padding-left: 40px;">			
+							<div id="replydiv" style="padding-left: 50px;">			
 							<c:if test= "${replylist.del == 'N'}">
-								<label class="jg">${replylist.memId }</label>
+								<img class="circle" src="/resources/littleryan.jpg" style="width: 30px; height: 30px;   border-radius: 70%;">
+								<label style="display: inline-block;" class="jg">${replylist.memName }</label>
+								<label >( ${replylist.memId } )</label>
 									
-								<textarea style="width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
+								<textarea style=" width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
 								
-<!-- 								</div> -->
 								[ ${replylist.regDt} ] 	
 									
 								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">		
@@ -328,8 +608,11 @@ function replyinsert() {
 							<hr>	
 						</c:forEach>
 						<br>
-						<div id="replyinsertdiv" style="padding-left: 30px;">		
-						
+						<div id="replyinsertdiv" style="padding-left: 50px;">		
+							 <input type="hidden" name="someId" value="${issuevo.issueId }">
+							 <input type="hidden" name="categoryId" value="${issuevo.categoryId}">
+							 <input type="hidden" name="reqId" value="${issuevo.reqId }">
+							 <input type="hidden" name="memId" value="${issuevo.memId }">
 							
 							 <textarea name = "replyCont" id ="re_con" onkeyup="resize(this)" ></textarea><br>
 							 <div style="width: 700px;">
@@ -346,6 +629,7 @@ function replyinsert() {
 	          
 	  </div>
 	     
+	</div>
 </div>
 
 

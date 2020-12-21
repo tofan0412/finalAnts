@@ -59,6 +59,12 @@ public class ScheduleController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 
+		if(scheduleVo.getSearchKeyword() != null) {			
+			session.setAttribute("searchKeyword", scheduleVo.getSearchKeyword());
+			session.setAttribute("searchCondition",scheduleVo.getSearchCondition());
+			session.setAttribute("pageIndex", scheduleVo.getPageIndex());
+		}
+		
 		return "tiles/schedule/scheduleplaceView";
 	}
 

@@ -52,25 +52,9 @@
 		height : 50px;
 		border-radius: 80px;	
 		outline: none;
-	}	
-		/* 말풍선 */
-span.tip {
-    position: relative;
-}
-
-span.tip span {
-    position: absolute;
-    z-index: 1;
-    width:150px;		
-    font-size:11px;				
-    background: white;	
-    border: 1px solid black;		
-    color: black;  
-    -moz-border-radius: 15px; /* 파폭 박스 둥근 정도 */
-    -webkit-border-radius: 60px 60px 60px 0px; /* 사파리 박스 둥근 정도 */ 	
-}		
-</style>	
-
+	}				
+</style>			
+	
 <body>	
 <div class="wrapperdd" style="margin-left:25%; margin-right:25%; margin-top:25px;">
 	<div class="register-card-body">	
@@ -78,19 +62,16 @@ span.tip span {
 		<div class="login-logo">
 			<b>회원가입</b>
 		</div>		
-										
+											
 		<div class="card card-primary card-outline">
 			<div class="card-body box-profile">
-				
+					
 				<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
 				<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
-					
-				<div class="text-center">
+						
+				<div class="text-center" title="이미지를 클릭하면 변경할 수 있어요!">
 					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border: 1px solid white; height: 200px; width:140px; margin: 0 auto;">
 						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" src="http://192.168.44.76/profile/user-1.png" alt="User profile picture"/>
-						<span class="tip">
-							<span>이미지를 클릭하면 변경할 수 있어요!</span>
-						</span>
 					</div><br>		 
 					<div class="content">
 						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left;" />	
@@ -98,7 +79,7 @@ span.tip span {
 					</div>
 				</div> 	
 							
-								
+									
 				<h3 class="profile-username text-center">
 					<!-- 경로 미리보기용 <div id="clickmsg">경로 : </div>	<hr>  -->
 					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none" readonly/>
@@ -352,10 +333,9 @@ function readURL(input) {
 		reader.readAsDataURL(input.files[0]);
 	}
 }
-
-			
 	
 		
+			
 												/* 기본이미지 선택  */
 		
 		// 기본이미지 모달창 띄으기

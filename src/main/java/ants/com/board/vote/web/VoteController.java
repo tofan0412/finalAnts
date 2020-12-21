@@ -69,7 +69,11 @@ public class VoteController{
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
-		
+		if(voteVo.getSearchKeyword() != null) {			
+			session.setAttribute("searchKeyword", voteVo.getSearchKeyword());
+			session.setAttribute("searchCondition",voteVo.getSearchCondition());
+			session.setAttribute("pageIndex", voteVo.getPageIndex());
+		}
 		
 		return "tiles/vote/votelist";
 	}

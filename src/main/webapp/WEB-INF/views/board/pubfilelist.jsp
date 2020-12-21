@@ -155,7 +155,7 @@ function pubfilecopy(){
  
  
  function search(){
-		 document.listForm.pageIndex.value = 1;
+		document.listForm.pageIndex.value = 1;
 	 	document.listForm.action = "<c:url value='/file/publicfileview'/>";
 	    document.listForm.submit();
 }
@@ -234,6 +234,7 @@ function pubfilecopy(){
         				<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
 							<form:option value="1" label="파일명"/>
 							<form:option value="2" label="소유자" />
+							<form:option value="3" label="확장자" />
 						</form:select> 
 						
 						

@@ -84,7 +84,20 @@
 		FROM MEMBER
 		WHERE MEM_ID = #{memId}
 	</select>
-
+	
+	<!-- 초대된 프로젝트 리스트 -->
+	<select id="requestPjtMember" resultType="ants.com.member.model.ProjectMemberVo" parameterType="ants.com.member.model.MemberVo">
+		SELECT * 
+		  FROM(
+				SELECT a.req_id, a.promem_id, a.mem_id, a.promem_status, b.pro_name as title, c.mem_name as pl_name
+				  FROM projectmember a, project b, member c
+				 WHERE a.req_id = b.req_id
+				   AND b.mem_id = c.mem_id
+		  	   )
+	     WHERE mem_id = #{memId}
+	       AND promem_status = 'WAIT'
+	</select>
+	
 	<insert id="insertPjtMember"
 		parameterType="ants.com.member.model.ProjectMemberVo">
 		INSERT INTO PROJECTMEMBER 
@@ -92,6 +105,18 @@
 		VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL, #{memId},#{promemStatus})
 
 	</insert>
+	
+	<update id="updatePjtMember" parameterType="ants.com.member.model.ProjectMemberVo">
+		UPDATE PROJECTMEMBER
+		   SET promem_status = #{promemStatus}
+		 WHERE req_id = #{reqId}
+		   AND mem_id = #{memId}
+	</update>
+	
+	<delete id="deletePjtMember">
+		DELETE PROJECTMEMBER
+		 WHERE promem_id = #{promemId}
+	</delete>
 
 	<!-- 진행도 update -->
 	<update id="propercentChange"
@@ -377,5 +402,42 @@
 		group by b.mem_name
 	</select>
 	
+	<select id="chartproday" parameterType="java.lang.String"
+		resultType="ants.com.member.model.ProjectVo">
+		<![CDATA[ 
+		SELECT 
+		    e.regDt as regDt,
+		    ROUND(e.hpercent/f.cnt)as percent
+		from(
+		SELECT sum(c.hpercent) as hpercent,
+		       c.regDt,
+		       c.req_id
+		from(
+		SELECT
+		    todo_id,
+		    to_char(reg_dt,'yyyy-mm-dd') as regDt,
+		    max(to_number(hpercent)) as hpercent,
+		    req_id
+		FROM
+		    todohistory 
+		where req_id =#{reqId} 
+		 And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
+		group by todo_id, req_id, to_char(reg_dt,'yyyy-mm-dd'))c
+		GROUP BY c.regDt, c.req_id
+		)e,
+		(SELECT 
+		    		COUNT(todo_id) as cnt,
+		            req_id
+				FROM todo 
+					WHERE req_id =#{reqId} 
+					AND del ='N'
+		            group by req_id) f
+		where e.req_id = f.req_id 
+		group by e.hpercent, e.regDt, e.req_id, ROUND(e.hpercent/f.cnt)
+		order by regDt asc
+		]]> 
+	</select>
+	
+	 
 	
 </mapper>

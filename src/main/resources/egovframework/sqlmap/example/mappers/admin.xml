@@ -109,10 +109,6 @@ VALUES (IPHIST_SEQ.NEXTVAL,#{memId},#{ipAddr},SYSDATE)
 					FROM PROJECT
 					WHERE DEL = 'N'
 					AND pro_name != 'null'
-					<!-- 
-					WHERE DEL != 'Y'
-					AND PRO_NAME != 'null'
-					 --> 
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>
 							<when test="searchCondition == 1">
@@ -132,6 +128,7 @@ VALUES (IPHIST_SEQ.NEXTVAL,#{memId},#{ipAddr},SYSDATE)
 		select count(*) as totCnt
 		from project
 		WHERE DEL = 'N'
+		AND pro_name is not null
 		<if test="searchKeyword != null and searchKeyword != ''">
 			<choose>
 				<when test="searchCondition == 1">
@@ -146,10 +143,16 @@ VALUES (IPHIST_SEQ.NEXTVAL,#{memId},#{ipAddr},SYSDATE)
 	
 	<!-- 프로젝트 삭제하기 -->
 	<update id="delproject" parameterType="ants.com.member.model.ProjectVo" >
-		UPDATE PROJECT
+		UPDATE project
 			SET DEL = 'Y'
-		WHERE REQ_ID = #{reqId}
+		WHERE req_id = #{reqId}
 	</update>
 
+	<!-- 1개 프로젝트 가져오기 -->
+	<select id="projectDetail" parameterType="ants.com.member.model.ProjectVo" resultType="ants.com.member.model.ProjectVo">
+		SELECT *
+		FROM PROJECT
+		WHERE REQ_ID = #{reqId}	
+	</select>
 
 </mapper>
