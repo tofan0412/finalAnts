@@ -40,6 +40,7 @@ $(function(){
 		$('#sgtContModal').val("${suggestVo.sgtCont}");
 		$('.warningTodo').empty();
 		$('.warningTitle').empty();
+		
 		$('.sgtFile').css('display', 'block');
 		
 		fileCnt = $('.sgtFile').length;
@@ -71,32 +72,30 @@ $(function(){
 		window.history.back();
 	})
 	
-	
-	
 	// 일감 검색을 위해 키워드를 작성한 경우 자동완성
-	$('#todoIdModal').keyup(function(){
-		var keyword = $(this).val();
-		$('.warningTodo').empty();
-		// 사용자가 입력을 한 경우, 키워드를 통해 일감을 검색한다.
-		if (keyword != ''){
-			$.ajax({
-				url : "/suggest/searchTodo",
-				data : {keyword : keyword},
-				method : "GET",
-				success : function(res){
-					todoSearchList = [];
-					for (var i = 0 ; i < res.length; i++){
-						if (keyword == '@'){
-							todoSearchList.push("@["+res[i].todoId+"]"+":"+res[i].todoTitle);
-						}else{
-							todoSearchList.push("["+res[i].todoId+"]"+":"+res[i].todoTitle);	
-						}
-					}
-					autoComplete(todoSearchList);
-				}
-			})
-		}
-	})
+// 	$('#todoIdModal').keyup(function(){
+// 		var keyword = $(this).val();
+// 		$('.warningTodo').empty();
+// 		// 사용자가 입력을 한 경우, 키워드를 통해 일감을 검색한다.
+// 		if (keyword != ''){
+// 			$.ajax({
+// 				url : "/suggest/searchTodo",
+// 				data : {keyword : keyword},
+// 				method : "GET",
+// 				success : function(res){
+// 					todoSearchList = [];
+// 					for (var i = 0 ; i < res.length; i++){
+// 						if (keyword == '@'){
+// 							todoSearchList.push("@["+res[i].todoId+"]"+":"+res[i].todoTitle);
+// 						}else{
+// 							todoSearchList.push("["+res[i].todoId+"]"+":"+res[i].todoTitle);	
+// 						}
+// 					}
+// 					autoComplete(todoSearchList);
+// 				}
+// 			})
+// 		}
+// 	})
 	
 	$('#sgtTitleModal').keyup(function(){
 		$('.warningTitle').empty();
@@ -158,6 +157,41 @@ $(function(){
 	    }
 	});
 	
+	
+	// mouseover 이벤트
+	$('.singleTodo').on('mouseenter',function(){
+		$(this).css("background-color", 'lightgrey');
+	})
+	
+	$('.singleTodo').on('mouseleave',function(){
+		$(this).css("background-color", 'white');
+	})
+	
+	// 목록에 있는 일감 추가하기..
+	$('#modSuggestModal').on('click', '.singleTodo', function(){
+		$('.warningTodo').empty();
+		
+		var todoId = $(this).attr("todoId");
+	    var todoTitle = $(this).attr("todoTitle");
+		
+	    $('#todoIdModal').val(todoId+":"+todoTitle);
+	})
+	
+	// 일감 검색 기능..
+	$('#searchTodoMod').keyup(function(){
+		$('.warningTodo').empty();
+		var keyword = $(this).val();
+		
+		for (var i = 0 ; i < $('.singleTodo').length ; i++){
+			if ($('.singleTodo')[i].attributes[2].value.includes(keyword)){
+				$('.singleTodo')[i].style.display = 'block';
+			}else{
+				$('.singleTodo')[i].style.display = 'none';
+			}	
+		}
+	})
+	
+	
 	// 수정하기 버튼 클릭시..
 	$('#modBtn').click(function(){
 		cnt = 0;
@@ -199,23 +233,67 @@ $(function(){
 			$('#sgtForm').submit();
 		}
 	})
+	
+	$('#takeIt').click(function(){
+		$('.takeItModal').modal();
+	})
+	
+	// 해당 건의 사항을 승인한다.
+	$('#suggestAcceptBtn').click(function(){
+		// 건의 사항 상태를 ACCEPT로 수정한다.
+		sgtId = '${suggestVo.sgtId}';
+		$.ajax({
+			url : "/suggest/acceptOrReject",
+			data : {sgtId : sgtId, sgtStatus : 'ACCEPT'},
+			success : function(res){
+				if (res > 0){
+					alert("승인 처리하였습니다.");
+					// 담당자 변경 페이지로 이동한다.
+					todoId = '${suggestVo.todoId}';
+					$(location).attr("href", "/todo/updatetodoView?todoId="+todoId);
+				}else{
+					alert("승인 처리 실패했습니다.");
+				}
+			}
+		})
+	})
+	
+	// 해당 건의 사항을 반려한다.
+	$('#suggestRejectBtn').click(function(){
+		// 해당 건의사항 글의 status를 reject로 변경한다. 
+		sgtId = '${suggestVo.sgtId}';
+		$.ajax({
+			url : "/suggest/acceptOrReject",
+			data : {sgtId : sgtId, sgtStatus : 'REJECT'},
+			success : function(res){
+				if (res > 0){
+					alert("반려 처리하였습니다.");
+					// 건의사항 리스트로 이동한다. 
+					$(location).attr("href", "/suggest/readSuggestList");
+				}else{
+					alert("반려 처리에 실패하였습니다.");
+				}
+			}
+		})
+	})
+	
 }) // $(function(){}) END
 
 // 자동 완성 부분 ..
-function autoComplete(todoSearchList){
-	$('#todoIdModal').autocomplete({
-		source : todoSearchList,
-		select : function(event, ui){
-			console.log(ui.item);
-		},
-		minLength : 1,
-		// 모달 창 위로 떠야 한다..
-		appendTo : $('#modSuggestModal'),
-		focus: function(event, ui) {
-            return false;
-        }
-	})
-}
+// function autoComplete(todoSearchList){
+// 	$('#todoIdModal').autocomplete({
+// 		source : todoSearchList,
+// 		select : function(event, ui){
+// 			console.log(ui.item);
+// 		},
+// 		minLength : 1,
+// 		// 모달 창 위로 떠야 한다..
+// 		appendTo : $('#modSuggestModal'),
+// 		focus: function(event, ui) {
+//             return false;
+//         }
+// 	})
+// }
 
 //일감 상세보기
 function todo(){
@@ -465,6 +543,11 @@ width:100%; overflow:visible; background-color:transparent; border:none;
 					</c:if>
 						<input type="button" value="목록으로" id="back"
 							class="btn btn-default float-left jg">
+						<!-- PL인 경우 해당 건의 사항에 대해 바로 처리할 수 있다. -->
+						<c:if test="${projectVo.memId == SMEMBER.memId }">
+							<input type="button" value="처리하기" id="takeIt"
+								class="btn btn-info float-left jg" style="margin-left : 5px;">
+						</c:if>	
 				</div>
 
 
@@ -571,9 +654,9 @@ width:100%; overflow:visible; background-color:transparent; border:none;
 
 <!-- Modal to modify my Suggest . . . -->
 <div class="modal fade" id="modSuggestModal" tabindex="-1" role="dialog"
-	aria-labelledby="inviteMemberModal">
-	<div class="modal-dialog modal-sm" role="document">
-		<div class="modal-content" style="height: 800px; width : 400px;">
+	aria-labelledby="modSuggestModal">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content" style="height: 600px; width : 800px;">
 			
 			<div class="modal-header">
 				<h3 class="modal-title jg" id="addplLable" style="text-align : center;">건의사항 수정</h3>
@@ -587,42 +670,82 @@ width:100%; overflow:visible; background-color:transparent; border:none;
 				<form:form commandName="suggestVo" id="sgtForm" name="sgtForm" 
 							action="/suggest/suggestMod" enctype="multipart/form-data">
 					
-					<label class="jg" style="float : left;">일감 수정</label>
-					<form:input id="sgtIdModal" path="sgtId" value="${suggestVo.sgtId}" readonly="readonly" hidden="hidden" />
-					<!-- 사용자가 일감을 선택하지 않은 경우 .. -->
-					<div class="jg"><span class="jg warningTodo" style="color : red;"></span></div>
-					<form:input id="todoIdModal" path="todoId" style="width : 90%;" value="${suggestVo.todoId}:현재 일감 번호" />
-					<br><br>
+					<div class="modSuggestLeftArea" style="float : left; width : 45%;">
+						<label class="jg">일감 수정</label>
+						<form:input id="sgtIdModal" path="sgtId" value="${suggestVo.sgtId}" readonly="true" hidden="hidden" />
+						<!-- 사용자가 일감을 선택하지 않은 경우 .. -->
+						<div class="jg"><span class="jg warningTodo" style="color : red;"></span></div>
+						<form:input id="todoIdModal" path="todoId" 
+							style="width : 90%;
+							       border : 2px solid lightgrey; 
+								   border-radius : 0.7rem;" 
+							value="${suggestVo.todoId}" readonly="true" />
+						<br><br>
+						<label class="jg" style="float: left;">일감 제목 검색</label> 
+						<input class="jg" type="text" id="searchTodoMod"
+							style="width: 90%; 
+								   border: 2px solid lightgrey; 
+								   border-radius: 0.7rem;"
+							placeholder="키워드를 입력해 주세요.." autocomplete="off"> 
+						<br><br>
 					
-					<label class="jg" style="float : left;">건의 사항 제목</label>
-					<!-- 사용자가 제목을 입력하지 않은 경우 .. -->
-					<div class="jg"><span class="jg warningTitle" style="color : red;"></span></div>
-					<form:input id="sgtTitleModal" path="sgtTitle" style="width : 90%;" value="${suggestVo.sgtTitle}" />
-					<br><br>
+					<!-- 내 일감 목록 리스트를 출력한다. -->
+					<div style="height : 250px; overflow-y : auto;">
+						<c:forEach items="${myTodoList}" var="myTodo">
+							<div class="jg singleTodo" todoId="${myTodo.todoId }"
+								todoTitle="${myTodo.todoTitle }"
+								style="width: 90%; height: 50px; overflow-y: auto;">
+								${myTodo.todoTitle } <span style="float: right;">일감번호 :
+									${myTodo.todoId }</span> <br>
+								<c:if test="${myTodo.todoImportance == 'gen' }">
+									<span class="jg" style="font-size: 1.0em;">일반</span>
+								</c:if>
+								<c:if test="${myTodo.todoImportance == 'emg' }">
+									<span class="jg" style="font-size: 1.0em;">긴급</span>
+								</c:if>
+							</div>
+							<br>
+						</c:forEach>
+					</div>
+					</div>
 					
-					<label class="jg">건의 사항 내용</label><br>
-					<form:textarea id="sgtContModal" path="sgtCont" rows="3" cols="30" 
-									style="resize: none; width : 90%;" value="${suggestVo.sgtCont}" />
-				</form:form>
-				<br>
-				
+					<div class="modSuggestRightArea" style="float : right; width : 50%;">
+						<label class="jg" style="float : left;">건의 사항 제목</label>
+						<!-- 사용자가 제목을 입력하지 않은 경우 .. -->
+						<div class="jg"><span class="jg warningTitle" style="color : red;"></span></div>
+						<form:input id="sgtTitleModal" path="sgtTitle" 
+							style="width : 90%;
+								   border : 2px solid lightgrey; 
+							       border-radius : 0.7rem;" 
+					        value="${suggestVo.sgtTitle}" autocomplete="off" />
+						<br><br>
+						
+						<label class="jg">건의 사항 내용</label><br>
+						<form:textarea id="sgtContModal" path="sgtCont" rows="3" cols="30" 
+										style="resize: none; width : 90%;
+											   border : 2px solid lightgrey; 
+								       		   border-radius : 0.7rem;" 
+										value="${suggestVo.sgtCont}" autocomplete="off" />
+					</form:form>
+					<br>
 					
-				<label class="jg">파일 첨부</label>&nbsp;&nbsp;
-				<span>파일은 최대 5개까지 첨부 가능합니다.</span>
-				<div class="sgtFileList">
-					<c:forEach items="${suggestFileList }" var="file" >
-						<div class="jg sgtFile" pubId="${file.pubId }">
-							<a href="#">${file.pubFilename }</a>
-						</div>
-					</c:forEach>
+						
+					<label class="jg">파일 첨부</label>&nbsp;&nbsp;
+					<span class="jg">파일은 최대 5개까지 첨부 가능합니다.</span>
+					<div class="sgtFileList">
+						<c:forEach items="${suggestFileList }" var="file" >
+							<div class="jg sgtFile" pubId="${file.pubId }">
+								<a href="#">${file.pubFilename }</a>
+							</div>
+						</c:forEach>
+					</div>
+					
+					<form id="suggestFileForm">
+						<input name="file" type="file" class="file" 
+							onchange="fileRestrict($('.file')[0].files.length)" multiple="multiple" />
+						<div class="sgtFileListNew"></div>
+					</form>
 				</div>
-				
-				<form id="suggestFileForm">
-					파일 첨부하기..		
-					<input name="file" type="file" class="file" 
-						onchange="fileRestrict($('.file')[0].files.length)" multiple="multiple" />
-					<div class="sgtFileListNew"></div>
-				</form>
 			</div>
 			
 			<div class="modal-footer">
@@ -632,3 +755,25 @@ width:100%; overflow:visible; background-color:transparent; border:none;
 	</div>
 </div>
 <!--  /Modal -->
+
+<div class="modal fade takeItModal" tabindex="-1" role="dialog" >
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content jg" style="width : 350px; height : 200px;">
+			<div class="modal-header">
+				<h3>건의사항 처리</h3>
+			</div>
+			
+			<div class="modal-body" style="margin : 0 auto; width : 100%;">
+				<button type="button" class="btn" id="suggestAcceptBtn" 
+					style="width : 100%; 
+						   background-color : #58ACFA;
+						   height : 50px;">승인</button>
+				<button type="button" class="btn" id="suggestRejectBtn"
+					style="width : 100%;
+						   background-color : #FFBF00;
+						   height : 50px;">반려</button>
+			</div>
+		</div>
+	</div>
+</div>
+

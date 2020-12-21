@@ -201,35 +201,31 @@ $(function(){
 		}
 	})
 	
+	
 	// 사용자가 채팅방 나가기 버튼을 클릭할 때 ..
 	$('.chatList').on('click','.exitBtn',function(){
 		var factor = confirm("채팅방을 나가시겠습니까?");
 		if(factor){
 			// 채팅방에서 해당 회원을 나가게 한다.
 			var memId = '${SMEMBER.memId}';
-			var cgroupId = '${cgroup.cgroupId}';
-			// 이대로 두면, 채팅방 번호가 바뀌지 않는다..!
+			var cgroupId = $('#cgroupId').val();
 			
-			alert("삭제할려고 하는 채팅방 번호 : " + cgroupId);
-			
-// 			$.ajax({
-// 				url : "/chat/exitChat",
-// 				data : {memId : memId, cgroupId : cgroupId},
-// 				success : function(res){
-// 					if (res > 0){
-// 						alert("처리되었습니다.");
-// 						$('.chatTitle').css('display', 'block');
-// 						$('.mkNewChat').css('display', 'block');
+			$.ajax({
+				url : "/chat/exitChat",
+				data : {memId : memId, cgroupId : cgroupId},
+				success : function(res){
+					if (res > 0){
+						alert("처리되었습니다.");
+						$('.chatTitle').css('display', 'block');
+						$('.mkNewChat').css('display', 'block');
 						
-// 						$('.chatList').empty();
-// 						readChatList();
-// 					}
-// 				}
-// 			})
+						$('.chatList').empty();
+						readChatList();
+					}
+				}
+			})
 		}
 	})
-	
-	
 });
 </script>
 <aside class="control-sidebar control-sidebar-white" 

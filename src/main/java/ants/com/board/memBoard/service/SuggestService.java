@@ -29,6 +29,11 @@ public class SuggestService {
 		return mapper.suggestInsert(suggestVo);
 	}
 	
+	// 페이징 처리 위해 게시글 개수 가져오기
+	public int suggestPagingListCnt(SuggestVo suggestVo) {
+		return mapper.suggestPagingListCnt(suggestVo);
+	}
+	
 	// 하나의 건의사항 읽기
 	public SuggestVo suggestDetail(SuggestVo suggestVo) {
 		return mapper.suggestDetail(suggestVo);
@@ -67,5 +72,10 @@ public class SuggestService {
 	// 파일 하나 DB에서 삭제하기
 	public int suggestFileDel(PublicFileVo publicFileVo) {
 		return mapper.suggestFileDel(publicFileVo);
+	}
+	
+	// 건의사항 승인 또는 반려하기..
+	public int acceptOrReject(SuggestVo suggestVo) {
+		return mapper.acceptOrReject(suggestVo);
 	}
 }

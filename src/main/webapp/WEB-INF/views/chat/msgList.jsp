@@ -43,6 +43,7 @@
 		sockMsg.close();
 	})
 	
+	
 	// 메시지 전송
 	function sendMessage() {
 		sockMsg.send($("#sendChatCont").val());
@@ -203,6 +204,8 @@ width:16px;height:16px;background:#d2d6de;}
 }
 </style>
 <!-- 채팅방 이름을 표시한다. -->
+<input type="text" id="cgroupId" value="${cgroup.cgroupId }" hidden="hidden">
+
 <div class="chatName">${cgroup.cgroupName }
 	<!-- 뒤로 가기 버튼 -->
 	<span class="returnBtn fas fa-undo icon" style="float : right; padding-right : 10px;"></span>

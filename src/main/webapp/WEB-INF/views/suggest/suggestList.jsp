@@ -6,39 +6,42 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <style type="text/css">
-#pagenum a{
-	 display: inline-block;
-	 text-align: center;
-	 width : auto;	 
-	 border: none; 
-
+#pagenum a {
+	display: inline-block;
+	text-align: center;
+	width: auto;
+	border: none;
 }
 
-li strong{
+li strong {
 	display: inline-block;
 	text-align: center;
 	width: 30px;
 }
 
-.pagingui{
-	 display: inline-block;
-	 text-align: center;
-	 width: 30px;
-	 
+.pagingui {
+	display: inline-block;
+	text-align: center;
+	width: 30px;
 }
-#paging{
-	 display: inline-block;
-	 width:auto; float:left; margin:0 auto; text-align:center;"
-	 
-	}
 
-th,td{
-	text-align : center;
+#paging {
+	display: inline-block;
+	width: auto;
+	float: left;
+	margin: 0 auto;
+	text-align: center;
+	"
 }
+
+th, td {
+	text-align: center;
+}
+
 #queue {
 	border: 1px solid #E5E5E5;
 	height: 177px;
-	width : 90%;
+	width: 90%;
 	overflow: auto;
 	margin-bottom: 10px;
 	padding: 0 3px 3px;
@@ -50,9 +53,19 @@ $(function(){
 	todoSearchList = [];
 	fileCnt = 0;
 	
+	$('.suggestInsertModal').on('click', '.singleTodo', function(){
+		$('.warningTodo').empty();
+		
+		var todoId = $(this).attr("todoId");
+	    var todoTitle = $(this).attr("todoTitle");
+	    
+	    $('#SearchTodoIdBar').val(todoId+":"+todoTitle);
+	    
+	})
+	
 	$('#insertSuggestBtn').click(function(){
 		// 사용자 입력란 비우기
-		$('#todoId').val('');
+		$('#SearchTodoIdBar').val('');
 		$('#sgtTitle').val('');
 		$('#sgtCont').val('');
 		// 경고 관련 div 비우기
@@ -65,55 +78,63 @@ $(function(){
 		$('#suggestInsert').modal();
 	})
 	
-	$('#todoId').keyup(function(){
-		var keyword = $(this).val();
+	$('#searchTodo').keyup(function(){
 		$('.warningTodo').empty();
+		var keyword = $(this).val();
 		
-		// 사용자가 입력을 한 경우, 키워드를 통해 일감을 검색한다.
-		if (keyword != ''){
-			$.ajax({
-				url : "/suggest/searchTodo",
-				data : {keyword : keyword},
-				method : "GET",
-				success : function(res){
-					todoSearchList = [];
-					for (var i = 0 ; i < res.length; i++){
-						if (keyword == '@'){
-							todoSearchList.push("@["+res[i].todoId+"]"+":"+res[i].todoTitle);
-						}else{
-							todoSearchList.push("["+res[i].todoId+"]"+":"+res[i].todoTitle);	
-						}
-					}
-					autoComplete(todoSearchList);
-				}
-			})
+		for (var i = 0 ; i < $('.singleTodo').length ; i++){
+			if ($('.singleTodo')[i].attributes[2].value.includes(keyword)){
+				$('.singleTodo')[i].style.display = 'block';
+			}else{
+				$('.singleTodo')[i].style.display = 'none';
+			}	
 		}
+	})
+	
+	// 초기화 버튼 클릭시 내용 초기화 -> 모달창 열고 닫을 때도 적용된다.
+	$('.suggestResetBtn').click(function(){
+		$('.warningTodo').empty();
+		$('.warningTitle').empty();
+		$('.sgtFileList').empty();
+		$('.file').val('');
+		$('#SearchTodoIdBar').val('');
+		$('#sgtTitle').val('');
+		$('#sgtCont').val('');
 	})
 	
 	$('#sgtTitle').keyup(function(){
 		$('.warningTitle').empty();
 	})
 	
-	// 자동 완성 부분 ..
-	function autoComplete(todoSearchList){
-		$('#todoId').autocomplete({
-			source : todoSearchList,
-			select : function(event, ui){
-				console.log(ui.item);
-			},
-			minLength : 1,
-			// 모달 창 위로 떠야 한다..
-			appendTo : $('#suggestInsert'),
-			focus: function(event, ui) {
-	            return false;
-	        }
-		})
-	}
+// 	// 자동 완성 부분 ..
+// 	function autoComplete(todoSearchList){
+// 		$('#todoId').autocomplete({
+// 			source : todoSearchList,
+// 			select : function(event, ui){
+// 				console.log(ui.item);
+// 			},
+// 			minLength : 1,
+// 			// 모달 창 위로 떠야 한다..
+// 			appendTo : $('#suggestInsert'),
+// 			focus: function(event, ui) {
+// 	            return false;
+// 	        }
+// 		})
+// 	}
+
+	// mouseover 이벤트
+	$('.singleTodo').on('mouseenter',function(){
+		$(this).css("background-color", 'lightgrey');
+	})
+	
+	$('.singleTodo').on('mouseleave',function(){
+		$(this).css("background-color", 'white');
+	})
 	
 	$('#regBtn').click(function(){
 		cnt = 0;
 		// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
-		if ($('#todoId').val().length == 0){
+		if ($('#SearchTodoIdBar').val().length == 0){
 			$('.warningTodo').text("일감을 지정해 주세요.");
 			cnt++;
 		}
@@ -188,37 +209,38 @@ $(function(){
 
 <%@include file="/WEB-INF/views/layout/contentmenu.jsp"%>
 
-<form:form commandName="suggestVo" id="listForm" name="listForm" method="post">
+<form:form commandName="suggestVo" id="listForm" name="listForm"
+	method="post">
 	<section class="content">
 		<div class="col-12 col-sm-12">
 			<div class="card" style="border-radius: inherit;">
-<!-- 				<div class="container-fluid"> -->
-<!-- 					<div class="row mb-2"> -->
-<!-- 						<br> -->
-<!-- 						<div class="col-sm-6"> -->
-<!-- 							<br> -->
-<!-- 							<h1 class="jg" style="padding-left: 10px;">건의 사항 리스트</h1> -->
-<!-- 						</div> -->
-<!-- 						<div class="col-sm-6"> -->
-<!-- 							<ol class="breadcrumb float-sm-right" style="background: white"> -->
-<!-- 								<li class="breadcrumb-item san"><a href="#">Home</a></li> -->
-<!-- 								<li class="breadcrumb-item active">건의 사항 리스트</li> -->
-<!-- 							</ol> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
+				<!-- 				<div class="container-fluid"> -->
+				<!-- 					<div class="row mb-2"> -->
+				<!-- 						<br> -->
+				<!-- 						<div class="col-sm-6"> -->
+				<!-- 							<br> -->
+				<!-- 							<h1 class="jg" style="padding-left: 10px;">건의 사항 리스트</h1> -->
+				<!-- 						</div> -->
+				<!-- 						<div class="col-sm-6"> -->
+				<!-- 							<ol class="breadcrumb float-sm-right" style="background: white"> -->
+				<!-- 								<li class="breadcrumb-item san"><a href="#">Home</a></li> -->
+				<!-- 								<li class="breadcrumb-item active">건의 사항 리스트</li> -->
+				<!-- 							</ol> -->
+				<!-- 						</div> -->
+				<!-- 					</div> -->
+				<!-- 				</div> -->
 				<br>
 				<div class="card-header">
-				<div id="keyword" class="card-tools float-left"
+					<div id="keyword" class="card-tools float-left"
 						style="width: 450px;">
 						<h3 class="jg" style="padding-left: 10px;">건의 사항 리스트</h3>
-				</div>		
+					</div>
 					<div id="keyword" class="card-tools float-right"
 						style="width: 450px;">
 						<div class="input-group row">
 							<label for="searchCondition" style="visibility: hidden;"></label>
 
-							<form:select path="searchCondition" 
+							<form:select path="searchCondition"
 								class="form-control col-md-3 jg" style="width: 100px;">
 								<form:option value="1" label="작성자" />
 								<form:option value="2" label="제목" />
@@ -249,36 +271,58 @@ $(function(){
 						<thead>
 							<tr>
 								<th class="jg" style="width: 150px; padding-left: 50px;">No.</th>
-								<th class="jg"  style="padding-left: 30px;">건의사항 제목</th>
-								<th class="jg" >작성자</th>
-								<th class="jg" >날짜</th>
-								<th class="jg" >해당일감</th>
-								<th class="jg" >처리현황</th>
+								<th class="jg" style="padding-left: 30px;">건의사항 제목</th>
+								<th class="jg">작성자</th>
+								<th class="jg">날짜</th>
+								<th class="jg">해당일감</th>
+								<th class="jg">처리현황</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${suggestList }" var="suggest" varStatus="status">
+							<c:forEach items="${suggestList }" var="suggest"
+								varStatus="status">
 								<tr>
 
-									<td class="jg"  style="width: 150px; padding-left: 50px;"><c:out
+									<td class="jg" style="width: 150px; padding-left: 50px;"><c:out
 											value="${  ((suggest.pageIndex-1) * suggest.pageUnit + (status.index+1))}" />.</td>
 
-									<td class="jg"  style="padding-left: 30px;">
-										<a href="/suggest/suggestDetail?sgtId=${suggest.sgtId }&memId=${suggest.memId }">${suggest.sgtTitle }</a>
+									<td class="jg" style="padding-left: 30px;"><a
+										href="/suggest/suggestDetail?sgtId=${suggest.sgtId }&memId=${suggest.memId }">${suggest.sgtTitle }</a>
 									</td>
-											
-									<td class="jg" >${suggest.memName }</td>
-									<td class="jg" >${suggest.regDt }</td>
-									<td class="jg" >${suggest.todoId }</td>
+
+									<td class="jg">${suggest.memName }</td>
+									<td class="jg">${suggest.regDt }</td>
+									<td class="jg">${suggest.todoId }</td>
 									<!-- 건의사항 상태 : 대기, 승인, 반려에 따른 출력 -->
 									<c:if test="${'WAIT' == suggest.sgtStatus }">
-										<td class="jg" >대기</td>
+										<td class="jg">
+											<span 
+												style="border : 3px solid #FFBF00;
+												       background-color: #FFBF00;
+												       border-radius : 0.3rem;">
+												       &nbsp;대기&nbsp;
+									       </span>
+										</td>
 									</c:if>
-									<c:if test="${'Y' == suggest.sgtStatus }">
-										<td class="jg" >승인</td>
+									<c:if test="${'ACCEPT' == suggest.sgtStatus }">
+										<td class="jg">
+											<span 
+												style="border : 3px solid #088A29;
+												       background-color: #088A29;
+												       border-radius : 0.3rem;">
+												       &nbsp;승인&nbsp;
+									       </span>
+										</td>
 									</c:if>
-									<c:if test="${'N' == suggest.sgtStatus }">
-										<td class="jg" >반려</td>
+									<c:if test="${'REJECT' == suggest.sgtStatus }">
+										<td class="jg">
+											<span 
+												style="border : 3px solid #FF0000;
+												       background-color: #FF0000;
+												       border-radius : 0.3rem;">
+												       &nbsp;반려&nbsp;
+									       </span>
+										</td>
 									</c:if>
 								</tr>
 							</c:forEach>
@@ -287,16 +331,17 @@ $(function(){
 				</div>
 
 				<br>
-				 <div id="paging" class="card-tools">
-	              	<ul class="pagination pagination-sm jg" id ="pagingui">
-	              	
-		        		<li  class="page-item jg" id ="pagenum" >	
-		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
-		        		<form:hidden path="pageIndex" />		        		
-                    
-	                 </ul>
-        		  </div>
-			
+				<div id="paging" class="card-tools">
+					<ul class="pagination pagination-sm jg" id="pagingui">
+
+						<li class="page-item jg" id="pagenum"><ui:pagination
+								paginationInfo="${paginationInfo}" type="image"
+								jsFunction="fn_egov_link_page" /></li>
+						<form:hidden path="pageIndex" />
+
+					</ul>
+				</div>
+
 				<div class="card-footer clearfix">
 					<button id="insertSuggestBtn" type="button"
 						class="btn btn-default float-left jg">
@@ -314,55 +359,104 @@ $(function(){
 </form:form>
 
 <!-- Modal to invite new Members . . . -->
-<div class="modal fade" id="suggestInsert" tabindex="-1" role="dialog"
-	aria-labelledby="inviteMemberModal">
-	<div class="modal-dialog modal-sm" role="document">
-		<div class="modal-content" style="height: 800px; width : 400px;">
-			
+<div class="modal fade suggestInsertModal" id="suggestInsert"
+	tabindex="-1" role="dialog" aria-labelledby="suggestInsertModal">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content" style="height: 600px; width: 800px;">
+
 			<div class="modal-header">
-				<h3 class="modal-title jg" id="addplLable" style="text-align : center;">건의사항 작성</h3>
+				<h3 class="modal-title jg" id="addplLable"
+					style="text-align: center;">건의사항 작성</h3>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			
+
 			<div class="modal-body" style="width: 100%; height: 100%;">
-				<form:form commandName="suggestVo" id="sgtForm" name="sgtForm" 
-							action="/suggest/suggestInsert">
+				<form:form commandName="suggestVo" id="sgtForm" name="sgtForm"
+					action="/suggest/suggestInsert">
 					<form:input path="sgtId" id="sgtId" type="text" hidden="hidden" />
-					<label class="jg" style="float : left;">일감 검색</label>
-					<!-- 사용자가 일감을 선택하지 않은 경우 .. -->
-					<div class="jg"><span class="jg warningTodo" style="color : red;"></span></div>
-					<form:input id="todoId" path="todoId" style="width : 90%;"/>
-					<br><br>
-					
-					<label class="jg" style="float : left;">건의 사항 제목</label>
-					<!-- 사용자가 제목을 입력하지 않은 경우 .. -->
-					<div class="jg"><span class="jg warningTitle" style="color : red;"></span></div>
-					<form:input id="sgtTitle" path="sgtTitle" style="width : 90%;"/>
-					<br><br>
-					
-					<label class="jg">건의 사항 내용</label><br>
-					<form:textarea id="sgtCont" path="sgtCont" rows="3" cols="30" 
-									style="resize: none; width : 90%;"/>
+
+					<div class="searchTodoArea"
+						style="float: left; width: 45%; height: 400px;">
+						<label class="jg" style="float: left;">선택한 일감</label>
+						<!-- 사용자가 일감을 선택하지 않은 경우 .. -->
+						<div class="jg">
+							<span class="jg warningTodo" style="color: red;"></span>
+						</div>
+						<br>
+
+						<form:input id="SearchTodoIdBar" class="jg" path="todoId"
+							style="width : 90%; 
+								   border : 2px solid lightgrey; 
+								   border-radius : 0.7rem;"
+							readonly="true" placeholder="일감을 선택해 주세요.." autocomplete="off" />
+
+						<br><br>
+						<!-- 일감 검색 searchBar -->
+						<label class="jg" style="float: left;">일감 제목 검색</label> <input
+							class="jg" type="text" id="searchTodo"
+							style="width: 90%; border: 2px solid lightgrey; border-radius: 0.7rem;"
+							placeholder="키워드를 입력해 주세요.." autocomplete="off"> 
+						<br><br>
+						<div style="overflow-y : auto; height : 250px;" >
+							<c:forEach items="${myTodoList}" var="myTodo">
+								<div class="jg singleTodo" todoId="${myTodo.todoId }"
+									todoTitle="${myTodo.todoTitle }"
+									style="width: 90%; height: 50px;">
+									${myTodo.todoTitle } <span style="float: right;">일감번호 :
+										${myTodo.todoId }</span> <br>
+									<c:if test="${myTodo.todoImportance == 'gen' }">
+										<span class="jg" style="font-size: 1.0em;">일반</span>
+									</c:if>
+									<c:if test="${myTodo.todoImportance == 'emg' }">
+										<span class="jg" style="font-size: 1.0em;">긴급</span>
+									</c:if>
+								</div>
+								<br>
+							</c:forEach>
+						</div>
+					</div>
+
+					<div class="suggestInsertArea" style="float: right; width: 50%;">
+						<label class="jg" style="float: left;">건의 사항 제목</label>
+						<!-- 사용자가 제목을 입력하지 않은 경우 .. -->
+						<div class="jg">
+							<span class="jg warningTitle" style="color: red;"></span>
+						</div>
+						<form:input id="sgtTitle" path="sgtTitle"
+							style="width : 90%;
+								   border : 2px solid lightgrey; 
+								   border-radius : 0.7rem;"
+							autocomplete="off" />
+						<br>
+						<br> <label class="jg">건의 사항 내용</label><br>
+						<form:textarea id="sgtCont" path="sgtCont" rows="3" cols="30"
+							style="resize: none; 
+											   width : 90%;
+											   border : 2px solid lightgrey; 
+								   			   border-radius : 0.7rem;"
+							autocomplete="off" />
 				</form:form>
 				<br>
-				
 				<form id="suggestFileForm">
-					<!-- 파일 첨부하기.. -->			
-					<label class="jg">파일 첨부</label>&nbsp;&nbsp;
-					<span>파일은 최대 5개까지 첨부 가능합니다.</span>
-					<input name="file" type="file" class="file" 
-						onchange="fileRestrict($('.file')[0].files.length)" multiple="multiple" />
+					<!-- 파일 첨부하기.. -->
+					<label class="jg">파일 첨부</label>&nbsp;&nbsp; <span class="jg">파일은 최대
+						5개까지 첨부 가능합니다.</span> 
+						<input name="file" type="file" class="file"
+						onchange="fileRestrict($('.file')[0].files.length)"
+						multiple="multiple" />
 					<div class="sgtFileList"></div>
 				</form>
 			</div>
-			
-			<div class="modal-footer">
-				<button class="btn btn-success" id="regBtn">등록</button>
-			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary jg suggestResetBtn">초기화</button>
+			<button class="jg btn btn-success" id="regBtn">등록</button>
 		</div>
 	</div>
+</div>
 </div>
 <!--  /Modal -->

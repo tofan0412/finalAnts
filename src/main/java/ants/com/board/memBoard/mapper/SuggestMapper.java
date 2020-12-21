@@ -19,6 +19,9 @@ public interface SuggestMapper {
 	// 건의 사항 등록하기
 	public int suggestInsert(SuggestVo suggestVo);
 	
+	// 페이징 처리 위해 게시글 개수 불러오기
+	public int suggestPagingListCnt(SuggestVo suggestVo);
+	
 	// 하나의 건의사항 읽기
 	public SuggestVo suggestDetail(SuggestVo suggestVo);
 	
@@ -42,4 +45,7 @@ public interface SuggestMapper {
 	
 	// 건의사항에서 올린 첨부파일 하나 삭제하기
 	public int suggestFileDel(PublicFileVo publicFileVo);
+	
+	// 건의사항 승인 또는 반려하기
+	public int acceptOrReject(SuggestVo suggestVo);
 }
