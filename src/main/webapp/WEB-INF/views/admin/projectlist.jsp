@@ -5,9 +5,6 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -47,13 +44,14 @@
 
 <script type="text/javascript">
 $(function(){
-	$('.projectDelBtn').click(function(){
+	$('.projectDelBtn').click(function(e){
+		e.preventDefault();
 		alert("프로젝트가 삭제되었습니다.");
 		
 		var reqId = $(this).attr("reqId");
-		$(location).attr("href", "${pageContext.request.contextPath}/admin/delproject?reqId="+reqId);
+		//$(location).attr("href", "/admin/delproject?reqId="+reqId);
+		location.href="/admin/delproject?reqId="+reqId;
 	})
-// 	$("#pagenum a").addClass("page-link");  
 })
 
 /* pagination 페이지 링크 function */
@@ -73,8 +71,7 @@ $(function(){
 	    document.listForm.submit();
 }
 </script>
-</head>
-<body>
+
 <!-- 	<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 <form:form commandName="projectVo" id="listForm" name="listForm" method="post">
 	<section class="content" >
@@ -141,6 +138,7 @@ $(function(){
 								<th style="text-align: center;">제목</th>
 								<th style="text-align: center;">담당자</th>
 								<th style="text-align: center;">날짜</th>
+								<th style="text-align: center;">-</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -151,7 +149,7 @@ $(function(){
 									<td style="text-align: center;">${project.proName }</td>
 									<td style="text-align: center;">${project.memId }</td>
 									<td style="text-align: center;">${project.regDt }</td>
-									<td><button class="btn btn-danger projectDelBtn" reqId=${project.reqId }>삭제</button></td>
+									<td><button type="button" class="btn btn-danger projectDelBtn" reqId=${project.reqId }>삭제</button></td>
 								</tr>
 							</c:forEach>
 							<c:if test="${projectlist.size() == 0}">
@@ -179,5 +177,3 @@ $(function(){
 		</div>
 	</section>
 </form:form>	
-</body>
-</html>

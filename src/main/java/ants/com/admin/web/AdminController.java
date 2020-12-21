@@ -493,19 +493,31 @@ public class AdminController {
 		
 	}
 	
-	// 프로젝트 delete 
+//	// 프로젝트 delete 1
+//	@RequestMapping("/delproject")
+//	public String delproject(String reqId) {		
+//		int delCnt = adminService.delproject(reqId);
+//		if(delCnt>0) {		
+//			return "redirect:/admin/projectlist";
+//		}else {
+//			return "redirect:/admin/projectDetail?reqId="+reqId;
+//		}
+//	}
+	// 프로젝트 delete 2
 	@RequestMapping("/delproject")
-	public String delproject(String reqId) {		
-		int delCnt = adminService.delproject(reqId);
+	public String delproject(ProjectVo projectVo) {		
+		int delCnt = adminService.delproject(projectVo);
+		System.out.println("delCnt = " + delCnt);
 		return "redirect:/admin/projectlist";
 	}
 	
-//	// 프로젝트 하나만 가져오기
-//	@RequestMapping("/getProject")
-//	public String getProject(ProjectVo projectVo) {
-//		ProjectVo result = adminService.getProject(projectVo);
-//		return "admin.tiles/admin/projectDetail";
-//	}
+	// 프로젝트 하나만 가져오기
+	@RequestMapping("/projectDetail")
+	public String getproject(ProjectVo projectVo) {
+		ProjectVo result = adminService.getProject(projectVo);
+		return "admin.tiles/admin/projectDetail";
+	}
+	
 	
 }
 

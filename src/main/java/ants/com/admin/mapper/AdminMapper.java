@@ -85,23 +85,13 @@ public interface AdminMapper {
 	// 프로젝트 카테고리 검색 리스트
 	public int projectPagingListCnt(ProjectVo projectVo);
 	
-	// 프로젝트 삭제하기
-	public int delproject(String reqId);
+//	// 프로젝트 삭제하기 1
+//	public int delproject(String reqId);
+	// 프로젝트 삭제하기 2
+	public int delproject(ProjectVo projectVo);
 
-	
-//	// 프로젝트 리스트
-//	public List<ProjectVo> getProjectList();
-//	
-//	//1개? 프로젝트 가져오기
-//	public ProjectVo getProject(ProjectVo projectVo);
-//	
-//	//프로젝트 삭제하기
-//	public int delproject(ProjectVo projectVo);
-
-
-
-
-	
+	//1개 프로젝트 가져오기
+	public ProjectVo getProject(ProjectVo projectVo);
 
 	
 	
