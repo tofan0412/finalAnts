@@ -10,6 +10,7 @@ import ants.com.board.manageBoard.mapper.ManageBoardMapper;
 import ants.com.board.manageBoard.model.HotIssueVo;
 import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
+import ants.com.board.manageBoard.model.todoHistoryVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.model.ReqVo;
@@ -125,4 +126,14 @@ public class ManageBoardService {
 	public List<TodoVo> getAllTodo(String reqId) {
 		return mapper.getAllTodo(reqId);
 	}
+
+	public int todoHistoryCnt(todoHistoryVo todoHistoryVo) {
+		return mapper.todoHistoryCnt(todoHistoryVo);
+	}
+
+	public int todoHistoryfirst(todoHistoryVo historyVo) {
+		return mapper.todoHistoryfirst(historyVo);
+	}
+
+	
 }

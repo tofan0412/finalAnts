@@ -1,6 +1,5 @@
 package ants.com.board.manageBoard.model;
 
-import java.util.Date;
 
 public class TodoLogVo {
 

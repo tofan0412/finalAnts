@@ -150,11 +150,11 @@ $(document).ready(function(){
 		                    </td>
 		                    <td>${todo.todoPercent}%</td>   
 	                    </c:if>   
-						<c:if test= "${todo.todoPercent+0 >=30+0 and todo.todoPercent+0 <=59+0}">
+						<c:if test= "${todo.todoPercent+0 != 0 and todo.todoPercent+0 <=59+0}">
 	                        <td>
 		                        <div class="progress progress-xs progress-striped active">
 		                           <fmt:parseNumber value="${todo.todoPercent}" var="NUM"/>
-		                          <div class="progress-bar bg-primary" style="width: <c:out value="${NUM}" />%"></div>
+		                          <div class="progress-bar bg-warning" style="width: <c:out value="${NUM}" />%"></div>
 		                        </div>
 		                    </td>    
 		                    <td>${todo.todoPercent}%</td>
@@ -163,7 +163,7 @@ $(document).ready(function(){
 	                        <td>
 		                        <div class="progress progress-xs progress-striped active">
 		                           <fmt:parseNumber value="${todo.todoPercent}" var="NUM"/>
-		                          <div class="progress-bar bg-warning" style="width: <c:out value="${NUM}" />%"></div>
+		                          <div class="progress-bar bg-primary" style="width: <c:out value="${NUM}" />%"></div>
 		                        </div>
 		                     </td>   
 		                     <td>${todo.todoPercent}%</td>

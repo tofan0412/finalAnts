@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
+import ants.com.board.manageBoard.model.todoHistoryVo;
 import ants.com.board.manageBoard.service.ManageBoardService;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.view.FileController;
@@ -62,6 +63,7 @@ public class TodoController {
 
 		int todoInsert = manageBoardService.todoInsert(todoVo);
 		if (todoInsert > 0) {
+			
 			String proper = (String) manageBoardService.proPerChangebytodo(todoVo);
 			ProjectVo projectVo = new ProjectVo();
 			projectVo.setPercent(proper);
@@ -86,6 +88,7 @@ public class TodoController {
 		int todoInsert = manageBoardService.todoInsert(todoVo);
 		String todoId = todoVo.getTodoId();
 		if (todoInsert > 0) {
+			
 			String proper = (String) manageBoardService.proPerChangebytodo(todoVo);
 			ProjectVo projectVo = new ProjectVo();
 			projectVo.setPercent(proper);
@@ -203,9 +206,17 @@ public class TodoController {
 
 	// 진행도 수정
 	@RequestMapping("/progressChange")
-	public String progressChange(TodoVo todoVo, Model model) {
+	public String progressChange(TodoVo todoVo, Model model, HttpSession session) {
 		String reqId = todoVo.getReqId();
 		int proChangeCnt = manageBoardService.progressChange(todoVo);
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		todoHistoryVo historyVo = new todoHistoryVo();
+		historyVo.setMemId(memId);
+		historyVo.setPercent(todoVo.getTodoPercent());
+		historyVo.setReqId(reqId);
+		historyVo.setTodoId(todoVo.getTodoId());
+		int todoHistoryCnt = manageBoardService.todoHistoryCnt(historyVo);
 		
 		if (proChangeCnt > 0) {
 			String proper = (String) manageBoardService.proPerChangebytodo(todoVo);
