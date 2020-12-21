@@ -495,13 +495,9 @@ public class AdminController {
 	
 	// 프로젝트 delete 
 	@RequestMapping("/delproject")
-	public String delproject(String reqId, HttpSession session, Model model) {		
+	public String delproject(String reqId) {		
 		int delCnt = adminService.delproject(reqId);
-		if(delCnt>0) {		
-			return "redirect:/admin/projectlist";
-		}else {
-			return "redirect:/admin/eachprojectDetail?reqId="+reqId;
-		}
+		return "redirect:/admin/projectlist";
 	}
 	
 //	// 프로젝트 하나만 가져오기
