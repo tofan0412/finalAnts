@@ -31,13 +31,48 @@
 							<when test="searchCondition == 1">
 								AND notice_title LIKE '%' || #{searchKeyword} || '%'
 							</when>
-							<when test="searchCondition == 2">
-							</when>
 						</choose>
 					</if>
 					ORDER BY reg_dt desc, notice_id desc
 				) a
 		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE c.RNUM > #{firstIndex}]]>
+	</select>
+	
+	<!-- 공지사항게시글 수 조회하기 -->	
+	<select id="noticePagingListCnt" parameterType="ants.com.admin.model.NoticeVo"  resultType="int">
+		<!-- 
+		select count(*) as totCnt
+		from notice
+		where del = 'N'
+		
+		<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 1">
+						AND	admin_id LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 2">
+						AND	notice_title LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 3">
+						AND	notice_cont LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>
+			
+		 
+		SELECT COUNT(*)
+		  FROM NOTICE
+		   -->
+		select count(*) as totCnt
+		from notice
+		WHERE DEL = 'N'
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchCondition == 1">
+					AND notice_title LIKE '%' || #{searchKeyword} || '%'
+				</when>
+			</choose>
+		</if>
 	</select>
 	
 	<!-- 각 공지사항게시글 내용 가져오기 -->
@@ -80,33 +115,6 @@
 			set del = 'Y' 
 		where notice_id = #{noticeId}
 	</update>
-
-	<!-- 공지사항게시글 수 조회하기 -->	
-	<select id="noticePagingListCnt" parameterType="ants.com.admin.model.NoticeVo"  resultType="int">
-		<!-- 
-		select count(*) as totCnt
-		from notice
-		where del = 'N'
-		
-		<if test="searchKeyword != null and searchKeyword != ''">
-		        <choose>
-		            <when test="searchCondition == 1">
-						AND	admin_id LIKE '%' || #{searchKeyword} || '%'
-					</when>
-		            <when test="searchCondition == 2">
-						AND	notice_title LIKE '%' || #{searchKeyword} || '%'
-					</when>
-		            <when test="searchCondition == 3">
-						AND	notice_cont LIKE '%' || #{searchKeyword} || '%'
-					</when>
-				</choose>
-			</if>
-		 -->	
-		 
-		SELECT COUNT(*)
-		  FROM NOTICE
-	</select>
-	
 
 
 

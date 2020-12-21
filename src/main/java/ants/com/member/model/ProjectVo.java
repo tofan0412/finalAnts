@@ -1,7 +1,8 @@
 package ants.com.member.model;
 
+import ants.com.base.model.BaseVo;
 
-public class ProjectVo {
+public class ProjectVo extends BaseVo{
 	private String reqId;
 	private String memId;
 	private String proName;

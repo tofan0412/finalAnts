@@ -5,6 +5,7 @@ import java.util.List;
 import ants.com.board.manageBoard.model.HotIssueVo;
 import ants.com.board.manageBoard.model.TodoLogVo;
 import ants.com.board.manageBoard.model.TodoVo;
+import ants.com.board.manageBoard.model.todoHistoryVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.model.ReqVo;
@@ -90,5 +91,9 @@ public interface ManageBoardMapper {
 	public String gethissueId();
 	// 전체 todoList
 	public List<TodoVo> getAllTodo(String reqId);
+
+	public int todoHistoryCnt(todoHistoryVo todoHistoryVo);
+
+	public int todoHistoryfirst(todoHistoryVo historyVo);
 	
 }

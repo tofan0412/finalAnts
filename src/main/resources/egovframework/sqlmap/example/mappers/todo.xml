@@ -291,6 +291,44 @@
 			)
 		</insert>
 		
+		<insert id="todoHistoryfirst"
+			parameterType="ants.com.board.manageBoard.model.todoHistoryVo">
+						
+			INSERT INTO todohistory (
+			    todo_hid,
+			    todo_id,
+			    reg_dt,
+			    hpercent,
+			    mem_id,
+			    req_id
+			) VALUES (
+			    TODOHISTORY_SEQ.NEXTVAL,
+			    #{todoId},
+			   sysdate,
+			    '0',
+			    #{memId},
+			    #{reqId}
+			)
+			
+		</insert>
+		<insert id="todoHistoryCnt" parameterType="ants.com.board.manageBoard.model.TodoLogVo">
+			INSERT INTO todohistory (
+				    todo_hid,
+				    todo_id,
+				    reg_dt,
+				    hpercent,
+				    mem_id,
+				    req_id
+				) VALUES (
+				    TODOHISTORY_SEQ.NEXTVAL,
+				    #{todoId},
+				   sysdate,
+				    #{hpercent},
+				    #{memId},
+				    #{reqId}
+				)
+		</insert>
+		
 		<!-- 프로젝트 멤버 가져오기 -->
 		<select id="projectList" parameterType="ants.com.member.model.ProjectVo"
 		resultType="ants.com.member.model.ProjectVo">

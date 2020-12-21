@@ -91,7 +91,7 @@ $(function(){
 						<br>
 						<div class="col-sm-6">
 							<br>
-							<h1 class="jg" style="padding-left: 10px;">회원 리스트</h1>
+							<h1 class="nav-icon fas fa-address-book" style="padding-left: 10px;">&nbsp;회원리스트</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right" style="background: white">

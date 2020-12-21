@@ -45,8 +45,24 @@
 	
 	<!-- 목록 갯수  -->
 	<select id="memberlistPagingListCnt" parameterType="ants.com.member.model.MemberVo" resultType="int">
-		SELECT COUNT(*)
-		  FROM MEMBER
+<!-- 		SELECT COUNT(*) -->
+<!-- 		  FROM MEMBER -->
+		select count(*) as totCnt
+		from member
+		WHERE DEL = 'N'
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchCondition == 1">
+					AND mem_id LIKE '%' || #{searchKeyword} || '%'
+				</when>
+				<when test="searchCondition == 2">
+					AND mem_name LIKE '%' || #{searchKeyword} || '%'
+				</when>
+				<when test="searchCondition == 3">
+					AND mem_type LIKE '%' || #{searchKeyword} || '%'
+				</when>
+			</choose>
+		</if>
 	</select>
 	
 	
@@ -84,24 +100,55 @@ VALUES (IPHIST_SEQ.NEXTVAL,#{memId},#{ipAddr},SYSDATE)
 </insert>
 
 	<!-- 프로젝트 리스트 -->
-	<select id="getProjectList" resultType="ants.com.member.model.ProjectVo" parameterType="ants.com.member.model.ProjectVo">
-		SELECT * 
-		  FROM PROJECT
-		 WHERE DEL != 'Y'
+	<select id="projectlist" resultType="ants.com.member.model.ProjectVo" parameterType="ants.com.member.model.ProjectVo">
+		SELECT c.*
+			FROM (
+				SELECT ROWNUM RNUM, a.*
+				FROM (
+					SELECT *
+					FROM PROJECT
+					WHERE DEL = 'N'
+					AND pro_name != 'null'
+					<!-- 
+					WHERE DEL != 'Y'
+					AND PRO_NAME != 'null'
+					 --> 
+					<if test="searchKeyword != null and searchKeyword != ''">
+						<choose>
+							<when test="searchCondition == 1">
+								AND pro_name LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 2">
+								AND mem_id LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</if>
+				) a
+		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE c.RNUM > #{firstIndex}]]>
 	</select>
 	
-	<!-- 1개 프로젝트 가져와 -->
-	<select id="getProject" parameterType="ants.com.member.model.ProjectVo" resultType="ants.com.member.model.ProjectVo">
-		SELECT * 
-		  FROM PROJECT
-		 WHERE REQ_ID = #{reqId}
+	<!-- 프로젝트 카테고리 검색  -->
+	<select id="projectPagingListCnt" parameterType="ants.com.member.model.ProjectVo" resultType="int">
+		select count(*) as totCnt
+		from project
+		WHERE DEL = 'N'
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchCondition == 1">
+					AND pro_name LIKE '%' || #{searchKeyword} || '%'
+				</when>
+				<when test="searchCondition == 2">
+					AND mem_id LIKE '%' || #{searchKeyword} || '%'
+				</when>
+			</choose>
+		</if>
 	</select>
 	
 	<!-- 프로젝트 삭제하기 -->
 	<update id="delproject" parameterType="ants.com.member.model.ProjectVo" >
 		UPDATE PROJECT
-			SEL DEL = 'Y'
-		WHERE req_id = #{reqId}
+			SET DEL = 'Y'
+		WHERE REQ_ID = #{reqId}
 	</update>
 
 
