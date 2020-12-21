@@ -573,7 +573,7 @@ public class MemberController {
 	}
 		
 	
-	// 공지사항리스트 출력
+	// 공지사항리스트 출력	(로그인 전)
 	// admin 인터셉터 때문에 관리자로 로그인 안하면 admin url을 탈수 없기 때문에 따로 만듦
 	@RequestMapping("/noticelistmemview")
 	public String noticelistmemview(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model) throws Exception{
@@ -601,8 +601,7 @@ public class MemberController {
 					
 		return "main.tiles/notice/noticelistmemview";
 	}
-			
-		
+	
 	// 각 공지사항 상세보기
 	@RequestMapping("/noticedetailmemview")
 	public String noticedetailmemview(String noticeId, HttpSession session, Model model) {
@@ -612,6 +611,35 @@ public class MemberController {
 		
 		return "main.tiles/notice/noticedetailmemview";
 	}
+	
 		
+	// 공지사항리스트 출력	(로그인 후)
+	// admin 인터셉터 때문에 관리자로 로그인 안하면 admin url을 탈수 없기 때문에 따로 만듦
+	@RequestMapping("/noticelistview")
+	public String noticelistview(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model) throws Exception{
+		
+		/** EgovPropertyService.sample */
+		noticeVo.setPageUnit(propertiesService.getInt("pageUnit"));
+		noticeVo.setPageSize(propertiesService.getInt("pageSize"));
+			
+		/** pageing setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(noticeVo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(noticeVo.getPageUnit());
+		paginationInfo.setPageSize(noticeVo.getPageSize());
+
+		noticeVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		noticeVo.setLastIndex(paginationInfo.getLastRecordIndex());
+		noticeVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		List<NoticeVo> resultList = adminService.noticelist(noticeVo);
+		model.addAttribute("noticelist", resultList);
+
+		int totCnt = adminService.noticePagingListCnt(noticeVo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
+						
+		return "tiles/notice/noticelistmemview";
+	}
 	
 }

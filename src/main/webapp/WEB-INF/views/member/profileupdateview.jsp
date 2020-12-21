@@ -54,23 +54,6 @@
 		border-radius: 80px;	
 		outline: none;
 	} 	
-	
-		/* 말풍선 */
-span.tip {
-    position: relative;
-}
-
-span.tip span {
-    position: absolute;
-    z-index: 1;
-    width:150px;		
-    font-size:11px;				
-    background: white;	
-    border: 1px solid black;	
-    color: black;  
-    -moz-border-radius: 15px; /* 파폭 박스 둥근 정도 */
-    -webkit-border-radius: 60px 60px 80px 20px; /* 사파리 박스 둥근 정도 */ 	
-}	 	
 </style>	
 		
 <body>
@@ -86,13 +69,10 @@ span.tip span {
 				
 				<form id="fmin" role="form" class="form-horizontal" action="/member/profileupdate" method="POST" enctype="multipart/form-data">
 				<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
-				
-				<div class="text-center">
+					
+				<div class="text-center" title="이미지를 클릭하면 변경할 수 있어요!">
 					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border: 1px solid white; height: 200px; width:140px; margin: 0 auto;">
 						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;"/>
-						<span class="tip">
-							<span>이미지를 클릭하면 변경할 수 있어요!</span>
-						</span>
 					</div><br>		 
 					<div class="content">
 						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left;" />	
