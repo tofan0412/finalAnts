@@ -139,13 +139,14 @@
 								<th style="padding-left: 30px;">제목</th>
 								<th>작성자</th>
 								<th>날짜</th>
-								<th></th>
+								<th>종류</th>
 							</tr>
 						</thead>
 						
 						<!-- 리스트부분 -->
 						<tbody>
 							<c:forEach items="${noticelist }" var="notice" varStatus="status">
+							
 								<tr>
 									<td style="width: 150px; padding-left: 50px;"><c:out
 											value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />.</td>
@@ -155,8 +156,14 @@
 											${notice.noticeTitle }</a></td>
 									<td>${notice.adminId }</td>
 									<td>${notice.regDt }</td>
-									<td style="text-align: center;">
+									<c:if test="${notice.importance == 'slow'}">
+									<td  class="jg"> 일반</td>										
+									</c:if>
+									<c:if test="${notice.importance == 'fast'}">
+										<td  class="jg"> 긴급</td>										
+									</c:if>
 								</tr>
+								
 							</c:forEach>
 							<c:if test="${noticelist.size() == 0}">
 								<td colspan="7" style="text-align: center;"><br> <strong>

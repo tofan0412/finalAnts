@@ -25,6 +25,14 @@ $(function(){
 	$("#back").on('click',function(){
 		window.history.back();
 	})
+	
+	if('${noticevo.importance}' == 'slow'){
+		$('#importance').text('일반');
+	}else if('${noticevo.importance}' == 'fast'){
+		$('#importance').text('긴급');
+	}
+	
+	
 })
 </script>
 
@@ -107,6 +115,14 @@ $(function(){
 		            <td style="padding-left: 20px; width: 700px;">
 		            	<label class="control-label" id="regDt">${noticevo.regDt }</label>
 		            </td>
+		        </tr>
+		        
+		        <tr class="stylediff">
+		            <th class="success jg">종류</th>
+		            <td colspan="3">
+		            	<label id ="importance" class="control-label"></label> 		
+		            </td>
+		           
 		        </tr>
 		        
 		        <tr>
