@@ -7,6 +7,9 @@ public class ProjectMemberVo {
 	private String promemId;
 	private String memId;
 	private String promemStatus;
+	private String title;
+	private String plName;
+	
 	public String getReqId() {
 		return reqId;
 	}
@@ -31,11 +34,24 @@ public class ProjectMemberVo {
 	public void setPromemStatus(String promemStatus) {
 		this.promemStatus = promemStatus;
 	}
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getPlName() {
+		return plName;
+	}
+	public void setPlName(String plName) {
+		this.plName = plName;
+	}
 	@Override
 	public String toString() {
 		return "ProjectMemberVo [reqId=" + reqId + ", promemId=" + promemId + ", memId=" + memId + ", promemStatus="
-				+ promemStatus + "]";
+				+ promemStatus + ", title=" + title + ", plName=" + plName + "]";
 	}
-	
 	
 }

@@ -116,6 +116,32 @@ public class ProjectController {
 			return "fail";
 		}
 	}
+	
+	@RequestMapping("requestPjtMember")
+	public String requestPjtMember(HttpSession session, Model model) {
+		//data setting
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		List<ProjectMemberVo> pjtMemberList = projectService.requestPjtMember(memberVo);
+		model.addAttribute("pjtMemberList", pjtMemberList);
+		return "tiles/project/pjtMemberList";
+	}
+	
+	@RequestMapping("updatePjtMember")
+	public String updatePjtMember(ProjectMemberVo projectMemberVo,HttpSession session) {
+		//data setting
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		projectMemberVo.setMemId(memberVo.getMemId());
+		projectMemberVo.setPromemStatus("IN");
+		
+		projectService.updatePjtMember(projectMemberVo);
+		return "jsonView";
+	}
+	@RequestMapping("deletePjtMember")
+	public String deletePjtMember(ProjectMemberVo projectMemberVo,HttpSession session) {
+		
+		projectService.deletePjtMember(projectMemberVo);
+		return "jsonView";
+	}
 
 	@RequestMapping("/insertProject")
 	@ResponseBody

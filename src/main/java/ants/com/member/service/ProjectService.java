@@ -140,5 +140,17 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	public List<IssueVo> chartIssuesCnt(String reqId) {
 		return mapper.chartIssuesCnt(reqId);
 	}
+	
+	public List<ProjectMemberVo> requestPjtMember(MemberVo memberVo){
+		return mapper.requestPjtMember(memberVo);
+	}
+
+	public int updatePjtMember(ProjectMemberVo projectMemberVo) {
+		return mapper.updatePjtMember(projectMemberVo);
+	}
+	
+	public int deletePjtMember(ProjectMemberVo projectMemberVo) {
+		return mapper.deletePjtMember(projectMemberVo);
+	}
 
 }
