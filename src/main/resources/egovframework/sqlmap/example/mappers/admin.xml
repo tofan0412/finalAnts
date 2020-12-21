@@ -101,11 +101,6 @@ VALUES (IPHIST_SEQ.NEXTVAL,#{memId},#{ipAddr},SYSDATE)
 
 	<!-- 프로젝트 리스트 -->
 	<select id="projectlist" resultType="ants.com.member.model.ProjectVo" parameterType="ants.com.member.model.ProjectVo">
-		<!-- 
-		SELECT * FROM NOTICE where del = 'N'
-		order by notice_id desc 
-		 -->
-		
 		SELECT c.*
 			FROM (
 				SELECT ROWNUM RNUM, a.*
@@ -113,6 +108,11 @@ VALUES (IPHIST_SEQ.NEXTVAL,#{memId},#{ipAddr},SYSDATE)
 					SELECT *
 					FROM PROJECT
 					WHERE DEL = 'N'
+					AND pro_name != 'null'
+					<!-- 
+					WHERE DEL != 'Y'
+					AND PRO_NAME != 'null'
+					 --> 
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>
 							<when test="searchCondition == 1">
@@ -144,25 +144,12 @@ VALUES (IPHIST_SEQ.NEXTVAL,#{memId},#{ipAddr},SYSDATE)
 		</if>
 	</select>
 	
-<!-- 	<select id="getProjectList" resultType="ants.com.member.model.ProjectVo" parameterType="ants.com.member.model.ProjectVo"> -->
-<!-- 		SELECT *  -->
-<!-- 		  FROM project -->
-<!-- 		 WHERE DEL = 'N' -->
-<!-- 	</select> -->
-	
-	<!-- 1개 프로젝트 가져와 -->
-<!-- 	<select id="getProject" parameterType="ants.com.member.model.ProjectVo" resultType="ants.com.member.model.ProjectVo"> -->
-<!-- 		SELECT *  -->
-<!-- 		  FROM project -->
-<!-- 		 WHERE REQ_ID = #{reqId} -->
-<!-- 	</select> -->
-	
 	<!-- 프로젝트 삭제하기 -->
-<!-- 	<update id="delproject" parameterType="ants.com.member.model.ProjectVo" > -->
-<!-- 		UPDATE project -->
-<!-- 			SET DEL = 'Y' -->
-<!-- 		WHERE req_id = #{reqId} -->
-<!-- 	</update> -->
+	<update id="delproject" parameterType="ants.com.member.model.ProjectVo" >
+		UPDATE PROJECT
+			SET DEL = 'Y'
+		WHERE REQ_ID = #{reqId}
+	</update>
 
 
 </mapper>

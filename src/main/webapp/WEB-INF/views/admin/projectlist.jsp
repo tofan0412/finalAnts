@@ -45,19 +45,15 @@
 	}
 </style>
 
-<script>
+<script type="text/javascript">
 $(function(){
-	$("#delproject").on('click', function(){
-        if(confirm("정말 삭제하시겠습니까 ?") == true){
-			$(location).attr('href', '${pageContext.request.contextPath}/admin/delproject?reqId=${projectvo.reqId}');
-        }else{
-        	return;
-        }
+	$('.projectDelBtn').click(function(){
+		alert("프로젝트가 삭제되었습니다.");
+		
+		var reqId = $(this).attr("reqId");
+		$(location).attr("href", "${pageContext.request.contextPath}/admin/delproject?reqId="+reqId);
 	})
-})
-$(function(){
-	
-	$("#pagenum a").addClass("page-link");  
+// 	$("#pagenum a").addClass("page-link");  
 })
 
 /* pagination 페이지 링크 function */
@@ -90,7 +86,7 @@ $(function(){
 						<br>
 						<div class="col-sm-6">
 							<br>
-							<h1 class="jg" style="padding-left: 10px;">프로젝트 리스트</h1>
+							<h1 class="nav-icon fas fa-tasks" style="padding-left: 10px;">&nbsp;프로젝트 리스트</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right" style="background: white">
@@ -155,7 +151,7 @@ $(function(){
 									<td style="text-align: center;">${project.proName }</td>
 									<td style="text-align: center;">${project.memId }</td>
 									<td style="text-align: center;">${project.regDt }</td>
-									<td><button id="delproject" class="btn btn-danger projectDelBtn" reqId=${project.reqId }>삭제</button></td>
+									<td><button class="btn btn-danger projectDelBtn" reqId=${project.reqId }>삭제</button></td>
 								</tr>
 							</c:forEach>
 							<c:if test="${projectlist.size() == 0}">

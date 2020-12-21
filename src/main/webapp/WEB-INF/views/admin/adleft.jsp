@@ -11,16 +11,9 @@
 	$(function(){
 		// 메뉴를 선택하면 배경색이 변한다. 
 		$('.selectable').click(function(){
-// 			alert($(this).text());
 			$('.selectable').parent().removeClass("active");
 			$(this).parent().addClass("active");
 		})
-		
-// 		$('.mkPjtBtn').click(function(){
-// 			var plId = '${SMEMBER.memId}';
-// 			$(location).attr('href', '/project/readReqList?plId='+plId);
-// 		})
-		
 		
 	})
 
@@ -48,6 +41,7 @@
 						<p class="jg">전체정보<i class="fas fa-angle-left right"></i></p>
 		            </a>
 		            <ul class="nav nav-treeview" style="display: block;">
+		            
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/admin/noticelist" class="nav-link" >
 		                 <i class="nav-icon fas fa-clipboard-list"></i>
@@ -62,28 +56,19 @@
 		              </li>
 		              <li class="nav-item">
 		                <a href="/admin/ipMain" class="nav-link" >
-						<i class="nav-icon fas fa-network-wired"></i>
+						<i class="nav-icon fas fa-unlock-alt"></i>
 						<p class="selectable jg">관리자 허용ip 리스트</p>
 		                </a>
 		              </li>
-					</ul>
-				</li><br>
-				
-				<!-- 프로젝트 관리할곳 -->
-				<li class="nav-item has-treeview menu-open" >
-					<a href="#" class="nav-link active">
-		              <i class="nav-icon fas fa-newspaper"></i>
-						<p class="jg">프로젝트<i class="fas fa-angle-left right"></i></p>
-		            </a>
-		            
-		            <ul class="nav nav-treeview" style="display: block;">
-		            <li class="nav-item">
-		                <a href="/admin/projectlist" class="nav-link" >
-		                 <i class="nav-icon fas fa-clipboard-list"></i>
+		              <li class="nav-item">
+		                <a href="${pageContext.request.contextPath}/admin/projectlist" class="nav-link" >
+		                 <i class="nav-icon fas fa-tasks"></i>
 							<p class="selectable jg">프로젝트 목록</p>
 		                </a>
-		            </li>
-				</li>
+		              </li>
+		              
+					</ul>
+				</li><br>
 				 
 			</ul>
 			

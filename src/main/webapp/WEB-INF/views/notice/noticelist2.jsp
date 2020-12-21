@@ -94,7 +94,7 @@
 						<br>
 						<div class="col-sm-6">
 							<br>
-							<h1 class="jg" style="padding-left: 10px;">공지사항</h1>
+							<h1><i class=" fas fa-clipboard-list " style="padding-left: 10px">&nbsp;공지사항</i></h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right" style="background: white">
