@@ -126,7 +126,7 @@ toastr.options = {
 					dataType : "text",
 					success : function(data){
 						alarmList();
-					}
+					}ㄴ
 			});
 		}
 	}
