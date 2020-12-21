@@ -213,7 +213,7 @@ public class TodoController {
 		String memId = memberVo.getMemId();
 		todoHistoryVo historyVo = new todoHistoryVo();
 		historyVo.setMemId(memId);
-		historyVo.setPercent(todoVo.getTodoPercent());
+		historyVo.setHpercent(todoVo.getTodoPercent());
 		historyVo.setReqId(reqId);
 		historyVo.setTodoId(todoVo.getTodoId());
 		int todoHistoryCnt = manageBoardService.todoHistoryCnt(historyVo);

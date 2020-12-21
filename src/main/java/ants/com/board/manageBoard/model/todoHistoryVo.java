@@ -4,7 +4,7 @@ public class todoHistoryVo {
 	private String todoHid;
 	private String todoId;
 	private String regDt;
-	private String percent;
+	private String hpercent;
 	private String memId;
 	private String memName;
 	private String reqId;
@@ -40,22 +40,23 @@ public class todoHistoryVo {
 	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
-	public String getPercent() {
-		return percent;
-	}
-	public void setPercent(String percent) {
-		this.percent = percent;
-	}
+	
 	public String getMemId() {
 		return memId;
 	}
 	public void setMemId(String memId) {
 		this.memId = memId;
 	}
+	public String getHpercent() {
+		return hpercent;
+	}
+	public void setHpercent(String hpercent) {
+		this.hpercent = hpercent;
+	}
 	@Override
 	public String toString() {
-		return "todoHistoryVo [todoHid=" + todoHid + ", todoId=" + todoId + ", regDt=" + regDt + ", percent=" + percent
-				+ ", memId=" + memId + ", memName=" + memName + ", reqId=" + reqId + "]";
+		return "todoHistoryVo [todoHid=" + todoHid + ", todoId=" + todoId + ", regDt=" + regDt + ", hpercent="
+				+ hpercent + ", memId=" + memId + ", memName=" + memName + ", reqId=" + reqId + "]";
 	}
-
+	
 }
