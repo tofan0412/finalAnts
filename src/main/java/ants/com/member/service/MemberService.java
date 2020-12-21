@@ -43,6 +43,10 @@ public class MemberService{
 		return mapper.getAllMember(term);
 	}
 	
+	public List<MemberVo> getAllMemberList(){
+		return mapper.getAllMemberList();
+	}
+	
 	
 	public int checkSignup(MemberVo memberVo) {
 		logger.debug("memberService checkSignup : {}", memberVo);

@@ -613,5 +613,15 @@ public class MemberController {
 		return "main.tiles/notice/noticedetailmemview";
 	}
 		
+	// 전체 회원 리스트 뽑아오기
+	@RequestMapping("/getAllMemberList")
+	@ResponseBody
+	public int getAllMemberList(Model model){
+		List<MemberVo> memList = memberService.getAllMemberList();
+		model.addAttribute("memList" , memList);
+		
+		// 불러온 전체 회원수를 반환한다.
+		return memList.size();
+	}
 	
 }
