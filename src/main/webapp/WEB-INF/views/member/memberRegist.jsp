@@ -35,16 +35,16 @@
 		font-size:13px;		
 	}
 	.imgc{
-		width: 80px; 
-		height: 56px; 
+		width: 100px; 
+		height: 100px; 
 		cursor: pointer;
-	}
-	#checkbtn{
+	}	
+	#checkbtn{	
 		height : 42px;
 	}
 	.indiv{
 		margin-left: 20px;
-	} 
+	} 	
 	.phoneNumber{
 		padding : 10px;
 		padding-left : 20px;
@@ -52,8 +52,7 @@
 		height : 50px;
 		border-radius: 80px;	
 		outline: none;
-	}
-	
+	}	
 		/* 말풍선 */
 span.tip {
     position: relative;
@@ -65,14 +64,13 @@ span.tip span {
     width:150px;		
     font-size:11px;				
     background: white;	
-    border: 1px solid black;	
+    border: 1px solid black;		
     color: black;  
     -moz-border-radius: 15px; /* 파폭 박스 둥근 정도 */
-    -webkit-border-radius: 60px 60px 80px 20px; /* 사파리 박스 둥근 정도 */ 	
-}	 
-	  
+    -webkit-border-radius: 60px 60px 60px 0px; /* 사파리 박스 둥근 정도 */ 	
+}		
 </style>	
-		
+
 <body>	
 <div class="wrapperdd" style="margin-left:25%; margin-right:25%; margin-top:25px;">
 	<div class="register-card-body">	
@@ -89,7 +87,7 @@ span.tip span {
 					
 				<div class="text-center">
 					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border: 1px solid white; height: 200px; width:140px; margin: 0 auto;">
-						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" src="http://192.168.44.76/profile/user-0.png" alt="User profile picture"/>
+						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" src="http://192.168.44.76/profile/user-1.png" alt="User profile picture"/>
 						<span class="tip">
 							<span>이미지를 클릭하면 변경할 수 있어요!</span>
 						</span>
@@ -172,52 +170,29 @@ span.tip span {
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-lg">
-    
+    <div class="modal-dialog modal-lg" style="width:450px;">
+    	
       <!-- Modal content-->
       <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">기본 이미지</h4>
+        <div class="modal-header">		
+          <h5 class="modal-title">기본 이미지</h5>	
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-	          <img src="/profile/user-0.png" id="img0" name="img0" class="imgc">
+        </div>	
+        <div class="modal-body" style="width:450px;">
 	          <img src="/profile/user-1.png" id="img1" name="img1" class="imgc">
 	          <img src="/profile/user-2.png" id="img2" name="img2" class="imgc"/>
-	          <img src="/profile/user-3.png" id="img3" name="img3" class="imgc"/>
 	          <img src="/profile/user-4.png" id="img4" name="img4" class="imgc"/>
+	          <img src="/profile/user-3.png" id="img3" name="img3" class="imgc"/>	
 	          <img src="/profile/user-5.png" id="img5" name="img5" class="imgc"/>
 	          <img src="/profile/user-6.png" id="img6" name="img6" class="imgc"/>
 	          <img src="/profile/user-7.png" id="img7" name="img7" class="imgc"/>
 	          <img src="/profile/user-8.png" id="img8" name="img8" class="imgc"/>
-	          <img src="/profile/user-9.png" id="img9" name="img9" class="imgc"/>
-	          <img src="/profile/user-10.png" id="img10" name="img10" class="imgc"/>
-	          <img src="/profile/user-11.png" id="img11" name="img11" class="imgc"/>
-	          <img src="/profile/user-12.png" id="img12" name="img12" class="imgc"/>
-	          <img src="/profile/user-13.png" id="img13" name="img13" class="imgc"/>
-	          <img src="/profile/user-14.png" id="img14" name="img14" class="imgc"/>
-	          <img src="/profile/user-15.png" id="img15" name="img15" class="imgc"/>
-	          <img src="/profile/user-16.png" id="img16" name="img16" class="imgc"/>
-	          <img src="/profile/user-17.png" id="img17" name="img17" class="imgc"/>
-	          <img src="/profile/user-18.png" id="img18" name="img18" class="imgc"/>
-	          <img src="/profile/user-19.png" id="img19" name="img19" class="imgc"/>
-	          <img src="/profile/user-20.png" id="img20" name="img20" class="imgc"/>
-	          <img src="/profile/user-21.png" id="img21" name="img21" class="imgc"/>
-	          <img src="/profile/user-22.png" id="img22" name="img22" class="imgc"/>
-	          <img src="/profile/user-23.png" id="img23" name="img23" class="imgc"/>
-	          <img src="/profile/user-24.png" id="img24" name="img24" class="imgc"/>
-	          <img src="/profile/user-25.png" id="img25" name="img25" class="imgc"/>
-	          <img src="/profile/user-26.png" id="img26" name="img26" class="imgc"/>
-	          <img src="/profile/user-27.png" id="img27" name="img27" class="imgc"/>
-	          <img src="/profile/user-28.png" id="img28" name="img28" class="imgc"/>
-	          <img src="/profile/user-29.png" id="img29" name="img29" class="imgc"/>
-	          <img src="/profile/user-30.png" id="img30" name="img30" class="imgc"/>
-        </div>
+        </div>	
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="close" data-dismiss="modal" style="height:25px; width:80px;">Close</button>
         </div>
-      </div>
-      
+      </div>	
+    	  										
     </div>
   </div>
   
@@ -390,7 +365,7 @@ function readURL(input) {
 			})
 			
 			
-				
+		/* 		
 			$('#img0').click(function(){
 				// 기본이미지 선택하면 파일 값 날리기
 				var picture = document.getElementById('picture');
@@ -399,18 +374,18 @@ function readURL(input) {
 				// 0번 이미지 경로 가져오기
 				imgsrc = document.getElementById('img0').src
 					
-				/* $('#clickmsg').append(imgsrc); */		 		// 이미지 경로 미리보기
+				$('#clickmsg').append(imgsrc); 		 		// 이미지 경로 미리보기
 				$('#pictureViewImg').attr('src', imgsrc); 		// 이미지 뷰어에 보이기
 				$('#imgname').attr('value', imgsrc);			// input 태그에 value값으로 경로 추가
-				/* 
+				
 				var pass = document.getElementById('imgname');	// img name 에 담긴 value값 가져오기
 				alert(pass.value);								// img name 의 value 값 확인
-				*/
+				
  				// 모달창 닫기
 				$("#myModal").modal('hide');
-				
+					
 			})
-			
+			 */
 			
 			$('#img1').click(function(){
 				var picture = document.getElementById('picture');// 파일 value값 지우기
@@ -496,8 +471,8 @@ function readURL(input) {
 				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
 				
 				$("#myModal").modal('hide');					// 모달창 닫기
-			})
-			$('#img9').click(function(){
+			})	
+	/* 		$('#img9').click(function(){
 				var picture = document.getElementById('picture');// 파일 value값 지우기
 				picture.value = null;
 				
@@ -734,7 +709,7 @@ function readURL(input) {
 			
 			
 			
-			
+				
 			
 			
 			$('#img30').click(function(){
@@ -746,7 +721,7 @@ function readURL(input) {
 				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가
 				
 				$("#myModal").modal('hide');					// 모달창 닫기
-			})
+			}) */
 		})
 		
 		
