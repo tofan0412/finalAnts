@@ -9,7 +9,7 @@
 <html>
 <style>
  a{
- 	color : darkslategray;
+ 	color : currentcolor;
  }
  
  	.pagingui{
@@ -273,7 +273,8 @@ toastr.options = {
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'reply'}"><b>댓글</b>
-					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }','${fn:split(a.alarmCont,'&&')[0]}','${fn:split(a.alarmCont,'&&')[4]}')">${fn:substring(fn:split(a.alarmCont,'&&')[5],0,70)}</a>
+					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }','${fn:split(a.alarmCont,'&&')[0]}','${fn:split(a.alarmCont,'&&')[4]}')">${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}</a>
+					                    	 &nbsp;<span style="font-size: 0.9em; color: darkslategray">[${fn:substring(fn:split(a.alarmCont,'&&')[5],0,20)}]</span>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'posts'}"><b>게시물</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
