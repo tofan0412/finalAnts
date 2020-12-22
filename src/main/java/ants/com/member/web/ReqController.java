@@ -32,7 +32,6 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 @RequestMapping("/req")
 @Controller
 public class ReqController {
-	private static final Logger logger = LoggerFactory.getLogger(ReqController.class);
 
 	@Resource(name = "reqService")
 	private ReqService reqService;
@@ -56,7 +55,6 @@ public class ReqController {
 			HttpSession session) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER"); 
 		reqVo.setMemId(memberVo.getMemId());
-		logger.debug("받아온 reqVo:{}",reqVo);
 
 		/** pageing setting */
 		PaginationInfo paginationInfo = new PaginationInfo();
@@ -70,7 +68,6 @@ public class ReqController {
 
 		List<?> reqList = reqService.reqList(reqVo);
 		model.addAttribute("reqList", reqList);
-		logger.debug("결과reqVo...........:{}",reqVo);
 
 		int totCnt = reqService.reqListCount(reqVo);
 		paginationInfo.setTotalRecordCount(totCnt);
@@ -79,6 +76,13 @@ public class ReqController {
 		return "tiles/member/reqList";
 	}
 	
+	/**
+	 * 요구사항 정의서 상세페이지조회
+	 * @param id reqId
+	 * @param reqVo 
+	 * @param model
+	 * @return reqVo 객체
+	 */
 	@RequestMapping(value="/reqDetail")
 	public String reqDetail(@RequestParam(name="selectedId", required= false) String id,@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
 		if(id != null) {
@@ -213,7 +217,7 @@ public class ReqController {
 	@RequestMapping(value="/plDelete")
 	public String plDelete(ReqVo reqVo, @RequestParam(name="selectedId", required= false) String id) {
 		reqVo.setReqId(id);
-		int cnt = reqService.plDelete(reqVo);
+		reqService.plDelete(reqVo);
 		
 		return "redirect:/req/reqList";
 	}
