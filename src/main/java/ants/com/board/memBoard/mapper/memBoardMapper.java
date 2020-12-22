@@ -2,6 +2,8 @@ package ants.com.board.memBoard.mapper;
 
 import java.util.List;
 
+import org.springframework.ui.Model;
+
 import ants.com.board.memBoard.model.AllBookMarkVo;
 import ants.com.board.memBoard.model.BookmarkVo;
 import ants.com.board.memBoard.model.ReplyVo;
@@ -56,6 +58,18 @@ public interface memBoardMapper {
 	// 일정 삭제
 	public int scheduleDelete(ScheduleVo scheduleVo);
 
+	
+	
+	// 일정 댓글 작성
+	public int scheduleinsertreply(ReplyVo replyVo);
+	
+	// 일정 댓글 삭제
+	public int scheduledelreply(ReplyVo replyVo);
+		
+	// 일정 댓글 목록 출력
+	public List<ReplyVo> schedulereplylist(ReplyVo replyVo);
+	
+		
 
 	//프로젝트 캘린더용
 	public List<ScheduleVo> showCalendar(ScheduleVo scheduleVo);

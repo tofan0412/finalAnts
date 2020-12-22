@@ -6,8 +6,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import ants.com.board.manageBoard.web.HotIssueController;
 import ants.com.board.memBoard.mapper.memBoardMapper;
 import ants.com.board.memBoard.model.AllBookMarkVo;
 import ants.com.board.memBoard.model.BookmarkVo;
@@ -92,6 +96,26 @@ public class memBoardService {
 		return mapper.scheduleDelete(scheduleVo);
 	}
 
+		
+	
+	private static final Logger logger = LoggerFactory.getLogger(HotIssueController.class);
+	// 일정 댓글 작성
+	public int scheduleinsertreply(ReplyVo replyVo) {
+		return mapper.scheduleinsertreply(replyVo);
+	}	
+				
+	// 일정 댓글 삭제
+	public int scheduledelreply(ReplyVo replyVo) {
+		return mapper.scheduledelreply(replyVo);
+	}
+			
+	// 일정 댓글 목록 출력
+	public List<ReplyVo> schedulereplylist(ReplyVo replyVo){
+		return mapper.schedulereplylist(replyVo);
+	}
+	
+	
+	
 	// 프로젝트용
 	// 일정 리스트(캘린더용)
 	public List<ScheduleVo> showCalendar(ScheduleVo scheduleVo) {

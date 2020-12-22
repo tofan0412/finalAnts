@@ -395,7 +395,6 @@ function resize(obj) {
 						<input type= "button" value="삭제하기" id="delissue"  class="btn btn-default float-right jg" >			
 						<input type= "button" value="수정하기" id ="modissue" class="btn btn-default float-right jg" style="margin-right: 5px;">
 					</c:if>
-				
             </div>
             
             
@@ -444,9 +443,8 @@ function resize(obj) {
 								 <input id="replybtn2" type = "button" class="btn btn-default float-right jg" value = "댓글작성"><br>				
 							 </div>
 						 </div>
-						</div>
 					</div>
-				
+				</div>
 			</form>
 	    </div>
 		<!-- 이슈 상세보기 끝-->  
