@@ -21,6 +21,8 @@ public interface MemberMapper {
 
 	public List<MemberVo> getAllMember(String term);
 
+	public List<MemberVo> getAllMemberList();
+	
 	public int checkSignup(MemberVo memberVo);
 	
 	public MemberVo logincheck(MemberVo memberVo);

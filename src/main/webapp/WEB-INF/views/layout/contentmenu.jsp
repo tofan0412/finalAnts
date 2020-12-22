@@ -1,19 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<!-- autoComplete 기능을 위해 필요한 애들 ... -->
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <script>
 	$(function() {
 		SearchListBanner = [];
 		inviteMemListBanner = [];
 		reqId = '${projectId}';
 		memId = "${SMEMBER.memId}";
-
+		
 		// 회원 초대 버튼을 누르면 모달창이 나온다.
 		$('.inviteBtn').click(function() {
 
@@ -27,36 +21,37 @@
 		})
 
 		$('#userSearchBanner').keyup(function() {
+			$('.warningBanner').empty();
+			
 			var keyword = $(this).val();
 
 			if (keyword != '') {
 				$.ajax({
 					url : "/project/userSearch",
-					data : {
-						keyword : keyword
-					},
+					data : { keyword : keyword },
 					method : "GET",
 					success : function(res) {
-						SearchListBanner = [];
-						for (var i = 0; i < res.length; i++) {
-							SearchListBanner.push(res[i].memId);
+						SearchListBanner = [];	// 검색 결과 리스트 초기화.
+						if (res.length == 0){	// 검색 결과가 없는 경우, 메서드 종료
+							return;
+						}else{	// 검색 결과가 1개 이상인 경우
+							for (var i = 0; i < res.length; i++) {
+								SearchListBanner.push(res[i].memId);
+							}
+							autoComplete(SearchListBanner);	
 						}
-						autoComplete(SearchListBanner);
 					}
 				})
-			}
+			} 
 		})
 
 		// 자동 완성 부분 ..
 		function autoComplete(SearchListBanner) {
 			$('#userSearchBanner').autocomplete({
 				source : SearchListBanner,
-				select : function(event, ui) {
-					console.log(ui.item);
-				},
+				select : function(event, ui) {},
 				minLength : 2,
-				// 모달 창 위로 떠야 한다..
-				appendTo : $('#inviteMember'),
+				appendTo : $('#inviteMember'),	// 모달 창 위로 떠야 한다..
 				focus : function(event, ui) {
 					return false;
 				}
@@ -64,101 +59,90 @@
 		}
 
 		// 사용자가 추가 버튼을 누를 때 ..
-		$('.addMemBtnBanner')
-				.click(
-						function() {
-							var memId = $('#userSearchBanner').val();
+		$('.addMemBtnBanner').click(function() {
+			addingMemId = $('#userSearchBanner').val();
+			reqId = "${projectId}";
+			
+			alert("현재 프로젝트 번호는? " + reqId);
+			alert("추가하고자 하는 회원 아이디는? " + addingMemId); 
+			
+			if (addingMemId == "${SMEMBER.memId}") {
+				$('.warningBanner').text("본인입니다.");
+				return;
+			}
 
-							// 나는 초대할 수 없다. 
-							if (memId == "${SMEMBER.memId}") {
-								$('.warningBanner').text("본인입니다.");
+			var DBCheck = "";		// DB에 존재하는가?
+			var existCheck = "";	// 이미 참여한 회원인가?
+			var addedCheck = "";	// 이미 초대할 리스트에 추가되어 있는가?
+			
+			// DB에 존재하는지 확인
+			$.ajax({
+				url : "/project/chkMemId",
+				data : { memId : addingMemId },
+				method : "POST",
+				success : function(res) {
+					alert("DB에 존재하는지 확인합니다..");
+					if (res == "accept") {
+						alert("DB에 존재합니다.");
+						DBCheck = "pass";
+					}else{
+						DBCheck = "noop";
+						$('.warningBanner').text("존재하지 않는 회원입니다.");
+						return;
+					}
+				}
+			})
+			if (DBCheck == "pass"){
+				$.ajax({
+					url : "/projectMember/proMemList",
+					data : { reqId : reqId },
+					method : "POST",
+					success : function(res) {
+						alert("이미 추가된 플젝 회원인지 검사합니다..");
+						for (var i = 0; i < res.length; i++) {
+							if (addingMemId == res[i].memId) {
+								$('.warningBanner').text("이미 참여하고 있는 회원입니다.");
+								existCheck = "noop";
 								return;
+							}else{
+								existCheck = "pass";
 							}
+						}
+					}
+				})
+			}
 
-							// 기존에 추가한 회원인지 아닌지를 확인하는 값.
-							check = 0;
-
-							// 1차적으로 DB에서 검증이 필요.(DB에 존재하는지 안하는지..)  
-							$
-									.ajax({
-										url : "/project/chkMemId",
-										data : {
-											memId : memId
-										},
-										method : "POST",
-										success : function(res) {
-											console.log(res);
-											if ("accept" == res) { // DB 상에 존재하는 회원아이디임을 나타낸다 ! 
-
-												// 이미 프로젝트에 참여하고 있는 멤버인지 확인해야 한다. 
-												$
-														.ajax({
-															url : "/projectMember/proMemList",
-															data : {
-																reqId : reqId
-															},
-															method : "POST",
-															success : function(
-																	res) {
-																// 프로젝트를 생성한 시점에서, PL이 있기 때문에 멤버는 최소 1명이다. 
-																for (var i = 0; i < res.length; i++) {
-
-																	// 이미 프로젝트에 참여하고 있는 회원이라면 . . . 
-																	if (memId == res[i].memId) {
-																		$(
-																				'.warningBanner')
-																				.text(
-																						"이미 참여하고 있는 회원입니다.");
-																		break; //for문을 벗어난다.
-																	} else { // DB상 존재하고, 프로젝트에 참여하지 않은 회원이다.
-																		// 만약 inviteMemList 길이가 0인 경우, 최초로 넣는 것이므로 바로 패스.
-																		if (inviteMemListBanner.length == 0) {
-																			$(
-																					'.warningBanner')
-																					.text(
-																							'');
-																			inviteMemListBanner
-																					.push(memId); // 배열에 추가하고
-																			listMember(inviteMemListBanner); // View 목록 수정.
-																			break;
-																		}
-																		// inviteMemList 목록의 길이가 0이 아닌 경우 이미 추가했는지 안했는지를 검증해야 한다.
-																		else {
-																			for (i = 0; i < inviteMemListBanner.length; i++) {
-																				if (inviteMemListBanner[i] == memId) {
-																					$(
-																							".warningBanner")
-																							.text(
-																									'');
-																					$(
-																							'.warningBanner')
-																							.text(
-																									"이미 추가한 회원입니다.");
-																					check = 1;
-																				}
-																			}
-																			if (check != 1) { // 기존에 추가하지 않은 회원인 경우, 추가한다.
-																				$(
-																						'.warningBanner')
-																						.text(
-																								'');
-																				inviteMemListBanner
-																						.push(memId);
-																				listMember(inviteMemListBanner);
-																			}
-																		}
-																	}
-																}
-															}
-														})
-											} else { // DB상 존재하지 않는 경우..
-												$(".warningBanner").text('');
-												$(".warningBanner").append(
-														"존재하지 않는 사용자 이름입니다.");
-											}
-										}
-									})
-						})
+			if (existCheck == "pass"){
+				// 초대할 회원 리스트 길이가 0인 경우 : 바로 넣는다.
+				if (inviteMemListBanner.length == 0) {
+					$('.warningBanner').text('');
+					inviteMemListBanner.push(memId);
+					listMember(inviteMemListBanner);
+					return;
+				}
+			
+				// 이미 초대할 회원이 리스트에 존재하는 경우 : 중복되면 안된다.
+				for (i = 0; i < inviteMemListBanner.length; i++) {
+					if (addingMemId == inviteMemListBanner[i]) {
+						$(".warningBanner").text('');
+						$('.warningBanner').text("이미 추가한 회원입니다.");
+						addedCheck = "noop";
+						return;
+					}else{
+						addedCheck = "pass";
+					}
+				}
+			}
+			if (addedCheck == "pass"){
+				$('.warningBanner').text('');
+				inviteMemListBanner.push(memId);
+				listMember(inviteMemListBanner);
+				return; // 추가하고 끝낸다.
+			}
+			alert("마지막입니다. 종료합니다.");
+			return;
+		})
+		///////////////// 추가 끝 /////////////////
 
 		function listMember(inviteMemListBanner) {
 			$('.MemListBanner').empty();
@@ -184,26 +168,29 @@
 		// 초대할 대상을 정한 후 초대하기 버튼을 누르면 해당 멤버에게 초대가 전송된다.
 
 		$('.inviteMemBtn').click(function() {
-			var ajaxArr = {
-				"inviteMemList" : inviteMemListBanner, // 변수명을 맞춰야 한다. inviteMemList로!
-				"reqId" : reqId,
-				"memId" : memId
-			};
-			$.ajax({
-				url : "/project/insertPjtMember",
-				data : ajaxArr,
-				method : "POST",
-				success : function(res) {
-					if (res == "success") {
-						// 해당 요구사항 정의서의 상태를 변경해야 한다.
-						saveReqMsg();
-						alert("초대를 완료하였습니다.");
-					} else {
-						console.log("인원 초대 실패..")
+			if (inviteMemListBanner.length == 0){
+				alert("초대할 대상을 선택하지 않았습니다.");
+			}else{
+				var ajaxArr = {
+						"inviteMemList" : inviteMemListBanner, // 변수명을 맞춰야 한다. inviteMemList로!
+						"reqId" : reqId,
+						"memId" : memId
+					};
+				$.ajax({
+					url : "/project/insertPjtMember",
+					data : ajaxArr,
+					method : "POST",
+					success : function(res) {
+						if (res == "success") {
+							// 해당 요구사항 정의서의 상태를 변경해야 한다.
+							saveReqMsg();
+							alert("초대를 완료하였습니다.");
+						} else {
+							console.log("인원 초대 실패..")
+						}
 					}
-				}
-			})
-
+				})
+			}
 		})
 		
 		function saveReqMsg(){
@@ -326,8 +313,8 @@
 	<!-- Modal to invite new Members . . . -->
 	<div class="modal fade" id="inviteMember" tabindex="-1" role="dialog"
 		aria-labelledby="inviteMemberModal">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content" style="height: 500px;">
+		<div class="modal-dialog modal-sm-center" role="document">
+			<div class="modal-content" style="height: 600px; width : 600px;">
 
 				<div class="modal-header">
 					<h3 class="modal-title jg" id="addplLable">멤버 초대하기</h3>
@@ -337,21 +324,31 @@
 					</button>
 				</div>
 
-				<div class="modal-body" style="width: 100%; height: 100%;">
-					<label class="jg" style="text-align: center;">초대할 멤버의 아이디를
-						검색하세요.</label>
-					<div class="warningBanner jg" style="color: red;"></div>
-					<input type="text" id="userSearchBanner" style="float: left;">
-					<button class="btn btn-success addMemBtnBanner">추가</button>
-					<br> <label class="jg">초대 목록</label>
-					<div class="MemListBanner"></div>
-
+				<div class="modal-body jg" style="width: 100%; height: 60%;">
+					
+					<div style="float : left; width : 50%;">
+						<label>초대할 멤버의 아이디를 검색하세요.</label>
+						<div class="warningBanner" style="color: red;"></div>
+						<input type="text" id="userSearchBanner" 
+							style="float: left; border-radius : 0.45rem;">
+							
+						<button class="btn btn-success addMemBtnBanner" style="height : 30px;">
+							ADD
+						</button>
+					</div>
+					
+					<div style="float : right; width : 50%;">
+						<label style="text-align : center;">초대 목록</label>
+						<div class="MemListBanner" style="height : 450px; overflow-y : auto;">
+						</div>
+					</div>
 				</div>
-
+				
 				<div class="modal-footer">
 					<button class="btn btn-success inviteMemBtn">초대하기</button>
 				</div>
 			</div>
+			
 		</div>
 	</div>
 
