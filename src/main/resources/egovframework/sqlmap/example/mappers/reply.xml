@@ -4,7 +4,15 @@
 
 	<!-- 댓글 등록 -->
 	<insert id="insertreply" parameterType="ants.com.board.memBoard.model.ReplyVo">
-		INSERT INTO reply VALUES(reply_seq.nextval,#{someId}, #{replyCont}, sysdate,'N', #{categoryId}, #{reqId}, #{memId})
+		INSERT INTO reply VALUES(
+			reply_seq.nextval,
+			#{someId}, 
+			#{replyCont}, 
+			sysdate,'N', 
+			#{categoryId}, 
+			(select req_id from issue where issue_id = #{someId}), 
+			#{memId}
+			)
 	</insert>
 	
 
@@ -22,8 +30,8 @@
 		    b.mem_filepath
     FROM reply a, member b
     WHERE some_id = #{someId}
-      and req_id = #{reqId}
       and category_id = #{categoryId}
+      and req_id = (select req_id from issue where issue_id = #{someId})
       and a.mem_id = b.mem_id
     order by reg_dt, to_number(reply_id)
   </select>

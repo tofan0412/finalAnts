@@ -31,12 +31,10 @@ public class ReplyController {
 	public String insertapply(ReplyVo replyVo, Model model, HttpSession session
 								,RedirectAttributes ra, HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		
-		String reqId = (String)session.getAttribute("projectId");
 		MemberVo membervo = (MemberVo) session.getAttribute("SMEMBER");
 				
 		replyVo.setMemId(membervo.getMemId());		
 		replyVo.setCategoryId(replyVo.getCategoryId());		
-		replyVo.setReqId(reqId);
 		
 		System.out.println("replyvo : " + replyVo );
 		
