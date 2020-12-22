@@ -53,6 +53,9 @@ public interface ManageBoardMapper {
 
 	// PL.프로젝트 리스트
 	public ProjectVo projectList(ProjectVo projectVo);
+	
+	// PM.프로젝트 리스트
+	public ProjectVo pmProjectList(ProjectVo projectVo);
 
 	// 다음 index값 추출
 	public String gettodoId();

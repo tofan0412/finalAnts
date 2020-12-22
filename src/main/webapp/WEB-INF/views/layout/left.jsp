@@ -211,7 +211,11 @@
 					    		<c:if test="${project.memId != SMEMBER.memId }">
 							    	<li class="nav-item">
 										<a class="nav-link " href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">
-									 		<i class="nav-icon fas fa-layer-group"></i><p class="selectable">${project.proName}</p>
+									 		<i class="nav-icon fas fa-layer-group"></i>
+											<c:choose>
+									 			<c:when test="${fn:length(project.proName) > 14 }"><p>${fn:substring(project.proName,0,12)}...</p></c:when>
+									 			<c:otherwise><p>${project.proName}</p></c:otherwise>
+									 		</c:choose>
 									 	</a>
 									</li>
 								</c:if>
@@ -255,7 +259,7 @@
 					    	<c:forEach items="${pmInProjectList}" var="project">
 					    		<c:if test="${project.proName != '' and project.proName != null}">
 							    	<li class="nav-item">
-										<a class="nav-link " href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}" >
+										<a class="nav-link " href="${pageContext.request.contextPath}/project/pmProjectgetReq?reqId=${project.reqId}" >
 									 		<i class="nav-icon fas fa-layer-group"></i>
 									 		<c:choose>
 									 			<c:when test="${fn:length(project.proName) > 14 }"><p>${fn:substring(project.proName,0,12)}...</p></c:when>

@@ -14,6 +14,7 @@
 			projectmember.req_id = project.req_id
 		and projectmember.mem_id = #{memId}
 		and projectmember.promem_status='IN'
+		and project.del ='N'
 	</select>
 
 	<select id="plInProjectList" parameterType="String"
@@ -29,6 +30,7 @@
 			reqlist.req_id = project.req_id
 		AND reqlist.pl_id= #{memId}
 		AND reqlist.status ='ACCEPT'
+		and project.del ='N'
 	</select>
 	
 	
@@ -37,13 +39,16 @@
 		SELECT
 			DISTINCT project.req_id, project.pro_name,
 			project.mem_id,
-			project.pro_percent as percent, project.reg_dt
+			project.pro_percent as percent,
+            TO_CHAR(project.reg_dt,'yyyy-mm-dd') as regDt,
+            TO_CHAR((project.reg_dt + reqlist.req_period),'yyyy-mm-dd') as endDt
 			FROM	(select * from
 					project)project,
 					reqlist reqlist
 		WHERE
 			reqlist.req_id = project.req_id
-		AND reqlist.mem_id= #{memId}
+		AND reqlist.mem_id= 'pm1'
+		and project.del ='N'
 	</select>
 
 	<select id="readReqList"
@@ -438,6 +443,35 @@ SELECT * FROM MEMBER WHERE MEM_NAME LIKE #{keyword}
 		]]> 
 	</select>
 	
+	<select id="projectListmain" parameterType="String"
+		resultType="ants.com.member.model.ProjectVo">
+		SELECT
+			project.req_id, project.mem_id, project.pro_name,
+			project.pro_percent as percent, 
+			TO_CHAR(project.reg_dt,'yyyy-mm-dd') as regDt,
+            TO_CHAR((project.reg_dt + reqlist.req_period),'yyyy-mm-dd') as endDt
+		FROM(select * from project)project,
+			projectmember projectmember,(select * from reqlist)reqlist
+		WHERE
+			projectmember.req_id = project.req_id
+        and reqlist.req_id=project.req_id    
+        and projectmember.mem_id = 'java'
+		and projectmember.promem_status='IN'
+        and project.del ='N'
+        union
+         SELECT
+			project.req_id, project.mem_id,project.pro_name,
+			project.pro_percent as percent, TO_CHAR(project.reg_dt,'yyyy-mm-dd') as regDt,
+            TO_CHAR((project.reg_dt + reqlist.req_period),'yyyy-mm-dd') as endDt
+		FROM(select * from	
+			project)project,
+			reqlist reqlist
+		WHERE
+			reqlist.req_id = project.req_id
+		AND reqlist.pl_id= 'java'
+		AND reqlist.status ='ACCEPT'
+         and project.del ='N'
+	</select>
 	 
 	
 </mapper>

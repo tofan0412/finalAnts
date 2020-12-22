@@ -89,20 +89,26 @@ $(function(){
 	
 	// 댓글 작성하기 삭제 버튼
 	$('#replydiv').on('click','#replydelbtn', function(){
-		var someid = $(this).prev().val();
-		var replyid = $(this).prev().prev().val();
-		issueid = '${issuevo.issueId }'
-		console.log(replyid)
-		console.log(someid)
-		$.ajax({url :"/reply/delreply",
-			   data :{replyId: replyid,
-				       someId: someid },
-			   method : "get",
-			   success :function(data){	
-				   console.log(data)
-				   $(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+issueid);				
-			 }
-		})
+		if(confirm("댓글을 정말 삭제하시겠습니까 ?") == true){   
+			
+			var someid = $(this).prev().val();
+			var replyid = $(this).prev().prev().val();
+			issueid = '${issuevo.issueId }'
+			console.log(replyid)
+			console.log(someid)
+			$.ajax({url :"/reply/delreply",
+				   data :{replyId: replyid,
+					       someId: someid, 
+					       reqId : '${issuevo.reqId}'},
+				   method : "get",
+				   success :function(data){	
+					   console.log(data)
+					   $(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+issueid+'&reqId='+reqId);				
+				 }
+			})
+		}else{
+        	return;
+        }
 	})
 	
 	// 답글 글자수 계산
@@ -159,7 +165,7 @@ function todo(){
 }
 
 
-// 댓글 작성
+//댓글 작성
 function replyinsert() {
 		someId : '${issuevo.issueId }';
 	$.ajax({
@@ -169,23 +175,24 @@ function replyinsert() {
 		data : {
 			someId :  '${issuevo.issueId }',
 			categoryId : '${issuevo.categoryId}',
-			replyCont : $('#re_con').val()
+			replyCont : $('#re_con').val(),
+			reqId : '${issuevo.reqId}'
 			
 		},
 		success : function(data) {
 			
-				saveMsg();
+				saveMsg(reqId);
 				console.log(data.someId)
-				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.someId);
+				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.someId+'&reqId='+reqId);
 		}
 
 	});
 
 }
 
-function saveMsg(){
+function saveMsg(reqId){
 	var alarmData = {
-						"alarmCont" : "${issuevo.issueId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail?issueId=${issuevo.issueId}&&${issuevo.issueTitle}"+ $('#re_con').val(),
+						"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail&&${issuevo.issueId}&&${issuevo.issueTitle}"+ $('#re_con').val(),
 						"memId" 	: "${issuevo.memId}",
 						"alarmType" : "reply"
 	}
@@ -323,13 +330,13 @@ function resize(obj) {
 		         
 		        <tr class="stylediff">
 		            <th class="success jg">작성자</th>
-		            <td style="padding-left: 20px; width: 700px;">
+		            <td style="width: 700px;">
 		            	<label class="control-label" id="memid">${issuevo.memName }</label>
 		            </td>
 		          	
 		       
 		            <th class="success jg">작성일</th>		            
-		            <td style="padding-left: 20px; width: 700px;">
+		            <td style="width: 700px;">
 		            	<label class="control-label" id="regDt">${issuevo.regDt }</label>
 		            </td>
 		        </tr>
@@ -360,7 +367,7 @@ function resize(obj) {
 		            <td colspan="3">
 			            <div id = "filediv">
 							<c:if test="${filelist.size() == 0}">
-								<label class="jg">	[ 첨부파일이 없습니다. ] </label>
+								<label>	[ 첨부파일이 없습니다. ] </label>
 							
 							</c:if>
 							

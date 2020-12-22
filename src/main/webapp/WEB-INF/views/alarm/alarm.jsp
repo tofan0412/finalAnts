@@ -131,31 +131,41 @@ toastr.options = {
 		}
 	}
 	
-	function readAlarm(url,alarmId,alarmType,reqId){
+	function readAlarm(url,alarmId,alarmType,reqId,id){
 		$.ajax({
 				url  : "/alarmUpdate",
 				data : {alarmId : alarmId},
 				method : "post",
 				dataType : "json",
 				success : function(data){
-					if(alarmType == 'reply'){
-						getReply(url,reqId);
-					}else{
-						getPage(url);
+					if(alarmType == 'reply' || alarmType == 'posts'){
+						getPage(url,alarmType,reqId,id);
 					}
 				}
 		});
 	}
-	function getReply(url,reqId){
-		document.location = url+"&reqId="+reqId;
-	}
-	function getPage(url){
-		document.location = url;
+	/*해당 페이지로 이동*/
+	function getPage(url,alarmType,reqId,id){
+		document.getPageForm.url.value = url;
+		document.getPageForm.alarmType.value = alarmType;
+		document.getPageForm.reqId.value = reqId;
+		document.getPageForm.id.value = id;
+		
+		document.getPageForm.action = "<c:url value='${pageContext.request.contextPath}/getAlarmPage'/>";
+		document.getPageForm.submit();
+		
 	}
   
 </script>
 
 <title>협업관리프로젝트</title>
+	<form:form commandName="alarmVo" id="getPageForm" name="getPageForm" method="post">
+		<form:hidden path="url"/>
+		<form:hidden path="reqId"/>
+		<form:hidden path="alarmType"/>
+		<form:hidden path="id"/>
+	</form:form>
+
 	<form:form commandName="alarmVo" id="alarmForm" name="alarmForm" method="post">
 		    <!-- Content Header (Page header) -->
 		    <section class="content-header" style="
@@ -263,7 +273,7 @@ toastr.options = {
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'reply'}"><b>댓글</b>
-					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }',${fn:split(a.alarmCont,'&&')[0]})">${fn:substring(fn:split(a.alarmCont,'&&')[4],0,70)}</a>
+					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }','${fn:split(a.alarmCont,'&&')[0]}','${fn:split(a.alarmCont,'&&')[4]}')">${fn:substring(fn:split(a.alarmCont,'&&')[5],0,70)}</a>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'posts'}"><b>게시물</b>
 					                    	 - <a href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} : ${fn:split(a.alarmCont,'&&')[5] } </a>

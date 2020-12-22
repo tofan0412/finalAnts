@@ -346,6 +346,20 @@
 	        AND project.req_id = #{reqId}
 		</select>
 		
+		<select id="pmProjectList" parameterType="ants.com.member.model.ProjectVo" resultType="ants.com.member.model.ProjectVo">
+			SELECT
+				project.req_id,
+	            project.pro_name,
+	            project.mem_id
+			FROM(select * from project)project,
+				reqlist r
+			WHERE
+				r.req_id = project.req_id
+			AND r.mem_id = #{memId}
+			AND r.del = 'N'
+	        AND project.req_id = #{reqId}
+		</select>
+		
 		<!-- 일감등록, 진행도 수정, 일감삭제시 프로젝트 진행도 계산용 -->
 		<select id="proPerChangebytodo" parameterType="ants.com.board.manageBoard.model.TodoVo" resultType ="java.lang.String">
 		SELECT 

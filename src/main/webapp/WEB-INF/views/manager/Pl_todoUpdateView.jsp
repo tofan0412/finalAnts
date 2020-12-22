@@ -11,7 +11,6 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
 <script src="/plugins/summernote/summernote-bs4.min.js"></script>
 <script src="/plugins/summernote/lang/summernote-ko-KR.js"></script>

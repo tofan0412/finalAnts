@@ -135,8 +135,8 @@ public class MemberController {
 			adminService.insertMemLoginLog(log);
 			
 			
-			List<ScheduleVo> showCalendar = new ArrayList<>();	// 캘린더 목록 선언 및 초기화
-			List<IssueVo> resultList = new ArrayList<>();		// 공지사항 목록 선언 및 초기화
+//			List<ScheduleVo> showCalendar = new ArrayList<>();	// 캘린더 목록 선언 및 초기화
+//			List<IssueVo> resultList = new ArrayList<>();		// 공지사항 목록 선언 및 초기화
 			
 			// 회원 타입이 MEM일 때만 조회
 			if(dbMember.getMemType().equals("MEM")) {
@@ -147,32 +147,32 @@ public class MemberController {
 				if (proList.size() != 0) {
 					session.setAttribute("memInProjectList", proList);	// 프로젝트 리스트 세션에 저장
 					
-					// 로그인
-					/*캘린더 초기값 */
-					ScheduleVo scheduleVo = new ScheduleVo();		
-					scheduleVo.setReqId(proList.get(proList.size()-1).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
-					showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
-					
-					/*공지사항 초기값*/
-					IssueVo issueVo = new IssueVo();
-					issueVo.setMemId(dbMember.getMemId());
-					issueVo.setReqId(proList.get(proList.size()-1).getReqId());	// 첫번째 프로젝트의 이슈 가져오기
-					issueVo.setCategoryId("3");						// 카테고리 번호 (3번이 이슈)
-					issueVo.setIssueKind("notice");					// 이슈 말머리 선택 (공지사항)
-					model.addAttribute("reqId", proList.get(proList.size()-1).getReqId());	// 기본 프로젝트 번호 jsp로 넘겨주기
-					model.addAttribute("proName", proList.get(proList.size()-1).getProName());	// 프로젝트 이름
-							
-					/** pageing setting */
-					PaginationInfo paginationInfo = new PaginationInfo();
-					paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
-					paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
-					paginationInfo.setPageSize(issueVo.getPageSize());
-					
-					issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
-					issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
-					issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
-					resultList = promemService.issuelist(issueVo);
+//					// 로그인
+//					/*캘린더 초기값 */
+//					ScheduleVo scheduleVo = new ScheduleVo();		
+//					scheduleVo.setReqId(proList.get(proList.size()-1).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
+//					showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
+//					
+//					/*공지사항 초기값*/
+//					IssueVo issueVo = new IssueVo();
+//					issueVo.setMemId(dbMember.getMemId());
+//					issueVo.setReqId(proList.get(proList.size()-1).getReqId());	// 첫번째 프로젝트의 이슈 가져오기
+//					issueVo.setCategoryId("3");						// 카테고리 번호 (3번이 이슈)
+//					issueVo.setIssueKind("notice");					// 이슈 말머리 선택 (공지사항)
+//					model.addAttribute("reqId", proList.get(proList.size()-1).getReqId());	// 기본 프로젝트 번호 jsp로 넘겨주기
+//					model.addAttribute("proName", proList.get(proList.size()-1).getProName());	// 프로젝트 이름
+//							
+//					/** pageing setting */
+//					PaginationInfo paginationInfo = new PaginationInfo();
+//					paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
+//					paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
+//					paginationInfo.setPageSize(issueVo.getPageSize());
+//					
+//					issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+//					issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
+//					issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+//
+//					resultList = promemService.issuelist(issueVo);
 					
 				}
 				
@@ -192,40 +192,47 @@ public class MemberController {
 				// PM의 프로젝트 리스트가 있을때만
 				if (prp_pm.size() != 0) {
 					session.setAttribute("pmInProjectList", prp_pm);	// 프로젝트 리스트 세션에 저장
-					
-					// 로그인
-					/*캘린더 초기값 */
-					ScheduleVo scheduleVo = new ScheduleVo();		
-					scheduleVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
-					showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
-						
-					/*공지사항 초기값*/
-					IssueVo issueVo = new IssueVo();	
-					issueVo.setMemId(dbMember.getMemId());
-					issueVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId());	// 첫번째 프로젝트의 이슈 가져오기
-					issueVo.setCategoryId("3");					// 카테고리 번호 (3번이 이슈)
-					issueVo.setIssueKind("notice");				// 이슈 말머리 선택 (공지사항)
-					model.addAttribute("reqId", prp_pm.get(prp_pm.size()-1).getReqId());	// 기본 프로젝트 번호 jsp로 넘겨주기
-					model.addAttribute("proName", prp_pm.get(prp_pm.size()-1).getProName());	// 프로젝트 이름
-					
-					/** pageing setting */
-					PaginationInfo paginationInfo = new PaginationInfo();
-					paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
-					paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
-					paginationInfo.setPageSize(issueVo.getPageSize());
-					
-					issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
-					issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
-					issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
-					resultList = promemService.issuelist(issueVo);
+					session.setAttribute("projectList_main", prp_pm);
+//					// 로그인
+//					/*캘린더 초기값 */
+//					ScheduleVo scheduleVo = new ScheduleVo();		
+//					scheduleVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
+//					showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
+//						
+//					/*공지사항 초기값*/
+//					IssueVo issueVo = new IssueVo();	
+//					issueVo.setMemId(dbMember.getMemId());
+//					issueVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId());	// 첫번째 프로젝트의 이슈 가져오기
+//					issueVo.setCategoryId("3");					// 카테고리 번호 (3번이 이슈)
+//					issueVo.setIssueKind("notice");				// 이슈 말머리 선택 (공지사항)
+//					model.addAttribute("reqId", prp_pm.get(prp_pm.size()-1).getReqId());	// 기본 프로젝트 번호 jsp로 넘겨주기
+//					model.addAttribute("proName", prp_pm.get(prp_pm.size()-1).getProName());	// 프로젝트 이름
+//					
+//					/** pageing setting */
+//					PaginationInfo paginationInfo = new PaginationInfo();
+//					paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
+//					paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
+//					paginationInfo.setPageSize(issueVo.getPageSize());
+//					
+//					issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+//					issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
+//					issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+//
+//					resultList = promemService.issuelist(issueVo);
 				}
 			}	
 			
 			// 캘린더 전송	// 캘린더는 있든 없든 전송해야함
-			model.addAttribute("showSchedule", showCalendar);
+//			model.addAttribute("showSchedule", showCalendar);
 			// 공지사항 전송 
-			model.addAttribute("issuelist", resultList);
+//			model.addAttribute("issuelist", resultList);
+			
+			if(!dbMember.getMemType().equals("PM")) {
+				List<ProjectVo> projectList_main = projectService.projectListmain(dbMember.getMemId());
+				session.setAttribute("projectList_main", projectList_main);	
+			} 
+						
+			
 			
 			return "tiles/layout/contentmain";
 		} else {

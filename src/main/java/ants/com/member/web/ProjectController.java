@@ -201,7 +201,20 @@ public class ProjectController {
 		projectVo.setReqId(reqId);
 		ProjectVo sessionVo = manageBoardService.projectList(projectVo);
 		session.setAttribute("projectVo", sessionVo);
-		System.out.println(sessionVo);
+		session.setAttribute("projectId", reqId);
+		return "redirect:/project/outlineView";
+	}
+	
+	// 프로젝트 버튼 클릭시 세션저장
+	@RequestMapping("/pmProjectgetReq")
+	public String pmProjectgetReq(HttpSession session, String reqId) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		ProjectVo projectVo = new ProjectVo();
+		projectVo.setMemId(memId);
+		projectVo.setReqId(reqId);
+		ProjectVo sessionVo = manageBoardService.pmProjectList(projectVo);
+		session.setAttribute("projectVo", sessionVo);
 		session.setAttribute("projectId", reqId);
 		return "redirect:/project/outlineView";
 	}

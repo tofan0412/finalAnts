@@ -13,19 +13,36 @@
 	
 	<!-- 공지사항 리스트 -->
 	<select id="noticelist" resultType="ants.com.admin.model.NoticeVo" parameterType="ants.com.admin.model.NoticeVo">
-		<!-- 
-		SELECT * FROM NOTICE where del = 'N'
-		order by notice_id desc 
-		 -->
 		
-		SELECT c.*
+		SELECT Z.*
 			FROM (
-				SELECT ROWNUM RNUM, a.*
+				SELECT ROWNUM RNUM,
+					 S.*
 				FROM (
-					SELECT NOTICE_ID, NOTICE_TITLE, NOTICE_CONT, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, ADMIN_ID, DEL
-					FROM NOTICE
-					WHERE DEL = 'N'
+				
+					select *
+					from(
+						select *
+						from
+							(select *
+							 from notice
+							 where importance = 'emg'
+							 and DEL = 'N'
+							 and notice_title is not null
+							 order by reg_dt )
 							
+						union all
+						
+						select *
+						from
+							(select *
+							 from notice
+							 where importance = 'gen'
+							 and DEL = 'N'
+							 and notice_title is not null
+							 order by reg_dt desc)
+					)
+						
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>
 							<when test="searchCondition == 1">
@@ -33,9 +50,12 @@
 							</when>
 						</choose>
 					</if>
-					ORDER BY reg_dt desc, notice_id desc
-				) a
-		WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex} ) c <![CDATA[ WHERE c.RNUM > #{firstIndex}]]>
+<!-- 					ORDER BY reg_dt desc, notice_id desc -->
+					
+				) S
+					WHERE ROWNUM <![CDATA[ <= ]]> #{lastIndex}
+			) Z
+		<![CDATA[ WHERE Z.RNUM > #{firstIndex}]]>
 	</select>
 	
 	<!-- 공지사항게시글 수 조회하기 -->	
@@ -78,8 +98,8 @@
 	<!-- 각 공지사항게시글 내용 가져오기 -->
 	<select id="geteachnotice"  resultType ="ants.com.admin.model.NoticeVo" parameterType="String">
 			
-			SELECT notice_id, notice_title, notice_cont, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT,
-					admin_id, del
+			SELECT notice_id, notice_title, notice_cont, to_char(REG_DT,'YYYY-MM-DD') as REG_DT,
+					admin_id, del, importance
 			FROM notice
 			WHERE notice_id = #{noticeId} and del = 'N'
 
@@ -90,10 +110,10 @@
 		
 		INSERT INTO notice (
 		    notice_id, notice_title, notice_cont,  reg_dt,  
-		    admin_id, del
+		    admin_id, del, importance
 		) VALUES (
 		    NOTICE_SEQ.nextval, #{noticeTitle}, #{noticeCont}, sysdate, 
-		     #{adminId}, 'N'
+		     #{adminId}, 'N', #{importance}
 		)
 		
 	</insert>
@@ -103,7 +123,8 @@
 		UPDATE NOTICE
 		SET
 			NOTICE_TITLE = #{noticeTitle},
-			NOTICE_CONT = #{noticeCont}
+			NOTICE_CONT = #{noticeCont},
+			IMPORTANCE = #{importance}
 	    WHERE 
 	    	NOTICE_ID = #{noticeId}
 	</update>

@@ -128,8 +128,16 @@ $(function(){
 	 $(document).click(function(){
 		    $(".contextmenu").hide();
 	 });
+	 
+	// 마우스 올려놨을때
+	$("#pubfileList tr").on("mouseenter",function(){
+		$(this).css("backgroundColor","#F0F8FF");
+	});
 
-	
+	// 마우스가 벗어났을때
+	$("#pubfileList tr").on("mouseleave",function(){
+		$(this).css("backgroundColor","white");
+	});
 
 	
 })

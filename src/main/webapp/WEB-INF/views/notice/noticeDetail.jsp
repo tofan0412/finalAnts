@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>noticeDetail.jsp</title>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 <script type="text/javascript">
@@ -25,12 +24,6 @@ $(function(){
 	$("#back").on('click',function(){
 		window.history.back();
 	})
-	
-	if('${noticevo.importance}' == 'slow'){
-		$('#importance').text('일반');
-	}else if('${noticevo.importance}' == 'fast'){
-		$('#importance').text('긴급');
-	}
 	
 	
 })
@@ -50,6 +43,7 @@ $(function(){
 	.writeCon{
 	width:100%; overflow:visible; background-color:transparent; border:none;
   		resize :none; 
+  		padding-left:40px;
 	}
 	
 	#re_con{
@@ -83,14 +77,12 @@ $(function(){
 
 </head>
 
-<%@include file="./noticecontentmenu.jsp"%>
-<%-- <%@include file="./eachproject.jsp"%> --%>
-
 
 <body>
 
 <div class="col-12 col-sm-12">
 	<div class="card card-teal ">
+	
 		<div class="card-body" id="detailDiv">
 			<br>
 			<h4 class="jg">공지사항  상세내역</h4>
@@ -101,8 +93,15 @@ $(function(){
 					<th class="success jg">제목</th>
 			         	<td colspan="3">			  
 			         		<label class="control-label" id="noticeTitle">${noticevo.noticeTitle}</label>
+			         		<c:if test="${noticevo.importance=='emg'}">
+								<span class="badge badge-danger">필독</span>
+							</c:if>
+				         	<c:if test="${noticevo.importance=='gen'}">
+								<span class="badge badge-success">일반</span>
+							</c:if>
 			         	</td>
 			    </tr>
+			    
 			    
 			    <tr class="stylediff">
 		            <th class="success jg">작성자</th>
@@ -117,14 +116,13 @@ $(function(){
 		            </td>
 		        </tr>
 		        
+		        <!-- 
 		        <tr class="stylediff">
-		            <th class="success jg">종류</th>
-		            <td colspan="3">
-		            	<label id ="importance" class="control-label"></label> 		
-		            </td>
-		           
-		        </tr>
-		        
+					<th class="success jg">우선순위</th>
+			         <td style="padding-left: 20px;"><div class="jg" id="importance"></div></td>
+			    </tr>
+		         -->
+		         
 		        <tr>
 		            <th class="success jg" style="height: 300px;">내용</th>
 		            <td colspan="3">
@@ -157,14 +155,6 @@ $(function(){
 
 
 
-<!-- 
-			<br><br>
-			<c:if test="${noticevo.adminId == adminId}">
-				<input type= "button" value="수정" id ="modnotice" class="btn btn-info">
-				<input type= "button" value="목록" id="back"  class="btn btn-success">			
-				<input type= "button" value="삭제" id="delnotice"  class="btn btn-danger">			
-			</c:if>
- -->
  
 </body>
 </html>

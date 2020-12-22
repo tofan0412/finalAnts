@@ -77,6 +77,10 @@ public class ManageBoardService {
 	public ProjectVo projectList(ProjectVo projectVo) {
 		return mapper.projectList(projectVo);
 	}
+	
+	public ProjectVo pmProjectList(ProjectVo projectVo) {
+		return mapper.pmProjectList(projectVo);
+	}
 
 	public String gettodoId() {
 		return mapper.gettodoId();
