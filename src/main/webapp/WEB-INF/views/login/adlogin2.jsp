@@ -64,7 +64,7 @@
 	height : 100%;
 	float : right;
 	margin-right : 10%;
-	margin-top: 6%;
+	margin-top: 2%;
 	padding : 50px; 15px; 35px; 35px;
 	-webkit-animation: fadein 1s; /* Safari and Chrome */
 	border-radius: 0.7rem;
@@ -201,7 +201,7 @@ $(document).ready(function(){
 	<div class="loginBox">
 		<div>
 			<h2 class="jg" style="line-height: 25px;color: #0BB783">
-				Ants 
+				<a href="/member/mainView" style="color : #0BB783; text-decoration:none;" >Ants</a> 
 			</h2>
 			<h3 class="jg">
 				관리자 페이지 입니다.
@@ -240,7 +240,6 @@ $(document).ready(function(){
 					<br> <br>
 					<div style="float: right">
 						<span id="sp" style="color:red"></span>
-						<button type="button" id="mainBtn" class="jg loginBtn" style="width: 100px;">MAIN</button>
 						<button type="button" id="loginBtn" class="jg loginBtn" style="width: 100px;">LOGIN</button>
 					</div>
 				</div>
