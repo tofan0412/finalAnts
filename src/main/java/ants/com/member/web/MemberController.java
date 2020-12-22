@@ -61,7 +61,6 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
-
 	@Resource(name = "memberService")
 	private MemberService memberService;
 	
@@ -602,7 +601,6 @@ public class MemberController {
 		return "main.tiles/notice/noticelistmemview";
 	}
 			
-		
 	// 각 공지사항 상세보기
 	@RequestMapping("/noticedetailmemview")
 	public String noticedetailmemview(String noticeId, HttpSession session, Model model) {
