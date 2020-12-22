@@ -143,10 +143,13 @@
 	
 	//답글 알림 db저장, 소켓에 메세지보내기
 	function saveMsg(){
+		var pid= $("#hissueParentid").val();  
 		var alarmData = {
-							"alarmCont" : "${hotIssueVo.hissueId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/hotIssue/hissueList?reqId=${projectId}&&${hotIssueVo.hissueTitle}&&"+ $('#hissueTitle').val(),
+							"alarmCont" : pid+"&&${SMEMBER.memName}&&${SMEMBER.memId}&&/hotIssue/hissueList?reqId=${projectId}&&${hotIssueVo.hissueTitle}&&"+ $('#hissueTitle').val(),
 							"memId" 	: "${hotIssueVo.memId}",
 							"alarmType" : "posts"
+							
+							
 		}
 		console.log(alarmData);
 		
@@ -218,7 +221,7 @@
                 <input type="hidden" name="hissueId" value="${hissueSeq }">
                   <input class="form-control" placeholder="Subject:" name="hissueTitle" id="hissueTitle"><br>
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
-                  <input type="hidden" name="hissueParentid" value="${hissueParentid}">
+                  <input type="hidden" name="hissueParentid" value="${hissueParentid}" id="hissueParentid">
                 <textarea id="summernote" name="hissuetCont"></textarea>
        			 </form>
               	</div>
