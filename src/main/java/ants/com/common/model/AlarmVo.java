@@ -20,10 +20,9 @@ public class AlarmVo extends BaseVo{
 	private String reqStatus;
 	private String[] memIds;
 	private String del;
-	
-	public AlarmVo() {
-		
-	}
+	private String url;
+	private String id;
+	private String reqId;
 	public String getAlarmId() {
 		return alarmId;
 	}
@@ -84,36 +83,53 @@ public class AlarmVo extends BaseVo{
 	public void setTotalCnt(int totalCnt) {
 		this.totalCnt = totalCnt;
 	}
-	
 	public String getReqStatus() {
 		return reqStatus;
 	}
 	public void setReqStatus(String reqStatus) {
 		this.reqStatus = reqStatus;
 	}
-	
 	public String[] getMemIds() {
 		return memIds;
 	}
 	public void setMemIds(String[] memIds) {
 		this.memIds = memIds;
 	}
-	
 	public String getDel() {
 		return del;
 	}
 	public void setDel(String del) {
 		this.del = del;
 	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getReqId() {
+		return reqId;
+	}
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
+	}
 	@Override
 	public String toString() {
 		return "AlarmVo [alarmId=" + alarmId + ", alarmCont=" + alarmCont + ", alarmStatus=" + alarmStatus + ", memId="
 				+ memId + ", alarmType=" + alarmType + ", reqPl=" + reqPl + ", resPl=" + resPl + ", reply=" + reply
 				+ ", posts=" + posts + ", totalCnt=" + totalCnt + ", reqStatus=" + reqStatus + ", memIds="
-				+ Arrays.toString(memIds) + ", del=" + del + "]";
+				+ Arrays.toString(memIds) + ", del=" + del + ", url=" + url + ", id=" + id + ", reqId=" + reqId + "]";
 	}
 	
-	
+	public AlarmVo() {
+		
+	}
 	
 	
 	

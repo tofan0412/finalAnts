@@ -95,15 +95,16 @@ public class AlarmHandler extends TextWebSocketHandler {
 			}
 			
 			// 댓글,답글이 달렸을 때
-			if(strs != null && strs.length == 8) {				//댓글			,답글				
-				String issueId = strs[0];  						//이슈아이디		,핫이슈 아이디		
+			if(strs != null && strs.length == 9) {				//댓글			,답글				
+				String reqId = strs[0];  						//req아이디		,req 아이디		
 				String callerName = strs[1];					//댓글 			,답글 작성자 이름	
 				String callerId = strs[2];						//댓글 			,답글 작성자 아이디	
-				String url = strs[3];							//댓글달린 게시물 	,해당 핫이슈 게시판	
-				String title = strs[4];							//댓글달린 이슈제목 	,답글달린 게시물 제목	
-				String cont = strs[5];							//댓글내용,		,답글 제목		 	
-				String receiverId = strs[6];					//알림 받는사람 아이디
-				String type = strs[7];							//알림 타입
+				String url = strs[3];							//댓글달린 게시물 	,해당 핫이슈 게시판
+				String id = strs[4];							//이슈아이디		,핫이슈 아이디
+				String title = strs[5];							//댓글달린 이슈제목 	,답글달린 게시물 제목	
+				String cont = strs[6];							//댓글내용,		,답글 제목		 	
+				String receiverId = strs[7];					//알림 받는사람 아이디
+				String type = strs[8];							//알림 타입
 				
 				if(title.length()>6) {
 					title = title.substring(0,6) + "..";

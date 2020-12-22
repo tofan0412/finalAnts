@@ -181,7 +181,7 @@ function replyinsert() {
 		},
 		success : function(data) {
 			
-				saveMsg();
+				saveMsg(reqId);
 				console.log(data.someId)
 				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.someId+'&reqId='+reqId);
 		}
@@ -190,9 +190,9 @@ function replyinsert() {
 
 }
 
-function saveMsg(){
+function saveMsg(reqId){
 	var alarmData = {
-						"alarmCont" : "${issuevo.issueId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail?issueId=${issuevo.issueId}&&${issuevo.issueTitle}"+ $('#re_con').val(),
+						"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail&&${issuevo.issueId}&&${issuevo.issueTitle}"+ $('#re_con').val(),
 						"memId" 	: "${issuevo.memId}",
 						"alarmType" : "reply"
 	}

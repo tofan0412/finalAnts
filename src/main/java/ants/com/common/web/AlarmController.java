@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ants.com.board.manageBoard.service.ManageBoardService;
+import ants.com.board.memBoard.model.IssueVo;
 import ants.com.common.model.AlarmVo;
 import ants.com.common.service.AlarmService;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectVo;
 import ants.com.member.web.ReqController;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -27,6 +31,9 @@ public class AlarmController {
 	
 	@Resource(name="alarmService")
 	private AlarmService alarmService;
+	
+	@Resource(name="manageBoardService")
+	private ManageBoardService manageBoardService;
 	
 	@RequestMapping("/alarmCount")
 	public String alarmCount(Model model,AlarmVo alarmVo) {
@@ -90,6 +97,36 @@ public class AlarmController {
 		int cnt = alarmService.alarmDelete(deleteData);
 		model.addAttribute("cnt", cnt);
 		return "jsonView";
+	}
+	
+	@RequestMapping("/getAlarmPage")
+	public String getAlarmPage(AlarmVo alarmVo ,RedirectAttributes re, HttpSession session ) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		String memId = memberVo.getMemId();
+		ProjectVo projectVo = new ProjectVo();
+		projectVo.setMemId(memId);
+ 		projectVo.setReqId(alarmVo.getReqId());
+		//PM, MEM 일때
+		if(memberVo.getMemType().equals("PM")) {
+			projectVo = manageBoardService.pmProjectList(projectVo);
+		}
+		else {
+			projectVo = manageBoardService.projectList(projectVo);
+		}
+		session.setAttribute("projectVo", projectVo);
+		session.setAttribute("projectId", alarmVo.getReqId());
+		
+		// 댓글, 게시글 구분
+		if(alarmVo.getAlarmType().equals("reply")) {
+			re.addAttribute("reqId", alarmVo.getReqId());
+			session.setAttribute("categoryId", "3");
+			re.addAttribute("issueId", alarmVo.getId());
+			
+			return "redirect:/projectMember/eachissueDetail";
+		}
+		else {
+			return "redirect:";
+		}
 	}
 
 }
