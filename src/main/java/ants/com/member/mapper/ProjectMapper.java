@@ -95,4 +95,6 @@ public interface ProjectMapper {
 
 	public List<ProjectVo> chartproday(String reqId);
 
+	public List<ProjectVo> projectListmain(String memId);
+
 }

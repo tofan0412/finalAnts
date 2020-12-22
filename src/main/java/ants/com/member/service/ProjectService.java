@@ -157,4 +157,8 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	public List<ProjectVo> chartproday(String reqId) {
 		return mapper.chartproday(reqId);
 	}
+
+	public List<ProjectVo> projectListmain(String memId) {
+		return mapper.projectListmain(memId);
+	}
 }
