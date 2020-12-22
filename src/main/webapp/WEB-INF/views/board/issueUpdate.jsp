@@ -205,7 +205,7 @@
 				    		var $this = $(this);	
 				    		if($this.val() ==  '${issueVo.todoId}')
 				    		$this.prop('selected', 'selected');
-				    })
+				     })
 				    
 				 }
 		 	})

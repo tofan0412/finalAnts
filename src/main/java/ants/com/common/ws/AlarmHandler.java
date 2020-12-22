@@ -106,18 +106,18 @@ public class AlarmHandler extends TextWebSocketHandler {
 				String receiverId = strs[7];					//알림 받는사람 아이디
 				String type = strs[8];							//알림 타입
 				
-				if(title.length()>6) {
-					title = title.substring(0,6) + "..";
+				if(title.length()>25) {
+					title = title.substring(0,25) + "..";
 				}
-				if(cont.length()>6) {
-					cont = cont.substring(0, 6) + "..";
+				if(cont.length()>25) {
+					cont = cont.substring(0, 25) + "..";
 				}
 				
 				//게시물작성자가 로그인해 있다면
 				WebSocketSession boardWriterSession = userSessionsMap.get(receiverId);
 				//댓글
 				if(type.equals("reply") && boardWriterSession != null) {
-					TextMessage tmpMsg = new TextMessage(type + "&&" + callerName + "&&" + title + " : " + cont + "<a type='external' href="+url+">댓글 보기</a>");
+					TextMessage tmpMsg = new TextMessage(type + "&&" + callerName + "&&" + cont + "<br>&&" + title + "&&" + callerId);
 					boardWriterSession.sendMessage(tmpMsg);
 				}
 				else if(type.equals("posts") && boardWriterSession != null) {

@@ -183,7 +183,6 @@ function replyinsert() {
 			
 				saveMsg(reqId);
 				console.log(data.someId)
-				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.someId+'&reqId='+reqId);
 		}
 
 	});
@@ -192,7 +191,7 @@ function replyinsert() {
 
 function saveMsg(reqId){
 	var alarmData = {
-						"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail&&${issuevo.issueId}&&${issuevo.issueTitle}"+ $('#re_con').val(),
+						"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail&&${issuevo.issueId}&&${issuevo.issueTitle}&&"+ $('#re_con').val(),
 						"memId" 	: "${issuevo.memId}",
 						"alarmType" : "reply"
 	}
@@ -208,6 +207,8 @@ function saveMsg(reqId){
 				
 				let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 				socket.send(socketMsg);
+				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.someId+'&reqId='+reqId);
+
 				
 				
 			},

@@ -148,47 +148,59 @@ function listMember(MemListArr){
 	<div style="float : left; width : 67%; height : 100%;">
 		<span class="jg">프로젝트 멤버</span><br>
 		<div style="height : 100%; width : 100%; border : 2px solid lightgrey; padding : 10px 10px 10px 10px; overflow : auto;">
-			<c:forEach var="i" begin="0" end="${chatMemList.size()-1 }">
-				<!-- 리스트 하나하나를 자바스크립트 배열에 저장해야 한다. -->
-				
-				<!-- 로그인한 당사자는 리스트에서 제외되어야 한다. -->
-				<c:choose>
-					<c:when test="${chatMemList[i].memId != SMEMBER.memId }">
-						<!-- 사용자 Id를 입력한다. -->
-						<div class="singleMem" memId="${chatMemList[i].memId }" memName="${memInfoList[i].memName }" style="height : 70px; font-size : 1.0em;">
-							
-							<!-- 사용자 프로필 이미지를 출력한다. -->
-							<img class="img-circle" alt="이미지" src="http://localhost/profile/user-0.png" width="25px;" height="25px;" >
-							&nbsp;
-							${chatMemList[i].memId }
-							<br>
-							<span style=" float : left; color : grey; font-size : 0.8em;">
-								${memInfoList[i].memName }
-							</span>
-							<span style="float : right; font-size : 0.8em;">
-								<c:if test="${memInfoList[i].memType == 'MEM' }">
-									<div style="
-										background-color : skyblue; 
-										border : 3px solid skyblue; 
-										border-radius : 0.3rem; 
-										font-color : white;">
-										일반회원
-									</div>
-								</c:if>
-								<c:if test="${memInfoList[i].memType != 'MEM' }">
-									<div style="background-color : red;
-									 	border : 3px solid red; 
-									 	border-radius : 0.3rem; 
-									 	font-color : white;">
-								 		관리자
-							 		</div>
-								</c:if>
-							</span>
-						</div>
-					</c:when>
-					<c:otherwise></c:otherwise>
-				</c:choose>
-			</c:forEach>
+			<c:if test="${chatMemList.size() == 0 }">
+				<div class="jg" style="height : 70px; 
+									   width : 80%; 
+									   margin : 0 auto; 
+									   text-align : center;
+									   font-size : 1.0em;
+									   padding-top : 140px;">
+					<span>초대할 수 있는 회원이 <br>존재하지 않습니다.</span>
+				</div>
+			</c:if>			
+			<c:if test="${chatMemList.size() > 0 }">
+				<c:forEach var="i" begin="0" end="${chatMemList.size()-1 }">
+					<!-- 리스트 하나하나를 자바스크립트 배열에 저장해야 한다. -->
+						
+					<!-- 로그인한 당사자는 리스트에서 제외되어야 한다. -->
+					<c:choose>
+						<c:when test="${chatMemList[i].memId != SMEMBER.memId }">
+							<!-- 사용자 Id를 입력한다. -->
+							<div class="singleMem jg" memId="${chatMemList[i].memId }" memName="${memInfoList[i].memName }" style="height : 70px; font-size : 1.0em;">
+								
+								<!-- 사용자 프로필 이미지를 출력한다. -->
+								<img class="img-circle" alt="이미지" src="http://localhost/profile/user-0.png" width="25px;" height="25px;" >
+								&nbsp;
+								${chatMemList[i].memId }
+								<br>
+								<span style=" float : left; color : grey; font-size : 0.8em;">
+									${memInfoList[i].memName }
+								</span>
+								<span style="float : right; font-size : 0.8em;">
+									<c:if test="${memInfoList[i].memType == 'MEM' }">
+										<div style="
+											background-color : skyblue; 
+											border : 3px solid skyblue; 
+											border-radius : 0.3rem; 
+											font-color : white;">
+											일반회원
+										</div>
+									</c:if>
+									<c:if test="${memInfoList[i].memType != 'MEM' }">
+										<div style="background-color : red;
+										 	border : 3px solid red; 
+										 	border-radius : 0.3rem; 
+										 	font-color : white;">
+									 		관리자
+								 		</div>
+									</c:if>
+								</span>
+							</div>
+						</c:when>
+						<c:otherwise></c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</c:if>
 		</div>
 	</div>
 </div>

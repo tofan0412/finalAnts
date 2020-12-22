@@ -26,7 +26,6 @@
 		console.log('${issueKind}')
 		
 		 $('#summernote').summernote({
-		        placeholder: 'Hello stand alone ui',
 		        tabsize: 2,
 		        height: 300,
 		        toolbar: [
@@ -134,34 +133,75 @@
 	    
 	    
      	// 작성 버튼 클릭시 파일 업로드 호출
-     	$('#insertbtn').on('click', function(){
-     		// 업로드할 파일이 존재하지 않을시
-     		if($('.uploadifive-queue-item').length ==0){    			
-     			if($('#kindselect').val() == 'issue'){
-     	     		if($('#issueTitle').val() != ''){		     	     		
-     					$('#todoselect').val() != '' ? $('#frm').submit() : alert('선택해주세요');	    					    			
-     				}
-     			}else if($('#kindselect').val() == 'notice'){
-     				if($('#issueTitle').val() != ''){					
-     					$('#frm').submit();
-     				}
-     			}	
-     		// 업드로할 파일이 존재할 시
-     		}else{
-     			$('#file_upload').uploadifive('upload');
-     		}	
-     	})     	
+//      	$('#insertbtn').on('click', function(){
+//      		// 업로드할 파일이 존재하지 않을시
+//      		if($('.uploadifive-queue-item').length ==0){    			
+//      			if($('#kindselect').val() == 'issue'){
+//      	     		if($('#issueTitle').val() != ''){		     	     		
+//      					$('#todoselect').val() != '' ? $('#frm').submit() : alert('선택해주세요');	    					    			
+//      				}
+//      			}else if($('#kindselect').val() == 'notice'){
+//      				if($('#issueTitle').val() != ''){					
+//      					$('#frm').submit();
+//      				}
+//      			}	
+//      		// 업드로할 파일이 존재할 시
+//      		}else{
+//      			$('#file_upload').uploadifive('upload');
+//      		}	
+//      	})     	
      	// 업로드된 파일의 수와 사용자가 올린 파일의 수가 같을 시 from 전송
      	function insert(){
      		if(uploadCnt == $('.uploadifive-queue-item').length){
      			$('#frm').submit();     		
 
         	}else{
-//         		alert('작성실패');
         	}
 
     	}
      	
+     	
+     	// 이슈/공지사항 선택시
+     	$('#kindselect').on('change',function(){
+     		if($('#kindselect').val() !='issue'){
+     			$('.warningTodo').text(""); 			
+     		}
+     	
+     	})
+     	
+    	
+     	// 작성 버튼 클릭시 파일 업로드 호출
+     	$('#insertbtn').on('click', function(){		
+     		cnt = 0;
+     		
+			// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
+			if ($('#kindselect').val() != 'issue' && $('#kindselect').val() != 'notice' ){
+				$('.warningKind').text("종류를 선택해 주세요.");
+				cnt++;
+			}else{
+				$('.warningKind').text("");
+			}
+			
+			
+			if ($('#issueTitle').val().length == 0){
+				$('.warningTitle').text("제목을 작성해 주세요.");
+				cnt++;
+			}
+			
+     		if($('#kindselect').val() =='issue'){
+				if ($('#todoselect').val().length == 0){
+					$('.warningTodo').text("일감을 선택해 주세요.");
+					cnt++;
+				}
+     		}
+			if (cnt == 0){				
+				if($('.uploadifive-queue-item').length ==0){ 
+					$('#frm').submit();
+				}else{
+	     			$('#file_upload').uploadifive('upload');
+	     		}
+			}
+     	})
       
  	})
  	
@@ -176,8 +216,9 @@
 					
 					 
 					 html  =  '<label for="todoId" class="col-sm-2 control-label jg">일감 </label>'
-				     html +=  '<select name="todoId" id="todoselect"  class ="col-sm-4" required>'		
+				     html +=  '<select name="todoId" id="todoselect"  class ="col-sm-4 form-control" style="display: inline-block;" required>'		
 				     html +=  '<option value="">선택</option>'
+				   
 				     for( i = 0 ; i< data.todolist.length; i++){		
 					     html +=  '	 <option value='+data.todolist[i].todoId+'>'+data.todolist[i].todoTitle+'</option>'	
 				     }
@@ -248,25 +289,28 @@
 			
 			 <div class="form-group">
 					<label for="issueKind" class="col-sm-2 control-label jg">이슈종류</label> 
-					<select name="issueKind" id="kindselect" class ="col-sm-3" required>
+					<select name="issueKind" id="kindselect" class ="col-sm-3 form-control" style="display:inline-block; width: 200px;" required>
 					    <option value="">선택</option>
 					    <option  value="issue">이슈</option>
 					    <option  value="notice">공지사항</option>
 					</select>
 				</div>
+				<div class="jg" style=" padding-left: 10px;"><span class="jg warningKind" style="color : red;"></span></div>
 				
 				<div class="form-group" id="todolist">
 
 				</div>
+				 <div class="jg" style=" padding-left: 10px;"><span class="jg warningTodo" style="color : red;"></span></div>
 				
 				<div class="form-group">
 					<label for="issueTitle" class="col-sm-2 control-label jg">이슈제목</label>
-					<input type="text" name="issueTitle" style="width: 70%;" id="issueTitle" required>
+					<input class="form-control" type="text" name="issueTitle" style="display:inline-block; width: 70%;" id="issueTitle" required>
+				<div class="jg" style=" padding-left: 10px;"><span class="jg warningTitle" style="color : red;"></span></div>
 				</div>
 				
 				<div class="form-group" style="width: 90%;">
 					<label for="issueCont" class="col-sm-2 control-label jg">이슈 내용</label>
-					<textarea id="summernote" name="issueCont" id="issueCont"></textarea>
+					<textarea  id="summernote" name="issueCont" id="issueCont"></textarea>
 				</div>
 						
 			</form>

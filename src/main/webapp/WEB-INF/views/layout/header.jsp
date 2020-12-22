@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<style>
+	.toast{
+		width:500px;
+		font-family: Jeju Gothic;
+	}
+</style>
 <script>
  	
 	var socket = null;
@@ -22,6 +28,10 @@
     	}
     	
     	alarmCount('${SMEMBER.memId}');
+    	
+    	$('#why').on('click',function(){
+    		document.location = '/alarmList';
+    	});
     	
     	
 	});
@@ -49,9 +59,9 @@
 		// 댓글
 		}else if(data[0] == 'reply'){
 			$(document).Toasts('create', {
-			     body: data[2],
-			     title: '댓글이 달렸습니다.',
-			     subtitle: data[1],
+			     body: data[2]+ "<span id='why' style='font-size:0.9em; color:gray;'>"+data[3]+"</span>",
+			     title: data[1],
+			     subtitle: "댓글",
 			     icon: 'fas fa-envelope fa-lg',
 			});
 		// pl응답

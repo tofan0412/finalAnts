@@ -62,6 +62,22 @@
 			$(location).attr('href', '/project/readReqList?plId='+plId);
 		})
 		
+		// 개인 메뉴를 사용할 때는 session에 저장되어 있는 projectId를 지운다. 
+		// ( 이전에 들어간 플젝의 채팅 리스트가 그대로 노출 ..)
+		$('.sessioncheck').click(function(){
+			$.ajax({
+				url : "/common/delProjectIdSession",
+				method : "POST",
+				success : function(res){
+					if (res == "success"){
+						console.log("projectId 세션을 삭제하였습니다.");
+					}
+				}
+			})			
+		})
+		
+		
+		
 		
 	})
 	
@@ -114,7 +130,7 @@
 		              <li class="nav-item">
 		                <a href="/alarmList" class="nav-link">
 		                 <i class="nav-icon fas fa-bullhorn"></i>
-							<p class="selectable" >새로운 소식
+							<p class="selectable sessioncheck" >새로운 소식
 								<span id="newalarm" class="right badge badge-warning"></span>
 							</p>
 		                </a>
@@ -122,25 +138,25 @@
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/bookmark/getallbookmark" class="nav-link">
 						<i class="nav-icon fas fa-bookmark"></i>
-						<p class="selectable">내 북마크</p>
+						<p class="selectable sessioncheck">내 북마크</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/projectMember/myissuelist" class="nav-link">
 						<i class="nav-icon far fa-lightbulb"></i>
-						<p class="selectable">내가 작성한 이슈</p>
+						<p class="selectable sessioncheck">내가 작성한 이슈</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/schedule/MyclendarView" class="nav-link">
 		                <i class="nav-icon far fa-calendar-alt"></i>
-						<p class="selectable">개인 캘린더</p>
+						<p class="selectable sessioncheck">개인 캘린더</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/privatefile/privatefileView" class="nav-link">
 		                <i class="nav-icon fas fa-folder-open"></i>
-						<p class="selectable">내 파일함</p>
+						<p class="selectable sessioncheck">내 파일함</p>
 		                </a>
 		              </li>
 		              
@@ -160,7 +176,7 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="/req/reqInsertView" class="nav-link" style="color: currentcolor"><i class="nav-icon fa fa-plus-square" style="color: cornflowerblue"></i>
+									<a href="/req/reqInsertView" class="nav-link sessioncheck" style="color: currentcolor"><i class="nav-icon fa fa-plus-square" style="color: cornflowerblue"></i>
 										<p >요구사항정의서  생성하기</p>
 									</a>
 								</li>
@@ -173,7 +189,7 @@
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
 									<a href="#" class="nav-link" style="color: currentcolor"><i	class="nav-icon fa fa-plus-square" style="color: cornflowerblue"></i>
-										<p class="selectable mkPjtBtn ">새 프로젝트 만들기</p>
+										<p class="selectable sessioncheck mkPjtBtn ">새 프로젝트 만들기</p>
 									</a>
 								</li>
 							</ul>
