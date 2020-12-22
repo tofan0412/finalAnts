@@ -6,10 +6,12 @@
 <head>
 <%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 <style type="text/css">
-.banicl{
-	float:left; 
-}
-
+.bani_a{text-decoration: none; color: black;}
+.bani_a:hover {	text-decoration: none; color: black;}
+.baniChart{text-align: center;}
+.bani_div{width: 50%; float:left; }
+.bani_div2{width: 50%; float:left; }
+.bani_div3{width: 50%; float:left; padding-left: 3%; }
 </style>
 </head>
 <script type="text/javascript">
@@ -54,14 +56,14 @@ function stackedbarchart() {
 				 datasets: [
 				        {
 				          label               : '할일 진행도',
-				          backgroundColor     : 'rgba(60,141,188,0.9)',
-				          borderColor         : 'rgba(60,141,188,0.8)',
+				          backgroundColor     : '#1D6A96',
+				          borderColor         : '#1D6A96',
 				          pointRadius          : false,
-				          pointColor          : '#3b8bba',
-				          pointStrokeColor    : 'rgba(60,141,188,1)',
+				          pointColor          : '#1D6A96',
+				          pointStrokeColor    : '#1D6A96',
 				          pointHighlightFill  : '#fff',
-				          pointHighlightStroke: 'rgba(60,141,188,1)',
-				          barThickness: 100,
+				          pointHighlightStroke: '#1D6A96',
+				          barThickness: 50,
 				          data                : percent 
 				        },
 				        {
@@ -73,7 +75,7 @@ function stackedbarchart() {
 				          pointStrokeColor    : '#c1c7d1',
 				          pointHighlightFill  : '#fff',
 				          pointHighlightStroke: 'rgba(220,220,220,1)',
-				          barThickness: 100,
+				          barThickness: 50,
 				          data                : percent2
 				        }]
 		};
@@ -118,7 +120,7 @@ function donutChart() {
 				 datasets: [
 				        {
 				          data: dpercent,
-				          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+				          backgroundColor : ['#87C488', '#fb7552', '#f29f8f', '#fed770', '#84c0e9', '#bcc74f'],
 				        }
 				      ]
 		};
@@ -150,11 +152,11 @@ function donutSuggestAccept() {
 			var d = c+"";
 			dpercent.push(d);
 			var donutChartData = {
-					labels : ['ACCEPT','REJECT','WAIT'],
+					labels : ['수용','거절','대기'],
 					 datasets: [
 					        {
 					          data: dpercent,
-					          backgroundColor : ['#00a65a', '#f39c12', '#00c0ef'],
+					          backgroundColor : ['#87C488', '#E3A6A1', '#869DAB'],
 					        }
 					      ]
 			};
@@ -187,16 +189,16 @@ function barchartSuggestCnt() {
 					labels : num,
 					 datasets: [
 					        {
-					          label               : '건의사항 작성 수',
-					          backgroundColor     : 'rgba(60,141,188,0.9)',
-					          borderColor         : 'rgba(60,141,188,0.8)',
+					          label               : '개수',
+					          backgroundColor     : '#1D6A96',
+					          borderColor         : '#1D6A96',
 					          pointRadius          : false,
-					          pointColor          : '#3b8bba',
-					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointColor          : '#1D6A96',
+					          pointStrokeColor    : '#1D6A96',
 					          pointHighlightFill  : '#fff',
-					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          pointHighlightStroke: '#1D6A96',
 					          data                : percent ,					 
-					          barThickness: 100
+					          barThickness: 50
 					         
 					        }]
 			};
@@ -240,11 +242,12 @@ function donutchartvotetotal() {
 			var d = c+"";
 			dpercent.push(d);
 			var donutChartData = {
-					labels : ['참여 율','불참여 율'],
+					labels : ['참여','불참'],
 					 datasets: [
 					        {
 					          data: dpercent,
-					          backgroundColor : ['#00a65a', '#f39c12'],
+					          backgroundColor : ['#87C488', '#869DAB']
+					         
 					        }
 					      ]
 			};
@@ -278,15 +281,15 @@ function barchartvoteindi() {
 					 datasets: [
 					        {
 					          label               : '투표 참여율',
-					          backgroundColor     : 'rgba(60,141,188,0.9)',
-					          borderColor         : 'rgba(60,141,188,0.8)',
+					          backgroundColor     : '#1D6A96',
+					          borderColor         : '#1D6A96',
 					          pointRadius          : false,
-					          pointColor          : '#3b8bba',
-					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointColor          : '#1D6A96',
+					          pointStrokeColor    : '#1D6A96',
 					          pointHighlightFill  : '#fff',
-					          pointHighlightStroke: 'rgba(60,141,188,1)',
-					          data                : percent ,					 
-					          barThickness: 100
+					          pointHighlightStroke: '#1D6A96',
+					          data                : percent,
+					          barThickness: 50
 					         
 					        }]
 			};
@@ -333,14 +336,14 @@ function chartfilesday() {
 					labels : num,
 					 datasets: [
 					        {
-					          label               : '일별(MB)',
-					          backgroundColor     : 'rgba(60,141,188,0.9)',
-					          borderColor         : 'rgba(60,141,188,0.8)',
+					          label               : '일별',
+					          backgroundColor     : '#1D6A96',
+					          borderColor         : '#1D6A96',
 					          pointRadius          : false,
-					          pointColor          : '#3b8bba',
-					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointColor          : '#1D6A96',
+					          pointStrokeColor    : '#1D6A96',
 					          pointHighlightFill  : '#fff',
-					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          pointHighlightStroke: '#1D6A96',
 					          data                : percent 				 
 					        }]
 			};
@@ -386,16 +389,16 @@ function chartfilesmonth() {
 					labels : num,
 					 datasets: [
 					        {
-					          label               : '월별(MB)',
-					          backgroundColor     : 'rgba(60,141,188,0.9)',
-					          borderColor         : 'rgba(60,141,188,0.8)',
+					          label               : '월별',
+					          backgroundColor     : '#87C488',
+					          borderColor         : '#87C488',
 					          pointRadius          : false,
-					          pointColor          : '#3b8bba',
-					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointColor          : '#87C488',
+					          pointStrokeColor    : '#87C488',
 					          pointHighlightFill  : '#fff',
-					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          pointHighlightStroke: '#87C488',
 					          data                : percent,
-					          barThickness: 100
+					          barThickness: 50
 					        }]
 			};
 			 var lineChartOptions     = {
@@ -439,16 +442,16 @@ function chartfilesextension() {
 					labels : num,
 					 datasets: [
 					        {
-					          label               : 'cnt',
-					          backgroundColor     : 'rgba(60,141,188,0.9)',
-					          borderColor         : 'rgba(60,141,188,0.8)',
+					          label               : '개수',
+					          backgroundColor     : '#6a92cc',
+					          borderColor         : '#6a92cc',
 					          pointRadius          : false,
-					          pointColor          : '#3b8bba',
-					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointColor          : '#6a92cc',
+					          pointStrokeColor    : '#6a92cc',
 					          pointHighlightFill  : '#fff',
-					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          pointHighlightStroke: '#6a92cc',
 					          data                : percent,
-					          barThickness: 100
+					          barThickness: 30
 					        }]
 			};
 			 var barChartOptions     = {
@@ -493,13 +496,13 @@ function chartIssuesday() {
 					 datasets: [
 					        {
 					          label               : '일별',
-					          backgroundColor     : 'rgba(60,141,188,0.9)',
-					          borderColor         : 'rgba(60,141,188,0.8)',
+					          backgroundColor     : '#1D6A96',
+					          borderColor         : '#1D6A96',
 					          pointRadius          : false,
-					          pointColor          : '#3b8bba',
-					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointColor          : '#1D6A96',
+					          pointStrokeColor    : '#1D6A96',
 					          pointHighlightFill  : '#fff',
-					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          pointHighlightStroke: '#1D6A96',
 					          data                : percent 				 
 					        }]
 			};
@@ -546,15 +549,15 @@ function chartIssuesmonth() {
 					 datasets: [
 					        {
 					          label               : '월별',
-					          backgroundColor     : 'rgba(60,141,188,0.9)',
-					          borderColor         : 'rgba(60,141,188,0.8)',
+					          backgroundColor     : '#87C488',
+					          borderColor         : '#87C488',
 					          pointRadius          : false,
-					          pointColor          : '#3b8bba',
-					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointColor          : '#87C488',
+					          pointStrokeColor    : '#87C488',
 					          pointHighlightFill  : '#fff',
-					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          pointHighlightStroke: '#87C488',
 					          data                : percent,
-					          barThickness: 100
+					          barThickness: 50
 					        }]
 			};
 			 var lineChartOptions     = {
@@ -599,16 +602,16 @@ function chartIssuesCnt() {
 					labels : num,
 					 datasets: [
 					        {
-					          label               : 'cnt',
-					          backgroundColor     : 'rgba(60,141,188,0.9)',
-					          borderColor         : 'rgba(60,141,188,0.8)',
+					          label               : '개수',
+					          backgroundColor     : '#6a92cc',
+					          borderColor         : '#6a92cc',
 					          pointRadius          : false,
 					          pointColor          : '#3b8bba',
-					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointStrokeColor    : '#6a92cc',
 					          pointHighlightFill  : '#fff',
-					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          pointHighlightStroke: '#6a92cc',
 					          data                : percent,
-					          barThickness: 100
+					          barThickness: 50
 					        }]
 			};
 			 var barChartOptions     = {
@@ -622,6 +625,7 @@ function chartIssuesCnt() {
 					        yAxes: [{
 					        	ticks: {
 					                  stepSize: 10,
+					                  suggestedMax: 50,
 					                  beginAtZero: true
 					          }
 					        }]
@@ -653,13 +657,13 @@ function chartproday() {
 					 datasets: [
 					        {
 					          label               : '일별 진행도',
-					          backgroundColor     : 'rgba(60,141,188,0.9)',
-					          borderColor         : 'rgba(60,141,188,0.8)',
+					          backgroundColor     : '#1D6A96',
+					          borderColor         : '#1D6A96',
 					          pointRadius          : false,
-					          pointColor          : '#3b8bba',
-					          pointStrokeColor    : 'rgba(60,141,188,1)',
+					          pointColor          : '#1D6A96',
+					          pointStrokeColor    : '#1D6A96',
 					          pointHighlightFill  : '#fff',
-					          pointHighlightStroke: 'rgba(60,141,188,1)',
+					          pointHighlightStroke: '#1D6A96',
 					          data                : percent
 					        }]
 			};
@@ -706,7 +710,7 @@ function donutChartproper() {
 					 datasets: [
 					        {
 					          data: dpercent,
-					          backgroundColor : ['#00a65a', '#f39c12'],
+					          backgroundColor : ['#87C488', '#869DAB'],
 					        }
 					      ]
 			};
@@ -728,98 +732,135 @@ function donutChartproper() {
 </script>
 
 <body>
-              <div class="col-12 col-sm-12">
+	<%@include file="../layout/contentmenu.jsp"%>
+		<!-- /.container-fluid -->
+              <div class="col-12 col-sm-12 jg">
                      <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                       <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-work" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">main</a>
+                        <a class="nav-link active bani_a" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-work" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">프로젝트 차트</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-gantt-tab" data-toggle="pill" href="#custom-tabs-three-gantt" role="tab" aria-controls="custom-tabs-three-gantt" aria-selected="false">일감관련</a>
+                        <a class="nav-link bani_a" id="custom-tabs-three-gantt-tab" data-toggle="pill" href="#custom-tabs-three-gantt" role="tab" aria-controls="custom-tabs-three-gantt" aria-selected="false">일감 차트</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-messages-issue" data-toggle="pill" href="#custom-tabs-three-issue" role="tab" aria-controls="custom-tabs-three-issue" aria-selected="false">건의사항관련</a>
+                        <a class="nav-link bani_a" id="custom-tabs-three-calendar-tab" data-toggle="pill" href="#custom-tabs-three-calendar" role="tab" aria-controls="custom-tabs-three-calendar" aria-selected="false">이슈 차트</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-settings-suggest" data-toggle="pill" href="#custom-tabs-three-suggest" role="tab" aria-controls="custom-tabs-three-suggest" aria-selected="false">투표관련</a>
+                        <a class="nav-link bani_a" id="custom-tabs-three-mywork-tab" data-toggle="pill" href="#custom-tabs-three-mywork" role="tab" aria-controls="custom-tabs-three-mywork" aria-selected="false">파일함 차트</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-calendar-tab" data-toggle="pill" href="#custom-tabs-three-calendar" role="tab" aria-controls="custom-tabs-three-calendar" aria-selected="false">이슈관련</a>
+                        <a class="nav-link bani_a" id="custom-tabs-three-settings-suggest" data-toggle="pill" href="#custom-tabs-three-suggest" role="tab" aria-controls="custom-tabs-three-suggest" aria-selected="false">투표 차트</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-mywork-tab" data-toggle="pill" href="#custom-tabs-three-mywork" role="tab" aria-controls="custom-tabs-three-mywork" aria-selected="false">파일함 관련</a>
+                        <a class="nav-link bani_a" id="custom-tabs-three-messages-issue" data-toggle="pill" href="#custom-tabs-three-issue" role="tab" aria-controls="custom-tabs-three-issue" aria-selected="false">건의사항 차트</a>
                       </li>
                     </ul>
                   </div>
                   <!-- 내용 -->
-                  <div class="card-body">
+                  <div class="card-body jg">
                     <div class="tab-content" id="custom-tabs-three-tabContent">
                       <div class="tab-pane fade active show" id="custom-tabs-three-work" role="tabpanel" aria-labelledby="custom-tabs-three-work-tab">
-                          <h4 class="baniChart">프로젝트 진행도</h4>
+                      	<br><br>
+                      	<div class="bani_div">
+                          <h5 class="baniChart">프로젝트 진행도 </h5><br>
                           <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="donutChartproper" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
 	              		 </div>
-	              		 <h4 class="baniChart">일별 프로젝트 진행율</h4>
+	              		 </div>
+	              		 <div class="bani_div">
+	              		 <h5 class="baniChart">일별 프로젝트 진행율 </h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartproday" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
                          </div>
+                         </div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-gantt" role="tabpanel" aria-labelledby="custom-tabs-three-gantt-tab">
-                      	<h4 class="baniChart">팀원별 할일 진행율</h4>
-                      	<div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                  			<canvas id="stackedBarChartTodo" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
-                		</div>
-                      	<h4 class="baniChart">팀원별 할일 비중도</h4>
+                      <br><br>
+                      <div class="bani_div">
+                      	<h5 class="baniChart">팀원별 할일 비중도</h5><br>
                 		<div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
               		 		<canvas id="donutChartTodo" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
               		 	</div>
+              		 	</div>
+                      <div class="bani_div">
+                      	<h5 class="baniChart">팀원별 할일 진행율</h5><br>
+                      	<div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                  			<canvas id="stackedBarChartTodo" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+                		</div>
+                		</div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab">
-                      	<h4 class="baniChart">건의사항  수용, 대기, 거절 비율</h4>
+                      <br><br>
+                      <div class="bani_div">
+                      	<h5 class="baniChart">건의사항 현황</h5><br>
                      	 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="donutChartsuggest" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
 	              		 </div>
-                      	<h4 class="baniChart">팀원별 건의사항 작성 수</h4>
+	              		 </div>
+	              		 <div class="bani_div">
+                      	<h5 class="baniChart">팀원별 건의사항 작성 수</h5><br>
 	              		 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartsuggestCnt" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div>
+	              		 </div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-suggest" role="tabpanel" aria-labelledby="custom-tabs-three-suggest-tab">
-                      	<h4 class="baniChart">전체 투표 참여율</h4>
+                      <br><br>
+                      <div class="bani_div">
+                      	<h5 class="baniChart">전체 투표 참여율</h5><br>
                       	 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-	              		 	<canvas id="chartvotetotal" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
+	              		 	<canvas id="chartvotetotal" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 347px;" width="347" height="250" class="chartjs-render-monitor"></canvas>
 	              		 </div>
+	              		 </div>
+	              		 <div class="bani_div">
 	              		 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                      	<h4 class="baniChart">팀원별 투표 참여율</h4>
+                      	<h5 class="baniChart">팀원별 투표 참여율</h5><br>
 	              		 	<canvas id="chartvoteindi" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div> 
+	              		 </div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-calendar" role="tabpanel" aria-labelledby="custom-tabs-three-calendar-tab">
-                      	<h4 class="baniChart">월별 이슈 작성 수</h4>
+                      <br><br>
+                      <div class="bani_div2">
+                      	<h5 class="baniChart">월별 이슈 작성 수</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartIssuesmonth" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div> 
-                      	<h4 class="baniChart">일별 이슈 작성 수</h4>
+	              		 </div>
+	              		 <div class="bani_div3">
+                      	<h5 class="baniChart">일별 이슈 작성 수</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartIssuesday" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
                          </div>
-                      	<h4 class="baniChart">팀원별 이슈 작성 수</h4>
+                         </div>
+                         <br><br>
+                         <div class="bani_div2" style="padding-top: 5%;">
+                      	<h5 class="baniChart">팀원별 이슈 작성 수</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartIssuesCnt" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div> 
+	              		 </div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-mywork" role="tabpanel" aria-labelledby="custom-tabs-three-mywork-tab">
-                      	<h4 class="baniChart">월별 파일 업로드 용량</h4>
+                      <br><br>
+                      <div class="bani_div2">
+                      	<h5 class="baniChart">월별 파일 업로드 용량 (MB)</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartfilesmonth" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div> 
-                      	<h4 class="baniChart">일별 파일 업로드 용량</h4>
+	              		 </div>
+	              		 <div class="bani_div3">
+                      	<h5 class="baniChart">일별 파일 업로드 용량 (MB)</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartfilesday" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
                          </div>
-                      	<h4 class="baniChart">확장자별 업로드 수</h4>
+                         </div>
+                         <div class="bani_div2" style="padding-top: 5%;">
+                      	<h5 class="baniChart">확장자별 업로드 수</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartfilesextension" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div> 
+	              		 </div>
                       </div>
                     </div>
                   </div>
