@@ -37,7 +37,7 @@ function chartmain() {
 					          pointHighlightFill  : '#fff',
 					          pointHighlightStroke: '#87C488',
 					          data                : percent,
-					          barThickness: 50
+					          barThickness: 30
 					        }]
 			};
 			 var lineChartOptions     = {
@@ -69,11 +69,17 @@ function chartmain() {
 </script>
 <style>
 #maintop{
-	width: 100%;
+	width: 65%;
 	height: 40%;
+	float:left;
+}
+#maintop2{
+	width: 35%;
+	height: 100%;
+	float:right;
 }
 #mainleft{
-	width: 65%;	
+	width: 35%;	
 	min-height: 20%;
 	float:left;
 	
@@ -84,7 +90,7 @@ function chartmain() {
 	float:left;
 }
 #project_table{
-	width : 50%;
+	width : 100%;
     border-top: 1px solid #444444;
     border-collapse: collapse;
     text-align: center;
@@ -103,11 +109,11 @@ function chartmain() {
 <body>
  <div class="col-12 col-sm-12">
  
-<div id="maintop" style="OVERFLOW-Y:auto; padding-left:3%; margin-top: 1%;">
- <div class="card" style="height: 100%;">
+<div id="maintop" style="OVERFLOW-Y:auto; padding-left:2%; margin-top: 1%;">
+ <div class="card card-success card-outline" style="height: 100%;">
 <div class="card-header">
 <h4 class="jg" >Project List</h4></div>
-<div class="card-body pt-0" style=" margin-left: 2%; margin-right: 2%; margin-top: 1%; margin-bottom: 0.5%;" >
+<div class="card-body pt-0" style=" margin-left: 2%; margin-right: 2%; margin-top: 1%;" >
 	<table id="project_table" class="ns">
 		<tr style="background-color: #f6f6f6">
 			<th>프로젝트 이름</th>
@@ -118,15 +124,15 @@ function chartmain() {
 		<tbody >
 				<c:forEach items="${projectList_main }" var="project" varStatus="sts" >
 				    <tr>
-					<td style="text-align: left; width: 350px; font-size: 1em; padding-left: 5%">${project.proName }</td>
+					<td style="text-align: left; font-size: 1em; padding-left: 5%">${project.proName }</td>
 					<c:if test="${empty project.percent }">
-					<td style="width: 100px;">0%</td>
+					<td >0%</td>
 					</c:if>					
 					<c:if test="${not empty project.percent }">
 					<td>${project.percent }%</td>
 					</c:if>					
-					<td style="width: 200px;">${project.regDt }&nbsp;&nbsp;~&nbsp;&nbsp; ${project.endDt }</td>			
-					<td style="width: 100px;">${project.memId }</td>			
+					<td >${project.regDt }&nbsp;&nbsp;~&nbsp;&nbsp; ${project.endDt }</td>			
+					<td >${project.memId }</td>			
 					</tr>
 				</c:forEach>
 		</tbody>
@@ -134,13 +140,26 @@ function chartmain() {
 </div>
 </div>
 </div>
-
-<div id="mainleft" style="padding-left: 3%;">
-<div class="card" style="height: 360px;">
+<div id="maintop2" style="padding-left: 2%;  margin-top: 1%; padding-right: 2%;">
+<div class="card card-success card-outline">
+<div class="card-header">
+<h4 class="jg" >알림!!!!</h4></div>
+<div class="card-body pt-0">
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+</div>
+</div>
+</div>
+<div id="mainleft" style="padding-left: 2%;">
+<div class="card card-success card-outline" style="height: 340px;">
 <div class="card-header">
 <h4 class="jg" >Progress Chart </h4></div>
 <div class="card-body pt-0">
-	<div class="chart">
+	<div class="chart" style="padding-top: 2%;">
 		<div class="chartjs-size-monitor">
 			<div class="chartjs-size-monitor-expand">
 				<div class=""></div>
@@ -149,13 +168,13 @@ function chartmain() {
 				<div class=""></div>
 			</div>
 		</div>
-		<canvas id="chartmain" style="min-height: 200px; height: 290px; max-height: 290px; max-width: 100%; display: block; width: 100px;" width="100" height="290" class="chartjs-render-monitor"></canvas>
+		<canvas id="chartmain" style="min-height: 200px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 100px;" width="100" height="250" class="chartjs-render-monitor"></canvas>
 	</div>
 	</div>
 </div>
 </div>
-<div id="mainright" style="padding-left: 3%;">
-<div class="card" style="height: 350px;">
+<div id="mainright" style="padding-left: 2%;">
+<div class="card card-success card-outline" style="height: 340px;">
               <div class="card-header">
                 <h4 class="jg" style="text-align: center;"> Calendar</h4>
               </div>
@@ -167,7 +186,7 @@ function chartmain() {
                 <ul class="list-unstyled">
                 <li class="show">
                 <div class="datepicker">
-                <div class="datepicker-days" style="">
+                <div class="datepicker-days" >
                 <table class="table table-sm">
                 <thead>
                 <tr>
