@@ -8,22 +8,29 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style type="text/css">
 	#pagenum a{
 		 display: inline-block;
 		 text-align: center;
-		 width : auto;	 
+		 padding : 6px; 	 
 		 border: none; 
-	
 	}
+	#table{
+		width : 100%;
+	    border-top: 1px solid #444444;
+	    border-collapse: collapse;
+	    text-align: center;
+  	}
+  	th, td {
+	    border-bottom: 1px solid #444444;
+	    padding: 10px;
+  	}
 	
 	li strong{
 		display: inline-block;
 		text-align: center;
-		width: 30px;
+		padding : 6px; 
 	}
 	
 	.pagingui{
@@ -48,17 +55,11 @@
 
 <script type="text/javascript">
 	$(function() {
-		$("#insertnotice")
-				.on(
-						'click',
-						function() {
+		$("#insertnotice").on('click',function() {
+			$(location).attr('href','${pageContext.request.contextPath}/admin/insertnoticeView');
+		})
 
-							$(location)
-									.attr('href',
-											'${pageContext.request.contextPath}/admin/insertnoticeView');
-						})
-
-		$("#pagenum a").addClass("page-link");
+// 		$("#pagenum a").addClass("page-link");
 
 	})
 
@@ -86,7 +87,7 @@
 <form:form commandName="noticeVo" id="listForm" name="listForm" method="post">
 		
 	<section class="content" >
-		<div class="col-12 col-sm-12">
+		<div class="col-sm-12 ns">
 			<div class="card" style="border-radius: inherit; padding : 2px; margin-top: 10px">
 				<!-- 헤더 부분 -->
 				<div class="container-fluid">
@@ -108,67 +109,66 @@
 				<!-- 검색창 라인 -->
 				<div class="card-header  ">
 					<div id="keyword" class="card-tools float-right" style="width: 450px;">
-	
-							<div class="input-group row">		
-								<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">				
-									<form:option value="1" label="제목"/>
-									<form:option value="2" label="날짜"/>
-								</form:select> 
-									
-								<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-								<form:input style="width: 300px;" path="searchKeyword"  placeholder="검색어를 입력하세요." class="form-control jg"/>
-				                 
-					            <span class="input-group-append">							
-									<button class="btn btn-default" type="button" id="searchBtn" onclick="search()" >
-										<i class="fa fa-fw fa-search"></i>
-									</button>
-								</span>
-							</div><br>
-							
+						<div class="input-group row">		
+							<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">				
+								<form:option value="1" label="제목"/>
+								<form:option value="2" label="날짜"/>
+							</form:select> 
+								
+							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
+							<form:input style="width: 300px;" path="searchKeyword"  placeholder="검색어를 입력하세요." class="form-control jg"/>
+			                 
+				            <span class="input-group-append">							
+								<button class="btn btn-default" type="button" id="searchBtn" onclick="search()" >
+									<i class="fa fa-fw fa-search"></i>
+								</button>
+							</span>
+						</div><br>
 					</div>
 				</div>
 				<!-- 검색창 라인 끝 -->
 				
 				<!-- 리스트 부분 시작 -->
 	            <div class="card-body p-0">
-	            	<table class="table">
+	            	<table id="table" class="jg">
 	            		<!-- 헤더부분  -->
-	            		<thead>
-							<tr>
-								<th style="width: 150px; padding-left: 50px;">No.</th>
-								<th style="padding-left: 30px;">제목</th>
-								<th>작성자</th>
-								<th>날짜</th>
-								<th>종류</th>
-							</tr>
-						</thead>
+						<tr>
+	                        <th style="padding-left: 10px;" >No.</th>
+							<th>상태</th>
+	                     	<th>제목</th> 
+							<th>작성자</th>
+							<th>날짜</th>
+                    	</tr>
 						
 						<!-- 리스트부분 -->
 						<tbody>
 							<c:forEach items="${noticelist }" var="notice" varStatus="status">
 							
 								<tr>
-									<td style="width: 150px; padding-left: 50px;"><c:out
-											value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />.</td>
-
-									<td style="padding-left: 30px;"><a
-										href="${pageContext.request.contextPath}/admin/eachnoticeDetail?noticeId=${notice.noticeId}">
-											${notice.noticeTitle }</a></td>
+									<td>
+										<c:out value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />
+									.</td>
+										
+									<td>	
+										<c:if test="${notice.importance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
+										<c:if test="${notice.importance eq 'emg'}"><span class="badge badge-danger ns">필독</span></c:if>
+									</td>
+									
+									<td>
+										<a href="${pageContext.request.contextPath}/admin/eachnoticeDetail?noticeId=${notice.noticeId}">
+											${notice.noticeTitle }</a>
+									</td>
 									<td>${notice.adminId }</td>
 									<td>${notice.regDt }</td>
-									<c:if test="${notice.importance == 'slow'}">
-									<td  class="jg"> 일반</td>										
-									</c:if>
-									<c:if test="${notice.importance == 'fast'}">
-										<td  class="jg"> 긴급</td>										
-									</c:if>
+									
 								</tr>
 								
 							</c:forEach>
 							<c:if test="${noticelist.size() == 0}">
-								<td colspan="7" style="text-align: center;"><br> <strong>
+								<td colspan="7" style="text-align: center;" class="jg"><br> <strong>
 										[ 결과가 없습니다. ] </strong></td>
 							</c:if>
+							
 						</tbody>
 	            	</table>
 	            </div><!-- 리스트 부분 끝 -->
@@ -187,7 +187,7 @@
 				<br>
 				<div class="card-footer clearfix">
 					<button id="insertnotice" type="button"
-						class="btn btn-default float-right" onclick="noticeInsert()">
+						class="btn btn-default float-left" onclick="noticeInsert()">
 						<i class="fas fa-plus"></i>등 록
 					</button>
 				</div>
