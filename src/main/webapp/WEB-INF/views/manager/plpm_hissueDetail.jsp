@@ -15,7 +15,7 @@
  		// 답글 작성
 		$(document).on('click','#creatChildBtn', function(){
 			var hissueId = $("#hissueId").val();
-		   	document.location = "/hotIssue/hissueInsertView?Parentid="+hissueId;
+		   	document.location = "/hotIssue/hissueInsertView?hissueParentid="+hissueId;
 		})
 		
 		
