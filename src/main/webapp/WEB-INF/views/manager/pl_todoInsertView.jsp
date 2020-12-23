@@ -26,8 +26,9 @@
 
 <script type="text/javascript">
 	 	$(document).ready(function(){
-	 		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
-	 		
+ 	 		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
+			 $('#currentDate').attr('min', new Date().toISOString().substring(0, 10));
+			 $('#todo_end').attr('min', new Date().toISOString().substring(0, 10));
 	 		 $('#summernote').summernote({
 			        placeholder: 'Hello stand alone ui',
 			        tabsize: 2,

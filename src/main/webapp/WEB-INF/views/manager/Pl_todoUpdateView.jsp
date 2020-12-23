@@ -22,12 +22,17 @@
 		$("#memChangecomment").hide();
 		$('#summernote').summernote();
 		
-		// db일자 가져오기
 		var todo_start = $('#todo_start').val();
 		var todo_end = $('#todo_end').val();
-		document.getElementById('todoStart').value = new Date(todo_start).toISOString().substring(0, 10);
- 		document.getElementById('todoEnd').value = new Date(todo_end).toISOString().substring(0, 10);
- 		
+		var todo_start2 = new Date(todo_start);
+		var todo_end2 = new Date(todo_end);
+		date1 = getFormatDate(todo_start2);
+		date2 = getFormatDate(todo_end2);
+ 		document.getElementById('todoStart').value = date1;
+  		document.getElementById('todoEnd').value = date2;
+		 $('#todoStart').attr('min', new Date(date1).toISOString().substring(0, 10));
+		 $('#todoEnd').attr('min', new Date(date2).toISOString().substring(0, 10));
+		
  		//파일
 		fileSlotCnt = "${filelist.size() }";
 		console.log(fileSlotCnt)
@@ -157,7 +162,14 @@
 		 	})
 		}
  		
- 		
+	function getFormatDate(date){
+	    var year = date.getFullYear();              //yyyy
+	    var month = (1 + date.getMonth());          //M
+	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    var day = date.getDate();                   //d
+	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    return  year + '-' + month + '-' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+	}
  		//파일끝
  		
  		// 뒤로가기
