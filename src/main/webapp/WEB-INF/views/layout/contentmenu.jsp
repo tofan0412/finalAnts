@@ -3,23 +3,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
 	$(function() {
-		SearchListBanner = [];
-		inviteMemListBanner = [];
+		memberSearchList = [];
+		inviteMemList = [];
+		
 		reqId = '${projectId}';
 		memId = "${SMEMBER.memId}";
 		
 		// 회원 초대 버튼을 누르면 모달창이 나온다.
 		$('.inviteBtn').click(function() {
-			// 경고 문구 나오는 곳 비우기..
-			$('.warningBanner').empty();
-			$('.MemListBanner').empty();
+			$('#warningText').text("");
+			$('.memListView').empty();
 			
 			// 검색창과 검색결과창 비우기..
 			$('.searchResult').empty();
-			$('#userSearchBanner').val("");
+			$('#userSearchBar').val("");
 			
-			SearchListBanner = [];
-			inviteMemListBanner = [];
+			memberSearchList = [];
+			inviteMemList = [];
+			$('#fake').show();
 			$('#inviteMember').modal();
 		})
 
@@ -27,11 +28,14 @@
 		// test = window.setTimeout("실행할 함수", 지연할 시간(ms 단위)); 
 		// 와 같이 test 를 주고 if (test) 조건을 주면 test는 임의의 숫자값을 가지므로 실행된다.
 		var timer = null;
-		$('#userSearchBanner').keyup(function(){
+		$('#userSearchBar').keyup(function(){
 			
 			if ($(this).val() != ''){
-				$('#searchWaiting')[0].style.visibility = 'visible';	
-				
+				$('#warningText').text("검색 중입니다..");
+				$('#fake').hide();
+				$('#warningText')[0].style.visibility = 'visible';
+			}else{
+				$('#warningText')[0].style.visibility = 'hidden';
 			}
 			
 			if (timer){	// 즉 기존에 실행하려고 예정된 함수가 있는지 확인한다.
@@ -43,9 +47,9 @@
 				
 				$('.warningBanner').empty();
 				$('.searchResult').empty();
-				SearchListBanner = [];
+				memberSearchList = [];
 				
-				var keyword = $('#userSearchBanner').val();
+				var keyword = $('#userSearchBar').val();
 				if (keyword == ''){
 					$('.searchResult').empty();
 				}
@@ -59,16 +63,16 @@
 								return;
 							}else{	// 검색 결과가 1개 이상인 경우
 								for (i = 0; i < res.length; i++) {
-									SearchListBanner.push(res[i].memName+":["+res[i].memId+"]");
+									memberSearchList.push(res[i].memName+":["+res[i].memId+"]");
 								}
-//	 							autoComplete(SearchListBanner);
+//	 							autoComplete(memberSearchList);
 							}
 						},
 						complete : function(){
-							$('#searchWaiting')[0].style.visibility = 'hidden';
+							$('#warningText')[0].style.visibility = 'hidden';
 							$('.searchResult').empty();
-								
-							printSearchResult(SearchListBanner);
+							
+							printSearchResult(memberSearchList);
 						}
 					})
 				}
@@ -91,165 +95,125 @@
 // 		}
 		
 		function printSearchResult(arr){
-			for (j = 0 ; j < arr.length ; j++){
-				$('.searchResult').append(
-				"<div class=\'searchResultOne\' style=\'height : 50px; \' >"
-					+"<span style=\'float : left;\'>"
-						+arr[j].split(":")[0]
-					+"</span>"
-					+"<span style=\'float : left;\'>"
-						+arr[j].split(":")[1]
-					+"</span>"
-				+"</div>");	
-			} 
-		}
-		
-		// 자동 완성 부분 ..
-		function autoComplete(SearchListBanner) {
-			$('#userSearchBanner').autocomplete({
-				source : SearchListBanner,
-				select : function(event, ui) {},
-				minLength : 1,
-				appendTo : $('#inviteMember'),	// 모달 창 위로 떠야 한다..
-				focus : function(event, ui) {
-					return false;
-				}
-			})
-		}
-		
-		// 사용자가 추가 버튼을 누를 때 ..
-		$('.addMemBtnBanner').click(function() {
-			addingMemName = $('#userSearchBanner').val();
-			reqId = "${projectId}";
-			
-// 			alert("현재 프로젝트 번호는? " + reqId);
-// 			alert("추가하고자 하는 회원 아이디는? " + addingMemId); 
-			
-			if (addingMemName == "${SMEMBER.memName}") {
-				$('.warningBanner').text("본인입니다.");
+			// 검색 결과가 존재하지 않는 경우  : (검색중입니다..) 문구를 삭제한다.
+			if (arr.length == 0 ){
+				$('#warningText')[0].style.visibility = 'hidden';
 				return;
 			}
-
-			var DBCheck = "";		// DB에 존재하는가?
-			var existCheck = "";	// 이미 참여한 회원인가?
-			var addedCheck = "";	// 이미 초대할 리스트에 추가되어 있는가?
+			// 검색 결과가 1건 이상 존재하는 경우..
+			else{
+				for (j = 0 ; j < arr.length ; j++){
+					$('.searchResult').append(
+					"<div class=\'searchResultOne\' memId=\'"
+					+ arr[j].split(":")[1].replace("[","").replace("]","") +"\' memName=\'"
+					+ arr[j].split(":")[0] + "\' style=\'height : 50px; \' >"
+						+"<span style=\'float : left;\'>"
+							+arr[j].split(":")[0]
+						+"</span>"
+						+"<span style=\'float : left;\'>"
+							+arr[j].split(":")[1]
+						+"</span>"
+					+"</div>");	
+				} 
+				$('#warningText')[0].style.visibility = 'hidden';
+			}
+		}
+		
+		$('.searchResult').on('click', '.searchResultOne', function(){
+			memName = $(this).attr("memName");
+			addingMemId = $(this).attr("memId");
+			reqId = "${projectId}";
 			
-			// DB에 존재하는지 확인
+			$('#warningText')[0].style.visibility = 'hidden';
+			
+			// 본인인지 아닌지, 확인해야 한다.
+			if (memName == "${SMEMBER.memName}") {
+				$('#warningText').text("본인입니다.");
+				$('#warningText')[0].style.visibility = 'visible';
+				return;
+			}
+			
+			// 넣기 전, 이미 프로젝트에 참여하고 있는 회원인지 검사해야 한다.
 			$.ajax({
-				url : "/project/chkMemId",
-				data : { memId : addingMemId },
+				url : "/projectMember/proMemList",
+				data : { reqId : reqId },
 				method : "POST",
 				success : function(res) {
-// 					alert("DB에 존재하는지 확인합니다..");
-					if (res == "accept") {
-// 						alert("DB에 존재합니다.");
-						DBCheck = "pass";
-						if (DBCheck == "pass"){
-							$.ajax({
-								url : "/projectMember/proMemList",
-								data : { reqId : reqId },
-								method : "POST",
-								success : function(res) {
-// 									alert("이미 추가된 플젝 회원인지 검사합니다..");
-									for (var i = 0; i < res.length; i++) {
-										if (addingMemId == res[i].memId) {
-											$('.warningBanner').text("이미 참여하고 있는 회원입니다.");
-											existCheck = "noop";
-											return;
-										}else{
-											existCheck = "pass";
-										}
-									}
-									if (existCheck == "pass"){
-										// 초대할 회원 리스트 길이가 0인 경우 : 바로 넣는다.
-										if (inviteMemListBanner.length == 0) {
-											$('.warningBanner').text('');
-											inviteMemListBanner.push(addingMemId);
-											listMember(inviteMemListBanner);
-											return;
-										}
-									
-										// 이미 초대할 회원이 리스트에 존재하는 경우 : 중복되면 안된다.
-										for (i = 0; i < inviteMemListBanner.length; i++) {
-											if (addingMemId == inviteMemListBanner[i]) {
-												$(".warningBanner").text('');
-												$('.warningBanner').text("이미 추가한 회원입니다.");
-												addedCheck = "noop";
-												return;
-											}else{
-												addedCheck = "pass";
-											}
-										}
-										if (addedCheck == "pass"){
-											$('.warningBanner').text('');
-											inviteMemListBanner.push(addingMemId);
-											listMember(inviteMemListBanner);
-											return; // 추가하고 끝낸다.
-										}
-									}
-								}
-							})
+					// 검사 시작
+					for (var i = 0; i < res.length; i++) {
+						if (addingMemId == res[i].memId) {
+							$('#warningText').text("이미 참여하고 있는 회원입니다.");
+							$('#warningText')[0].style.visibility = 'visible';
+							return;
 						}
-					}else{
-						DBCheck = "noop";
-						$('.warningBanner').text("존재하지 않는 회원입니다.");
+					}
+					// 초대할 회원 리스트 길이가 0인 경우 : 바로 넣는다.
+					if (inviteMemList.length == 0) {
+						inviteMemList.push(memName+":"+addingMemId);
+						
+						listMember(inviteMemList);
+						$('#warningText').text("추가하였습니다..");
+						$('#warningText')[0].style.visibility = 'visible';
 						return;
+					}else{
+					
+					// 초대 회원 리스트 길이가 0이 아닌 경우 : 중복되면 안된다.
+						for (i = 0; i < inviteMemList.length; i++) {
+							if ((memName+":"+addingMemId) == inviteMemList[i]) {
+								$('#warningText').text("이미 추가한 회원입니다.");
+								$('#warningText')[0].style.visibility = 'visible';
+								return;
+							}
+						}
+						inviteMemList.push(memName+":"+addingMemId);
+						
+						listMember(inviteMemList);
+						$('#warningText').text("추가하였습니다..");
+						return; // 추가하고 끝낸다.
 					}
 				}
 			})
-// 			alert("마지막입니다. 종료합니다.");
-			return;
 		})
 		
-		$('.MemListBanner').on('mouseenter','.addedMemIdBanner',function(){
-			$(this).css("background-color", 'lightgrey');
-		})
-		
-		$('.MemListBanner').on('mouseleave','.addedMemIdBanner',function(){
-			$(this).css("background-color", 'white');
-		})
-		
-		// 검색 창에서 마우스 올렸을 때 ..
-		$('.searchResult').on('mouseenter','.searchResultOne',function(){
-			$(this).css("background-color", 'lightgrey');
-		})
-		
-		$('.searchResult').on('mouseleave','.searchResultOne',function(){
-			$(this).css("background-color", 'white');
-		})
-		
-		
-		
-		
-		function listMember(inviteMemListBanner) {
-			$('.MemListBanner').empty();
-			for (i = 0; i < inviteMemListBanner.length; i++) {
-				$('.MemListBanner').append(
-						"<div class=\'addedMemIdBanner jg\' style=\'height : 50px;\' memId='"+inviteMemListBanner[i]+"'>"
-								+ inviteMemListBanner[i] + "</div>");
+		function listMember(inviteMemList) {
+			$('.memListView').empty();
+			for (i = 0; i < inviteMemList.length; i++) {
+				$('.memListView').append(
+						"<div class=\'addedMember jg\' style=\'height : 50px;\'"
+							+" memId='"+inviteMemList[i]+"'>"
+							+ inviteMemList[i].split(":")[0]
+							+ "[" + inviteMemList[i].split(":")[1] + "]"
+						+ "</div>");
 			}
 		}
-
-		function delMember(memId) {
-			$('.warningBanner').text('');
-			inviteMemListBanner.splice(inviteMemListBanner.indexOf(memId), 1); // 뒤의 개수는 몇개를 제거할 지 이다..
-			listMember(inviteMemListBanner);
-		}
-
+		
 		// 사용자가 아이디를 누르는 경우 제거한다. 
-		$('.MemListBanner').on('click', '.addedMemIdBanner', function() {
+		$('.memListView').on('click', '.addedMember', function() {
 			var memId = $(this).attr('memId');
 			delMember(memId);
 		})
+		
+		function delMember(memId) {
+			$('.warningBanner').text('');
+			inviteMemList.splice(inviteMemList.indexOf(memId), 1);
+			listMember(inviteMemList);
+		}
 
 		// 초대할 대상을 정한 후 초대하기 버튼을 누르면 해당 멤버에게 초대가 전송된다.
-
 		$('.inviteMemBtn').click(function() {
-			if (inviteMemListBanner.length == 0){
-				alert("초대할 대상을 선택하지 않았습니다.");
+			if (inviteMemList.length == 0){
+				$('#fake').hide();
+				$('#warningText').text("초대할 인원을 선택하지 않았습니다.");
+				$('#warningText')[0].style.visibility = "visible";				
 			}else{
+				// inviteMemList를 먼저 가공해야 한다.
+				setInviteMemList = [];
+				for (i = 0 ; i < inviteMemList.length ; i++){
+					setInviteMemList.push(inviteMemList[i].split(":")[1]);
+				}
+				
 				var ajaxArr = {
-						"inviteMemList" : inviteMemListBanner, // 변수명을 맞춰야 한다. inviteMemList로!
+						"inviteMemList" : setInviteMemList, // 변수명을 맞춰야 한다. inviteMemList로!
 						"reqId" : reqId,
 						"memId" : memId
 					};
@@ -262,8 +226,10 @@
 							// 해당 요구사항 정의서의 상태를 변경해야 한다.
 							saveReqMsg();
 							alert("초대를 완료하였습니다.");
+							$('#inviteMember').modal("hide"); // 모달창 닫기 
 						} else {
-							console.log("인원 초대 실패..")
+							alert("초대 실패..");
+							$('#inviteMember').modal("hide");
 						}
 					}
 				})
@@ -271,9 +237,15 @@
 		})
 		
 		function saveReqMsg(){
+			// inviteMemList를 가공해야 한다.
+			setInviteMemList = [];
+			for (i = 0 ; i < inviteMemList.length ; i++){
+				setInviteMemList.push(inviteMemList[i].split(":")[1]);
+			}
+			
 			var alarmData = {
 					"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId=" + reqId + "&&${projectVo.proName}" ,
-					"memIds"	: inviteMemListBanner,
+					"memIds"	: setInviteMemList,
 					"alarmType" : "req-pro"
 			}
 			
@@ -293,6 +265,24 @@
 			});
 			console.log(alarmData);
 		}
+		
+		// 마우스 over, leave 관련 이벤트
+		$('.memListView').on('mouseenter','.addedMember',function(){
+			$(this).css("background-color", 'lightgrey');
+		})
+		
+		$('.memListView').on('mouseleave','.addedMember',function(){
+			$(this).css("background-color", 'white');
+		})
+		
+		// 검색 창에서 마우스 올렸을 때 ..
+		$('.searchResult').on('mouseenter','.searchResultOne',function(){
+			$(this).css("background-color", 'lightgrey');
+		})
+		
+		$('.searchResult').on('mouseleave','.searchResultOne',function(){
+			$(this).css("background-color", 'white');
+		})
 		
 	});//function
 </script>
@@ -404,18 +394,28 @@
 				<div class="modal-body jg" style="width: 100%; height: 60%;">
 					
 					<div style="float : left; width : 50%;">
-						<label>초대할 멤버의 아이디를 검색하세요.</label>
-						<div class="warningBanner" style="color: red;"></div>
-						<input type="text" id="userSearchBanner" 
-							style="float: left; width : 95%; border-radius : 0.45rem;" autocomplete="off">
-						<div id="searchWaiting" style="visibility: hidden;">검색 중입니다..</div>
+						<label style="margin : 5px 5px 5px 5px;">초대할 멤버의 아이디를 검색하세요.</label>
+						<input type="text" id="userSearchBar" 
+							style="float: left; 
+								   width : 90%; 
+								   border-radius : 0.45rem;
+								   margin : 5px 5px 5px 5px;" autocomplete="off" placeholder="사용자의 이름을 입력하세요..">
+						<label id="fake" style="width : 80%;">&nbsp;</label>
+						<div id="warningText" 
+							style="visibility: visible; 
+								   float : left;
+								   margin-top : 5px;
+								   margin-left : 5px;
+								   margin-bottom : 5px;
+								   color : red;"></div>
+								   
 						<div class="searchResult jg" style="
 							margin : 5px 5px 5px 5px;
-							border : 1px solid lightgrey;
+							border : 2px solid lightgrey;
 							width : 90%;
 							height : 300px;
 							border-radius : 0.45rem;
-							padding : 5px 5px 5px 5px;
+							padding : 7px 7px 7px 7px;
 							overflow-y : auto;">
 						</div>
 						
@@ -423,7 +423,12 @@
 					
 					<div style="float : right; width : 50%;">
 						<label style="text-align : center;">초대 목록</label>
-						<div class="MemListBanner" style="height : 450px; overflow-y : auto;">
+						<div class="memListView" 
+							style="height : 375px; 
+								   border : 2px solid lightgrey;
+								   border-radius : 0.45rem;
+								   padding : 7px 7px 7px 7px;
+								   overflow-y : auto;">
 						</div>
 					</div>
 				</div>
@@ -435,5 +440,4 @@
 			
 		</div>
 	</div>
-
 	<!--  /Modal -->
