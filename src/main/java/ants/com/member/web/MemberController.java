@@ -196,7 +196,7 @@ public class MemberController {
 				// PM의 프로젝트 리스트가 있을때만
 				if (prp_pm.size() != 0) {
 					session.setAttribute("pmInProjectList", prp_pm); // 프로젝트 리스트 세션에 저장
-					session.setAttribute("projectList_main", prp_pm);
+					model.addAttribute("projectList_main", prp_pm);
 					// // 로그인
 					// /*캘린더 초기값 */
 					// ScheduleVo scheduleVo = new ScheduleVo();
@@ -238,7 +238,7 @@ public class MemberController {
 
 			if (!dbMember.getMemType().equals("PM")) {
 				List<ProjectVo> projectList_main = projectService.projectListmain(dbMember.getMemId());
-				session.setAttribute("projectList_main", projectList_main);
+				model.addAttribute("projectList_main", projectList_main);
 			}
 			return "tiles/layout/contentmain";
 		} else {

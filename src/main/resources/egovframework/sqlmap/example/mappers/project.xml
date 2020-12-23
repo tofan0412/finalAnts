@@ -47,7 +47,7 @@
 					reqlist reqlist
 		WHERE
 			reqlist.req_id = project.req_id
-		AND reqlist.mem_id= 'pm1'
+		AND reqlist.mem_id= #{memId}
 		and project.del ='N'
 	</select>
 
@@ -455,7 +455,7 @@ SELECT * FROM MEMBER WHERE MEM_NAME LIKE #{keyword}
 		WHERE
 			projectmember.req_id = project.req_id
         and reqlist.req_id=project.req_id    
-        and projectmember.mem_id = 'java'
+        and projectmember.mem_id = #{memId}
 		and projectmember.promem_status='IN'
         and project.del ='N'
         union
@@ -468,7 +468,7 @@ SELECT * FROM MEMBER WHERE MEM_NAME LIKE #{keyword}
 			reqlist reqlist
 		WHERE
 			reqlist.req_id = project.req_id
-		AND reqlist.pl_id= 'java'
+		AND reqlist.pl_id= #{memId}
 		AND reqlist.status ='ACCEPT'
          and project.del ='N'
 	</select>

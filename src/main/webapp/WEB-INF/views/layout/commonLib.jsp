@@ -31,6 +31,8 @@
 <script src="/plugins/fullcalendar-daygrid/main.js"></script>
 <script src="/plugins/fullcalendar-interaction/main.js"></script>
 <script src="/plugins/fullcalendar-timegrid/main.js"></script>
+<!-- daterangepicker(메인 페이지 달력용) -->
+<script src="/plugins/daterangepicker/daterangepicker.js"></script>
 <!--  
 캐시무력화 
 <script src="/dist/js/adminlte.min.js?ver=1"></script>
