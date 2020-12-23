@@ -127,8 +127,8 @@ function chartmain() {
 <body>
  <div class="col-12 col-sm-12">
  
-<div id="maintop" style="OVERFLOW-Y:auto; padding-left:2%; margin-top: 1%;">
-	<div class="card card-success card-outline" style="height: 100%;">
+<div id="maintop" style="OVERFLOW-Y:auto; padding-left:2%; margin-top: 1%; height: 400px;">
+	<div class="card">
 		<div class="card-header">
 			<h3 class="card-title jg">Project List</h3>
 		</div>
@@ -174,7 +174,7 @@ function chartmain() {
 		</div>
 	</div>
 </div>
-<div id="mainleft" style="padding-left: 2%;">
+<div id="mainleft" style="padding-left: 2%; margin-top: 3%;">
 	<div class="card card-success card-outline" style="height: 340px;">
 		<div class="card-header">
 			<h3 class="card-title jg">Progress Chart</h3>
@@ -194,7 +194,7 @@ function chartmain() {
 		</div>
 	</div>
 </div>
-<div id="mainright" style="padding-left: 2%;">
+<div id="mainright" style="padding-left: 2%; margin-top: 3%;">
 	<div class="card card-success card-outline" style="height: 330px;">
 		<div class="card-header">
 			<h3 class="card-title jg" style="text-align: center;">Calendar</h3>
