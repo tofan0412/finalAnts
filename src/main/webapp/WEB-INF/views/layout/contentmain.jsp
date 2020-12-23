@@ -133,10 +133,14 @@ function chartmain() {
     border: 1px solid white;
     background: white;
     color: black;
+    
 }
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
 	background-color: #1D6A96;
 	color: white; 
+}
+.ui-widget.ui-widget-content {
+    width: 100%;
 }
 </style>
 </head>				
