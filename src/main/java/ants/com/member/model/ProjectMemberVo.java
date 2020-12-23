@@ -9,6 +9,7 @@ public class ProjectMemberVo {
 	private String promemStatus;
 	private String title;
 	private String plName;
+	private String plId;
 	
 	public String getReqId() {
 		return reqId;
@@ -48,10 +49,17 @@ public class ProjectMemberVo {
 	public void setPlName(String plName) {
 		this.plName = plName;
 	}
+	
+	public String getPlId() {
+		return plId;
+	}
+	public void setPlId(String plId) {
+		this.plId = plId;
+	}
 	@Override
 	public String toString() {
 		return "ProjectMemberVo [reqId=" + reqId + ", promemId=" + promemId + ", memId=" + memId + ", promemStatus="
-				+ promemStatus + ", title=" + title + ", plName=" + plName + "]";
+				+ promemStatus + ", title=" + title + ", plName=" + plName + ", plId=" + plId + "]";
 	}
 	
 }

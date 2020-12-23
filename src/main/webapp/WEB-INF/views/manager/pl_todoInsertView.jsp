@@ -26,8 +26,9 @@
 
 <script type="text/javascript">
 	 	$(document).ready(function(){
-	 		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
-	 		
+ 	 		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
+			 $('#currentDate').attr('min', new Date().toISOString().substring(0, 10));
+			 $('#todo_end').attr('min', new Date().toISOString().substring(0, 10));
 	 		 $('#summernote').summernote({
 			        placeholder: 'Hello stand alone ui',
 			        tabsize: 2,
@@ -165,6 +166,15 @@
 		$("#back").on("click", function() {
 			window.history.back();
 		});
+		
+		// 제목 글자수 계산
+        $('#todoTitle').keyup(function (e){
+            var content = $(this).val();           
+            if (content.length > 66){
+                alert("최대 66자까지 입력 가능합니다.");
+                 $(this).val(content.substring(0, 65));
+            }
+        });
 	});
     
      	
