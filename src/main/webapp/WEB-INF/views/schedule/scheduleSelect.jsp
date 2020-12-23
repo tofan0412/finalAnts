@@ -26,7 +26,7 @@
 	padding-left : 50px;
 	padding-top : 10px;
 	padding-bottom : 10px;
-} 
+}
 #scheCont{
 	width : 100%;
 	height : 400px;
@@ -35,13 +35,13 @@
 	width : 100%;
 }
 .form-control:disabled, .form-control[readonly] {
-   background-color: white;
-   }
-  .success{
-  background-color: #f6f6f6;
-  width: 10%;
-  text-align: center;
-  }
+	background-color: white;
+}
+.success{
+	background-color: #f6f6f6;
+	width: 10%;
+	text-align: center;
+}
 #re_con{
 	width: 700px;
 	display :inline-block;
@@ -51,14 +51,21 @@
     line-height: 1.6;
     overflow-y:hidden;
 }		
- #re_con.autosize { min-height: 60px; } 
-	
+#re_con.autosize { 
+	min-height: 60px; 
+}
+#tx{
+	background-color:transparent; 
+	border:none; 
+	width:100%; 
+	overflow:visible;	
+}		
 </style>	
 <%@include file="../layout/contentmenu.jsp"%>
 <body>
 <div class="col-12 col-sm-12">
 	<div class="card card-teal ">
-	 
+	
 	    <form id="listform" action="${pageContext.request.contextPath}/schedule/scheduleplaceView" method="post">
 		    <input type="hidden" value="${searchCondition }" name="searchCondition">
 		    <input type="hidden" value="${searchKeyword }" name="searchKeyword">
@@ -162,8 +169,8 @@
 								<label style="display: inline-block;" class="jg">${replylist.memName }</label>
 								<label >( ${replylist.memId } )</label>
 													
-								<textarea style=" width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
-												
+								<textarea id="tx" disabled class ="writeCon">${replylist.replyCont}</textarea>
+									
 								[ ${replylist.regDt} ] 	
 													
 								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">		
@@ -185,7 +192,7 @@
 						<div id="replyinsertdiv" style="padding-left: 50px;">			
 							<input type="hidden" name="someId" value="${scheduleVo.scheId}">
 							<input type="hidden" name="categoryId" value="${scheduleVo.categoryId}">
-							<input type="text" name="reqId" value="${scheduleVo.reqId}">
+							<input type="hidden" name="reqId" value="${scheduleVo.reqId}">
 							<input type="hidden" name="memId" value="${scheduleVo.memId}">
 											
 							<textarea name = "replyCont" id ="re_con" onkeyup="resize(this)" ></textarea><br>
@@ -196,7 +203,7 @@
 						</div>
 					</div>
 				</div>
-			</form>
+			</form>	
 	
 		</div>
 	</div>
@@ -402,7 +409,6 @@
 		
 		// 수정하기 버튼
 		$("#modsche").on('click', function(){
-			console.log("수정버튼")
 			$(location).attr('href', '${pageContext.request.contextPath}/schedule/scheduleUpdateView?scheId=${scheduleVo.scheId}');
 		})
 		
@@ -417,7 +423,7 @@
 		 	
 	});
 		
-		
+			
 //댓글 작성
 function replyinsert() {
 	someId : '${scheduleVo.scheId}';
@@ -430,22 +436,19 @@ function replyinsert() {
 			categoryId : '${scheduleVo.categoryId}',
 			reqId : '${scheduleVo.reqId}',
 			replyCont : $('#re_con').val()	
-			
-		},
-		success : function(data) {
-					
-			saveMsg(scheduleVo.scheId);																	/* 2020-12-22 여기부터  */
-			$(location).attr('href', '${pageContext.request.contextPath}/schedule/scheduleSelect?	issueId='+data.someId+'&reqId='+reqId);
+		},	
+		success : function(data) {	
+			$(location).attr('href', '/schedule/scheduleSelect?scheId=${scheduleVo.scheId}');
 		}
 	});
 }		
-
+		
 // 댓글작성시 작동 증가
 function resize(obj) {
 	obj.style.height = "1px";
 	obj.style.height = (12+obj.scrollHeight)+"px";
 }
-	
+
 		
 $(function(){
 	// 댓글 높이 자동 맞춤
@@ -469,27 +472,24 @@ $(function(){
 			var someid = $(this).prev().val();
 			var replyid = $(this).prev().prev().val();
 			issueid = '${scheduleVo.scheId }'
-			console.log(replyid)
-			console.log(someid)
 			$.ajax({url :"/reply/delreply",
 				   data :{replyId: replyid,
 					       someId: someid, 
 					       reqId : '${scheduleVo.reqId}'},
 				   method : "get",
-				   success :function(data){	
+				   success :function(data){
+					   $(location).attr('href', '/schedule/scheduleSelect?scheId=${scheduleVo.scheId}');
 				 }
 			})
 		}else{
         	return;
         }
 	})
-			
+				
 	// 답글 글자수 계산
 	$('#re_con').keyup(function (e){
 	    var content = $(this).val();
 	  
-// 	    console.log(content)
-		
 	    $('#counter').html("('+content.length+' / 최대 300자)");    //글자수 실시간 카운팅	  
 		$('span').html(content.length);
 		
