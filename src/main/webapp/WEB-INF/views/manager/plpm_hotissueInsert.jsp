@@ -112,16 +112,23 @@
  		
  	// 작성 버튼 클릭시 파일 업로드 호출
  	$('#regBtn').on('click', function(){
+ 		cnt = 0;
  		// 업로드할 파일이 존재하지 않을시
- 		if($('.uploadifive-queue-item').length ==0){    			
- 			if("${hissueParentid}" != null){
-	 			saveMsg();
-	 		}
-			$("#hissueform").submit();
- 		// 업드로할 파일이 존재할 시
+ 	// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
+			if ($('#hissueTitle').val().length == 0){
+			$('.warninghissueTitle').text("제목을 작성해 주세요.");  
+			cnt++;
+		}
+			if(cnt == 0){
+				if($('.uploadifive-queue-item').length ==0){    			
+		 			if("${hissueParentid}" != null){
+			 			saveMsg();
+			 		}
+					$("#hissueform").submit();
  		}else{
  			$('#file_upload').uploadifive('upload');
- 		}	
+ 			}	
+		}
  	})
  	
  	function insert(){
@@ -222,7 +229,8 @@
                 <div class="form-group">
 				<form method="post" action="${pageContext.request.contextPath }/hotIssue/hissueInsert" id="hissueform" >    
                 <input type="hidden" name="hissueId" value="${hissueSeq }">
-                  <input class="form-control" placeholder="Subject:" name="hissueTitle" id="hissueTitle"><br>
+                  <input class="form-control" placeholder="Subject:" name="hissueTitle" id="hissueTitle">
+                  <div class="jg" style=" padding-left: 10px;"><span class="jg warninghissueTitle" style="color : red;"></span></div><br>
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
                   <input type="hidden" name="hissueParentid" value="${hissueParentid}" id="hissueParentid">
                 <textarea id="summernote" name="hissuetCont"></textarea>
