@@ -228,7 +228,7 @@
 					<li class="nav-item">
 			            <a href="#" class="nav-link" style="background: white;">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p >내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
+							<p>내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
 					    <ul class="nav nav-treeview">
 					    	<c:forEach items="${plInProjectList}" var="project">
