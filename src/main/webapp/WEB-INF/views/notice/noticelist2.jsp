@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,10 +23,10 @@
 	    border-collapse: collapse;
 	    text-align: center;
   	}
-  	th, td {
-	    border-bottom: 1px solid #444444;
-	    padding: 10px;
-  	}
+   	th, td { 
+ 	    border-bottom: 1px solid #444444; 
+ 	    padding: 10px; 
+   	} 
 	
 	li strong{
 		display: inline-block;
@@ -112,7 +113,6 @@
 						<div class="input-group row">		
 							<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">				
 								<form:option value="1" label="제목"/>
-								<form:option value="2" label="날짜"/>
 							</form:select> 
 								
 							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
@@ -132,34 +132,38 @@
 	            <div class="card-body p-0">
 	            	<table id="table" class="jg">
 	            		<!-- 헤더부분  -->
-						<tr>
-	                        <th style="padding-left: 10px;" >No.</th>
-							<th>상태</th>
-	                     	<th>제목</th> 
-							<th>작성자</th>
-							<th>날짜</th>
-                    	</tr>
-						
+						<thead>
+		                    <tr>
+		                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
+		                     	<th style="width:50%; padding-left: 30px; text-align: center;" class="jg"> 제목</th> 
+								<th style="text-align: center;" class="jg">   작성자 </th>
+								<th style="text-align: center;" class="jg">   날짜   </th>
+		                    </tr>
+	                 	</thead>
 						<!-- 리스트부분 -->
-						<tbody>
+						<tbody >
 							<c:forEach items="${noticelist }" var="notice" varStatus="status">
-							
+
 								<tr>
-									<td>
+									<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
 										<c:out value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />
-									.</td>
+									</td>
 										
-									<td>	
+									<td class="jg"  style="padding-left: 30px; text-align: left;">
 										<c:if test="${notice.importance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
 										<c:if test="${notice.importance eq 'emg'}"><span class="badge badge-danger ns">필독</span></c:if>
-									</td>
-									
-									<td>
+										&nbsp;
 										<a href="${pageContext.request.contextPath}/admin/eachnoticeDetail?noticeId=${notice.noticeId}">
-											${notice.noticeTitle }</a>
+											<c:if test="${fn:length(notice.noticeTitle) > 30}">									
+												${fn:substring(notice.noticeTitle,0 ,30) }...
+											</c:if>
+											<c:if test="${fn:length(notice.noticeTitle) <= 30}">									
+												${notice.noticeTitle}
+											</c:if>
+										</a>
 									</td>
-									<td>${notice.adminId }</td>
-									<td>${notice.regDt }</td>
+									<td class="jg" style="text-align: center;">${notice.adminId }</td>
+									<td class="jg" style="text-align: center;">${notice.regDt }</td>
 									
 								</tr>
 								

@@ -91,14 +91,14 @@ $(function(){
 			
 				<tr class="stylediff">
 					<th class="success jg">제목</th>
-			         	<td colspan="3">			  
-			         		<label class="control-label" id="noticeTitle">${noticevo.noticeTitle}</label>
+			         	<td colspan="3">
 			         		<c:if test="${noticevo.importance=='emg'}">
 								<span class="badge badge-danger">필독</span>
 							</c:if>
 				         	<c:if test="${noticevo.importance=='gen'}">
 								<span class="badge badge-success">일반</span>
-							</c:if>
+							</c:if>	&nbsp;	  
+			         		<label class="control-label" id="noticeTitle">${noticevo.noticeTitle}</label>
 			         	</td>
 			    </tr>
 			    

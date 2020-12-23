@@ -133,10 +133,7 @@
 		});
      	
      	
-     	// 업데이트 버튼 클릭시 파일 삭제 호출
-     	$('#updatebtn').on('click', function(){
-     		 delfiles();	     	
-     	})
+     	
      	
      	// 업로드된 파일의 수와 사용자가 올린 파일의 수가 같을 시 from 전송
      	function insertcheck(){
@@ -146,6 +143,32 @@
         	}
 
     	}
+     	
+
+	     // 제목 글자수 계산
+	   	$('#issueTitle').keyup(function (e){
+	   	    var content = $(this).val();   		
+	   	    if (content.length > 66){
+	   	        alert("최대 66자까지 입력 가능합니다.");
+	   	     	$(this).val(content.substring(0, 65));
+	   	    }
+	   	});
+	     
+	 // 업데이트 버튼 클릭시 파일 삭제 호출
+     	$('#updatebtn').on('click', function(){
+     		
+     		cnt = 0;    		
+			
+			if ($('#issueTitle').val().length == 0){
+				$('.warningTitle').text("제목을 작성해 주세요.");
+				cnt++;
+			}
+			    		
+			if (cnt == 0){				
+				 delfiles();	     	
+	     	}
+	    })
+    	
 	      
  	});
 	
@@ -293,6 +316,7 @@
 					<input class="form-control col-sm-8" type="text" class="jg" name="issueTitle" style=" display: inline-block; " value="${issueVo.issueTitle }" id="issueTitle">
 					
 				</div>
+				<div class="jg" style=" padding-left: 10px;"><span class="jg warningTitle" style="color : red;"></span></div>
 				
 				<div class="form-group jg" style="width: 90%;">
 				

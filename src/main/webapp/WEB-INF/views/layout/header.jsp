@@ -43,9 +43,9 @@
 		// 답글
 		if(data[0] == 'posts'){
 			$(document).Toasts('create', {
-			     body: data[2],
-			     title: '답글이 달렸습니다.',
-			     subtitle: data[1],
+			     body: data[2]+ "<br><span id='why' style='font-size:0.9em; color:gray;'>"+data[3]+"</span>["+data[4]+"]",
+			     title: data[1],
+			     subtitle: '답글이 달렸습니다.' ,
 			     icon: 'fas fa-envelope fa-lg',
 			});
 		// pl요청
