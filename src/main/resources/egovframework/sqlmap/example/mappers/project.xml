@@ -97,7 +97,7 @@ SELECT *
 	<select id="requestPjtMember" resultType="ants.com.member.model.ProjectMemberVo" parameterType="ants.com.member.model.MemberVo">
 		SELECT * 
 		  FROM(
-				SELECT a.req_id, a.promem_id, a.mem_id, a.promem_status, b.pro_name as title, c.mem_name as pl_name
+				SELECT a.req_id, a.promem_id, a.mem_id, a.promem_status, b.pro_name as title, c.mem_name as pl_name, b.mem_id as pl_id
 				  FROM projectmember a, project b, member c
 				 WHERE a.req_id = b.req_id
 				   AND b.mem_id = c.mem_id

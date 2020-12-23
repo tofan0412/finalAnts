@@ -27,15 +27,15 @@
 		    					"alarmType" : "res-pro"
 		    			}
 		    			// 알림db등록
-		    			saveResMsg(alarmData);
+		    			savePjtResMsg(alarmData);
 		    	}
 		    });
 	    });
 		
-	    $('.rejectPjt').on('click',function(){
+	    $('.rejectPjt').on('click',function(eve){
 	    	var reqId = $(this).val();
 	    	var reqTitle = $(this).parent().prev().prev().text().trim();
-	    	var memId = $(this).prev().val().trim();
+	    	var memId = $(this).prev().prev().val().trim();
 	    	
 	    	if (confirm("정말 거절하시겠습니까?")) {
 		    	var promemId  = $(this).val();
@@ -51,19 +51,16 @@
 			    					"alarmType" : "res-pro"
 			    			}
 			    			// 알림db등록
-			    			saveResMsg(alarmData);
+			    			savePjtResMsg(alarmData);
 			    			
 			    	}
 			    });
 	    	}
+	    	eve.preventDefault();
 	    });
 		
-		
-		
-	});//function
-	
 	/* pl응답 알림메세지 db에 저장하기 */
-	function saveResMsg(alarmData){
+	function savePjtResMsg(alarmData){
 		
 		$.ajax({
 				url : "/alarmInsert",
@@ -71,7 +68,6 @@
 				type : 'POST',
 				contentType : "application/json; charset=utf-8",
 				dataType : 'text',
-				async: false,
 				success : function(data){
 					
 					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
@@ -83,6 +79,10 @@
 				}
 		});
 	}
+		
+		
+	});//function
+	
 
 </script>
 <section class="content">
@@ -134,7 +134,7 @@
 								<td class="jg"  style="padding-left: 30px; text-align: center;">${i.title}</td>
 								<td class="jg" style="text-align: center;"> ${i.plName }</td>
 								<td class="jg" style="text-align: center;"> 
-									<input type="hidden" value="${i.memId}">
+									<input type="hidden" value="${i.plId}">
 									<button type="button" class="btn btn-default in jg" value="${i.reqId }"><i class="fas fa-edit "></i>수락</button>
 									<button type="button" class="btn btn-default rejectPjt jg" value="${i.promemId }"><i class="fas fa-edit "></i>거절</button>
 								</td>
