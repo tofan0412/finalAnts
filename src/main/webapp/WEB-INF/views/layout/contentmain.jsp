@@ -85,6 +85,10 @@ function chartmain() {
 	}
 </script>
 <style>
+body{
+    min-width: 1400px;
+   
+}
 #maintop{
 	width: 68%;
 	height: 40%;
@@ -139,9 +143,16 @@ function chartmain() {
 	background-color: #1D6A96;
 	color: white; 
 }
-.ui-widget.ui-widget-content {
-    width: 100%;
-}
+/*  .ui-widget.ui-widget-content {  */
+/*      width: auto; */
+/*      font-size: 100%; */
+/*  }  */
+
+  .ui-datepicker{ font-size: 16px; width: auto; min-width: 205px;} 
+/*  .ui-datepicker select.ui-datepicker-month{ width:20%; font-size: 11px; } */
+/* .ui-datepicker select.ui-datepicker-year{ width:30%; font-size: 11px; } */
+
+
 </style>
 </head>				
 <body>
@@ -277,12 +288,12 @@ function chartmain() {
 	</div>
 </div>
 <div id="mainright" style="padding-left: 2%; margin-top: 2%;">
-	<div class="card" style="height: 330px;">
+	<div class="card" style="height: 330px; min-width: 240px;">
 	<div class="card-header">
 			<h3 class="card-title jg">Calendar</h3>
 		</div>
-		<div class="card-body pt-0"><br>
-			<div id ="datePicker" style="width: auto;"></div>
+		<div class="card-body pt-0" style="min-width: 160px;"><br>
+			<div id ="datePicker"></div>
 		</div>           
 	</div>
 <!-- <div id="mainright" style="padding-left: 2%; margin-top: 2%;"> -->
