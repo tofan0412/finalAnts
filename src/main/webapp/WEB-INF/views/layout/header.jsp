@@ -33,7 +33,35 @@
     		document.location = '/alarmList';
     	});
     	
+    	// session에 있는 projectId 삭제하기
+    	$('#toNotice').click(function(){
+    		$.ajax({
+    			url : "/common/delProjectIdSession",
+    			method : "POST",
+    			success : function(res){
+    				
+    			}
+    		})
+    	})
     	
+    	// 프로필 버튼 누를 때 projectId session값 삭제
+    	$('.toProfile').click(function(){
+    		$.ajax({
+				url : "/common/delProjectIdSession",
+				method : "POST",
+				success : function(res){
+				}
+			})
+    	})
+    	
+    	// 알람 관련 버튼 누를 때 projectId session값 삭제
+    	$(".toAlarm").click(function(){
+			$.ajax({
+				url : "/common/delProjectIdSession",
+				method : "POST",
+				success : function(res){}
+			})
+		})
 	});
     
 	function onMessage(evt){
@@ -116,7 +144,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/member/noticelistmemview" class="nav-link">공지사항</a>
+        <a id="toNotice" href="/member/noticelistmemview" class="nav-link">공지사항</a>
       </li>
     </ul>
 		
@@ -175,15 +203,15 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header alarmCount">개의 알림이 있습니다.</span>
           <div class="dropdown-divider"></div>
-          <a href="${pageContext.request.contextPath}/alarmList?searchCondition=1" class="dropdown-item" id="resCnt" style="font-size: 0.9em">
+          <a href="${pageContext.request.contextPath}/alarmList?searchCondition=1" class="dropdown-item toAlarm" id="resCnt" style="font-size: 0.9em">
             <i class="fas fa-envelope mr-2 " ></i>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="${pageContext.request.contextPath}/alarmList?searchCondition=2" class="dropdown-item" id="replyCnt" style="font-size: 0.9em">
+          <a href="${pageContext.request.contextPath}/alarmList?searchCondition=2" class="dropdown-item toAlarm" id="replyCnt" style="font-size: 0.9em">
             <i class="fas fa-comment-dots mr-2" ></i> 
           </a>
           <div class="dropdown-divider"></div>
-          <a href="${pageContext.request.contextPath}/alarmList?searchCondition=3" class="dropdown-item" id="postsCnt" style="font-size: 0.9em">
+          <a href="${pageContext.request.contextPath}/alarmList?searchCondition=3" class="dropdown-item toAlarm" id="postsCnt" style="font-size: 0.9em">
             <i class="fas fa-reply mr-2" ></i> 
           </a>
           <div class="dropdown-divider"></div>
@@ -197,7 +225,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
-          <a href="${pageContext.request.contextPath}/member/profile" class="dropdown-item">
+          <a href="${pageContext.request.contextPath}/member/profile" class="dropdown-item toProfile">
             <i class="fas fa-user-edit mr-2"></i>프로필
           </a>
           
