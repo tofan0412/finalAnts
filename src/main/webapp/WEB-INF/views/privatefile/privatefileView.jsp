@@ -590,11 +590,12 @@ var id;
             </ul>
   		  </div>
   		
-  		 
+  		 	
 	 	<div class="card-footer clearfix">
           <button id="fileregbtn" type="button" class="btn btn-default float-left jg"><i class="fas fa-plus"></i>파일추가</button>
+       		<a href="/bot/chatbot" style="display:none;">봇</a>
         </div>
-	
+		
 	 </div>
 	
 	</div>

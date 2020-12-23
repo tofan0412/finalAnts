@@ -15,7 +15,6 @@ import ants.com.admin.model.IpVo;
 import ants.com.admin.service.AdminService;
 
 public class IpCheckInterceptor extends HandlerInterceptorAdapter {
-	private static final Logger logger = LoggerFactory.getLogger(IpCheckInterceptor.class);
 	
 	@Resource(name="adminService")
 	AdminService adminService;
@@ -34,8 +33,6 @@ public class IpCheckInterceptor extends HandlerInterceptorAdapter {
 		String ip = request.getHeader("X-FORWARDED-FOR");
 		if (ip == null) ip = request.getRemoteAddr();
 		
-		logger.debug("클라이언트 IP : {}", ip);
-		
 		String[] clientIpArr = ip.split("\\.");
 		
 		List<IpVo> ipList = adminService.getIpList();
@@ -43,7 +40,6 @@ public class IpCheckInterceptor extends HandlerInterceptorAdapter {
 		int equalsCnt = 0;
 		int factor = 0;
 		for (int i = 0 ; i < ipList.size(); i++) {
-			logger.debug("비교할 server IP : {}", ipList.get(i).getIpAddr());
 			
 			if(factor == 1) {
 				break;	// 일치하는 IP를 찾았으므로, 더이상 찾을 필요가 없다.
@@ -65,11 +61,9 @@ public class IpCheckInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		if (factor == 1) {
-			logger.debug("접속 허가 ...");
 		}
 		
 		if(factor != 1) {	// IP가 서버에 등록되지 않았다는 뜻이다. 
-			logger.debug("접속 차단 ...");
 			response.sendRedirect("/member/blockView");
 			return false;
 		}

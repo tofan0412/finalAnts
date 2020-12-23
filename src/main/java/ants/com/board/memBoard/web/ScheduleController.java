@@ -1,8 +1,12 @@
 package ants.com.board.memBoard.web;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpRequest;
@@ -10,8 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ants.com.board.manageBoard.model.TodoVo;
+import ants.com.board.manageBoard.web.HotIssueController;
+import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.board.memBoard.service.memBoardService;
 import ants.com.file.model.PrivateFileVo;
@@ -94,6 +101,15 @@ public class ScheduleController {
 		ScheduleVo schedule = memBoardService.scheduleSelect(scheduleVo);
 		model.addAttribute("scheduleVo", schedule);
 
+			
+		ReplyVo replyVo = new ReplyVo(schedule.getScheId(), "6", schedule.getReqId());	//댓글 조회
+		logger.debug("replyVo : {}",replyVo);	
+		List<ReplyVo> replylist= memBoardService.schedulereplylist(replyVo);
+			
+		model.addAttribute("issuevo", schedule);	
+		model.addAttribute("memId", schedule.getMemId());
+		model.addAttribute("replylist", replylist);	
+		logger.debug("schedulereplylist : {}",replylist);	
 		return "tiles/schedule/scheduleSelect";
 	}
 
@@ -132,6 +148,41 @@ public class ScheduleController {
 			return "redirect:/schedule/scheduleplaceView";
 		}
 	}
+	
+	
+	
+	
+	
+	private static final Logger logger = LoggerFactory.getLogger(HotIssueController.class);
+		
+	// 댓글 작성
+	@RequestMapping(path ="/scheduleinsertreply")
+	public String scheduleinsertreply(ReplyVo replyVo, Model model, HttpSession session) throws SQLException, IOException {
+		
+		MemberVo membervo = (MemberVo) session.getAttribute("SMEMBER");
+		replyVo.setMemId(membervo.getMemId());		
+		replyVo.setCategoryId(replyVo.getCategoryId());	
+			
+		logger.debug("replyVo: {}", replyVo);
+		memBoardService.scheduleinsertreply(replyVo);
+		model.addAttribute("someId", replyVo.getSomeId());
+		return "jsonView";
+	}	
+	
+	
+	// 댓글 삭제
+	@RequestMapping(path ="/delreply")
+	public String deleteapply(ReplyVo replyVo, Model model, HttpSession session) throws SQLException, IOException {
+		
+		memBoardService.delreply(replyVo);
+		
+		return "jsonView";
+	}
+	
+	
+	
+	
+	
 
 	// 프로젝트용 캘린더
 	// 캘린더 화면 출력

@@ -26,7 +26,11 @@ public class ReplyVo {
 		this.reqId = reqId;
 		this.memId = memId;
 	}
-	
+	public ReplyVo(String someId, String categoryId, String reqId) {
+		this.someId = someId;
+		this.categoryId = categoryId;
+		this.reqId = reqId;
+	}
 	
 	public String getReplypercent() {
 		return replypercent;
