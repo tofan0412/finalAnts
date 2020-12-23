@@ -123,7 +123,7 @@
 	        <if test="memId != null">mem_id=#{memId},</if>	 	            
 	        <if test="issueDel != null">issue_del=#{issueDel},</if>	 	            
 	        <if test="todoId != null">todo_id=#{todoId},</if>	 	            
-	        <if test="reqId != null">req_id=#{reqId}</if>	 	            
+	         	            
 	    </set>    
 	    where issue_id = #{issueId}
 	</update>
@@ -222,7 +222,10 @@
 	<select id="mytodolist" resultType ="ants.com.board.manageBoard.model.TodoVo" parameterType="ants.com.member.model.ProjectMemberVo">		
 		select todo_title, todo_id 
 		from todo 
-		where mem_id = #{memId} and req_id = #{reqId} 
+		where mem_id = #{memId} 
+			<if test="reqId != null and reqId != ''">
+				and req_id = #{reqId}
+			</if> 
 			  and todo_percent between 0 and 100		
 	</select>
 

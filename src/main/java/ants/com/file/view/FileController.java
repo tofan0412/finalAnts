@@ -106,8 +106,10 @@ public class FileController {
 
 				String filename = UUID.randomUUID().toString();
 			
-				String originName = files.get(i).getOriginalFilename();
-//				String extension = files.get(i).getOriginalFilename().split("\\.")[1];
+				String originName = files.get(i).getOriginalFilename();			
+				int pos = originName .lastIndexOf(".");
+				String realfileName = originName.substring(0, pos);
+				
 				String extension = originName.substring(originName.lastIndexOf(".")+1);
 				String filepath = "C:\\profile\\" + filename +"."+ extension;
 				File uploadFile = new File(filepath);
@@ -116,7 +118,7 @@ public class FileController {
 				} catch (IllegalStateException | IOException e) {
 				}
 				
-				PublicFileVo filevo = new PublicFileVo(filepath, files.get(i).getOriginalFilename(), extension,
+				PublicFileVo filevo = new PublicFileVo(filepath, realfileName, extension,
 														pfv.getCategoryId(), pfv.getSomeId(), reqId, String.valueOf(filesize), memId);
 				System.out.println(filevo);
 				fileId +=  fileService.insertFile(filevo);

@@ -166,39 +166,54 @@ public class PrivateFileController {
         String oriFilePath = filevo.getPubFilepath();
 		
         String filename = UUID.randomUUID().toString();
-		String extension = filevo.getPubFilename().split("\\.")[1];
-	
-		
+		String extension = filevo.getPubFilepath().substring(filevo.getPubFilepath().lastIndexOf(".")+1);
+			
         //복사될 파일경로
-        String copyFilePath = "C:\\profile\\"+filename+"."+extension;
+        String copyFilePath = "C:\\profile\\"+filename+"."+extension;	
+	    	
+        //파일객체생성
+        File oriFile = new File(oriFilePath);
+        //복사파일객체생성
+        File copyFile = new File(copyFilePath);
         
-    	File f = new File(copyFilePath);
-		if(f.exists()) {	
-	        //파일객체생성
-	        File oriFile = new File(oriFilePath);
-	        //복사파일객체생성
-	        File copyFile = new File(copyFilePath);
-	        
-	            
-	        FileInputStream fis = new FileInputStream(oriFile); //읽을파일
-	        FileOutputStream fos = new FileOutputStream(copyFile); //복사할파일
-	        
-	        fis.close();
-	        fos.close();
-	        
-	        
-	        PrivateFileVo privateVo = new PrivateFileVo();
-	        MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
-			privateVo.setMemId(memberVo.getMemId());
-			
-	        privateVo.setPrivFilepath(copyFilePath);
-			privateVo.setPrivFilename(filevo.getPubFilename());
-			privateVo.setPrivSize(String.valueOf(filevo.getPubSize()));
-			
-			list.add(privateVo);
-			
-			fileService.privateInsert(list);	
-		}
+        try {
+            
+            FileInputStream fis = new FileInputStream(oriFile); //읽을파일
+            FileOutputStream fos = new FileOutputStream(copyFile); //복사할파일
+            
+            int fileByte = 0; 
+            // fis.read()가 -1 이면 파일을 다 읽은것
+            while((fileByte = fis.read()) != -1) {
+                fos.write(fileByte);
+            }
+            //자원사용종료
+            fis.close();
+            fos.close();
+            
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	      
+        
+      
+        PrivateFileVo privateVo = new PrivateFileVo();
+        MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		privateVo.setMemId(memberVo.getMemId());
+		
+        privateVo.setPrivFilepath(copyFilePath);
+		privateVo.setPrivFilename(filevo.getPubFilename());
+		privateVo.setPrivSize(String.valueOf(filevo.getPubSize()));			
+		privateVo.setPrivExtension(extension);
+
+		
+		list.add(privateVo);
+		
+		fileService.privateInsert(list);	
+		
 		return "redirect:/file/publicfileview";
 	}
 	
@@ -223,11 +238,14 @@ public class PrivateFileController {
 				double size = ((double) files.get(i).getSize()/1024);				
 				double filesize = Math.round(size *100)/100.0;
 				
-				
 				String filename = UUID.randomUUID().toString();
-				String extension = files.get(i).getOriginalFilename().split("\\.")[1];
+				String originName = files.get(i).getOriginalFilename();			
+				int pos = originName .lastIndexOf(".");
+				String realfileName = originName.substring(0, pos);
+				
+				String extension = originName.substring(originName.lastIndexOf(".")+1);
+			
 				String Filepath = "C:\\upload\\" + filename +"."+extension;
-				String realfilename = files.get(i).getOriginalFilename();
 				
 				File uploadFile = new File(Filepath);
 				try {
@@ -237,7 +255,7 @@ public class PrivateFileController {
 				
 				privateVo.setPrivExtension(extension);
 				privateVo.setPrivFilepath(Filepath);
-				privateVo.setPrivFilename(realfilename);
+				privateVo.setPrivFilename(realfileName);
 				privateVo.setPrivSize(String.valueOf(filesize));
 				
 				list.add(privateVo);
