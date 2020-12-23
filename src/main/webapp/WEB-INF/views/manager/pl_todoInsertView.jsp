@@ -119,45 +119,66 @@
 	 		
      // 작성 버튼 클릭시 파일 업로드 호출
      	$('#regBtn').on('click', function(){
+     		cnt = 0;
      		// 업로드할 파일이 존재하지 않을시
+     		if($('.uploadifive-queue-item').length ==0){
+     		// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
+     			if ($('#todoTitle').val().length == 0){
+    				$('.warningTitle').text("제목을 작성해 주세요.");  
+    				cnt++;
+    			}
+     			if($('#mem-select').val()==0){    				
+    				$('.warningmem').text("담당자를 지정해 주세요.");   	
+    				cnt++;
+    			}
+     			if($('#todo_end').val()==0){    				
+    				$('.warningtodo_end').text("마감일을 지정해 주세요.");
+    				cnt++;
+    			}
+     			if(cnt == 0){
+     				if($('.uploadifive-queue-item').length ==0){ 
+     					$("#todoform").submit(); 
+    				}else{
+    	     			$('#file_upload').uploadifive('upload');
+    	     		}
+     			}
+     	}
+     })
+     	
+     	
+     // 하위 일감 등록
+		$("#creatChildBtn").on("click", function() {
+
+			$("#todoform").attr("action", "${pageContext.request.contextPath }/todo/todoChildInsert");
+			
+			// 업로드할 파일이 존재하지 않을시
      		if($('.uploadifive-queue-item').length ==0){    			
      			$("#todoform").submit();
      		// 업드로할 파일이 존재할 시
      		}else{
      			$('#file_upload').uploadifive('upload');
      		}	
-     	})
+     	});
+		
+ 		
+		// 뒤로가기
+		$("#back").on("click", function() {
+			window.history.back();
+		});
+	});
+    
      	
      	function insert(){
      		if(uploadCnt == $('.uploadifive-queue-item').length){
      			$('#todoform').submit();     		
         	}else{
         	}
-
     	}
 	 		//파일끝
 
 	 		
-	 		// 하위 일감 등록
-			$("#creatChildBtn").on("click", function() {
-
-				$("#todoform").attr("action", "${pageContext.request.contextPath }/todo/todoChildInsert");
-				
-				// 업로드할 파일이 존재하지 않을시
-	     		if($('.uploadifive-queue-item').length ==0){    			
-	     			$("#todoform").submit();
-	     		// 업드로할 파일이 존재할 시
-	     		}else{
-	     			$('#file_upload').uploadifive('upload');
-	     		}	
-	     	});
-			
 	 		
-			// 뒤로가기
-			$("#back").on("click", function() {
-				window.history.back();
-			});
-	 	});
+	 	
 </script>
 <style type="text/css">
 #fileBtn{
@@ -203,7 +224,8 @@
 	   		<input type="hidden" name="todoId" value="${todoSeq }">
         <div class="card-body">
                 <div class="form-group">
-                  <input class="form-control " placeholder="Subject:" name="todoTitle">
+                  <input class="form-control " placeholder="Subject:" name="todoTitle" id="todoTitle">
+                <div class="jg" style=" padding-left: 10px;"><span class="jg warningTitle" style="color : red;"></span></div>
                 </div>
                 <div class="form-group">
                 <textarea id="summernote" name="todoCont" placeholder="할일:"></textarea>
@@ -216,6 +238,7 @@
                 		<option class="jg" value="${mem.memId}">${mem.memName}</option>
             			</c:forEach>
        				 </select>
+                <div class="jg" style=" padding-left: 10px;"><span class="jg warningmem" style="color : red;"></span></div>
                 </div>
                 <div class="form-group">
                 <label for="status-select" class="col-sm-1 control-label ns">우선순위</label>
@@ -229,6 +252,7 @@
         			<input type='date' id='currentDate' name="todoStart"/><br><br>
         			<label for="todoEnd" class="col-sm-1 control-label ns">종료 일</label>
         			<input type='date' id='todo_end' name="todoEnd"/>
+                <div class="jg" style=" padding-left: 10px;"><span class="jg warningtodo_end" style="color : red;"></span></div>
                 </div>
                 <div class="form-group" hidden="hidden">
                 	<c:if test="${not empty todoVo.todoParentid}">
