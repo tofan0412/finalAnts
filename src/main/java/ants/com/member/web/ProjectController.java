@@ -143,21 +143,7 @@ public class ProjectController {
 		return "jsonView";
 	}
 
-	@RequestMapping("/insertProject")
-	@ResponseBody
-	public String insertProject(ReqVo reqVo) {
-		ProjectVo projectVo = new ProjectVo();
-		projectVo.setReqId(reqVo.getReqId());
-
-		int result = projectService.insertProject(projectVo);
-
-		if (result > 0) {
-			return "success";
-		} else {
-			return "failure";
-		}
-	}
-
+	
 	@RequestMapping("/acceptOrReject")
 	public String acceptOrReject(ReqVo reqVo, HttpSession session) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");

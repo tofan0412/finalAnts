@@ -71,11 +71,11 @@
 	</select>
 
 	<insert id="insertProject"
-		parameterType="ants.com.member.model.ProjectVo">
+		parameterType="ants.com.member.model.ReqVo">
 		INSERT INTO PROJECT 
-			(REQ_ID,MEM_ID,PRO_NAME,REG_DT,DEL)
+			(REQ_ID,REG_DT,DEL)
 		VALUES
-			(#{reqId},#{memId,jdbcType=VARCHAR},#{proName,jdbcType=VARCHAR},SYSDATE,'N')
+			(#{reqId},SYSDATE,'N')
 	</insert>
 
 	<select id="userSearch" parameterType="java.lang.String"

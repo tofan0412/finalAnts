@@ -150,60 +150,24 @@
 	    	   }
      	 })
 	    
-     	// 작성 버튼 클릭시 요구사항정의서 등록
+     	// 작성 버튼 클릭시 요구사항정의서,프로젝트 등록
      	$('.insertbtn').on('click', function(){
-     		fn_egov_save();
+				 $.ajax({
+						url : "${registerFlag == 'create' ? '/req/reqInsert' : '/req/reqUpdate' }",
+						method : "post",
+						data : $('#saveForm').serialize(),
+						success : function(data){
+								if($('.uploadifive-queue-item').length>0){
+									fileUpload(data.reqVo);
+								}else{
+									delfiles();
+								}
+						}
+				 });
      	});
 	    
-		/* 요구사항정의서 목록으로 이동 */
-	 	function insert(){
-	 			document.location = "/req/reqList";   		
-		}
 	
-		/* 요구사항정의서 등록 function */
-	    function fn_egov_save() {
-			 $.ajax({
-					url : "${registerFlag == 'create' ? '/req/reqInsert' : '/req/reqUpdate' }",
-					method : "post",
-					data : $('#saveForm').serialize(),
-					success : function(data){
-						if(${registerFlag eq 'create'}){
-							projectInsert(data.reqVo);
-						}
-						else{
-							if($('.uploadifive-queue-item').length>0){
-								fileUpload(data.reqVo);
-							}else{
-								delfiles();
-							}
-						}
-					}
-			 });
-	    }
 		
-	  	/* 프로젝트 생성 */
-	  	function projectInsert(reqVo){
-	  		$.ajax({
-				url : "/project/insertProject",
-				data : {reqId : reqVo.reqId},
-				method : "POST",
-				success : function(res){
-					if ("success" == res){
-						if($('.uploadifive-queue-item').length > 0){
-							fileUpload(reqVo);
-							// 파일업로드가 끝나면, alert를 띄우고 요구사항정의서 리스트로 돌아간다.
-							alert("요구사항 정의서를 작성하였습니다.");
-							// 요구사항 정의서 목록으로 돌아가기 ..
-							$(location).attr("href" , "/req/reqList");
-							
-			     		}else{
-			     			insert();
-			     		}
-					}
-				}
-			});
-	  	} //projectInsert
-	 
 	  	/* 파일 업로드 */
 	 	function fileUpload(reqVo){
 	 		var reqId = reqVo.reqId;
@@ -234,16 +198,17 @@
 		 			 data : {delfile : $('#delfile').val() },
 					 method : "post",
 					 success :function(data){
-						 insert();
+						 reqList();
 					 }
 			 });
 		}
 	
 }); //document.ready
 	
-	
-	
-	 
+	/* 요구사항정의서 목록으로 이동 */
+	function reqList(){
+			document.location = "/req/reqList";   		
+	}
 	
 	function initData(){
 		$('#reqTitle').val("텀블러 자동세척기 개발");

@@ -40,9 +40,6 @@ function chartmain() {
 			var percent=[];
 			for(i=0; i<data.dbsize; i++){
 			num.push(data.projectList_main[i].proName);	
-			if(data.projectList_main[i].percent == null){
-			percent.push('0');				
-			}
 			percent.push(data.projectList_main[i].percent);
 			}
 			var lineChartData = {
@@ -58,7 +55,7 @@ function chartmain() {
 					          pointHighlightFill  : '#fff',
 					          pointHighlightStroke: '#87C488',
 					          data                : percent,
-					          barThickness: 20
+					          barThickness: 30
 					        }]
 			};
 			 var lineChartOptions     = {
@@ -130,8 +127,8 @@ function chartmain() {
 <body>
  <div class="col-12 col-sm-12">
  
-<div id="maintop" style="OVERFLOW-Y:auto; padding-left:2%; margin-top: 1%;">
-	<div class="card card-success card-outline" style="height: 100%;">
+<div id="maintop" style="OVERFLOW-Y:auto; padding-left:2%; margin-top: 1%; height: 400px;">
+	<div class="card">
 		<div class="card-header">
 			<h3 class="card-title jg">Project List</h3>
 		</div>
@@ -177,13 +174,13 @@ function chartmain() {
 		</div>
 	</div>
 </div>
-<div id="mainleft" style="padding-left: 2%;">
+<div id="mainleft" style="padding-left: 2%; margin-top: 3%;">
 	<div class="card card-success card-outline" style="height: 340px;">
 		<div class="card-header">
 			<h3 class="card-title jg">Progress Chart</h3>
 		</div>
 		<div class="card-body pt-0">
-			<div class="chart" style="padding-top: 2%; width: 50%;">
+			<div class="chart" style="padding-top: 2%;">
 				<div class="chartjs-size-monitor">
 					<div class="chartjs-size-monitor-expand">
 						<div class=""></div>
@@ -197,7 +194,7 @@ function chartmain() {
 		</div>
 	</div>
 </div>
-<div id="mainright" style="padding-left: 2%;">
+<div id="mainright" style="padding-left: 2%; margin-top: 3%;">
 	<div class="card card-success card-outline" style="height: 330px;">
 		<div class="card-header">
 			<h3 class="card-title jg" style="text-align: center;">Calendar</h3>

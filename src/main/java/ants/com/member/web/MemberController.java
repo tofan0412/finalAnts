@@ -265,6 +265,21 @@ public class MemberController {
 		model.addAttribute("dbsize", size);
 		return "jsonView";
 	}
+	//메인가기
+	@RequestMapping("/mainpage")
+	public String mainpage(Model model, ProjectVo projectVo, HttpSession session) {
+		MemberVo memberVo=new MemberVo();
+		memberVo =(MemberVo) session.getAttribute("SMEMBER");
+		if(memberVo.getMemType().equals("PM")) {
+			List<ProjectVo> projectList_main = projectService.pmInProjectList(memberVo.getMemId());
+			model.addAttribute("projectList_main", projectList_main);
+		}
+		else {
+			List<ProjectVo> projectList_main = projectService.projectListmain(memberVo.getMemId());
+			model.addAttribute("projectList_main", projectList_main);
+		}
+		return "tiles/layout/contentmain";
+	}
 
 	// 로그인 체크 ajax
 	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)

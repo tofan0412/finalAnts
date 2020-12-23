@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ants.com.member.mapper.ProjectMapper;
 import ants.com.member.mapper.ReqMapper;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectVo;
 import ants.com.member.model.ReqVo;
 
 @Service("reqService")
@@ -45,7 +46,13 @@ public class ReqService{
 	 * @return 성공:1  실패:0
 	 */
 	public int reqInsert(ReqVo reqVo) {
-		return mapper.reqInsert(reqVo);
+		int cnt = 0;
+		ProjectVo projectVo = new ProjectVo();
+		projectVo.setReqId(reqVo.getReqId());
+		
+		cnt += mapper.reqInsert(reqVo);
+		cnt += proMapper.insertProject(projectVo);
+		return cnt;
 	}
 	
 	/**
