@@ -161,6 +161,18 @@
     	}
      	
      	
+     	
+	     // 제목 글자수 계산
+	   	$('#issueTitle').keyup(function (e){
+	   	    var content = $(this).val();   		
+	   		if (content.length > 66){
+	   	        alert("최대 66자까지 입력 가능합니다.");
+	   	     	$(this).val(content.substring(0, 65));
+	   	    }
+	   	});
+     	
+     	
+     	
      	// 이슈/공지사항 선택시
      	$('#kindselect').on('change',function(){
      		if($('#kindselect').val() !='issue'){
@@ -195,10 +207,10 @@
 				}
      		}
 			if (cnt == 0){				
-				if($('.uploadifive-queue-item').length ==0){ 
+				if($('.uploadifive-queue-item').length ==0){ //첨부파일이 하나도 없을시
 					$('#frm').submit();
 				}else{
-	     			$('#file_upload').uploadifive('upload');
+	     			$('#file_upload').uploadifive('upload'); // 첨부파일이 존재할시
 	     		}
 			}
      	})
