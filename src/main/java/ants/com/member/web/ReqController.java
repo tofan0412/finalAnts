@@ -117,11 +117,12 @@ public class ReqController {
 	 * @return 성공: 요구사항리스트  실패:등록화면
 	 */
 	@RequestMapping(value = "/reqInsert", method = RequestMethod.POST)
-	public String reqInsert(@ModelAttribute("reqVo") ReqVo reqVo, HttpSession session) {
+	public String reqInsert(@ModelAttribute("reqVo") ReqVo reqVo, HttpSession session, Model model) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
 		reqVo.setMemId(memberVo.getMemId());
 		
-		reqService.reqInsert(reqVo);
+		int cnt = reqService.reqInsert(reqVo);
+		model.addAttribute("cnt", cnt);
 
 		return "jsonView";
 	}
