@@ -71,7 +71,7 @@
 	</select>
 
 	<insert id="insertProject"
-		parameterType="ants.com.member.model.ReqVo">
+		parameterType="ants.com.member.model.ProjectVo">
 		INSERT INTO PROJECT 
 			(REQ_ID,REG_DT,DEL)
 		VALUES

@@ -47,10 +47,10 @@ public class ReqService{
 	 */
 	public int reqInsert(ReqVo reqVo) {
 		int cnt = 0;
+		cnt += mapper.reqInsert(reqVo);
 		ProjectVo projectVo = new ProjectVo();
 		projectVo.setReqId(reqVo.getReqId());
 		
-		cnt += mapper.reqInsert(reqVo);
 		cnt += proMapper.insertProject(projectVo);
 		return cnt;
 	}
