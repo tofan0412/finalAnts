@@ -146,7 +146,7 @@ toastr.options = {
 				method : "post",
 				dataType : "json",
 				success : function(data){
-					if(alarmType == 'reply' || alarmType == 'posts'){
+					if(alarmType.includes('reply') || alarmType == 'posts'){
 						getPage(url,alarmType,reqId,id);
 					}else{
 						document.location = url;
