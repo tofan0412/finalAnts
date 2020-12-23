@@ -137,7 +137,15 @@
 
 									<td style="padding-left: 30px;">
 									
-									<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}">${notice.noticeTitle }</a>
+									<c:choose>
+									<c:when test="${not empty main}">
+										<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}&main=Y">${notice.noticeTitle }</a>
+									</c:when>		
+									<c:otherwise>
+										<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}">${notice.noticeTitle }</a>
+									</c:otherwise>
+									</c:choose>
+										
 											
 									</td>
 									<td>${notice.adminId }</td>

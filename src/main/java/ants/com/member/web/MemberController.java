@@ -602,7 +602,7 @@ public class MemberController {
 	// 공지사항리스트 출력
 	// admin 인터셉터 때문에 관리자로 로그인 안하면 admin url을 탈수 없기 때문에 따로 만듦
 	@RequestMapping("/noticelistmemview")
-	public String noticelistmemview(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model)
+	public String noticelistmemview(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model, String main)
 			throws Exception {
 
 		/** EgovPropertyService.sample */
@@ -626,18 +626,29 @@ public class MemberController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 
-		return "main.tiles/notice/noticelistmemview";
+		if("Y".equals(main)) {	
+			model.addAttribute("main", "Y");
+			return "main.tiles/notice/noticelistmemview";
+		} else {
+			return "tiles/notice/noticelistmemview";
+		}	
 	}
-
+	
 	// 각 공지사항 상세보기
 	@RequestMapping("/noticedetailmemview")
-	public String noticedetailmemview(String noticeId, HttpSession session, Model model) {
-
+	public String noticedetailmemview(String noticeId, HttpSession session, Model model, String main) {
+		
 		NoticeVo noticevo = adminService.geteachnotice(noticeId);
 		model.addAttribute("noticevo", noticevo);
-
-		return "main.tiles/notice/noticedetailmemview";
-	}
+		
+		if("Y".equals(main)) {
+			model.addAttribute("main", "Y");
+			return "main.tiles/notice/noticedetailmemview";
+		} else {
+			return "tiles/notice/noticedetailmemview";
+		}
+	}		
+	
 
 	// 전체 회원 리스트 뽑아오기
 	@RequestMapping("/getAllMemberList")

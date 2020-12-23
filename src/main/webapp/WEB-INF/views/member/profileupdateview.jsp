@@ -63,7 +63,7 @@
 		<div class="login-logo">
 			<b>프로필 수정</b>
 		</div>		
-										
+		
 		<div class="card card-primary card-outline">
 			<div class="card-body box-profile">
 				

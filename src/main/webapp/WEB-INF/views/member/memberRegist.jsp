@@ -52,6 +52,9 @@
 		height : 50px;
 		border-radius: 80px;	
 		outline: none;
+	}	
+	#pictureView{
+		 height: 200px;
 	}				
 </style>			
 	
@@ -62,17 +65,17 @@
 		<div class="login-logo">
 			<b>회원가입</b>
 		</div>		
-											
+												
 		<div class="card card-primary card-outline">
 			<div class="card-body box-profile">
-					
+				
 				<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
 				<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 						
 				<div class="text-center" title="이미지를 클릭하면 변경할 수 있어요!">
-					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border: 1px solid white; height: 200px; width:140px; margin: 0 auto;">
-						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" src="http://localhost/profile/user-1.png" alt="User profile picture"/>
-					</div><br>		 	
+					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border:1px solid white; height: 200px; width:140px; margin: 0 auto;">
+						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" src="http://localhost/profile/user-1.png"/>
+					</div><br>	
 					<div class="content">
 						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left;" />	
 						<input type="text" id="imgname" name="imgname" style="display: none">
