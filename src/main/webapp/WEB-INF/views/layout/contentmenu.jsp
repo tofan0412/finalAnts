@@ -45,7 +45,7 @@
 				// 여기서부터 대기한 후에 실행할 함수를 호출한다.
 				timer = null;
 				
-				$('.warningBanner').empty();
+				$('#warningText').text("");
 				$('.searchResult').empty();
 				memberSearchList = [];
 				
@@ -53,7 +53,7 @@
 				if (keyword == ''){
 					$('.searchResult').empty();
 				}
-				if (keyword != '') {
+				else {
 					$.ajax({
 						url : "/project/userSearch",
 						data : { keyword : keyword },
@@ -194,7 +194,7 @@
 		})
 		
 		function delMember(memId) {
-			$('.warningBanner').text('');
+			$('#warningText').text('');
 			inviteMemList.splice(inviteMemList.indexOf(memId), 1);
 			listMember(inviteMemList);
 		}
@@ -391,7 +391,10 @@
 					</button>
 				</div>
 
-				<div class="modal-body jg" style="width: 100%; height: 60%;">
+				<div class="modal-body jg" 
+					style="width: 100%; height: 60%; 
+						   padding-right : 15px;
+						   padding-left : 15px;">
 					
 					<div style="float : left; width : 50%;">
 						<label style="margin : 5px 5px 5px 5px;">초대할 멤버의 아이디를 검색하세요.</label>
@@ -400,7 +403,7 @@
 								   width : 90%; 
 								   border-radius : 0.45rem;
 								   margin : 5px 5px 5px 5px;" autocomplete="off" placeholder="사용자의 이름을 입력하세요..">
-						<label id="fake" style="width : 80%;">&nbsp;</label>
+						<label id="fake" style="width : 80%; height : 21px;">&nbsp;</label>
 						<div id="warningText" 
 							style="visibility: visible; 
 								   float : left;
@@ -421,8 +424,8 @@
 						
 					</div>
 					
-					<div style="float : right; width : 50%;">
-						<label style="text-align : center;">초대 목록</label>
+					<div style="float : left; width : 50%;">
+						<label style="text-align : center; margin : 5px 5px 5px 5px;">초대 목록</label>
 						<div class="memListView" 
 							style="height : 375px; 
 								   border : 2px solid lightgrey;
