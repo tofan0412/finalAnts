@@ -151,6 +151,18 @@ public class AlarmHandler extends TextWebSocketHandler {
 							+ "님이" + " pl요청을 거절했습니다. " + "<a type='external' href=" + url + ">보기</a>");
 					responseSession.sendMessage(tmpMsg);
 				}
+				else if (type.equals("res-pro") && responseSession != null && status.equals("ACCEPT")) {
+					TextMessage tmpMsg = new TextMessage(type + "&&" + callerName + "&&" + title + "&&" + callerName
+							+ "님이" + " 프로젝트 초대를 수락했습니다. " + "<a type='external' href=" + url + ">보기</a>");
+					responseSession.sendMessage(tmpMsg);
+				}
+				else if (type.equals("res-pro") && responseSession != null && status.equals("REJECT")) {
+					TextMessage tmpMsg = new TextMessage(type + "&&" + callerName + "&&" + title + "&&" + callerName
+							+ "님이" + " 프로젝트 초대를 거절했습니다. " + "<a type='external' href=" + url + ">보기</a>");
+					responseSession.sendMessage(tmpMsg);
+				}
+				
+				
 			}
 
 			// 답글 달렸을 때

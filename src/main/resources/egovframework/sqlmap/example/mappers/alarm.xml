@@ -44,7 +44,9 @@
 							    <choose>
 							        <when test="searchCondition == 1">
 										AND	(alarm_type = 'req-pl'
-										 OR alarm_type = 'res-pl')
+										 OR alarm_type = 'res-pl' 
+										 OR alarm_type = 'req-pro'
+										 OR alarm_type = 'res-pro' )
 									</when>
 							        <when test="searchCondition == 2">
 										AND	alarm_type LIKE 'reply' 
@@ -71,7 +73,9 @@
 							    <choose>
 							        <when test="searchCondition == 1">
 										AND	(alarm_type = 'req-pl'
-										 OR alarm_type = 'res-pl')
+										 OR alarm_type = 'res-pl'
+										 OR alarm_type = 'req-pro'
+										 OR alarm_type = 'res-pro' )
 									</when>
 							        <when test="searchCondition == 2">
 										AND	alarm_type = 'reply'

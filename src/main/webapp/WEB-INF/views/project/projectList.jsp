@@ -116,9 +116,18 @@ th, td {
 			
 			var ajaxArr = {"inviteMemList" : setInviteMemList, "reqId" : reqId, "memId" : me};
 			
+			ArrWithoutMe = [];
+			for (i = 0 ; i < setInviteMemList.length ; i++){
+				if (me == setInviteMemList[i]){
+					// 나 스스로한테는 알람을 보내선 안되므로, 아무것도 하지 않는다.(알람 대상 리스트에 나를 제외한다.)
+				}else{
+					ArrWithoutMe.push(setInviteMemList[i]);
+				}
+			}
+			
 			var alarmData = {
 					"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId=" + reqId + "&&" + projectName ,
-					"memIds"	: mkPjtInviteMemList,
+					"memIds"	: ArrWithoutMe,
 					"alarmType" : "req-pro"
 			}
 			
@@ -429,7 +438,8 @@ th, td {
 						<input type="text" class="projectName inputBox" placeholder='프로젝트 이름을 입력해 주세요 ..' autocomplete="off">
 						<br><br>
 						<h5>멤버 검색하기</h5>
-						<input type="text" id="mkPjtUserSearch" class="inputBox" autocomplete="off">
+						<input type="text" id="mkPjtUserSearch" class="inputBox" 
+							autocomplete="off" placeholder="회원 이름">
 						<label id="mkPjtFake" style="width : 80%; height : 11px;">&nbsp;</label>
 						<br>
 						<div id="mkPjtWarningText" 
@@ -448,13 +458,15 @@ th, td {
 					
 					
 					<!-- 초대 리스트 -->
-					<label>초대 리스트</label>
-					<div class="mkPjtMemList" 
-						style="float : right; 
-							   border : 2px solid lightgrey;
-							   width : 50%; height : 300px; border-radius : 0.35rem;
-							   padding : 10px 10px 10px 10px; line-height : 45px;
-					 		   background-color : white; overflow-y : auto;">
+					<h5>초대 리스트</h5>
+					<div>
+						<div class="mkPjtMemList" 
+							style="float : right; 
+								   border : 2px solid lightgrey;
+								   width : 50%; height : 300px; border-radius : 0.35rem;
+								   padding : 10px 10px 10px 10px; line-height : 45px;
+						 		   background-color : white; overflow-y : auto;">
+						</div>
 					</div>
 				</div>
 				

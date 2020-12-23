@@ -14,7 +14,13 @@
 					from(
 						select *
 						from
-							(select *
+							(select notice_id,
+								    notice_title,
+								    notice_cont,
+								    to_char(REG_DT,'YYYY-MM-DD') as REG_DT,
+								    admin_id,
+								    del,
+								    importance
 							 from notice
 							 where importance = 'emg'
 							 and DEL = 'N'
@@ -25,7 +31,13 @@
 						
 						select *
 						from
-							(select *
+							(select notice_id,
+								    notice_title,
+								    notice_cont,
+								    to_char(REG_DT,'YYYY-MM-DD') as REG_DT,
+								    admin_id,
+								    del,
+								    importance
 							 from notice
 							 where importance = 'gen'
 							 and DEL = 'N'

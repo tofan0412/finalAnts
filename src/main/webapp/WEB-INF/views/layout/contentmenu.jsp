@@ -23,7 +23,6 @@
 			$('#fake').show();
 			$('#inviteMember').modal();
 		})
-
 		
 		// test = window.setTimeout("실행할 함수", 지연할 시간(ms 단위)); 
 		// 와 같이 test 를 주고 if (test) 조건을 주면 test는 임의의 숫자값을 가지므로 실행된다.

@@ -8,7 +8,7 @@
 		  FROM (
 		   SELECT ROWNUM RNUM, a.* 
 			 FROM (
-			     SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, PRIV_SIZE, MEM_ID
+			     SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, PRIV_SIZE, MEM_ID, PRIV_EXTENSION
 			     FROM PRIVATEFILE
 			     WHERE MEM_ID = #{memId}
 			     <if test="searchKeyword != null and searchKeyword != ''">
@@ -72,7 +72,7 @@
 	
 	<!-- 클릭한 파일 정보 -->
 	<select id="privateSelect" parameterType="ants.com.file.model.PublicFileVo" resultType="ants.com.file.model.PrivateFileVo">
-		SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, MEM_ID
+		SELECT PRIV_ID, PRIV_FILEPATH, PRIV_FILENAME, PRIV_SIZE, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, MEM_ID, PRIV_EXTENSION 
 		FROM PRIVATEFILE
 		WHERE PRIV_ID = #{privId}
 	</select>

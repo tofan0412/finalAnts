@@ -23,8 +23,10 @@ public class FileDownloadView extends AbstractView{
 		String realfilename = (String)model.get("pubFilename");
 		String fileName = URLEncoder.encode(realfilename,"UTF-8").replaceAll("\\+", "%20");
 		String filepath = (String)model.get("pubFilepath");
+
+		String extension = filepath.substring(filepath.lastIndexOf(".")+1);
 		
-		response.setHeader("Content-Disposition", "attachment; filename=\""+fileName+"\"");
+		response.setHeader("Content-Disposition", "attachment; filename=\""+fileName+"."+extension+"\"");
 		response.setContentType("application/octet-stream utf-8");//파일을 다운로드할때는 octet-stream을 사용한다.
 	
 		// 경로 확인 후 파일 입출력을 통해 응답 생성

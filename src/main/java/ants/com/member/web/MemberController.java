@@ -278,6 +278,7 @@ public class MemberController {
 			List<ProjectVo> projectList_main = projectService.projectListmain(memberVo.getMemId());
 			model.addAttribute("projectList_main", projectList_main);
 		}
+		
 		return "tiles/layout/contentmain";
 	}
 

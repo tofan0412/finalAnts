@@ -11,20 +11,32 @@
 <script type="text/javascript">
 	$(function(){
 		//수락버튼 click
-	    $('#in').on('click',function(){
+	    $('.in').on('click',function(){
 	    	var reqId = $(this).val();
+	    	var reqTitle = $(this).parent().prev().prev().text().trim();
+	    	var memId = $(this).prev().val().trim();
 		    $.ajax({
 		    	url : "${pageContext.request.contextPath}/project/updatePjtMember",
 		    	data : { reqId : reqId },
 		    	method : "post",
 		    	success : function(data){
 		    			alert("참여가 완료됐습니다.");
-		    			document.location = "${pageContext.request.contextPath}/project/requestPjtMember";
+		    			var alarmData = {
+		    					"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId=" + reqId + "&&" + reqTitle + "&&ACCEPT&& ",
+		    					"memId" 	: memId,
+		    					"alarmType" : "res-pro"
+		    			}
+		    			// 알림db등록
+		    			savePjtResMsg(alarmData);
 		    	}
 		    });
 	    });
 		
-	    $('#rejectPjt').on('click',function(){
+	    $('.rejectPjt').on('click',function(eve){
+	    	var reqId = $(this).val();
+	    	var reqTitle = $(this).parent().prev().prev().text().trim();
+	    	var memId = $(this).prev().prev().val().trim();
+	    	
 	    	if (confirm("정말 거절하시겠습니까?")) {
 		    	var promemId  = $(this).val();
 			    $.ajax({
@@ -33,15 +45,44 @@
 			    	method : "post",
 			    	success : function(data){
 			    			alert("거절이 완료됐습니다.");
-			    			document.location = "${pageContext.request.contextPath}/project/requestPjtMember";
+			    			var alarmData = {
+			    					"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId=" + reqId + "&&" + reqTitle + "&&REJECT&& ",
+			    					"memId" 	: memId,
+			    					"alarmType" : "res-pro"
+			    			}
+			    			// 알림db등록
+			    			savePjtResMsg(alarmData);
+			    			
 			    	}
 			    });
 	    	}
+	    	eve.preventDefault();
 	    });
 		
+	/* pl응답 알림메세지 db에 저장하기 */
+	function savePjtResMsg(alarmData){
+		
+		$.ajax({
+				url : "/alarmInsert",
+				data : JSON.stringify(alarmData),
+				type : 'POST',
+				contentType : "application/json; charset=utf-8",
+				dataType : 'text',
+				success : function(data){
+					
+					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
+					socket.send(socketMsg);
+					document.location = "${pageContext.request.contextPath}/project/requestPjtMember";
+				},
+				error : function(err){
+					console.log(err);
+				}
+		});
+	}
 		
 		
 	});//function
+	
 
 </script>
 <section class="content">
@@ -93,8 +134,9 @@
 								<td class="jg"  style="padding-left: 30px; text-align: center;">${i.title}</td>
 								<td class="jg" style="text-align: center;"> ${i.plName }</td>
 								<td class="jg" style="text-align: center;"> 
-									<button id="in" type="button" class="btn btn-default  jg" value="${i.reqId }"><i class="fas fa-edit "></i>수락</button>
-									<button id="rejectPjt" type="button" class="btn btn-default  jg" value="${i.promemId }"><i class="fas fa-edit "></i>거절</button>
+									<input type="hidden" value="${i.plId}">
+									<button type="button" class="btn btn-default in jg" value="${i.reqId }"><i class="fas fa-edit "></i>수락</button>
+									<button type="button" class="btn btn-default rejectPjt jg" value="${i.promemId }"><i class="fas fa-edit "></i>거절</button>
 								</td>
 							</tr>
 						</c:forEach>

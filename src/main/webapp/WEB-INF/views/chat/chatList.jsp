@@ -29,7 +29,7 @@
 	</c:if>
 </c:if>
 <c:if test="${projectId eq null }">
-	<div style="text-align : center; padding-top : 170px;">
+	<div style="text-align : center; padding-top : 200px;">
 		<span class="jg">프로젝트를 <br> 선택해 주세요.</span>
 	</div>
 </c:if>

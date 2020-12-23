@@ -211,7 +211,7 @@ function listMember(MemListArr){
 	<div class="selectedMemList" style="float : left;"></div>
 </div>
 
-<br><br>
+<br>
 <!-- Button -->	
 <div class="jg" style="float : right;">
 	<button class="returnBtn jg btn btn-primary">취소</button>

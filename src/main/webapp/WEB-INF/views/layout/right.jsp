@@ -235,7 +235,7 @@ $(function(){
 	<!-- Control sidebar content goes here -->
 	<div class="p-3" 
 		style="background-color : white;
-		height : 100%;
+		height : 700px;
 		border : 5px solid skyblue;
 	    border-radius : 0.8rem;
 	   	border-bottom-left-radius : 0.8rem;
