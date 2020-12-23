@@ -22,10 +22,10 @@
 	    border-collapse: collapse;
 	    text-align: center;
   	}
-  	th, td {
-	    border-bottom: 1px solid #444444;
-	    padding: 10px;
-  	}
+   	th, td { 
+ 	    border-bottom: 1px solid #444444; 
+ 	    padding: 10px; 
+   	} 
 	
 	li strong{
 		display: inline-block;
@@ -131,29 +131,31 @@
 	            <div class="card-body p-0">
 	            	<table id="table" class="jg">
 	            		<!-- 헤더부분  -->
-						<tr>
-	                        <th style="margin-left: 1px; float: center" >No.</th>
-	                     	<th style="text-align: left; padding-left: 130px;">제목</th> 
-							<th style="float: center">작성자</th>
-							<th style="float: center">날짜</th>
-                    	</tr>
+						<thead>
+		                    <tr>
+		                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
+		                     	<th style="width:60%; padding-left: 30px; text-align: center;" class="jg"> 제목</th> 
+								<th style="text-align: center;" class="jg">   작성자 </th>
+								<th style="text-align: center;" class="jg">   날짜   </th>
+		                    </tr>
+	                 	</thead>
 						<!-- 리스트부분 -->
 						<tbody >
 							<c:forEach items="${noticelist }" var="notice" varStatus="status">
-							
+
 								<tr>
-									<td style="float: center">
+									<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
 										<c:out value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />
-									</td>
+									.</td>
 										
-									<td style="text-align: left; padding-left: 92px;">
+									<td class="jg"  style="padding-left: 30px; text-align: left;">
 										<c:if test="${notice.importance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
 										<c:if test="${notice.importance eq 'emg'}"><span class="badge badge-danger ns">필독</span></c:if>
 										<a href="${pageContext.request.contextPath}/admin/eachnoticeDetail?noticeId=${notice.noticeId}">
 											${notice.noticeTitle }</a>
 									</td>
-									<td style="float: center">${notice.adminId }</td>
-									<td style="float: center">${notice.regDt }</td>
+									<td class="jg" style="text-align: center;">${notice.adminId }</td>
+									<td class="jg" style="text-align: center;">${notice.regDt }</td>
 									
 								</tr>
 								

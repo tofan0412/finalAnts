@@ -115,7 +115,7 @@
 				
 				<div class="form-group" >
 					<label for="noticeTitle" class="col-sm-2 control-label jg">제목 </label>
-					<input class="form-control col-sm-8" type="text" class="jg" name="noticeTitle" style=" display: inline-block;" value="${noticeVo.noticeTitle }" id="noticeTitle"><br><br>
+					<input maxlength="60" class="form-control col-sm-8" type="text" class="jg" name="noticeTitle" style=" display: inline-block;" value="${noticeVo.noticeTitle }" id="noticeTitle"><br><br>
 				</div>
 				
 				<div class="form-group jg" style="width: 90%;">
