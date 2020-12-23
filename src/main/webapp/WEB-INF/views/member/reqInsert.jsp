@@ -137,7 +137,7 @@
 				 });
 				 event.preventDefault();
      	});
-     	// 수정 버튼 클릭시 요구사항정의서,프로젝트 등록
+     	// 수정 버튼 클릭시 요구사항정의서 수정
      	$('#updatebtn').on('click', function(event){
 				 $.ajax({
 						url : "/req/reqUpdate",
@@ -146,9 +146,11 @@
 						dataType : 'json', 
 						success : function(data){
 							var delfile = $('#delfile').val();
+							//삭제할 파일 존재하면
 							if(delfile != null && delfile != ''){
 								delfiles(data.reqVo);
 							 }else{
+								//삭제없고 업로드파일만 있으면
 								if($('.uploadifive-queue-item').length>0){
 									fileUpload(data.reqVo);
 								}else{
@@ -195,11 +197,12 @@
 		 			 data : {delfile : $('#delfile').val() },
 					 method : "post",
 					 success :function(data){
-						 if($('.uploadifive-queue-item').length>0){
-								fileUpload(reqVo);
-							}else{
-								reqList();
-							}
+						//삭제하고 업로드파일 있으면
+						if($('.uploadifive-queue-item').length>0){
+							fileUpload(reqVo);
+						}else{
+							reqList();
+						}
 					 }
 			 });
 		}
