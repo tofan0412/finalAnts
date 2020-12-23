@@ -193,7 +193,7 @@ function saveMsg(reqId){
 	var alarmData = {
 						"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail&&${issuevo.issueId}&&${issuevo.issueTitle}&&"+ $('#re_con').val(),
 						"memId" 	: "${issuevo.memId}",
-						"alarmType" : "reply"
+						"alarmType" : "reply-3"
 	}
 	console.log(alarmData);
 	
@@ -208,8 +208,6 @@ function saveMsg(reqId){
 				let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 				socket.send(socketMsg);
 				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issuevo.issueId }');
-
-				
 				
 			},
 			error : function(err){

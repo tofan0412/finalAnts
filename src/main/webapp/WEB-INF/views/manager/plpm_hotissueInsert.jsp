@@ -127,9 +127,10 @@
  	function insert(){
  		if(uploadCnt == $('.uploadifive-queue-item').length){
  			if("${hissueParentid}" != null){
-	 			saveMsg();
+ 				saveMsg();
 	 		}
 			$("#hissueform").submit();    		
+	 		
     	}else{}
 	}
  	//파일끝
@@ -143,9 +144,11 @@
 	
 	//답글 알림 db저장, 소켓에 메세지보내기
 	function saveMsg(){
-		var pid= $("#hissueParentid").val();  
+		var pid= $("#hissueParentid").val(); 
+		var chTitle = $('#hissueTitle').val();
+		var chCont = $('#summernote').val();
 		var alarmData = {
-							"alarmCont" : pid+"&&${SMEMBER.memName}&&${SMEMBER.memId}&&/hotIssue/hissueList?reqId=${projectId}&&${hotIssueVo.hissueTitle}&&"+ $('#hissueTitle').val(),
+							"alarmCont" : "${projectId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/hotIssue/hissueList&&"+pid+"&&${hotIssueVo.hissueTitle}&&"+ chTitle + "&&" + chCont,
 							"memId" 	: "${hotIssueVo.memId}",
 							"alarmType" : "posts"
 							
@@ -159,11 +162,11 @@
 				type : 'POST',
 				contentType : "application/json; charset=utf-8",
 				dataType : 'text',
+				async: false,
 				success : function(data){
 					
 					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 					socket.send(socketMsg);
-					
 					
 				},
 				error : function(err){

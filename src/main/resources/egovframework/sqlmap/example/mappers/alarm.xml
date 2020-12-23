@@ -20,14 +20,16 @@
 		    alarm_cont,
 		    alarm_status,
 		    mem_id,
-		    alarm_type
+		    alarm_type,
+		    reg_dt
 		)
 		VALUES (
 		    alarm_seq.nextval,
 		    #{alarmCont},
 		    'N',
 		    #{memId},
-		    #{alarmType}
+		    #{alarmType},
+		    SYSDATE
 		)
 	</insert>
 	
@@ -45,7 +47,7 @@
 										 OR alarm_type = 'res-pl')
 									</when>
 							        <when test="searchCondition == 2">
-										AND	alarm_type = 'reply'
+										AND	alarm_type LIKE 'reply' 
 									</when>
 							        <when test="searchCondition == 3">
 										AND	alarm_type = 'posts'
