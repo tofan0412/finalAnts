@@ -30,7 +30,7 @@ body{
 	line-height: 170px;
 }
 
-#todoTable {
+table{
 	width: 98%;
 	border-top: 1px solid #444444;
 	border-collapse: collapse;
@@ -161,6 +161,10 @@ var id;
 		$("#privatefileList tr").on("mouseenter",function(){
 			$(this).css("backgroundColor","#F0F8FF");
 		});
+		// 마우스 올려놨을때
+		$("#imageTable img").on("mouseenter",function(){
+			$(this).css("backgroundColor","#F0F8FF");
+		});
 
 		// 마우스 우클릭시
 		$("#privatefileList tr").on("mousedown", function(e){
@@ -190,10 +194,36 @@ var id;
 		    //Prevent browser default contextmenu.
 		    return false;
 			}
+		});
 		
-		
+		// 마우스 우클릭시
+		$("#imageTable img").on("mousedown", function(e){
+			console.log('click')
+			var privfileId = $(this).data("privid");
+			console.log(privfileId)
+			
+			if(event.button == 2){
+			 //Get window size:
+		    var winWidth = $(document).width();
+		    var winHeight = $(document).height();
+		    //Get pointer position:
+		    var posX = e.pageX;
+		    var posY = e.pageY;
+		    //Get contextmenu size:
+		    var menuWidth = $(".contextmenu").width();
+		    var menuHeight = $(".contextmenu").height();
+		    //Security margin:
+		    var secMargin = 10;
+		    
+		    $(".contextmenu").css({
+		      "left": posX,
+		      "top": posY-50
+		    }).show();
+		    id=privfileId;
 
-		 
+		    //Prevent browser default contextmenu.
+		    return false;
+			}
 		});
 		 $(document).click(function(){
 			    $(".contextmenu").hide();
@@ -206,6 +236,11 @@ var id;
 		$("#privatefileList tr").on("mouseleave",function(){
 			$(this).css("backgroundColor","white");
 		});  
+		// 마우스가 벗어났을때
+		$("#imageTable img").on("mouseleave",function(){
+			$(this).css("backgroundColor","white");
+		});  
+		
      	  
 		var QueueCnt =0;
 		var uploadCnt = 0;
@@ -263,13 +298,49 @@ var id;
      		if(uploadCnt == $('.uploadifive-queue-item').length){
      			console.log("닫아라랑아")
      			$('#modal').modal("hide");
-     			$(location).attr('href', '/privatefile/privatefileView');
+     			$(location).attr('href', '/privatefile/privatefileView?type=${imagetype}');
      		}
+     	}
+     	
+//      	$('#imageTable').hide();
+     	
+     	// 이미지 버튼
+//      	$('#imagebtn').on('click', function(){
+//      		console.log('이미지')
+//      		$('#imageTable').show();
+//      		$('#listTable').hide();
+//      	})
+     	
+     	// 리스트 버튼
+//      	$('#imagelistbtn').on('click', function(){
+//      		console.log('리스트')
+//      		$('#imageTable').hide();
+//      		$('#listTable').show();
+//      	})
+     	
+     	if('${imagetype}' == 'imageicon'){
+     		$('#imageTable').show();
+     		$('#listTable').hide();
+     	}else{
+     		$('#imageTable').hide();
+     		$('#listTable').show();
      	}
      	
      	
 	});
 	
+	function listfunc(){
+// 		$('#imageTable').hide();
+//  		$('#listTable').show();
+ 		$('input[name=type]').val('imagelist')
+ 		$(location).attr('href', '/privatefile/privatefileView?type=imagelist'); 		
+	}
+	function imagefunc(){
+// 		$('#imageTable').show();
+//  		$('#listTable').hide();
+ 		$('input[name=type]').val('imageicon')
+ 		$(location).attr('href', '/privatefile/privatefileView?type=imageicon'); 	
+	}
 	
 	// 파일 다운로드
 	function privfiledown(){
@@ -282,12 +353,14 @@ var id;
 	
 		
 	function fn_egov_link_page(pageNo){
-		document.listForm.pageIndex.value = pageNo;
+		document.listForm.pageIndex.value = pageNo;	
+		document.listForm.type.value = $('input[name=type]').val();	
 		document.listForm.action = "<c:url value='/privatefile/privatefileView'/>";
 	   	document.listForm.submit();
 	}
 	 function search(){
-		 document.listForm.pageIndex.value = 1;
+		document.listForm.pageIndex.value = 1;
+		document.listForm.type.value = $('input[name=type]').val();	
 		document.listForm.action = "<c:url value='/privatefile/privatefileView'/>";
 		document.listForm.submit();
 	}
@@ -308,8 +381,9 @@ var id;
 
 <section class="content" >
   <div class="col-12 col-sm-12">
-  
-  	
+  		
+<%--   		<form:hidden path="type" value="${imagetype }" /> --%>
+  		<input type="hidden" name="type" value="${imagetype }">
 		<!-- 파일등록  -->
 	   <div class="card" style="border-radius: inherit; padding : 2px;">
 	      
@@ -332,11 +406,10 @@ var id;
         
     
         
-	<div style="padding-left: 30px; background-color: white;">
 			
-		<div class="float-left">
-		    <div class="card-header" style="border-bottom: none;">				
-				<div id="keyword" class="card-tools float-right" style="width: 550px;">
+		<div class="card-header" style="border-bottom: none;">				
+			<div class="float-left">
+				<div id="keyword" class="card-tools float-right" style="width: 550px; padding-left: 30px;">
 					<div class="input-group row">		
 						<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">				
 							<form:option value="1" label="파일명"/>
@@ -357,10 +430,14 @@ var id;
 					</div>
 		        </div>
 		    </div>	
-		</div>
-		<div class="float-right">
-		    <div class="card-header with-border">
-						<label class="jg" style="padding-right: 10px;">사용량 : 
+			
+			<div class="float-right">
+		   
+<!-- 		    			<input type="button"  id="imagebtn" value="이미지"> -->
+<!-- 		    			<input type="button"  id="imagelistbtn" value="리스트"> -->
+		    			<button class="btn" type="button"  id="imagelistbtn" onclick="listfunc()"><i class="fas fa-align-justify"></i></button>
+		    			<button class="btn" type="button"  id="imagebtn" onclick="imagefunc()"><i class="far fa-images"></i></button> &nbsp;
+						<label class="jg" style="padding-right: 20px;">사용량 : 
 							<c:set var = "total" value = "0" />
 							<c:forEach items="${totalSize}" var="totalSize" varStatus="sts" >
 								<c:set var= "total" value="${total + totalSize}"/> 
@@ -381,10 +458,12 @@ var id;
                         </label> 	
 		    </div>
 		</div>
-		<div class="card-body p-0">
-		<table id="todoTable">
+		
+	<div style="padding-left: 30px; padding-right: 20px; background-color: white;">
+		<div class="card-body p-0" id="listTable">
+		
+		<table>
 			<tr>
-				
 				<th class="jg" style="width: 150px;  text-align: center;">No.</th> 
 				<th class="jg" style="padding-left:60px;">파일명</th>
 				<th class="jg" width="200px"  >파일사이즈</th>
@@ -401,13 +480,13 @@ var id;
 						<c:set var="cutName" value="${fn:substring(orginalName, nameLength-5, nameLength)}"/>
 						<c:set var="filename" value="${fn:substringAfter(cutName,'.')}"/>		
 					
-				    <tr data-privid="${privatefile.privId}" title="시퀸스 : ${privatefile.privId} <br>
-																	수정한 날짜: ${privatefile.regDt } <br>
-																	파일이름 : ${privatefile.privFilename } <br>
-																	파일경로 : ${privatefile.privFilepath} <br>
-																	파일사이즈 : ${privatefile.privSize } KB<br>
-																	확장자: ${filename} <br>
-																	">
+				  <tr data-privid="${privatefile.privId}" title="시퀸스 : ${privatefile.privId} <br>
+																		수정한 날짜: ${privatefile.regDt } <br>
+																		파일이름 : ${privatefile.privFilename } <br>
+																		파일경로 : ${privatefile.privFilepath} <br>
+																		파일사이즈 : ${privatefile.privSize } KB<br>
+																		확장자: ${filename} <br>
+																			">
 																	
 					<td style="width: 150px;  text-align: center;" class="jg"><c:out value="${((privatefileVo.pageIndex-1) * privatefileVo.pageUnit + sts.index+1)}"/>. 
 						<input type="hidden" id="${privatefile.privId }" name="${privatefile.privId }">
@@ -440,26 +519,63 @@ var id;
 					<td  class="jg" style="padding-right: 30px;"> 
 						${privatefile.regDt }
 					</td>
-					<%-- <td>
-						<a href="/privatefile/privatefileDown?privId=${privatefile.privId}">
-						<input type="button" value="다운로드"/>
-						</a>
-					</td> --%>
-<!-- 					<td> -->
-<%-- 						<a href="/privatefile/privatefileDelete?privId=${privatefile.privId}"> --%>
-<%-- 						<input type="button" class="delbtn jg" id="${privatefile.privId}" value="삭제"/> --%>
-<!-- 						</a> -->
-<!-- 					</td> -->
-					
-					
-					</tr>
+				 </tr>
 					
 				</c:forEach> 
 				
 			</tbody>
 		</table>
+		
 		</div>  
+		
+		
+		
+		
+		
+		<div class="card-body p-0" id="imageTable">
+			
+			<hr>
+			<br>
+			<div>
+				<c:forEach items="${privatefileList}" var="privatefile" varStatus="sts" >
+				
+						<c:set var="orginalName" value="${privatefile.privFilename}"/>
+						<c:set var="nameLength" value="${fn:length(orginalName)}"/>
+						<c:set var="cutName" value="${fn:substring(orginalName, nameLength-5, nameLength)}"/>
+						<c:set var="filename" value="${fn:substringAfter(cutName,'.')}"/>		
+					
+					
+					<div  style="width: 150px; height: 200px; display: inline-block; text-align: center;">
+						<img  name="link" src="/fileFormat/${fn:toLowerCase(filename)}.png" onerror="this.src='/fileFormat/not.png';" style="width:120px; height:120px;" 
+								data-privid="${privatefile.privId}"  title="파일이름 : ${privatefile.privFilename } <br>
+																			수정한 날짜: ${privatefile.regDt } <br>
+																			파일사이즈 : ${privatefile.privSize } KB<br>
+																			확장자: ${filename} <br>
+																			">
+								
+								
+						<label style="text-align: center;">
+						<c:if test="${fn:length(privatefile.privFilename) > 10}">
+							${fn:substring(privatefile.privFilename,0 ,9) }...
+										
+						</c:if>
+						<c:if test="${fn:length(privatefile.privFilename) <= 10}">
+							${privatefile.privFilename}
+										
+						</c:if>
+						</label>		
+					</div>
+			   
+			    </c:forEach>
+			</div>
+			<hr>					
+		</div>
+		
+		
+		
+		
 	</div>
+	
 		<br>
 		<c:if test="${privatefileList.size() == 0}">
 			<p class="jg" style="text-align: center;">[등록된 파일이 없습니다.]</p>
@@ -474,11 +590,12 @@ var id;
             </ul>
   		  </div>
   		
-  		 
+  		 	
 	 	<div class="card-footer clearfix">
           <button id="fileregbtn" type="button" class="btn btn-default float-left jg"><i class="fas fa-plus"></i>파일추가</button>
+       		<a href="/bot/chatbot" style="display:none;">봇</a>
         </div>
-	
+		
 	 </div>
 	
 	</div>
@@ -490,7 +607,7 @@ var id;
 </body>
 
 
-<!-- 투표 등록 모달 -->
+<!-- 파일 등록 모달 -->
 <!-- Modal to invite new Members . . . -->
 <div class="modal fade" id="filemodal" tabindex="-1" role="dialog"
 	aria-labelledby="inviteMemberModal" style=" padding-top: 150px;">

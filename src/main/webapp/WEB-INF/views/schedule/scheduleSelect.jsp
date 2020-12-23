@@ -42,6 +42,17 @@
   width: 10%;
   text-align: center;
   }
+#re_con{
+	width: 700px;
+	display :inline-block;
+    resize: none;
+    padding: 1.1em; /* prevents text jump on Enter keypress */
+    padding-bottom: 0.2em;
+    line-height: 1.6;
+    overflow-y:hidden;
+}		
+ #re_con.autosize { min-height: 60px; } 
+	
 </style>	
 <%@include file="../layout/contentmenu.jsp"%>
 <body>
@@ -128,18 +139,67 @@
 		         </tr>
 	        </table>
 	        
-	    <div class="card-footer clearfix">
-			<input type= "button" value="목록으로" id ="back" class="btn btn-default float-left jg" >
+	   	 	<div class="card-footer clearfix">
+				<input type= "button" value="목록으로" id ="back" class="btn btn-default float-left jg" >
 			
-	    	<c:if test="${scheduleVo.memId == SMEMBER.memId}">
-				<input type= "button" value="삭제하기" id="delsche"  class="btn btn-default float-right jg" >			
-				<input type= "button" value="수정하기" id ="modsche" class="btn btn-default float-right jg" style="margin-right: 5px;">
-			</c:if>
+	    		<c:if test="${scheduleVo.memId == SMEMBER.memId}">
+					<input type= "button" value="삭제하기" id="delsche"  class="btn btn-default float-right jg" >			
+					<input type= "button" value="수정하기" id ="modsche" class="btn btn-default float-right jg" style="margin-right: 5px;">
+				</c:if>
+			</div>
+		
+		
+			<form class="form-horizontal" role="form" id ="frm" method="post" action="${pageContext.request.contextPath}/schedule/scheduleinsertreply">	
+				<div class="form-group">
+				<hr>	
+					<label for="pass" class="col-sm-2 control-label jg">댓글</label>
+					<div class="col-sm-12" id="replydiv">	
+												
+						<c:forEach items="${replylist }" var="replylist">
+							<div id="replydiv" style="padding-left: 50px;">			
+							<c:if test= "${replylist.del == 'N'}">
+								<img class="circle" src="/resources/littleryan.jpg" style="width: 30px; height: 30px;   border-radius: 70%;">
+								<label style="display: inline-block;" class="jg">${replylist.memName }</label>
+								<label >( ${replylist.memId } )</label>
+													
+								<textarea style=" width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
+												
+								[ ${replylist.regDt} ] 	
+													
+								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">		
+									<input type="hidden" value="${replylist.replyId}">
+									<input type="hidden" value="${replylist.someId}">																							
+									<input id ="replydelbtn" type="button" class="btn btn-default jg" value ="삭제"/>						
+								</c:if>		
+															
+							</c:if>		 														
+							<c:if test= "${replylist.del == 'Y'}">			
+																
+								<p>[ 삭제된 댓글입니다. ]</p>		
+												
+							</c:if>	
+							</div>	 														
+							<hr>	
+						</c:forEach>	
+						<br>		
+						<div id="replyinsertdiv" style="padding-left: 50px;">			
+							<input type="hidden" name="someId" value="${scheduleVo.scheId}">
+							<input type="hidden" name="categoryId" value="${scheduleVo.categoryId}">
+							<input type="text" name="reqId" value="${scheduleVo.reqId}">
+							<input type="hidden" name="memId" value="${scheduleVo.memId}">
+											
+							<textarea name = "replyCont" id ="re_con" onkeyup="resize(this)" ></textarea><br>
+							<div style="width:700px;">	
+								<span>0</span> &nbsp;자 / 300 자		
+								<input id="replybtn2" type = "button" class="btn btn-default float-right jg" value = "댓글작성"><br>				
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+	
 		</div>
-	
-	
 	</div>
-</div>
 </div>	
 	
 <script type="text/javascript">
@@ -250,8 +310,7 @@
 
 				searchAddressToCoordinate($("#juso").val());
 			});
-
-			searchAddressToCoordinate($("#juso").val());
+	
 		}
 
 		function makeAddress(item) {
@@ -357,6 +416,92 @@
 		})
 		 	
 	});
+		
+		
+//댓글 작성
+function replyinsert() {
+	someId : '${scheduleVo.scheId}';
+	$.ajax({
+		
+		url : "${pageContext.request.contextPath}/schedule/scheduleinsertreply",
+		method : "post",
+		data : {	
+			someId : '${scheduleVo.scheId}',
+			categoryId : '${scheduleVo.categoryId}',
+			reqId : '${scheduleVo.reqId}',
+			replyCont : $('#re_con').val()	
+			
+		},
+		success : function(data) {
+					
+			saveMsg(scheduleVo.scheId);																	/* 2020-12-22 여기부터  */
+			$(location).attr('href', '${pageContext.request.contextPath}/schedule/scheduleSelect?	issueId='+data.someId+'&reqId='+reqId);
+		}
+	});
+}		
+
+// 댓글작성시 작동 증가
+function resize(obj) {
+	obj.style.height = "1px";
+	obj.style.height = (12+obj.scrollHeight)+"px";
+}
+	
+		
+$(function(){
+	// 댓글 높이 자동 맞춤
+	$('.writeCon').each(function () {	
+		  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+	}).on('input', function () {
+		  this.style.height = 'auto';
+		  this.style.height = (this.scrollHeight) + 'px';
+	});
+
+	
+	// 댓글 작성
+	$('#replybtn2').on('click', function(){
+		replyinsert();
+	})
+	
+	// 댓글 작성하기 삭제 버튼
+	$('#replydiv').on('click','#replydelbtn', function(){
+		if(confirm("댓글을 정말 삭제하시겠습니까 ?") == true){   
+			
+			var someid = $(this).prev().val();
+			var replyid = $(this).prev().prev().val();
+			issueid = '${scheduleVo.scheId }'
+			console.log(replyid)
+			console.log(someid)
+			$.ajax({url :"/reply/delreply",
+				   data :{replyId: replyid,
+					       someId: someid, 
+					       reqId : '${scheduleVo.reqId}'},
+				   method : "get",
+				   success :function(data){	
+				 }
+			})
+		}else{
+        	return;
+        }
+	})
+			
+	// 답글 글자수 계산
+	$('#re_con').keyup(function (e){
+	    var content = $(this).val();
+	  
+// 	    console.log(content)
+		
+	    $('#counter').html("('+content.length+' / 최대 300자)");    //글자수 실시간 카운팅	  
+		$('span').html(content.length);
+		
+	    if (content.length > 300){
+	        alert("최대 300자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 300));
+	        $('span').html("(200 / 최대 300자)");
+	    }
+	});
+	
+
+})
 </script>
 
 </body>

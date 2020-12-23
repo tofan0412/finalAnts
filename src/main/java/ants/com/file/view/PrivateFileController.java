@@ -59,9 +59,18 @@ public class PrivateFileController {
 		/** pageing setting */
 		PaginationInfo paginationInfo = new PaginationInfo();			// 스프링 지원 태그
 		paginationInfo.setCurrentPageNo(privatefileVo.getPageIndex());	// privatefileVo에 BaseVo 상속
-		paginationInfo.setRecordCountPerPage(privatefileVo.getPageUnit());
 		paginationInfo.setPageSize(privatefileVo.getPageSize());
+	
+		if(privatefileVo.getType() != null && privatefileVo.getType().equals("imageicon")) {	
+			paginationInfo.setRecordCountPerPage(20);
+			System.out.println("type333 : " + paginationInfo.getRecordCountPerPage());
 
+		}else {
+			paginationInfo.setRecordCountPerPage(privatefileVo.getPageUnit());
+		}
+		
+		System.out.println("type222 : " + privatefileVo.getType());
+		
 		privatefileVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		privatefileVo.setLastIndex(paginationInfo.getLastRecordIndex());
 		privatefileVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
@@ -82,6 +91,7 @@ public class PrivateFileController {
 		// 개인파일함 총 사용량
 		String totalSize = fileService.privatefiletotalSize(privatefileVo);
 		model.addAttribute("totalSize", totalSize);
+		session.setAttribute("imagetype", privatefileVo.getType());
 		
 		return "tiles/privatefile/privatefileView";
 	}

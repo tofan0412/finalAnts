@@ -31,6 +31,16 @@
 		SELECT COUNT(*)
 		  FROM privatefile
 		 WHERE MEM_ID = #{memId}
+		 <if test="searchKeyword != null and searchKeyword != ''">
+			<choose>	
+				<when test="searchCondition == 1">
+					AND PRIV_FILENAME LIKE '%' || #{searchKeyword} || '%'
+				</when>
+				<when test="searchCondition == 2">
+					AND PRIV_FILENAME LIKE '%' || #{searchKeyword} || '%'
+				</when>
+			</choose>	
+		</if>
 	</select>
 	
 	<!-- 개인파일함 해당 사용자 사용량  -->

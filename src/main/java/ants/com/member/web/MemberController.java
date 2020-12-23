@@ -63,26 +63,26 @@ public class MemberController {
 
 	@Resource(name = "memberService")
 	private MemberService memberService;
-	
+
 	@Resource(name = "projectService")
 	private ProjectService projectService;
-	
-	@Resource(name="adminService")
+
+	@Resource(name = "adminService")
 	private AdminService adminService;
-	
+
 	@Resource(name = "memBoardService")
 	private memBoardService memBoardService;
-	
-	@Resource(name="promemService")
+
+	@Resource(name = "promemService")
 	ProjectmemberService promemService;
-	
-	@Resource(name="alarmService")
+
+	@Resource(name = "alarmService")
 	private AlarmService alarmService;
-	
+
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
-	
+
 	@RequestMapping("/mainView")
 	public String mainView() {
 		return "main.tiles/main";
@@ -93,170 +93,196 @@ public class MemberController {
 	public String loginView() {
 		return "member/login";
 	}
-	
+
 	// 블락 페이지 이동
 	@RequestMapping("/blockView")
 	public String blockView() {
 		return "member/block";
 	}
-	
+
 	// 메인 페이지로 이동
 	@RequestMapping("/projectMainView")
 	public String projectMainView() {
 		return "tiles/layout/contentmain";
 	}
-	
+
 	// 로그인 로직
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
-		
+
 		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
-		
+
 		MemberVo dbMember = memberService.getMember(memberVo);
 		logger.debug("dbMember : {}", dbMember);
-			
+
 		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
 			session.setAttribute("SMEMBER", dbMember);
 			// 로그인 정보를 history에 기록한다.
-			
+
 			// 1. IP 가져오기
-			HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder
-										.currentRequestAttributes()).getRequest();
+			HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+					.getRequest();
 			String ip = req.getHeader("X-FORWARDED-FOR");
-			
-			if (ip == null) ip = req.getRemoteAddr();
+
+			if (ip == null)
+				ip = req.getRemoteAddr();
 			model.addAttribute("clientIp", ip);
-			
+
 			// 2. IpHistoryVo를 이용하여 기록하기.
 			IpHistoryVo log = new IpHistoryVo();
 			log.setMemId(dbMember.getMemId());
 			log.setIpAddr(ip);
-			
+
 			adminService.insertMemLoginLog(log);
-			
-			
-//			List<ScheduleVo> showCalendar = new ArrayList<>();	// 캘린더 목록 선언 및 초기화
-//			List<IssueVo> resultList = new ArrayList<>();		// 공지사항 목록 선언 및 초기화
-			
+
+			// List<ScheduleVo> showCalendar = new ArrayList<>(); // 캘린더 목록 선언 및 초기화
+			// List<IssueVo> resultList = new ArrayList<>(); // 공지사항 목록 선언 및 초기화
+
 			// 회원 타입이 MEM일 때만 조회
-			if(dbMember.getMemType().equals("MEM")) {
+			if (dbMember.getMemType().equals("MEM")) {
 				// 로그인 한 회원 프로젝트 리스트 가져옴
 				List<ProjectVo> proList = projectService.memInProjectList(dbMember.getMemId());
-				
+
 				// MEM의 프로젝트 리스트가 있을때만
 				if (proList.size() != 0) {
-					session.setAttribute("memInProjectList", proList);	// 프로젝트 리스트 세션에 저장
-					
-//					// 로그인
-//					/*캘린더 초기값 */
-//					ScheduleVo scheduleVo = new ScheduleVo();		
-//					scheduleVo.setReqId(proList.get(proList.size()-1).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
-//					showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
-//					
-//					/*공지사항 초기값*/
-//					IssueVo issueVo = new IssueVo();
-//					issueVo.setMemId(dbMember.getMemId());
-//					issueVo.setReqId(proList.get(proList.size()-1).getReqId());	// 첫번째 프로젝트의 이슈 가져오기
-//					issueVo.setCategoryId("3");						// 카테고리 번호 (3번이 이슈)
-//					issueVo.setIssueKind("notice");					// 이슈 말머리 선택 (공지사항)
-//					model.addAttribute("reqId", proList.get(proList.size()-1).getReqId());	// 기본 프로젝트 번호 jsp로 넘겨주기
-//					model.addAttribute("proName", proList.get(proList.size()-1).getProName());	// 프로젝트 이름
-//							
-//					/** pageing setting */
-//					PaginationInfo paginationInfo = new PaginationInfo();
-//					paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
-//					paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
-//					paginationInfo.setPageSize(issueVo.getPageSize());
-//					
-//					issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
-//					issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
-//					issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-//
-//					resultList = promemService.issuelist(issueVo);
-					
+					session.setAttribute("memInProjectList", proList); // 프로젝트 리스트 세션에 저장
+
+					// // 로그인
+					// /*캘린더 초기값 */
+					// ScheduleVo scheduleVo = new ScheduleVo();
+					// scheduleVo.setReqId(proList.get(proList.size()-1).getReqId()); // 가져온 프로젝트
+					// 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
+					// showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서
+					// 캘린더 가져옴
+					//
+					// /*공지사항 초기값*/
+					// IssueVo issueVo = new IssueVo();
+					// issueVo.setMemId(dbMember.getMemId());
+					// issueVo.setReqId(proList.get(proList.size()-1).getReqId()); // 첫번째 프로젝트의 이슈
+					// 가져오기
+					// issueVo.setCategoryId("3"); // 카테고리 번호 (3번이 이슈)
+					// issueVo.setIssueKind("notice"); // 이슈 말머리 선택 (공지사항)
+					// model.addAttribute("reqId", proList.get(proList.size()-1).getReqId()); // 기본
+					// 프로젝트 번호 jsp로 넘겨주기
+					// model.addAttribute("proName", proList.get(proList.size()-1).getProName()); //
+					// 프로젝트 이름
+					//
+					// /** pageing setting */
+					// PaginationInfo paginationInfo = new PaginationInfo();
+					// paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
+					// paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
+					// paginationInfo.setPageSize(issueVo.getPageSize());
+					//
+					// issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+					// issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
+					// issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+					//
+					// resultList = promemService.issuelist(issueVo);
+
 				}
-				
+
 				List<ProjectVo> pro_pL = projectService.plInProjectList(dbMember.getMemId());// 프로젝트 리스트 조회
-					
+
 				// PL의 프로젝트 리스트가 있을때만
 				if (pro_pL.size() != 0) {
-					session.setAttribute("plInProjectList", pro_pL);	// 프로젝트 리스트 세션에 저장
+					session.setAttribute("plInProjectList", pro_pL); // 프로젝트 리스트 세션에 저장
 				}
-			}	
-			
-			
+			}
+
 			// 회원 타입이 PM일 때만 조회
-			if(dbMember.getMemType().equals("PM")) {
-				List<ProjectVo> prp_pm = projectService.pmInProjectList(dbMember.getMemId());// 프로젝트 리스트 조회			
-				
+			if (dbMember.getMemType().equals("PM")) {
+				List<ProjectVo> prp_pm = projectService.pmInProjectList(dbMember.getMemId());// 프로젝트 리스트 조회
+
 				// PM의 프로젝트 리스트가 있을때만
 				if (prp_pm.size() != 0) {
-					session.setAttribute("pmInProjectList", prp_pm);	// 프로젝트 리스트 세션에 저장
+					session.setAttribute("pmInProjectList", prp_pm); // 프로젝트 리스트 세션에 저장
 					session.setAttribute("projectList_main", prp_pm);
-//					// 로그인
-//					/*캘린더 초기값 */
-//					ScheduleVo scheduleVo = new ScheduleVo();		
-//					scheduleVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId());		// 가져온 프로젝트 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
-//					showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서 캘린더 가져옴
-//						
-//					/*공지사항 초기값*/
-//					IssueVo issueVo = new IssueVo();	
-//					issueVo.setMemId(dbMember.getMemId());
-//					issueVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId());	// 첫번째 프로젝트의 이슈 가져오기
-//					issueVo.setCategoryId("3");					// 카테고리 번호 (3번이 이슈)
-//					issueVo.setIssueKind("notice");				// 이슈 말머리 선택 (공지사항)
-//					model.addAttribute("reqId", prp_pm.get(prp_pm.size()-1).getReqId());	// 기본 프로젝트 번호 jsp로 넘겨주기
-//					model.addAttribute("proName", prp_pm.get(prp_pm.size()-1).getProName());	// 프로젝트 이름
-//					
-//					/** pageing setting */
-//					PaginationInfo paginationInfo = new PaginationInfo();
-//					paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
-//					paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
-//					paginationInfo.setPageSize(issueVo.getPageSize());
-//					
-//					issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
-//					issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
-//					issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-//
-//					resultList = promemService.issuelist(issueVo);
+					// // 로그인
+					// /*캘린더 초기값 */
+					// ScheduleVo scheduleVo = new ScheduleVo();
+					// scheduleVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId()); // 가져온 프로젝트 리스트
+					// 중에 첫번째리스트에 있는 캘린더 보여줄거
+					// showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서
+					// 캘린더 가져옴
+					//
+					// /*공지사항 초기값*/
+					// IssueVo issueVo = new IssueVo();
+					// issueVo.setMemId(dbMember.getMemId());
+					// issueVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId()); // 첫번째 프로젝트의 이슈
+					// 가져오기
+					// issueVo.setCategoryId("3"); // 카테고리 번호 (3번이 이슈)
+					// issueVo.setIssueKind("notice"); // 이슈 말머리 선택 (공지사항)
+					// model.addAttribute("reqId", prp_pm.get(prp_pm.size()-1).getReqId()); // 기본
+					// 프로젝트 번호 jsp로 넘겨주기
+					// model.addAttribute("proName", prp_pm.get(prp_pm.size()-1).getProName()); //
+					// 프로젝트 이름
+					//
+					// /** pageing setting */
+					// PaginationInfo paginationInfo = new PaginationInfo();
+					// paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
+					// paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
+					// paginationInfo.setPageSize(issueVo.getPageSize());
+					//
+					// issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+					// issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
+					// issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+					//
+					// resultList = promemService.issuelist(issueVo);
 				}
-			}	
-			
-			// 캘린더 전송	// 캘린더는 있든 없든 전송해야함
-//			model.addAttribute("showSchedule", showCalendar);
-			// 공지사항 전송 
-//			model.addAttribute("issuelist", resultList);
-			
-			if(!dbMember.getMemType().equals("PM")) {
+			}
+
+			// 캘린더 전송 // 캘린더는 있든 없든 전송해야함
+			// model.addAttribute("showSchedule", showCalendar);
+			// 공지사항 전송
+			// model.addAttribute("issuelist", resultList);
+
+			if (!dbMember.getMemType().equals("PM")) {
 				List<ProjectVo> projectList_main = projectService.projectListmain(dbMember.getMemId());
-				session.setAttribute("projectList_main", projectList_main);	
-			} 
-						
-			
-			
+				session.setAttribute("projectList_main", projectList_main);
+			}
 			return "tiles/layout/contentmain";
 		} else {
 			return "redirect:/member/loginView";
 		}
 	}
-		
+
+	// 일별 프로젝트 진행도
+	@RequestMapping("/chartmain")
+	public String chartmain(Model model, ProjectVo projectVo, HttpSession session) {
+		MemberVo memberVo=new MemberVo();
+		memberVo =(MemberVo) session.getAttribute("SMEMBER");
+		int size = 0;
+		if(memberVo.getMemType().equals("PM")) {
+			List<ProjectVo> projectList_main = projectService.pmInProjectList(memberVo.getMemId());
+			size = projectList_main.size();
+			model.addAttribute("projectList_main", projectList_main);
+		}
+		else {
+			List<ProjectVo> projectList_main = projectService.projectListmain(memberVo.getMemId());
+			size = projectList_main.size();
+			model.addAttribute("projectList_main", projectList_main);
+		}
+		model.addAttribute("dbsize", size);
+		return "jsonView";
+	}
+
 	// 로그인 체크 ajax
 	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
 	public String logincheck(MemberVo memberVo, Model model) {
-		
+
 		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
-		
+
 		MemberVo dbMember = memberService.logincheck(memberVo);
-		
-        try {
-            model.addAttribute("memId", dbMember.getMemId());
-            model.addAttribute("memPass", dbMember.getMemPass());
-            logger.debug("logincheck rowcount : {}", dbMember);
-        }catch(NullPointerException e) {
-            logger.debug("## 예외처리 - 로그인 체크 ## (NullPointerException) 일치하는 회원정보 없음 : {}", dbMember);
-        }    
-        
-        return "jsonView";
+
+		try {
+			model.addAttribute("memId", dbMember.getMemId());
+			model.addAttribute("memPass", dbMember.getMemPass());
+			logger.debug("logincheck rowcount : {}", dbMember);
+		} catch (NullPointerException e) {
+			logger.debug("## 예외처리 - 로그인 체크 ## (NullPointerException) 일치하는 회원정보 없음 : {}", dbMember);
+		}
+
+		return "jsonView";
 	}
 
 	// 회원가입 페이지 이동
@@ -264,43 +290,46 @@ public class MemberController {
 	public String getView() {
 		return "main.tiles/member/memberRegist";
 	}
-	
+
 	// 회원가입 로직
-	@RequestMapping(path="/memberRegist", method=RequestMethod.POST)
-	public String memberRegist(MemberVo memberVo, BindingResult br, @RequestPart(value="memFilename", required=false) MultipartFile file, Model model, @RequestParam(value="imgname", required=false)String imgname) {
+	@RequestMapping(path = "/memberRegist", method = RequestMethod.POST)
+	public String memberRegist(MemberVo memberVo, BindingResult br,
+			@RequestPart(value = "memFilename", required = false) MultipartFile file, Model model,
+			@RequestParam(value = "imgname", required = false) String imgname) {
 		logger.debug("memberVo : {} / imgname : {}", memberVo, imgname);
-		logger.debug("filename : {} / memFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),file.getSize());
-		
+		logger.debug("filename : {} / memFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),
+				file.getSize());
+
 		String Filename = "";
 		String Filepath = "";
-		
-		if(!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
-			
+
+		if (!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
+
 			logger.debug("br.hasErrors() : {}", br.hasErrors());
-	
+
 			if (br.hasErrors()) {
-//				return "main.tiles/member/memberRegist";
+				// return "main.tiles/member/memberRegist";
 			}
-	
+
 			String filekey = UUID.randomUUID().toString();
-			Filepath = "D:\\upload\\"+ filekey + "\\"+ file.getOriginalFilename();
+			Filepath = "D:\\upload\\" + filekey + "\\" + file.getOriginalFilename();
 			Filename = file.getOriginalFilename();
 			File uploadFile = new File(Filepath);
-			
+
 			try {
 				file.transferTo(uploadFile);
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-	
+
 			logger.debug("---------------------통과-------------------");
-		}else {
+		} else {
 			// 기본 이미지 중에 선택했을때
-			if(!imgname.equals("") && !imgname.equals(null)) {
+			if (!imgname.equals("") && !imgname.equals(null)) {
 				Filepath = imgname;
 				Filename = imgname.split("/")[4];
-			// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
-			}else { 
+				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+			} else {
 				Filepath = "http://localhost/profile/user-0.png";
 				Filename = "user-0.png";
 			}
@@ -308,10 +337,9 @@ public class MemberController {
 
 		memberVo.setMemFilepath(Filepath);
 		memberVo.setMemFilename(Filename);
-		
+
 		logger.debug("memId : {}", memberVo.getMemId());
 		logger.debug("memberVo : {}", memberVo);
-		
 
 		int insertCnt = 0;
 		try {
@@ -319,7 +347,7 @@ public class MemberController {
 		} catch (SQLException | IOException e) {
 			return "main.tiles/member/memberRegist";
 		}
-		
+
 		if (insertCnt == 1) {
 			model.addAttribute("cnt", insertCnt);
 			return "main.tiles/main";
@@ -327,18 +355,17 @@ public class MemberController {
 			return "redirect:member/memberRegist";
 		}
 	}
-	
-	
+
 	// 중복아이디 체크
-	@ResponseBody @RequestMapping(path = "/checkSignup", method = RequestMethod.POST) 
-	public String checkSignup(HttpServletRequest request, MemberVo memberVo) { 
+	@ResponseBody
+	@RequestMapping(path = "/checkSignup", method = RequestMethod.POST)
+	public String checkSignup(HttpServletRequest request, MemberVo memberVo) {
 		String memId = request.getParameter("memId");
-		int rowcount = memberService.checkSignup(memberVo); 
-		
+		int rowcount = memberService.checkSignup(memberVo);
+
 		return String.valueOf(rowcount);
 	}
-	
-	
+
 	// 비밀번호 수정 - 이메일
 	/** 자바 메일 발송 * @throws MessagingException * @throws AddressException **/
 	@RequestMapping(value = "/mailsender")
@@ -355,15 +382,16 @@ public class MemberController {
 		final String username = "noylit"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
 		final String password = "1234c5678"; // 네이버 이메일 비밀번호를 입력해주세요.
 		int port = 465; // 포트번호
-		
+
 		String uuid = UUID.randomUUID().toString();
 		model.addAttribute("uuid", uuid);
 		model.addAttribute("memId", memberVo.getMemId());
 		// 메일 내용
 		String recipient = memberVo.getMemId(); // 받는 사람의 메일주소를 입력해주세요.
 		String subject = "Ants - 비밀번호 변경요청(URL)"; // 메일 제목 입력해주세요.
-		String body = "비밀번호 변경 페이지로 이동 \n http://localhost/member/passupdateemail?memId=" + memberVo.getMemId().replace("@", "%40"); // 메일 내용 입력해주세요.
-		
+		String body = "비밀번호 변경 페이지로 이동 \n http://localhost/member/passupdateemail?memId="
+				+ memberVo.getMemId().replace("@", "%40"); // 메일 내용 입력해주세요.
+
 		Properties props = System.getProperties(); // 정보를 담기 위한 객체 생성
 
 		// SMTP 서버 정보 설정
@@ -372,7 +400,7 @@ public class MemberController {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.ssl.enable", "true");
 		props.put("mail.smtp.ssl.trust", host);
-		
+
 		// Session 생성
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			String un = username;
@@ -390,24 +418,22 @@ public class MemberController {
 																		// 주소를 다 작성해주세요.
 		mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); // 수신자셋팅 //.TO 외에 .CC(참조)
 																							// .BCC(숨은참조) 도 있음
-		
+
 		mimeMessage.setSubject(subject); // 제목셋팅
 		mimeMessage.setText(body); // 내용셋팅
 		Transport.send(mimeMessage); // javax.mail.Transport.send() 이용 }
-		
+
 		return "main.tiles/main";
 	}
-	
-	
+
 	// 비밀번호 수정 - 이메일
 	@RequestMapping(path = "/passupdateemail", method = RequestMethod.GET)
-	public String passupdateemail(MemberVo memberVo,Model model) {
+	public String passupdateemail(MemberVo memberVo, Model model) {
 		model.addAttribute("memId", memberVo.getMemId());
-		
+
 		return "main.tiles/member/memberPassmodified";
 	}
-	
-	
+
 	// 비밀번호 수정 (문자,메일 -> 비밀번호 수정 쿼리로)
 	@RequestMapping(path = "/passupdate", method = RequestMethod.GET)
 	public String passupdate(MemberVo memberVo) {
@@ -415,17 +441,16 @@ public class MemberController {
 		int updatecnt = memberService.updatePass(memberVo);
 
 		if (updatecnt == 1) {
-			return mainView();		// 수정되면 메인으로
-		} else {					// 수정하는 정보에 전화번호가 없으면   메일 수정창으로 복귀
+			return mainView(); // 수정되면 메인으로
+		} else { // 수정하는 정보에 전화번호가 없으면 메일 수정창으로 복귀
 			if (memberVo.getMemTel().equals(null) || memberVo.getMemTel().equals("")) {
 				return "main.tiles/member/memberPassmodified";
-			}else {		// 수정하는 정보에 전화번호가 있으면 전화번호 수정창으로 복귀
+			} else { // 수정하는 정보에 전화번호가 있으면 전화번호 수정창으로 복귀
 				return "main.tiles/member/memberPassmodified2";
 			}
 		}
 	}
-	
-	
+
 	// 인증번호 생성
 	public static String numberGen(int len, int dupCd) {
 		Random rand = new Random();
@@ -450,7 +475,6 @@ public class MemberController {
 		}
 		return numStr;
 	}
-	
 
 	// 비밀번호 수정 - 문자
 	@RequestMapping(path = "/sendSms")
@@ -459,10 +483,10 @@ public class MemberController {
 		String api_key = "NCSLFKWJHGFLOQ9K";
 		String api_secret = "HYV5DTDAVLUMKWMFB8WZVLAPZ56LUZAL";
 		net.nurigo.java_sdk.api.Message coolsms = new net.nurigo.java_sdk.api.Message(api_key, api_secret);
-		
+
 		// 인증번호 생성
-		String validatenumber = numberGen(6,2);
-		
+		String validatenumber = numberGen(6, 2);
+
 		// 4 params(to, from, type, text) are mandatory. must be filled
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("to", memberVo.getMemTel()); // 수신번호
@@ -470,12 +494,11 @@ public class MemberController {
 		params.put("type", "SMS"); // Message type ( SMS, LMS, MMS, ATA )
 		params.put("text", "[Ants 본인확인] \n인증번호 [" + validatenumber + "]를 입력해주세요"); // 문자내용
 		params.put("app_version", "JAVA SDK v1.2"); // application name and version
-		
+
 		model.addAttribute("uuid", validatenumber);
 		model.addAttribute("memId", memberVo.getMemId());
 		model.addAttribute("memTel", memberVo.getMemTel());
-		
-		
+
 		try {
 			JSONObject obj = (JSONObject) coolsms.send(params);
 			System.out.println(obj.toString());
@@ -483,10 +506,10 @@ public class MemberController {
 			System.out.println(e.getMessage());
 			System.out.println(e.getCode());
 		}
-		
+
 		return "main.tiles/member/memberPassmodified2";
 	}
-	
+
 	// 프로필 수정 페이지
 	@RequestMapping("/profileupdateview")
 	public String profileupdateview(MemberVo memberVo, Model model) {
@@ -494,82 +517,80 @@ public class MemberController {
 		model.addAttribute("memberVo", dbMember);
 		return "tiles/member/profileupdateview";
 	}
-	
-	
-    @RequestMapping(path="/profileupdate", method = RequestMethod.POST)                // VO 객체 바로 뒤에 Binding 와야함... 안그럼 매칭안됨
-    public String profileupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
-                                                                @RequestPart(value="memFilename", required=false) MultipartFile file) {
-        
-        logger.debug("memFilename : {}", file.getOriginalFilename());
-        String Filename = "";
-        String Filepath = "";
-        
-        if(!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
-            
-            if (br.hasErrors()) {
-//                return "main.tiles/member/memberRegist";
-            }
-    
-            String filekey = UUID.randomUUID().toString();
-            
-             /*filekey + "\\"+*/
-            Filepath = "D:\\upload\\"+ file.getOriginalFilename();
-            Filename = file.getOriginalFilename();
-            File uploadFile = new File(Filepath);
-            
-            try {
-                file.transferTo(uploadFile);
-            } catch (IllegalStateException | IOException e) {
-                e.printStackTrace();
-            }
-            
-        }else {
-            
-            // 기본 이미지 중에 선택했을때
-            if(!imgname.equals("") && !imgname.equals(null)) {
-                Filepath = imgname;
-                Filename = imgname.split("/")[4];
-            
-            // 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
-            }else { 
-                Filepath = "http://localhost/profile/user-0.png";
-                Filename = "user-0.png";
-            }
-        }
-        memberVo.setMemFilepath(Filepath);
-        memberVo.setMemFilename(Filename);
-        
-        
-        int updateCnt = memberService.profileupdate(memberVo);
-        
-        if(updateCnt == 1){
-            return "redirect:/member/profile";
-        }else {
-            return "tiles/member/profileupdateview";    
-        }
 
-    }
-	
+	@RequestMapping(path = "/profileupdate", method = RequestMethod.POST) // VO 객체 바로 뒤에 Binding 와야함... 안그럼 매칭안됨
+	public String profileupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
+			@RequestPart(value = "memFilename", required = false) MultipartFile file) {
+
+		logger.debug("memFilename : {}", file.getOriginalFilename());
+		String Filename = "";
+		String Filepath = "";
+
+		if (!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
+
+			if (br.hasErrors()) {
+				// return "main.tiles/member/memberRegist";
+			}
+
+			String filekey = UUID.randomUUID().toString();
+
+			/* filekey + "\\"+ */
+			Filepath = "D:\\upload\\" + file.getOriginalFilename();
+			Filename = file.getOriginalFilename();
+			File uploadFile = new File(Filepath);
+
+			try {
+				file.transferTo(uploadFile);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+
+		} else {
+
+			// 기본 이미지 중에 선택했을때
+			if (!imgname.equals("") && !imgname.equals(null)) {
+				Filepath = imgname;
+				Filename = imgname.split("/")[4];
+
+				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+			} else {
+				Filepath = "http://localhost/profile/user-0.png";
+				Filename = "user-0.png";
+			}
+		}
+		memberVo.setMemFilepath(Filepath);
+		memberVo.setMemFilename(Filename);
+
+		int updateCnt = memberService.profileupdate(memberVo);
+
+		if (updateCnt == 1) {
+			return "redirect:/member/profile";
+		} else {
+			return "tiles/member/profileupdateview";
+		}
+
+	}
+
 	// 프로필 보기
 	@RequestMapping("/profile")
 	public String profile(HttpSession session, MemberVo memberVo, Model model) {
-		
+
 		memberVo = (MemberVo) session.getAttribute("SMEMBER");
 		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
 		MemberVo dbMember = memberService.getMember(memberVo);
 		logger.debug("dbMember : {}", dbMember);
-		
-		model.addAttribute("memberVo",dbMember);
+
+		model.addAttribute("memberVo", dbMember);
 		return "tiles/member/memberProfile";
 	}
-	
+
 	// 로그아웃
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/member/loginView";
 	}
-	
+
 	// 알람 on/off
 	@RequestMapping(path = "/updateAlarm", method = RequestMethod.GET)
 	public String updateAlarm(MemberVo memberVo, Model model) {
@@ -577,17 +598,17 @@ public class MemberController {
 		model.addAttribute("memberVo", memberVo);
 		return "tiles/member/memberProfile";
 	}
-		
-	
+
 	// 공지사항리스트 출력
 	// admin 인터셉터 때문에 관리자로 로그인 안하면 admin url을 탈수 없기 때문에 따로 만듦
 	@RequestMapping("/noticelistmemview")
-	public String noticelistmemview(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model) throws Exception{
-			
+	public String noticelistmemview(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model)
+			throws Exception {
+
 		/** EgovPropertyService.sample */
 		noticeVo.setPageUnit(propertiesService.getInt("pageUnit"));
 		noticeVo.setPageSize(propertiesService.getInt("pageSize"));
-		
+
 		/** pageing setting */
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(noticeVo.getPageIndex());
@@ -597,36 +618,36 @@ public class MemberController {
 		noticeVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		noticeVo.setLastIndex(paginationInfo.getLastRecordIndex());
 		noticeVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-		
+
 		List<NoticeVo> resultList = adminService.noticelist(noticeVo);
 		model.addAttribute("noticelist", resultList);
 
 		int totCnt = adminService.noticePagingListCnt(noticeVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-					
+
 		return "main.tiles/notice/noticelistmemview";
 	}
-			
+
 	// 각 공지사항 상세보기
 	@RequestMapping("/noticedetailmemview")
 	public String noticedetailmemview(String noticeId, HttpSession session, Model model) {
-			
+
 		NoticeVo noticevo = adminService.geteachnotice(noticeId);
 		model.addAttribute("noticevo", noticevo);
-		
+
 		return "main.tiles/notice/noticedetailmemview";
 	}
-		
+
 	// 전체 회원 리스트 뽑아오기
 	@RequestMapping("/getAllMemberList")
 	@ResponseBody
-	public int getAllMemberList(Model model){
+	public int getAllMemberList(Model model) {
 		List<MemberVo> memList = memberService.getAllMemberList();
-		model.addAttribute("memList" , memList);
-		
+		model.addAttribute("memList", memList);
+
 		// 불러온 전체 회원수를 반환한다.
 		return memList.size();
 	}
-	
+
 }

@@ -183,7 +183,6 @@ function replyinsert() {
 			
 				saveMsg(reqId);
 				console.log(data.someId)
-				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.someId+'&reqId='+reqId);
 		}
 
 	});
@@ -192,7 +191,7 @@ function replyinsert() {
 
 function saveMsg(reqId){
 	var alarmData = {
-						"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail&&${issuevo.issueId}&&${issuevo.issueTitle}"+ $('#re_con').val(),
+						"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail&&${issuevo.issueId}&&${issuevo.issueTitle}&&"+ $('#re_con').val(),
 						"memId" 	: "${issuevo.memId}",
 						"alarmType" : "reply"
 	}
@@ -208,6 +207,8 @@ function saveMsg(reqId){
 				
 				let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 				socket.send(socketMsg);
+				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.someId+'&reqId='+reqId);
+
 				
 				
 			},
@@ -395,7 +396,6 @@ function resize(obj) {
 						<input type= "button" value="삭제하기" id="delissue"  class="btn btn-default float-right jg" >			
 						<input type= "button" value="수정하기" id ="modissue" class="btn btn-default float-right jg" style="margin-right: 5px;">
 					</c:if>
-				
             </div>
             
             
@@ -444,9 +444,8 @@ function resize(obj) {
 								 <input id="replybtn2" type = "button" class="btn btn-default float-right jg" value = "댓글작성"><br>				
 							 </div>
 						 </div>
-						</div>
 					</div>
-				
+				</div>
 			</form>
 	    </div>
 		<!-- 이슈 상세보기 끝-->  
