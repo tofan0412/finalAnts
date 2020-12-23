@@ -123,7 +123,7 @@ $(document).ready(function(){
 		<table id="HotIssueVoTable" class="jg">
 			<tr>
 				<th style="padding-left: 10px;">No.</th>
-				<th>제목</th>
+				<th style="text-align: left; padding-left: 12%;">제목</th>
 				<th>작성일</th>
 				<th>작성자</th>
 			</tr>
@@ -133,10 +133,10 @@ $(document).ready(function(){
 					<td><c:out value="${paginationInfo.totalRecordCount - ((hotIssueVo.pageIndex-1) * hotIssueVo.pageUnit + sts.index)}"/>. 
 					</td>			
 					<c:if test="${hotissue.hissueParentid ne null}">
-					<td style="padding-left: 20px;"><span style="color: gray;">답글 : </span>&nbsp;&nbsp;${hotissue.hissueTitle}</td>
+					<td style="text-align: left; padding-left: 10%;"><span style="color: gray;">답글 : </span>&nbsp;&nbsp;${hotissue.hissueTitle}</td>
 					</c:if>
 					<c:if test="${hotissue.hissueParentid eq null}">
-					<td>${hotissue.hissueTitle}</td>
+					<td style="text-align: left; padding-left: 9%;">${hotissue.hissueTitle}</td>
 					</c:if>
 					<td>${hotissue.regDt}</td>
 					<td>${hotissue.writer}</td>
