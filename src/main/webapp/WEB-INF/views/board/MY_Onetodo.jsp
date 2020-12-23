@@ -10,8 +10,13 @@
 		
 		//진행도 수정
 		$(document).on('click','#modalBtn', function(){
+			if($('#inpercent').val()==''){
+				alert("진행도를 입력해주세요!");
+			}
+			else{
 			document.proForm.action = "<c:url value='/todo/progressChange'/>";
 			document.proForm.submit();
+			}
 		})
 		
 		// 뒤로가기
@@ -98,6 +103,12 @@
 		
 		
 	})
+	
+	function checkInputNum(){
+		if ((event.keyCode < 48) || (event.keyCode > 57)){
+	          event.returnValue = false;
+	      }
+	  }
 	function todoDetail(todoId) {
 		$.ajax({
 			url : "/todo/myonetodo",
@@ -256,17 +267,17 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
       </div>
       <div class="modal-body">
-       	<p class="jg">진행도를 입력해주세요!</p>
+       	<p class="jg">진행도를 입력해주세요!(숫자만 입력가능)</p>
        	<form id="proForm" name="proForm" method="post">
        	<input type="hidden" name="todoId" id="todoId_in">
        	<input type="hidden" name="reqId" id="reqId">
-       	<input type="text" name="todoPercent" >
+       	<input type="text" id="inpercent" name="todoPercent" maxlength="3" onkeyPress="javascript:checkInputNum();">
        	</form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default jg" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-default jg" id="modalBtn">등록</button>
-    
+    		
       </div>
     </div>
   </div>
