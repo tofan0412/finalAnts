@@ -112,7 +112,6 @@
 						<div class="input-group row">		
 							<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">				
 								<form:option value="1" label="제목"/>
-								<form:option value="2" label="날짜"/>
 							</form:select> 
 								
 							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
@@ -133,33 +132,28 @@
 	            	<table id="table" class="jg">
 	            		<!-- 헤더부분  -->
 						<tr>
-	                        <th style="padding-left: 10px;" >No.</th>
-							<th>상태</th>
-	                     	<th>제목</th> 
-							<th>작성자</th>
-							<th>날짜</th>
+	                        <th style="margin-left: 1px; float: center" >No.</th>
+	                     	<th style="text-align: left; padding-left: 130px;">제목</th> 
+							<th style="float: center">작성자</th>
+							<th style="float: center">날짜</th>
                     	</tr>
-						
 						<!-- 리스트부분 -->
-						<tbody>
+						<tbody >
 							<c:forEach items="${noticelist }" var="notice" varStatus="status">
 							
 								<tr>
-									<td>
+									<td style="float: center">
 										<c:out value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />
-									.</td>
+									</td>
 										
-									<td>	
+									<td style="text-align: left; padding-left: 92px;">
 										<c:if test="${notice.importance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
 										<c:if test="${notice.importance eq 'emg'}"><span class="badge badge-danger ns">필독</span></c:if>
-									</td>
-									
-									<td>
 										<a href="${pageContext.request.contextPath}/admin/eachnoticeDetail?noticeId=${notice.noticeId}">
 											${notice.noticeTitle }</a>
 									</td>
-									<td>${notice.adminId }</td>
-									<td>${notice.regDt }</td>
+									<td style="float: center">${notice.adminId }</td>
+									<td style="float: center">${notice.regDt }</td>
 									
 								</tr>
 								
