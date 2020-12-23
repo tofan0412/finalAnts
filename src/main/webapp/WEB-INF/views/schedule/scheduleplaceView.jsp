@@ -49,7 +49,7 @@ $(document).ready(function(){
 			$(location).attr('href', '${pageContext.request.contextPath}/schedule/scheduleSelect?scheId='+scheId);
 	});
 })   
-	
+
 function scheInsert(){
  	document.listForm.action = "<c:url value='${pageContext.request.contextPath}/schedule/scheduleInsertview'/>";
  	document.listForm.submit();

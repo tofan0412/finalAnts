@@ -128,21 +128,21 @@
 		    a.mem_id,
 		    b.mem_name,
 		    b.mem_filepath	
-    FROM reply a, member b
-    WHERE some_id = #{someId}
-      and category_id = #{categoryId}
-      and req_id = #{reqId}
-      and a.mem_id = b.mem_id
-    order by reg_dt, to_number(reply_id)
-  </select>
+	    FROM reply a, member b
+	    WHERE some_id = #{someId}
+	    	and category_id = #{categoryId}
+	    	and req_id = #{reqId}
+	    	and a.mem_id = b.mem_id
+	    order by reg_dt, to_number(reply_id)
+	</select>
   	
   
-   <!-- 댓글 삭제 status Y으로-->
-  <update id="scheduledelreply" parameterType="ants.com.board.memBoard.model.ReplyVo">
-  	UPDATE reply 
-  	SET del = 'Y' 
-  	WHERE reply_id = #{replyId} 
-  </update>
+	<!-- 댓글 삭제 status Y으로-->
+	<update id="scheduledelreply" parameterType="ants.com.board.memBoard.model.ReplyVo">
+		UPDATE reply 
+		SET del = 'Y' 
+		WHERE reply_id = #{replyId} 
+	</update>	
   
   								<!-- 	댓		글	 -->
   
