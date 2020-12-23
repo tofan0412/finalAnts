@@ -110,7 +110,7 @@
 <aside class="main-sidebar sidebar-light-teal elevation-4">
 	<!-- Brand Logo -->
 	<div style="margin: 20px 20px 20px 3px; min-width: max-content;">
-	<a href="/mainpage/mainreconnection?memId=${SMEMBER.memId}"  style="border-bottom: none"> 
+	<a href="${pageContext.request.contextPath}/member/mainpage"  style="border-bottom: none"> 
 		<img src="/dist/img/logo.png"  style="float: none;width: 60px;margin: 15px 8px 10px 7px;height: 50px;">
 		<img src="/dist/img/ants.png" style="width: 100px;">
 	</a>

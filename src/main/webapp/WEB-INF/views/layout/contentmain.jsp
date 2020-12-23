@@ -40,9 +40,6 @@ function chartmain() {
 			var percent=[];
 			for(i=0; i<data.dbsize; i++){
 			num.push(data.projectList_main[i].proName);	
-			if(data.projectList_main[i].percent == null){
-			percent.push('0');				
-			}
 			percent.push(data.projectList_main[i].percent);
 			}
 			var lineChartData = {
@@ -58,7 +55,7 @@ function chartmain() {
 					          pointHighlightFill  : '#fff',
 					          pointHighlightStroke: '#87C488',
 					          data                : percent,
-					          barThickness: 20
+					          barThickness: 30
 					        }]
 			};
 			 var lineChartOptions     = {
@@ -183,7 +180,7 @@ function chartmain() {
 			<h3 class="card-title jg">Progress Chart</h3>
 		</div>
 		<div class="card-body pt-0">
-			<div class="chart" style="padding-top: 2%; width: 50%;">
+			<div class="chart" style="padding-top: 2%;">
 				<div class="chartjs-size-monitor">
 					<div class="chartjs-size-monitor-expand">
 						<div class=""></div>
