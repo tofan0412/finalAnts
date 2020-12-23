@@ -342,7 +342,6 @@
 			WHERE
 				projectmember.req_id = project.req_id
 			AND projectmember.mem_id = #{memId}
-			AND projectmember.promem_status='IN'
 	        AND project.req_id = #{reqId}
 		</select>
 		
