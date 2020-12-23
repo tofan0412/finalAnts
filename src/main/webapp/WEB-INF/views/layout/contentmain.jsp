@@ -13,7 +13,8 @@
 $(document).ready(function() {
 	chartmain();
 	$('#datePicker').datepicker({
-	    format: "yyyy-mm-dd",	
+	    format: "yyyy-mm-dd",
+	    pickTime : false,
 	    calendarWeeks : false, 
 	    clearBtn : false, 
 	    disableTouchKeyboard : false,	
@@ -27,8 +28,6 @@ $(document).ready(function() {
 	    showWeekDays : true ,
 	    todayHighlight : true , 
 	    weekStart : 0 
-	  
-	    
 	});//datepicker end
 });
 function chartmain() {
@@ -87,17 +86,17 @@ function chartmain() {
 </script>
 <style>
 #maintop{
-	width: 65%;
+	width: 68%;
 	height: 40%;
 	float:left;
 }
 #maintop2{
-	width: 35%;
+	width: 32%;
 	height: 100%;
 	float:right;
 }
 #mainleft{
-	width: 43%;	
+	width: 46%;	
 	min-height: 20%;
 	float:left;
 	
@@ -130,6 +129,15 @@ function chartmain() {
 #maintop::-webkit-scrollbar-track {
     background-color: white;
   }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: 1px solid white;
+    background: white;
+    color: black;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+	background-color: #1D6A96;
+	color: white; 
+}
 </style>
 </head>				
 <body>
@@ -151,7 +159,7 @@ function chartmain() {
 				<tbody >
 						<c:forEach items="${projectList_main }" var="project" varStatus="sts" >
 						    <tr>
-							<td style="text-align: left; font-size: 1em; padding-left: 5%">${project.proName }</td>
+							<td style="text-align: left; padding-left: 5%; font-size: 1em;">${project.proName }</td>
 							<c:if test="${empty project.percent }">
 							<td >0%</td>
 							</c:if>					
@@ -168,7 +176,7 @@ function chartmain() {
 	</div>
 </div>
 <div id="maintop2" style="padding-left: 2%;  margin-top: 2%; padding-right: 2%;">
-	<div class="card">
+	<div class="card" style="font-size: 0.9em;">
 		<div class="card-header">
 			<h3 class="card-title jg">Timeline</h3>
 			</div>
@@ -266,14 +274,22 @@ function chartmain() {
 </div>
 <div id="mainright" style="padding-left: 2%; margin-top: 2%;">
 	<div class="card" style="height: 330px;">
-		<div class="card-header">
-			<h3 class="card-title jg" style="text-align: center;">Calendar</h3>
+	<div class="card-header">
+			<h3 class="card-title jg">Calendar</h3>
 		</div>
-		<div class="card-body pt-0">
+		<div class="card-body pt-0"><br>
 			<div id ="datePicker" style="width: auto;"></div>
 		</div>           
 	</div>
-</div>
+<!-- <div id="mainright" style="padding-left: 2%; margin-top: 2%;"> -->
+<!-- 	<div class="card" style="height: 330px;"> -->
+<!-- 		<div class="card-header"> -->
+<!-- 			<h3 class="card-title jg" style="text-align: center;">Calendar</h3> -->
+<!-- 		</div> -->
+<!-- 		<div class="card-body pt-0"> -->
+<!-- 			<div id ="datePicker" style="width: auto;"></div> -->
+<!-- 		</div>            -->
+<!-- 	</div> -->
 </div>
 </html>
 </body>
