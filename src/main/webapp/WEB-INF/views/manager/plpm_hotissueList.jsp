@@ -135,8 +135,8 @@ $(document).ready(function(){
 					<td><c:out value="${paginationInfo.totalRecordCount - ((hotIssueVo.pageIndex-1) * hotIssueVo.pageUnit + sts.index)}"/>. 
 					</td>			
 					<c:if test="${hotissue.hissueParentid ne null}">
-					<td style="text-align: left; padding-left: 10%;">
-					<span style="color: gray;">답글 : </span>&nbsp;&nbsp;
+					<td style="text-align: left; padding-left: 9%;">
+					<span style="color: gray;">답글 : </span>&nbsp;
 					<c:if test="${fn:length(hotissue.hissueTitle) > 25}">									
 						${fn:substring(hotissue.hissueTitle,0 ,25) }...
 					</c:if>

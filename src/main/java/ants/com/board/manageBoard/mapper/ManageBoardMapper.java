@@ -98,5 +98,7 @@ public interface ManageBoardMapper {
 	public int todoHistoryCnt(todoHistoryVo todoHistoryVo);
 
 	public int todoHistoryfirst(todoHistoryVo historyVo);
+
+	public List<HotIssueVo> gethissueandchild(HotIssueVo hotIssueVo);
 	
 }

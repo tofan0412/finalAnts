@@ -139,5 +139,9 @@ public class ManageBoardService {
 		return mapper.todoHistoryfirst(historyVo);
 	}
 
+	public List<HotIssueVo> gethissueandchild(HotIssueVo hotIssueVo) {
+		return mapper.gethissueandchild(hotIssueVo);
+	}
+
 	
 }
