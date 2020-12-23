@@ -41,6 +41,16 @@
 		$("#back").on("click", function() {
 			window.history.back();
 		});
+		 
+		 
+		// 제목 글자수 계산
+	   	$('#noticeTitle').keyup(function (e){
+	   	    var content = $(this).val();   		
+	   		if (content.length > 66){
+// 	   	        alert("최대 66자까지 입력 가능합니다.");
+	   	     	$(this).val(content.substring(0, 65));
+	   	    }
+	   	}); 
  	});
 	
 </script>
@@ -56,7 +66,7 @@
 					<br>
 					<!-- 제목라인 -->
 					<div class="form-group">
-	                	<input class="form-control " placeholder="Subject:" name="noticeTitle">
+	                	<input class="form-control " placeholder="Subject:" id="noticeTitle" name="noticeTitle">
 	                </div>
 	                <!-- note라인 -->
 	                <div class="form-group">

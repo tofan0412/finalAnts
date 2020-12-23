@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -134,7 +135,7 @@
 						<thead>
 		                    <tr>
 		                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-		                     	<th style="width:60%; padding-left: 30px; text-align: center;" class="jg"> 제목</th> 
+		                     	<th style="width:50%; padding-left: 30px; text-align: center;" class="jg"> 제목</th> 
 								<th style="text-align: center;" class="jg">   작성자 </th>
 								<th style="text-align: center;" class="jg">   날짜   </th>
 		                    </tr>
@@ -146,13 +147,20 @@
 								<tr>
 									<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
 										<c:out value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />
-									.</td>
+									</td>
 										
 									<td class="jg"  style="padding-left: 30px; text-align: left;">
 										<c:if test="${notice.importance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
 										<c:if test="${notice.importance eq 'emg'}"><span class="badge badge-danger ns">필독</span></c:if>
+										&nbsp;
 										<a href="${pageContext.request.contextPath}/admin/eachnoticeDetail?noticeId=${notice.noticeId}">
-											${notice.noticeTitle }</a>
+											<c:if test="${fn:length(notice.noticeTitle) > 30}">									
+												${fn:substring(notice.noticeTitle,0 ,30) }...
+											</c:if>
+											<c:if test="${fn:length(notice.noticeTitle) <= 30}">									
+												${notice.noticeTitle}
+											</c:if>
+										</a>
 									</td>
 									<td class="jg" style="text-align: center;">${notice.adminId }</td>
 									<td class="jg" style="text-align: center;">${notice.regDt }</td>
