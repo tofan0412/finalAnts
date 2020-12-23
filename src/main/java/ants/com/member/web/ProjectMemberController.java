@@ -159,7 +159,6 @@ public class ProjectMemberController {
 		List<ReplyVo> replylist= memBoardService.replylist(replyVo);
 		
 		model.addAttribute("issuevo", issuevo);	
-		model.addAttribute("memId", issuevo.getMemId());
 		model.addAttribute("replylist", replylist);
 		 
 		return "tiles/board/issueDetail";

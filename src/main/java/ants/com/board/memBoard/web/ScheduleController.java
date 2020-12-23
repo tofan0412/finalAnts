@@ -154,30 +154,7 @@ public class ScheduleController {
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(HotIssueController.class);
-		
-	// 댓글 작성
-	@RequestMapping(path ="/scheduleinsertreply")
-	public String scheduleinsertreply(ReplyVo replyVo, Model model, HttpSession session) throws SQLException, IOException {
-		
-		MemberVo membervo = (MemberVo) session.getAttribute("SMEMBER");
-		replyVo.setMemId(membervo.getMemId());		
-		replyVo.setCategoryId(replyVo.getCategoryId());	
-			
-		logger.debug("replyVo: {}", replyVo);
-		memBoardService.scheduleinsertreply(replyVo);
-		model.addAttribute("someId", replyVo.getSomeId());
-		return "jsonView";
-	}	
 	
-	
-	// 댓글 삭제
-	@RequestMapping(path ="/delreply")
-	public String deleteapply(ReplyVo replyVo, Model model, HttpSession session) throws SQLException, IOException {
-		
-		memBoardService.delreply(replyVo);
-		
-		return "jsonView";
-	}
 	
 	
 	

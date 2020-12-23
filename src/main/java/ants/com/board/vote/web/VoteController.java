@@ -99,7 +99,6 @@ public class VoteController{
 		voteVo.setMemId(memId);
 		voteVo.setReqId(reqId);	
 		
-		System.out.println("마감 :" + voteVo.getVoteDeadline());
 		
 		voteService.insertvote(voteVo);
 		
@@ -108,9 +107,20 @@ public class VoteController{
 	
 	// 투표아이템 테이블에 등록
 	@RequestMapping("/voteiteminsert")
-	public String insertvoteitem(String voteitemName, String voteId, VoteItemVo voteitemVo, Model model){
+	public String insertvoteitem(String voteitems ,VoteItemVo voteitemVo, Model model){
 		
-		voteService.insertvoteitem(voteitemVo);
+		
+		if(!voteitems.equals("null") || voteitems !=null || !voteitems.equals("")) {
+			String[] itemName = voteitems.split(",");
+			for(int i=0; i<itemName.length;i++) {
+				voteitemVo.setVoteitemName(itemName[i]);
+				voteService.insertvoteitem(voteitemVo);
+			}		
+		}
+		
+		System.out.println("voteitems : " + voteitems);
+
+		System.out.println("투표아이템 명: " + voteitemVo.getVoteitemName());
 		
 		return "jsonView";
 	}

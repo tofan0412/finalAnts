@@ -12,7 +12,7 @@
 	           	   S.*
 		      FROM (				
                 
-                 select c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt ,
+                 select c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'yyyy-mm-dd hh24:mi') as reg_dt ,
                         c.issue_kind,  case when c.bookmem = #{memId} then c.book_id else null end issue_del , d.mem_name as mem_id
 				  from
 					  (select a.issue_id , a.issue_title , a.issue_cont , a.reg_dt ,
@@ -82,7 +82,7 @@
 	
 	<!-- 각 이슈게시글 내용 가져오기 -->
 	<select id="geteachissue"  resultType ="ants.com.board.memBoard.model.IssueVo" parameterType="String">
-		select  a.issue_id ,  a.issue_title , a.issue_cont ,TO_CHAR( a.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt, 
+		select  a.issue_id ,  a.issue_title , a.issue_cont ,TO_CHAR( a.reg_dt,'yyyy-mm-dd hh24:mi') as reg_dt, 
 				a.todo_id , b.mem_name ,  a.category_id, a.issue_kind , a.mem_id , c.pro_name 
 			
 		from( select issue_id, issue_title, issue_cont, reg_dt , issue_del, mem_id, category_id, issue_kind, todo_id, req_id
@@ -147,7 +147,7 @@
 	      	SELECT ROWNUM RNUM , 
 	           	   S.*
 		      FROM (
-			    select c.issue_id , c.issue_title , to_char(c.reg_dt,'YYYY-MM-DD hh:mm') as reg_dt , e.req_title as proName,
+			    select c.issue_id , c.issue_title , to_char(c.reg_dt,'yyyy-mm-dd hh24:mi') as reg_dt , e.req_title as proName,
                         c.issue_kind, case when c.bookmem = #{memId} then c.book_id else null end bookmark , d.mem_name as mem_name
 				  from
 					  (select a.issue_id , a.issue_title , a.reg_dt , a.req_id,
