@@ -172,6 +172,14 @@
 			$("#mem-select").remove();
 		
 		});
+ 		
+		$('#todoTitle').keyup(function (e){
+            var content = $(this).val();           
+            if (content.length > 66){
+                alert("최대 66자까지 입력 가능합니다.");
+                 $(this).val(content.substring(0, 65));
+            }
+        });
  	});
 
 </script>
@@ -225,7 +233,7 @@
 		        <div class="form-group">
 				<input type="hidden" name="todoId" value="${todoVo.todoId }">
 				<label for="todoTitle" class="col-sm-1 control-label ns">제목</label>
-				<input  class="ns" type="text" name="todoTitle" style="width: 580px;" id="todoTitle" value="${todoVo.todoTitle }">
+				<input  class="ns" type="text" name="todoTitle" style="width: 1000px;" id="todoTitle" value="${todoVo.todoTitle }">
 				<div class="jg" style=" padding-left: 10px; display: inline;"><span class="jg warningtodoTitle" style="color : red;"></span></div><br><br>
                 
 				<div style="width: 80%;">

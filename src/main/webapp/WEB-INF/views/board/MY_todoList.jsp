@@ -6,6 +6,7 @@
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -13,8 +14,6 @@ $(document).ready(function(){
 		var todoId = $(this).data("todoid");
  		$(location).attr('href', '${pageContext.request.contextPath}/todo/myonetodoView?todoId='+todoId);
 		});
-	
-	
 	});
 
 	
@@ -130,7 +129,14 @@ $(document).ready(function(){
 					<c:if test="${todo.todoImportance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
 					<c:if test="${todo.todoImportance eq 'emg'}"><span class="badge badge-danger ns">긴급</span></c:if>
 					</td>
-					<td style="text-align: left; padding-left: 10%;">${todo.todoTitle}</td>
+					<td style="text-align: left; padding-left: 10%;">
+					<c:if test="${fn:length(todo.todoTitle) > 30}">									
+						${fn:substring(todo.todoTitle,0 ,30) }...
+					</c:if>
+					<c:if test="${fn:length(todo.todoTitle) <= 30}">									
+						${todo.todoTitle}
+					</c:if>
+					</td>
 					<td>${todo.memId}</td>
 					<c:if test= "${todo.todoPercent eq '0'}">
 						<td>

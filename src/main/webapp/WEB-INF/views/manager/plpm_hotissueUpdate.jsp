@@ -156,6 +156,14 @@
 			window.history.back();
 		});
 	 	
+		// 제목 글자수 계산
+        $('#hissueTitle').keyup(function (e){
+            var content = $(this).val();           
+            if (content.length > 66){
+                alert("최대 66자까지 입력 가능합니다.");
+                 $(this).val(content.substring(0, 65));
+            }
+        });
 	});
 	
 </script>
