@@ -210,11 +210,6 @@ function chartmain() {
                           </div>
                         </div>
                       </div>
-                      <div class="time-label">
-                        <span class="bg-success ns">
-                          	the old times
-                        </span>
-                      </div>
                       <div>
                         <i class="fas fa-user bg-info"></i>
                         <div class="timeline-item">
@@ -225,6 +220,12 @@ function chartmain() {
                           </div>
                         </div>
                       </div>
+                      <div class="time-label">
+                        <span class="bg-success ns">
+                          	the old times
+                        </span>
+                      </div>
+                      
                       <div>
                         <i class="fas fa-comments bg-warning"></i>
                         <div class="timeline-item">
@@ -244,7 +245,7 @@ function chartmain() {
 	</div>
 </div>
 <div id="mainleft" style="padding-left: 2%; margin-top: 2%;">
-	<div class="card card-success card-outline" style="height: 340px;">
+	<div class="card" style="height: 340px;">
 		<div class="card-header">
 			<h3 class="card-title jg">Progress Chart</h3>
 		</div>
@@ -264,7 +265,7 @@ function chartmain() {
 	</div>
 </div>
 <div id="mainright" style="padding-left: 2%; margin-top: 2%;">
-	<div class="card card-success card-outline" style="height: 330px;">
+	<div class="card" style="height: 330px;">
 		<div class="card-header">
 			<h3 class="card-title jg" style="text-align: center;">Calendar</h3>
 		</div>
