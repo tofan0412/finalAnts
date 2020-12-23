@@ -45,9 +45,7 @@ $(function(){
 				$('#regBtn').hide();
 			}		
 		});
-		
-		
-		
+
 		$('#voteDetail').modal();
 	})
 	
@@ -100,20 +98,24 @@ $(function(){
 	
 	// 댓글 작성하기 삭제 버튼
 	$('#replydiv').on('click','#replydelbtn', function(){
-		var someid = $(this).prev().val();
-		var replyid = $(this).prev().prev().val();
-		issueid = '${issuevo.issueId }'
-		console.log(replyid)
-		console.log(someid)
-		$.ajax({url :"/reply/delreply",
-			   data :{replyId: replyid,
-				       someId: someid },
-			   method : "get",
-			   success :function(data){	
-				   console.log(data)
-				   $(location).attr('href', '${pageContext.request.contextPath}/vote/voteDetail?voteId='+someid);				
-			 }
-		})
+		if(confirm("댓글을 정말 삭제하시겠습니까 ?") == true){   
+			var someid = $(this).prev().val();
+			var replyid = $(this).prev().prev().val();
+			issueid = '${issuevo.issueId }'
+			console.log(replyid)
+			console.log(someid)
+			$.ajax({url :"/reply/delreply",
+				   data :{replyId: replyid,
+					       someId: someid },
+				   method : "get",
+				   success :function(data){	
+					   console.log(data)
+					   $(location).attr('href', '${pageContext.request.contextPath}/vote/voteDetail?voteId='+someid);				
+				 }
+			})
+		}else{
+        	return;
+        }
 	})
 	
 	// 댓글 작성
@@ -159,7 +161,7 @@ function resize(obj) {
 
 //댓글 작성
 function replyinsert() {
-		
+	console.log($('#re_con').val())
 	$.ajax({
 	
 		url : "${pageContext.request.contextPath}/reply/insertreply",
@@ -173,6 +175,7 @@ function replyinsert() {
 		success : function(data) {
 			
 				console.log(data.someId)
+				console.log(data.replyCont)
 				$(location).attr('href', '${pageContext.request.contextPath}/vote/voteDetail?voteId='+data.someId);
 		}
 

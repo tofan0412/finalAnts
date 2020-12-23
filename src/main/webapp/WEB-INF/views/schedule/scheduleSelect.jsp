@@ -429,7 +429,7 @@ function replyinsert() {
 	someId : '${scheduleVo.scheId}';
 	$.ajax({
 		
-		url : "${pageContext.request.contextPath}/schedule/scheduleinsertreply",
+		url : "${pageContext.request.contextPath}/reply/insertreply",
 		method : "post",
 		data : {	
 			someId : '${scheduleVo.scheId}',

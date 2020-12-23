@@ -207,7 +207,7 @@ function saveMsg(reqId){
 				
 				let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 				socket.send(socketMsg);
-				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId='+data.someId+'&reqId='+reqId);
+				$(location).attr('href', '${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issuevo.issueId }');
 
 				
 				
@@ -290,7 +290,7 @@ function resize(obj) {
 			<br>
 			<c:set var="projectNAME" value="${issuevo.proName}"></c:set>
 			<h3 class="jg" style="padding-left:10px;">${projectNAME}</h3> 
-			<hr><br>
+			<hr>
 		</c:if>
 	  <!-- 이슈 상세보기 -->
 	  <div class="card-body" id="detailDiv">
