@@ -193,11 +193,11 @@ $(document).ready(function(){
 							<button type="button" id="registBtn" class="btn btn-info">수정</button>
 						</a>
 					</div>
-
+					<!-- 
 					<div class="col-sm-6">
 						<button type="button" id="cancelBtn" onclick="window.history.back()" class="btn btn-default float-right">&nbsp;뒤&nbsp;&nbsp;로&nbsp;&nbsp;가&nbsp;&nbsp;기&nbsp;</button>
-					</div>
-
+					</div>	
+					-->
 				</div>
 			</div>
 				

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/layout/fonts.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -85,8 +86,8 @@
     }
 }
 </style>
-	
-<script>	
+<script>				
+//이메일 형식 정규식
  	$(document).ready(function(){
 													/* 쿠키 설정 */		
 		// 로그인했다가 뒤로 가기 하면 아이디 값 남아있는것 제거 
@@ -123,8 +124,12 @@
 				
 		// 메일 전송시 알림창
  		$('#mailsub').on('click',function(){
- 			alert('메일을 확인해 주세요');
- 			$('#mailform').submit();
+	 		if(chkID()){
+	 			alert('메일전송! \n메일을 확인해 주세요');
+	 	 		$('#mailform').submit();
+	 		} else {	
+	 			alert('아이디(이메일)를 확인해주세요');
+	 		}	
  		});			
  		
  		// ??? 뭐지?
@@ -142,8 +147,9 @@
  		
  		// 비밀번호 변경 모달창 열기
 		$("#myBtn").click(function(){
-	    	$("#myModal").modal();
+	    	$("#idinputModal").modal();
 	    });
+ 		
  		
  		//로그인시 회원가입 안한 멤버 거르기
 		/* action="/member/loginFunc" method="POST" */
@@ -175,8 +181,52 @@
 			})
 			//return false;
 		});
+ 			
+ 		// 비밀번호 찾을때 아이디 찾기	
+	 	$('#checkbtn').on('click', function(){ 
+	 				
+	 		$.ajax({
+				type : "GET",			
+		        url : "/member/getmember",	
+	 	        data: { 'memId' : $('#mailck').val() },	
+		        dataType : "json",	
+		        async: false,	// false로 설정하게되면 동기식방식으로 이제 ajax를 호출하여 서버에서 응답을 기다렸다가 응답을 모두 완료한 후 다음 로직을 실행하는 동기식으로 변경
+		        success : function(data) {	
+		         	if(data.memId == $('#mailck').val()){
+		         		document.getElementById("pwid").value = data.memId;
+		         		document.getElementById("pwtel").value = data.memTel;
+		         		$("#idinputModal").modal('toggle');
+			        	$("#passModal").modal();			
+		         	}else{
+		         		alert('일치하는 회원정보가 없습니다.');
+		         	}	
+		        },  	
+		        error : function(error) {
+		        	alert('일치하는 회원정보가 없습니다.');
+		        }
+			})	
+	 		return false;	/* 페이지 새로고침 막기 */
+	 	}); //end on 
 	})
-</script>
+	
+function chkID(){	
+	var emailRule = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+			
+	if($('#mailId').val() == null || $('#mailId').val() == '') {          
+		 $('#checkMsg').html('<p></p>');	
+		 return false;	
+	} else if(!emailRule.test($('#mailId').val())){
+		 $('#checkMsg').html('<p style="color:red">이메일 형식이 맞지 않습니다.</p>');
+		 return false;
+	} else {			
+		 $('#checkMsg').html('<p></p>'); 
+		return true;
+	}	
+}
+		
+
+	
+</script>	
 	
 <body class="loginContainer fadein">
 	<div class="imgBox">
@@ -199,8 +249,8 @@
 					Email<br>
 				</header>
 				<input type="email" class="form-control login" id="memId" name="memId" value="" style="border: 0; outline: 0;">
-			</div>
-
+			</div>	
+		
 			<div class="form-group has-feedback">
 				<div>
 					<header class="jg" style="font-size: 1.2em; float: left;">
@@ -237,11 +287,29 @@
 	</div>
 	
 	<div class="container">
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" role="dialog">
+		<!-- 아이디 입력 모달 -->		
+		<div class="modal fade" id="idinputModal" role="dialog">
+		    <div class="modal-dialog">
+		    	<div class="modal-content">
+			        <div class="modal-header">
+			            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			            <h4>비밀번호 찾기</h4>
+			        </div>	
+			        <div class="modal-body">
+			        	비밀번호를 찾고자 하는 아이디를 입력해 주세요.<br><br>	
+			        	<input class="input" name="memId" type="email" id="mailck" placeholder="사용중인 이메일을 입력해 주세요" onkeyup="chkID()"/><br>
+			        	<button type="submit" id="checkbtn" style="float:right; height:30px; width:120px; background:white; color:black; border:1px solid black; font-size:14px; margin-right:20px;">다음</button>
+			        </div>
+			        <div class="modal-footer">	
+			            <button type="button" name="button" id="closemd" class="btn btn-color2" data-dismiss="modal" >닫기</button>
+			        </div>
+		        </div>	
+		    </div>
+		</div>
+		
+		<!-- 비번찾기 모달 -->
+		<div class="modal fade" id="passModal" role="dialog">
 			<div class="modal-dialog">
-
-				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header" style="padding: 35px 50px;">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -256,6 +324,8 @@
 										<a data-toggle="collapse" data-parent="#accordion"
 											href="#collapse1"><li>이메일로 찾기</li></a>
 									</h4>
+									<input type="text" id="pwid">	
+											
 								</div>
 								<div id="collapse1" class="panel-collapse collapse in">
 									<div class="panel-body">
@@ -263,12 +333,11 @@
 										<form id="mailform" role="form" action="/member/mailsender">
 
 											<div class="form-group">
-												<label for="usrname"><span
-													class="glyphicon glyphicon-user"></span> 이메일 주소를 입력해주세요</label> <input
-													type="text" name="memId" class="form-control" id="memId"
-													placeholder="Enter email">
-											</div>
-
+												<label for="usrname"><span class="glyphicon glyphicon-user"></span>전송받으실 이메일 주소를 입력해주세요</label> 
+												<input type="email" name="memId" class="form-control" id="mailId" placeholder="Enter email" onkeyup="chkID()">	
+												<div id="checkMsg" class="indiv"></div>	
+											</div>	
+	
 											<input id="mailsub" type="button" value="확인">
 											<button type="button" data-dismiss="modal">취소</button>
 										</form>
@@ -276,14 +345,16 @@
 									</div>
 								</div>
 							</div>
- 
-
+							
+ 							
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
 										<a data-toggle="collapse" data-parent="#accordion"
 											href="#collapse2"><li>전화번호로 찾기</li></a>
 									</h4>
+									<input type="text" id="pwtel"/>
+ 							
 								</div>
 								<div id="collapse2" class="panel-collapse collapse">
 									<div class="panel-body">
@@ -291,23 +362,20 @@
 										<form role="form" action="/member/sendSms">
 
 											<div class="form-group">
-												<label for="usrname"><span
-													class="glyphicon glyphicon-user"></span> 아이디를 입력해주세요</label> <input
-													type="text" name="memId" class="form-control" id="memId"
-													placeholder="Enter phone number"> <label
-													for="usrname"><span
-													class="glyphicon glyphicon-user"></span> 전화번호를 입력해주세요</label> <input
-													type="text" name="memTel" class="form-control" id="memTel"
-													placeholder="Enter phone number">
+												<label for="usrname"><span class="glyphicon glyphicon-user"></span>아이디(이메일)를 입력해주세요</label> 
+												<input type="email" name="memId" class="form-control" id="memId" placeholder="Enter email">
+													
+												<label for="usrname"><span class="glyphicon glyphicon-user"></span>전화번호를 입력해주세요</label> 
+												<input type="tel" name="memTel" class="form-control" id="memTel" placeholder="Enter phone number">
 											</div>
-
+	
 											<input type="submit" value="확인">
 											<button type="button" data-dismiss="modal">취소</button>
 										</form>
 
 									</div>
 								</div>
-							</div>
+							</div>	
 
 						</div>
 						<br>
