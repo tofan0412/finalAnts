@@ -222,7 +222,6 @@
 		<!-- 로그인한 사람이 글쓴이가 아닐때-->
 		<div id="btnMenu">
 		<div class="float-right">
-		<button type="button" class="btn btn-default jg" id="creatChildBtn">답글 작성</button>
 		<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
 		</div>	
 		</div>
