@@ -60,6 +60,7 @@ public class ProjectController {
 		int result = projectService.updateProject(projectVo);
 		if (result > 0) {
 			
+			// left 세션 업데이트
 			MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
 			String memId = memberVo.getMemId();
 			List<ProjectVo> pro_pL = projectService.plInProjectList(memId);
@@ -131,6 +132,15 @@ public class ProjectController {
 		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
 		List<ProjectMemberVo> pjtMemberList = projectService.requestPjtMember(memberVo);
 		model.addAttribute("pjtMemberList", pjtMemberList);
+		
+		// left 세션 업데이트
+		MemberVo memberVo2 = (MemberVo) session.getAttribute("SMEMBER");
+		String memId = memberVo2.getMemId();
+		List<ProjectVo> proList = projectService.memInProjectList(memId);
+		if (proList.size() != 0) {
+			session.setAttribute("memInProjectList", proList); 
+		}
+		
 		return "tiles/project/pjtMemberList";
 	}
 	

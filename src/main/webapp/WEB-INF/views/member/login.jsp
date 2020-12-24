@@ -84,10 +84,14 @@
     to {
         opacity:1;
     }
+
+.search_in{display: block;margin: 4px 79px 0 10px;} 파란색으로 조절한다. 
+
+.search_in input{width:100%}
+
 }
 </style>
 <script>				
-//이메일 형식 정규식
  	$(document).ready(function(){
 													/* 쿠키 설정 */		
 		// 로그인했다가 뒤로 가기 하면 아이디 값 남아있는것 제거 
@@ -122,16 +126,34 @@
 		}
 		
 				
-		// 메일 전송시 알림창
+		// 메일 전송 버튼 클릭
  		$('#mailsub').on('click',function(){
-	 		if(chkID()){
-	 			alert('메일전송! \n메일을 확인해 주세요');
-	 	 		$('#mailform').submit();
-	 		} else {	
-	 			alert('아이디(이메일)를 확인해주세요');
-	 		}	
- 		});			
- 		
+ 			if($('#pwidhidden').val() == $('#mailId').val()){
+		 		if(chkID()){
+		 			alert('메일을 발송했습니다. 메일을 확인해 주세요');	
+		 	 		$('#mailform').submit();	
+		 		} else {	
+		 			alert('아이디(이메일)를 확인해주세요');
+		 		}		
+ 			}else{
+ 				alert('본인확인 이메일 주소와 입력한 이메일 주소가 같지 않습니다.');
+ 			}
+ 		});
+		
+		// 문자 전송 버튼 클릭
+ 		$('#telsub').on('click',function(){
+ 			if($('#pwtelhidden').val() == $('#mailtel').val()){
+		 		if($('#pwtelhidden').val() == $('#mailtel').val()){	
+		 			alert('문자를 발송했습니다. 핸드폰을 확인해 주세요');	
+		 	 		$('#smsform').submit();		
+		 		} else {	
+		 			alert('전화번호를 확인해주세요');
+		 		}		
+ 			}else{
+ 				alert('회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같지 않습니다.');
+ 			}	
+ 		});	
+ 			
  		// ??? 뭐지?
  		loginAlert = '${flashAlert}';
  		if (loginAlert != ''){
@@ -149,7 +171,6 @@
 		$("#myBtn").click(function(){
 	    	$("#idinputModal").modal();
 	    });
- 		
  		
  		//로그인시 회원가입 안한 멤버 거르기
 		/* action="/member/loginFunc" method="POST" */
@@ -193,16 +214,72 @@
 		        async: false,	// false로 설정하게되면 동기식방식으로 이제 ajax를 호출하여 서버에서 응답을 기다렸다가 응답을 모두 완료한 후 다음 로직을 실행하는 동기식으로 변경
 		        success : function(data) {	
 		         	if(data.memId == $('#mailck').val()){
-		         		document.getElementById("pwid").value = data.memId;
-		         		document.getElementById("pwtel").value = data.memTel;
+		         		
+		         		// 이메일 마스킹
+		         		email = data.memId.split('.')[0]	// poiqqw@naver
+		         		emailStr = email.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-])/gi);	// 이메일 정규식
+		         			
+		         		// poiqqw@naver => po****@n****
+		         		strLength = emailStr.toString().split('@')[0].length - 3; 	 
+		         		splitmail = email.toString().replace(new RegExp('.(?=.{0,' + strLength + '}@)', 'g'), '*').replace(/.{4}$/, "****"); 
+		         			
+		         		/// po****@n****.com
+		         		maskingmail = splitmail + '.' + data.memId.split('.')[1];
+		         		
+		         		// input 태그 글자갯수에 맞춰 크기조절	
+		         		var starcnt1 = maskingmail.match(/\*/g).length;	
+		         		// (po@n.com + 기본공백 = width 85) - (기본공백 8) + (기본공백 + * = 14) + (별갯수-1는  완전히보이는크기 더했으니까 1개 빼줌)*6(별하나크기) 	(** 크기 20, *1개당 6, 14-*= 8 기본공백크기)	
+		         		document.getElementById("pwid").style.width = 85 - 8 + 14 + ((starcnt1-1)*6) + 'px';
+		         		document.getElementById("pwid").value = maskingmail;
+		         		document.getElementById("pwidhidden").value = data.memId;
+		         				
+		         					
+		         		// 전화번호 마스킹	입력해둔 전화번호가 있을때만 
+		         		if(data.memTel != null && data.memTel != ''){
+			         		phoneStr = data.memTel.match(/\d{3}-\d{3,4}-\d{4}/gi); 
+			         			
+			         		if(/-[0-9]{3}-/.test(phoneStr)) {
+			         			// 000-000-0000 
+			         			first = data.memTel.split('-')[0].substring(0,2);
+		 						second = data.memTel.split('-')[1].substring(0,1);
+		 						third = data.memTel.split('-')[2].substring(0,1);
+		 						// 00*-0**-0*** 
+		 						maskingnum = first + '*-' + second + '**-' + third + '***';
+		 						
+		 						// input 태그 글자갯수에 맞춰 크기조절	
+		 						var starcnt2 = maskingmail.match(/\*/g).length;	
+		 												// 01-4-7 width 기본값 55
+				         		document.getElementById("pwtel").style.width = 85 - 8 + 14 + ((starcnt2-1)*6) + 'px';
+		 					} else if(/-[0-9]{4}-/.test(phoneStr)) {
+		 						// 000-0000-0000	
+		 						first = data.memTel.split('-')[0].substring(0,2);
+		 						second = data.memTel.split('-')[1].substring(0,1);
+		 						third = data.memTel.split('-')[2].substring(0,1);
+		 						// 00*-0***-0***
+		 						maskingnum = first + '*-' + second + '***-' + third + '***';
+		 						
+		 						// input 태그 글자갯수에 맞춰 크기조절	
+		 						var starcnt2 = maskingmail.match(/\*/g).length;	
+		 												  // 01-4-7 width 기본값 55
+				         		document.getElementById("pwtel").style.width = 55 - 8 + 14 + ((starcnt2-1)*6) + 'px';
+				         		document.getElementById("pwtel").value = maskingnum;
+				         		document.getElementById("pwtelhidden").value = data.memTel;
+	 						}	
+		         		} else{
+		         			document.getElementById("teldiv").style.display='none';
+		         		}
+		         										
+		         		
 		         		$("#idinputModal").modal('toggle');
+		         		
+									         		
 			        	$("#passModal").modal();			
 		         	}else{
-		         		alert('일치하는 회원정보가 없습니다.');
+		         		alert('입력하신 아이디를 찾을 수 없습니다.');
 		         	}	
-		        },  	
+		        },  		
 		        error : function(error) {
-		        	alert('일치하는 회원정보가 없습니다.');
+		        	alert('입력하신 아이디를 찾을 수 없습니다.');
 		        }
 			})	
 	 		return false;	/* 페이지 새로고침 막기 */
@@ -223,7 +300,7 @@ function chkID(){
 		return true;
 	}	
 }
-		
+	
 
 	
 </script>	
@@ -301,75 +378,79 @@ function chkID(){
 			        	<button type="submit" id="checkbtn" style="float:right; height:30px; width:120px; background:white; color:black; border:1px solid black; font-size:14px; margin-right:20px;">다음</button>
 			        </div>
 			        <div class="modal-footer">	
-			            <button type="button" name="button" id="closemd" class="btn btn-color2" data-dismiss="modal" >닫기</button>
+			            <button type="button" name="button" id="closemd" class="btn btn-color2" data-dismiss="modal">닫기</button>
 			        </div>
-		        </div>	
+		        </div>		
 		    </div>
-		</div>
-		
+		</div>	
+			
 		<!-- 비번찾기 모달 -->
 		<div class="modal fade" id="passModal" role="dialog">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header" style="padding: 35px 50px;">
+			<div class="modal-dialog" style="max-width: 100%; width: auto; display: table;">							
+				<div class="modal-content" style="max-width: 100%; width: auto;">									
+					<div class="modal-header" style="padding: 35px 50px; max-width: 100%; width: auto;">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4>비밀번호가 생각나지 않으시나요?</h4>
-					</div>
-					<div class="modal-body" style="padding: 40px 50px;">
-						<div class="panel-group" id="accordion">
-
-							<div class="panel panel-default">
-								<div class="panel-heading">
+						<h4>비밀번호가 생각나지 않으시나요?</h4>			
+					</div>				
+					<div class="modal-body" style="padding: 40px 50px; width:max-width: 100%; width: auto;">
+						<div class="panel-group" id="accordion"	style="width:max-width: 100%; width: auto;">
+		
+							<div class="panel panel-default" style="width:max-width: 100%; width: auto;">	
+								<div class="panel-heading" style="width:max-width: 100%; width: auto; background-color:white">	
 									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion"
-											href="#collapse1"><li>이메일로 찾기</li></a>
-									</h4>
-									<input type="text" id="pwid">	
-											
-								</div>
-								<div id="collapse1" class="panel-collapse collapse in">
-									<div class="panel-body">
-
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+										<li>본인확인 이메일로 인증 ( <input type="text" id="pwid" style="border:none; outline:none;" readonly> )</li>
+										<input type="text" id="pwidhidden" style="display:none;" readonly>
+										</a>								
+									</h4>						
+																		
+												
+								</div>		
+								<div id="collapse1" class="panel-collapse collapse in" style="width:max-width: 100%; width: auto;;">
+									<div class="panel-body" style="width:max-width: 100%; width: auto;">
+	
 										<form id="mailform" role="form" action="/member/mailsender">
-
-											<div class="form-group">
-												<label for="usrname"><span class="glyphicon glyphicon-user"></span>전송받으실 이메일 주소를 입력해주세요</label> 
+							
+											<div class="form-group" style="width:max-width: 100%; width: auto;">	
+												<p style="font-size:10px;">본인확인 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.</p><br>
+												<label for="usrname" style="width:500px;">이메일</label> 
 												<input type="email" name="memId" class="form-control" id="mailId" placeholder="Enter email" onkeyup="chkID()">	
 												<div id="checkMsg" class="indiv"></div>	
 											</div>	
-	
+						
 											<input id="mailsub" type="button" value="확인">
 											<button type="button" data-dismiss="modal">취소</button>
 										</form>
 
 									</div>
 								</div>
-							</div>
-							
- 							
-							<div class="panel panel-default">
-								<div class="panel-heading">
+							</div>	
+									
+ 										
+							<div class="panel panel-default" id="teldiv" style="width:100%;">
+								<div class="panel-heading" style="width:max-width: 100%; width: auto; background-color:white">	
 									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion"
-											href="#collapse2"><li>전화번호로 찾기</li></a>
-									</h4>
-									<input type="text" id="pwtel"/>
- 							
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+										<li>회원정보에 등록한 휴대전화로 인증 ( <input type="text" id="pwtel" style="border:none; outline:none;" readonly/> )</li>
+										<input type="text" id="pwtelhidden" style="display:none;" readonly>
+										</a>		
+									</h4>	
 								</div>
 								<div id="collapse2" class="panel-collapse collapse">
 									<div class="panel-body">
 
-										<form role="form" action="/member/sendSms">
-
+										<form id="smsform" role="form" action="/member/sendSms">
+			
 											<div class="form-group">
-												<label for="usrname"><span class="glyphicon glyphicon-user"></span>아이디(이메일)를 입력해주세요</label> 
+												<p style="font-size:10px;">회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야, 인증번호를 받을 수 있습니다.<p><br>
+												<label for="usrname" style="width:500px;">아이디</label> 
 												<input type="email" name="memId" class="form-control" id="memId" placeholder="Enter email">
-													
-												<label for="usrname"><span class="glyphicon glyphicon-user"></span>전화번호를 입력해주세요</label> 
-												<input type="tel" name="memTel" class="form-control" id="memTel" placeholder="Enter phone number">
+															
+												<label for="usrname" style="width:500px;">전화번호</label> 
+												<input type="tel" name="memTel" class="form-control" id="mailtel" placeholder="Enter phone number">
 											</div>
-	
-											<input type="submit" value="확인">
+		
+											<input type="button" id="telsub" value="확인">
 											<button type="button" data-dismiss="modal">취소</button>
 										</form>
 
