@@ -17,7 +17,6 @@ public class NoticeVo extends BaseVo{
 	private String main;
 	
 	
-	
 	public String getMain() {
 		return main;
 	}
