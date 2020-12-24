@@ -20,10 +20,10 @@ SELECT *
 
 
 <select id="readMessages" resultType="ants.com.chatting.model.ChatVo" parameterType="java.lang.String">
-SELECT *
+SELECT CGROUP_ID, CHAT_ID, MEM_ID, CHAT_CONT, TO_CHAR(REG_DT, 'YYYY-MM-DD HH24:MI:SS') AS REG_DT
   FROM CHAT
  WHERE CGROUP_ID = #{cgroupId}
-ORDER BY REG_DT
+ORDER BY TO_NUMBER(CHAT_ID)
 </select>
 
 <insert id="sendMessage" parameterType="ants.com.chatting.model.ChatGroupVo">

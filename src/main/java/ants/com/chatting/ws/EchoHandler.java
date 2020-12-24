@@ -29,7 +29,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		Map<String, Object> httpSession = session.getAttributes();
 		MemberVo SMEMBER = (MemberVo) httpSession.get("SMEMBER");
 		
-		LOGGER.info("{} 연결 됨\n. 현재 채팅방 번호 : {}", SMEMBER.getMemId(), httpSession.get("cgroupId"));
+//		LOGGER.info("{} 연결 됨\n. 현재 채팅방 번호 : {}", SMEMBER.getMemId(), httpSession.get("cgroupId"));
 		sessionList.add(session);
 		
 	}
@@ -41,8 +41,8 @@ public class EchoHandler extends TextWebSocketHandler {
 		MemberVo SMEMBER = (MemberVo) httpSession.get("SMEMBER");
 		String cgroupId = (String) httpSession.get("cgroupId");
 		
-		LOGGER.info("{}로부터 \'{}\' 받음\n", SMEMBER.getMemId(), message.getPayload());
-		LOGGER.info("채팅방 번호 : {}", cgroupId);
+//		LOGGER.info("{}로부터 \'{}\' 받음\n", SMEMBER.getMemId(), message.getPayload());
+//		LOGGER.info("채팅방 번호 : {}", cgroupId);
 		
 		// sessionList에 존재하는 모든 사용자에게 메시지 뿌리기 ..
 		for(WebSocketSession sess : sessionList) {
@@ -61,7 +61,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		MemberVo SMEMBER = (MemberVo) httpSession.get("SMEMBER");
 		
 		sessionList.remove(session);
-		LOGGER.info("{} 연결 끊김\n", SMEMBER.getMemId());
+//		LOGGER.info("{} 연결 끊김\n", SMEMBER.getMemId());
 	}
 	
 }

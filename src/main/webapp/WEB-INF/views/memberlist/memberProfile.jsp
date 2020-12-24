@@ -1,13 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>상세 보기</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 
-<!-- Font Awesome Icons -->
-<!-- Theme style -->
 <style>
 body{
 	min-width: 1100px;
@@ -17,7 +12,7 @@ body{
 	margin-left : 150px;
 }
 
-								/* 알람 스타일 */
+								/* 알람 토글(on/off) 스타일 */
 .switch {
   position: relative;
   display: inline-block;
@@ -76,8 +71,9 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-
+					/* 알람 토글(on/off) 스타일 */
 </style>
+
 <script>	
 
 							/*  알람 토글(on/off) 기능     */
@@ -148,49 +144,50 @@ $(document).ready(function(){
 			<div class="login-logo">
 				<b>Profile</b>
 			</div>	
-				
+			
+			<!-- 프로필 리스트 시작 -->	
 			<div class="card card-success card-outline">
 				<div class="card-body box-profile">
-					<div class="text-center">
-						<div class="mailbox-attachment-icon has-img" id="pictureView" style=" height: 200px; width: 140px; margin: 0 auto;">
-							<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" alt="User profile picture"/>
+					<div class="text-center">	 	
+						<div class="mailbox-attachment-icon has-img" id="pictureView" style="display:inline-block; border: 1px solid white; height:200px; width:140px; margin: 0 auto;">
+							<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;"/>
 						</div>
-					</div>
+					</div>	
 					
 					<h3 class="profile-username text-center">
-						<input class="profile-username text-center" name="memName" type="text" class="form-control" id="memName" placeholder="(이름)" value="${memberVo.memName}" style="border: none;outline: none;" readonly />
+						<input class="profile-username text-center" name="memName" type="text" class="form-control" id="memName" placeholder="(이름)" value="${memberVo.memName}" style="border: none" readonly />
 					</h3>
 						
 					<p class="text-muted text-center">
-						<input class="text-muted text-center" name="memId" type="text" class="form-control" id="memId" placeholder="(아이디)" value="${memberVo.memId}" style="border: none;outline: none;" readonly>
+						<input class="text-muted text-center" name="memId" type="text" class="form-control" id="memId" placeholder="(아이디)" value="${memberVo.memId}" style="border: none" readonly>
 					</p>
-					
 						
-					<ul class="list-group list-group-unbordered mb-3">
-						<li class="list-group-item "><b>전화번호 </b> 
+					<ul class="list-group list-group-unbordered mb-3"> 
+						<li class="list-group-item"><b>전화번호</b>  	
 							<a class="float-right">
-								<input class="" name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border:none;outline: none;" readonly />
-							</a>
+								<input name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border:none; width:105px;" readonly />
+							</a>	
 						</li>
 						<li class="list-group-item"><b>알람</b> 
 							<a class="float-right">
-								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none;outline: none;" readonly>
-								<!-- 알람 토글 버튼 	
-								<label class="switch">										
+								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none; width:40px;" readonly>
+								<!-- 알람 토글 버튼 -->	
+								<label class="switch">											<!-- 알람 토글 기본 y : y아닐땐 off -->
 									<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>	
 									<span class="slider round"></span>	
 								</label>
-								-->
 							</a>
-						</li>	
-						<li class="list-group-item "><b>타입</b>
+						</li>			
+						<li class="list-group-item"><b>타입</b>
 							<a class="float-right">
-								<input name="memType" type="text" class="" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border: none;outline: none;" readonly>
+								<input name="memType" type="text" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border:none; width:105px;" readonly>
 							</a>
 						</li>
 					</ul>
+					
 				</div>
 			</div>
+			<!-- 프로필 리스트 끝 -->
 				
 			<div class="card-footer" style="background-color: white">
 				<div class="row">

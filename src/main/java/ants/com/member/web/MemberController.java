@@ -59,7 +59,6 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 @RequestMapping("/member")
 @Controller
 public class MemberController {
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 	@Resource(name = "memberService")
 	private MemberService memberService;
@@ -110,10 +109,8 @@ public class MemberController {
 	@RequestMapping(path = "/loginFunc")
 	public String loginFunc(MemberVo memberVo, HttpSession session, Model model) {
 
-		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
 
 		MemberVo dbMember = memberService.getMember(memberVo);
-		logger.debug("dbMember : {}", dbMember);
 
 		if (dbMember != (null) && memberVo.getMemPass().equals(dbMember.getMemPass())) {
 			session.setAttribute("SMEMBER", dbMember);
@@ -135,8 +132,6 @@ public class MemberController {
 
 			adminService.insertMemLoginLog(log);
 
-			// List<ScheduleVo> showCalendar = new ArrayList<>(); // 캘린더 목록 선언 및 초기화
-			// List<IssueVo> resultList = new ArrayList<>(); // 공지사항 목록 선언 및 초기화
 
 			// 회원 타입이 MEM일 때만 조회
 			if (dbMember.getMemType().equals("MEM")) {
@@ -146,39 +141,6 @@ public class MemberController {
 				// MEM의 프로젝트 리스트가 있을때만
 				if (proList.size() != 0) {
 					session.setAttribute("memInProjectList", proList); // 프로젝트 리스트 세션에 저장
-
-					// // 로그인
-					// /*캘린더 초기값 */
-					// ScheduleVo scheduleVo = new ScheduleVo();
-					// scheduleVo.setReqId(proList.get(proList.size()-1).getReqId()); // 가져온 프로젝트
-					// 리스트 중에 첫번째리스트에 있는 캘린더 보여줄거
-					// showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서
-					// 캘린더 가져옴
-					//
-					// /*공지사항 초기값*/
-					// IssueVo issueVo = new IssueVo();
-					// issueVo.setMemId(dbMember.getMemId());
-					// issueVo.setReqId(proList.get(proList.size()-1).getReqId()); // 첫번째 프로젝트의 이슈
-					// 가져오기
-					// issueVo.setCategoryId("3"); // 카테고리 번호 (3번이 이슈)
-					// issueVo.setIssueKind("notice"); // 이슈 말머리 선택 (공지사항)
-					// model.addAttribute("reqId", proList.get(proList.size()-1).getReqId()); // 기본
-					// 프로젝트 번호 jsp로 넘겨주기
-					// model.addAttribute("proName", proList.get(proList.size()-1).getProName()); //
-					// 프로젝트 이름
-					//
-					// /** pageing setting */
-					// PaginationInfo paginationInfo = new PaginationInfo();
-					// paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
-					// paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
-					// paginationInfo.setPageSize(issueVo.getPageSize());
-					//
-					// issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
-					// issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
-					// issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-					//
-					// resultList = promemService.issuelist(issueVo);
-
 				}
 
 				List<ProjectVo> pro_pL = projectService.plInProjectList(dbMember.getMemId());// 프로젝트 리스트 조회
@@ -197,44 +159,8 @@ public class MemberController {
 				if (prp_pm.size() != 0) {
 					session.setAttribute("pmInProjectList", prp_pm); // 프로젝트 리스트 세션에 저장
 					model.addAttribute("projectList_main", prp_pm);
-					// // 로그인
-					// /*캘린더 초기값 */
-					// ScheduleVo scheduleVo = new ScheduleVo();
-					// scheduleVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId()); // 가져온 프로젝트 리스트
-					// 중에 첫번째리스트에 있는 캘린더 보여줄거
-					// showCalendar = memBoardService.showCalendar(scheduleVo); // 첫번째 프로젝트 번호 가져가서
-					// 캘린더 가져옴
-					//
-					// /*공지사항 초기값*/
-					// IssueVo issueVo = new IssueVo();
-					// issueVo.setMemId(dbMember.getMemId());
-					// issueVo.setReqId(prp_pm.get(prp_pm.size()-1).getReqId()); // 첫번째 프로젝트의 이슈
-					// 가져오기
-					// issueVo.setCategoryId("3"); // 카테고리 번호 (3번이 이슈)
-					// issueVo.setIssueKind("notice"); // 이슈 말머리 선택 (공지사항)
-					// model.addAttribute("reqId", prp_pm.get(prp_pm.size()-1).getReqId()); // 기본
-					// 프로젝트 번호 jsp로 넘겨주기
-					// model.addAttribute("proName", prp_pm.get(prp_pm.size()-1).getProName()); //
-					// 프로젝트 이름
-					//
-					// /** pageing setting */
-					// PaginationInfo paginationInfo = new PaginationInfo();
-					// paginationInfo.setCurrentPageNo(issueVo.getPageIndex());
-					// paginationInfo.setRecordCountPerPage(issueVo.getPageUnit());
-					// paginationInfo.setPageSize(issueVo.getPageSize());
-					//
-					// issueVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
-					// issueVo.setLastIndex(paginationInfo.getLastRecordIndex());
-					// issueVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-					//
-					// resultList = promemService.issuelist(issueVo);
 				}
 			}
-
-			// 캘린더 전송 // 캘린더는 있든 없든 전송해야함
-			// model.addAttribute("showSchedule", showCalendar);
-			// 공지사항 전송
-			// model.addAttribute("issuelist", resultList);
 
 			if (!dbMember.getMemType().equals("PM")) {
 				List<ProjectVo> projectList_main = projectService.projectListmain(dbMember.getMemId());
@@ -286,16 +212,13 @@ public class MemberController {
 	@RequestMapping(path = "/logincheck", method = RequestMethod.GET)
 	public String logincheck(MemberVo memberVo, Model model) {
 
-		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
 
 		MemberVo dbMember = memberService.logincheck(memberVo);
 
 		try {
 			model.addAttribute("memId", dbMember.getMemId());
 			model.addAttribute("memPass", dbMember.getMemPass());
-			logger.debug("logincheck rowcount : {}", dbMember);
 		} catch (NullPointerException e) {
-			logger.debug("## 예외처리 - 로그인 체크 ## (NullPointerException) 일치하는 회원정보 없음 : {}", dbMember);
 		}
 
 		return "jsonView";
@@ -305,7 +228,6 @@ public class MemberController {
 	@RequestMapping(path = "/getmember", method = RequestMethod.GET)
 	public String getmember(MemberVo memberVo, Model model) {
 			
-		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
 
 		MemberVo dbMember = memberService.getMember(memberVo);
 		
@@ -313,9 +235,7 @@ public class MemberController {
 			model.addAttribute("memId", dbMember.getMemId());
 			model.addAttribute("memTel", dbMember.getMemTel());
 			model.addAttribute("memberVo", dbMember);
-			logger.debug("logincheck rowcount : {}", dbMember);
 		} catch (NullPointerException e) {
-			logger.debug("## 예외처리 - 로그인 체크 ## (NullPointerException) 일치하는 회원정보 없음 : {}", dbMember);
 		}
 		
 		return "jsonView";
@@ -332,16 +252,12 @@ public class MemberController {
 	public String memberRegist(MemberVo memberVo, BindingResult br,
 			@RequestPart(value = "memFilename", required = false) MultipartFile file, Model model,
 			@RequestParam(value = "imgname", required = false) String imgname) {
-		logger.debug("memberVo : {} / imgname : {}", memberVo, imgname);
-		logger.debug("filename : {} / memFilename : {} / size : {}", file.getName(), file.getOriginalFilename(),
-				file.getSize());
 
 		String Filename = "";
 		String Filepath = "";
 
 		if (!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
 
-			logger.debug("br.hasErrors() : {}", br.hasErrors());
 
 			if (br.hasErrors()) {
 				// return "main.tiles/member/memberRegist";
@@ -358,7 +274,6 @@ public class MemberController {
 				e.printStackTrace();
 			}
 
-			logger.debug("---------------------통과-------------------");
 		} else {
 			// 기본 이미지 중에 선택했을때
 			if (!imgname.equals("") && !imgname.equals(null)) {
@@ -374,8 +289,6 @@ public class MemberController {
 		memberVo.setMemFilepath(Filepath);
 		memberVo.setMemFilename(Filename);
 
-		logger.debug("memId : {}", memberVo.getMemId());
-		logger.debug("memberVo : {}", memberVo);
 
 		int insertCnt = 0;
 		try {
@@ -558,7 +471,6 @@ public class MemberController {
 	public String profileupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
 			@RequestPart(value = "memFilename", required = false) MultipartFile file) {
 
-		logger.debug("memFilename : {}", file.getOriginalFilename());
 		String Filename = "";
 		String Filepath = "";
 
@@ -612,9 +524,7 @@ public class MemberController {
 	public String profile(HttpSession session, MemberVo memberVo, Model model) {
 
 		memberVo = (MemberVo) session.getAttribute("SMEMBER");
-		logger.debug("LoginCOntroller - memberVo : {} ", memberVo);
 		MemberVo dbMember = memberService.getMember(memberVo);
-		logger.debug("dbMember : {}", dbMember);
 
 		model.addAttribute("memberVo", dbMember);
 		return "tiles/member/memberProfile";
@@ -662,7 +572,7 @@ public class MemberController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 
-		if("Y".equals(main)) {	
+		if("Y".equals(noticeVo.getMain())) {	
 			model.addAttribute("main", "Y");
 			return "main.tiles/notice/noticelistmemview";
 		} else {

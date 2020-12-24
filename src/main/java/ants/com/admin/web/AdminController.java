@@ -43,7 +43,6 @@ public class AdminController {
 	MemberService memberService;
 	
 	
-	////////////////////////////////////////////////관리자 로그인
 	
 	//관리자 로그인 페이지
 	@RequestMapping("/adloginView")
@@ -55,16 +54,12 @@ public class AdminController {
 	@RequestMapping(path = "/adloginFunc")
 	public String adloginFunc(AdminVo adminVo, HttpSession session, Model model) {
 
-
 		AdminVo dbAdmin = adminService.getAdmin(adminVo);
-		logger.debug("dbAdmin : {}", dbAdmin);
 		
 		if (dbAdmin != (null) && adminVo.getAdminPass().equals(dbAdmin.getAdminPass())) {
 			session.setAttribute("SADMIN", dbAdmin);
-			
-			
 			return "admin.tiles/admin/adcontentmain";
-//				return "redirect:/admin/noticelist";
+			
 		} else {
 			return "redirect:/admin/adloginView";
 		}
@@ -75,11 +70,9 @@ public class AdminController {
 	@RequestMapping(path = "/adlogincheck", method = RequestMethod.GET)
 	public String adlogincheck(AdminVo adminVo, Model model) {
 		
-		logger.debug("LoginController - logincheck : {} ", adminVo);
 		
 		AdminVo dbAdmin = adminService.adlogincheck(adminVo);
 		
-		logger.debug("logincheck rowcount : {}", dbAdmin);
 		
 		
 		model.addAttribute("adminId", dbAdmin.getAdminId());
@@ -99,9 +92,7 @@ public class AdminController {
 	@RequestMapping("/adMainView")
 	public String adMainView() {
 		return "admin.tiles/admin/adcontentmain";
-//		return "redirect:/admin/noticelist";
 	}
-///////////////////////////////////////////////////////////////////////////////////////////////관리자 로그인 끝	
 	
 	
 //////////////////////////////////////////////////////////////////////////////////////////////관리자 공지사항	
@@ -177,13 +168,10 @@ public class AdminController {
 	@RequestMapping("/insertnotice")
 	public String insertnotice(NoticeVo noticeVo, HttpSession session, Model model) {
 		
-//		System.out.println(noticeVo);
-//		String reqId = (String)session.getAttribute("reqId");
 		String noticeId = (String)session.getAttribute("noticeId");
 		
 		noticeVo.setAdminId("admin");
 		
-//			System.out.println(issueVo);
 		int insertCnt = adminService.insertnotice(noticeVo);
 
 		if(insertCnt>0) {		
@@ -209,9 +197,8 @@ public class AdminController {
 	@RequestMapping("/updatenotice")
 	public String updatenotice(NoticeVo noticeVo, HttpSession session, Model model) {
 		
-//		String reqId = (String)session.getAttribute("reqId");
 		String noticeId = (String)session.getAttribute("noticeId");
-//		noticeVo.setNoticeId(noticeId);
+
 		noticeVo.setAdminId("admin");
 		
 		int insertCnt = adminService.updatenotice(noticeVo);
@@ -234,9 +221,7 @@ public class AdminController {
 			return "redirect:/admin/eachnoticeDetail?noticeId="+noticeId;
 		}
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////관리자 공지사항 끝
 	
-//////////////////////////////////////////////////////////////////////////////////////////////멤버 리스트 시작
 	
 	//회원 리스트 목록 조회
 	@RequestMapping("/memberlist")
@@ -262,12 +247,10 @@ public class AdminController {
 
 		List<MemberVo> resultList = adminService.memberlist(memberVo);
 		model.addAttribute("memberlist", resultList);
-		logger.debug("memberlist", resultList);
 
 		int totCnt = adminService.memberlistPagingListCnt(memberVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-		logger.debug("paginationInfo", paginationInfo);
 
 		return "admin.tiles/memberlist/memberList2";
 	}
@@ -279,9 +262,6 @@ public class AdminController {
 		MemberVo membervo = adminService.geteachmemlist(memId);
 		
 		model.addAttribute("membervo", membervo);
-		
-		
-//		model.addAttribute("adminId", "admin");
 		 
 		return "admin.tiles/memberlist/memlistDetail";
 	}
@@ -293,9 +273,9 @@ public class AdminController {
 	public String memlistprofile(HttpSession session, MemberVo memberVo, Model model) {
 		
 		MemberVo dbMember = adminService.getMember(memberVo);
-		logger.debug("dbMember : {}", dbMember);
 		
 		model.addAttribute("memberVo",dbMember);
+		
 		return "admin.tiles/memberlist/memberProfile";
 	}
 	
@@ -304,7 +284,9 @@ public class AdminController {
 	@RequestMapping("/memlistprofileupdate")
 	public String memlistprofileupdate(MemberVo memberVo, Model model) {
 		MemberVo dbMember = adminService.getMember(memberVo);
+		
 		model.addAttribute("memberVo", dbMember);
+		
 		return "admin.tiles/memberlist/profileupdateview";
 	}
 	
@@ -313,7 +295,6 @@ public class AdminController {
 	public String memlistproupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
 			@RequestPart(value = "memFilename", required = false) MultipartFile file) {
 
-		logger.debug("memFilename : {}", file.getOriginalFilename());
 		String Filename = "";
 		String Filepath = "";
 
@@ -325,7 +306,6 @@ public class AdminController {
 
 			String filekey = UUID.randomUUID().toString();
 
-			/* filekey + "\\"+ */
 			Filepath = "D:\\upload\\" + file.getOriginalFilename();
 			Filename = file.getOriginalFilename();
 			File uploadFile = new File(Filepath);
@@ -398,12 +378,6 @@ public class AdminController {
 		return "redirect:/admin/getIpList";
 	}
 	
-//	// Ip 수정하기
-//	@RequestMapping("/updateIp")
-//	public String updateIp(IpVo ipVo) {
-//		int result = adminService.updateIp(ipVo);
-//		return "admin.tiles/admin/ipUpdate";
-//	}
 	
 	//Ip 입력창으로 이동
 	@RequestMapping("/insertIpView")
@@ -414,7 +388,6 @@ public class AdminController {
 	// Ip 입력하기
 	@RequestMapping("/insertIp")
 	public String insertIp(String ip1,String ip2,String ip3,String ip4, HttpSession session) {
-		logger.debug("{} {} {} {}", ip1, ip2, ip3, ip4);
 		
 		
 		String ip = ip1.concat(".")
@@ -425,7 +398,6 @@ public class AdminController {
 					.concat(ip4);
 		
 		AdminVo admin =(AdminVo) session.getAttribute("SADMIN");
-		logger.debug("adminVo : {}", admin);
 		IpVo ipVo = new IpVo();
 		
 		ipVo.setIpAddr(ip);
@@ -458,7 +430,6 @@ public class AdminController {
 		return adminService.loginLogList();
 	}
 	
-	////////////////////////////////////////////////프로젝트할곳..
 	
 	// 프로젝트 리스트 전체 가져오기 -> 차단 리스트 또는 허용 리스트
 	@RequestMapping("/projectlist")
@@ -493,21 +464,10 @@ public class AdminController {
 		
 	}
 	
-//	// 프로젝트 delete 1
-//	@RequestMapping("/delproject")
-//	public String delproject(String reqId) {		
-//		int delCnt = adminService.delproject(reqId);
-//		if(delCnt>0) {		
-//			return "redirect:/admin/projectlist";
-//		}else {
-//			return "redirect:/admin/projectDetail?reqId="+reqId;
-//		}
-//	}
 	// 프로젝트 delete 2
 	@RequestMapping("/delproject")
 	public String delproject(ProjectVo projectVo) {		
 		int delCnt = adminService.delproject(projectVo);
-		System.out.println("delCnt = " + delCnt);
 		return "redirect:/admin/projectlist";
 	}
 	

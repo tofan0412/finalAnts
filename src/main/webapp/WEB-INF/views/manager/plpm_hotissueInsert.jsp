@@ -244,8 +244,16 @@
                   <input class="form-control" placeholder="Subject:" name="hissueTitle" id="hissueTitle">
                   <div class="jg" style=" padding-left: 10px;"><span class="jg warninghissueTitle" style="color : red;"></span></div><br>
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
-                  <input type="hidden" name="hissueParentid" value="${hissueParentid}" id="hissueParentid">
                 <textarea id="summernote" name="hissuetCont"></textarea>
+                <div class="form-group" hidden="hidden">
+                	<c:if test="${not empty hissueParentid}">
+			        <input type="hidden" name="hissueParentid" value="${hissueParentid}" id="hissueParentid">
+			        <input type="hidden" name="hissueLevel" value="2">  
+			        </c:if>      
+			        <c:if test="${empty hissueParentid}">
+			        <input type="hidden" name="hissueLevel" value="1">        
+			        </c:if>
+                </div>
        			 </form>
               	</div>
              

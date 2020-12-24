@@ -67,7 +67,7 @@
 		<div class="card card-primary card-outline">
 			<div class="card-body box-profile">
 				
-				<form id="fmin" role="form" class="form-horizontal" action="/admin/memlistproupdate" method="POST" enctype="multipart/form-data">
+				<form id="fmin" role="form" class="form-horizontal" action="/member/profileupdate" method="POST" enctype="multipart/form-data">
 				<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 					
 				<div class="text-center" title="이미지를 클릭하면 변경할 수 있어요!">
@@ -123,16 +123,6 @@
 							<div id="checkTel" class="indiv"></div>
 						</a>
 					</li>
-					<li class="list-group-item">	<b>타입</b> 
-						<a class="float-right">
-							<select id="memTypeSelect" name="memTypeSelect">
-								<option value="1" selected="selected">타입</option>
-								<option value="PM">PM</option>
-								<option value="MEM">MEM</option>
-							</select>
-							<input class="input" name="memType" type="text" id="memType"  value="${memberVo.memType}"/>
-						</a>
-					</li>
 				</ul>
 						
 				<div style="float:right;">				
@@ -143,6 +133,7 @@
 				<div style="display:none;">					
 					알람 : <input class="form-control" name="memAlert" type="text" id="memAlert" placeholder="알람" value="${memberVo.memAlert}" readonly><br> 
 					삭제여부:   <input class="form-control" name="del" type="text" id="del" placeholder="삭제여부" value="${memberVo.del}" readonly><br> 
+					멤버구분 :  <input class="form-control" name="memType" type="text" id="memType" placeholder="멤버구분" value="${memberVo.memType}" readonly><br>
 					이미지 경로: <input class="form-control" name="imgname" type="text" id="imgname" placeholder="파일경로" value="${memberVo.memFilepath}" readonly>
 					사진 : <img id="pict" style="width: 30px; height: 30px;" src="/profileImgView?memId=${memberVo.memId}" />
 					기본이미지 : <img id="imge" style="width: 30px; height: 30px;" src="${memberVo.memFilepath}" /><br>
@@ -195,33 +186,6 @@
 <script src="/resources/bootstrap/dist/js/adminlte.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-$(function() {
-	$(document).ready(function() {
-		$('select[name=memTypeSelect]').change(function() {
-			if ($(this).val() == "1") {
-				$('#memType').val("");
-			} else {
-				$('#memType').val($(this).val());
-				$("#memType").attr("readonly", true);
-			}
-		});
-	});
-});
-
-
-
-$(document).ready(function(){
-    $('.content i').on('click',function(){
-        $('input').toggleClass('active');
-        if($('input').hasClass('active')){
-            $(this).attr('class',"fa fa-eye-slash fa-lg")
-            .prev('input').attr('type',"text");
-        }else{
-            $(this).attr('class',"fa fa-eye fa-lg")
-            .prev('input').attr('type','password');
-        }
-    });
-});
 
 //핸드폰 번호 정규식
 $(document).on("keyup", ".phoneNumber", function() { 

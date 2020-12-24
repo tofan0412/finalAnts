@@ -4,18 +4,20 @@
 <!-- 요구사항정의서 번호가 null이 아닌 경우에만 채팅방 목록을 출력한다. -->
 <c:if test="${projectId ne null }">
 	<c:if test="${chatList.size() > 0 }">
-		<c:forEach var="i" begin="0" end="${chatList.size()-1 }" >
-			<input type="text" value="${chatList[i].cgroupId }" hidden="hidden">
-				<div class="jg cgroupName" cgroupId="${chatList[i].cgroupId }"
-					style="height: 40px; padding: 10px 10px 10px; color: black;">
-					<a href="#" class="link" style="color: black;">
-						${chatList[i].cgroupName }&nbsp;&nbsp;&nbsp;
-					</a>
-					<div class="jg" style="color : grey; font-size : 0.9em; float : right;">
-					${eachChatMemList[i].size() }명 참여중
+		<div style="height : 100%; overflow-y : auto;">
+			<c:forEach var="i" begin="0" end="${chatList.size()-1 }" >
+				<input type="text" value="${chatList[i].cgroupId }" hidden="hidden">
+					<div class="jg cgroupName" cgroupId="${chatList[i].cgroupId }"
+						style="height: 40px; padding: 10px 10px 10px; color: black;">
+						<a href="#" class="link" style="color: black;">
+							${chatList[i].cgroupName }&nbsp;&nbsp;&nbsp;
+						</a>
+						<div class="jg" style="color : grey; font-size : 0.9em; float : right;">
+						${eachChatMemList[i].size() }명 참여중
+						</div>
 					</div>
-				</div>
-		</c:forEach>
+			</c:forEach>
+		</div>
 	</c:if>
 
 	<!-- 요구사항 정의서가 null은 아니지만, 열린 채팅방이 없는 경우 .. -->
