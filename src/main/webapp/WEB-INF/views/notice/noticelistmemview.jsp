@@ -67,12 +67,22 @@
 	/* pagination 페이지 링크 function */
 	function fn_egov_link_page(pageNo) {
 		document.listForm.pageIndex.value = pageNo;
+		if('${SMEMBER}'!= null && '${SMEMBER}'!= ''){			
+			document.listForm.main.value = "N";
+		}else{
+			document.listForm.main.value = "Y";
+		}
 		document.listForm.action = "<c:url value='/member/noticelistmemview'/>";
 		document.listForm.submit();
 	}
 	
 	 function search(){
 		document.listForm.pageIndex.value = 1;
+		if('${SMEMBER}'!= null && '${SMEMBER}'!= ''){			
+			document.listForm.main.value = "N";
+		}else{
+			document.listForm.main.value = "Y";
+		}
 		document.listForm.action = "<c:url value='/member/noticelistmemview'/>";
 		document.listForm.submit();
 	}	
@@ -82,6 +92,7 @@
 
 <body>
 <form:form commandName="noticeVo" id="listForm" name="listForm" method="post">
+	<form:hidden path="main"/>
 		
 	<section class="content" >
 		<div class="col-12 col-sm-12" style="padding-top: 3%">
@@ -153,7 +164,7 @@
 										&nbsp;
 										<c:choose>
 											<c:when test="${not empty main}">
-												<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}">
+												<a href="${pageContext.request.contextPath}/member/noticedetailmemview?main=Y&noticeId=${notice.noticeId}">
 													<c:if test="${fn:length(notice.noticeTitle) > 30}">									
 														${fn:substring(notice.noticeTitle,0 ,30) }...
 													</c:if>
