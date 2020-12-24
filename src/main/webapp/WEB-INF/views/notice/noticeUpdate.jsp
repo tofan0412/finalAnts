@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,6 +47,15 @@
 		$("#back").on("click", function() {
 			window.history.back();
 		});
+		 
+		// 제목 글자수 계산
+	   	$('#noticeTitle').keyup(function (e){
+	   	    var content = $(this).val();   		
+	   	    if (content.length > 66){
+// 	   	        alert("최대 66자까지 입력 가능합니다.");
+	   	     	$(this).val(content.substring(0, 65));
+	   	    }
+	   	});
  	});
 	
 </script>
@@ -115,7 +125,7 @@
 				
 				<div class="form-group" >
 					<label for="noticeTitle" class="col-sm-2 control-label jg">제목 </label>
-					<input class="form-control col-sm-8" type="text" class="jg" name="noticeTitle" style=" display: inline-block;" value="${noticeVo.noticeTitle }" id="noticeTitle"><br><br>
+					<input  class="form-control col-sm-8" type="text" class="jg" name="noticeTitle" style=" display: inline-block;" value="${noticeVo.noticeTitle }" id="noticeTitle"><br><br>
 				</div>
 				
 				<div class="form-group jg" style="width: 90%;">

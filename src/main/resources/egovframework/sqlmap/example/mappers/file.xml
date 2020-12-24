@@ -66,7 +66,7 @@
 	      	SELECT ROWNUM RNUM , 
 	           	   S.*
 		      FROM (				  	
-					SELECT a.PUB_ID, a.PUB_EXTENSION ,a.pub_filename, to_char(a.reg_dt,'yyyy-mm-dd hh:mm') as reg_dt ,
+					SELECT a.PUB_ID, a.PUB_EXTENSION ,a.pub_filename, to_char(a.reg_dt,'yyyy-mm-dd hh24:mi') as reg_dt ,
 						   a.pub_size , b.mem_name as mem_id , a.category_id
 					  FROM publicfile a, member b
 					 WHERE req_id = #{reqId}

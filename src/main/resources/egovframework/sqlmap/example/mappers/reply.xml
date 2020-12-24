@@ -9,8 +9,25 @@
 			#{someId}, 
 			#{replyCont}, 
 			sysdate,'N', 
-			#{categoryId}, 
-			(select req_id from issue where issue_id = #{someId}), 
+			#{categoryId}, 			
+	        <choose>
+	            <when test="categoryId == 10"> <!-- 투표 -->
+					(select req_id from vote where vote_id = #{someId}), 
+				</when>	         
+	            <when test="categoryId == 3"> <!-- 이슈 -->
+					(select req_id from issue where issue_id = #{someId}) ,
+				</when>
+	            <when test="categoryId == 4"> <!-- 건의사항 -->
+					(select req_id from todo where todo_id = (select todo_id from suggest where sgt_id = #{someId})) ,
+				</when>
+	            <when test="categoryId == 6"> <!-- 일정 -->
+					(select req_id from schedule where sche_id = #{someId}) ,
+				</when>
+				<otherwise>
+					#{reqId},
+				</otherwise>
+			</choose>
+		
 			#{memId}
 			)
 	</insert>
@@ -21,7 +38,7 @@
     SELECT  a.reply_id,
 		    a.some_id,
 		    a.reply_cont,
-		    to_char(a.reg_dt,'yyyy-mm-dd hh24:mm') as reg_dt ,
+		    to_char(a.reg_dt,'yyyy-mm-dd hh24:mi') as reg_dt ,
 		    a.del,
 		    a.category_id,
 		    a.req_id,
@@ -31,7 +48,20 @@
     FROM reply a, member b
     WHERE some_id = #{someId}
       and category_id = #{categoryId}
-      and req_id = (select req_id from issue where issue_id = #{someId})
+       <choose>
+           <when test="categoryId == 10"> <!-- 투표 -->
+			   and req_id = (select req_id from vote where vote_id = #{someId})
+			</when>	         
+	        <when test="categoryId == 3"> <!-- 이슈 -->
+				 and req_id = (select req_id from issue where issue_id = #{someId})
+			</when>
+		 	<when test="categoryId == 4"> <!-- 건의사항 -->
+		 		 and req_id = (select req_id from todo where todo_id = (select todo_id from suggest where sgt_id = #{someId}))
+			</when>
+		 	<when test="categoryId == 6"> <!-- 일정-->
+		 	 	and req_id = (select req_id from schedule where sche_id = #{someId})
+			</when>	
+		</choose>
       and a.mem_id = b.mem_id
     order by reg_dt, to_number(reply_id)
   </select>

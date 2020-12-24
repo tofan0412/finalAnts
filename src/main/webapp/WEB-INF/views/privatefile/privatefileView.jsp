@@ -480,20 +480,18 @@ var id;
 						<c:set var="cutName" value="${fn:substring(orginalName, nameLength-5, nameLength)}"/>
 						<c:set var="filename" value="${fn:substringAfter(cutName,'.')}"/>		
 					
-				  <tr data-privid="${privatefile.privId}" title="시퀸스 : ${privatefile.privId} <br>
-																		수정한 날짜: ${privatefile.regDt } <br>
-																		파일이름 : ${privatefile.privFilename } <br>
-																		파일경로 : ${privatefile.privFilepath} <br>
-																		파일사이즈 : ${privatefile.privSize } KB<br>
-																		확장자: ${filename} <br>
-																			">
+				  <tr data-privid="${privatefile.privId}" title=" 항목유형 : ${fn:toUpperCase(privatefile.privExtension)}파일 <br>
+					  											   파일이름 : ${privatefile.privFilename } <br>
+																  수정한 날짜 : ${privatefile.regDt } <br>																		
+																 파일사이즈 : ${privatefile.privSize } KB<br>
+																">
 																	
 					<td style="width: 150px;  text-align: center;" class="jg"><c:out value="${((privatefileVo.pageIndex-1) * privatefileVo.pageUnit + sts.index+1)}"/>. 
 						<input type="hidden" id="${privatefile.privId }" name="${privatefile.privId }">
 					</td>	
 					<td class="jg" style="padding-left:30px;">
 
-						<img name="link" src="/fileFormat/${fn:toLowerCase(filename)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
+						<img name="link" src="/fileFormat/${fn:toLowerCase(privatefile.privExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
 						${privatefile.privFilename }
 
 					</td>
@@ -512,7 +510,7 @@ var id;
 				
 				
 					<td  class="jg"> 
-					 	${fn:toUpperCase(filename) }
+					 	${fn:toUpperCase(privatefile.privExtension) }
 					
 					</td>
 					
@@ -546,11 +544,12 @@ var id;
 					
 					
 					<div  style="width: 150px; height: 200px; display: inline-block; text-align: center;">
-						<img  name="link" src="/fileFormat/${fn:toLowerCase(filename)}.png" onerror="this.src='/fileFormat/not.png';" style="width:120px; height:120px;" 
-								data-privid="${privatefile.privId}"  title="파일이름 : ${privatefile.privFilename } <br>
-																			수정한 날짜: ${privatefile.regDt } <br>
+						<img  name="link" src="/fileFormat/${fn:toLowerCase(privatefile.privExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:120px; height:120px;" 
+								data-privid="${privatefile.privId}"  title="항목유형 : ${fn:toUpperCase(privatefile.privExtension)}파일 <br>
+																			파일이름 : ${privatefile.privFilename } <br>
+																			 수정한 날짜 : ${privatefile.regDt } <br>																		
 																			파일사이즈 : ${privatefile.privSize } KB<br>
-																			확장자: ${filename} <br>
+																			
 																			">
 								
 								

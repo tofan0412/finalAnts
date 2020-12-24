@@ -117,14 +117,11 @@ public class AlarmController {
 		session.setAttribute("projectId", alarmVo.getReqId());
 
 		// 댓글, 게시글 구분
-		if(alarmVo.getAlarmType().equals("reply")) {
+		if(alarmVo.getAlarmType().equals("reply-3")) {
 			re.addAttribute("reqId", alarmVo.getReqId());
 			session.setAttribute("categoryId", "3");
-			
 			session.setAttribute("pageIndex", 1);
-			
 			re.addAttribute("issueId", alarmVo.getId());
-			
 			return "redirect:/projectMember/eachissueDetail";
 		}
 		else {

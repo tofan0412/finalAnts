@@ -13,7 +13,8 @@
 $(document).ready(function() {
 	chartmain();
 	$('#datePicker').datepicker({
-	    format: "yyyy-mm-dd",	
+	    format: "yyyy-mm-dd",
+	    pickTime : false,
 	    calendarWeeks : false, 
 	    clearBtn : false, 
 	    disableTouchKeyboard : false,	
@@ -27,8 +28,6 @@ $(document).ready(function() {
 	    showWeekDays : true ,
 	    todayHighlight : true , 
 	    weekStart : 0 
-	  
-	    
 	});//datepicker end
 });
 function chartmain() {
@@ -86,18 +85,22 @@ function chartmain() {
 	}
 </script>
 <style>
+body{
+    min-width: 1400px;
+   
+}
 #maintop{
-	width: 65%;
+	width: 68%;
 	height: 40%;
 	float:left;
 }
 #maintop2{
-	width: 35%;
+	width: 32%;
 	height: 100%;
 	float:right;
 }
 #mainleft{
-	width: 44%;	
+	width: 46%;	
 	min-height: 20%;
 	float:left;
 	
@@ -121,14 +124,42 @@ function chartmain() {
  tr{
  height: 30px;
  }
- 
+#maintop::-webkit-scrollbar {
+    width: 10px;
+  }
+#maintop::-webkit-scrollbar-thumb {
+    background-color: white;
+  }
+#maintop::-webkit-scrollbar-track {
+    background-color: white;
+  }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: 1px solid white;
+    background: white;
+    color: black;
+    
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+	background-color: #1D6A96;
+	color: white; 
+}
+/*  .ui-widget.ui-widget-content {  */
+/*      width: auto; */
+/*      font-size: 100%; */
+/*  }  */
+
+  .ui-datepicker{ font-size: 16px; width: auto; min-width: 205px;} 
+/*  .ui-datepicker select.ui-datepicker-month{ width:20%; font-size: 11px; } */
+/* .ui-datepicker select.ui-datepicker-year{ width:30%; font-size: 11px; } */
+
+
 </style>
 </head>				
 <body>
  <div class="col-12 col-sm-12">
  
-<div id="maintop" style="OVERFLOW-Y:auto; padding-left:2%; margin-top: 1%; height: 400px;">
-	<div class="card">
+<div id="maintop" style="OVERFLOW-Y:auto; padding-left:2%; margin-top: 2%; max-height: 380px;">
+	<div class="card card card-success card-outline">
 		<div class="card-header">
 			<h3 class="card-title jg">Project List</h3>
 		</div>
@@ -143,7 +174,7 @@ function chartmain() {
 				<tbody >
 						<c:forEach items="${projectList_main }" var="project" varStatus="sts" >
 						    <tr>
-							<td style="text-align: left; font-size: 1em; padding-left: 5%">${project.proName }</td>
+							<td style="text-align: left; padding-left: 5%; font-size: 1em;">${project.proName }</td>
 							<c:if test="${empty project.percent }">
 							<td >0%</td>
 							</c:if>					
@@ -159,23 +190,85 @@ function chartmain() {
 		</div>
 	</div>
 </div>
-<div id="maintop2" style="padding-left: 2%;  margin-top: 1%; padding-right: 2%;">
-	<div class="card card-success card-outline">
+<div id="maintop2" style="padding-left: 2%;  margin-top: 2%; padding-right: 2%;">
+	<div class="card" style="font-size: 0.9em;">
 		<div class="card-header">
-			<h3 class="card-title jg">알림!!!</h3>
-			<div class="card-body pt-0">
-				<br><br><br><br><br>
-				<br><br><br><br><br>
-				<br><br><br><br><br>
-				<br><br><br><br><br>
-				<br><br><br><br><br>
-				<br><br><br><br><br>
+			<h3 class="card-title jg">Timeline</h3>
+			</div>
+			<div class="card-body pt-0 jg">
+			<div class="timeline timeline-inverse">
+				<br>
+                      <div class="time-label">
+                        <span class="bg-danger ns">
+                          	today
+                        </span>
+                      </div>
+                      <div>
+                        <i class="fas fa-envelope bg-primary"></i>
+                        <div class="timeline-item">
+                          <span class="time"><i class="far fa-clock"></i> 12:05</span>
+                          <h3 class="timeline-header">PL 요청</h3>
+                          <div class="timeline-body">
+                            	보낸사람 - 요구사항정의서 제목
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <i class="fas fa-user bg-info"></i>
+                        <div class="timeline-item">
+                          <span class="time"><i class="far fa-clock"></i> 09:50</span>
+                          <h3 class="timeline-header">댓글</h3>
+                          <div class="timeline-body">
+                            	댓글 작성한 사람 - 댓글이 작성된 글제목
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <i class="fas fa-comments bg-warning"></i>
+                        <div class="timeline-item">
+                          <span class="time"><i class="far fa-clock"></i> 06:00</span>
+                          <h3 class="timeline-header">프로젝트 초대</h3>
+                          <div class="timeline-body">
+                            	보낸사람 - 프로젝트이름
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <i class="fas fa-user bg-info"></i>
+                        <div class="timeline-item">
+                          <span class="time"><i class="far fa-clock"></i> 09:50</span>
+                          <h3 class="timeline-header">몰라</h3>
+                          <div class="timeline-body">
+                            	이거 내용 많아지면 스크롤 만들어...
+                          </div>
+                        </div>
+                      </div>
+                      <div class="time-label">
+                        <span class="bg-success ns">
+                          	the old times
+                        </span>
+                      </div>
+                      
+                      <div>
+                        <i class="fas fa-comments bg-warning"></i>
+                        <div class="timeline-item">
+                          <span class="time"><i class="far fa-clock"></i> 06:00</span>
+                          <h3 class="timeline-header">테스트</h3>
+                          <div class="timeline-body">
+                            	좀 큰 느낌인디
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <i class="far fa-clock bg-gray"></i>
+                      </div>
+                    </div>
 			</div>
 		</div>
 	</div>
 </div>
-<div id="mainleft" style="padding-left: 2%; margin-top: 3%;">
-	<div class="card card-success card-outline" style="height: 340px;">
+<div id="mainleft" style="padding-left: 2%; margin-top: 2%;">
+	<div class="card" style="height: 340px;">
 		<div class="card-header">
 			<h3 class="card-title jg">Progress Chart</h3>
 		</div>
@@ -194,16 +287,24 @@ function chartmain() {
 		</div>
 	</div>
 </div>
-<div id="mainright" style="padding-left: 2%; margin-top: 3%;">
-	<div class="card card-success card-outline" style="height: 330px;">
-		<div class="card-header">
-			<h3 class="card-title jg" style="text-align: center;">Calendar</h3>
+<div id="mainright" style="padding-left: 2%; margin-top: 2%;">
+	<div class="card" style="height: 330px; min-width: 240px;">
+	<div class="card-header">
+			<h3 class="card-title jg">Calendar</h3>
 		</div>
-		<div class="card-body pt-0">
+		<div class="card-body pt-0" style="min-width: 160px;"><br>
 			<div id ="datePicker"></div>
 		</div>           
 	</div>
-</div>
+<!-- <div id="mainright" style="padding-left: 2%; margin-top: 2%;"> -->
+<!-- 	<div class="card" style="height: 330px;"> -->
+<!-- 		<div class="card-header"> -->
+<!-- 			<h3 class="card-title jg" style="text-align: center;">Calendar</h3> -->
+<!-- 		</div> -->
+<!-- 		<div class="card-body pt-0"> -->
+<!-- 			<div id ="datePicker" style="width: auto;"></div> -->
+<!-- 		</div>            -->
+<!-- 	</div> -->
 </div>
 </html>
 </body>

@@ -217,7 +217,7 @@ width:16px;height:16px;background:#d2d6de;}
 
 <!-- 팝업창  -->
 <div class="pop" style="display : none; z-index : 1; overflow-y : auto;"> 
-	<label class="jg" style="padding-top : 10px;"><h4>채팅방 회원 목록</h4></label><hr>
+	<label class="jg" style="padding-top : 10px;"><h4>참여중인 멤버</h4></label><hr>
 	<c:forEach var="i" begin="0" end="${chatMemList.size() }" >
 		<div style="height : 10%; folat : left;">${chatMemList[i].memId }	
 			<br><span style="color : blue;">${memInfoList[i].memName }</span>
@@ -227,7 +227,7 @@ width:16px;height:16px;background:#d2d6de;}
 </div>
 
 <!-- 채팅 메시지 목록 부분  -->
-<div id="msgArea">	
+<div id="msgArea">
 	<c:forEach items="${msgList }" var="msg">
 			
 		<!-- 접속한 사용자의 아이디와 일치하는 경우, 우측 배열 -->

@@ -159,7 +159,6 @@ public class ProjectMemberController {
 		List<ReplyVo> replylist= memBoardService.replylist(replyVo);
 		
 		model.addAttribute("issuevo", issuevo);	
-		model.addAttribute("memId", issuevo.getMemId());
 		model.addAttribute("replylist", replylist);
 		 
 		return "tiles/board/issueDetail";
@@ -236,11 +235,10 @@ public class ProjectMemberController {
 	@RequestMapping("/updateissueView")
 	public String updateissueView(IssueVo issueVo, Model model, HttpSession session) {
 		
-		String reqId = (String)session.getAttribute("projectId");
 		
 		IssueVo issuevo = promemService.geteachissue(issueVo.getIssueId());
 		
-		PublicFileVo pfv = new PublicFileVo("3",issueVo.getIssueId() , reqId);
+		PublicFileVo pfv = new PublicFileVo("3",issueVo.getIssueId() ,"");
 		
 		filecontroller.getfiles(pfv, model);
 				

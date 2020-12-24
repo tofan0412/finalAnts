@@ -113,6 +113,8 @@ $(function(){
 			console.log($('.voteItemName').eq(i).val()) 
 			if($('.voteItemName').eq(i).val() != '' ){			
 				voteitems.push( $('.voteItemName').eq(i).val());
+				$('#voteitems').append( $('.voteItemName').eq(i).val()+',') // 처음에 배열로 만들었는데 숫자만입력시 뒤죽박죽됨으로 append시킴
+				$('#voteitems').val($('#voteitems').text())
 			}
 		}
 
@@ -131,8 +133,8 @@ $(function(){
 			$('.warningDate').text("마감일을 작성해 주세요.");
 			cnt++;
 		}
-		if (cnt == 0){				
-			insertvote(voteitems);			
+		if (cnt == 0){		
+			insertvote($('#voteitems').val());	
 		}
 	})
 	
@@ -196,9 +198,8 @@ function insertvote(voteitems){
 			  	 voteId :  $('#nextSeq').val() },
 		 success :function(data){	
 			 
-			 for(i=0; i<voteitems.length;i++){
-					insertvoteItem(voteitems[i])
-			} 
+			insertvoteItem(voteitems)
+ 
 		    alert('투표테이블 등록');
 		
 		 }
@@ -207,14 +208,12 @@ function insertvote(voteitems){
 
 // 투표 아이템(투표항목) 작성
 function insertvoteItem(voteitems){
-	console.log(voteitems)
 	$.ajax({url :"${pageContext.request.contextPath}/vote/voteiteminsert",
 		 method : "post",
-		 data : {voteitemName : voteitems,
+		 data : {voteitems : voteitems,
 			 	 voteId :  $('#nextSeq').val()},
 		 success :function(data){	
-			 
-// 		    alert('투표아이템 테이블 등록');
+			console.log(voteitems)
 		   
 			$(location).attr('href', '${pageCContext.request.contextPath}/vote/votelist');
 		 }
@@ -229,17 +228,11 @@ function itemdetail(voteid){
 		 data : {voteId :  voteid},
 		 success :function(data){				 
 			 res ='';
-// 			 console.log(data)
 			 for(i=0;i<data.itemlist.length;i++){
 				 res += '<input type="radio" name="voteitem" value='+data.itemlist[i].voteitemName+'>';
 				 console.log(data.itemlist[i])
 			 }
-			
-// 			 $('#itemdiv').html(res);
-			 
-			 
-// 			 $('#voteDetail').modal();
-			 
+
 		 }
 	})
 }
@@ -269,7 +262,7 @@ function itemdetail(voteid){
 
 <!-- 	<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 <form:form commandName="voteVo" id="listForm" name="listForm" method="post">
-	
+		
 			<section class="content" >
 		      <div class="col-12 col-sm-12">
 			    <div class="card" style="border-radius: inherit; padding : 2px;">
@@ -389,7 +382,7 @@ function itemdetail(voteid){
 <!-- </div> -->
 
 
-
+<input type="hidden" name="voteitems" id="voteitems">
 <!-- 투표 등록 모달 -->
 <!-- Modal to invite new Members . . . -->
 <div class="modal fade" id="voteInsert" tabindex="-1" role="dialog"

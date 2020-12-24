@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-	
 <!-- Channel Plugin Scripts -->
 <script>
   (function() {
@@ -48,7 +47,6 @@
   
   	
 	$(function(){
-		
 		alarmCnt("${SMEMBER.memId}");
 		// 메뉴를 선택하면 배경색이 변한다. 
 		$('.selectable').click(function(){
@@ -76,8 +74,14 @@
 			})			
 		})
 		
-		
-		
+		// session에 있는 projectId 삭제하기
+		$(".toMainPage").click(function(){
+			$.ajax({
+				url : "/common/delProjectIdSession",
+				method : "POST",
+				success : function(res){}
+			})
+		})
 		
 	})
 	
@@ -110,7 +114,7 @@
 <aside class="main-sidebar sidebar-light-teal elevation-4">
 	<!-- Brand Logo -->
 	<div style="margin: 20px 20px 20px 3px; min-width: max-content;">
-	<a href="${pageContext.request.contextPath}/member/mainpage"  style="border-bottom: none"> 
+	<a class="toMainPage" href="${pageContext.request.contextPath}/member/mainpage"  style="border-bottom: none"> 
 		<img src="/dist/img/logo.png"  style="float: none;width: 60px;margin: 15px 8px 10px 7px;height: 50px;">
 		<img src="/dist/img/ants.png" style="width: 100px;">
 	</a>
@@ -228,7 +232,7 @@
 					<li class="nav-item">
 			            <a href="#" class="nav-link" style="background: white;">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p >내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
+							<p>내가 PL인 프로젝트<i class="fas fa-angle-left right"></i></p>
 						</a>
 					    <ul class="nav nav-treeview">
 					    	<c:forEach items="${plInProjectList}" var="project">
@@ -253,7 +257,7 @@
 					<li class="nav-item">
 			            <a href="#" class="nav-link">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p >프로젝트관리<i class="fas fa-angle-left right"></i></p>
+							<p>프로젝트관리<i class="fas fa-angle-left right"></i></p>
 						</a>
 					    <ul class="nav nav-treeview">
 					    	<c:forEach items="${pmInProjectList}" var="project">
@@ -278,7 +282,7 @@
 					<li class="nav-item has-treeview menu-close">
 			            <a href="#" class="nav-link">
 				        	<i class="nav-icon fas fa-poll-h"></i>
-							<p >참여중인 프로젝트가 없습니다</p>
+							<p>참여중인 프로젝트가 없습니다</p>
 						</a>
 				 </c:if>
 			</ul>

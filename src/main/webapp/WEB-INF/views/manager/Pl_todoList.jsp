@@ -6,6 +6,8 @@
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,7 +121,7 @@
 			<tr>
 				<th style="padding-left: 10px;">No.</th>
 				<th>상태</th>
-				<th >제목</th>
+				<th style="text-align: left; padding-left: 10%;">제목</th>
 				<th>담당자</th>
 				<th>Progress</th>
 				<th>진행도</th>
@@ -137,7 +139,14 @@
 					<c:if test="${todo.todoImportance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
 					<c:if test="${todo.todoImportance eq 'emg'}"><span class="badge badge-danger ns">긴급</span></c:if>
 					</td>
-					<td >${todo.todoTitle}</td>
+					<td style="text-align: left; padding-left: 8%;">
+					<c:if test="${fn:length(todo.todoTitle) > 30}">									
+						${fn:substring(todo.todoTitle,0 ,30) }...
+					</c:if>
+					<c:if test="${fn:length(todo.todoTitle) <= 30}">									
+						${todo.todoTitle}
+					</c:if>
+					</td>
 					<td>${todo.memId}</td>
 					<c:if test= "${todo.todoPercent eq '0'}">
 						<td>

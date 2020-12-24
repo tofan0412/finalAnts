@@ -69,7 +69,7 @@
 	
 	<!-- 일정 상세페이지 -->
 	<select id="scheduleSelect" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">	
-		SELECT a.SCHE_ID, a.SCHE_TITLE, a.SCHE_CONT, to_char(a.REG_DT,'YYYY-MM-DD hh:mm') as REG_DT, a.X_VAL, a.Y_VAL, a.CATEGORY_ID, a.REQ_ID, 
+		SELECT a.SCHE_ID, a.SCHE_TITLE, a.SCHE_CONT, to_char(a.REG_DT,'yyyy-mm-dd hh24:mi') as REG_DT, a.X_VAL, a.Y_VAL, a.CATEGORY_ID, a.REQ_ID, 
 		        b.mem_name, a.mem_id, a.DEL, to_char(a.START_DT,'YYYY-MM-DD') as START_DT, to_char(a.END_DT,'YYYY-MM-DD') as END_DT, a.JUSO, a.CALENDARCSS
 		FROM SCHEDULE a, member b
 		WHERE sche_id = #{scheId}
@@ -99,57 +99,7 @@
 		WHERE sche_id = #{scheId}
 	</update>
 	
-		
-									<!-- 	댓		글	 -->
-										
-	<!-- 댓글 등록 -->
-	<insert id="scheduleinsertreply" parameterType="ants.com.board.memBoard.model.ReplyVo">
-		INSERT INTO reply VALUES(
-			reply_seq.nextval,
-			#{someId}, 
-			#{replyCont}, 
-			sysdate,'N', 
-			#{categoryId}, 
-			#{reqId}, 
-			#{memId}
-			)
-	</insert>
 	
-	
-	<!-- 댓글목록 가져오기 -->
-	<select id="schedulereplylist" resultType="ants.com.board.memBoard.model.ReplyVo" parameterType="String">
-		SELECT  a.reply_id,
-			a.some_id,
-		    a.reply_cont,
-		    to_char(a.reg_dt,'yyyy-mm-dd hh24:mm') as reg_dt ,
-		    a.del,
-		    a.category_id,
-		    a.req_id,
-		    a.mem_id,
-		    b.mem_name,
-		    b.mem_filepath	
-	    FROM reply a, member b
-	    WHERE some_id = #{someId}
-	    	and category_id = #{categoryId}
-	    	and req_id = #{reqId}
-	    	and a.mem_id = b.mem_id
-	    order by reg_dt, to_number(reply_id)
-	</select>
-  	
-  
-	<!-- 댓글 삭제 status Y으로-->
-	<update id="scheduledelreply" parameterType="ants.com.board.memBoard.model.ReplyVo">
-		UPDATE reply 
-		SET del = 'Y' 
-		WHERE reply_id = #{replyId} 
-	</update>	
-  
-  								<!-- 	댓		글	 -->
-  
-  
-  
-  
-  
   
 	<!-- 일정 리스트(캘린더용) -->
 	<select id="showCalendar" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">

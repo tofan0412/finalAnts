@@ -22,12 +22,17 @@
 		$("#memChangecomment").hide();
 		$('#summernote').summernote();
 		
-		// db일자 가져오기
 		var todo_start = $('#todo_start').val();
 		var todo_end = $('#todo_end').val();
-		document.getElementById('todoStart').value = new Date(todo_start).toISOString().substring(0, 10);
- 		document.getElementById('todoEnd').value = new Date(todo_end).toISOString().substring(0, 10);
- 		
+		var todo_start2 = new Date(todo_start);
+		var todo_end2 = new Date(todo_end);
+		date1 = getFormatDate(todo_start2);
+		date2 = getFormatDate(todo_end2);
+ 		document.getElementById('todoStart').value = date1;
+  		document.getElementById('todoEnd').value = date2;
+		 $('#todoStart').attr('min', new Date(date1).toISOString().substring(0, 10));
+		 $('#todoEnd').attr('min', new Date(date2).toISOString().substring(0, 10));
+		
  		//파일
 		fileSlotCnt = "${filelist.size() }";
 		console.log(fileSlotCnt)
@@ -104,7 +109,28 @@
      	// 업데이트 버튼 클릭시 파일 삭제 호출
      	$('#updatebtn').on('click', function(){
      		$("#mem-select").remove();
+     		cnt = 0;
+     		// 각 칸이 빈칸인지 확인
+     		if ($('#todoTitle').val().length == 0){
+				$('.warningtodoTitle').text("제목을 작성해 주세요.");  
+				cnt++;
+			}
+     		if ($('#todoStart').val().length == 0){
+				$('.warningtodoStart').text("시작일을 지정해 주세요.");  
+				cnt++;
+			}
+     		if ($('#todoEnd').val().length == 0){
+				$('.warningtodoEnd').text("마감일을 지정해 주세요.");  
+				cnt++;
+			}
+     		if ($('#memChangeComment2').val().length == 0){
+				$('.warningmemChangeComment').text("인수인계 내용을 입력해주세요.");  
+				cnt++;
+			}
+     		if(cnt == 0){
      		 delfiles();	     	
+     		}
+     		
      	})
      	
      	// 업로드된 파일의 수와 사용자가 올린 파일의 수가 같을 시 from 전송
@@ -124,7 +150,6 @@
 				 method : "post",
 				 success :function(data){	
 					 console.log(data);
-					 
 					// 업로드할 파일이 존재하지 않을시 update전송
 		     		if($('.uploadifive-queue-item').length ==0){    	
 		     			$("#mem-select").remove();
@@ -137,7 +162,14 @@
 		 	})
 		}
  		
- 		
+	function getFormatDate(date){
+	    var year = date.getFullYear();              //yyyy
+	    var month = (1 + date.getMonth());          //M
+	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    var day = date.getDate();                   //d
+	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    return  year + '-' + month + '-' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+	}
  		//파일끝
  		
  		// 뒤로가기
@@ -150,7 +182,16 @@
 			$("#changemem").val('${todoVo.memId }');
 			$("#memChangecomment").show();
 			$("#mem-select").remove();
+		
 		});
+ 		
+		$('#todoTitle').keyup(function (e){
+            var content = $(this).val();           
+            if (content.length > 66){
+                alert("최대 66자까지 입력 가능합니다.");
+                 $(this).val(content.substring(0, 65));
+            }
+        });
  	});
 
 </script>
@@ -204,8 +245,9 @@
 		        <div class="form-group">
 				<input type="hidden" name="todoId" value="${todoVo.todoId }">
 				<label for="todoTitle" class="col-sm-1 control-label ns">제목</label>
-				<input  class="ns" type="text" name="todoTitle" style="width: 580px;" id="todoTitle" value="${todoVo.todoTitle }"><br><br>
-				
+				<input  class="ns" type="text" name="todoTitle" style="width: 1000px;" id="todoTitle" value="${todoVo.todoTitle }">
+				<div class="jg" style=" padding-left: 10px; display: inline;"><span class="jg warningtodoTitle" style="color : red;"></span></div><br><br>
+                
 				<div style="width: 80%;">
 				<label for="todoCont" class="col-sm-1 control-label ns">할일</label>
 				<textarea id="summernote" name="todoCont" id="todoCont">${todoVo.todoCont }</textarea>
@@ -214,18 +256,21 @@
 				<label for="mem-select" class="col-sm-1 control-label ns">담당자</label>
 				<input  class="ns" type="text" id="mem-select" name="memId" value="${todoVo.memId }" readonly="readonly">
 				<input  class="ns" type="button" id="memChange" value="인수인계">
-				
+                
 				<div id="memChangecomment">
 				<label for="memChangeComment" class="col-sm-1 control-label ns">인수인계 내용</label>
-				<input  class="ns" type="text" id="memChangeComment" name ="logComment"/>
-				
+				<input  class="ns" type="text" id="memChangeComment2" name ="logComment"/>
+				<div class="jg" style=" padding-left: 10px; display: inline;"><span class="jg warningmemChangeComment" style="color : red;"></span></div>
+                
 				<label for="mem-select" class="col-sm-1 control-label ns">변경 담당자</label>
 				<select name="memId" id="mem-select2">
 				<c:forEach items="${promemList}" var="mem">
-					<c:if test="${mem.memName ne todoVo.memId }">
+					<c:if test="${mem.memId ne todoVo.memId }">
 				<option  class="ns" value="${mem.memId}">${mem.memName}</option></c:if>
 		 		</c:forEach>
 		 		</select>
+		 		<div class="jg" style=" padding-left: 10px;"><span class="jg warningmem-select2" style="color : red;"></span></div>
+                
 				</div>
 				<br><br>
 				<input type="hidden" name="changemem" id="changemem" />
@@ -245,12 +290,15 @@
 				<input class="ns" type="text" id="todoPercent" name="todoPercent" value="${todoVo.todoPercent }" readonly="readonly"/><br><br>
 				
 				<label for="todoStart" class="col-sm-1 control-label ns">시작 일</label>
-				<input class="ns" type='date' id='todoStart' name="todoStart"/><br><br>
-				<input type="hidden" id='todo_start' value="${todoVo.todoStart}"/>
-				
+				<input class="ns" type='date' id='todoStart' name="todoStart"/>
+				<div class="jg" style=" padding-left: 10px; display: inline;"><span class="jg warningtodoStart" style="color : red;"></span></div><br><br>
+				<input type="hidden" id='todo_start' value="${todoVo.todoStart}">
+                
 				<label for="todoEnd" class="col-sm-1 control-label ns">종료 일</label>
-				<input class="ns" type='date' id='todoEnd' name="todoEnd"/><br><br>
-				<input type="hidden" id='todo_end' value="${todoVo.todoEnd}"/>
+				<input class="ns" type='date' id='todoEnd' name="todoEnd"/>
+				<div class="jg" style=" padding-left: 10px; display: inline;"><span class="jg warningtodoEnd" style="color : red;"></span></div><br><br>
+				<input type="hidden" id='todo_end' value="${todoVo.todoEnd}">
+                
 				</div>
 				
 				<div class="form-group">

@@ -112,24 +112,32 @@
  		
  	// 작성 버튼 클릭시 파일 업로드 호출
  	$('#regBtn').on('click', function(){
+ 		cnt = 0;
  		// 업로드할 파일이 존재하지 않을시
- 		if($('.uploadifive-queue-item').length ==0){    			
- 			if("${hissueParentid}" != null){
-	 			saveMsg();
-	 		}
-			$("#hissueform").submit();
- 		// 업드로할 파일이 존재할 시
+ 	// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
+			if ($('#hissueTitle').val().length == 0){
+			$('.warninghissueTitle').text("제목을 작성해 주세요.");  
+			cnt++;
+		}
+			if(cnt == 0){
+				if($('.uploadifive-queue-item').length ==0){    			
+		 			if("${hissueParentid}" != null){
+			 			saveMsg();
+			 		}
+					$("#hissueform").submit();
  		}else{
  			$('#file_upload').uploadifive('upload');
- 		}	
+ 			}	
+		}
  	})
  	
  	function insert(){
  		if(uploadCnt == $('.uploadifive-queue-item').length){
  			if("${hissueParentid}" != null){
-	 			saveMsg();
+ 				saveMsg();
 	 		}
 			$("#hissueform").submit();    		
+	 		
     	}else{}
 	}
  	//파일끝
@@ -139,13 +147,27 @@
 		$("#back").on("click", function() {
 			window.history.back();
 		});
+ 	
+        
+        // 제목 글자수 계산
+          $('#hissueTitle').keyup(function (e){
+              var content = $(this).val();           
+              if (content.length > 66){
+                  alert("최대 66자까지 입력 가능합니다.");
+                   $(this).val(content.substring(0, 65));
+              }
+          });
+        
+ 	
 	});
 	
 	//답글 알림 db저장, 소켓에 메세지보내기
 	function saveMsg(){
-		var pid= $("#hissueParentid").val();  
+		var pid= $("#hissueParentid").val(); 
+		var chTitle = $('#hissueTitle').val();
+		var chCont = $('#summernote').val();
 		var alarmData = {
-							"alarmCont" : pid+"&&${SMEMBER.memName}&&${SMEMBER.memId}&&/hotIssue/hissueList?reqId=${projectId}&&${hotIssueVo.hissueTitle}&&"+ $('#hissueTitle').val(),
+							"alarmCont" : "${projectId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/hotIssue/hissueList&&"+pid+"&&${hotIssueVo.hissueTitle}&&"+ chTitle + "&&" + chCont,
 							"memId" 	: "${hotIssueVo.memId}",
 							"alarmType" : "posts"
 							
@@ -159,11 +181,11 @@
 				type : 'POST',
 				contentType : "application/json; charset=utf-8",
 				dataType : 'text',
+				async: false,
 				success : function(data){
 					
 					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 					socket.send(socketMsg);
-					
 					
 				},
 				error : function(err){
@@ -219,7 +241,8 @@
                 <div class="form-group">
 				<form method="post" action="${pageContext.request.contextPath }/hotIssue/hissueInsert" id="hissueform" >    
                 <input type="hidden" name="hissueId" value="${hissueSeq }">
-                  <input class="form-control" placeholder="Subject:" name="hissueTitle" id="hissueTitle"><br>
+                  <input class="form-control" placeholder="Subject:" name="hissueTitle" id="hissueTitle">
+                  <div class="jg" style=" padding-left: 10px;"><span class="jg warninghissueTitle" style="color : red;"></span></div><br>
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
                   <input type="hidden" name="hissueParentid" value="${hissueParentid}" id="hissueParentid">
                 <textarea id="summernote" name="hissuetCont"></textarea>

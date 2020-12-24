@@ -99,12 +99,9 @@
 	         "buttonText": "파일찾기",
 	         "fileSizeLimit": "20MB",
 	         "uploadLimit": 10,
-			 'onUploadComplete' : function(file, data) { 
-				 if($('#delfile').val()==""){
-					insert();
-				 }else{
-					delfiles();
-				 }
+			 'onUploadComplete' : function(file, data) {
+				 reqList();
+				 
 			},
 			'onCancel': function (file) {// 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
 // 				alert('취소')
@@ -119,51 +116,53 @@
 			}
 		});
 	  
-		fileSlotCnt = 1;
-	    // 최대 첨부파일 수
-	    maxFileSlot = 5;
-	    $('#filediv').on('click', '#btnMinus', function(){
-	     	   if(fileSlotCnt > 1){
-	     		   fileSlotCnt--;
-	     		   console.log(fileSlotCnt);
-	     	   }
-	     	   console.log("minus clicked!!");
-	     	   $(this).prev().prev().remove();
-	     	   $(this).prev().remove();
-	     	   $(this).remove();
-	     	   $('#addbtn').show();
-	     	   
-	        })
-	        
-         $('#addbtn').on('click', function(){
-			   fileSlotCnt++;
-	    	   console.log("click!!");
-	    	   var html = '<br><input type="file" name="file" id="fileBtn">'
-	    	   				+'<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">'
-								+'<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i>'
-							+'</button>';
-	    	   $(this).next().next().append(html);  
-	    	   
-	    	   if(fileSlotCnt >= maxFileSlot){
-	    		   $(this).hide();
- 	    		   alert("파일은 총 "+maxFileSlot+"개 까지만 첨부가능합니다.");
-	    	   }
-     	 })
 	    
      	// 작성 버튼 클릭시 요구사항정의서,프로젝트 등록
-     	$('.insertbtn').on('click', function(){
+     	$('#insertbtn').on('click', function(event){
 				 $.ajax({
-						url : "${registerFlag == 'create' ? '/req/reqInsert' : '/req/reqUpdate' }",
+						url : "/req/reqInsert",
 						method : "post",
 						data : $('#saveForm').serialize(),
+						dataType : 'json', 
 						success : function(data){
 								if($('.uploadifive-queue-item').length>0){
 									fileUpload(data.reqVo);
 								}else{
-									delfiles();
+									reqList();
 								}
-						}
+						},
+						error:function(request,status,error){
+					        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					    }
 				 });
+				 event.preventDefault();
+     	});
+     	// 수정 버튼 클릭시 요구사항정의서 수정
+     	$('#updatebtn').on('click', function(event){
+				 $.ajax({
+						url : "/req/reqUpdate",
+						method : "post",
+						data : $('#saveForm').serialize(),
+						dataType : 'json', 
+						success : function(data){
+							var delfile = $('#delfile').val();
+							//삭제할 파일 존재하면
+							if(delfile != null && delfile != ''){
+								delfiles(data.reqVo);
+							 }else{
+								//삭제없고 업로드파일만 있으면
+								if($('.uploadifive-queue-item').length>0){
+									fileUpload(data.reqVo);
+								}else{
+									reqList();
+								}
+							 }
+						},
+						error:function(request,status,error){
+					        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					       }
+				 });
+				 event.preventDefault();
      	});
 	    
 	
@@ -178,7 +177,7 @@
 	 	}
 	  	
 	 	/* 파일 삭제버튼 클릭 */
-		$(document).on("click", "#btnMinus", function(){
+		$(document).on("click", "#btnMinus", function(event){
 				var id = $(this).prev().attr('name')
 				$('#delfile').append(id + ",");
 				
@@ -188,27 +187,36 @@
 				$(this).prev().prev().remove();
 	     	    $(this).prev().remove();
 	     	    $(this).remove();
-	       	    
+	     	   event.preventDefault();
 	     });
-
+	 	
 		/* 파일삭제 */ 
-		function delfiles(){
+		function delfiles(reqVo){
 			console.log($('#delfile').val());
 		 	$.ajax({url :"${pageContext.request.contextPath}/file/delfiles",
 		 			 data : {delfile : $('#delfile').val() },
 					 method : "post",
 					 success :function(data){
-						 reqList();
+						//삭제하고 업로드파일 있으면
+						if($('.uploadifive-queue-item').length>0){
+							fileUpload(reqVo);
+						}else{
+							reqList();
+						}
 					 }
 			 });
 		}
-	
+
+		
 }); //document.ready
 	
 	/* 요구사항정의서 목록으로 이동 */
 	function reqList(){
 			document.location = "/req/reqList";   		
 	}
+	
+	
+
 	
 	function initData(){
 		$('#reqTitle').val("텀블러 자동세척기 개발");
@@ -315,10 +323,10 @@
 					       <a href="#" class="btn btn-secondary" id="back">취소</a>
 					       <c:choose>
 						       	<c:when test="${registerFlag == 'modify' }">
-						       		<button class="btn btn-success float-right insertbtn">수정</button>
+						       		<button class="btn btn-success float-right insertbtn" id="updatebtn">수정</button>
 						       	</c:when>
 						       	<c:when test="${registerFlag == 'create' }">
-						       		<button class="btn btn-success float-right insertbtn">저장</button>
+						       		<button class="btn btn-success float-right insertbtn" id="insertbtn">저장</button>
 						       	</c:when>
 					       </c:choose>
 					     </div>

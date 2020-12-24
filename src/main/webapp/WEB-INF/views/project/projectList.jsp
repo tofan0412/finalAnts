@@ -3,10 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <style>
 .reqListContent {
 	background-color: white;
@@ -24,32 +20,29 @@ th, td {
 	padding: 10px;
 	text-align: center;
 }
-#userSearch{
+
+#mkPjtUserSearch{
 	z-index: 50;
 }
+
 .inputBox{
 	border : none;
 	background-color : #ebf1f5;
 	border-radius: 0.3rem;
 	height : 30px;
+	width : 80%;
 	font-size : 1.15em;
 }
-.addedMemId{
-	border : 2px solid #faff69;
-	background-color : #faff69;
-	border-radius : 0.5rem;
-	height : 40px;
-	font-size : 1.5em;
-	display: inline-block;	
-}
+
 .xBtn{
 	 cursor: pointer;
 }
 </style>
 <script>
 	$(function() {
-		SearchList = [];	// 자동완성 검색에 띄울 리스트 ..
-		inviteMemList = [];	// 프로젝트에 초대할 회원 리스트..
+		mkPjtMemberSearchList = [];	// 검색결과에 띄울 리스트 ..
+		mkPjtInviteMemList = [];	// 프로젝트에 초대할 회원 리스트..
+		
 		me = "${SMEMBER.memId}"; 	
 		
 		// 사용자가 승인 버튼을 누르는 경우 버튼 내용이 프로젝트 생성으로 변경되며, 
@@ -84,13 +77,16 @@ th, td {
 			var reqTitle = $(this).attr("reqTitle");
 
 			// Modal창이므로 이전에 입력했던 내용이 유지된다. 모두 초기화 해준다.  
-			$('.warning').empty();
-			$('.MemList').empty();
-			$('.projectName').val("");
-			$('#userSearch').val("");
+			$('.mkPjtMemList').empty();		// 프로젝트에 초대할 회원 리스트 비우기
+			$('#mkPjtUserSearch').val("");	// 검색창 비우기
+			$('.projectName').val("");		// 프로젝트 이름 비우기
 			
-			SearchList = [];
-			inviteMemList = [];
+			mkPjtMemberSearchList = [];		// 검색 결과 리스트 비우기
+			mkPjtInviteMemList = [];		// 초대할 회원 리스트 비우기
+			
+			$('.mkPjtSearchResult').empty();// 검색 결과 비우기
+			$('#mkPjtWarningText').text("");// 경고창 비우기
+			$('#mkPjtFake').show();			
 			$('#mkProject').modal();
 			
 			$('.modal-body .reqId').val(reqId);
@@ -110,17 +106,33 @@ th, td {
 			}
 			
 			//생성 직전, 자기 자신 아이디를 추가한다. 
-			inviteMemList.push(me);
-			var ajaxArr = {"inviteMemList" : inviteMemList, "reqId" : reqId, "memId" : me};
+			mkPjtInviteMemList.push("본인아이디"+":"+me);
+			
+			// 현재 초대 리스트는 회원이름과 결합되어 있으므로, 가공해줘야 한다.
+			setInviteMemList = [];
+			for (i = 0 ; i < mkPjtInviteMemList.length ; i++){
+				setInviteMemList.push(mkPjtInviteMemList[i].split(":")[1]);
+			}
+			
+			var ajaxArr = {"inviteMemList" : setInviteMemList, "reqId" : reqId, "memId" : me};
+			
+			ArrWithoutMe = [];
+			for (i = 0 ; i < setInviteMemList.length ; i++){
+				if (me == setInviteMemList[i]){
+					// 나 스스로한테는 알람을 보내선 안되므로, 아무것도 하지 않는다.(알람 대상 리스트에 나를 제외한다.)
+				}else{
+					ArrWithoutMe.push(setInviteMemList[i]);
+				}
+			}
 			
 			var alarmData = {
 					"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId=" + reqId + "&&" + projectName ,
-					"memIds"	: inviteMemList,
+					"memIds"	: ArrWithoutMe,
 					"alarmType" : "req-pro"
 			}
 			
 			// 프로젝트를 먼저 생성한다.
-			// 20.12.12 수정 : 프로젝트는 수정되어 있고 제목만 등록한다. 
+			// 20.12.12 수정 : 프로젝트는 이미 DB상에서 생성되어 있으므로, 제목만 등록한다. 
 			$.ajax({
 				url : "/project/updateProject",
 				data : { "reqId" : reqId,
@@ -128,7 +140,7 @@ th, td {
 				method : "POST",
 				success : function(res){
 					if ("success" == res){
-						// 프로젝트 생성을 완료했으면, 이어서 프로젝트 멤버를 DB에 등록한다. 
+						// 프로젝트 제목을 수정했으면, 이어서 프로젝트 멤버를 DB에 등록한다. 
 						// 내 아이디가 프로젝트멤버에 등록될 때는, 상태가 승인 상태로 되어야 한다..! 
 						$.ajax({
 							url : "/project/insertPjtMember",
@@ -151,127 +163,165 @@ th, td {
 			})
 		})
 		
-		// 사용자가 초대할 멤버를 추가할 때
-		$('.addMemBtn').click(function(){
-			// 사용자가 입력한 아이디를 변수로 저장한다. 
-			var memId = $('#userSearch').val();
-			
-			// 나는 초대할 수 없다. 
-			if (memId == "${SMEMBER.memId}"){
-				$('.warning').text("본인입니다.");
-				return;
-			}
-			
-			// 기존에 추가한 회원인지 아닌지를 확인하는 값.
-			var check = 0;
-			
-			// 1차적으로 DB에서 검증이 필요.(DB에 존재하는지 안하는지..)  
-			$.ajax({
-				url : "/project/chkMemId",
-				data : {memId : memId},
-				method : "POST",
-				success : function(res){
-					console.log(res);
-					if ("accept" == res){	// DB 상에 존재하는 회원아이디임을 나타낸다 ! 
-						
-						// 만약 inviteMemList 길이가 0인 경우, 최초로 넣는 것이므로 바로 패스.
-						if (inviteMemList.length == 0){
-							$('.warning').text('');
-							inviteMemList.push(memId);	// 배열에 추가하고
-							listMember(inviteMemList);	// View 목록 수정.
-						}
-						
-					// inviteMemList 목록의 길이가 0이 아닌 경우 이미 추가했는지 안했는지를 검증해야 한다.
-						else{
-							for(i = 0 ; i < inviteMemList.length ; i++){
-								if ( inviteMemList[i] == memId ){
-									$(".warning").text('');
-									$('.warning').text("이미 추가한 회원입니다.");
-									check = 1;
-								}
-							}
-							if (check != 1){	// 기존에 추가하지 않은 회원인 경우, 추가한다.
-								$('.warning').text('');
-								inviteMemList.push(memId);
-								listMember(inviteMemList);
-							}
-						}
-					}
-					else{
-						$(".warning").text('');
-						$(".warning").append("존재하지 않는 사용자 이름입니다.");
-					}
-				}
-			})
-		})
-		
 		// 사용자가 아이디를 누르는 경우 제거한다. 
-		$('.MemList').on('click', '.xBtn', function(){
+		$('.mkPjtMemList').on('click', '.mkPjtAddedMember', function(){
 			var memId = $(this).attr('memId');
 			delMember(memId);
 		})
 		
-		
 		function delMember(memId){
-			$('.warning').text('');
-			inviteMemList.splice(inviteMemList.indexOf(memId),1); // 뒤의 개수는 몇개를 제거할 지 이다..
-			listMember(inviteMemList);
+			$('#mkPjtWarningText').text('해당 회원을 제외하였습니다.');
+			$('#mkPjtWarningText')[0].style.visibility = 'visible';
+			
+			mkPjtInviteMemList.splice(mkPjtInviteMemList.indexOf(memId),1); // 뒤의 개수는 몇개를 제거할 지 이다..
+			listMember(mkPjtInviteMemList);
 		}
 		
-		function listMember(inviteMemList){
-			$('.MemList').empty();
-			for (i = 0 ; i < inviteMemList.length ; i++){
-				$('.MemList').append(
-					"<div class=\'addedMemId jg\'>"
-						+inviteMemList[i]
-					+"</div>&nbsp;"+
-					"<span class=\'xBtn fas fa-window-close icon\' memId=\'"+ inviteMemList[i] +"\'>"
-					+"</span>&nbsp;&nbsp;");	
-			}	
-		}
-		
-		// 사용자가 프로젝트에 초대할 아이디를 입력하는 경우 자동완성 기능을 사용한다.		
-		
-		// 사용자가 프로젝트 이름을 입력하려고 하면 에러 메시지를 지운다.
-		$('.projectName').keyup(function(){
-			$('.error').empty();
+		// 사용자가 검색어를 입력하면, 자동으로 ajax를 이용해 검색한다.
+		var timer = null;
+		$('#mkPjtUserSearch').keyup(function(){
+			if ($(this).val() != ''){
+				$('#mkPjtWarningText').text("검색 중입니다..");
+				$('#mkPjtFake').hide();
+				$('#mkPjtWarningText')[0].style.visibility = 'visible';
+			}else{
+				$('#mkPjtWarningText')[0].style.visibility = 'hidden';
+			}
+			
+			if (timer){
+				window.clearTimeout(timer);
+			}
+			timer = window.setTimeout(function(){
+				timer = null;
+				$('#mkPjtWarningText').text("");
+				$('.mkPjtSearchResult').empty();
+				mkPjtMemberSearchList = [];
+				
+				var keyword = $('#mkPjtUserSearch').val();
+				if (keyword == ''){
+					$('.mkPjtSearchResult').empty();
+				}
+				else {
+					$.ajax({
+						url : "/project/userSearch",
+						data : { keyword : keyword },
+						method : "GET",
+						success : function(res) {
+							if (res.length == 0){	// 검색 결과가 없는 경우, 메서드 종료
+								return;
+							}else{	// 검색 결과가 1개 이상인 경우
+								for (i = 0; i < res.length; i++) {
+									mkPjtMemberSearchList.push(res[i].memName+":["+res[i].memId+"]");
+								}
+							}
+						},
+						complete : function(){
+							$('#mkPjtWarningText')[0].style.visibility = 'hidden';
+							$('.mkPjtSearchResult').empty();
+							printSearchResult(mkPjtMemberSearchList);
+						}
+					})
+				}
+			},500);
 		})
 		
-		$('#userSearch').keyup(function(){
-			var keyword = $(this).val();
-			if (keyword != ''){
-				$.ajax({
-					url : "/project/userSearch",
-					data : {keyword : keyword},
-					method : "GET",
-					success : function(res){
-						SearchList = [];
-						for (var i = 0 ; i < res.length; i++){
-							SearchList.push(res[i].memId);
-						}
-						autoComplete(SearchList);
+		// 사용자가 검색한 결과를 출력한다.
+		function printSearchResult(arr){
+			// 검색 결과가 존재하지 않는 경우  : (검색중입니다..) 문구를 삭제한다.
+			if (arr.length == 0 ){
+				$('#mkPjtWarningText')[0].style.visibility = 'hidden';
+				return;
+			}
+			// 검색 결과가 1건 이상 존재하는 경우..
+			else{
+				for (j = 0 ; j < arr.length ; j++){
+					$('.mkPjtSearchResult').append(
+					"<div class=\'mkPjtSearchResultOne\' memId=\'"
+					+ arr[j].split(":")[1].replace("[","").replace("]","") +"\' memName=\'"
+					+ arr[j].split(":")[0] + "\' style=\'height : 50px; \' >"
+						+"<span style=\'float : left;\'>"
+							+arr[j].split(":")[0]
+						+"</span>"
+						+"<span style=\'float : left;\'>"
+							+arr[j].split(":")[1]
+						+"</span>"
+					+"</div>");	
+				} 
+				$('#mkPjtWarningText')[0].style.visibility = 'hidden';
+			}
+		}
+		
+		// 검색 결과 중 하나를 클릭했을 때..
+		$('.mkPjtSearchResult').on('click', '.mkPjtSearchResultOne', function(){
+			memName = $(this).attr("memName");
+			addingMemId = $(this).attr("memId");
+			
+			$('#mkPjtWarningText')[0].style.visibility = 'hidden';
+			
+			// 본인인지 아닌지, 확인해야 한다.
+			if (memName == "${SMEMBER.memName}") {
+				$('#mkPjtWarningText').text("본인입니다.");
+				$('#mkPjtWarningText')[0].style.visibility = 'visible';
+				return;
+			}
+			// 초대할 회원 리스트 길이가 0인 경우 : 바로 넣는다.
+			if (mkPjtInviteMemList.length == 0) {
+				mkPjtInviteMemList.push(memName+":"+addingMemId);
+				listMember(mkPjtInviteMemList);
+				$('#mkPjtWarningText').text("추가하였습니다..");
+				$('#mkPjtWarningText')[0].style.visibility = 'visible';
+				return;
+			}else{
+			// 초대 회원 리스트 길이가 0이 아닌 경우 : 중복되면 안된다.
+				for (i = 0; i < mkPjtInviteMemList.length; i++) {
+					if ((memName+":"+addingMemId) == mkPjtInviteMemList[i]) {
+						$('#mkPjtWarningText').text("이미 추가한 회원입니다.");
+						$('#mkPjtWarningText')[0].style.visibility = 'visible';
+						return;
 					}
-				})
+				}
+				mkPjtInviteMemList.push(memName+":"+addingMemId);
+				listMember(mkPjtInviteMemList);
+				$('#mkPjtWarningText').text("추가하였습니다..");
+				$('#mkPjtWarningText')[0].style.visibility = 'visible';
+				return; // 추가하고 끝낸다.
 			}
 		})
-		// 자동 완성 부분 ..
-		function autoComplete(SearchList){
-			$('#userSearch').autocomplete({
-				source : SearchList,
-				select : function(event, ui){
-					console.log(ui.item);
-				},
-				minLength : 2,
-				// 모달 창 위로 떠야 한다..
-				appendTo : $('#mkProject'),
-				focus: function(event, ui) {
-		            return false;
-		            //event.preventDefault();
-		        }
-			})
+		
+		// 배열 기준으로 초대 목록 우측에 작성하기.
+		function listMember(mkPjtInviteMemList) {
+			$('.mkPjtMemList').empty();
+			for (i = 0; i < mkPjtInviteMemList.length; i++) {
+				$('.mkPjtMemList').append(
+						"<div class=\'mkPjtAddedMember jg\' style=\'height : 50px;\'"
+							+" memId='"+mkPjtInviteMemList[i]+"'>"
+							+ mkPjtInviteMemList[i].split(":")[0]
+							+ "[" + mkPjtInviteMemList[i].split(":")[1] + "]"
+						+ "</div>");
+			}
 		}
 		
-	})
+		// 검색 창에서 마우스 올렸을 때 ..
+		$('.mkPjtSearchResult').on('mouseenter','.mkPjtSearchResultOne',function(){
+			$(this).css("background-color", 'lightgrey');
+		})
+		
+		$('.mkPjtSearchResult').on('mouseleave','.mkPjtSearchResultOne',function(){
+			$(this).css("background-color", 'white');
+		})
+		
+		// 초대할 회원 리스트에 마우스 올렸을 때 ..
+		$('.mkPjtMemList').on('mouseenter','.mkPjtAddedMember',function(){
+			$(this).css("background-color", 'lightgrey');
+		})
+		
+		$('.mkPjtMemList').on('mouseleave','.mkPjtAddedMember',function(){
+			$(this).css("background-color", 'white');
+		})
+		
+		
+		
+	})	//$(function(){}) 의 끝 ...
 	
 	/* pl응답 알림메세지 db에 저장하기 */
 	function saveResMsg(alarmData){
@@ -362,13 +412,13 @@ th, td {
 
 
 	<!-- 프로젝트 생성 modal 창 -->
-	<div class="modal fade" id="mkProject" tabindex="-1" role="dialog"
+	<div class="modal fade jg" id="mkProject" tabindex="-1" role="dialog"
 		aria-labelledby="createPjtModal">
 		<div class="modal-dialog modal-lg" role="document">
 			
-			<div class="modal-content" style="height: 500px;">
+			<div class="modal-content" style="height: 700px;">
 				<div class="modal-header">
-					<h3 class="modal-title jg" id="addplLable">새 프로젝트 생성하기</h3>
+					<h3 class="modal-title" id="addplLable">새 프로젝트 생성하기</h3>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -380,33 +430,42 @@ th, td {
 					<input class="reqId" type="text" value="" hidden="hidden">
 					<input class="memId" type="text" value="${SMEMBER.memId }" hidden="hidden">
 					
+					<div style="float : left; width : 50%; height : 450px;">
+						<h5>요구사항정의서 이름</h5>
+						<input type="text" class="reqTitle inputBox" readonly>
+						<br><br>
+						<h5>프로젝트 이름</h5>
+						<input type="text" class="projectName inputBox" placeholder='프로젝트 이름을 입력해 주세요 ..' autocomplete="off">
+						<br><br>
+						<h5>멤버 검색하기</h5>
+						<input type="text" id="mkPjtUserSearch" class="inputBox" 
+							autocomplete="off" placeholder="회원 이름">
+						<label id="mkPjtFake" style="width : 80%; height : 11px;">&nbsp;</label>
+						<br>
+						<div id="mkPjtWarningText" 
+							style="color : red; float : left;
+								   margin-top : 5px;
+								   margin-left : 5px;
+								   margin-bottom : 5px;"></div>
+						<div class="mkPjtSearchResult" 
+							style="border : 2px solid lightgrey;
+								   border-radius : 0.45rem; 
+								   margin-top : 15px;
+								   overflow-y : auto;
+								   padding : 7px 7px 7px 7px;
+								   height : 200px; width : 80%;"></div>
+					</div>
+					
+					
+					<!-- 초대 리스트 -->
+					<h5>초대 리스트</h5>
 					<div>
-						<div style="float : left; width : 50%; height : 300px;">
-							<h5 class="jg">요구사항정의서 이름</h5>
-							<input type="text" class="reqTitle inputBox jg" readonly><br><br>
-							<h5 class="jg">프로젝트 이름</h5>
-							<input type="text" class="projectName inputBox jg" 
-							placeholder='프로젝트 이름을 입력해 주세요 ..'>
-							<br>
-							
-							<!-- 프로젝트 이름 입력 안했을 때 나오는 에러 문구.. with JSR303 -->
-							<span class="error" style="color : red;">
-								<form:errors path="projectVo.proName" class="jg"/>
-							</span>
-							<br>
-							<h5 class="jg">멤버 검색하기</h5>
-							<input type="text" id="userSearch" class="inputBox jg">
-							<button class="btn btn-success addMemBtn" type="button">추가</button>
-							<div class="warning jg" style="color : red; "></div>
-						</div>
-						
-						<!-- 초대 리스트 -->
-						<div class="MemList" style="float : right; 
-						width : 50%; height : 300px; border-radius : 0.35rem;
-						padding : 10px 10px 10px 10px; line-height : 45px;
-						background-color : #F3F6F9;">
-							<label class="jg">프로젝트 멤버 목록</label><br>
-							<span class="jg addedMemId"></span>
+						<div class="mkPjtMemList" 
+							style="float : right; 
+								   border : 2px solid lightgrey;
+								   width : 50%; height : 300px; border-radius : 0.35rem;
+								   padding : 10px 10px 10px 10px; line-height : 45px;
+						 		   background-color : white; overflow-y : auto;">
 						</div>
 					</div>
 				</div>

@@ -110,7 +110,14 @@
      	
      	// 업데이트 버튼 클릭시 파일 삭제 호출
      	$('#updatebtn').on('click', function(){
-     		 delfiles();	     	
+     		cnt = 0;
+     		if ($('#hissueTitle').val().length == 0){
+				$('.warninghissueTitle').text("제목을 작성해 주세요.");  
+				cnt++;
+			}
+     		if(cnt == 0){
+        		 delfiles();	     	
+        	}
      	})
      	
      	// 업로드된 파일의 수와 사용자가 올린 파일의 수가 같을 시 from 전송
@@ -149,6 +156,14 @@
 			window.history.back();
 		});
 	 	
+		// 제목 글자수 계산
+        $('#hissueTitle').keyup(function (e){
+            var content = $(this).val();           
+            if (content.length > 66){
+                alert("최대 66자까지 입력 가능합니다.");
+                 $(this).val(content.substring(0, 65));
+            }
+        });
 	});
 	
 </script>
@@ -201,7 +216,8 @@
               <div class="card-body">
 				<form method="post" action="${pageContext.request.contextPath }/hotIssue/updatehissue" id="hissueform"  >    
                 <div class="form-group">
-                  <input class="form-control" name="hissueTitle" value="${hotIssueVo.hissueTitle }">
+                  <input class="form-control" name="hissueTitle" value="${hotIssueVo.hissueTitle }" id="hissueTitle">
+                  <div class="jg" style=" padding-left: 10px;"><span class="jg warninghissueTitle" style="color : red;"></span></div><br>
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
                   <input type="hidden" name="hissueParentid" value="${hissueP }">
                   <input type="hidden" name="hissueId" value="${hotIssueVo.hissueId }">

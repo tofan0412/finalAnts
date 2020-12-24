@@ -71,16 +71,19 @@
 	</select>
 
 	<insert id="insertProject"
-		parameterType="ants.com.member.model.ReqVo">
+		parameterType="ants.com.member.model.ProjectVo">
 		INSERT INTO PROJECT 
 			(REQ_ID,REG_DT,DEL)
 		VALUES
 			(#{reqId},SYSDATE,'N')
 	</insert>
 
-	<select id="userSearch" parameterType="java.lang.String"
-		resultType="ants.com.member.model.MemberVo">
-SELECT * FROM MEMBER WHERE MEM_NAME LIKE #{keyword}
+	<select id="userSearch" parameterType="java.lang.String" resultType="ants.com.member.model.MemberVo">
+SELECT * 
+		  FROM MEMBER 
+		 WHERE MEM_NAME LIKE #{keyword}
+		   AND DEL != 'Y'
+		   AND MEM_TYPE != 'PM'
 </select>
 
 	<select id="chkMemId" parameterType="java.lang.String"
@@ -94,7 +97,7 @@ SELECT * FROM MEMBER WHERE MEM_NAME LIKE #{keyword}
 	<select id="requestPjtMember" resultType="ants.com.member.model.ProjectMemberVo" parameterType="ants.com.member.model.MemberVo">
 		SELECT * 
 		  FROM(
-				SELECT a.req_id, a.promem_id, a.mem_id, a.promem_status, b.pro_name as title, c.mem_name as pl_name
+				SELECT a.req_id, a.promem_id, a.mem_id, a.promem_status, b.pro_name as title, c.mem_name as pl_name, b.mem_id as pl_id
 				  FROM projectmember a, project b, member c
 				 WHERE a.req_id = b.req_id
 				   AND b.mem_id = c.mem_id
