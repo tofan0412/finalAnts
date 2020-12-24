@@ -28,7 +28,7 @@
 		
 		// 뒤로가기
 		$(document).on('click','#back', function(){
-			window.history.back();
+		   	document.location = "/hotIssue/hissueList";
 		})
 		
 		
@@ -44,40 +44,6 @@
 		})
  	})
  	
-// 	function hotDetail(hissueId) {
-// 		$.ajax({
-// 			url : "/hotIssue/hissueDetail",
-// 			method : "get",
-// 			data : {
-// 				hissueId : hissueId
-// 			},
-// 			success : function(data) {
-// 				var res ="";
-			
-// 				$("#hissueTitle").html(data.hotIssueVo.hissueTitle);
-// 				$("#hissuetCont").html(data.hotIssueVo.hissuetCont);
-// 				$("#regDt").html(data.hotIssueVo.regDt);
-// 				$("#writer").html(data.hotIssueVo.writer);
-				
-// 				$("#hissueId").val(data.hotIssueVo.hissueId);
-// 				$("#hissueParentid").val(data.hotIssueVo.hissueParentid);
-// 				$("#hissueLevel").val(data.hotIssueVo.hissueLevel);
-				
-
-// 				if(data.filelist.length == 0){
-// 					res += '<div class="jg" >[ 첨부파일이 없습니다. ]</div>';
-// 					$("#filediv").html(res);
-// 				}
-// 				if(data.filelist.length != 0) {
-// 					for( i = 0 ; i< data.filelist.length; i++){	
-//  						res += '<a href="${pageContext.request.contextPath}/hotissueFile/hotfileDown?hissuefId='+data.filelist[i].hissuefId+'"><input id ="files"  type="button" class="btn btn-default jg" name="'+ data.filelist[i].hissuefId+'" value="'+data.filelist[i].hissuefFilename+'" ></a>  ';
-						
-//  						$("#filediv").html(res);
-// 					}	
-// 				}
-// 			}
-// 		});
-// 	}
 </script>
 <style type="text/css">
   .success{
@@ -142,7 +108,7 @@
 		<button type="button" class="btn btn-default jg" id="updateBtn">수정</button>
 		<button type="button" class="btn btn-default jg" id="deleteBtn">삭제</button>
 		<div class="float-right">
-		<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
+		<button type="button" class="btn btn-default jg" id="back">목록 보기</button>
 		</div>	
 		</div>
 		</c:if>
@@ -151,7 +117,7 @@
 		<div id="btnMenu">
 		<div class="float-right">
 		<button type="button" class="btn btn-default jg" id="creatChildBtn">답글 작성</button>
-		<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
+		<button type="button" class="btn btn-default jg" id="back">목록 보기</button>
 		</div>	
 		</div>
 		</c:if>
@@ -222,7 +188,6 @@
 		<!-- 로그인한 사람이 글쓴이가 아닐때-->
 		<div id="btnMenu">
 		<div class="float-right">
-		<button type="button" class="btn btn-default jg" id="creatChildBtn">답글 작성</button>
 		<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
 		</div>	
 		</div>

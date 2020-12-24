@@ -59,6 +59,14 @@ public class ProjectController {
 
 		int result = projectService.updateProject(projectVo);
 		if (result > 0) {
+			
+			MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+			String memId = memberVo.getMemId();
+			List<ProjectVo> pro_pL = projectService.plInProjectList(memId);
+			if (pro_pL.size() != 0) {
+				session.setAttribute("plInProjectList", pro_pL); 
+			}
+			
 			return "success";
 		} else {
 			return "fail";
