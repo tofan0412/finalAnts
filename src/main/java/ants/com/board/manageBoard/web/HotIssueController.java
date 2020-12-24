@@ -24,7 +24,6 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 @RequestMapping("/hotIssue")
 @Controller
 public class HotIssueController {
-	private static final Logger logger = LoggerFactory.getLogger(HotIssueController.class);
 
 	
 	@Resource(name = "manageBoardService")
@@ -58,12 +57,6 @@ public class HotIssueController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		return "tiles/manager/plpm_hotissueList";
 	}
-	
-//	// 핫이슈 상세보기 화면 출력
-//	@RequestMapping("/hissueDetailView")
-//	public String hissueDetailView() {
-//		return "tiles/manager/plpm_hissueDetail";
-//	}
 	
 	
 	// 핫이슈 상세보기
