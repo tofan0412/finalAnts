@@ -164,7 +164,7 @@ $(function(){
 					$('#sgtId').val(sgtSeq);
 					var todoTitle = $('#SearchTodoIdBar').val();
 					var alarmData = {
-	    					"alarmCont" : "${projectVo.reqId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&suggest/suggestDetail&&" + sgtSeq + "&&" + $('#sgtTitle').val() + "&&" + $('#sgtCont').val() + "&&" + todoTitle,
+	    					"alarmCont" : "${projectVo.reqId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/suggest/suggestDetail&&" + sgtSeq + "&&" + todoTitle + "&&" + $('#sgtTitle').val() + "&&" + $('#sgtCont').val() +"&&${projectVo.proName}" ,
 	    					"memId" 	: "${projectVo.memId}",
 	    					"alarmType" : "suggest"
 	    			}
@@ -175,9 +175,8 @@ $(function(){
 		}
 	});
 	
-	/* 프로젝트초대 알림메세지 db에 저장하기 */
+	/* 건의사항 요청 알림메세지 db에 저장하기 */
 	function saveSReqMsg(alarmData){
-		
 		$.ajax({
 				url : "/alarmInsert",
 				data : JSON.stringify(alarmData),
@@ -189,7 +188,6 @@ $(function(){
 					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 					socket.send(socketMsg);
 					$('#sgtForm').submit();
-					
 				},
 				error : function(err){
 					console.log(err);

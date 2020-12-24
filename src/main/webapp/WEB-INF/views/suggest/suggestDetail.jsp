@@ -245,6 +245,7 @@ $(function(){
 		$.ajax({
 			url : "/suggest/acceptOrReject",
 			data : {sgtId : sgtId, sgtStatus : 'ACCEPT'},
+			async:false,
 			success : function(res){
 				if (res > 0){
 					alert("승인 처리하였습니다.");
@@ -265,6 +266,7 @@ $(function(){
 		$.ajax({
 			url : "/suggest/acceptOrReject",
 			data : {sgtId : sgtId, sgtStatus : 'REJECT'},
+			async:false,
 			success : function(res){
 				if (res > 0){
 					alert("반려 처리하였습니다.");
@@ -276,6 +278,26 @@ $(function(){
 			}
 		})
 	})
+	
+	/* 건의사항  응답 알림메세지 db에 저장하기 */
+	function saveSResMsg(alarmData){
+		$.ajax({
+				url : "/alarmInsert",
+				data : JSON.stringify(alarmData),
+				type : 'POST',
+				contentType : "application/json; charset=utf-8",
+				dataType : 'text',
+				async:false,
+				success : function(data){
+					
+					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
+					socket.send(socketMsg);
+				},
+				error : function(err){
+					console.log(err);
+				}
+		});
+	}
 	
 }) // $(function(){}) END
 

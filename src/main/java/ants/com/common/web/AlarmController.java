@@ -116,20 +116,28 @@ public class AlarmController {
 		session.setAttribute("projectVo", projectVo);
 		session.setAttribute("projectId", alarmVo.getReqId());
 
-		// 댓글, 게시글 구분
-		if(alarmVo.getAlarmType().equals("reply-3")) {
-			re.addAttribute("reqId", alarmVo.getReqId());
-			session.setAttribute("categoryId", "3");
-			session.setAttribute("pageIndex", 1);
-			re.addAttribute("issueId", alarmVo.getId());
-			return "redirect:/projectMember/eachissueDetail";
+		// 댓글
+		if(alarmVo.getAlarmType().matches("reply.*")) {
+			if(alarmVo.getAlarmType().equals("reply-3")) {
+				re.addAttribute("reqId", alarmVo.getReqId());
+				session.setAttribute("categoryId", "3");
+				session.setAttribute("pageIndex", 1);
+				re.addAttribute("issueId", alarmVo.getId());
+				return "redirect:/projectMember/eachissueDetail";
+			}
 		}
-		else {
-			return "redirect:";
-		}
-					
-	
 		
+		//건의사항
+		if(alarmVo.getAlarmType().equals("suggest")) {
+			re.addAttribute("reqId", alarmVo.getReqId());
+			session.setAttribute("categoryId", "4");
+			session.setAttribute("pageIndex", 1);
+			re.addAttribute("sgtId", alarmVo.getId());
+			return "redirect:/suggest/suggestDetail";
+		}
+		
+		
+		return null;
 	}
 
 }

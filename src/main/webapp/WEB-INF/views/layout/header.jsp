@@ -76,8 +76,8 @@
 			     subtitle: '답글이 달렸습니다.' ,
 			     icon: 'fas fa-envelope fa-lg',
 			});
-		// pl요청
-		}else if(data[0] == 'req-pl' || data[0] == 'req-pro'){
+		// 요청,응답
+		}else if(data[0] == 'req-pl' || data[0] == 'req-pro' || data[0] == 'res-pl' || data[0] == 'res-pro'){
 			$(document).Toasts('create', {
 			     body: data[3],
 			     title: data[2],
@@ -85,19 +85,19 @@
 			     icon: 'fas fa-envelope fa-lg',
 			});
 		// 댓글
-		}else if(data[0] == 'reply'){
+		}else if(data[0].indexOf('reply') != -1){
 			$(document).Toasts('create', {
-			     body: data[2]+ "<span id='why' style='font-size:0.9em; color:gray;'>"+data[3]+"</span>",
-			     title: data[1],
-			     subtitle: "댓글",
+			     body: data[2]+ "<br><span id='why' style='font-size:0.9em; color:gray;'>"+data[3]+"["+data[5]+"]"+"</span>",
+			     title: "새로운 댓글이 있습니다." ,
+			     subtitle: data[1],
 			     icon: 'fas fa-envelope fa-lg',
 			});
-		// pl응답
-		}else if(data[0] == 'res-pl' || data[0] == 'res-pro'){
+		// 건의사항작성
+		}else if(data[0] == 'suggest'){
 			$(document).Toasts('create', {
-			     body: data[3],
-			     title: data[2],
-			     subtitle: data[1],
+			     body: data[2]+ "<br><span id='why' style='font-size:0.9em; color:gray;'>["+data[6]+"]"+data[4]+"</span>",
+			     title: "새로운 건의사항이 있습니다.",
+			     subtitle: data[1] ,
 			     icon: 'fas fa-envelope fa-lg',
 			});
 			

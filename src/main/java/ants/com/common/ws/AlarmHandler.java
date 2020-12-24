@@ -93,41 +93,41 @@ public class AlarmHandler extends TextWebSocketHandler {
 			}
 
 			// 댓글달렸을 때
-			if (strs != null && strs.length == 9) { // 댓글 ,답글
-				String reqId = strs[0]; // req아이디 ,req 아이디
-				String callerName = strs[1]; // 댓글 ,답글 작성자 이름
-				String callerId = strs[2]; // 댓글 ,답글 작성자 아이디
-				String url = strs[3]; // 댓글달린 게시물 ,해당 핫이슈 게시판
-				String id = strs[4]; // 이슈아이디 ,핫이슈 아이디
-				String title = strs[5]; // 댓글달린 이슈제목 ,답글달린 게시물 제목
-				String cont = strs[6]; // 댓글내용, ,답글 제목
-				String receiverId = strs[7]; // 알림 받는사람 아이디
-				String type = strs[8]; // 알림 타입
+			if (strs != null && strs.length == 10) { // 댓글 ,답글
+				String reqId = strs[0];			// req아이디 ,req 아이디
+				String callerName = strs[1]; 	// 댓글 ,답글 작성자 이름
+				String callerId = strs[2]; 		// 댓글 ,답글 작성자 아이디
+				String url = strs[3]; 			// 댓글달린 게시물 ,해당 핫이슈 게시판
+				String id = strs[4]; 			// 이슈아이디 ,핫이슈 아이디
+				String title = strs[5]; 		// 댓글달린 이슈제목 ,답글달린 게시물 제목
+				String cont = strs[6]; 			// 댓글내용, ,답글 제목
+				String proName = strs[7];		// 프로젝트이름
+				String receiverId = strs[8]; 	// 알림 받는사람 아이디
+				String type = strs[9]; 			// 알림 타입
 
-				if (title.length() > 25) {
-					title = title.substring(0, 25) + "..";
+				if (title.length() > 15) {
+					title = title.substring(0, 15) + "..";
 				}
-				if (cont.length() > 25) {
-					cont = cont.substring(0, 25) + "..";
+				if (cont.length() > 30) {
+					cont = cont.substring(0, 30) + "..";
+				}
+				if (proName.length() > 13) {
+					proName = proName.substring(0, 13) + "..";
 				}
 
 				// 게시물작성자가 로그인해 있다면
 				WebSocketSession boardWriterSession = userSessionsMap.get(receiverId);
 				// 댓글
-				if (type.equals("reply") && boardWriterSession != null) {
+				if (type.matches("reply.*") && boardWriterSession != null) {
 					TextMessage tmpMsg = new TextMessage(
-							type + "&&" + callerName + "&&" + cont + "<br>&&" + title + "&&" + callerId);
-					boardWriterSession.sendMessage(tmpMsg);
-				} else if (type.equals("posts") && boardWriterSession != null) {
-					TextMessage tmpMsg = new TextMessage(type + "&&" + callerName + "&&" + title + " : " + cont
-							+ "<a type='external' href=" + url + ">게시판으로 가기</a>");
+							type + "&&" + callerName + "&&" + cont + "&&" + title + "&&" + callerId + "&&" + proName);
 					boardWriterSession.sendMessage(tmpMsg);
 				}
 			}
 
 			// 요청에 응답할때 알림
 			if (strs != null && strs.length == 9) {
-				String id = strs[0]; // 요구사항정의서아이디
+				String reqId = strs[0]; // 요구사항정의서아이디
 				String callerName = strs[1]; // 응답자 이름(pl이름)
 				String callerId = strs[2]; // 응답자 아이디(pl아이디)
 				String url = strs[3]; // 요구사항정의서 세부사항
@@ -165,21 +165,22 @@ public class AlarmHandler extends TextWebSocketHandler {
 				
 			}
 
-			// 답글 달렸을 때
-			if (strs != null && strs.length == 10) { //답글
-				String reqId = strs[0]; // req 아이디
-				String callerName = strs[1]; // 답글 작성자 이름
-				String callerId = strs[2]; // 답글 작성자 아이디
-				String url = strs[3]; // 해당 핫이슈 게시판
-				String id = strs[4]; // 핫이슈 아이디
-				String title = strs[5]; // 답글달린 게시물 제목
-				String chTitle = strs[6]; // 답글 제목
-				String chCont = strs[7];  // 답글 내용
-				String receiverId = strs[8]; // 알림 받는사람 아이디
-				String type = strs[9]; // 알림 타입
+			// 답글 달렸을 때 , 일감에 건의사항등록될때
+			if (strs != null && strs.length == 11) { //답글
+				String reqId = strs[0]; 		// req 아이디			/reqId
+				String callerName = strs[1]; 	// 답글 작성자 이름		/
+				String callerId = strs[2]; 		// 답글 작성자 아이디		/
+				String url = strs[3]; 			// 해당 핫이슈 게시판		/
+				String id = strs[4]; 			// 핫이슈 아이디		/건의사항id
+				String title = strs[5]; 		// 답글달린 게시물 제목	/일감제목
+				String chTitle = strs[6]; 		// 답글 제목			/건의사항제목
+				String chCont = strs[7];  		// 답글 내용			/건의사항내용
+				String proName = strs[8];		// 프로젝트 제목		/
+				String receiverId = strs[9]; 	// 알림 받는사람 아이디	/
+				String type = strs[10]; 		// 알림 타입			/
 
-				if (title.length() > 25) {
-					title = title.substring(0, 25) + "..";
+				if (title.length() > 13) {
+					title = title.substring(0, 13) + "..";
 				}
 				if (chTitle.length() > 25) {
 					chTitle = chTitle.substring(0, 25) + "..";
@@ -187,14 +188,23 @@ public class AlarmHandler extends TextWebSocketHandler {
 				if (chCont.length() > 25) {
 					chCont = chCont.substring(0, 25) + "..";
 				}
+				if (proName.length() > 13) {
+					proName = proName.substring(0, 13) + "..";
+				}
+				
 
-				// 게시물작성자가 로그인해 있다면
+				// 받는사람이 로그인해 있다면
 				WebSocketSession boardWriterSession = userSessionsMap.get(receiverId);
-				// 댓글
+				// 답글
 				if (type.equals("posts") && boardWriterSession != null) {
 					TextMessage tmpMsg = new TextMessage(
-							type + "&&" + callerName + "&&" + chTitle + "&&" + chCont + "&&" + title + "&&" + callerId);
+							type + "&&" + callerName + "&&" + chTitle + "&&" + chCont + "&&" + title + "&&" + callerId + "&&" + proName);
 					boardWriterSession.sendMessage(tmpMsg);
+				}else if(type.equals("suggest") && boardWriterSession != null) {
+					TextMessage tmpMsg = new TextMessage(
+							type + "&&" + callerName + "&&" + chTitle + "&&" + chCont + "&&" + title + "&&" + callerId + "&&" + proName);
+					boardWriterSession.sendMessage(tmpMsg);
+							
 				}
 			}
 

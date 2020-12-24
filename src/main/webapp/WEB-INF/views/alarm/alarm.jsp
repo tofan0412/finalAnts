@@ -146,7 +146,7 @@ toastr.options = {
 				method : "post",
 				dataType : "json",
 				success : function(data){
-					if(alarmType.includes('reply') || alarmType == 'posts'){
+					if(alarmType.includes('reply') || alarmType == 'posts' || alarmType == 'suggest'){
 						getPage(url,alarmType,reqId,id);
 					}else{
 						document.location = url;
@@ -265,6 +265,7 @@ toastr.options = {
 				                    	</c:when>
 				                    </c:choose>
 			                    </td>
+			                 
 			                    <td class="mailbox-name" style="width: 15%; "><a href="read-mail.html">${fn:split(a.alarmCont,'&&')[1]}(${fn:substring(fn:split(a.alarmCont,'&&')[2],0,10)})</a></td>
 			                    <td class="mailbox-subject">
 				                    <c:choose>
@@ -293,14 +294,19 @@ toastr.options = {
 					                    	  		</span>
 				                    	</c:when>
 				                    	<c:when test="${fn:contains(a.alarmType,'reply')}"><span id="newalarm" class="right badge badge123" style="background: gainsboro; margin-bottom: 5px;">댓글</span>
-					                    	 &nbsp; <a style="font-weight: bold;" href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }','${fn:split(a.alarmCont,'&&')[0]}','${fn:split(a.alarmCont,'&&')[4]}')">${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}</a>
+					                    	 &nbsp; <a style="font-weight: bold;" href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }','${fn:split(a.alarmCont,'&&')[0]}','${fn:split(a.alarmCont,'&&')[4]}')">  ${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}</a>
 					                    	 <br><span style="font-size: 0.9em; color: darkslategray">[이슈게시판]</span>
-					                    	 ${fn:substring(fn:split(a.alarmCont,'&&')[5],0,20)}
+					                    	 ${fn:substring(fn:split(a.alarmCont,'&&')[5],0,30)}
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'posts'}"><span id="newalarm" class="right badge badge123" style="background: #87C488; margin-bottom: 5px;">답글</span>
-					                    	 &nbsp; <a style="font-weight: bold;" href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[6]}</a>
-					                    	 &nbsp;<div style="display: inline; color: darkslategray" id="alarmPost"> ${fn:replace(fn:split(a.alarmCont,'&&')[7], '<br>', '&nbsp;')} </div>
-					                    	 <br><span style="font-size: 0.9em; color: darkslategray;">[PM-PL이슈게시판]&nbsp;</span>${fn:split(a.alarmCont,'&&')[5] }
+					                    	 &nbsp; <a style="font-weight: bold;" href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }','${fn:split(a.alarmCont,'&&')[0]}','${fn:split(a.alarmCont,'&&')[4]}')">  ${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}</a>
+					                    	 &nbsp;<div style="display: inline; color: darkslategray" id="alarmPost"> ${fn:substring(fn:replace(fn:split(a.alarmCont,'&&')[7], '<br>', '&nbsp;'),0,30)} </div>
+					                    	 <br><span style="font-size: 0.9em; color: darkslategray;">[PM-PL이슈게시판]&nbsp;</span>${fn:substring(fn:split(a.alarmCont,'&&')[5],0,30) }
+				                    	</c:when>
+				                    	<c:when test="${a.alarmType eq 'suggest'}"><span id="newalarm" class="right badge badge123" style="background: #f249; margin-bottom: 5px;">건의사항</span>
+					                    	 &nbsp; <a style="font-weight: bold;" href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }','${fn:split(a.alarmCont,'&&')[0]}','${fn:split(a.alarmCont,'&&')[4]}')">  ${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}</a>
+					                    	 &nbsp;<div style="display: inline; color: darkslategray" id="alarmPost"> ${fn:substring(fn:replace(fn:split(a.alarmCont,'&&')[7], '<br>', '&nbsp;'),0,30)} </div>
+					                    	 <br><span style="font-size: 0.9em; color: darkslategray;">[건의사항]&nbsp;</span>${fn:substring(fn:split(a.alarmCont,'&&')[5],0,30) }
 				                    	</c:when>
 				                    </c:choose>
 			                    </td>
