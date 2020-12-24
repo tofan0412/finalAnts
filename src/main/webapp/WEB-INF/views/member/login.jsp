@@ -84,12 +84,10 @@
     to {
         opacity:1;
     }
-
 .search_in{display: block;margin: 4px 79px 0 10px;} 파란색으로 조절한다. 
-
 .search_in input{width:100%}
-
-}
+}	
+.ptag {white-space: nowrap;}
 </style>
 <script>				
  	$(document).ready(function(){
@@ -143,13 +141,17 @@
 		// 문자 전송 버튼 클릭
  		$('#telsub').on('click',function(){
  			if($('#pwtelhidden').val() == $('#mailtel').val()){
-		 		if($('#pwtelhidden').val() == $('#mailtel').val()){	
-		 			alert('문자를 발송했습니다. 핸드폰을 확인해 주세요');	
-		 	 		$('#smsform').submit();		
-		 		} else {	
-		 			alert('전화번호를 확인해주세요');
-		 		}		
- 			}else{
+ 				if($('#pwidhidden').val() == $('#mailId2').val()){
+ 			 		if(chkID2()){
+ 			 			alert('문자를 발송했습니다. 핸드폰을 확인해 주세요');	
+ 			 	 		$('#smsform').submit();
+ 			 		} else {	
+ 			 			alert('아이디(이메일)를 확인해주세요');
+ 			 		}		
+ 	 			}else{
+ 	 				alert('본인확인 아이디와 입력한 아이디가 같지 않습니다.');
+ 	 			}	
+ 			}else{	
  				alert('회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같지 않습니다.');
  			}	
  		});	
@@ -301,8 +303,24 @@ function chkID(){
 	}	
 }
 	
-
+function chkID2(){	
+ 	var emailRule = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+ 	
+	if($('#mailId2').val() == null || $('#mailId2').val() == '') {          
+		 $('#checkMsg2').html('<p></p>');	
+		 return false;	
+	} else if(!emailRule.test($('#mailId2').val())){
+		 $('#checkMsg2').html('<p style="color:red">이메일 형식이 맞지 않습니다.</p>');
+		 return false;
+	} else {			
+		 $('#checkMsg2').html('<p></p>'); 
+		return true;
+	}
+}
 	
+$(document).on("keyup", "#mailtel", function() { 
+	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+});
 </script>	
 	
 <body class="loginContainer fadein">
@@ -363,36 +381,46 @@ function chkID(){
 		</form>
 	</div>
 	
+	
+	
 	<div class="container">
+	
 		<!-- 아이디 입력 모달 -->		
 		<div class="modal fade" id="idinputModal" role="dialog">
-		    <div class="modal-dialog">
-		    	<div class="modal-content">
+		    <div class="modal-dialog">	
+		    	<div class="modal-content">	
 			        <div class="modal-header">
 			            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 			            <h4>비밀번호 찾기</h4>
-			        </div>	
+			            <div style="float:right;">	
+			           		<a style="color:green; font-size:7px;">01. 아이디 입력</a><b style="font-size:7px;">>02. 본인 확인>03. 비밀번호 재설정</b>	
+			        	</div>				
+			        </div>					
 			        <div class="modal-body">
-			        	비밀번호를 찾고자 하는 아이디를 입력해 주세요.<br><br>	
-			        	<input class="input" name="memId" type="email" id="mailck" placeholder="사용중인 이메일을 입력해 주세요" onkeyup="chkID()"/><br>
-			        	<button type="submit" id="checkbtn" style="float:right; height:30px; width:120px; background:white; color:black; border:1px solid black; font-size:14px; margin-right:20px;">다음</button>
+			        	<p style="font-size:15px;">비밀번호를 찾고자 하는 아이디를 입력해 주세요.</p><br>
+			        	<label for="usrname" style="width:500px;">아이디</label> 
+			        	<input class="form-control" name="memId" type="email" id="mailck" placeholder="Enter email" onkeyup="chkID()" style="width:100%;"/><br>
+			        </div>					
+			        <div class="modal-footer">		
+			            <button type="button" id="closemd" style="float:right; margin-left:5px;" data-dismiss="modal">닫기</button>
+			        	<button type="submit" id="checkbtn" style="float:right;">다음</button>
 			        </div>
-			        <div class="modal-footer">	
-			            <button type="button" name="button" id="closemd" class="btn btn-color2" data-dismiss="modal">닫기</button>
-			        </div>
-		        </div>		
-		    </div>
-		</div>	
-			
+		        </div>				
+		    </div>		
+		</div>				
+						
 		<!-- 비번찾기 모달 -->
 		<div class="modal fade" id="passModal" role="dialog">
-			<div class="modal-dialog" style="max-width: 100%; width: auto; display: table;">							
-				<div class="modal-content" style="max-width: 100%; width: auto;">									
-					<div class="modal-header" style="padding: 35px 50px; max-width: 100%; width: auto;">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4>비밀번호가 생각나지 않으시나요?</h4>			
-					</div>				
-					<div class="modal-body" style="padding: 40px 50px; width:max-width: 100%; width: auto;">
+			<div class="modal-dialog">							
+				<div class="modal-content">										
+					<div class="modal-header"">	
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+						<h4>비밀번호 찾기</h4>		
+						<div style="float:right;">		
+			           		<b style="font-size:7px;">01. 아이디 입력></b><a style="color:green; font-size:7px;">02. 본인 확인</a><b style="font-size:7px;">>03. 비밀번호 재설정</b>	
+			        	</div>			
+					</div>					
+					<div class="modal-body" style="width:max-width: 100%; width: auto;">
 						<div class="panel-group" id="accordion"	style="width:max-width: 100%; width: auto;">
 		
 							<div class="panel panel-default" style="width:max-width: 100%; width: auto;">	
@@ -406,7 +434,7 @@ function chkID(){
 																		
 												
 								</div>		
-								<div id="collapse1" class="panel-collapse collapse in" style="width:max-width: 100%; width: auto;;">
+								<div id="collapse1" class="panel-collapse collapse in" style="width:max-width: 100%; width: auto;">
 									<div class="panel-body" style="width:max-width: 100%; width: auto;">
 	
 										<form id="mailform" role="form" action="/member/mailsender">
@@ -440,12 +468,13 @@ function chkID(){
 									<div class="panel-body">
 
 										<form id="smsform" role="form" action="/member/sendSms">
-			
+					
 											<div class="form-group">
 												<p style="font-size:10px;">회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야, 인증번호를 받을 수 있습니다.<p><br>
 												<label for="usrname" style="width:500px;">아이디</label> 
-												<input type="email" name="memId" class="form-control" id="memId" placeholder="Enter email">
-															
+												<input type="email" name="memId" class="form-control" id="mailId2" placeholder="Enter email" onkeyup="chkID2()">
+												<div id="checkMsg2" class="indiv"></div>
+													
 												<label for="usrname" style="width:500px;">전화번호</label> 
 												<input type="tel" name="memTel" class="form-control" id="mailtel" placeholder="Enter phone number">
 											</div>
@@ -456,15 +485,17 @@ function chkID(){
 
 									</div>
 								</div>
-							</div>	
-
+							</div>
+		
 						</div>
-						<br>
-						<hr>
+						<br>	
+						<hr>					
+						<button type="button" id="closemd" style="float:right; margin-left:5px;" data-dismiss="modal">닫기</button>
 						<br>
 					</div>
 				</div>
-			</div>
+			</div>	
 		</div>
+		
 	</div>
 </body>

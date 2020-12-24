@@ -22,14 +22,19 @@ body{
 }
 </style>
 
-<body>
+<body>	
 <div id="di" style="border:1px solid white;">
-	<h3>비밀번호 변경페이지(전화번호)</h3>
+	<h3>비밀번호 변경 (전화번호)</h3>
+		<div style="float:left; margin-left:33%;">					
+			<b style="font-size:7px;">01. 아이디 입력>02. 본인 확인></b><a style="color:green; font-size:7px;">03. 비밀번호 재설정</a>	
+		</div>	
 	<input type="text" class="ke" id="uid" value="${uuid}" style="display:none"><br>
 	
 	<form id="passup" action="/member/passupdate">
 		<input type="text" class="ke" name="memTel" value="${memTel}" style="display:none"><br>
 		<label class="lic" style="display:none">아이디</label> <input type="text" id="memId" name="memId" value="${memId}"  style="display:none"><br>
+		<div>
+			
 			
 		<div>	
 			<label class="lic" style="float:left;">인증번호</label> 
@@ -54,6 +59,7 @@ body{
 				<input type="password" id="newpass2" style="float:left; width:300px;" name="newpass2" onkeyup="unityPW()" placeholder="패스워드"/>
 				<div id="checkPass2" class="indiv" style="float:left; margin-left:20px; margin-top:2px;"></div>	
 			</div>
+		</div>
 		</div>	
 	</form>
 	
