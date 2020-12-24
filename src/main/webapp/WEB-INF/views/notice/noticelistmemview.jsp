@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script
@@ -18,14 +19,24 @@
 	#pagenum a{
 		 display: inline-block;
 		 text-align: center;
-		 width : auto;	 
+		 padding : 6px; 	 
 		 border: none; 
 	}
+	#table{
+		width : 100%;
+	    border-top: 1px solid #444444;
+	    border-collapse: collapse;
+	    text-align: center;
+  	}
+   	th, td { 
+ 	    border-bottom: 1px solid #444444; 
+ 	    padding: 10px; 
+   	} 
 	
 	li strong{
 		display: inline-block;
 		text-align: center;
-		width: 30px;
+		padding : 6px; 
 	}
 	
 	.pagingui{
@@ -39,11 +50,13 @@
 		 width:auto; float:left; margin:0 auto; text-align:center;"
 		 
 	}
-	.option{	
+	
+	.option{
 		height: 50px;
 		width: 150px;
 		padding: 5px;
 	}
+	
 	#searchBtn{
 		height: 38px;
 	}
@@ -119,38 +132,67 @@
 	            	<table class="table">
 	            		<!-- 헤더부분  -->
 	            		<thead>
-							<tr>
-								<th style="width: 150px; padding-left: 50px;">No.</th>
-								<th style="padding-left: 30px;">제목</th>
-								<th>작성자</th>
-								<th>날짜</th>
-								<th></th>
-							</tr>
-						</thead>
+		                    <tr>
+		                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
+		                     	<th style="width:50%; padding-left: 30px; text-align: center;" class="jg"> 제목</th> 
+								<th style="text-align: center;" class="jg">   작성자 </th>
+								<th style="text-align: center;" class="jg">   날짜   </th>
+		                    </tr>
+	                 	</thead>
 						
 						<!-- 리스트부분 -->
 						<tbody>
 							<c:forEach items="${noticelist }" var="notice" varStatus="status">
 								<tr>
-									<td style="width: 150px; padding-left: 50px;"><c:out
-											value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />.</td>
-
-									<td style="padding-left: 30px;">
-									
-									<c:choose>
-									<c:when test="${not empty main}">
-										<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}&main=Y">${notice.noticeTitle }</a>
-									</c:when>		
-									<c:otherwise>
-										<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}">${notice.noticeTitle }</a>
-									</c:otherwise>
-									</c:choose>
-										
-											
+									<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
+										<c:out value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />
 									</td>
-									<td>${notice.adminId }</td>
-									<td>${notice.regDt }</td>
-									<td style="text-align: center;">
+									
+									<!-- noticeTitle line -->
+									<td class="jg"  style="padding-left: 30px; text-align: left;">
+										<c:if test="${notice.importance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
+										<c:if test="${notice.importance eq 'emg'}"><span class="badge badge-danger ns">필독</span></c:if>
+										&nbsp;
+										<c:choose>
+											<c:when test="${not empty main}">
+												<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}">
+													<c:if test="${fn:length(notice.noticeTitle) > 30}">									
+														${fn:substring(notice.noticeTitle,0 ,30) }...
+													</c:if>
+													<c:if test="${fn:length(notice.noticeTitle) <= 30}">									
+														${notice.noticeTitle}
+													</c:if>
+												</a>
+											</c:when>
+											<c:otherwise>
+												<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}">
+													<c:if test="${fn:length(notice.noticeTitle) > 30}">									
+														${fn:substring(notice.noticeTitle,0 ,30) }...
+													</c:if>
+													<c:if test="${fn:length(notice.noticeTitle) <= 30}">									
+														${notice.noticeTitle}
+													</c:if>
+												</a>
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<!-- 상진이형이 한거
+									<td class="jg"  style="padding-left: 30px; text-align: left;">
+										 
+										<c:choose>
+											<c:when test="${not empty main}">
+												<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}&main=Y">${notice.noticeTitle }</a>
+											</c:when>		
+											<c:otherwise>
+												<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}">${notice.noticeTitle }</a>
+											</c:otherwise>
+										</c:choose>
+										 
+									</td>
+									-->
+									
+									<td class="jg" style="text-align: center;">${notice.adminId }</td>
+									<td class="jg" style="text-align: center;">${notice.regDt }</td>
 								</tr>
 							</c:forEach>
 							<c:if test="${noticelist.size() == 0}">
