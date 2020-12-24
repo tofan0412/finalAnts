@@ -662,7 +662,7 @@ public class MemberController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 
-		if("Y".equals(main)) {	
+		if("Y".equals(noticeVo.getMain())) {	
 			model.addAttribute("main", "Y");
 			return "main.tiles/notice/noticelistmemview";
 		} else {
