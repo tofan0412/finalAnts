@@ -162,11 +162,42 @@ $(function(){
 					alert("작성하였습니다.");
 					var sgtSeq = res.sgtSeq;
 					$('#sgtId').val(sgtSeq);
-					$('#sgtForm').submit();
+					var todoTitle = $('#SearchTodoIdBar').val();
+					var alarmData = {
+	    					"alarmCont" : "${projectVo.reqId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&suggest/suggestDetail&&" + sgtSeq + "&&" + $('#sgtTitle').val() + "&&" + $('#sgtCont').val() + "&&" + todoTitle,
+	    					"memId" 	: "${projectVo.memId}",
+	    					"alarmType" : "suggest"
+	    			}
+					saveSReqMsg(alarmData);
+				
 				}
-			})
+			});
 		}
-	})
+	});
+	
+	/* 프로젝트초대 알림메세지 db에 저장하기 */
+	function saveSReqMsg(alarmData){
+		
+		$.ajax({
+				url : "/alarmInsert",
+				data : JSON.stringify(alarmData),
+				type : 'POST',
+				contentType : "application/json; charset=utf-8",
+				dataType : 'text',
+				success : function(data){
+					
+					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
+					socket.send(socketMsg);
+					$('#sgtForm').submit();
+					
+				},
+				error : function(err){
+					console.log(err);
+				}
+		});
+	}
+	
+	
 })// $(function(){}) 종료..
 
 /* pagination 페이지 링크 function */
@@ -402,7 +433,7 @@ $(function(){
 						<br><br>
 						<div style="overflow-y : auto; height : 250px;" >
 							<c:forEach items="${myTodoList}" var="myTodo">
-								<div class="jg singleTodo" todoId="${myTodo.todoId }"
+								<div class="jg singleTodo" todoId="${myTodo.todoId }" id="getTodo"
 									todoTitle="${myTodo.todoTitle }"
 									style="width: 90%; height: 50px;">
 									${myTodo.todoTitle } <span style="float: right;">일감번호 :

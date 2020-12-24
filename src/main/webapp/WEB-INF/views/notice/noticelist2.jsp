@@ -162,6 +162,7 @@
 											</c:if>
 										</a>
 									</td>
+									
 									<td class="jg" style="text-align: center;">${notice.adminId }</td>
 									<td class="jg" style="text-align: center;">${notice.regDt }</td>
 									

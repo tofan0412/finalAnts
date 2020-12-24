@@ -95,8 +95,7 @@
 		location="/resources/plugins/" />
 	<mvc:resources mapping="/dist/**"
 		location="/resources/dist/" />
-	<mvc:resources mapping="/profile/*"
-		location="/WEB-INF/views/userprofile/" />
+	<mvc:resources mapping="/profile/*" location="/WEB-INF/views/userprofile/"/>
 	<mvc:resources mapping="/fileFormat/*"
 		location="/WEB-INF/views/layout/fileFormat/" />
 <!-- 	<mvc:resources mapping="/gantt/**" location="/resources/plugins/robicch-jQueryGantt/"/> -->
@@ -163,7 +162,8 @@
 			<mvc:exclude-mapping path="/member/memberRegistview"/>
 			<mvc:exclude-mapping path="/member/noticelistmemview"/>
 			<mvc:exclude-mapping path="/member/noticedetailmemview"/>
-				
+			<mvc:exclude-mapping path="/member/getmember"/>
+					
 			<mvc:exclude-mapping path="/member/mailsender"/>
 			<mvc:exclude-mapping path="/member/passupdateemail"/>
 			<mvc:exclude-mapping path="/member/passupdate"/>

@@ -59,7 +59,7 @@
 	    	eve.preventDefault();
 	    });
 		
-	/* pl응답 알림메세지 db에 저장하기 */
+	/* 프로젝트초대 알림메세지 db에 저장하기 */
 	function savePjtResMsg(alarmData){
 		
 		$.ajax({

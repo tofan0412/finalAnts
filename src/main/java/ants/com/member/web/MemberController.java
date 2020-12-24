@@ -300,7 +300,27 @@ public class MemberController {
 
 		return "jsonView";
 	}
+	
+	// 아이디 찾기
+	@RequestMapping(path = "/getmember", method = RequestMethod.GET)
+	public String getmember(MemberVo memberVo, Model model) {
+			
+		logger.debug("LoginCOntroller - logincheck : {} ", memberVo);
 
+		MemberVo dbMember = memberService.getMember(memberVo);
+		
+		try {
+			model.addAttribute("memId", dbMember.getMemId());
+			model.addAttribute("memTel", dbMember.getMemTel());
+			model.addAttribute("memberVo", dbMember);
+			logger.debug("logincheck rowcount : {}", dbMember);
+		} catch (NullPointerException e) {
+			logger.debug("## 예외처리 - 로그인 체크 ## (NullPointerException) 일치하는 회원정보 없음 : {}", dbMember);
+		}
+		
+		return "jsonView";
+	}
+	
 	// 회원가입 페이지 이동
 	@RequestMapping(path = "/memberRegistview", method = RequestMethod.GET)
 	public String getView() {
@@ -346,7 +366,7 @@ public class MemberController {
 				Filename = imgname.split("/")[4];
 				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
 			} else {
-				Filepath = "http://localhost/profile/user-0.png";
+				Filepath = "http://localhost/profile/user-1.png";
 				Filename = "user-0.png";
 			}
 		}

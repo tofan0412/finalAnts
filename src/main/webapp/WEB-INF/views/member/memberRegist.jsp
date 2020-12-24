@@ -74,14 +74,14 @@
 						
 				<div class="text-center" title="이미지를 클릭하면 변경할 수 있어요!">
 					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border:1px solid white; height: 200px; width:140px; margin: 0 auto;">
-						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" src="http://localhost/profile/user-1.png"/>
-					</div><br>	
-					<div class="content">
+						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" src="/profile/user-1.png"/>
+					</div><br>				
+					<div class="content">			
 						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left;" />	
-						<input type="text" id="imgname" name="imgname" style="display: none">
-					</div>
+						<input type="text" id="imgname" name="imgname" style="display: none">	
+					</div>	
 				</div> 	
-							
+					
 									
 				<h3 class="profile-username text-center">
 					<!-- 경로 미리보기용 <div id="clickmsg">경로 : </div>	<hr>  -->
@@ -94,9 +94,9 @@
 				<ul class="list-group list-group-unbordered mb-3"> 
 					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>아이디</b>  	
 						<a class="float-right">
-							<input class="input" name="memId" type="email" id="memId" placeholder="회원 id" onkeyup="chkID()"/><br>
+							<input class="input" name="memId" type="email" id="memId" placeholder="사용중인 이메일을 입력해 주세요" onkeyup="chkID()"/><br>
 							<div style="margin-top:10px;">	
-								<div id="checkMsg" class="indiv" style="float:left;"></div>
+								<div id="checkMsg" class="indiv" style="float:left;"></div>	
 								<div id="checkid" class="indiv" ></div>	
 								<button type="submit" id="checkbtn" style="float:right; height:30px; width:120px; background:white; color:black; border:1px solid black; font-size:14px; margin-right:20px;">중복확인</button>
 							</div>		
@@ -263,7 +263,7 @@ function unityPW(){
 			 $('#checkPass1').html('<p></p>'); 
 		 }
 	} else { 
-		$('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
+		$('#checkPass2').html('<p style="color:blue">사용가능</p>'); 
 	}	
 }
  	
@@ -301,13 +301,13 @@ $(document).ready(function(){
 			data: { "memId" : $('#memId').val() }, 
 			success: function(data){
 				if($.trim(data) == 0 && $('#memId').val() != "" && chkID()){ 
-					$('#checkMsg').html('<p style="color:blue">사용가능</p>'); 
+					$('#checkMsg').html('<p style="color:blue">사용가능한 아이디</p>'); 
 					btn = document.getElementById('registBtn')
 					btn.disabled = false;
-				}else{ 
-					$('#checkMsg').html('<p style="color:red">사용불가</p>'); 
+				}else{ 		
+					$('#checkMsg').html('<p style="color:red">중복된 아이디</p>'); 
 				}	
-			}	
+			}		
 		}); //end ajax 
 		return false;	/* 페이지 새로고침 막기 */
 	}); //end on 
