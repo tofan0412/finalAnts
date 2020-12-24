@@ -4,9 +4,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set value="<%=new Date() %>" var="currTime" ></c:set>
-<fmt:formatDate value="${currTime }" var="currTime" pattern="yyyy-MM-dd HH:mm:ss" />
 <script>
+	getNow();
+	// 시간 관련 함수 설정
+	function getNow(){
+		var now = new Date();
+		
+		var calendar = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate();
+		
+	 	var currentHours = addZeros(now.getHours(),2); 
+	    var currentMinute = addZeros(now.getMinutes() ,2);
+	    var currentSeconds =  addZeros(now.getSeconds(),2);
+		
+	    $('#clock').val(calendar + " " + currentHours + ":" + currentMinute + ":" + currentSeconds);
+		setTimeout("getNow()", 1000);
+	}
+	
+	function addZeros(num, digit) { // 자릿수 맞춰주기
+		  var zero = '';
+		  num = num.toString();
+		  if (num.length < digit) {
+		    for (i = 0; i < digit - num.length; i++) {
+		      zero += '0';
+		    }
+		  }
+		  return zero + num;
+	}
+
 	// sockJS 선언하기. 만약 기존에 선언된 경우 선언을 생략한다.
 	sockMsg = new SockJS("/echo");
    	sockMsg.onmessage = onMessage;
@@ -19,7 +43,7 @@
 		}
 		else{
 			var memId = '${SMEMBER.memId}';
-			var regDt = '${currTime}';
+			var regDt = $('#clock').val();
 			var cgroupId = '${cgroup.cgroupId }';
 			var chatCont = $('#sendChatCont').val(); 
 			sendMessage();
@@ -48,6 +72,14 @@
 	function sendMessage() {
 		sockMsg.send($("#sendChatCont").val());
 	}
+	
+	// 엔터버튼으로 전송
+	$(".sendMsgTextbar").keyup(function(e){
+		if(e.keyCode == 13){
+			$('#sendMsg').trigger("click");
+		}
+	})
+	
 	// 서버로부터 메시지를 받았을 때. 내 아이디인 경우 우측에 배치하고 상대방인 경우 좌측에 배치한다. 
 	function onMessage(msg) {
 		var data = msg.data;
@@ -57,7 +89,7 @@
 		var id = arr[1];
 		var chatCont = arr[2];
 		
-		console.log("채팅방 번호 : "+cgroupId+", 발신인 : "+id+", 내용 : "+chatCont);
+// 		console.log("채팅방 번호 : "+cgroupId+", 발신인 : "+id+", 내용 : "+chatCont);
 		
 		// 현재 내가 있는 채팅방이 아닌 경우, 메시지를 메신저에 표시하지 않는다.
 		if ("${cgroupId}" != cgroupId){
@@ -68,7 +100,7 @@
 		if (id == '${SMEMBER.memId}'){
 			var memId = "<div class=\'memId mine\'>"+ id + "</div>";
 			var timeCode = "<div class='regDt mine'>";
-			timeCode += "<c:out value='${currTime}'/></div>";
+			timeCode += $('#clock').val()+"</div>";
 			
 			$('#msgArea').append("<div class=\'oneMsg\'>");
 			$('#msgArea').append(memId);
@@ -80,7 +112,7 @@
 		else{
 			var memId = "<div class=\'memId yours\'>"+ id + "</div>";
 			var timeCode = "<div class='regDt yours'>";
-			timeCode += "<c:out value='${currTime}'/></div>";
+			timeCode += $('#clock').val()+"</div>";
 			
 			$('#msgArea').append("<div class=\'oneMsg\'>");
 			$('#msgArea').append(memId);
@@ -97,8 +129,6 @@
 	$(function(){
 		// 문서 로딩이 끝나면 최 하단으로 내린다...
 		$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);	
-		
-		
 		
 		
 		
@@ -203,6 +233,10 @@ width:16px;height:16px;background:#d2d6de;}
     border-radius: .4rem;
 }
 </style>
+
+<!-- 현재 시간 표시하는 부분.. -->
+<input type="text" id="clock" readonly hidden="hidden">
+
 <!-- 채팅방 이름을 표시한다. -->
 <input type="text" id="cgroupId" value="${cgroup.cgroupId }" hidden="hidden">
 
