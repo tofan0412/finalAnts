@@ -20,18 +20,31 @@ SELECT *
 
 
 <select id="readMessages" resultType="ants.com.chatting.model.ChatVo" parameterType="java.lang.String">
-SELECT CGROUP_ID, CHAT_ID, MEM_ID, CHAT_CONT, TO_CHAR(REG_DT, 'YYYY-MM-DD HH24:MI:SS') AS REG_DT
+SELECT CGROUP_ID, 
+	   CHAT_ID, 
+	   MEM_ID,
+	   MEM_NAME,
+	   CHAT_CONT, 
+	   TO_CHAR(REG_DT, 'YYYY-MM-DD HH24:MI:SS') AS REG_DT
   FROM CHAT
  WHERE CGROUP_ID = #{cgroupId}
 ORDER BY TO_NUMBER(CHAT_ID)
 </select>
 
-<insert id="sendMessage" parameterType="ants.com.chatting.model.ChatGroupVo">
-INSERT INTO chat (cgroup_id,chat_id,mem_id,chat_cont,reg_dt
-) VALUES (#{cgroupId},CHAT_SEQ.NEXTVAL,#{memId},#{chatCont},to_date(#{regDt}, 'YYYY-MM-DD-HH24:MI:SS'))
+<insert id="sendMessage" parameterType="ants.com.chatting.model.ChatVo">
+INSERT INTO CHAT (CGROUP_ID,
+				  CHAT_ID,
+				  MEM_ID,
+				  MEM_NAME,
+				  CHAT_CONT,
+				  REG_DT) 
+	 VALUES (#{cgroupId},
+	 		 CHAT_SEQ.NEXTVAL,
+	 		 #{memId},
+	 		 #{memName},
+	 		 #{chatCont},
+	 		 to_date(#{regDt}, 'YYYY-MM-DD-HH24:MI:SS'))
 </insert>
-
-
 
 <select id="readChatMembers" parameterType="java.lang.String" resultType="ants.com.member.model.ProjectMemberVo">
 SELECT * 

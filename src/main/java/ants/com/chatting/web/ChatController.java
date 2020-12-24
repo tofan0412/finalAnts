@@ -96,7 +96,7 @@ public class ChatController {
 	// 전송한 메시지를 DB에 저장한다..
 	@RequestMapping("/sendMessage")
 	@ResponseBody
-	public String sendMessage(ChatVo chatVo, HttpSession session) {
+	public String sendMessage(ChatVo chatVo) {
 
 		int result = chatService.sendMessage(chatVo);
 		if (result > 0) {

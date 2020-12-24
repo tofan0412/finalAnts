@@ -3,10 +3,18 @@ package ants.com.chatting.model;
 public class ChatVo {
 
 	private String memId;
+	private String memName;
 	private String regDt;
 	private String cgroupId;
 	private String chatId;
 	private String chatCont;
+	
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
 	public void setMemId(String memId) {
 		this.memId = memId; 
 	}

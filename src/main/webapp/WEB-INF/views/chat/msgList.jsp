@@ -43,6 +43,7 @@
 		}
 		else{
 			var memId = '${SMEMBER.memId}';
+			var memName = '${SMEMBER.memName}';
 			var regDt = $('#clock').val();
 			var cgroupId = '${cgroup.cgroupId }';
 			var chatCont = $('#sendChatCont').val(); 
@@ -267,7 +268,7 @@ width:16px;height:16px;background:#d2d6de;}
 		<!-- 접속한 사용자의 아이디와 일치하는 경우, 우측 배열 -->
 		<c:if test="${msg.memId eq SMEMBER.memId }">
 			<div class="oneMsg" chatId="${msg.chatId}" >
-				<div class="memId mine">${msg.memId }</div>
+				<div class="memId mine">${msg.memName }</div>
 				<div class="chatCont mine">
 					<span class="spaan">&nbsp;${msg.chatCont }&nbsp;</span>
 				</div>
@@ -277,7 +278,7 @@ width:16px;height:16px;background:#d2d6de;}
 		<!-- 접속한 사용자가 보낸 메시지가 아닌 경우, 좌측 배열 -->
 		<c:if test="${msg.memId ne SMEMBER.memId }">
 			<div class="oneMsg" chatId="${msg.chatId}" >
-				<div class="memId yours">${msg.memId }</div>
+				<div class="memId yours">${msg.memName }</div>
 				<div class="chatCont yours">
 					<span class="spaan">&nbsp;${msg.chatCont }&nbsp;</span>
 				</div>
