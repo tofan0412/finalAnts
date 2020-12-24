@@ -14,8 +14,16 @@ public class NoticeVo extends BaseVo{
 	private String adminId; //작성자 == memId
 	private String del; //삭제여부 == 어디갔지?
 	private String importance; //긴급공지?
+	private String main;
 	
 	
+	
+	public String getMain() {
+		return main;
+	}
+	public void setMain(String main) {
+		this.main = main;
+	}
 	public String getImportance() {
 		return importance;
 	}
@@ -62,7 +70,8 @@ public class NoticeVo extends BaseVo{
 	@Override
 	public String toString() {
 		return "NoticeVo [noticeId=" + noticeId + ", noticeTitle=" + noticeTitle + ", noticeCont=" + noticeCont
-				+ ", regDt=" + regDt + ", adminId=" + adminId + ", del=" + del + ", importance=" + importance + "]";
+				+ ", regDt=" + regDt + ", adminId=" + adminId + ", del=" + del + ", importance=" + importance
+				+ ", main=" + main + "]";
 	}
 	
 	
