@@ -84,16 +84,14 @@
 <form:form commandName="noticeVo" id="listForm" name="listForm" method="post">
 		
 	<section class="content" >
-		<div class="col-12 col-sm-12">
+		<div class="col-12 col-sm-12" style="padding-top: 3%">
 			<div class="card" style="border-radius: inherit; padding : 2px; margin-top: 10px">
 				<!-- 헤더 부분 -->
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<br>
 						<div class="col-sm-6">
-							<br>
-							<br>
-							<h1 class="jg" style="padding-left: 10px;">공지사항</h1>
+							<h1 class="jg" style="padding-left: 10px; padding-top: 10px">공지사항</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right" style="background: white">
