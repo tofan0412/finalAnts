@@ -59,21 +59,36 @@ public class HotIssueController {
 		return "tiles/manager/plpm_hotissueList";
 	}
 	
-	// 핫이슈 상세보기 화면 출력
-	@RequestMapping("/hissueDetailView")
-	public String hissueDetailView() {
-		return "tiles/manager/plpm_hissueDetail";
-	}
+//	// 핫이슈 상세보기 화면 출력
+//	@RequestMapping("/hissueDetailView")
+//	public String hissueDetailView() {
+//		return "tiles/manager/plpm_hissueDetail";
+//	}
 	
 	
 	// 핫이슈 상세보기
-	@RequestMapping("/hissueDetail")
+	@RequestMapping("/hissueDetailView")
 	public String hissueDetail(Model model, HotIssueVo hotIssueVo) {
-		HotIssueVo dbVo = manageBoardService.gethissue(hotIssueVo);
-		HotIssueFileVo pfv = new HotIssueFileVo(dbVo.getHissueId());
-		hotIssueFileController.getfiles(pfv, model);
-		model.addAttribute("hotIssueVo", dbVo);
-		return "jsonView";
+		List<HotIssueVo> hotlist = manageBoardService.gethissueandchild(hotIssueVo);
+		int size = hotlist.size();
+		if(size==2) {
+			String p_hissId = hotlist.get(0).getHissueId();
+			String c_hissId = hotlist.get(1).getHissueId();
+			HotIssueFileVo pfv = new HotIssueFileVo(p_hissId);
+			HotIssueFileVo pfv2 = new HotIssueFileVo(c_hissId);
+			hotIssueFileController.getfiles(pfv, model);
+			hotIssueFileController.getfiles2(pfv2, model);			
+			
+		}
+		if(size==1) {
+			String p_hissId = hotlist.get(0).getHissueId();
+			HotIssueFileVo pfv = new HotIssueFileVo(p_hissId);
+			hotIssueFileController.getfiles(pfv, model);
+		}
+		
+		model.addAttribute("hotlist", hotlist);
+		model.addAttribute("dbsize", size);
+		return "tiles/manager/plpm_hissueDetail";
 	}
 	
 	

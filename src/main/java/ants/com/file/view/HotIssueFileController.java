@@ -126,6 +126,15 @@ public class HotIssueFileController {@Resource(name = "fileService")
 	
 	 return "";
 	 }
+	 @RequestMapping(path ="/gethotfiles2")
+	 public String getfiles2(HotIssueFileVo pfv, Model model) {
+		 
+		 List<HotIssueFileVo> filelist = fileService.gethotfiles(pfv);
+		 
+		 model.addAttribute("filelist2" , filelist);
+		 
+		 return "";
+	 }
 	
 
 	// // 게시글의 파일 삭제하기
@@ -154,5 +163,7 @@ public class HotIssueFileController {@Resource(name = "fileService")
 		 
 		 return "jsonView";
 	 }
+
+	
 	
 }
