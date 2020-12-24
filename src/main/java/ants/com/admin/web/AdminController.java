@@ -291,6 +291,7 @@ public class AdminController {
 	// 프로필 보기
 	@RequestMapping("/memlistprofile")
 	public String memlistprofile(HttpSession session, MemberVo memberVo, Model model) {
+//		memberVo = (MemberVo) session.getAttribute("SMEMBER");
 		
 		MemberVo dbMember = adminService.getMember(memberVo);
 		logger.debug("dbMember : {}", dbMember);
