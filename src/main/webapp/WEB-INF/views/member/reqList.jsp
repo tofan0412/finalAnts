@@ -257,8 +257,8 @@ li strong{
 									<a class="btn btn-success btn-xs" href="javascript:reqUpdate(${req.reqId });"> 
 										 <i class="fas fa-pencil-alt"></i> 수정
 									</a>
-									<c:if test="${req.plId eq null and req.status != 'ACCEPT'}">
-										<a class="btn btn-danger btn-xs" href="javascript:reqDelete(${req.reqId });"> 
+									<c:if test="${req.plId eq null and req.proPercent eq null }">
+										<a class="btn btn-danger btn-xs" hr0ef="javascript:reqDelete(${req.reqId });"> 
 											<i class="fas fa-trash"></i> 삭제
 										</a>
 									</c:if>

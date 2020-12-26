@@ -135,7 +135,7 @@
 		   SET   pl_id  = null  ,
 		         status = null
 		 WHERE   req_id = #{reqId}
-</update>
+	</update>
 
 	<delete id="reqDelete" parameterType="String">
 UPDATE reqlist

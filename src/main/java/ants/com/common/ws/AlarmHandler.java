@@ -161,6 +161,16 @@ public class AlarmHandler extends TextWebSocketHandler {
 							+ "님이" + " 프로젝트 초대를 거절했습니다. " + "<a type='external' href=" + url + ">보기</a>");
 					responseSession.sendMessage(tmpMsg);
 				}
+				else if(type.equals("res-suggest") && responseSession != null && status.equals("ACCEPT")) {
+					TextMessage tmpMsg = new TextMessage(type + "&&" + callerName + "&&" + title + "&&" + callerName
+							+ "님이" + " 건의사항을 승인했습니다. " + "<a type='external' href=/alarmList>보기</a>&&" + cont);
+					responseSession.sendMessage(tmpMsg);
+				}
+				else if(type.equals("res-suggest") && responseSession != null && status.equals("REJECT")) {
+					TextMessage tmpMsg = new TextMessage(type + "&&" + callerName + "&&" + title + "&&" + callerName
+							+ "님이" + " 건의사항을 반려했습니다. " + "<a type='external' href=/alarmList>보기</a>&&" + cont);
+					responseSession.sendMessage(tmpMsg);
+				}
 				
 				
 			}

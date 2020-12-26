@@ -100,7 +100,14 @@
 			     subtitle: data[1] ,
 			     icon: 'fas fa-envelope fa-lg',
 			});
-			
+		// 건의사항응답	
+		}else if(data[0] == 'res-suggest'){
+			$(document).Toasts('create', {
+				body: data[3],
+			    title: data[2],
+			    subtitle: data[1],
+			    icon: 'fas fa-envelope fa-lg',
+			});
 		}
 		
 	}

@@ -249,9 +249,19 @@ $(function(){
 			success : function(res){
 				if (res > 0){
 					alert("승인 처리하였습니다.");
-					// 담당자 변경 페이지로 이동한다.
-					todoId = '${suggestVo.todoId}';
-					$(location).attr("href", "/todo/updatetodoView?todoId="+todoId);
+					var alarmData = {
+							"alarmCont" : "${projectVo.reqId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/suggest/suggestDetail?sgtId=${suggestVo.sgtId }&&${projectVo.proName}&&ACCEPT&&${suggestVo.sgtTitle }",
+							"memId"	: "${suggestVo.memId }",
+							"alarmType" : "res-suggest"
+					}
+					saveSResMsg(alarmData);
+					if (confirm("일감 수정페이지로 이동하시겠습니까?")) {
+						// 담당자 변경 페이지로 이동한다.
+						todoId = '${suggestVo.todoId}';
+						$(location).attr("href", "/todo/updatetodoView?todoId="+todoId);
+					}else{
+						$(location).attr("href", "/suggest/readSuggestList");
+					}
 				}else{
 					alert("승인 처리 실패했습니다.");
 				}
@@ -270,8 +280,14 @@ $(function(){
 			success : function(res){
 				if (res > 0){
 					alert("반려 처리하였습니다.");
-					// 건의사항 리스트로 이동한다. 
-					$(location).attr("href", "/suggest/readSuggestList");
+					var alarmData = {
+							"alarmCont" : "${projectVo.reqId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/suggest/suggestDetail?sgtId=${suggestVo.sgtId }&&${projectVo.proName}&&REJECT&&${suggestVo.sgtTitle }",
+							"memId"	: "${suggestVo.memId }",
+							"alarmType" : "res-suggest"
+					}
+					saveSResMsg(alarmData);
+					
+					
 				}else{
 					alert("반려 처리에 실패하였습니다.");
 				}
@@ -292,9 +308,11 @@ $(function(){
 					
 					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 					socket.send(socketMsg);
+					// 건의사항 리스트로 이동한다. 
+					$(location).attr("href", "/suggest/readSuggestList");
+					
 				},
 				error : function(err){
-					console.log(err);
 				}
 		});
 	}
@@ -394,9 +412,9 @@ function fileRestrict(fileNum){
 
 function saveMsg(){
 	var alarmData = {
-						"alarmCont" : "${issuevo.issueId},${SMEMBER.memName},${SMEMBER.memId},/projectMember/eachissueDetail?issueId=${issuevo.issueId},${issuevo.issueTitle}"+ $('#re_con').val(),
-						"memId" 	: "${issuevo.memId}",
-						"alarmType" : "reply"
+			"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/suggest/suggestDetail&&${suggestVo.sgtId}&&${suggestVo.sgtTitle}&&"+ $('#re_con').val() + "&&${projectVo.proName}",
+			"memId" 	: "${suggestVo.memId}",
+			"alarmType" : "reply-4"
 	}
 	console.log(alarmData);
 	
@@ -412,7 +430,7 @@ function saveMsg(){
 				socket.send(socketMsg);
 			},
 			error : function(err){
-				console.log(err);
+				
 			}
 	});
 }

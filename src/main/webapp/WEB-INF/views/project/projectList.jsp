@@ -326,8 +326,6 @@ th, td {
 	/* pl응답 알림메세지 db에 저장하기 */
 	function saveResMsg(alarmData){
 		
-		console.log(alarmData);
-		
 		$.ajax({
 				url : "/alarmInsert",
 				data : JSON.stringify(alarmData),
