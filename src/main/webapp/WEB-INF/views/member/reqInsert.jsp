@@ -125,7 +125,17 @@
 	    
      	// 작성 버튼 클릭시 요구사항정의서,프로젝트 등록
      	$('#insertbtn').on('click', function(event){
-				 $.ajax({
+     		cnt = 0;
+     		if ($('#reqTitle').val().length == 0){
+				$('.warningreqTitle').text("제목을 입력해 주세요.");  
+				cnt++;
+			}
+     		if ($('#reqPeriod').val().length == 0){
+				$('.warningreqPeriod').text("기간을 입력해 주세요.");  
+				cnt++;
+			}
+     		if(cnt == 0){
+     			$.ajax({
 						url : "/req/reqInsert",
 						method : "post",
 						data : $('#saveForm').serialize(),
@@ -141,11 +151,22 @@
 					        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					    }
 				 });
-				 event.preventDefault();
+				 event.preventDefault();	     	
+        	}
+     		
      	});
-     	
      	// 수정 버튼 클릭시 요구사항정의서 수정
      	$('#updatebtn').on('click', function(event){
+     		cnt = 0;
+     		if ($('#reqTitle').val().length == 0){
+				$('.warningreqTitle').text("제목을 입력해 주세요.");  
+				cnt++;
+			}
+     		if ($('#reqPeriod').val().length == 0){
+				$('.warningreqPeriod').text("기간을 입력해 주세요.");  
+				cnt++;
+			}
+     		if(cnt == 0){
 				 $.ajax({
 						url : "/req/reqUpdate",
 						method : "post",
@@ -170,6 +191,7 @@
 					       }
 				 });
 				 event.preventDefault();
+     		}
      	});
 	    
 	
@@ -265,6 +287,7 @@
 		                      <form:input path="reqTitle" id="reqTitle" placeholder="제목을 입력하세요" class="form-control"/>
 		                      <form:hidden path="reqId" />
 		                	</div>
+		                      <div class="jg" style=" padding-left: 10px;"><span class="jg warningreqTitle" style="color : red;"></span></div>
 	                  	</div>
 		            </div>
 		            <!-- /.card-header -->
@@ -276,10 +299,11 @@
 		                    <div class="input-group-prepend">
 		                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
 		                    </div>
-		                    <form:input path="reqPeriod"  class="form-control" id="reqPeriod" placeholder="60일이면 60만 적으세요." onkeyPress="javascript:checkInputNum();"/>
+		                    <form:input path="reqPeriod"  class="form-control" id="reqPeriod" placeholder="60일이면 60만 적으세요." onkeyPress="javascript:checkInputNum();"/><br>
 		                  </div>
 		                  <!-- /.input group -->
 		               </div>
+		                  <div class="jg" style=" padding-left: 10px;"><span class="jg warningreqPeriod" style="color : red;"></span></div><br>
 		              <div class="row col-md-2">
 		                  <label>내용 :</label>
 		              </div>
@@ -330,10 +354,10 @@
 					       <a href="#" class="btn btn-secondary" id="back">취소</a>
 					       <c:choose>
 						       	<c:when test="${registerFlag == 'modify' }">
-						       		<button class="btn btn-success float-right insertbtn" id="updatebtn">수정</button>
+						       		<input type="button" class="btn-success float-right insertbtn" id="updatebtn" value="수정">
 						       	</c:when>
 						       	<c:when test="${registerFlag == 'create' }">
-						       		<button class="btn btn-success float-right insertbtn" id="insertbtn">저장</button>
+						       		<input type="button" class="btn btn-success float-right insertbtn" id="insertbtn" value="저장">
 						       	</c:when>
 					       </c:choose>
 					     </div>
