@@ -140,13 +140,13 @@
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
+      <li class="nav-item jg">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
+      <li class="nav-item d-none d-sm-inline-block jg">
         <a id="home" href="${pageContext.request.contextPath}/member/mainpage" class="nav-link">HOME</a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
+      <li class="nav-item d-none d-sm-inline-block jg">
         <a id="toNotice" href="/member/noticelistmemview" class="nav-link">공지사항</a>
       </li>
     </ul>
@@ -203,7 +203,7 @@
           <span class="badge badge-warning navbar-badge" id="alarmCount"></span>
           
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right jg">
           <span class="dropdown-item dropdown-header alarmCount">개의 알림이 있습니다.</span>
           <div class="dropdown-divider"></div>
           <a href="${pageContext.request.contextPath}/alarmList?searchCondition=1" class="dropdown-item toAlarm" id="resCnt" style="font-size: 0.9em">
@@ -226,7 +226,7 @@
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-user-circle"></i>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right jg">
           <div class="dropdown-divider"></div>
           <a href="${pageContext.request.contextPath}/member/profile" class="dropdown-item toProfile">
             <i class="fas fa-user-edit mr-2"></i>프로필

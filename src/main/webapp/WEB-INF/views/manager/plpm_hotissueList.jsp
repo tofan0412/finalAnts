@@ -104,7 +104,7 @@ $(document).ready(function(){
 	<form:hidden path="hissueParentid" ></form:hidden>
 		<br>
 		    <div class="card-header">
-				<div id="keyword" class="card-tools float-right" style="width: 550px;">
+				<div id="keyword" class="card-tools float-right jg" style="width: 550px;">
 					<div class="input-group row">						
         				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3 jg" style="width: 100px;">
 							<form:option value="1" label="작성자"/>
