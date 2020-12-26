@@ -144,6 +144,9 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
+        <a id="home" href="${pageContext.request.contextPath}/member/mainpage" class="nav-link">HOME</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
         <a id="toNotice" href="/member/noticelistmemview" class="nav-link">공지사항</a>
       </li>
     </ul>
