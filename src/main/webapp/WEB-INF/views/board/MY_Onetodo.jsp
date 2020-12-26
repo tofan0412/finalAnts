@@ -11,6 +11,7 @@
 		//진행도 수정
 		$(document).on('click','#modalBtn', function(){
 			if($('#inpercent').val()==''){
+				
 				alert("진행도를 입력해주세요!");
 			}
 			else{
@@ -109,6 +110,16 @@
 	          event.returnValue = false;
 	      }
 	  }
+	 function handleChange(input) {
+	       if (input.value < 0){
+	    	   alert("진행도는 0 ~ 100까지 입력가능합니다.");
+	       	return false;
+	       }
+	       if (input.value > 100) {
+	    	   alert("진행도는 0 ~ 100까지 입력가능합니다.");
+	       	return false;
+	       }
+	     }
 	function todoDetail(todoId) {
 		$.ajax({
 			url : "/todo/myonetodo",
@@ -271,9 +282,9 @@
        	<form id="proForm" name="proForm" method="post">
        	<input type="hidden" name="todoId" id="todoId_in">
        	<input type="hidden" name="reqId" id="reqId">
-       	<input type="text" id="inpercent" name="todoPercent" maxlength="3" onkeyPress="javascript:checkInputNum();">
+       	<input type="text" id="inpercent" name="todoPercent" maxlength="3" onkeyPress="javascript:checkInputNum();" onchange="javascript:handleChange(this);">
        	</form>
-      </div>
+      </div>           
       <div class="modal-footer">
         <button type="button" class="btn btn-default jg" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-default jg" id="modalBtn">등록</button>
