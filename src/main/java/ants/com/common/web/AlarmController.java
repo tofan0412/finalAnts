@@ -128,7 +128,7 @@ public class AlarmController {
 		}
 		
 		//건의사항
-		if(alarmVo.getAlarmType().equals("suggest")) {
+		if(alarmVo.getAlarmType().matches(".*suggest")) {
 			re.addAttribute("reqId", alarmVo.getReqId());
 			session.setAttribute("categoryId", "4");
 			session.setAttribute("pageIndex", 1);

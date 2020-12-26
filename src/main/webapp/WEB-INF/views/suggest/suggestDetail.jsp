@@ -281,7 +281,7 @@ $(function(){
 				if (res > 0){
 					alert("반려 처리하였습니다.");
 					var alarmData = {
-							"alarmCont" : "${projectVo.reqId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/suggest/suggestDetail?sgtId=${suggestVo.sgtId }&&${projectVo.proName}&&REJECT&&${suggestVo.sgtTitle }",
+							"alarmCont" : "${projectVo.reqId}&&${SMEMBER.memName}&&${suggestVo.sgtId }&&${projectVo.proName}&&REJECT&&${suggestVo.sgtTitle }",
 							"memId"	: "${suggestVo.memId }",
 							"alarmType" : "res-suggest"
 					}
