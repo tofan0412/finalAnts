@@ -180,7 +180,7 @@
 		<button type="button" class="btn btn-default jg" id="updateBtn">수정</button>
 		<button type="button" class="btn btn-default jg" id="deleteBtn">삭제</button>
 		<div class="float-right">
-		<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
+		<button type="button" class="btn btn-default jg" id="back">목록 보기</button>
 		</div>	
 		</div>
 		</c:if>
@@ -188,7 +188,7 @@
 		<!-- 로그인한 사람이 글쓴이가 아닐때-->
 		<div id="btnMenu">
 		<div class="float-right">
-		<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
+		<button type="button" class="btn btn-default jg" id="back">목록 보기</button>
 		</div>	
 		</div>
 		</c:if>
