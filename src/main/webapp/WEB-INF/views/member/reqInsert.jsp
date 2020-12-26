@@ -69,6 +69,12 @@
 		window.history.back();
 	});
 	
+	function checkInputNum(){
+		if ((event.keyCode < 48) || (event.keyCode > 57)){
+	          event.returnValue = false;
+	      }
+	  }
+	
 	var uploadCnt = 0;
     var QueueCnt = 0;
 	
@@ -137,6 +143,7 @@
 				 });
 				 event.preventDefault();
      	});
+     	
      	// 수정 버튼 클릭시 요구사항정의서 수정
      	$('#updatebtn').on('click', function(event){
 				 $.ajax({
@@ -269,7 +276,7 @@
 		                    <div class="input-group-prepend">
 		                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
 		                    </div>
-		                    <form:input path="reqPeriod"  class="form-control" id="reqPeriod" placeholder="60일이면 60만 적으세요."/>
+		                    <form:input path="reqPeriod"  class="form-control" id="reqPeriod" placeholder="60일이면 60만 적으세요." onkeyPress="javascript:checkInputNum();"/>
 		                  </div>
 		                  <!-- /.input group -->
 		               </div>
