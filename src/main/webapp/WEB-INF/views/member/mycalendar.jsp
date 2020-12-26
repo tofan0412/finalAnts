@@ -330,8 +330,8 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/member/mainpage">Home</a></li>
-              <li class="breadcrumb-item active">Calendar</li>
+              <li class="breadcrumb-item san jg"><a href="${pageContext.request.contextPath}/member/mainpage">Home</a></li>
+              <li class="breadcrumb-item active jg">Calendar</li>
             </ol>
           </div>
         </div>

@@ -137,7 +137,7 @@ $(function(){
 		          <div class="col-sm-6">
 		         
 		            <ol class="breadcrumb float-sm-right"  style="background : white">
-		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li>
+		              <li class="breadcrumb-item san jg"><a href="${pageContext.request.contextPath}/member/mainpage">Home</a></li>
 		              <li class="breadcrumb-item active jg">내가 작성한 이슈</li>
 		            </ol>
 		          </div>
