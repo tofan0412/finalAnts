@@ -11,14 +11,11 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-	
+
+<link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
+<script src="/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="/plugins/summernote/lang/summernote-ko-KR.js"></script>
+
 <!-- <script src="/resources/upload/jquery.min.js" type="text/javascript"></script> -->
 <script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
@@ -120,12 +117,13 @@
      	// 작성 버튼 클릭시 파일 업로드 호출
      	$('#insertbtn').on('click', function(){
      		// 업로드할 파일이 존재하지 않을시
-     		if($('.uploadifive-queue-item').length ==0){    			
-     			if($('#kindselect').val() == 'issue'){
-     	     		if($('#issueTitle').val() != ''){		     	     		
-     					$('#todoselect').val() != '' ? $('#frm').submit() : alert('선택해주세요');	    					    			
-     				}
-     			}
+     		if($('.uploadifive-queue-item').length ==0){    			    			
+   	     		if($('#issueTitle').val() == ''){		     	     		
+   	     			$('.warningTitle').text("제목을 작성해 주세요.");		    			
+   				}else{
+   				 	$('#frm').submit() ;	 
+   				}
+     			
      		// 업드로할 파일이 존재할 시
      		}else{
      			$('#file_upload').uploadifive('upload');
@@ -207,17 +205,18 @@
 				
 			
 				<div class="form-group">
-					<label for="issueTitle" class="col-sm-2 control-label jg">이슈제목</label>
-					<input type="text" name="todoId" style="background-color:transparent; border:none;" value="${todoVo.todoTitle }" disabled>
+					<label for="issueTitle" class="col-sm-2 control-label jg">일감제목</label>
+					<input  type="text" name="todoId" style="background-color:transparent; border:none;" value="${todoVo.todoTitle }" disabled>
 				</div>
 				<div class="form-group">
 					<label for="issueTitle" class="col-sm-2 control-label jg">이슈제목</label>
-					<input type="text" name="issueTitle" style="width: 70%;" id="issueTitle" required>
+					<input  class="form-control" type="text" name="issueTitle" style="display:inline-block; width: 70%;" id="issueTitle" required>
+					<div class="jg" style=" padding-left: 10px;"><span class="jg warningTitle" style="color : red;"></span></div>
 				</div>
 				
 				<div class="form-group" style="width: 90%;">
 					<label for="issueCont" class="col-sm-2 control-label jg">이슈 내용</label>
-					<textarea id="summernote" name="issueCont" id="issueCont"></textarea>
+					<textarea id="summernote"  class="form-control" name="issueCont" id="issueCont"></textarea>
 				</div>
 						
 			</form>
