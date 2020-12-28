@@ -51,5 +51,8 @@ public interface ProjectmemberMapper {
 	public List<ProjectVo> memInProjectList(String memId);
 	
 	//reqId 이용해서 해당 프로젝트에 참여하고 있는 회원 조회하기
-	public List<ProjectMemberVo> proMemList(String reqId); 
+	public List<ProjectMemberVo> proMemList(String reqId);
+	
+	//reqId 이용해서 해당 프로젝트에 참여하고 있는 회원 조회하기(IN)
+	public List<ProjectMemberVo> proMemListIn(String reqId); 
 }

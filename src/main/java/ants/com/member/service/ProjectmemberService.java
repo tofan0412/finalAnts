@@ -84,4 +84,13 @@ public class ProjectmemberService extends EgovAbstractServiceImpl {
 	public List<ProjectMemberVo> proMemList(String reqId) {
 		return mapper.proMemList(reqId);
 	}
+	
+	/**
+	 * 프로젝트 참여 멤버리스트조회
+	 * @param reqId
+	 * @return 상태 IN인 projectMemberVo객체
+	 */
+	public List<ProjectMemberVo> proMemListIn(String reqId) {
+		return mapper.proMemListIn(reqId);
+	}
 }
