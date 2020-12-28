@@ -125,7 +125,7 @@ $(document).ready(function(){
 		<table id="HotIssueVoTable" class="jg">
 			<tr>
 				<th style="padding-left: 10px;">No.</th>
-				<th style="text-align: left; padding-left: 12%;">제목</th>
+				<th >제목</th>
 				<th>작성일</th>
 				<th>작성자</th>
 			</tr>

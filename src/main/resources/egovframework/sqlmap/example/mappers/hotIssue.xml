@@ -33,7 +33,7 @@
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>
 							<when test="searchCondition == 1">
-								AND hotissue.mem_name LIKE '%' || #{searchKeyword} || '%'
+								AND member.mem_name LIKE '%' || #{searchKeyword} || '%'
 							</when>
 							<when test="searchCondition == 2">
 								AND hotissue.hissue_title LIKE '%' || #{searchKeyword} || '%'

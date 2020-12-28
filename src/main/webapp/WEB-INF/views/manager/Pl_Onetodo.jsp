@@ -156,7 +156,7 @@
 	}
 .linka{
 	color: black;
-}
+	}
 
 
 </style>
@@ -176,8 +176,6 @@
             <th class="success ">제목</th>
          	<td colspan="3" style="padding-left: 20px;"><div class="jg" id="todoTitle"></div></td>
         </tr>
-           
-         
         <tr class="stylediff">
             <th class="success ">담당자</th>
             <td style="padding-left: 20px; width: 700px; "><div class="jg" id="memId"></div></td>
@@ -252,7 +250,6 @@
               <div class="form-group" id ="daylog">
               </div>
             </div>
-            <!-- /.card-body -->
           </div>
 </div>
 </html>
