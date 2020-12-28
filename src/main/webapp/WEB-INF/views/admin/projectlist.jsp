@@ -9,14 +9,24 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style type="text/css">
-#pagenum a{
+	#pagenum a{
 		 display: inline-block;
 		 text-align: center;
-		 width : auto;	 
+		 padding : 6px; 	 
 		 border: none; 
 	
 	}
-	
+	#table{
+		width : 100%;
+	    border-top: 1px solid #444444;
+	    border-collapse: collapse;
+	    text-align: center;
+  	}
+   	th, td { 
+ 	    border-bottom: 1px solid #444444; 
+ 	    padding: 10px; 
+   	} 
+   	
 	li strong{
 		display: inline-block;
 		text-align: center;
@@ -83,7 +93,7 @@ $(function(){
 						<br>
 						<div class="col-sm-6">
 							<br>
-							<h1 class="nav-icon fas fa-tasks" style="padding-left: 10px;">&nbsp;프로젝트 리스트</h1>
+							<h1 class="nav-icon fas fa-tasks" style="padding-left: 10px;">&nbsp;프로젝트 리스트1</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right" style="background: white">
@@ -138,7 +148,7 @@ $(function(){
 								<th style="text-align: center;">제목</th>
 								<th style="text-align: center;">담당자</th>
 								<th style="text-align: center;">날짜</th>
-								<th style="text-align: center;">-</th>
+								<th style="text-align: center;"></th>
 							</tr>
 						</thead>
 						<tbody>

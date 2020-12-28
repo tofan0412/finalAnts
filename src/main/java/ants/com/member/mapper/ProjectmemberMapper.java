@@ -52,4 +52,7 @@ public interface ProjectmemberMapper {
 	
 	//reqId 이용해서 해당 프로젝트에 참여하고 있는 회원 조회하기
 	public List<ProjectMemberVo> proMemList(String reqId); 
+	
+	// 프로젝트 멤버의 상태를 변경한다. 
+	public int promemUpdate(ProjectMemberVo projectMemberVo);
 }

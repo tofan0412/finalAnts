@@ -8,6 +8,7 @@ import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.model.SuggestVo;
 import ants.com.board.vote.model.VoteVo;
+import ants.com.common.model.AlarmVo;
 import ants.com.file.model.PublicFileVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectMemberVo;
@@ -96,5 +97,7 @@ public interface ProjectMapper {
 	public List<ProjectVo> chartproday(String reqId);
 
 	public List<ProjectVo> projectListmain(String memId);
+
+	public List<AlarmVo> alarmlistmain(String memId);
 
 }
