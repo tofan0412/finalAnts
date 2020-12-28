@@ -187,8 +187,8 @@ toastr.options = {
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right">
-		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active">새로운 소식</li>
+		              <li class="breadcrumb-item san jg"><a href="${pageContext.request.contextPath}/member/mainpage">Home</a></li>
+              		  <li class="breadcrumb-item active jg">새로운 소식</li>
 		            </ol>
 		          </div>
 		        </div>
