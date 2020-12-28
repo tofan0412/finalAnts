@@ -93,10 +93,10 @@
               <h3 class="card-title jg">일감 상세보기</h3>
             </div>
             <div class="card-body">
-        <table class="table" >
       		<c:forEach items="${todoVo }" var= "todo" varStatus="sts" >
              	<input type="hidden" id="todoId" value="${todo.todoId }">
              	<input type="hidden" id="reqId" value="${todo.reqId }">
+        <table class="table" >
         <tr class="stylediff">
             <th class="success ">제목</th>
          	<td colspan="3" style="padding-left: 20px;"><div class="jg" id="todoTitle">${todo.todoTitle }</div></td>
@@ -126,7 +126,6 @@
             <th class="success">내용</th>
             <td colspan="3" style="padding-left: 20px;"><div class="jg" id="todoCont">${todo.todoCont }</div></td>
         </tr>
-         </c:forEach>
         <tr>
             <th class="success">첨부파일</th>
             <td colspan="3" style="padding-left: 20px;">
@@ -162,6 +161,7 @@
 					 <button type="button" class="btn btn-default jg float-right" id="back">뒤로가기</button>    
 				 </div>
 				 </c:if>
+				 </c:forEach>
             </div>
           </div>
            <c:if test="${not empty dbtodolog}">
