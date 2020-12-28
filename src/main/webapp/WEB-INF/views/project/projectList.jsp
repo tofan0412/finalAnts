@@ -43,8 +43,8 @@ th, td {
 		mkPjtMemberSearchList = [];	// 검색결과에 띄울 리스트 ..
 		mkPjtInviteMemList = [];	// 프로젝트에 초대할 회원 리스트..
 		
-		me = "${SMEMBER.memId}"; 	
-		
+		myId = "${SMEMBER.memId}"; 	
+		myName = "${SMEMBER.memName}";
 		// 사용자가 승인 버튼을 누르는 경우 버튼 내용이 프로젝트 생성으로 변경되며, 
 		// reqList 테이블에서 status 가 accept로 변경된다.
 		$('.pjtAcceptBtn').click(function(){
@@ -106,7 +106,7 @@ th, td {
 			}
 			
 			//생성 직전, 자기 자신 아이디를 추가한다. 
-			mkPjtInviteMemList.push("본인아이디"+":"+me);
+			mkPjtInviteMemList.push(myName+":"+myId);
 			
 			// 현재 초대 리스트는 회원이름과 결합되어 있으므로, 가공해줘야 한다.
 			setInviteMemList = [];
@@ -114,11 +114,11 @@ th, td {
 				setInviteMemList.push(mkPjtInviteMemList[i].split(":")[1]);
 			}
 			
-			var ajaxArr = {"inviteMemList" : setInviteMemList, "reqId" : reqId, "memId" : me};
+			var ajaxArr = {"inviteMemList" : mkPjtInviteMemList, "reqId" : reqId, "memId" : myId};
 			
 			ArrWithoutMe = [];
 			for (i = 0 ; i < setInviteMemList.length ; i++){
-				if (me == setInviteMemList[i]){
+				if (myId == setInviteMemList[i]){
 					// 나 스스로한테는 알람을 보내선 안되므로, 아무것도 하지 않는다.(알람 대상 리스트에 나를 제외한다.)
 				}else{
 					ArrWithoutMe.push(setInviteMemList[i]);
@@ -259,7 +259,7 @@ th, td {
 			$('#mkPjtWarningText')[0].style.visibility = 'hidden';
 			
 			// 본인인지 아닌지, 확인해야 한다.
-			if (memName == "${SMEMBER.memName}") {
+			if (addingMemId == "${SMEMBER.memId}") {
 				$('#mkPjtWarningText').text("본인입니다.");
 				$('#mkPjtWarningText')[0].style.visibility = 'visible';
 				return;

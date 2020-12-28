@@ -108,11 +108,10 @@ SELECT *
 	
 	<insert id="insertPjtMember"
 		parameterType="ants.com.member.model.ProjectMemberVo">
-		INSERT INTO PROJECTMEMBER 
-			(req_id, promem_id, mem_id, promem_status)
-		VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL, #{memId},#{promemStatus})
-
-	</insert>
+INSERT INTO PROJECTMEMBER 
+			(req_id, promem_id, mem_name, mem_id, promem_status)
+		VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL,#{memName}, #{memId},#{promemStatus})
+</insert>
 	
 	<update id="updatePjtMember" parameterType="ants.com.member.model.ProjectMemberVo">
 		UPDATE PROJECTMEMBER
@@ -474,6 +473,25 @@ SELECT *
 		AND reqlist.pl_id= #{memId}
 		AND reqlist.status ='ACCEPT'
          and project.del ='N'
+	</select>
+	
+	<select id="alarmlistmain" parameterType="String"
+		resultType="ants.com.common.model.AlarmVo">
+		<![CDATA[ 
+		SELECT
+		    alarm_id,
+		    alarm_cont,
+		    alarm_status,
+		    mem_id,
+		    alarm_type,
+		    reg_dt
+		FROM
+		    alarm
+		WHERE mem_id = #{memId}
+		 and ALARM_STATUS ='N'
+		 AND ROWNUM <= 5
+		 ORDER BY to_number(alarm_id)desc
+		 ]]> 
 	</select>
 	 
 	

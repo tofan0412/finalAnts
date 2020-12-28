@@ -86,7 +86,7 @@
 			
 			<div class="conB_small_container">
 				<div class="conB_icon">
-					<i class="fas fa-network-wired icon"></i>
+					<i class="fas fa-unlock-alt icon"></i>
 				</div>
 				<div class="conB_content">
 					<h3>보안기능</h3>
