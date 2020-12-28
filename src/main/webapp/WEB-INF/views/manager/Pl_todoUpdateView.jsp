@@ -108,7 +108,7 @@
      	
      	// 업데이트 버튼 클릭시 파일 삭제 호출
      	$('#updatebtn').on('click', function(){
-     		$("#mem-select").remove();
+     		$("#mem-select2").remove();
      		cnt = 0;
      		// 각 칸이 빈칸인지 확인
      		if ($('#todoTitle').val().length == 0){
@@ -123,10 +123,7 @@
 				$('.warningtodoEnd').text("마감일을 지정해 주세요.");  
 				cnt++;
 			}
-     		if ($('#memChangeComment2').val().length == 0){
-				$('.warningmemChangeComment').text("인수인계 내용을 입력해주세요.");  
-				cnt++;
-			}
+     		
      		if(cnt == 0){
      		 delfiles();	     	
      		}
@@ -136,7 +133,7 @@
      	// 업로드된 파일의 수와 사용자가 올린 파일의 수가 같을 시 from 전송
      	function insertcheck(){
      		if(uploadCnt == $('.uploadifive-queue-item').length){
-     			$("#mem-select").remove();
+     			$("#mem-select2").remove();
      			$('#todoform').submit(); 
         	}
     	}
@@ -152,7 +149,7 @@
 					 console.log(data);
 					// 업로드할 파일이 존재하지 않을시 update전송
 		     		if($('.uploadifive-queue-item').length ==0){    	
-		     			$("#mem-select").remove();
+		     			$("#mem-select2").remove();
 		     			 $('#todoform').submit();	    					    					     			
 		     		// 업로드할 파일이 존재시 파일 등록 호출
 		     		}else{
@@ -182,6 +179,7 @@
 			$("#changemem").val('${todoVo.memId }');
 			$("#memChangecomment").show();
 			$("#mem-select").remove();
+			$("#mem-select2").attr('id','mem-select3');
 		
 		});
  		
@@ -256,13 +254,12 @@
 				<label for="mem-select" class="col-sm-1 control-label ns">담당자</label>
 				<input  class="ns" type="text" id="mem-select" name="memId" value="${todoVo.memId }" readonly="readonly">
 				<input  class="ns" type="button" id="memChange" value="인수인계">
-                
 				<div id="memChangecomment">
 				<label for="memChangeComment" class="col-sm-1 control-label ns">인수인계 내용</label>
 				<input  class="ns" type="text" id="memChangeComment2" name ="logComment"/>
 				<div class="jg" style=" padding-left: 10px; display: inline;"><span class="jg warningmemChangeComment" style="color : red;"></span></div>
                 
-				<label for="mem-select" class="col-sm-1 control-label ns">변경 담당자</label>
+				<label for="mem-select2" class="col-sm-1 control-label ns">변경 담당자</label>
 				<select name="memId" id="mem-select2">
 				<c:forEach items="${promemList}" var="mem">
 					<c:if test="${mem.memId ne todoVo.memId }">

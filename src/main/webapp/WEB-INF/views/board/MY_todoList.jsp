@@ -111,7 +111,7 @@ $(document).ready(function(){
 			<tr>
 				<th style="padding-left: 10px;">No.</th>
 				<th>상태</th>
-				<th style="text-align: left; padding-left: 12%;">제목</th>
+				<th>제목</th>
 				<th>담당자</th>
 				<th>Progress</th>
 				<th>진행도</th>

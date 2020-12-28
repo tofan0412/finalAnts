@@ -10,6 +10,25 @@
 	   AND PROMEM_STATUS != 'OUT'
 </select>
 
+<select id="proMemListIn" parameterType="java.lang.String" resultType="ants.com.member.model.ProjectMemberVo">
+	SELECT *
+	  FROM PROJECTMEMBER
+	 WHERE REQ_ID = #{reqId}
+	   AND PROMEM_STATUS = 'IN'
+</select>
+
+<update id="promemUpdate" parameterType="ants.com.member.model.ProjectMemberVo">
+	UPDATE PROJECTMEMBER
+	<set>
+		<if test="reqId != null">REQ_ID = #{reqId}</if>
+		<if test="memId != null">MEM_ID = #{memId}</if>
+		<if test="memName != null">MEM_NAME = #{memName}</if>
+		<if test="promemStatus != null">PROMEM_STATUS = #{promemStatus}</if>
+	</set>
+	 WHERE PROMEMID = #{promemId}
+</update>
+
+
 
 
 	

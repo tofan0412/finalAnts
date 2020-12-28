@@ -13,6 +13,7 @@ import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.model.SuggestVo;
 import ants.com.board.vote.model.VoteVo;
+import ants.com.common.model.AlarmVo;
 import ants.com.file.model.PublicFileVo;
 import ants.com.member.mapper.ProjectMapper;
 import ants.com.member.mapper.ProjectmemberMapper;
@@ -160,5 +161,9 @@ public class ProjectService extends EgovAbstractServiceImpl {
 
 	public List<ProjectVo> projectListmain(String memId) {
 		return mapper.projectListmain(memId);
+	}
+
+	public List<AlarmVo> alarmlistmain(String memId) {
+		return mapper.alarmlistmain(memId);
 	}
 }

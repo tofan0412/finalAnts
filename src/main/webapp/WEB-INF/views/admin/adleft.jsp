@@ -23,10 +23,12 @@
 
 <aside class="main-sidebar sidebar-light-teal elevation-4" >
 	<!-- Brand Logo -->
-	<a href="/admin/adMainView" class="brand-link"> 
-	<img src="/dist/img/adminicon.png"  style="float: none;width: 60px;margin: 15px 8px 10px 0px;height: 50px; background-color: white">
-	<img src="/dist/img/ants.png" style="width: 100px;">
-	</a>
+	<div style="margin: 20px 20px 20px 3px; min-width: max-content;">
+		<a href="${pageContext.request.contextPath}/admin/adMainView" class="brand-link" style="border-bottom: none;"> 
+			<img src="${pageContext.request.contextPath}/resources/dist/img/adminicon.png" alt="이미지" style="float: none;width: 60px;margin: 15px 8px 10px 0px;height: 50px; background-color: white">
+			<img src="${pageContext.request.contextPath}/resources/dist/img/ants.png" style="width: 100px;">
+		</a>
+	</div>
 
 	<!-- Sidebar -->
 	<div class="sidebar" style="font-size: 0.8em;">

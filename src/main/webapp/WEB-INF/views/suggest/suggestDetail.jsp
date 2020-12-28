@@ -381,7 +381,7 @@ function replyinsert() {
 		},
 		success : function(data) {
 			saveMsg();
-			$(location).attr('href', '${pageContext.request.contextPath}/suggest/suggestDetail?sgtId='+data.someId);
+			
 		}
 	});
 }
@@ -428,6 +428,7 @@ function saveMsg(){
 				
 				let socketMsg = alarmData.alarmCont +","+ alarmData.memId +","+ alarmData.alarmType;
 				socket.send(socketMsg);
+				$(location).attr('href', '${pageContext.request.contextPath}/suggest/suggestDetail?sgtId=${suggestVo.sgtId }');
 			},
 			error : function(err){
 				

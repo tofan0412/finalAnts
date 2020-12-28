@@ -355,10 +355,29 @@ public class AdminController {
 	
 	// Ip 리스트 전체 가져오기 -> 차단 리스트 또는 허용 리스트
 	@RequestMapping("/getIpList")
-	public String getIpList(Model model) {
+	public String getIpList(Model model, HttpSession session) {
 		List<IpVo> ipList = adminService.getIpList();
 		
+		/** pageing setting */
+		IpVo ipVo = new IpVo();
+		ipVo.setPageUnit(propertiesService.getInt("pageUnit"));
+		ipVo.setPageSize(propertiesService.getInt("pageSize"));
+		
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(ipVo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(ipVo.getPageUnit());
+		paginationInfo.setPageSize(ipVo.getPageSize());
+		
+		ipVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		ipVo.setLastIndex(paginationInfo.getLastRecordIndex());
+		ipVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
 		model.addAttribute("ipList", ipList);
+		
+		int totCnt = adminService.getIpCount();
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
+		session.setAttribute("pageIndex", ipVo.getPageIndex());
 		
 		return "admin.tiles/admin/ipAcceptedList";
 		

@@ -64,7 +64,7 @@
 			<b>프로필 수정</b>
 		</div>		
 		
-		<div class="card card-primary card-outline">
+		<div class="card card-success card-outline">
 			<div class="card-body box-profile">
 				
 				<form id="fmin" role="form" class="form-horizontal" action="/admin/memlistproupdate" method="POST" enctype="multipart/form-data">
@@ -75,17 +75,17 @@
 						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;"/>
 					</div><br>		 
 					<div class="content">
-						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left;" />	
+						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left; outline: none;" />	
 					</div>
 				</div> 	
 						
 							
 				<h3 class="profile-username text-center">
 					<!-- 경로 미리보기용 <div id="clickmsg">경로 : </div>	<hr>  -->
-					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none" readonly/>
+					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none; outline: none;" readonly/>
 				</h3>
 				<p class="text-muted text-right">
-					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none" readonly/>
+					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none; outline: none;" readonly/>
 				</p>
 					
 									
@@ -99,27 +99,29 @@
 						
 					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>이름</b> 
 						<a class="float-right">
-							<input class="input" name="memName" type="text" id="memName" placeholder="이름" value="${memberVo.memName}"/>
+							<input class="input" name="memName" type="text" id="memName" placeholder="이름" value="${memberVo.memName}" readonly/>
 						</a>
 					</li> 
 					
 					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b>
 						<a class="float-right">
-							<input class="input" name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합" value="${memberVo.memPass}"/>
+							<div>
+								<input class="input"  name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합" value="${memberVo.memPass}" readonly/>
+							</div>
 							<div id="checkPass1" class="indiv"></div>
 						</a>
 					</li>			
 								
 					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b> 
 						<a class="float-right">
-							<input class="input" type="password" style="float:left" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" value="${memberVo.memPass}"/>
+							<input class="input" type="password" style="float:left" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" value="${memberVo.memPass}" readonly/>
 							<div id="checkPass2" class="indiv"></div>	
 						</a>
 					</li>	
 								
 					<li class="list-group-item">	<b>전화번호</b> 
 						<a class="float-right">
-							<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력" value="${memberVo.memTel}"/>
+							<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력" value="${memberVo.memTel}" readonly/>
 							<div id="checkTel" class="indiv"></div>
 						</a>
 					</li>

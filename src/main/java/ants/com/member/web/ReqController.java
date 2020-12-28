@@ -21,11 +21,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 
+import ants.com.board.manageBoard.model.TodoVo;
+import ants.com.board.manageBoard.service.ManageBoardService;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.view.FileController;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectMemberVo;
+import ants.com.member.model.ProjectVo;
 import ants.com.member.model.ReqVo;
 import ants.com.member.service.MemberService;
+import ants.com.member.service.ProjectService;
+import ants.com.member.service.ProjectmemberService;
 import ants.com.member.service.ReqService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -38,6 +44,10 @@ public class ReqController {
 	
 	@Resource(name = "memberService")
 	private MemberService memberService;
+	
+	@Resource(name="promemService")
+	ProjectmemberService promemService;
+	
 	
 	@Autowired
 	FileController filecontroller;
@@ -84,15 +94,22 @@ public class ReqController {
 	 * @return reqVo 객체
 	 */
 	@RequestMapping(value="/reqDetail")
-	public String reqDetail(@RequestParam(name="selectedId", required= false) String id,@ModelAttribute("reqVo") ReqVo reqVo, Model model) {
+	public String reqDetail(@RequestParam(name="selectedId", required= false) String id,@ModelAttribute("reqVo") ReqVo reqVo, Model model, HttpSession session) {
 		if(id != null) {
 			reqVo.setReqId(id);
 		} 
 		reqVo = reqService.getReq(reqVo);
 		model.addAttribute("reqVo", reqVo);
+		//chart
+		session.setAttribute("projectId", reqVo.getReqId());
 		
+		//file
 		PublicFileVo pfv = new PublicFileVo("7",reqVo.getReqId() , reqVo.getReqId());
 		filecontroller.getfiles(pfv, model);
+		
+		//proMember
+		List<ProjectMemberVo> promemListIn = promemService.proMemListIn(reqVo.getReqId());
+		model.addAttribute("promemListIn", promemListIn);
 		
 		return "tiles/member/reqDetail";
 	}

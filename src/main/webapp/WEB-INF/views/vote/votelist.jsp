@@ -35,10 +35,6 @@
 		 
 	}
 
-	.badge{
-		height: 20px;
-	}
-	
 	
 </style>
 

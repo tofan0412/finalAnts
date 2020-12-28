@@ -155,32 +155,34 @@ $(document).ready(function(){
 					</div>	
 					
 					<h3 class="profile-username text-center">
-						<input class="profile-username text-center" name="memName" type="text" class="form-control" id="memName" placeholder="(이름)" value="${memberVo.memName}" style="border: none" readonly />
+						<input class="profile-username text-center" name="memName" type="text" class="form-control" id="memName" placeholder="(이름)" value="${memberVo.memName}" style="border: none; outline: none;" readonly />
 					</h3>
 						
 					<p class="text-muted text-center">
-						<input class="text-muted text-center" name="memId" type="text" class="form-control" id="memId" placeholder="(아이디)" value="${memberVo.memId}" style="border: none" readonly>
+						<input class="text-muted text-center" name="memId" type="text" class="form-control" id="memId" placeholder="(아이디)" value="${memberVo.memId}" style="border: none; outline: none;" readonly>
 					</p>
 						
 					<ul class="list-group list-group-unbordered mb-3"> 
 						<li class="list-group-item"><b>전화번호</b>  	
 							<a class="float-right">
-								<input name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border:none; width:105px;" readonly />
+								<input name="memTel" type="text" id="usernm" placeholder="(전화번호)" value="${memberVo.memTel}" style="border:none; width:105px; outline: none;" readonly />
 							</a>	
 						</li>
 						<li class="list-group-item"><b>알람</b> 
 							<a class="float-right">
-								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none; width:40px;" readonly>
+								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none; width:105px; outline: none;" readonly>
 								<!-- 알람 토글 버튼 -->	
-								<label class="switch">											<!-- 알람 토글 기본 y : y아닐땐 off -->
+								<!-- 
+								<label class="switch">											
 									<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>	
 									<span class="slider round"></span>	
 								</label>
+								-->
 							</a>
 						</li>			
 						<li class="list-group-item"><b>타입</b>
 							<a class="float-right">
-								<input name="memType" type="text" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border:none; width:105px;" readonly>
+								<input name="memType" type="text" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border:none; width:105px; outline: none;" readonly>
 							</a>
 						</li>
 					</ul>

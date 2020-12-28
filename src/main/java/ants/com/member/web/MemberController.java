@@ -44,6 +44,7 @@ import ants.com.admin.service.AdminService;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.board.memBoard.service.memBoardService;
+import ants.com.common.model.AlarmVo;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.common.service.AlarmService;
 import ants.com.member.model.MemberVo;
@@ -166,6 +167,11 @@ public class MemberController {
 				List<ProjectVo> projectList_main = projectService.projectListmain(dbMember.getMemId());
 				model.addAttribute("projectList_main", projectList_main);
 			}
+			List<AlarmVo> alarmlistmain = projectService.alarmlistmain(dbMember.getMemId());
+			if(alarmlistmain.size()!=0) {
+				model.addAttribute("alarmlistmain", alarmlistmain);
+			}
+			
 			return "tiles/layout/contentmain";
 		} else {
 			return "redirect:/member/loginView";
@@ -196,6 +202,12 @@ public class MemberController {
 	public String mainpage(Model model, ProjectVo projectVo, HttpSession session) {
 		MemberVo memberVo=new MemberVo();
 		memberVo =(MemberVo) session.getAttribute("SMEMBER");
+		
+		List<AlarmVo> alarmlistmain = projectService.alarmlistmain(memberVo.getMemId());
+		if(alarmlistmain.size()!=0) {
+			model.addAttribute("alarmlistmain", alarmlistmain);
+		}
+		
 		if(memberVo.getMemType().equals("PM")) {
 			List<ProjectVo> projectList_main = projectService.pmInProjectList(memberVo.getMemId());
 			model.addAttribute("projectList_main", projectList_main);
@@ -329,7 +341,7 @@ public class MemberController {
 
 		// POP3/IMAP 설정시 네이버에서 알려줌
 		final String username = "noylit"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
-		final String password = "1234c5678"; // 네이버 이메일 비밀번호를 입력해주세요.
+		final String password = "1234d5678"; // 네이버 이메일 비밀번호를 입력해주세요.
 		int port = 465; // 포트번호
 
 		String uuid = UUID.randomUUID().toString();
@@ -382,7 +394,7 @@ public class MemberController {
 
 		return "main.tiles/member/memberPassmodified";
 	}
-
+	
 	// 비밀번호 수정 (문자,메일 -> 비밀번호 수정 쿼리로)
 	@RequestMapping(path = "/passupdate", method = RequestMethod.GET)
 	public String passupdate(MemberVo memberVo) {

@@ -138,7 +138,7 @@ toastr.options = {
 			});
 		}
 	}
-	
+	/* 읽은 알림 상태변경 */
 	function readAlarm(url,alarmId,alarmType,reqId,id){
 		$.ajax({
 				url  : "/alarmUpdate",
@@ -154,7 +154,8 @@ toastr.options = {
 				}
 		});
 	}
-	/*해당 페이지로 이동*/
+	
+	/* 해당 페이지로 이동 */
 	function getPage(url,alarmType,reqId,id){
 		document.getPageForm.url.value = url;
 		document.getPageForm.alarmType.value = alarmType;
@@ -163,7 +164,6 @@ toastr.options = {
 		
 		document.getPageForm.action = "<c:url value='${pageContext.request.contextPath}/getAlarmPage'/>";
 		document.getPageForm.submit();
-		
 	}
   
 </script>
@@ -187,8 +187,8 @@ toastr.options = {
 		          </div>
 		          <div class="col-sm-6">
 		            <ol class="breadcrumb float-sm-right">
-		              <li class="breadcrumb-item san"><a href="#">Home</a></li>
-		              <li class="breadcrumb-item active">새로운 소식</li>
+		              <li class="breadcrumb-item san jg"><a href="${pageContext.request.contextPath}/member/mainpage">Home</a></li>
+              		  <li class="breadcrumb-item active jg">새로운 소식</li>
 		            </ol>
 		          </div>
 		        </div>
@@ -281,11 +281,11 @@ toastr.options = {
 					                    	  			]
 					                    	  		</span>
 				                    	</c:when>
-				                    	<c:when test="${a.alarmType eq 'req-pro' }"><span id="newalarm" class="right badge badge123" style="background: lightblue;">프로젝트 초대</span>
+				                    	<c:when test="${a.alarmType eq 'req-pro' }"><span id="newalarm" class="right badge badge123" style="background: lightblue;">초대</span>
 					                    	  &nbsp;<a style="font-weight: bold;" href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]}</a>
 					                    	  <a class="btn btn-sm" href="${pageContext.request.contextPath}/project/requestPjtMember" style="color: #0099ff;"><i class="fas fa-sign-in-alt" style="color: #0099ff;"></i> 응답 </a>
 				                    	</c:when>
-				                    	<c:when test="${a.alarmType eq 'res-pro' }"><span id="newalarm" class="right badge badge123" style="background: lightblue;">프로젝트 응답</span>
+				                    	<c:when test="${a.alarmType eq 'res-pro' }"><span id="newalarm" class="right badge badge123" style="background: lightblue;">초대 결과</span>
 					                    	  &nbsp;<a style="font-weight: bold;" href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }')">${fn:split(a.alarmCont,'&&')[4]} </a>
 					                    	  &nbsp;<span style="font-size: 0.9em; color: darkslategray;">[
 					                    	  			<c:if test="${fn:split(a.alarmCont,'&&')[5] eq 'ACCEPT'}">프로젝트 초대를 수락했습니다.</c:if>
@@ -295,9 +295,15 @@ toastr.options = {
 				                    	</c:when>
 				                    	<c:when test="${fn:contains(a.alarmType,'reply')}"><span id="newalarm" class="right badge badge123" style="background: gainsboro; margin-bottom: 5px;">댓글</span>
 					                    	 &nbsp;<a style="font-weight: bold;" href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }','${fn:split(a.alarmCont,'&&')[0]}','${fn:split(a.alarmCont,'&&')[4]}')">  ${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}</a>
-					                    	 <br><span style="font-size: 0.9em; color: darkslategray">[이슈게시판]</span>
+					                    	 <br>
+					                    	 <span style="font-size: 0.9em; color: darkslategray">
+					                    	 	<c:if test="${a.alarmType eq 'reply-3' }">[이슈]</c:if>
+					                    	 	<c:if test="${a.alarmType eq 'reply-4' }">[건의사항]</c:if>
+					                    	 	<c:if test="${a.alarmType eq 'reply-6' }">[일정]</c:if>
+					                    	 	<c:if test="${a.alarmType eq 'reply-10' }">[투표]</c:if>
+					                    	 </span>
 					                    	 ${fn:substring(fn:split(a.alarmCont,'&&')[5],0,30)}
-					                    	 <span style="font-size: 0.8em; color: darkslategray">from.${fn:substring(fn:split(a.alarmCont,'&&')[7],0,13)}</span>
+					                    	 &nbsp;<span style="font-size: 0.8em; color: darkslategray">from.${fn:substring(fn:split(a.alarmCont,'&&')[7],0,13)}</span>
 				                    	</c:when>
 				                    	<c:when test="${a.alarmType eq 'posts'}"><span id="newalarm" class="right badge badge123" style="background: #87C488; margin-bottom: 5px;">답글</span>
 					                    	 &nbsp;<a style="font-weight: bold;" href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }','${fn:split(a.alarmCont,'&&')[0]}','${fn:split(a.alarmCont,'&&')[4]}')">  ${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}</a>
@@ -307,10 +313,10 @@ toastr.options = {
 				                    	<c:when test="${a.alarmType eq 'suggest'}"><span id="newalarm" class="right badge badge123" style="background: #f249; margin-bottom: 5px;">건의사항</span>
 					                    	 &nbsp;<a style="font-weight: bold;" href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }','${fn:split(a.alarmCont,'&&')[0]}','${fn:split(a.alarmCont,'&&')[4]}')">  ${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}</a>
 					                    	 &nbsp;<div style="display: inline; color: darkslategray" id="alarmPost"> ${fn:substring(fn:replace(fn:split(a.alarmCont,'&&')[7], '<br>', '&nbsp;'),0,30)} </div>
-					                    	 <br><span style="font-size: 0.9em; color: darkslategray;">[건의사항]&nbsp;&nbsp;</span>${fn:substring(fn:split(a.alarmCont,'&&')[5],0,30) }
-					                    	 <span style="font-size: 0.8em; color: darkslategray;">from.${fn:substring(fn:split(a.alarmCont,'&&')[8],0,13) }</span>
+					                    	 <br><span style="font-size: 0.9em; color: darkslategray;">[일감]&nbsp;&nbsp;</span>${fn:substring(fn:split(a.alarmCont,'&&')[5],0,30) }
+					                    	 &nbsp;<span style="font-size: 0.8em; color: darkslategray;">from.${fn:substring(fn:split(a.alarmCont,'&&')[8],0,13) }</span>
 				                    	</c:when>
-				                    	<c:when test="${a.alarmType eq 'res-suggest'}"><span id="newalarm" class="right badge badge123" style="background: #f249; margin-bottom: 5px;">건의사항응답</span>
+				                    	<c:when test="${a.alarmType eq 'res-suggest'}"><span id="newalarm" class="right badge badge123" style="background: #f249; margin-bottom: 5px;">건의사항 결과</span>
 											 &nbsp;<a style="font-weight: bold;" href="javascript:readAlarm('${fn:split(a.alarmCont,'&&')[3] }','${a.alarmId }','${a.alarmType }','${fn:split(a.alarmCont,'&&')[0]}','${fn:split(a.alarmCont,'&&')[3]}')">  ${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}</a>					                    	  
 											 &nbsp;<span style="font-size: 0.9em; color: darkslategray;">[
 					                    	  			<c:if test="${fn:split(a.alarmCont,'&&')[5] eq 'ACCEPT'}">건의사항이 승인됐습니다.</c:if>

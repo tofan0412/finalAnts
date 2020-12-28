@@ -24,6 +24,70 @@
 			$('#inviteMember').modal();
 		})
 		
+		// 멤버 관리 버튼을 누르면 현재 프로젝트에 참여중인 회원을 강퇴할 수 있다.
+		$('.retireBtn').click(function() {
+			reqId = "${projectId}";
+			$('#retireMember .modal-body .pjtMem').empty();
+			// 현재 참여중인 회원 목록을 표시한다.
+			$.ajax({
+				url : "/projectMember/proMemList",
+				method : "POST", 
+				data : {reqId : reqId},
+				success : function(res){
+					for (i = 0 ; i < res.length ; i++){
+						if (res[i].promemStatus == "IN"){
+							status = "참여중";
+						}else if(res[i].promemStatus == "WAIT") {
+							status = "승인 대기중";
+						}
+						if (res[i].memId == "${SMEMBER.memId}"){
+							// 본인은 관리 목록에서 제외한다.
+						}
+						else{
+							$('#pjtMem').append("<div class=\'pjtMem\' promemId=\'"
+									+ res[i].promemId +"\' memName=\'"+ res[i].memName +"\'>" 
+									+ res[i].memName +"[" + res[i].memId + "]"
+									+"<span style=\'float : right;\'>" 
+									+ status
+									+ "</span>" 
+									+ "</div>");	
+						}
+					}
+				}
+			})
+			$('#retireMember').modal();
+		})
+		
+		$('#retireMember').on('mouseenter','.pjtMem',function(){
+			$(this).css("background-color", 'lightgrey');
+		})
+		
+		$('#retireMember').on('mouseleave','.pjtMem',function(){
+			$(this).css("background-color", 'white');
+		})
+		
+		$('#retireMember').on('click', '.pjtMem',function(){
+			std = confirm("해당 회원을 프로젝트에서 제외합니다.");
+			reqId = "${projectId}";
+			
+			if(std){
+				promemId = $(this).attr("promemId");
+				$.ajax({
+					url : "/projectMember/promemUpdate",
+					data : {promemId : promemId},
+					success : function(res){
+						if (res == "success"){
+							alert("프로젝트에서 제외하였습니다.");
+							$(location).attr("href", "/project/outlineView?reqId="+reqId);
+						}else{
+							alert("실패하였습니다.");
+						}
+					}
+				})
+			}
+		})
+		
+		
 		// test = window.setTimeout("실행할 함수", 지연할 시간(ms 단위)); 
 		// 와 같이 test 를 주고 if (test) 조건을 주면 test는 임의의 숫자값을 가지므로 실행된다.
 		var timer = null;
@@ -64,7 +128,6 @@
 								for (i = 0; i < res.length; i++) {
 									memberSearchList.push(res[i].memName+":["+res[i].memId+"]");
 								}
-//	 							autoComplete(memberSearchList);
 							}
 						},
 						complete : function(){
@@ -126,7 +189,7 @@
 			$('#warningText')[0].style.visibility = 'hidden';
 			
 			// 본인인지 아닌지, 확인해야 한다.
-			if (memName == "${SMEMBER.memName}") {
+			if (addingMemId == "${SMEMBER.memId}") {
 				$('#warningText').text("본인입니다.");
 				$('#warningText')[0].style.visibility = 'visible';
 				return;
@@ -141,7 +204,7 @@
 					// 검사 시작
 					for (var i = 0; i < res.length; i++) {
 						if (addingMemId == res[i].memId) {
-							$('#warningText').text("이미 참여하고 있는 회원입니다.");
+							$('#warningText').text("이미 참여했거나 초대 대기중인 회원입니다.");
 							$('#warningText')[0].style.visibility = 'visible';
 							return;
 						}
@@ -206,13 +269,13 @@
 				$('#warningText')[0].style.visibility = "visible";				
 			}else{
 				// inviteMemList를 먼저 가공해야 한다.
-				setInviteMemList = [];
-				for (i = 0 ; i < inviteMemList.length ; i++){
-					setInviteMemList.push(inviteMemList[i].split(":")[1]);
-				}
+// 				setInviteMemList = [];
+// 				for (i = 0 ; i < inviteMemList.length ; i++){
+// 					setInviteMemList.push(inviteMemList[i].split(":")[1]);
+// 				}
 				
 				var ajaxArr = {
-						"inviteMemList" : setInviteMemList, // 변수명을 맞춰야 한다. inviteMemList로!
+						"inviteMemList" : inviteMemList, // 변수명을 맞춰야 한다. inviteMemList로!
 						"reqId" : reqId,
 						"memId" : memId
 					};
@@ -316,6 +379,11 @@
 									<i class="fas fa-user-plus"></i> 멤버 초대
 								</button>
 							</li>
+							<li>
+								<button class="btn btn-app retireBtn">
+									<i class="fas fa-user-minus"></i> 멤버 관리
+								</button>
+							</li>  
 						</c:if>
 					</ol>
 				</div>
@@ -408,6 +476,7 @@
 								   float : left;
 								   margin-top : 5px;
 								   margin-left : 5px;
+								   font-size : 1.0em;
 								   margin-bottom : 5px;
 								   color : red;"></div>
 								   
@@ -443,3 +512,36 @@
 		</div>
 	</div>
 	<!--  /Modal -->
+	
+	<div class="modal fade jg" id="retireMember" tabindex="-1" role="dialog"
+		aria-labelledby="retireMemberModal">
+		<div class="modal-dialog modal-sm-center" role="document">
+			<div class="modal-content" style="height: 550px; width : 450px;">
+				
+				<div class="modal-header">
+					<h3 class="modal-title" id="addplLable">멤버 관리</h3>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				
+				<div class="modal-body">
+					<h5>제외할 멤버를 클릭해 주세요.</h5>
+					<div id="pjtMem" style="width : 100%; height : 90%; 
+									 line-height : 40px; 
+									 margin : 0 auto;
+									 overflow-y : auto;
+									 overflow-x : auto;">
+					 </div>			
+				</div>
+				
+				<div class="modal-footer" style="overflow-y : auto; text-align : left; ">
+					*승인 대기중 : 아직 해당 회원이 프로젝트에 참여하지 않은 상태입니다.<br>
+					*참여중 : 해당 회원이 프로젝트에 참여한 상태입니다.<br>
+					*제외한 멤버는 초대 기능을 통해 다시 초대할 수 있습니다.<br>
+				</div>
+				
+			</div>
+		</div>
+	</div>
