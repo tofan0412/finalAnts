@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +20,9 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"	rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	
+	<script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
 </head>
 	<%@include file="../layout/contentmenu.jsp"%>	
 
@@ -38,10 +42,10 @@ $(document).ready(function(){
 	});  
  	
  	// 등록
- 	$("#regBtn").on("click", function() {
- 		console.log('인서트')
-		$("#sform").submit();
-	});
+//  	$("#regBtn").on("click", function() {
+//  		console.log('인서트')
+// 		$("#sform").submit();
+// 	});
  	
  	// 뒤로가기
 	$("#back").on("click", function() {
@@ -53,29 +57,143 @@ $(document).ready(function(){
 	});
 	
 	
-	function scheInsert(){
-		console.log('인서트')
-		$("#sform").submit();
+
+ 	
+	// 제목 글자수 계산
+   	$('#til').keyup(function (e){
+   	    var content = $(this).val();   		
+   		if (content.length > 66){
+   	        alert("최대 66자까지 입력 가능합니다.");
+   	     	$(this).val(content.substring(0, 65));
+   	    }
+   	});
+	
+	
+   	var uploadCnt = 0;
+    var QueueCnt = 0;
+ 	//파일 업로드
+ 	$('#file_upload').uploadifive({
+		'uploadScript'     : '/file/insertfile',
+		'fileObjName'     : 'file',    
+		'formData'         : {
+							   'categoryId' : "6",
+							   'someId'     : '${scheSeq}'
+		                     },
+		'auto'             : false,
+		'queueID'          : 'queue',
+		"fileType": '.gif, .jpg, .png, .jpeg, .bmp, .doc, .ppt, .xls, .xlsx, .docx, .pptx, .zip, .rar, .pdf',
+		 "multi": true,
+         "height": 30,
+         "width": 100,
+         "buttonText": "파일찾기",
+         "fileSizeLimit": "20MB",
+         "uploadLimit": 10,
+		 'onUploadComplete' : function(file, data) { // 업로드 대기열이 완료되면 한 번 트리거됩니다.
+		
+			uploadCnt +=1;
+
+			console.log(data); 
+			console.log(data.publicFileVo); 
+			console.log(data.count); 
+
+			insert();
+		},
+		'onCancel': function (file) {// 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
+			alert('취소')
+			QueueCnt--;
+			if(QueueCnt == 0){
+				$('#dragdiv').show();
+			}
+		}, 
+		'onAddQueueItem'   : function(file) { // 대기열에 추가되는 각 파일에 대해 트리거됩니다.
+			QueueCnt++;
+			$('#dragdiv').hide();
+		}
+	});
+	
+ 	// 업로드된 파일의 수와 사용자가 올린 파일의 수가 같을 시 from 전송
+ 	function insert(){
+ 		if(uploadCnt == $('.uploadifive-queue-item').length){
+ 			
+			$('#frm').submit();
+    	}
 	}
  	
+ // 작성 버튼 클릭시 파일 업로드 호출
+ 	$('#insertbtn').on('click', function(){		
+ 		cnt = 0;
+ 		
+ 		// 제목을 작성하지 않았을 때 
+		if ($('#til').val().length == 0){
+			$('.warningTitle').text("제목을 작성해 주세요.");
+			cnt++;
+	 		
+		}else{
+			$('.warningTitle').text("");		
+		
+			if($('.uploadifive-queue-item').length ==0){ //첨부파일이 하나도 없을시
+				$('#frm').submit();
+			}else{
+     			$('#file_upload').uploadifive('upload'); // 첨부파일이 존재할시
+     		}
+		}
+ 	})
+	
 });
 
 
+
 </script>
+<style>
+#fileBtn{
+		 display: inline-block;
+		 padding-bottom:  .5em;
+		 padding-top:  .5em;
+	}
+	
+	.uploadifive-button {
+		float: left;
+		margin-right: 10px;
+		
+	}
+	
+	#queue {
+		border: 1px solid #E5E5E5;
+		height: 177px;
+		width : 450px;
+		overflow: auto;
+		margin-bottom: 10px;
+
+	
+	}
+	#uploadifive-file_upload{
+		width : 200px;
+		height: 30px;
+	}
+	
+	#dragdiv {
+		text-align: center;
+		color: darkgray;
+		line-height: 170px;
+	}
+</style>
 
 <body>
 	<br>
-	<div style="padding-left: 30px; padding-right: 30px;">
-	<form method="post" action="${pageContext.request.contextPath }/schedule/scheduleInsert" id="sform" id="sform">    
-			<div class="card card-primary card-outline">
-              <div class="card-header">
-                <h3 class="card-title jg"><c:out value="${projectVo.proName}"/></h3>
-              </div>
-              <div class="card-body">
+<div style="padding-left: 30px; padding-right: 30px;">
+	<div class="card card-primary card-outline">
+	  <div class="card-header">
+        <h3 class="card-title jg"><c:out value="${projectVo.proName}"/></h3>
+      </div>
+      <div class="card-body">
+		<form id="frm" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath }/schedule/scheduleInsert"   >	
+		
+                <input type="hidden" name="scheId" value="${scheSeq }">
+          		<input type="hidden" value="6" name="categoryId">
+          		
                 <div class="form-group">
                   <input class="form-control" id="til" name="scheTitle" placeholder="제목">
-                  <input type="hidden" name="writer" value="${SMEMBER.memId }">
-                  <input type="hidden" name="hissueParentid" value="${hissueP }">
+                  <div class="jg" style=" padding-left: 10px;"><span class="jg warningTitle" style="color : red;"></span></div>
                 </div>
                 <div class="form-group">
                 <textarea id="summernote" name="scheCont" placeholder="내용"></textarea>
@@ -101,7 +219,7 @@ $(document).ready(function(){
 					y
 	                <input type='text' id="y" name="yVal" value="127.437912"/><br>
                 	 categoryId : 
-					 <input type='text' name="categoryId" value="6"/><br>
+<!-- 					 <input type='text' name="categoryId" value="6"/><br> -->
 					 reqId : 
 					 <input type='text' name="reqId" value="${projectId}"/><br>
 					 memId : 
@@ -115,7 +233,7 @@ $(document).ready(function(){
 	                <div class="input-group row">
 		                <input type="text" id="address" value="" class="form-control" placeholder="검색어를 입력하세요.">
 		               	<span class="input-group-append">		
-							<button type="button" id="submit" class="btn btn-default jg" style="width: 120px;">
+							<button type="button" id="searchbtn" class="btn btn-default jg" style="width: 120px;">
 								<i class="fa fa-fw fa-search"></i>주소검색</button>
 						</span>
 						<!-- display:none; -->
@@ -124,18 +242,27 @@ $(document).ready(function(){
 				<br>
 				<div id="map" style="width:100%;height:400px;"></div>
 				<br>
-                 
-              </div>
-              <div class="card-footer clearfix"> 
-                  <input type="submit" class="btn btn-default float-left jg" id="regBtn" value="등록"> 
-<!--                   <button type="button" class="btn btn-default float-left jg" id="regBtn" onclick="scheInsert()"><i class="fas fa-pencil-alt"></i> 작성</button> -->
- 				 
-                
-              </div>
-            </div>
+				
+				
+
+				<label for="file" class="col-sm-2 control-label jg" >첨부파일</label>
+				<div id="queue" >
+					<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
+				</div>
+				<input id="file_upload" class="jg" name="file" type="file" multiple="true"/>
+				
+				
+				<br><br>
+				<div class="card-footer clearfix " >
+					
+					<input type="button"  class="btn btn-default float-right jg" id="insertbtn" value="작성하기" > 
+			 	</div>
         </form>
+
+	 </div>	
+			
 	</div>
-		
+</div>	
 
 <script type="text/javascript">
 
@@ -292,7 +419,7 @@ function initGeocoder() {
         }
     });
 
-    $('#submit').on('click', function(e) {
+    $('#searchbtn').on('click', function(e) {
         e.preventDefault();
 
         searchAddressToCoordinate($('#address').val());

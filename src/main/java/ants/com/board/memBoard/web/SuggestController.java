@@ -254,17 +254,21 @@ public class SuggestController {
 				double filesize = Math.round(size *100)/100.0;
 				
 				String filename = UUID.randomUUID().toString();
-				String extension = fileList.get(i).getOriginalFilename().split("\\.")[1];
+				
+				String originName = fileList.get(i).getOriginalFilename();			
+				int pos = originName .lastIndexOf(".");
+				String realfileName = originName.substring(0, pos);
+				
+				String extension = originName.substring(originName.lastIndexOf(".")+1);
 				String filepath = "C:\\profile\\" + filename +"."+ extension;
 				File uploadFile = new File(filepath);
-				
 				try {
 					fileList.get(i).transferTo(uploadFile);
 				} catch (IllegalStateException | IOException e) {
 				
 				}
 				
-				PublicFileVo filevo = new PublicFileVo(filepath, fileList.get(i).getOriginalFilename(), extension,
+				PublicFileVo filevo = new PublicFileVo(filepath, realfileName, extension,
 						"4", sgtSeq, reqId, String.valueOf(filesize), memId);
 				fileService.insertFile(filevo);
 			}

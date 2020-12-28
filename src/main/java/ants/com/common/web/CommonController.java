@@ -18,10 +18,10 @@ public class CommonController {
 	
 	// Left.jsp에서 개인 메뉴를 사용할 때는 세션에 저장된 projectId를 지운다.
 	
-	@RequestMapping("/delProjectIdSession")
+	@RequestMapping("/setChatStatusNone")
 	@ResponseBody
-	public String delProjectIdSession(HttpSession session ) {
-		session.removeAttribute("projectId");
+	public String setChatStatusNone(HttpSession session ) {
+		session.setAttribute("chatStatus", "none");
 		return "success";
 	}
 }

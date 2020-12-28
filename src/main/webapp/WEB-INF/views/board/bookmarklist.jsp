@@ -155,12 +155,11 @@
 	                  <thead>
 	                    <tr>
 	                        <th class="jg" style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-	                     	<th class="jg"  style="padding-left: 30px; text-align: center;">  이슈 제목</th> 
+	                     	<th class="jg"  style="padding-left: 50px; width: 35%;">  이슈 제목</th> 
 							<th class="jg" style="text-align: center;">   작성자  </th>
 							<th class="jg" style="text-align: center;">   날짜   </th>
 							<th class="jg" style="text-align: center;">   종류   </th>
 							<th class="jg" style="text-align: center;"> 즐겨찾기 </th>
-	                      <th></th>
 	                    </tr>
 	                  </thead>
 	                  <tbody>
@@ -169,7 +168,7 @@
 								<tr>			                 
 				                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((AllBookMarkVo.pageIndex-1) * AllBookMarkVo.pageUnit + (status.index+1))}"/>.</td>
 								
-									<td class="jg" style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${bookmark.issueId}&reqId=${bookmark.reqId}"> ${bookmark.issueTitle }</a> </td>
+									<td class="jg" style="padding-left: 50px; width: 35%;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${bookmark.issueId}&reqId=${bookmark.reqId}"> ${bookmark.issueTitle }</a> </td>
 									<td class="jg" style="text-align: center;"> ${bookmark.memName }</td>
 									<td class="jg" style="text-align: center;"> ${bookmark.regDt }</td>
 									<c:if test="${bookmark.issueKind == 'issue'}">
@@ -180,7 +179,6 @@
 									</c:if>
 									<td style="text-align: center;" class = "area-desc jg"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${bookmark.issueId}"/></span></td>											
 <%-- 									</c:forEach>  --%>
-			                      	<td style="text-align: center;">
 									 
 								</tr>
 							 </c:forEach> 

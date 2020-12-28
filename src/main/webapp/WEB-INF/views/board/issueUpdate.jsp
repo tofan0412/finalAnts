@@ -248,11 +248,7 @@
 		display: inline-block;
 		width: 100px;
 	}
-	#fileBtn{
-		 display: inline-block;
-		 padding-bottom:  .5em;
-		 padding-top:  .5em;
-	}
+
 	label{	
 		height: auto;
 		font-size: 1.1em;

@@ -476,6 +476,7 @@
 								   float : left;
 								   margin-top : 5px;
 								   margin-left : 5px;
+								   font-size : 1.0em;
 								   margin-bottom : 5px;
 								   color : red;"></div>
 								   
@@ -512,20 +513,21 @@
 	</div>
 	<!--  /Modal -->
 	
-	<div class="modal fade" id="retireMember" tabindex="-1" role="dialog"
+	<div class="modal fade jg" id="retireMember" tabindex="-1" role="dialog"
 		aria-labelledby="retireMemberModal">
 		<div class="modal-dialog modal-sm-center" role="document">
-			<div class="modal-content" style="height: 600px; width : 400px;">
+			<div class="modal-content" style="height: 550px; width : 450px;">
 				
 				<div class="modal-header">
-					<h3 class="modal-title jg" id="addplLable">멤버 관리</h3>
+					<h3 class="modal-title" id="addplLable">멤버 관리</h3>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				
-				<div class="modal-body jg">
+				<div class="modal-body">
+					<h5>제외할 멤버를 클릭해 주세요.</h5>
 					<div id="pjtMem" style="width : 100%; height : 90%; 
 									 line-height : 40px; 
 									 margin : 0 auto;
@@ -533,7 +535,13 @@
 									 overflow-x : auto;">
 					 </div>			
 				</div>
-			
+				
+				<div class="modal-footer" style="overflow-y : auto; text-align : left; ">
+					*승인 대기중 : 아직 해당 회원이 프로젝트에 참여하지 않은 상태입니다.<br>
+					*참여중 : 해당 회원이 프로젝트에 참여한 상태입니다.<br>
+					*제외한 멤버는 초대 기능을 통해 다시 초대할 수 있습니다.<br>
+				</div>
+				
 			</div>
 		</div>
 	</div>

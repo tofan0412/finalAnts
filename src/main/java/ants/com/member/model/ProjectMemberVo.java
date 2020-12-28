@@ -1,6 +1,8 @@
 package ants.com.member.model;
 
 public class ProjectMemberVo {
+	
+	
 	private String reqId;
 	private String promemId;
 	private String memId;
@@ -9,13 +11,6 @@ public class ProjectMemberVo {
 	private String title;
 	private String plName;
 	private String plId;
-	
-	public String getMemName() {
-		return memName;
-	}
-	public void setMemName(String memName) {
-		this.memName = memName;
-	}
 	public String getReqId() {
 		return reqId;
 	}
@@ -34,27 +29,30 @@ public class ProjectMemberVo {
 	public void setMemId(String memId) {
 		this.memId = memId;
 	}
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
 	public String getPromemStatus() {
 		return promemStatus;
 	}
 	public void setPromemStatus(String promemStatus) {
 		this.promemStatus = promemStatus;
 	}
-	
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
 	public String getPlName() {
 		return plName;
 	}
 	public void setPlName(String plName) {
 		this.plName = plName;
 	}
-	
 	public String getPlId() {
 		return plId;
 	}
@@ -63,8 +61,10 @@ public class ProjectMemberVo {
 	}
 	@Override
 	public String toString() {
-		return "ProjectMemberVo [reqId=" + reqId + ", promemId=" + promemId + ", memId=" + memId + ", promemStatus="
-				+ promemStatus + ", title=" + title + ", plName=" + plName + ", plId=" + plId + "]";
+		return "ProjectMemberVo [reqId=" + reqId + ", promemId=" + promemId + ", memId=" + memId + ", memName="
+				+ memName + ", promemStatus=" + promemStatus + ", title=" + title + ", plName=" + plName + ", plId="
+				+ plId + "]";
 	}
+	
 	
 }

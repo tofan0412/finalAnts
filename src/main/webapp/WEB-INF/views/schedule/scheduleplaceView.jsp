@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -106,7 +107,7 @@ function scheInsert(){
 		<table id="todoTable" class="table">
 			<tr>				
 				<th class="jg" style="text-align: center;" id="1">No.</th>
-				<th class="jg" style="text-align: center;" id="2">제목</th>
+				<th class="jg" style="padding-left: 50px; width: 35%;" id="2">제목</th>
 				<th class="jg" style="text-align: center;" id="3">작성자</th>
 				<th class="jg" style="text-align: center;" id="4">등록일</th>
 			</tr>
@@ -117,8 +118,13 @@ function scheInsert(){
 						
 						<td class="jg" style="width: 200px; text-align: center;"><c:out value="${  ((scheduleVo.pageIndex-1) * scheduleVo.pageUnit + (sts.index+1))}"/>.</td>
 					
-						<td style="text-align: center;" class="jg">
-							${schedule.scheTitle}
+						<td style="padding-left: 50px; width: 35%;" class="jg">
+							<c:if test="${fn:length(schedule.scheTitle) > 30}">									
+								${fn:substring(schedule.scheTitle,0 ,30) }...
+							</c:if>
+							<c:if test="${fn:length(schedule.scheTitle) <= 30}">									
+									${schedule.scheTitle}
+							</c:if>
 						</td>
 						<td style="text-align: center;" class="jg">
 							${schedule.memName }
