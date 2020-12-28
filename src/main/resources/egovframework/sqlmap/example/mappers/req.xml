@@ -70,18 +70,20 @@
 	
 	<!-- 요구사항정의서 정보 가져오기 -->
 	<select id="getReq" parameterType="ants.com.member.model.ReqVo" resultType="ants.com.member.model.ReqVo" >
-		SELECT REQ_ID
-			 , REQ_TITLE
-			 , REQ_CONT
-			 , REQ_PERIOD
-			 , REQ_FILEPATH
-			 , REQ_FILENAME
-			 , MEM_ID
-			 , STATUS
-			 , PL_ID
-			 , CATEGORY_ID
-		  FROM reqlist
-		 WHERE req_id = #{reqId} 
+		SELECT r.REQ_ID
+			 , r.REQ_TITLE
+			 , r.REQ_CONT
+			 , r.REQ_PERIOD
+			 , r.REQ_FILEPATH
+			 , r.REQ_FILENAME
+			 , r.MEM_ID
+			 , r.STATUS
+			 , r.PL_ID
+			 , r.CATEGORY_ID
+             , m.mem_name as pl_name
+		  FROM reqlist r, member m
+		 WHERE req_id = #{reqId}
+           AND r.pl_id = m.mem_id  
 	</select>
 
 	<insert id="reqInsert" parameterType="ants.com.member.model.ReqVo">

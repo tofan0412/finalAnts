@@ -40,6 +40,7 @@ VALUES (IP_SEQ.NEXTVAL, #{ipAddr}, #{ipStatus}, #{adminId}, #{del})
 <select id="getIpCount" resultType="java.lang.Integer">
 SELECT COUNT(*) 
   FROM IP
+WHERE DEL != 'Y'
 </select>
 
 <select id="loginLogList" resultType="ants.com.common.model.IpHistoryVo">

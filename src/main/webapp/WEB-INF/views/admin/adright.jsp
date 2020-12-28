@@ -248,13 +248,13 @@ $(function(){
 		
 		<!-- 채팅목록이 출력된다. -->
 		<div class="chatList jg">
-			<c:if test="${projectId eq null}">
+			<c:if test="${projectId eq null }">
 				<span class="jg">프로젝트를 먼저 선택해 주세요..</span>
 			</c:if>
 		</div>
 		
 		<!-- 선택한 프로젝트가 존재하는 경우에만 채팅방 개설하기 버튼을 표시한다. -->
-		<c:if test="${projectId ne null}">
+		<c:if test="${projectId ne null }">
 			<div class="mkNewChat jg">새로운 채팅방 만들기</div>
 		</c:if>
 	</div>

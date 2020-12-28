@@ -368,10 +368,17 @@ th, td {
 	}
 	
 </script>
-<%@include file="/WEB-INF/views/layout/contentmenu.jsp"%>
+
+<div class="jg" style="height : 100px; 
+					   background-color: #f2f2f2; 
+					   margin-bottom : 20px;
+					   padding-top : 10px;
+					   padding-left : 10px;">
+	<h2>프로젝트 생성</h2>
+</div>
 
 <div class="reqListContent">
-	<table class="reqTable">
+	<table class="reqTable" style="width : 95%;">
 		<tbody id="reqTableList">
 			<tr>
 				<th>요구사항정의서 이름</th>
@@ -400,7 +407,7 @@ th, td {
 			<!-- 나에게 요청된 요구사항 정의서가 아예 없는 경우 .. -->
 			<c:if test="${reqList.size() == 0 }">
 				<tr>
-					<td class="jg">요청된 요구사항 정의서가 존재하지 않습니다..</td>
+					<td colspan="4" class="jg"><h4>요청된 요구사항 정의서가 존재하지 않습니다.</h4></td>
 				</tr>
 			</c:if>
 		</tbody>
