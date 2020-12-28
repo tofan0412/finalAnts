@@ -93,4 +93,8 @@ public class ProjectmemberService extends EgovAbstractServiceImpl {
 	public List<ProjectMemberVo> proMemListIn(String reqId) {
 		return mapper.proMemListIn(reqId);
 	}
+	
+	public int promemUpdate(ProjectMemberVo projectMemberVo) {
+		return mapper.promemUpdate(projectMemberVo);
+	}
 }
