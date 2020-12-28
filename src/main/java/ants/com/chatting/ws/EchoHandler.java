@@ -48,8 +48,9 @@ public class EchoHandler extends TextWebSocketHandler {
 		for(WebSocketSession sess : sessionList) {
 			sess.sendMessage(
 					new TextMessage(
-							cgroupId + "$$$$" +
-							SMEMBER.getMemId() + "$$$$" 
+							cgroupId + "$$$$"
+							+ SMEMBER.getMemId() + "$$$$" 
+							+ SMEMBER.getMemName() + "$$$$"
 							+ message.getPayload()));
 		}
 	}

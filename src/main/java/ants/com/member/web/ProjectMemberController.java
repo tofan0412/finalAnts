@@ -24,6 +24,7 @@ import ants.com.file.model.PublicFileVo;
 import ants.com.file.view.FileController;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectMemberVo;
+import ants.com.member.service.MemberService;
 import ants.com.member.service.ProjectmemberService;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
@@ -37,6 +38,9 @@ public class ProjectMemberController {
 	
 	@Resource(name="memBoardService")
 	memBoardService memBoardService;
+	
+	@Resource(name="memberService")
+	MemberService memberService;
 	
 	@Autowired
 	FileController filecontroller;
@@ -293,4 +297,16 @@ public class ProjectMemberController {
 		return promemService.proMemList(reqId);
 	}
 	
+	// 프로젝트멤버 상태를 변경한다.
+	@RequestMapping("/promemUpdate")
+	@ResponseBody
+	public String promemUpdate(ProjectMemberVo projectMemberVo) {
+		projectMemberVo.setPromemStatus("OUT");
+		int result = promemService.promemUpdate(projectMemberVo);
+		if (result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 }

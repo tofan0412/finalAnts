@@ -1,16 +1,21 @@
 package ants.com.member.model;
 
 public class ProjectMemberVo {
-	
-	
 	private String reqId;
 	private String promemId;
 	private String memId;
+	private String memName;
 	private String promemStatus;
 	private String title;
 	private String plName;
 	private String plId;
 	
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
 	public String getReqId() {
 		return reqId;
 	}

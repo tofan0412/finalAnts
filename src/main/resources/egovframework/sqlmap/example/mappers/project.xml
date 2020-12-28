@@ -108,11 +108,10 @@ SELECT *
 	
 	<insert id="insertPjtMember"
 		parameterType="ants.com.member.model.ProjectMemberVo">
-		INSERT INTO PROJECTMEMBER 
-			(req_id, promem_id, mem_id, promem_status)
-		VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL, #{memId},#{promemStatus})
-
-	</insert>
+INSERT INTO PROJECTMEMBER 
+			(req_id, promem_id, mem_name, mem_id, promem_status)
+		VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL,#{memName}, #{memId},#{promemStatus})
+</insert>
 	
 	<update id="updatePjtMember" parameterType="ants.com.member.model.ProjectMemberVo">
 		UPDATE PROJECTMEMBER
