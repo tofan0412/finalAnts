@@ -96,7 +96,7 @@ public class ScheduleController {
 
 	// 일정장소 상세 페이지이동 scheId
 	@RequestMapping("/scheduleSelect")
-	public String scheduleSelect(ScheduleVo scheduleVo, Model model) {
+	public String scheduleSelect(ScheduleVo scheduleVo, Model model) throws SQLException, IOException {
 
 		ScheduleVo schedule = memBoardService.scheduleSelect(scheduleVo);
 		model.addAttribute("scheduleVo", schedule);
@@ -104,7 +104,7 @@ public class ScheduleController {
 			
 		ReplyVo replyVo = new ReplyVo(schedule.getScheId(), "6", schedule.getReqId());	//댓글 조회
 		logger.debug("replyVo : {}",replyVo);	
-		List<ReplyVo> replylist= memBoardService.schedulereplylist(replyVo);
+		List<ReplyVo> replylist= memBoardService.replylist(replyVo);
 			
 		model.addAttribute("issuevo", schedule);	
 		model.addAttribute("memId", schedule.getMemId());
