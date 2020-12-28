@@ -490,7 +490,7 @@ INSERT INTO PROJECTMEMBER
 		WHERE mem_id = #{memId}
 		 and ALARM_STATUS ='N'
 		 AND ROWNUM <= 5
-		 ORDER BY to_number(alarm_id)desc
+		 ORDER BY reg_dt asc
 		 ]]> 
 	</select>
 	 
