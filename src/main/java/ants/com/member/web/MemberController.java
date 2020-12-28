@@ -202,6 +202,12 @@ public class MemberController {
 	public String mainpage(Model model, ProjectVo projectVo, HttpSession session) {
 		MemberVo memberVo=new MemberVo();
 		memberVo =(MemberVo) session.getAttribute("SMEMBER");
+		
+		List<AlarmVo> alarmlistmain = projectService.alarmlistmain(memberVo.getMemId());
+		if(alarmlistmain.size()!=0) {
+			model.addAttribute("alarmlistmain", alarmlistmain);
+		}
+		
 		if(memberVo.getMemType().equals("PM")) {
 			List<ProjectVo> projectList_main = projectService.pmInProjectList(memberVo.getMemId());
 			model.addAttribute("projectList_main", projectList_main);
