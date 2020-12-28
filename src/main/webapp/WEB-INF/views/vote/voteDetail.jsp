@@ -173,15 +173,41 @@ function replyinsert() {
 			
 		},
 		success : function(data) {
-			
-				console.log(data.someId)
-				console.log(data.replyCont)
-				$(location).attr('href', '${pageContext.request.contextPath}/vote/voteDetail?voteId='+data.someId);
+				saveMsg();
+				
 		}
 
 	});
 
 }
+//댓글알림 
+function saveMsg(){
+	var alarmData = {
+						"alarmCont" : "${projectVo.reqId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/vote/voteDetail&&${voteVo.voteId}&&${voteVo.voteTitle}&&"+ $('#re_con').val() + "&&${projectVo.proName}",
+						"memId" 	: "${voteVo.memId}",
+						"alarmType" : "reply-10"
+	}
+	console.log(alarmData);
+	
+	$.ajax({
+			url : "/alarmInsert",
+			data : JSON.stringify(alarmData),
+			type : 'POST',
+			contentType : "application/json; charset=utf-8",
+			dataType : 'text',
+			success : function(data){
+				
+				let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
+				socket.send(socketMsg);
+				$(location).attr('href', '${pageContext.request.contextPath}/vote/voteDetail?voteId=${voteVo.voteId}');
+				
+			},
+			error : function(err){
+				console.log(err);
+			}
+	});
+}
+
 
 function doughnutchart(){
 	var dnum = [];

@@ -180,22 +180,19 @@ function replyinsert() {
 			
 		},
 		success : function(data) {
-			
 				saveMsg(reqId);
-				console.log(data.someId)
 		}
 
 	});
 
 }
-
+//댓글알림
 function saveMsg(reqId){
 	var alarmData = {
 						"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail&&${issuevo.issueId}&&${issuevo.issueTitle}&&"+ $('#re_con').val() + "&&${projectVo.proName}",
 						"memId" 	: "${issuevo.memId}",
 						"alarmType" : "reply-3"
 	}
-	console.log(alarmData);
 	
 	$.ajax({
 			url : "/alarmInsert",

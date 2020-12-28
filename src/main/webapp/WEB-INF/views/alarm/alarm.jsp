@@ -138,7 +138,7 @@ toastr.options = {
 			});
 		}
 	}
-	
+	/* 읽은 알림 상태변경 */
 	function readAlarm(url,alarmId,alarmType,reqId,id){
 		$.ajax({
 				url  : "/alarmUpdate",
@@ -154,7 +154,8 @@ toastr.options = {
 				}
 		});
 	}
-	/*해당 페이지로 이동*/
+	
+	/* 해당 페이지로 이동 */
 	function getPage(url,alarmType,reqId,id){
 		document.getPageForm.url.value = url;
 		document.getPageForm.alarmType.value = alarmType;
@@ -163,7 +164,6 @@ toastr.options = {
 		
 		document.getPageForm.action = "<c:url value='${pageContext.request.contextPath}/getAlarmPage'/>";
 		document.getPageForm.submit();
-		
 	}
   
 </script>

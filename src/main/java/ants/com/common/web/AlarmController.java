@@ -115,23 +115,28 @@ public class AlarmController {
 		}
 		session.setAttribute("projectVo", projectVo);
 		session.setAttribute("projectId", alarmVo.getReqId());
+		session.setAttribute("pageIndex", 1);
+		re.addAttribute("reqId", alarmVo.getReqId());
 
 		// 댓글
 		if(alarmVo.getAlarmType().matches("reply.*")) {
+			// issue댓글
 			if(alarmVo.getAlarmType().equals("reply-3")) {
-				re.addAttribute("reqId", alarmVo.getReqId());
 				session.setAttribute("categoryId", "3");
-				session.setAttribute("pageIndex", 1);
 				re.addAttribute("issueId", alarmVo.getId());
 				return "redirect:/projectMember/eachissueDetail";
+			}
+			// 투표댓글
+			else if(alarmVo.getAlarmType().equals("reply-10")) {
+				session.setAttribute("categoryId", "10");
+				re.addAttribute("voteId", alarmVo.getId());
+				return "redirect:/vote/voteDetail";
 			}
 		}
 		
 		//건의사항
 		if(alarmVo.getAlarmType().matches(".*suggest")) {
-			re.addAttribute("reqId", alarmVo.getReqId());
 			session.setAttribute("categoryId", "4");
-			session.setAttribute("pageIndex", 1);
 			re.addAttribute("sgtId", alarmVo.getId());
 			return "redirect:/suggest/suggestDetail";
 		}
