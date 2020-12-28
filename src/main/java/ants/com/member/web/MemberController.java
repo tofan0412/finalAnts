@@ -3,7 +3,9 @@ package ants.com.member.web;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -170,6 +172,12 @@ public class MemberController {
 			List<AlarmVo> alarmlistmain = projectService.alarmlistmain(dbMember.getMemId());
 			if(alarmlistmain.size()!=0) {
 				model.addAttribute("alarmlistmain", alarmlistmain);
+				
+				SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
+				Date time = new Date();
+				String time1 = format1.format(time);
+				
+				model.addAttribute("today", time1);
 			}
 			
 			return "tiles/layout/contentmain";
@@ -332,7 +340,7 @@ public class MemberController {
 	@RequestMapping(value = "/mailsender")
 	public String mailSender(MemberVo memberVo, HttpServletRequest request, ModelMap mo, Model model)
 			throws AddressException, MessagingException {
-
+	
 		// 네이버일 경우 smtp.naver.com 을 입력합니다.
 		// Google일 경우 smtp.gmail.com 을 입력합니다.
 

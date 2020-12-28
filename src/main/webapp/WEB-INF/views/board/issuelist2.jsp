@@ -131,23 +131,6 @@ $(function(){
 			<section class="content" >
 		      <div class="col-12 col-sm-12">
 			      <div class="card" style="border-radius: inherit; padding : 2px;">
-			      
-<!-- 			    <div class="container-fluid"> -->
-<!-- 		        <div class="row mb-2"> -->
-<!-- 		         <br> -->
-<!-- 		          <div class="col-sm-6"> -->
-<!-- 		          <br> -->
-<!-- 		            <h2 class="jg" style=" padding-left : 10px;">현업이슈 리스트</h2> -->
-<!-- 		          </div> -->
-<!-- 		          <div class="col-sm-6"> -->
-<!-- 		            <ol class="breadcrumb float-sm-right"  style="background : white"> -->
-<!-- 		              <li class="breadcrumb-item san jg"><a href="#">Home</a></li> -->
-<!-- 		              <li class="breadcrumb-item active jg">현업이슈 리스트</li> -->
-<!-- 		            </ol> -->
-<!-- 		          </div> -->
-<!-- 		        </div> -->
-<!-- 		        </div> -->
-		    
 		        
 		        <br>
 		        <div class="card-header  ">
@@ -196,13 +179,12 @@ $(function(){
 	                  <thead>
 	                    <tr>
 	                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-	                     	<th  style="padding-left: 30px; text-align: center;" class="jg">  이슈 제목</th> 
+	                     	<th  style="padding-left: 50px; width: 38%;" class="jg">  이슈 제목</th> 
 							<th style="text-align: center;" class="jg">   작성자 </th>
 							<th style="text-align: center;" class="jg">   날짜   </th>
 							<th style="text-align: center;" class="jg">   종류   </th>
 							<th style="text-align: center;" class="jg"> 즐겨찾기 </th>
 <!-- 	                      <th style="text-align: center;">응답 상태</th> -->
-	                      <th></th>
 	                    </tr>
 	                  </thead>
 	                  <tbody>
@@ -212,7 +194,7 @@ $(function(){
 			                 
 			                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
 							
-								<td class="jg"  style="padding-left: 30px; text-align: center;">
+								<td class="jg"  style="padding-left: 50px; width: 38%;">
 									<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> 
 									<c:if test="${fn:length(issue.issueTitle) > 30}">									
 										${fn:substring(issue.issueTitle,0 ,30) }...
@@ -238,7 +220,7 @@ $(function(){
 											<td style="text-align: center;" class = "area-desc"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
 										</c:otherwise>
 									</c:choose>
-		                      <td style="text-align: center;">
+<!-- 		                      <td style="text-align: center;"> -->
 								 
 							</tr>
 						 </c:forEach> 

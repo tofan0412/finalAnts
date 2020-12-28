@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,7 +23,9 @@ import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.board.memBoard.service.memBoardService;
 import ants.com.file.model.PrivateFileVo;
+import ants.com.file.model.PublicFileVo;
 import ants.com.file.service.FileService;
+import ants.com.file.view.FileController;
 import ants.com.member.model.MemberVo;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -35,6 +38,9 @@ public class ScheduleController {
 
 	@Resource(name = "memBoardService")
 	private memBoardService memBoardService;
+	
+	@Autowired
+	FileController filecontroller;
 
 	// 일정장소 게시판 이동
 	@RequestMapping("/scheduleplaceView")
@@ -77,8 +83,11 @@ public class ScheduleController {
 
 	// 일정장소 등록 페이지이동
 	@RequestMapping("/scheduleInsertview")
-	public String scheduleInsertview() {
-		System.out.println("인서트으으");
+	public String scheduleInsertview(Model model) {
+		
+		String scheSeq = memBoardService.getscheId();
+		model.addAttribute("scheSeq", scheSeq);
+		
 		return "tiles/schedule/scheduleInsert";
 	}
 
@@ -96,13 +105,16 @@ public class ScheduleController {
 
 	// 일정장소 상세 페이지이동 scheId
 	@RequestMapping("/scheduleSelect")
-	public String scheduleSelect(ScheduleVo scheduleVo, Model model) throws SQLException, IOException {
+	public String scheduleSelect(ScheduleVo scheduleVo, Model model, HttpSession session) throws SQLException, IOException {
 
+		String reqId = (String)session.getAttribute("projectId");
 		ScheduleVo schedule = memBoardService.scheduleSelect(scheduleVo);
 		model.addAttribute("scheduleVo", schedule);
 
+		PublicFileVo pfv = new PublicFileVo("6",scheduleVo.getScheId() , reqId);//파일조회
+		filecontroller.getfiles(pfv, model);
 			
-		ReplyVo replyVo = new ReplyVo(schedule.getScheId(), "6", schedule.getReqId());	//댓글 조회
+		ReplyVo replyVo = new ReplyVo(schedule.getScheId(), "6", reqId);	//댓글 조회
 		logger.debug("replyVo : {}",replyVo);	
 		List<ReplyVo> replylist= memBoardService.replylist(replyVo);
 			
@@ -115,22 +127,31 @@ public class ScheduleController {
 
 	// 일정장소 수정 페이지로 이동
 	@RequestMapping("/scheduleUpdateView")
-	public String scheduleUpdateView(ScheduleVo scheduleVo, Model model) {
+	public String scheduleUpdateView(ScheduleVo scheduleVo, Model model, HttpSession session) {
 
+		String reqId = (String)session.getAttribute("projectId");
+	
 		ScheduleVo schedule = memBoardService.scheduleSelect(scheduleVo);
+		
+		PublicFileVo pfv = new PublicFileVo("6",scheduleVo.getScheId() , reqId);//파일조회
+		filecontroller.getfiles(pfv, model);
+		
 		model.addAttribute("scheduleVo", schedule);
 
+		
 		return "tiles/schedule/scheduleUpdate";
 	}
 
 	// 일정장소 수정
 	@RequestMapping("/scheduleUpdate")
-	public String scheduleUpdate(ScheduleVo scheduleVo) {
+	public String scheduleUpdate(ScheduleVo scheduleVo, RedirectAttributes ra) {
 
 		int updateCnt = memBoardService.scheduleUpdate(scheduleVo);
-
+		
+		
 		if (updateCnt >= 1) {
-			return "redirect:/schedule/scheduleSelect?scheId=" + scheduleVo.getScheId();
+			ra.addAttribute("scheId", scheduleVo.getScheId());
+			return "redirect:/schedule/scheduleSelect";
 		} else {
 			return "tiles/schedule/scheduleUpdate";
 		}

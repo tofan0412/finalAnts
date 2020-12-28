@@ -484,13 +484,13 @@ INSERT INTO PROJECTMEMBER
 		    alarm_status,
 		    mem_id,
 		    alarm_type,
-		    reg_dt
+		    to_char(reg_dt, 'yyyy-MM-dd') as regDt
 		FROM
 		    alarm
 		WHERE mem_id = #{memId}
 		 and ALARM_STATUS ='N'
 		 AND ROWNUM <= 5
-		 ORDER BY reg_dt asc
+		 ORDER BY reg_dt desc
 		 ]]> 
 	</select>
 	 
