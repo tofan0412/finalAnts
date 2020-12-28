@@ -108,10 +108,10 @@ SELECT *
 	
 	<insert id="insertPjtMember"
 		parameterType="ants.com.member.model.ProjectMemberVo">
-INSERT INTO PROJECTMEMBER 
+		INSERT INTO PROJECTMEMBER 
 			(req_id, promem_id, mem_name, mem_id, promem_status)
 		VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL,#{memName}, #{memId},#{promemStatus})
-</insert>
+	</insert>
 	
 	<update id="updatePjtMember" parameterType="ants.com.member.model.ProjectMemberVo">
 		UPDATE PROJECTMEMBER
@@ -142,7 +142,8 @@ INSERT INTO PROJECTMEMBER
 		parameterType="ants.com.member.model.ProjectVo">
 		UPDATE PROJECT
 		<set>
-			<if test="memId != null">MEM_ID = #{memId},</if>
+			<if test='memId != null and memId != "공석"'>MEM_ID = #{memId},</if>
+			<if test='memId == "공석"'>MEM_ID = null,</if>
 			<if test="proName != null">PRO_NAME = #{proName},</if>
 			<if test="percent != null">PRO_PERCENT = #{percent},</if>
 			<if test="regDt != null">REG_DT = #{regDt},</if>

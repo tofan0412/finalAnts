@@ -97,4 +97,6 @@ public class ProjectmemberService extends EgovAbstractServiceImpl {
 	public int promemUpdate(ProjectMemberVo projectMemberVo) {
 		return mapper.promemUpdate(projectMemberVo);
 	}
+	
+	
 }

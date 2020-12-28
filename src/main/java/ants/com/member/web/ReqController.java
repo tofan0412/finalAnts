@@ -233,9 +233,11 @@ public class ReqController {
 	}
 	
 	@RequestMapping(value="/plDelete")
-	public String plDelete(ReqVo reqVo, @RequestParam(name="selectedId", required= false) String id) {
+	public String plDelete(@ModelAttribute("reqVo")ReqVo reqVo, @RequestParam(name="selectedId", required= false) String id, RedirectAttributes re) {
 		reqVo.setReqId(id);
-		reqService.plDelete(reqVo);
+		int cnt = reqService.plDelete(reqVo);
+		
+		re.addAttribute("plDelMsg", cnt);
 		
 		return "redirect:/req/reqList";
 	}

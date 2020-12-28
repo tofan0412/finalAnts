@@ -203,7 +203,7 @@ li strong{
 										            </div>
 												  </a>
 												  <div class="dropdown-divider"></div>
-												  <a class="" href="javascript:plDelete(${req.reqId });">삭제</a>
+												  <a class="" href="javascript:plDelete(${req.reqId},'${req.plId }');">삭제</a>
 												</div>
 											</div>
 										</td>
@@ -359,10 +359,15 @@ li strong{
 	});
 
 	$(function() {
+		
+		if(${plDelMsg == 3}){
+			alert("삭제성공");
+		}else if(${plDelMsg == null}){
+			
+		}else{
+			alert("삭제실패");
+		}
 
-		$('.plDelete').on('mouseenter', function() {
-
-		})
 		/* pl등록버튼 클릭*/
 		$('.addplModal').on('click', function() {
 			var reqId = $(this).attr("reqId");
@@ -508,7 +513,6 @@ li strong{
 				document.listForm.selectedId.value = id;
 				document.listForm.action = "<c:url value = '${pageContext.request.contextPath}/req/reqDelete'/>";
 				document.listForm.submit();
-			}else{
 			}
 		}else{
 			alert("삭제 권한이 없습니다.");
@@ -516,13 +520,13 @@ li strong{
 	}
 
 	/* pl 삭제하기 */
-	function plDelete(id) {
+	function plDelete(id,plId) {
 		if(${SMEMBER.memType == 'PM'}){
 			if (confirm("pl삭제시 복구 할 수 없으며 재등록을 해야합니다. 삭제하시겠습니까?")) {
 				document.listForm.selectedId.value = id;
+				document.listForm.memId.value = plId;
 				document.listForm.action = "<c:url value = '${pageContext.request.contextPath}/req/plDelete'/>";
 				document.listForm.submit();
-			}else{
 			}
 		}else{
 			alert("삭제권한이 없습니다.");

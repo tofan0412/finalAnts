@@ -6,8 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +29,7 @@ import ants.com.member.service.ReqService;
 @RequestMapping("/project")
 @Controller
 public class ProjectController {
-	
+
 	@Resource(name = "projectService")
 	private ProjectService projectService;
 
@@ -100,22 +98,21 @@ public class ProjectController {
 	@RequestMapping("/insertPjtMember")
 	public String insertPjtMember(@RequestParam(value = "inviteMemList[]") List<String> inviteMemList,
 			@RequestParam(value = "reqId") String reqId, @RequestParam(value = "memId") String memId) {
-		
+
 		int cnt = 0;
 		// 프로젝트 초대 회원수만큼, DB에 입력한다.
 		for (int i = 0; i < inviteMemList.size(); i++) {
 			ProjectMemberVo pjtMem = new ProjectMemberVo();
 			pjtMem.setReqId(reqId);
-			pjtMem.setMemName(inviteMemList.get(i).split(":")[0]);	// memName
-			pjtMem.setMemId(inviteMemList.get(i).split(":")[1]);	// memId
-			
+			pjtMem.setMemId(inviteMemList.get(i));
+
 			// 내가 아닌 다른 회원인 경우에는 상태를 'WAIT'으로 설정하지만,
 			// 나 자신은 PL이면서 프로젝트 멤버이므로, 'IN'으로 설정한다.
 			if (inviteMemList.get(i).equals(memId)) { // 만약 memId가 null이면 무조건 true..
 				pjtMem.setPromemStatus("IN");
 			} else {
 				pjtMem.setPromemStatus("WAIT");
-			}	
+			}
 
 			pjtMem.setPromemId("trashValue");
 			int result = projectService.insertPjtMember(pjtMem);

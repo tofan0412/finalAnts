@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ants.com.member.mapper.ProjectMapper;
 import ants.com.member.mapper.ReqMapper;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.model.ReqVo;
 
@@ -21,6 +22,7 @@ public class ReqService{
 	
 	@Resource(name="projectMapper")
 	private ProjectMapper proMapper;
+	
 	
 	/**
 	 * 요구사항정의서 목록가져오기
@@ -91,7 +93,24 @@ public class ReqService{
 	 * @return 성공:1 실패:0
 	 */
 	public int plDelete(ReqVo reqVo) {
-		return mapper.plDelete(reqVo);
+		int cnt = 0;
+		// 요구사항정의서에서 삭제
+		cnt += mapper.plDelete(reqVo);
+		
+		// 프로젝트멤버에서 del
+		ProjectMemberVo projectMemberVo = new ProjectMemberVo();
+		projectMemberVo.setMemId(reqVo.getMemId());
+		projectMemberVo.setReqId(reqVo.getReqId());
+		projectMemberVo.setPromemStatus("OUT");
+		cnt += proMapper.updatePjtMember(projectMemberVo);
+		
+		//프로젝트에서 삭제
+		ProjectVo projectVo = new ProjectVo();
+		projectVo.setReqId(reqVo.getReqId());
+		projectVo.setMemId("공석");
+		cnt += proMapper.updateProject(projectVo);
+		
+		return cnt;
 	}
 	
 	/**
