@@ -2,37 +2,35 @@
 	pageEncoding="UTF-8"%>
 
 <!-- Font Awesome Icons -->
-<link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
-<link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/toastr/toastr.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="/dist/css/adminlte.min.css">
-<link rel="stylesheet" href="/plugins/fullcalendar/main.css">
-<!-- Google Font: Source Sans Pro -->
-<link
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
-	rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/dist/css/adminlte.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/fullcalendar/main.css">
 
+<!-- Google Font: Source Sans Pro -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <!-- jquery -->
-<script src="/plugins/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- toastr -->
-<script src="/plugins/toastr/toastr.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE App -->
-<script src="/dist/js/adminlte.min.js"></script>
-<script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/dist/js/adminlte.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- ChartJS -->
-<script src="/plugins/chart.js/Chart.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/chart.js/Chart.min.js"></script>
 <!-- knob -->
-<script src="/plugins/jquery-knob/jquery.knob.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/jquery-knob/jquery.knob.min.js"></script>
 <!-- fullcalendar -->
-<script src="/plugins/moment/moment.min.js"></script>
-<script src="/plugins/fullcalendar/main.js"></script>
-<script src="/plugins/fullcalendar-daygrid/main.js"></script>
-<script src="/plugins/fullcalendar-interaction/main.js"></script>
-<script src="/plugins/fullcalendar-timegrid/main.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/moment/moment.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/fullcalendar/main.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/fullcalendar-daygrid/main.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/fullcalendar-interaction/main.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/fullcalendar-timegrid/main.js"></script>
 <!-- daterangepicker(메인 페이지 달력용) -->
-<script src="/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="${pageContext.request.contextPath }/resources/plugins/daterangepicker/daterangepicker.js"></script>
 <!--  
 캐시무력화 
 <script src="/dist/js/adminlte.min.js?ver=1"></script>

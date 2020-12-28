@@ -37,8 +37,6 @@
 		<tiles:insertAttribute name="adfooter" />
 
 	</div>
-
-
 </body>
 </html>
 
