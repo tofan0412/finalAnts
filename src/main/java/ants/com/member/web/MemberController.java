@@ -329,7 +329,7 @@ public class MemberController {
 
 		// POP3/IMAP 설정시 네이버에서 알려줌
 		final String username = "noylit"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
-		final String password = "1234c5678"; // 네이버 이메일 비밀번호를 입력해주세요.
+		final String password = "1234d5678"; // 네이버 이메일 비밀번호를 입력해주세요.
 		int port = 465; // 포트번호
 
 		String uuid = UUID.randomUUID().toString();
@@ -382,7 +382,7 @@ public class MemberController {
 
 		return "main.tiles/member/memberPassmodified";
 	}
-
+	
 	// 비밀번호 수정 (문자,메일 -> 비밀번호 수정 쿼리로)
 	@RequestMapping(path = "/passupdate", method = RequestMethod.GET)
 	public String passupdate(MemberVo memberVo) {

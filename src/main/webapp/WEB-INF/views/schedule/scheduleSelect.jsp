@@ -438,10 +438,38 @@ function replyinsert() {
 			replyCont : $('#re_con').val()	
 		},	
 		success : function(data) {	
-			$(location).attr('href', '/schedule/scheduleSelect?scheId=${scheduleVo.scheId}');
+			saveMsg();
 		}
 	});
-}		
+}	
+
+//댓글알림
+function saveMsg(){
+	var alarmData = {
+						"alarmCont" : "${projectVo.reqId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/projectMember/eachissueDetail&&${scheduleVo.scheId}&&${scheduleVo.scheTitle}&&"+ $('#re_con').val() + "&&${projectVo.proName}",
+						"memId" 	: "${scheduleVo.memId}",
+						"alarmType" : "reply-6"
+	}
+	
+	$.ajax({
+			url : "/alarmInsert",
+			data : JSON.stringify(alarmData),
+			type : 'POST',
+			contentType : "application/json; charset=utf-8",
+			dataType : 'text',
+			success : function(data){
+				
+				let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
+				socket.send(socketMsg);
+				$(location).attr('href', '/schedule/scheduleSelect?scheId=${scheduleVo.scheId}');
+				
+			},
+			error : function(err){
+				console.log(err);
+			}
+	});
+}
+
 		
 // 댓글작성시 작동 증가
 function resize(obj) {

@@ -130,12 +130,17 @@ public class TodoController {
 		return "tiles/manager/Pl_todoList";
 	}
 
-	// 한개의 일감 조회 Ajax
-	@RequestMapping("/onetodo")
+	// 한개의 일감 조회
+	@RequestMapping("/onetodoView")
 	public String todoDetailView(Model model, TodoVo todoVo, HttpSession session) {
 
 		List<TodoVo> dbtodoVo = manageBoardService.getTodo(todoVo);
+		int size = dbtodoVo.size();
+		if(size == 1) {
+			model.addAttribute("one", "one");
+		}
 		model.addAttribute("todoVo", dbtodoVo);
+		model.addAttribute("dbsize", size);
 		String todoId = todoVo.getTodoId();
 		List<TodoLogVo> dbtodolog = manageBoardService.getTodolog(todoId);
 		String reqId = (String) session.getAttribute("projectId");
@@ -143,16 +148,9 @@ public class TodoController {
 		PublicFileVo pfv = new PublicFileVo("1", todoId, reqId);
 		filecontroller.getfiles(pfv, model);
 		model.addAttribute("dbtodolog", dbtodolog);
-		System.out.println(dbtodolog);
-		System.out.println("asdasd");
-		return "jsonView";
-	}
-
-	// 한개의 일감조회 화면 출력
-	@RequestMapping("/onetodoView")
-	public String todoView() {
 		return "tiles/manager/Pl_Onetodo";
 	}
+
 
 	// 한개의 일감 조회 Ajax
 	@RequestMapping("/myonetodo")
