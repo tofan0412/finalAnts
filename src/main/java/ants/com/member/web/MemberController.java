@@ -44,6 +44,7 @@ import ants.com.admin.service.AdminService;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.board.memBoard.service.memBoardService;
+import ants.com.common.model.AlarmVo;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.common.service.AlarmService;
 import ants.com.member.model.MemberVo;
@@ -166,6 +167,11 @@ public class MemberController {
 				List<ProjectVo> projectList_main = projectService.projectListmain(dbMember.getMemId());
 				model.addAttribute("projectList_main", projectList_main);
 			}
+			List<AlarmVo> alarmlistmain = projectService.alarmlistmain(dbMember.getMemId());
+			if(alarmlistmain.size()!=0) {
+				model.addAttribute("alarmlistmain", alarmlistmain);
+			}
+			
 			return "tiles/layout/contentmain";
 		} else {
 			return "redirect:/member/loginView";
@@ -196,6 +202,12 @@ public class MemberController {
 	public String mainpage(Model model, ProjectVo projectVo, HttpSession session) {
 		MemberVo memberVo=new MemberVo();
 		memberVo =(MemberVo) session.getAttribute("SMEMBER");
+		
+		List<AlarmVo> alarmlistmain = projectService.alarmlistmain(memberVo.getMemId());
+		if(alarmlistmain.size()!=0) {
+			model.addAttribute("alarmlistmain", alarmlistmain);
+		}
+		
 		if(memberVo.getMemType().equals("PM")) {
 			List<ProjectVo> projectList_main = projectService.pmInProjectList(memberVo.getMemId());
 			model.addAttribute("projectList_main", projectList_main);

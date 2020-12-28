@@ -85,8 +85,12 @@ public class ProjectmemberService extends EgovAbstractServiceImpl {
 		return mapper.proMemList(reqId);
 	}
 	
-	// 프로젝트 멤버의 상태를 변경한다.promemStatus
-	public int promemUpdate(ProjectMemberVo projectMemberVo) {
-		return mapper.promemUpdate(projectMemberVo);
+	/**
+	 * 프로젝트 참여 멤버리스트조회
+	 * @param reqId
+	 * @return 상태 IN인 projectMemberVo객체
+	 */
+	public List<ProjectMemberVo> proMemListIn(String reqId) {
+		return mapper.proMemListIn(reqId);
 	}
 }

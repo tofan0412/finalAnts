@@ -121,8 +121,6 @@
      // 작성 버튼 클릭시 파일 업로드 호출
      	$('#regBtn').on('click', function(){
      		cnt = 0;
-     		// 업로드할 파일이 존재하지 않을시
-     		if($('.uploadifive-queue-item').length ==0){
      		// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
      			if ($('#todoTitle').val().length == 0){
     				$('.warningTitle').text("제목을 작성해 주세요.");  
@@ -136,20 +134,19 @@
     				$('.warningtodo_end').text("마감일을 지정해 주세요.");
     				cnt++;
     			}
-     			if(cnt == 0){
-     				if($('.uploadifive-queue-item').length ==0){ 
+     			if(cnt == 0 ){
+     				if($('.uploadifive-queue-item').length == 0){ 
      					$("#todoform").submit(); 
     				}else{
     	     			$('#file_upload').uploadifive('upload');
     	     		}
      			}
-     	}
+     	
      })
      	
      	
      // 하위 일감 등록
 		$("#creatChildBtn").on("click", function() {
-
 			$("#todoform").attr("action", "${pageContext.request.contextPath }/todo/todoChildInsert");
 			
 			// 업로드할 파일이 존재하지 않을시
@@ -175,7 +172,7 @@
                  $(this).val(content.substring(0, 65));
             }
         });
-	});
+	
     
      	
      	function insert(){
@@ -186,7 +183,7 @@
     	}
 	 		//파일끝
 
-	 		
+	 	});		
 	 		
 	 	
 </script>
@@ -280,7 +277,7 @@
 	<div id="queue">
 		<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
 	</div>
-	<input id="file_upload" name="file" type="file" multiple="true"/>
+	<input id="file_upload" name="file" type="file" multiple="multiple"/>
 				<br><br>
         	<div class="float-right">
         		<input type="hidden" value="3" name="categoryId">

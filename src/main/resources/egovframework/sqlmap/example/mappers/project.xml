@@ -474,6 +474,25 @@ INSERT INTO PROJECTMEMBER
 		AND reqlist.status ='ACCEPT'
          and project.del ='N'
 	</select>
+	
+	<select id="alarmlistmain" parameterType="String"
+		resultType="ants.com.common.model.AlarmVo">
+		<![CDATA[ 
+		SELECT
+		    alarm_id,
+		    alarm_cont,
+		    alarm_status,
+		    mem_id,
+		    alarm_type,
+		    reg_dt
+		FROM
+		    alarm
+		WHERE mem_id = #{memId}
+		 and ALARM_STATUS ='N'
+		 AND ROWNUM <= 5
+		 ORDER BY reg_dt asc
+		 ]]> 
+	</select>
 	 
 	
 </mapper>
