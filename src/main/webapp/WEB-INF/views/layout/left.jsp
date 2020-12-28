@@ -60,29 +60,6 @@
 			$(location).attr('href', '/project/readReqList?plId='+plId);
 		})
 		
-		// 개인 메뉴를 사용할 때는 session에 저장되어 있는 projectId를 지운다. 
-		// ( 이전에 들어간 플젝의 채팅 리스트가 그대로 노출 ..)
-		$('.sessioncheck').click(function(){
-			$.ajax({
-				url : "/common/delProjectIdSession",
-				method : "POST",
-				success : function(res){
-					if (res == "success"){
-						console.log("projectId 세션을 삭제하였습니다.");
-					}
-				}
-			})			
-		})
-		
-		// session에 있는 projectId 삭제하기
-		$(".toMainPage").click(function(){
-			$.ajax({
-				url : "/common/delProjectIdSession",
-				method : "POST",
-				success : function(res){}
-			})
-		})
-		
 	})
 	
 	/* 알림 총 개수*/

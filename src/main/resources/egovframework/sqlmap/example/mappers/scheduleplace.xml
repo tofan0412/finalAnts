@@ -2,9 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ants.com.board.memBoard.mapper.memBoardMapper">
 	
+	<!-- 다음일정 id조회 (파일 ajax로 등록하기위함) -->
+	<select id ="getscheid" resultType="String">
+		SELECT  SCHE_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
 	<!-- 일정 등록 -->
 	<insert id="scheduleInsert" parameterType="ants.com.board.memBoard.model.ScheduleVo">
-		INSERT INTO SCHEDULE VALUES(SCHE_SEQ.NEXTVAL, #{scheTitle}, #{scheCont}, SYSDATE, #{xVal}, #{yVal}, #{categoryId}, #{reqId}, 
+		INSERT INTO SCHEDULE VALUES(#{scheId}, #{scheTitle}, #{scheCont}, SYSDATE, #{xVal}, #{yVal}, #{categoryId}, #{reqId}, 
 									#{memId}, #{del}, #{startDt}, #{endDt}, #{juso}, null)
 	</insert>
 	

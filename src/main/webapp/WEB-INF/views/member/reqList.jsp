@@ -159,9 +159,9 @@ li strong{
 							<th style="width: 5%;">기간</th>
 							<th style="width: 10%; text-align: center;">담당자</th>
 							<th style="width: 10%; text-align: center;">응답 상태</th>
-							<th style="width: 15%;">진행도</th>
-							<th style="width: 3%;"></th>
-							<th style="width: 20%;"></th>
+							<th style="width: 15%; text-align: center;">진행도</th>
+							<th style="width: 5%;"></th>
+							<th style="width: 15%;"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -171,7 +171,12 @@ li strong{
 										value="${paginationInfo.totalRecordCount - ((reqVo.pageIndex-1) * reqVo.pageUnit + sts.index)}" />.
 									<form:hidden path="reqId" />
 								</td>
-								<td>${req.reqTitle }</td>
+								<td>
+									<a href="javascript:reqDetail('<c:out value="${req.reqId }"/>');">
+										${req.reqTitle }
+									</a> 
+								
+								</td>
 								<td>${req.reqPeriod }일</td>
 								<c:choose>
 									<c:when test="${req.plId eq null }">
@@ -248,8 +253,14 @@ li strong{
 										</c:when>
 									</c:choose>
 								</td>
-								<c:if test="${req.proPercent eq '0' or req.proPercent eq null }"></c:if>
-								<td class="project-actions text-center">${req.proPercent }<c:if test="${req.proPercent eq '0' or req.proPercent eq null }">0</c:if> %</td>
+								<c:choose>
+									<c:when test="${req.proPercent eq '0' or req.proPercent eq null }">
+										<td class="project-actions text-center">0 %</td>
+									</c:when>
+									<c:otherwise>
+										<td class="project-actions text-center">${req.proPercent } %</td>
+									</c:otherwise>
+								</c:choose>
 								<td class="project-actions text-right" style="opacity: .9; padding-right: 60px!important;">
 									<a class="btn btn-default btn-xs" href="javascript:reqDetail('<c:out value="${req.reqId }"/>');">
 										<i class="fas fa-folder"></i> 보기 
@@ -258,7 +269,7 @@ li strong{
 										 <i class="fas fa-pencil-alt"></i> 수정
 									</a>
 									<c:if test="${req.plId eq null and req.proPercent eq null }">
-										<a class="btn btn-danger btn-xs" hr0ef="javascript:reqDelete(${req.reqId });"> 
+										<a class="btn btn-danger btn-xs" href="javascript:reqDelete(${req.reqId });"> 
 											<i class="fas fa-trash"></i> 삭제
 										</a>
 									</c:if>

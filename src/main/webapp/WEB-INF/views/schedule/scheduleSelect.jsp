@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -124,8 +125,8 @@
 						<label id ="issueCont" class="control-label">${scheduleVo.scheCont }</label>
 		            </td>
 		        </tr>
+		        
 		        <tr class="stylediff" id="place">
-<%-- 			      <c:if test="${not empty scheduleVo.juso}"> --%>
 					
 						<th class="success jg" style="height: 300px;"  >장소</th>
 						<td  colspan="3">
@@ -142,8 +143,30 @@
 							</div>
 						</td>
 						
-<%-- 			        </c:if> --%>
 		         </tr>
+		         <tr>
+		            <th class="success jg" style="height: 150px;">첨부파일</th>
+		            <td colspan="3">
+			            <div id = "filediv">
+							<c:if test="${filelist.size() == 0}">
+								<label>	[ 첨부파일이 없습니다. ] </label>
+							
+							</c:if>
+							
+							<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
+																	 					
+								<a href="${cp }/file/publicfileDown?pubId=${files.pubId}">
+									<button id ="files${vs.index}" class="btn btn-default jg" name="${files.pubId}">
+										<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
+										 ${files.pubFilename} 다운로드
+									</button>
+								
+								</a>
+								<br>
+							</c:forEach>
+						</div>
+					</td>
+		        </tr>
 	        </table>
 	        
 	   	 	<div class="card-footer clearfix">
