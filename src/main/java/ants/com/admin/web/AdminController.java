@@ -8,8 +8,6 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,15 +32,12 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
-	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	@Resource(name="adminService")
 	AdminService adminService;
 	
 	@Resource(name="memberService")
 	MemberService memberService;
-	
-	
 	
 	//관리자 로그인 페이지
 	@RequestMapping("/adloginView")
@@ -358,6 +353,8 @@ public class AdminController {
 	public String getIpList(Model model, HttpSession session) {
 		List<IpVo> ipList = adminService.getIpList();
 		
+		model.addAttribute("ipList", ipList);
+		
 		/** pageing setting */
 		IpVo ipVo = new IpVo();
 		ipVo.setPageUnit(propertiesService.getInt("pageUnit"));
@@ -371,13 +368,11 @@ public class AdminController {
 		ipVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		ipVo.setLastIndex(paginationInfo.getLastRecordIndex());
 		ipVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-		
-		model.addAttribute("ipList", ipList);
-		
+
 		int totCnt = adminService.getIpCount();
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-		session.setAttribute("pageIndex", ipVo.getPageIndex());
+		model.addAttribute("pageIndex", ipVo.getPageIndex());
 		
 		return "admin.tiles/admin/ipAcceptedList";
 		
