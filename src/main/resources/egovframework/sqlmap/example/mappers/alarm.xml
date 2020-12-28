@@ -6,7 +6,7 @@
 		SELECT 
 		    COUNT(CASE WHEN alarm_type='req-pl' THEN 1 END) as reqPl,
 		    COUNT(CASE WHEN alarm_type='res-pl' THEN 1 END) as resPl,
-		    COUNT(CASE WHEN alarm_type='reply' THEN 1 END) as reply,
+		    COUNT(CASE WHEN alarm_type like 'reply%' THEN 1 END) as reply,
 		    COUNT(CASE WHEN alarm_type='posts' THEN 1 END) as posts,
 		    COUNT(*) as totalCnt
 		FROM alarm
@@ -49,7 +49,7 @@
 										 OR alarm_type = 'res-pro' )
 									</when>
 							        <when test="searchCondition == 2">
-										AND	alarm_type LIKE 'reply' 
+										AND	alarm_type LIKE 'reply%' 
 									</when>
 							        <when test="searchCondition == 3">
 										AND	alarm_type = 'posts'

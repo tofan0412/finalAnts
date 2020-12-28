@@ -132,6 +132,12 @@ public class AlarmController {
 				re.addAttribute("voteId", alarmVo.getId());
 				return "redirect:/vote/voteDetail";
 			}
+			// 일정댓글
+			else if(alarmVo.getAlarmType().equals("reply-6")) {
+				session.setAttribute("categoryId", "6");
+				re.addAttribute("scheId", alarmVo.getId());
+				return "redirect:/schedule/scheduleSelect";
+			}
 		}
 		
 		//건의사항
