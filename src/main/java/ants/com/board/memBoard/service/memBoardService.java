@@ -65,7 +65,11 @@ public class memBoardService {
 	public List<ReplyVo> replylist(ReplyVo replyVo) throws SQLException, IOException {
 		return mapper.replylist(replyVo);
 	}
-
+	
+	// 파일 업로드를 위해 다음seq
+	public String getscheId() {
+		return mapper.getscheid();
+	}
 	// 일정 등록
 	public int scheduleInsert(ScheduleVo scheduleVo) {
 		return mapper.scheduleInsert(scheduleVo);

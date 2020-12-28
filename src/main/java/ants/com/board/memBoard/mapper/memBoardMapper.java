@@ -39,6 +39,8 @@ public interface memBoardMapper {
 	public List<ReplyVo> replylist(ReplyVo replyVo);
 	
 	
+	// 다음 seq값 가져오기
+	public String getscheid();
 	
 	// 일정 등록
 	public int scheduleInsert(ScheduleVo scheduleVo);

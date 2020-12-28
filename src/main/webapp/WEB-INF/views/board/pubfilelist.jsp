@@ -268,7 +268,8 @@ function pubfilecopy(){
 	                  <thead>
 	                    <tr>
 	                        <th style="width: 200px;  text-align: center;" class="jg">No.</th>
-	                     	<th style="padding-left: 150px; width: 400px; " class="jg"> 파일명</th> 
+	                     	<th style="padding-left:60px; width: 200px;" class="jg"> 파일명</th> 
+	                     	<th style="text-align: center; width: 200px; " class="jg"> 카테고리명</th> 
 							<th style="text-align: center;" class="jg"> 소유자 </th>
 							<th style="text-align: center;" class="jg"> 날짜   </th>
 							<th style="text-align: center;" class="jg"> 확장자   </th>
@@ -291,7 +292,18 @@ function pubfilecopy(){
 										<img name="link" src="/fileFormat/${fn:toLowerCase(file.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">										 																	
 									 		${file.pubFilename}
 									</td>
-		
+									<c:if test="${file.categoryId == '3'}">
+										<c:set var="category" value="이슈"> </c:set>
+										<td class="jg" style="text-align: center;"> ${category}</td>
+									</c:if>
+									<c:if test="${file.categoryId == '4'}">
+										<c:set var="category" value="건의사항"> </c:set>
+										<td class="jg" style="text-align: center;"> ${category}</td>
+									</c:if>
+									<c:if test="${file.categoryId == '6'}">
+										<c:set var="category" value="일정"> </c:set>
+										<td class="jg" style="text-align: center;"> ${category}</td>
+									</c:if>
 									<td class="jg" style="text-align: center;"> ${file.memId }</td>
 									<td class="jg" style="text-align: center;"> ${file.regDt }</td>
 									<td class="jg" style="text-align: center;"> ${fn:toUpperCase(file.pubExtension) }</td>

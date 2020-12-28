@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -185,7 +186,7 @@ $(function(){
 	                  <thead>
 	                    <tr>
 	                        <th class="jg" style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-	                     	<th class="jg" style="padding-left: 30px; text-align: center;">  이슈 제목</th> 
+	                     	<th class="jg" style="padding-left: 50px; width : 35%;">  이슈 제목</th> 
 							<th class="jg" style="text-align: center;"> 프로젝트명 </th>
 							<th class="jg" style="text-align: center;">   날짜   </th>
 							<th class="jg" style="text-align: center;">   종류   </th>
@@ -200,7 +201,16 @@ $(function(){
 				                 
 				                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
 								
-									<td class="jg" style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${issue.reqId}"> ${issue.issueTitle }</a> </td>
+									<td class="jg" style="padding-left: 50px; width : 35%;">
+										<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${issue.reqId}"> 
+											<c:if test="${fn:length(issue.issueTitle) > 30}">									
+												${fn:substring(issue.issueTitle,0 ,30) }...
+											</c:if>
+											<c:if test="${fn:length(issue.issueTitle) <= 30}">									
+												${issue.issueTitle}
+											</c:if>
+										</a> 
+									</td>
 									<td class="jg" style="text-align: center;"> ${issue.proName }</td>
 									<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
 									<c:if test="${issue.issueKind == 'issue'}">

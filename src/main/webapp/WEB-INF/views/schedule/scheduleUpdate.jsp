@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,10 +20,58 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"	rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	
+	<script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
+	
 <style> 
 	#summernote{
 		width : 100%;
 		height : 250px;
+	}
+	#filelabel{
+		display: inline-block;
+		width: 100px;
+	}
+	#fileBtn{
+		 display: inline-block;
+		 padding-bottom:  .5em;
+		 padding-top:  .5em;
+	}
+	input[type=search]{
+		display : inline-block;
+		border: none; 
+		background: transparent;
+		 padding-bottom:  .5em;
+		 padding-top:  .5em;
+		 width: 350px;
+	}
+	.uploadifive-button {
+		float: left;
+		margin-right: 10px;
+		
+	}
+	
+	#queue {
+		border: 1px solid #E5E5E5;
+		height: 177px;
+		width : 450px;
+		overflow: auto;
+		margin-bottom: 10px;
+		padding: 0 3px 3px;
+	}
+	#uploadifive-file_upload{
+		width : 200px;
+		height: 30px;
+	}
+	#dragdiv {
+		text-align: center;
+		color: darkgray;
+		line-height: 170px;
+	}
+	#filelabel{
+		display: inline-block;
+		width: 100px;
 	}
 </style>
 </head>
@@ -33,14 +82,14 @@
 
 <br>
 	<div style="padding-left: 30px; padding-right: 30px;">
-	<form method="post" action="${pageContext.request.contextPath }/schedule/scheduleUpdate" id="sform" id="sform">    
+	<form method="post" action="${pageContext.request.contextPath }/schedule/scheduleUpdate" id="updateform" >    
 			<div class="card card-primary card-outline">
               <div class="card-header">
                 <h3 class="card-title jg"><c:out value="${projectVo.proName}"/></h3>
               </div>
               <div class="card-body">
                 <div class="form-group">
-            		<input class="form-control" name="scheTitle" placeholder="제목" value="${scheduleVo.scheTitle}">
+            		<input class="form-control" id="scheTitle" name="scheTitle" placeholder="제목" value="${scheduleVo.scheTitle}">
                 </div>
                 <div class="form-group">
                 <textarea id="summernote" name="scheCont" placeholder="내용">${scheduleVo.scheCont}</textarea>
@@ -94,7 +143,7 @@
 	                <div class="input-group row">
 		                <input type="text" id="address" value="" class="form-control" placeholder="검색어를 입력하세요.">
 		               	<span class="input-group-append">		
-							<button type="button" id="submit" class="btn btn-default jg" style="width: 120px;">
+							<button type="button" id="searchbtn" class="btn btn-default jg" style="width: 120px;">
 								<i class="fa fa-fw fa-search"></i>주소검색</button>
 						</span>
 						<!-- display:none; -->
@@ -108,14 +157,38 @@
 				
 				<div id="map" style="width:100%;height:400px;"></div>
 		       </div>
-			
-				<br>
+		       <br>
+				<div class="form-group">
+					<label id ="filelabel" for="files" class="col-sm-2 control-label jg">첨부파일</label>		
+					<div id ="file" class="col-sm-10">
+						
+						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
+						<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
+							<input type="search" class="jg" name="${files.pubId}" value="${files.pubFilename}" disabled >
+		   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn jg" style="margin-left: 5px; outline: 0; border: 0;">
+								<i class="fas fa-fw fa-minus" style=" font-size:10px;"></i> 
+							</button><br>
+						</c:forEach>								
+						
+					</div>
+					<input type="hidden" id="delfile" name="delfile" value="">	
+					<input type="hidden" value="3" name="categoryId" value="${issueVo.categoryId }">
+				</div>
+				
                  
+                 
+                <div id="queue">			
+					<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
+				</div>
+				
+				<input id="file_upload" name="file" type="file" multiple="true"/>
+				
+				
               </div>
               <div class="card-footer clearfix"> 
             
-                  <input type="submit" class="btn btn-default float-left jg" id="regBtn" value="수정"> 
-<!--                   <button type="button" class="btn btn-default float-left jg" id="regBtn" onclick="scheInsert()"><i class="fas fa-pencil-alt"></i> 작성</button> -->
+<!--                   <input type="submit" class="btn btn-default float-left jg" id="regBtn" value="수정">  -->
+                  <button type="button" class="btn btn-default float-left jg" id="regBtn" ><i class="fas fa-pencil-alt"></i> 수정</button>
  				 
                 
               </div>
@@ -135,12 +208,13 @@ var y = 0;
 var add = "";
 	$(document).ready(function(){
 	
-
 		if('${scheduleVo.juso}' == '' || '${scheduleVo.juso}' == null ){
 			$('#mapdiv').hide();
+			$('#addDiv').show();
 			add= "on";
 		}else if('${scheduleVo.juso}' != '' || '${scheduleVo.juso}' != null ){
 			$('#mapdiv').show();
+			$('#addDiv').hide();
 			add= "off";
 		}
 		
@@ -159,14 +233,142 @@ var add = "";
 			  lang: "ko-KR",					// 한글 설정
 		});  
 	 	// 등록
-	 	$("#regBtn").on("click", function() {
-			$("#sform").submit();
-		});
+// 	 	$("#regBtn").on("click", function() {
+// 			$("#updateform").submit();
+// 		});
 	 	
 	 	// 뒤로가기
 		$("#back").on("click", function() {
 			window.history.back();
 		});
+	 	
+	 	
+		fileSlotCnt = "${filelist.size() }";
+		console.log(fileSlotCnt)
+		maxFileSlot =5;
+		// 파일 삭제 버튼클릭
+		$(document).on("click", "#btnMinus", function(){
+				var id = $(this).prev().attr('name')
+				$('#delfile').append(id + ",");
+				
+				var a = $('#delfile').text();
+				$('#delfile').val(a);
+				
+				fileSlotCnt++;
+				$(this).prev().prev().remove();
+	     	    $(this).prev().remove();
+	     	    $(this).next().remove();
+	     	    $(this).remove();
+	       	    
+	     });
+		
+		
+		var uploadCnt = 0;
+	    var QueueCnt = 0;
+     	//파일 업로드
+     	$('#file_upload').uploadifive({
+			'uploadScript'     : '/file/insertfile',
+			'fileObjName'     : 'file',    
+			'formData'         : {
+								   'categoryId' : "6",
+								   'someId'     : '${scheduleVo.scheId }'
+			                     },
+			'auto'             : false,
+			'queueID'          : 'queue',
+			"fileType": '.gif, .jpg, .png, .jpeg, .bmp, .doc, .ppt, .xls, .xlsx, .docx, .pptx, .zip, .rar, .pdf',
+			 "multi": true,
+             "height": 30,
+             "width": 100,
+             "buttonText": "파일찾기",
+             "fileSizeLimit": "20MB",
+             "uploadLimit": 10,
+			 'onUploadComplete' : function(file, data) { 
+			
+				uploadCnt +=1;
+				insertcheck(); 
+			},
+			'onCancel': function (file) {// 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
+				alert('취소')
+				QueueCnt--;
+				if(QueueCnt == 0){
+					$('#dragdiv').show();
+				}
+			}, 
+			'onAddQueueItem'   : function(file) { // 대기열에 추가되는 각 파일에 대해 트리거됩니다.
+				QueueCnt++;
+				$('#dragdiv').hide();
+			}
+		});
+     	
+     	
+     	// 업로드된 파일의 수와 사용자가 올린 파일의 수가 같을 시 from 전송
+     	function insertcheck(){
+     		if(uploadCnt == $('.uploadifive-queue-item').length){
+     			$('#updateform').submit();   		
+     			console.log("같아")
+					
+        	}
+
+    	}
+     	
+     	  // 제목 글자수 계산
+	   	$('#issueTitle').keyup(function (e){
+	   	    var content = $(this).val();   		
+	   	    if (content.length > 66){
+	   	        alert("최대 66자까지 입력 가능합니다.");
+	   	     	$(this).val(content.substring(0, 65));
+	   	    }
+	   	});
+	     
+	 // 업데이트 버튼 클릭시 파일 삭제 호출
+     	$('#regBtn').on('click', function(){
+     		
+     		cnt = 0;  
+			
+			if ($('#scheTitle').val().length == 0){
+				$('.warningTitle').text("제목을 작성해 주세요.");
+				cnt++;
+			}
+			    		
+			if (cnt == 0){	
+				
+				
+				// 업로드할 파일이 존재하지 않을시 update전송
+	     		if($('#delfile').val().length == 0 && $('.uploadifive-queue-item').length == 0){    	
+	     			console.log("둘다 X")
+	     			$('#updateform').submit();   
+	     		// 삭제 파일 없고 업로드할 파일이 존재시 파일 등록 호출
+	     		}else if($('#delfile').val().length ==0 && $('.uploadifive-queue-item').length > 0){
+	     			console.log("파일만 존재")
+	     			$('#file_upload').uploadifive('upload');
+	  
+	     		}else{
+	     		
+	     			console.log("파일 삭제")
+// 	     			
+	     			$.ajax({url :"${pageContext.request.contextPath}/file/delfiles",
+			 			 data : {delfile : $('#delfile').val() },
+						 method : "post",
+						 success :function(data){	
+							 console.log(data);
+							 $("form").unbind('submit');	
+							// 업로드할 파일이 존재시 update전송
+				     		if($('.uploadifive-queue-item').length > 0){  
+				     			$('#file_upload').uploadifive('upload');
+				     				    					    					     			
+				     		// 업로드할 파일이 존재시 파일 등록 호출
+				     		}else{
+				     			 $('#updateform').submit();
+				     		}
+				     		
+						 }
+				 	})
+	     		}
+				     	
+	     	}
+	    })
+	 	
+	 	
 	 	
 /* 		$("#map1").on("click", function() {
 			document.getElementById('map').style.display="block";
@@ -174,6 +376,29 @@ var add = "";
 	 	
 	 	
 	});
+	
+// 삭제할 파일 
+function delfiles(){
+	console.log($('#delfile').val());
+ 	$.ajax({url :"${pageContext.request.contextPath}/file/delfiles",
+ 			 data : {delfile : $('#delfile').val() },
+			 method : "post",
+			 success :function(data){	
+				 console.log(data);
+				 
+				// 업로드할 파일이 존재시 update전송
+	     		if($('.uploadifive-queue-item').length > 0){  
+	     			$('#file_upload').uploadifive('upload');
+	     				    					    					     			
+	     		// 업로드할 파일이 존재시 파일 등록 호출
+	     		}else{
+	     			
+	     			 $('form').submit();
+	     		}
+	     		
+			 }
+	 	})
+}
 
 var contentString = '송촌동 우리집';
 
@@ -334,7 +559,7 @@ function initGeocoder() {
         }
     });
 
-    $('#submit').on('click', function(e) {
+    $('#searchbtn').on('click', function(e) {
         e.preventDefault();
 
         searchAddressToCoordinate($('#address').val());
