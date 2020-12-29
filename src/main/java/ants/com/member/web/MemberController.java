@@ -214,6 +214,11 @@ public class MemberController {
 		List<AlarmVo> alarmlistmain = projectService.alarmlistmain(memberVo.getMemId());
 		if(alarmlistmain.size()!=0) {
 			model.addAttribute("alarmlistmain", alarmlistmain);
+			SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
+			Date time = new Date();
+			String time1 = format1.format(time);
+				
+			model.addAttribute("today", time1);
 		}
 		
 		if(memberVo.getMemType().equals("PM")) {
