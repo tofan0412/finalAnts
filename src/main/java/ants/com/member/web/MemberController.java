@@ -302,7 +302,7 @@ public class MemberController {
 				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
 			} else {
 				Filepath = "http://localhost/profile/user-1.png";
-				Filename = "user-0.png";
+				Filename = "user-1.png";
 			}
 		}
 
@@ -522,8 +522,8 @@ public class MemberController {
 
 				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
 			} else {
-				Filepath = "http://localhost/profile/user-0.png";
-				Filename = "user-0.png";
+				Filepath = "http://localhost/profile/user-1.png";
+				Filename = "user-1.png";
 			}
 		}
 		memberVo.setMemFilepath(Filepath);
