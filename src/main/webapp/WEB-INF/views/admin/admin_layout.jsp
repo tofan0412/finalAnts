@@ -31,7 +31,7 @@
 			</div>
 		</div>
 		<!-- Control Sidebar -->
-		<tiles:insertAttribute name="adright" />
+<%-- 		<tiles:insertAttribute name="adright" /> --%>
 
 		<!-- Main Footer -->
 		<tiles:insertAttribute name="adfooter" />

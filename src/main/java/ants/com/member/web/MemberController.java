@@ -214,6 +214,11 @@ public class MemberController {
 		List<AlarmVo> alarmlistmain = projectService.alarmlistmain(memberVo.getMemId());
 		if(alarmlistmain.size()!=0) {
 			model.addAttribute("alarmlistmain", alarmlistmain);
+			SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
+			Date time = new Date();
+			String time1 = format1.format(time);
+				
+			model.addAttribute("today", time1);
 		}
 		
 		if(memberVo.getMemType().equals("PM")) {
@@ -296,14 +301,16 @@ public class MemberController {
 
 		} else {
 			// 기본 이미지 중에 선택했을때
-			if (!imgname.equals("") && !imgname.equals(null)) {
-				Filepath = imgname;
+//			if (!imgname.equals("") && !imgname.equals(null)) {
+//				Filepath = imgname;
+//				Filename = imgname.split("/")[4];
+//
+//				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+//			} else {
+//				Filepath = "http://localhost/profile/user-0.png";
+				Filepath = "/resources/profile/"+ imgname.split("/")[4];
 				Filename = imgname.split("/")[4];
-				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
-			} else {
-				Filepath = "http://localhost/profile/user-1.png";
-				Filename = "user-0.png";
-			}
+//			}
 		}
 
 		memberVo.setMemFilepath(Filepath);
@@ -349,9 +356,9 @@ public class MemberController {
 
 		// POP3/IMAP 설정시 네이버에서 알려줌
 		final String username = "noylit"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
-		final String password = "1234d5678"; // 네이버 이메일 비밀번호를 입력해주세요.
+		final String password = "1234e5678"; // 네이버 이메일 비밀번호를 입력해주세요.
 		int port = 465; // 포트번호
-
+		
 		String uuid = UUID.randomUUID().toString();
 		model.addAttribute("uuid", uuid);
 		model.addAttribute("memId", memberVo.getMemId());
@@ -516,15 +523,16 @@ public class MemberController {
 		} else {
 
 			// 기본 이미지 중에 선택했을때
-			if (!imgname.equals("") && !imgname.equals(null)) {
-				Filepath = imgname;
+//			if (!imgname.equals("") && !imgname.equals(null)) {
+//				Filepath = imgname;
+//				Filename = imgname.split("/")[4];
+//
+//				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+//			} else {
+//				Filepath = "http://localhost/profile/user-0.png";
+				Filepath = "/resources/profile/"+ imgname.split("/")[4];
 				Filename = imgname.split("/")[4];
-
-				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
-			} else {
-				Filepath = "http://localhost/profile/user-0.png";
-				Filename = "user-0.png";
-			}
+//			}
 		}
 		memberVo.setMemFilepath(Filepath);
 		memberVo.setMemFilename(Filename);
