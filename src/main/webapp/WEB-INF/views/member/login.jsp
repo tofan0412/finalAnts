@@ -88,6 +88,19 @@
 .search_in input{width:100%}
 }	
 .ptag {white-space: nowrap;}
+	
+#checkbtn:active{		
+	transform: scale(0.96);			
+}
+#telsub:active{		
+	transform: scale(0.96);			
+}
+#closemd:active{		
+	transform: scale(0.96);			
+}		
+#mailsub:active{		
+	transform: scale(0.96);			
+}		
 </style>
 <script>				
  	$(document).ready(function(){
@@ -113,7 +126,7 @@
 				Cookies.remove("SMEMBER");
 			}		
 		});	
-				
+			
 		// 쿠키 날짜 설정		SMEMBER		noylit		07 Oct 2020 00:38:35 GMT
 		function setCookie(cookieName, cookieValue, expires){
 			var today = new Date();
