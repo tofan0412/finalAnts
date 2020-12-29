@@ -4,12 +4,6 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>    
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
 <style>
 body{
 	min-width: 1000px;
@@ -43,6 +37,7 @@ body{
 		 margin-left:45%;		
 	}	
 </style>
+
 <script  type="text/javascript">
 $(document).ready(function(){
 	$("#schedulelist tr").on("click",function(){
@@ -63,10 +58,9 @@ function scheInsert(){
     document.listForm.submit();
  }
 </script>
-<body>	
 
+<body>	
 <%@include file="../layout/contentmenu.jsp"%>
-	
 <form:form commandName="scheduleVo" id="listForm" name="listForm" method="post">
 	<section class="content" >
 	      <div class="col-12 col-sm-12">
@@ -162,4 +156,3 @@ function scheInsert(){
   <br>
 </form:form>
 </body>
-</html>

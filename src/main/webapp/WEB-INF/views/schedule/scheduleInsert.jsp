@@ -2,32 +2,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>네이버API 지도</title>
-    <!-- 네이버 지도 로드 -->
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=e6rqd9yxsp&callback=CALLBACK_FUNCTION"></script>
-	<!-- 서브 모듈 로드 -->
-	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=YOUR_CLIENT_ID&submodules=panorama,geocoder"></script>
-	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=YOUR_CLIENT_ID&submodules=panorama"></script>
-	<link rel="icon" href="../../favicon.ico">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"	rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<%@include file="../layout/contentmenu.jsp"%>	
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="icon" href="../../favicon.ico">
+<!-- 네이버 지도 로드 -->
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=e6rqd9yxsp&callback=CALLBACK_FUNCTION"></script>
+<!-- 서브 모듈 로드 -->
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=YOUR_CLIENT_ID&submodules=panorama,geocoder"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=YOUR_CLIENT_ID&submodules=panorama"></script>
+<!-- 썸머노트 -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"	rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
 	
-	<script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
-</head>
-	<%@include file="../layout/contentmenu.jsp"%>	
-
 <script type="text/javascript">
-
 $(document).ready(function(){
 	
 	document.getElementById('startDt').value = new Date().toISOString().substring(0, 10);
@@ -140,42 +131,34 @@ $(document).ready(function(){
  	})
 	
 });
-
-
-
 </script>
+
 <style>
 #fileBtn{
-		 display: inline-block;
-		 padding-bottom:  .5em;
-		 padding-top:  .5em;
-	}
-	
-	.uploadifive-button {
-		float: left;
-		margin-right: 10px;
-		
-	}
-	
-	#queue {
-		border: 1px solid #E5E5E5;
-		height: 177px;
-		width : 450px;
-		overflow: auto;
-		margin-bottom: 10px;
-
-	
-	}
-	#uploadifive-file_upload{
-		width : 200px;
-		height: 30px;
-	}
-	
-	#dragdiv {
-		text-align: center;
-		color: darkgray;
-		line-height: 170px;
-	}
+	display: inline-block;
+	padding-bottom:  .5em;
+	padding-top:  .5em;
+}
+.uploadifive-button {
+	float: left;
+	margin-right: 10px;
+}
+#queue {
+	border: 1px solid #E5E5E5;
+	height: 177px;
+	width : 450px;
+	overflow: auto;
+	margin-bottom: 10px;
+}
+#uploadifive-file_upload{
+	width : 200px;
+	height: 30px;
+}
+#dragdiv {
+	text-align: center;
+	color: darkgray;
+	line-height: 170px;
+}
 </style>
 
 <body>
@@ -264,8 +247,8 @@ $(document).ready(function(){
 	</div>
 </div>	
 
+<!-- 지도 스크립트 -->
 <script type="text/javascript">
-
 var x = 0;
 var y = 0;
 var contentString = '송촌동 우리집';
@@ -281,7 +264,6 @@ var map = new naver.maps.Map('map', {
 	mapTypeControl : true // 일반ㆍ위성 지도보기 컨트롤 표시 (기본값 표시안함)
 
 });  
-
 
 //클릭이벤트를 적용하여 경고창으로 위도 경도를 봅니다.
 naver.maps.Event.addListener(map, 'click', function(e){
@@ -310,9 +292,6 @@ var marker = new naver.maps.Marker({
 	title:contentString,
 	map:map
 }); */
-
-
-
 
 var infoWindow = new naver.maps.InfoWindow({
     anchorSkew: true
