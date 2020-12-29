@@ -4,6 +4,7 @@
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -265,21 +266,46 @@
 						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
 						  <li>
 							<c:choose>
-								<c:when test="${files.pubExtension eq 'png' or files.pubExtension eq 'jpg' or files.pubExtension eq 'PNG' or files.pubExtension eq 'JPG'  }">
+								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'png' or fn:toLowerCase(file.pubExtension) eq 'jpg'}">
 									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
 										<i class="far fa-fw fa-image "></i>&nbsp;${files.pubFilename }
 									</a>
 								</c:when>
-								<c:when test="${files.pubExtension eq 'pdf' or files.pubExtension eq 'PDF'}">
+								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'pdf'}">
 									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
-										<i class="far fa-fw fa-image "></i>&nbsp;${files.pubFilename }
+										<i class="far fa-file-pdf"></i>&nbsp;${files.pubFilename }
 									</a>
 								</c:when>
-								<c:when test="${files.pubExtension eq 'docx' or files.pubExtension eq 'DOCX' }">
+								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'docx'}">
 									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
-										<i class="far fa-fw fa-image "></i>&nbsp;${files.pubFilename }
+										<i class="far fa-file-archive"></i>&nbsp;${files.pubFilename }
 									</a>
 								</c:when>
+								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'pptx'}">
+									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
+										<i class="far fa-file-powerpoint"></i>&nbsp;${files.pubFilename }
+									</a>
+								</c:when>
+								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'zip'}">
+									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
+										<i class="far fa-file-archive"></i>&nbsp;${files.pubFilename }
+									</a>
+								</c:when>
+								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'zip'}">
+									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
+										<i class="far fa-file-archive"></i>&nbsp;${files.pubFilename }
+									</a>
+								</c:when>
+								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'xlsx' or fn:toLowerCase(file.pubExtension) eq 'xls'}">
+									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
+										<i class="far fa-file-excel"></i>&nbsp;${files.pubFilename }
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
+										<i class="far fa-file"></i>&nbsp;${files.pubFilename }
+									</a>
+								</c:otherwise>
 								
 							</c:choose>
 						  </li>
