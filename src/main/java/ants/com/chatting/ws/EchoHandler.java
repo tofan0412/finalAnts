@@ -38,12 +38,10 @@ public class EchoHandler extends TextWebSocketHandler {
 		
 		// sessionList에 존재하는 모든 사용자에게 메시지 뿌리기 ..
 		for(WebSocketSession sess : sessionList) {
-			sess.sendMessage(
-					new TextMessage(
-							cgroupId + "$$$$"
-							+ SMEMBER.getMemId() + "$$$$" 
-							+ SMEMBER.getMemName() + "$$$$"
-							+ message.getPayload()));
+			sess.sendMessage(new TextMessage(cgroupId + "$$$$"
+				+ SMEMBER.getMemId() + "$$$$" 
+				+ SMEMBER.getMemName() + "$$$$"
+				+ message.getPayload()));
 		}
 	}
 
