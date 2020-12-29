@@ -3,11 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">		
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/dist/js/js.cookie-2.2.1.min.js"></script>
 		<!-- 정적자원 매핑처리 하지 말것 	 resources -> ${pageContext.request.contextPath} 바꾸면 서버 실행 초기에 쿠키 못찾음 -->
-<style>
+					
+<style>	
 .ff {
 	width: 100vw;
 	height: 100vh;
@@ -100,11 +102,22 @@
 }		
 #mailsub:active{		
 	transform: scale(0.96);			
-}		
+}
+
+.passviewdiv i{
+    position: absolute;
+    left: 85%;
+    top: 42px;						
+    color: black;	
+}				
 </style>
-<script>				
- 	$(document).ready(function(){
-													/* 쿠키 설정 */		
+
+<script>
+
+// 메일 전송 버튼 클릭	
+				
+ 	$(document).ready(function(){		
+														/* 쿠키 설정 */		
 		// 로그인했다가 뒤로 가기 하면 아이디 값 남아있는것 제거 
 		$("#memId").val('');		
 		
@@ -181,6 +194,18 @@
  				$('#loginBtn').trigger("click");
  			}
  		})
+ 		
+ 		// 비밀번호 보이기 버튼
+ 		$('.passviewdiv i').on('click',function(){
+ 	        $('input').toggleClass('active');
+ 	        if($('input').hasClass('active')){
+ 	            $(this).attr('class',"fa fa-eye-slash fa-lg")
+ 	            .prev('input').attr('type',"text");
+ 	        }else{
+ 	            $(this).attr('class',"fa fa-eye fa-lg")
+ 	            .prev('input').attr('type','password');
+ 	        }
+ 	    });	
  		
  		// 비밀번호 변경 모달창 열기
 		$("#myBtn").click(function(){
@@ -333,7 +358,7 @@ function chkID2(){
 	
 $(document).on("keyup", "#mailtel", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
-});
+});	
 </script>	
 	
 <body class="loginContainer fadein">
@@ -369,10 +394,16 @@ $(document).on("keyup", "#mailtel", function() {
 					<header class="jg" style="font-size: 1.0em; float: right; color: #0BB783;">
 						<a id="myBtn">비밀번호를 잊으셨나요?</a><br>
 					</header>
-				</div>
-				<input type="password" class="form-control login" id="memPass" name="memPass" value="" style="border: 0; outline: 0;">
-			</div>
-
+				</div>	
+								
+				<div class="passviewdiv">
+					<input type="password" class="form-control login" id="memPass" name="memPass" value="" style="display: inline-block; border:none; outline:0; float:left;">
+					<i class="fa fa-eye fa-lg"></i>	
+				</div>		
+						
+																	
+			</div>		
+					
 			<div class="row">
 				<div class="col-sm-8">
 					<div class="checkbox icheck">
