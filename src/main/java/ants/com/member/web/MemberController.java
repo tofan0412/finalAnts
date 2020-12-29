@@ -322,7 +322,7 @@ public class MemberController {
 //				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
 //			} else {
 //				Filepath = "http://localhost/profile/user-0.png";
-				Filepath = "/resources/profile/"+ imgname.split("/")[4];
+				Filepath = "/profile/"+ imgname.split("/")[4];
 				Filename = imgname.split("/")[4];
 //			}
 		}
@@ -544,7 +544,7 @@ public class MemberController {
 //				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
 //			} else {
 //				Filepath = "http://localhost/profile/user-0.png";
-				Filepath = "/resources/profile/"+ imgname.split("/")[4];
+				Filepath = "/profile/"+ imgname.split("/")[4];
 				Filename = imgname.split("/")[4];
 //			}
 		}
