@@ -203,7 +203,14 @@
 				                  <c:forEach items="${promemListIn }" var="pmem" begin="0" end="4">
 				                    <div class="post" style="border: none;">
 				                      <div class="user-block">
-					                  	<img class="img-circle img-bordered-sm pictureViewImg" src="/profileImgView?memId=${pmem.memId }" alt="user image">
+				                      	<c:if test="${fn:substring(pmem.memFilepath,0 ,1) eq '/' }">									
+											<img id="imge" style="width: 40px; height:  40px; border-radius: 50%; border: 1.5px solid #adb5bd;"  src="${pmem.memFilepath}" />
+										</c:if>
+										<c:if test="${fn:substring(pmem.memFilepath,0 ,2) eq 'D:' }">		
+											<img id="pict" style="width:  40px; height:  40px;  border-radius: 50%; border: 1px solid #adb5bd;" src="/profileImgView?memId=${pmem.memId}" />
+										</c:if>
+										
+<%-- 					                  	<img class="img-circle img-bordered-sm pictureViewImg" src="/profileImgView?memId=${pmem.memId }" alt="user image"> --%>
 				                        <span class="username">
 				                          <a href="#">${pmem.memName }</a>
 				                        </span>
@@ -345,7 +352,13 @@
 							<c:forEach items="${promemListIn }" var="pmem" varStatus="i">
 					            <div class="post" style="border: none;">
 					              <div class="user-block">
-						          	<img class="img-circle img-bordered-sm pictureViewImg" src="/profileImgView?memId=${pmem.memId }" alt="user image">
+					              	<c:if test="${fn:substring(pmem.memFilepath,0 ,1) eq '/' }">									
+										<img id="imge" style="width: 40px; height:  40px; border-radius: 50%; border: 1.5px solid #adb5bd;"  src="${pmem.memFilepath}" />
+									</c:if>
+									<c:if test="${fn:substring(pmem.memFilepath,0 ,2) eq 'D:' }">		
+										<img id="pict" style="width:  40px; height:  40px;  border-radius: 50%; border: 1px solid #adb5bd;" src="/profileImgView?memId=${pmem.memId}" />
+									</c:if>
+<%-- 						          	<img class="img-circle img-bordered-sm pictureViewImg" src="/profileImgView?memId=${pmem.memId }" alt="user image"> --%>
 					                <span class="username">
 					                  <a href="#">${pmem.memName }</a>
 					                </span>
