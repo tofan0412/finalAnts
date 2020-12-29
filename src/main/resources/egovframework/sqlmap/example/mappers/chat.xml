@@ -38,12 +38,23 @@ INSERT INTO CHAT (CGROUP_ID,
 				  MEM_NAME,
 				  CHAT_CONT,
 				  REG_DT) 
-	 VALUES (#{cgroupId},
+	 <if test="memId == '$ANNOUNCE$'">
+	 	VALUES (#{cgroupId},
+	 		 CHAT_SEQ.NEXTVAL,
+	 		 #{memId},
+	 		 #{memName},
+	 		 #{chatCont},
+	 		 to_date(SYSDATE,'YYYY-MM-DD-HH24:MI:SS'))
+	 </if>
+	 <if test="memId != '$ANNOUNCE$'">
+	 	VALUES (#{cgroupId},
 	 		 CHAT_SEQ.NEXTVAL,
 	 		 #{memId},
 	 		 #{memName},
 	 		 #{chatCont},
 	 		 to_date(#{regDt}, 'YYYY-MM-DD-HH24:MI:SS'))
+	 </if>
+	 
 </insert>
 
 <select id="readChatMembers" parameterType="java.lang.String" resultType="ants.com.member.model.ProjectMemberVo">

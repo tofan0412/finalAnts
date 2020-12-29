@@ -153,7 +153,7 @@ $(function(){
 							arr = res.split("$$");
 							var cgroupId = arr[0];
 							var cnt = arr[1];
-							alert(cgroupId+"채팅방 개설 완료 : " + cnt +"명을 초대하는 데 성공했습니다..");
+							alert("채팅방 개설 완료 ! " + cnt +"명을 초대하는 데 성공했습니다..");
 							// 채팅방과, 채팅방 멤버를 DB저장 완료하였다..
 							// WebSocket 설정 위해, 새롭게 만든 채팅방 번호를 세선에 저장한다.
 							$.ajax({
@@ -163,6 +163,19 @@ $(function(){
 								success : function(res){
 									console.log("현재 채팅방 번호 : "+cgroupId);
 									$('.chatList').empty();
+									// 채팅방 생성, 인원 초대까지 끝났으면 채팅방을 개설하였다는 메시지를 DB에 저장한다.
+									$.ajax({
+										url : "/chat/sendMessage",
+										data : {memId : "$ANNOUNCE$",
+											    memName : "$ANNOUNCE$",
+											    cgroupId : cgroupId,
+												chatCont : "${SMEMBER.memName}"+"님이 " 
+													+ MemListArr.length-1 +"명을 초대하였습니다."},
+										method : "POST",
+										success : function(res) {
+																						
+										}
+									})
 								}
 							})
 							
@@ -215,6 +228,20 @@ $(function(){
 				data : {memId : memId, cgroupId : cgroupId},
 				success : function(res){
 					if (res > 0){
+						// 나간 채팅방에 퇴장하였다는 메시지를 저장한다.
+						$.ajax({
+							url : "/chat/sendMessage",
+							data : {memId : "$ANNOUNCE$",
+								    memName : "$ANNOUNCE$",
+								    cgroupId : cgroupId,
+									chatCont : memId+"님이 대화방을 나갔습니다." 
+									},
+							method : "POST",
+							success : function(res) {
+																			
+							}
+						})
+						
 						alert("처리되었습니다.");
 						$('.chatTitle').css('display', 'block');
 						$('.mkNewChat').css('display', 'block');

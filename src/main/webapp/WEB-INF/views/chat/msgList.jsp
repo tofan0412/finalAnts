@@ -204,6 +204,15 @@
 	padding: 2px 2px 4px 4px;
 }
 
+.spaanAnnounce {
+	background-color: #F78181;
+	height: 100%;
+	display: inline-block;
+	border-radius: 0.4rem;
+	text-align: left;
+	padding: 2px 2px 4px 4px;
+}
+
 .announce {
 	text-align: center;
 }
@@ -273,7 +282,10 @@
 	<span class="returnBtn fas fa-undo icon"
 		style="float: right; padding-right: 10px;"></span>
 	<!-- 회원 목록 확인하기 -->
-	<span class="usersBtn fas fa-user icon"
+	<span class="usersBtn fas fa-users icon"
+		style="float: right; padding-right: 10px;"></span>
+	<!-- 회원 초대하기 버튼 -->
+	<span class="userInviteBtn fas fa-user-plus icon"
 		style="float: right; padding-right: 10px;"></span>
 	<!-- 채팅방 나가기 버튼 -->
 	<span class="exitBtn fas fa-door-open icon"
@@ -302,7 +314,7 @@
 	<c:forEach items="${msgList }" var="msg">
 
 		<!-- 접속한 사용자의 아이디와 일치하는 경우, 우측 배열 -->
-		<c:if test="${msg.memId eq SMEMBER.memId }">
+		<c:if test="${msg.memId eq SMEMBER.memId && msg.memId ne '$ANNOUNCE$'}">
 			<div class="oneMsg" chatId="${msg.chatId}">
 				<div class="memId mine">${msg.memName }</div>
 				<div class="chatCont mine">
@@ -312,7 +324,7 @@
 			</div>
 		</c:if>
 		<!-- 접속한 사용자가 보낸 메시지가 아닌 경우, 좌측 배열 -->
-		<c:if test="${msg.memId ne SMEMBER.memId }">
+		<c:if test="${msg.memId ne SMEMBER.memId && msg.memId ne '$ANNOUNCE$' }">
 			<div class="oneMsg" chatId="${msg.chatId}">
 				<div class="memId yours">${msg.memName }</div>
 				<div class="chatCont yours">
@@ -320,6 +332,13 @@
 				</div>
 				<div class="regDt yours">${msg.regDt }</div>
 			</div>
+		</c:if>
+		
+		<!-- 초대 알림, 퇴장 알림, 개설 알림등의 공지사항 메시지인 경우 .. -->
+		<c:if test="${msg.memId eq '$ANNOUNCE$' }">
+			<div class="oneMsg announce" chatId="${msg.chatId }">
+				<div class="spaanAnnounce">&nbsp;${msg.chatCont }&nbsp;</div>
+			</div>	
 		</c:if>
 	</c:forEach>
 </div>
