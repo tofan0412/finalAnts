@@ -169,14 +169,21 @@ public class MemberController {
 				List<ProjectVo> projectList_main = projectService.projectListmain(dbMember.getMemId());
 				model.addAttribute("projectList_main", projectList_main);
 			}
+			
 			List<AlarmVo> alarmlistmain = projectService.alarmlistmain(dbMember.getMemId());
 			if(alarmlistmain.size()!=0) {
+				int count =0;
+				for(int i=0; i<alarmlistmain.size(); i++) {
+					if(alarmlistmain.get(i).getDays().equals("0")) {
+						count++;
+					}
+				}
 				model.addAttribute("alarmlistmain", alarmlistmain);
-				
+				model.addAttribute("count", count);
 				SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
 				Date time = new Date();
 				String time1 = format1.format(time);
-				
+					
 				model.addAttribute("today", time1);
 			}
 			
@@ -213,7 +220,14 @@ public class MemberController {
 		
 		List<AlarmVo> alarmlistmain = projectService.alarmlistmain(memberVo.getMemId());
 		if(alarmlistmain.size()!=0) {
+			int count =0;
+			for(int i=0; i<alarmlistmain.size(); i++) {
+				if(alarmlistmain.get(i).getDays().equals("0")) {
+					count++;
+				}
+			}
 			model.addAttribute("alarmlistmain", alarmlistmain);
+			model.addAttribute("count", count);
 			SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
 			Date time = new Date();
 			String time1 = format1.format(time);

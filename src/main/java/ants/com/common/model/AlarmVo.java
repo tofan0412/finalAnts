@@ -25,9 +25,17 @@ public class AlarmVo extends BaseVo{
 	private String reqId;
 	private String regDt;
 	private String regTime;
+	private String days;
 	
 	
 	
+	
+	public String getDays() {
+		return days;
+	}
+	public void setDays(String days) {
+		this.days = days;
+	}
 	public String getRegTime() {
 		return regTime;
 	}
@@ -139,13 +147,14 @@ public class AlarmVo extends BaseVo{
 	}
 	
 	
+	
 	@Override
 	public String toString() {
 		return "AlarmVo [alarmId=" + alarmId + ", alarmCont=" + alarmCont + ", alarmStatus=" + alarmStatus + ", memId="
 				+ memId + ", alarmType=" + alarmType + ", reqPl=" + reqPl + ", resPl=" + resPl + ", reply=" + reply
 				+ ", posts=" + posts + ", totalCnt=" + totalCnt + ", reqStatus=" + reqStatus + ", memIds="
 				+ Arrays.toString(memIds) + ", del=" + del + ", url=" + url + ", id=" + id + ", reqId=" + reqId
-				+ ", regDt=" + regDt + ", regTime=" + regTime + "]";
+				+ ", regDt=" + regDt + ", regTime=" + regTime + ", days=" + days + "]";
 	}
 	public AlarmVo() {
 		

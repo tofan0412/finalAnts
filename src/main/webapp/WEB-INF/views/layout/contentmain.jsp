@@ -143,16 +143,12 @@ body{
 	background-color: #1D6A96;
 	color: white; 
 }
-/*  .ui-widget.ui-widget-content {  */
-/*      width: auto; */
-/*      font-size: 100%; */
-/*  }  */
-
   .ui-datepicker{ font-size: 16px; width: auto; min-width: 205px;} 
-/*  .ui-datepicker select.ui-datepicker-month{ width:20%; font-size: 11px; } */
-/* .ui-datepicker select.ui-datepicker-year{ width:30%; font-size: 11px; } */
-
-
+.bani{
+	font-size: 0.8em;
+	float: right;
+	margin-right: 3%;
+}
 </style>
 </head>				
 <body>
@@ -197,71 +193,112 @@ body{
 			</div>
 			<div class="card-body pt-0 jg">
 			<div class="timeline timeline-inverse">
-				<br>
-                      <div class="time-label">
-                        <span class="bg-danger ns">
-                          	today
-                        </span>
-                      </div>
+			<c:if test="${empty alarmlistmain }">
+			<br>
                       <div>
-                        <i class="fas fa-envelope bg-primary"></i>
+                        <i class="far fa-clock bg-gray"></i>
                         <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 12:05</span>
-                          <h3 class="timeline-header">PL 요청</h3>
                           <div class="timeline-body">
-                            	보낸사람 - 요구사항정의서 제목
+                            	미확인 알림이 없습니다.
                           </div>
                         </div>
                       </div>
-                      <div>
-                        <i class="fas fa-user bg-info"></i>
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 09:50</span>
-                          <h3 class="timeline-header">댓글</h3>
-                          <div class="timeline-body">
-                            	댓글 작성한 사람 - 댓글이 작성된 글제목
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <i class="fas fa-comments bg-warning"></i>
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 06:00</span>
-                          <h3 class="timeline-header">프로젝트 초대</h3>
-                          <div class="timeline-body">
-                            	보낸사람 - 프로젝트이름
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <i class="fas fa-user bg-info"></i>
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 09:50</span>
-                          <h3 class="timeline-header">몰라</h3>
-                          <div class="timeline-body">
-                            	이거 내용 많아지면 스크롤 만들어...
-                          </div>
-                        </div>
-                      </div>
-                      <div class="time-label">
-                        <span class="bg-success ns">
-                          	the old times
-                        </span>
-                      </div>
-                      
-                      <div>
-                        <i class="fas fa-comments bg-warning"></i>
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 06:00</span>
-                          <h3 class="timeline-header">테스트</h3>
-                          <div class="timeline-body">
-                            	좀 큰 느낌인디
-                          </div>
-                        </div>
-                      </div>
+			</c:if>
+			<c:if test="${not empty alarmlistmain }">
+			<br>
+            <c:forEach items="${alarmlistmain }" var="a" varStatus="i">
+            <c:choose>
+            	<c:when test="${a.regDt eq today and i.index eq 0}">
+            		<div class="time-label">
+		            	<span class="bg-success ns">today</span>
+		            </div>
+            	</c:when>
+            	<c:when test="${a.regDt ne today and i.index eq count }">
+            		<div class="time-label">
+		            	<span class="bg-danger ns">the old times</span>
+		            </div>
+            	</c:when>
+			</c:choose>
+                <div>
+                <c:choose>
+					<c:when test="${a.alarmType eq 'req-pl'}"><i class="fas fa-user bg-info"></i></c:when>
+					<c:when test="${a.alarmType eq 'res-pl' }"><i class="fas fa-user bg-info"></i></c:when>
+					<c:when test="${a.alarmType eq 'req-pro' }"><i class="fas fa-envelope bg-primary"></i></c:when>
+					<c:when test="${a.alarmType eq 'res-pro' }"><i class="fas fa-envelope bg-primary"></i></c:when>
+					<c:when test="${fn:contains(a.alarmType,'reply')}"><i class="fas fa-comments bg-warning"></i></c:when>
+					<c:when test="${a.alarmType eq 'posts'}"><i class="fas fa-comments bg-warning"></i></c:when>
+					<c:when test="${a.alarmType eq 'suggest'}"><i class="fas fa-exclamation-triangle"></i></c:when>
+					<c:when test="${a.alarmType eq 'res-suggest'}"><i class="fas fa-exclamation-triangle"></i></c:when>
+				</c:choose>
+                	
+                    <div class="timeline-item">
+                    	<span class="time"><i class="far fa-clock">
+                    	<c:if test="${a.regDt ne today}">${a.regDt }</c:if>
+                    	<c:if test="${a.regDt eq today}">${a.regTime }</c:if>
+                    	</i></span>
+                    	<h4 class="timeline-header">
+                    	<c:choose>
+				        <c:when test="${a.alarmType eq 'req-pl'}">PL요청  <span class="bani"> Sender : ${fn:split(a.alarmCont,'&&')[1]}</span></c:when>
+				        <c:when test="${a.alarmType eq 'res-pl' }">PL응답 <span class="bani"> Sender : ${fn:split(a.alarmCont,'&&')[1]}</span></c:when>
+				        <c:when test="${a.alarmType eq 'req-pro' }">Project 초대 <span class="bani"> Sender : ${fn:split(a.alarmCont,'&&')[1]}</span></c:when>
+				        <c:when test="${a.alarmType eq 'res-pro' }">Project초대 <span class="bani"> Sender : ${fn:split(a.alarmCont,'&&')[1]}</span> 결과</c:when>
+				        <c:when test="${fn:contains(a.alarmType,'reply')}">
+				        <c:if test="${a.alarmType eq 'reply-3' }">이슈 댓글 <span class="bani"> Sender : ${fn:split(a.alarmCont,'&&')[1]}</span></c:if>
+				        <c:if test="${a.alarmType eq 'reply-4' }">건의사항 댓글 <span class="bani"> Sender : ${fn:split(a.alarmCont,'&&')[1]}</span></c:if>
+				        <c:if test="${a.alarmType eq 'reply-6' }">일정 댓글 <span class="bani"> Sender : ${fn:split(a.alarmCont,'&&')[1]}</span></c:if>
+				        <c:if test="${a.alarmType eq 'reply-10' }">투표 댓글 <span class="bani"> Sender : ${fn:split(a.alarmCont,'&&')[1]}</span></c:if>
+				        </c:when>
+				        <c:when test="${a.alarmType eq 'posts'}">PM-PL이슈 답글 <span class="bani"> Sender : ${fn:split(a.alarmCont,'&&')[1]}</span>
+				        </c:when>
+				        <c:when test="${a.alarmType eq 'suggest'}">건의사항 <span class="bani"> Sender : ${fn:split(a.alarmCont,'&&')[1]}</span></c:when>
+				        <c:when test="${a.alarmType eq 'res-suggest'}">건의사항 결과 <span class="bani"> Sender : ${fn:split(a.alarmCont,'&&')[1]}</span></c:when>
+				        </c:choose>
+                    	</h4>
+                    	<div class="timeline-body" style="font-size: 0.9em;">
+                         <c:choose>
+				         <c:when test="${a.alarmType eq 'req-pl'}">${fn:split(a.alarmCont,'&&')[4]}</c:when>
+				         <c:when test="${a.alarmType eq 'res-pl' }">${fn:split(a.alarmCont,'&&')[4]}<br>[
+					     <c:if test="${fn:split(a.alarmCont,'&&')[5] eq 'ACCEPT'}">PL요청을 수락했습니다.</c:if>
+					     <c:if test="${fn:split(a.alarmCont,'&&')[5] eq 'REJECT'}">PL요청을 거절했습니다.</c:if>
+					     ]</c:when>
+				         <c:when test="${a.alarmType eq 'req-pro' }">${fn:split(a.alarmCont,'&&')[4]}</c:when>
+				         <c:when test="${a.alarmType eq 'res-pro' }">${fn:split(a.alarmCont,'&&')[4]}<br>[
+					     <c:if test="${fn:split(a.alarmCont,'&&')[5] eq 'ACCEPT'}">프로젝트 초대를 수락했습니다.</c:if>
+					     <c:if test="${fn:split(a.alarmCont,'&&')[5] eq 'REJECT'}">프로젝트 초대를 거절했습니다.</c:if>
+					     ]
+				         </c:when>
+				         <c:when test="${a.alarmType eq 'res-suggest'}">
+					     ${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}<br>[
+					     <c:if test="${fn:split(a.alarmCont,'&&')[5] eq 'ACCEPT'}">건의사항이 승인됐습니다.</c:if>
+					     <c:if test="${fn:split(a.alarmCont,'&&')[5] eq 'REJECT'}">건의사항이 반려됐습니다.</c:if>
+					     ]
+				         </c:when>
+				         <c:when test="${a.alarmType eq 'posts'}">${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}<br>
+					     from.[${fn:substring(fn:split(a.alarmCont,'&&')[5],0,30) }]
+				         </c:when>
+				         <c:when test="${fn:contains(a.alarmType,'reply')}">                                                                                                                              
+					     ${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}<br>
+					     from.${fn:substring(fn:split(a.alarmCont,'&&')[7],0,13)}&nbsp;&nbsp;&nbsp;
+						     <c:if test="${fn:length(fn:substring(fn:split(a.alarmCont,'&&')[5],0,30)) > 10}">									
+					     		[${fn:substring(fn:substring(fn:split(a.alarmCont,'&&')[5],0,30),0,8)}...]
+							</c:if>
+							<c:if test="${fn:length(fn:substring(fn:split(a.alarmCont,'&&')[5],0,30)) <= 10}">									
+					     		[${fn:substring(fn:split(a.alarmCont,'&&')[5],0,30)}]
+							</c:if>
+				         </c:when>
+				         <c:when test="${a.alarmType eq 'suggest'}">
+					     ${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}<br>
+					     from.${fn:substring(fn:split(a.alarmCont,'&&')[8],0,13) }&nbsp;&nbsp;&nbsp;[${fn:substring(fn:split(a.alarmCont,'&&')[5],0,30) }]
+				         </c:when>
+				         </c:choose>
+                    	</div>
+                    </div>
+                  </div>
+                      </c:forEach>
                       <div>
                         <i class="far fa-clock bg-gray"></i>
                       </div>
+                      </c:if>
                     </div>
 			</div>
 		</div>

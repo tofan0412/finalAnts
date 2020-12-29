@@ -487,12 +487,14 @@ SELECT *
 				    mem_id,
 				    alarm_type,
 				    to_char(reg_dt, 'YYYY-MM-DD') as regDt,
-		            to_char(reg_dt, 'hh24:mi') as regtime
+		            to_char(reg_dt, 'hh24:mi') as regtime,
+		            round(sysdate-reg_dt) as days
 				FROM
 				    alarm
 				WHERE mem_id = #{memId}
 				 and ALARM_STATUS ='N'
 		         and reg_dt  is not null
+		         
 				ORDER BY to_number(alarm_id)desc) where rownum <=5
 		 ]]> 
 	</select>
