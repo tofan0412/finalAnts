@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <style>
 .reqListContent {
@@ -36,6 +37,9 @@ th, td {
 
 .xBtn{
 	 cursor: pointer;
+}
+.addedMemExceptBtn, .addingMemAddBtn{
+	cursor: pointer;
 }
 </style>
 <script>
@@ -164,7 +168,12 @@ th, td {
 		})
 		
 		// 사용자가 아이디를 누르는 경우 제거한다. 
-		$('.mkPjtMemList').on('click', '.mkPjtAddedMember', function(){
+// 		$('.mkPjtMemList').on('click', '.mkPjtAddedMember', function(){
+// 			var memId = $(this).attr('memId');
+// 			delMember(memId);
+// 		})
+		
+		$('.mkPjtMemList').on('click', '.addedMemExceptBtn', function(){
 			var memId = $(this).attr('memId');
 			delMember(memId);
 		})
@@ -235,24 +244,32 @@ th, td {
 			// 검색 결과가 1건 이상 존재하는 경우..
 			else{
 				for (j = 0 ; j < arr.length ; j++){
+					name = arr[j].split(":")[0] + arr[j].split(":")[1]
+					if (name.length > 15){
+						name = name.substring(0,15) + "...";
+					}
+					
 					$('.mkPjtSearchResult').append(
-					"<div class=\'mkPjtSearchResultOne\' memId=\'"
-					+ arr[j].split(":")[1].replace("[","").replace("]","") +"\' memName=\'"
-					+ arr[j].split(":")[0] + "\' style=\'height : 50px; \' >"
+					"<div class=\'mkPjtSearchResultOne\' style=\'height : 50px;\'>"
 						+"<span style=\'float : left;\'>"
-							+arr[j].split(":")[0]
+							+ name
 						+"</span>"
-						+"<span style=\'float : left;\'>"
-							+arr[j].split(":")[1]
-						+"</span>"
+						+"<span class=\'addingMemAddBtn\' memId=\'"
+						   + arr[j].split(":")[1].replace("[","").replace("]","") + "\' "
+						   +"memName = \'"+ arr[j].split(":")[0] + "\' "
+						   +"style=\'border : 2px solid #5882FA; "
+						   +"float : right; "
+						   +"background-color : #5882FA;"
+						   +"color : white;"
+						   +"border-radius : 0.45rem;\'>&nbsp;추가&nbsp;</span>"
 					+"</div>");	
 				} 
 				$('#mkPjtWarningText')[0].style.visibility = 'hidden';
 			}
 		}
 		
-		// 검색 결과 중 하나를 클릭했을 때..
-		$('.mkPjtSearchResult').on('click', '.mkPjtSearchResultOne', function(){
+		// 검색 결과 중 하나를 클릭했을 때.. 원래는 mkPjtSearchResultOne이거임
+		$('.mkPjtSearchResult').on('click', '.addingMemAddBtn', function(){
 			memName = $(this).attr("memName");
 			addingMemId = $(this).attr("memId");
 			
@@ -292,11 +309,23 @@ th, td {
 		function listMember(mkPjtInviteMemList) {
 			$('.mkPjtMemList').empty();
 			for (i = 0; i < mkPjtInviteMemList.length; i++) {
+				name = mkPjtInviteMemList[i].split(":")[0] 
+					+ "[" + mkPjtInviteMemList[i].split(":")[1] + "]";
+				
+				if (name.length > 15){
+					name = name.substring(0, 15)+ "...";
+				}
+				
 				$('.mkPjtMemList').append(
-						"<div class=\'mkPjtAddedMember jg\' style=\'height : 50px;\'"
+						"<div class=\'mkPjtAddedMember\' style=\'height : 50px;\'"
 							+" memId='"+mkPjtInviteMemList[i]+"'>"
-							+ mkPjtInviteMemList[i].split(":")[0]
-							+ "[" + mkPjtInviteMemList[i].split(":")[1] + "]"
+							+ name
+							+ "<span class=\'addedMemExceptBtn\' memId=\'"+ mkPjtInviteMemList[i] + "\'"
+								   +"style=\'border : 2px solid white; "
+										   +"float : right; "
+										   +"background-color : red;"
+										   +"color : white;"
+										   +"border-radius : 0.45rem;\'>&nbsp;제외&nbsp;</span>"
 						+ "</div>");
 			}
 		}
@@ -362,9 +391,6 @@ th, td {
 			}
 		});
 		console.log(alarmData);
-		
-		
-
 	}
 	
 </script>
@@ -470,14 +496,16 @@ th, td {
 								   border : 2px solid lightgrey;
 								   width : 50%; height : 300px; border-radius : 0.35rem;
 								   padding : 10px 10px 10px 10px; line-height : 45px;
-						 		   background-color : white; overflow-y : auto;">
+						 		   background-color : white; 
+						 		   overflow-x : auto;
+						 		   overflow-y : auto;">
 						</div>
 					</div>
 				</div>
 				
 				<div class="modal-footer">
 					<!-- 프로젝트 생성 버튼 -->				
-					<button id="mkProjectBtn" class="btn btn-primary jg"
+					<button id="mkProjectBtn" class="btn btn-primary"
 					style="width : 80%; height : 50px; margin : 0 auto;
 					font-size : 1.5em;">프로젝트 생성</button>
 				</div>

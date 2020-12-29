@@ -44,13 +44,23 @@
 							// 본인은 관리 목록에서 제외한다.
 						}
 						else{
-							$('#pjtMem').append("<div class=\'pjtMem\' promemId=\'"
-									+ res[i].promemId +"\' memName=\'"+ res[i].memName +"\'>" 
+							$('#pjtMem').append("<div class=\'pjtMem\'>" 
 									+ res[i].memName +"[" + res[i].memId + "]"
 									+"<span style=\'float : right;\'>" 
-									+ status
+									+ status 
+									+"<span class=\'pjtMemExceptBtn\' "
+										+ "promemId=\'"+ res[i].promemId + "\' "
+										+ "memName = \'" + res[i].memName + "\' "
+										+ "style=\'float : right;"
+										+ "border : 2px solid red;"
+										+ "background-color : red;"
+										+ "line-height : 30px;"
+										+ "margin-left : 5px;"
+										+ "color : white;"
+										+ "border-radius : 0.45rem;\'>&nbsp;제외&nbsp;</span>"
 									+ "</span>" 
-									+ "</div>");	
+									+ "</div>"
+									);	
 						}
 					}
 				}
@@ -66,7 +76,8 @@
 			$(this).css("background-color", 'white');
 		})
 		
-		$('#retireMember').on('click', '.pjtMem',function(){
+		// 원래는 .pjtMem
+		$('#retireMember').on('click', '.pjtMemExceptBtn',function(){
 			std = confirm("해당 회원을 프로젝트에서 제외합니다.");
 			reqId = "${projectId}";
 			
@@ -165,23 +176,32 @@
 			// 검색 결과가 1건 이상 존재하는 경우..
 			else{
 				for (j = 0 ; j < arr.length ; j++){
+					name = arr[j].split(":")[0]+arr[j].split(":")[1];
+					if (name.length > 15){
+						name = name.substring(0,15) + "...";
+					}
+					
 					$('.searchResult').append(
-					"<div class=\'searchResultOne\' memId=\'"
-					+ arr[j].split(":")[1].replace("[","").replace("]","") +"\' memName=\'"
-					+ arr[j].split(":")[0] + "\' style=\'height : 50px; \' >"
+					"<div class=\'searchResultOne\' style=\'height : 50px;\'>"
 						+"<span style=\'float : left;\'>"
-							+arr[j].split(":")[0]
+							+ name
 						+"</span>"
-						+"<span style=\'float : left;\'>"
-							+arr[j].split(":")[1]
-						+"</span>"
+						+"<span class=\'addingMemAddBtn\' memId=\'"
+						   + arr[j].split(":")[1].replace("[","").replace("]","") + "\' "
+						   +"memName = \'"+ arr[j].split(":")[0] + "\' "
+						   +"style=\'border : 2px solid #5882FA; "
+						   +"float : right; "
+						   +"background-color : #5882FA;"
+						   +"color : white;"
+						   +"border-radius : 0.45rem;\'>&nbsp;추가&nbsp;</span>"
 					+"</div>");	
 				} 
 				$('#warningText')[0].style.visibility = 'hidden';
 			}
 		}
 		
-		$('.searchResult').on('click', '.searchResultOne', function(){
+		// 원래는  .searchResultOne임. 검색 리스트에서 추가 버튼을 누르면, 초대 리스트에 추가된다.
+		$('.searchResult').on('click', '.addingMemAddBtn', function(){
 			memName = $(this).attr("memName");
 			addingMemId = $(this).attr("memId");
 			reqId = "${projectId}";
@@ -240,17 +260,29 @@
 		function listMember(inviteMemList) {
 			$('.memListView').empty();
 			for (i = 0; i < inviteMemList.length; i++) {
+				name = inviteMemList[i].split(":")[0]
+				+ "[" + inviteMemList[i].split(":")[1] + "]";
+				
+				if (name.length > 15){
+					name = name.substring(0,15)+"...";
+				}
+				
 				$('.memListView').append(
-						"<div class=\'addedMember jg\' style=\'height : 50px;\'"
-							+" memId='"+inviteMemList[i]+"'>"
-							+ inviteMemList[i].split(":")[0]
-							+ "[" + inviteMemList[i].split(":")[1] + "]"
+						"<div class=\'addedMember\' style=\'height : 50px;\'>"
+							+ name
+							+"<span class=\'addedMemExceptBtn\' memId=\'"
+							   + inviteMemList[i] + "\' "
+							   +"style=\'border : 2px solid red; "
+							   +"float : right; "
+							   +"background-color : red;"
+							   +"color : white;"
+							   +"border-radius : 0.45rem;\'>&nbsp;제외&nbsp;</span>"
 						+ "</div>");
 			}
 		}
 		
-		// 사용자가 아이디를 누르는 경우 제거한다. 
-		$('.memListView').on('click', '.addedMember', function() {
+		// 사용자가 아이디를 누르는 경우 제거한다. 원래는  addedMember임..
+		$('.memListView').on('click', '.addedMemExceptBtn', function() {
 			var memId = $(this).attr('memId');
 			delMember(memId);
 		})
@@ -354,6 +386,9 @@
 	align: center;
 	height: 35px;
 }
+.addingMemAddBtn, .addedMemExceptBtn, .pjtMemExceptBtn{
+	cursor: pointer;
+}
 
 </style>
 <body class="hold-transition sidebar-mini accent-teal">
@@ -445,20 +480,20 @@
 	<!-- /.content -->
 
 	<!-- Modal to invite new Members . . . -->
-	<div class="modal fade" id="inviteMember" tabindex="-1" role="dialog"
+	<div class="modal fade jg" id="inviteMember" tabindex="-1" role="dialog"
 		aria-labelledby="inviteMemberModal">
 		<div class="modal-dialog modal-sm-center" role="document">
 			<div class="modal-content" style="height: 600px; width : 600px;">
 
 				<div class="modal-header">
-					<h3 class="modal-title jg" id="addplLable">멤버 초대하기</h3>
+					<h3 class="modal-title" id="addplLable">멤버 초대하기</h3>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 
-				<div class="modal-body jg" 
+				<div class="modal-body" 
 					style="width: 100%; height: 60%; 
 						   padding-right : 15px;
 						   padding-left : 15px;">
@@ -480,7 +515,7 @@
 								   margin-bottom : 5px;
 								   color : red;"></div>
 								   
-						<div class="searchResult jg" style="
+						<div class="searchResult" style="
 							margin : 5px 5px 5px 5px;
 							border : 2px solid lightgrey;
 							width : 90%;
@@ -516,7 +551,7 @@
 	<div class="modal fade jg" id="retireMember" tabindex="-1" role="dialog"
 		aria-labelledby="retireMemberModal">
 		<div class="modal-dialog modal-sm-center" role="document">
-			<div class="modal-content" style="height: 550px; width : 450px;">
+			<div class="modal-content" style="height: 600px; width : 500px;">
 				
 				<div class="modal-header">
 					<h3 class="modal-title" id="addplLable">멤버 관리</h3>
@@ -526,22 +561,21 @@
 					</button>
 				</div>
 				
-				<div class="modal-body">
+				<div class="modal-body" style="height : 60%;">
 					<h5>제외할 멤버를 클릭해 주세요.</h5>
 					<div id="pjtMem" style="width : 100%; height : 90%; 
 									 line-height : 40px; 
 									 margin : 0 auto;
 									 overflow-y : auto;
 									 overflow-x : auto;">
-					 </div>			
+					 </div>
 				</div>
 				
-				<div class="modal-footer" style="overflow-y : auto; text-align : left; ">
+				<div class="modal-footer" style="overflow-y : auto; text-align : left; height : 25%;">
 					*승인 대기중 : 아직 해당 회원이 프로젝트에 참여하지 않은 상태입니다.<br>
 					*참여중 : 해당 회원이 프로젝트에 참여한 상태입니다.<br>
 					*제외한 멤버는 초대 기능을 통해 다시 초대할 수 있습니다.<br>
 				</div>
-				
 			</div>
 		</div>
 	</div>

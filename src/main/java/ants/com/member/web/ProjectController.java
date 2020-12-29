@@ -111,11 +111,12 @@ public class ProjectController {
 		for (int i = 0; i < inviteMemList.size(); i++) {
 			ProjectMemberVo pjtMem = new ProjectMemberVo();
 			pjtMem.setReqId(reqId);
-			pjtMem.setMemId(inviteMemList.get(i));
+			pjtMem.setMemName(inviteMemList.get(i).split(":")[0]);
+			pjtMem.setMemId(inviteMemList.get(i).split(":")[1]);
 
 			// 내가 아닌 다른 회원인 경우에는 상태를 'WAIT'으로 설정하지만,
 			// 나 자신은 PL이면서 프로젝트 멤버이므로, 'IN'으로 설정한다.
-			if (inviteMemList.get(i).equals(memId)) { // 만약 memId가 null이면 무조건 true..
+			if (inviteMemList.get(i).split(":")[1].equals(memId)) { // 만약 memId가 null이면 무조건 true..
 				pjtMem.setPromemStatus("IN");
 			} else {
 				pjtMem.setPromemStatus("WAIT");
