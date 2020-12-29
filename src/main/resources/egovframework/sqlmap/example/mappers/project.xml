@@ -480,7 +480,7 @@ SELECT *
 		resultType="ants.com.common.model.AlarmVo">
 		<![CDATA[ 
 		
-SELECT
+		SELECT
 		    alarm_id,
 		    alarm_cont,
 		    alarm_status,
