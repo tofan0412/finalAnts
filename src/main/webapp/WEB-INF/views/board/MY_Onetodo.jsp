@@ -40,7 +40,9 @@
 		// 건의사항 작성 버튼
 		$('#suggestBtn').click(function(){
 			todoId = $('#todoId').val();
-			$('#SearchTodoIdBar').val(todoId+":현재 선택된 일감 번호");
+			title = $('#todoTitle').html();
+			
+			$('#SearchTodoIdBar').val(todoId+":"+title);
 			
 			$('.warningTodo').empty();
 			$('.warningTitle').empty();
@@ -101,8 +103,6 @@
 				})
 			}
 		})
-		
-		
 	})
 	
 	function checkInputNum(){
@@ -306,13 +306,13 @@
 
 <!-- Suggest Modal -->
 
-<div class="modal fade suggestInsertModal" id="suggestInsert"
+<div class="modal fade suggestInsertModal jg" id="suggestInsert"
 	tabindex="-1" role="dialog" aria-labelledby="suggestInsertModal">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content" style="height: 600px; width: 800px;">
+	<div class="modal-dialog modal-lg-center" role="document">
+		<div class="modal-content" style="height: 700px; width: 500px;">
 
 			<div class="modal-header">
-				<h3 class="modal-title jg" id="addplLable"
+				<h3 class="modal-title" id="addplLable"
 					style="text-align: center;">건의사항 작성</h3>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
@@ -320,32 +320,25 @@
 				</button>
 			</div>
 
-			<div class="modal-body" style="width: 100%; height: 100%;">
+			<div class="modal-body" style="width: 100%; margin : 0 auto;">
 				<form id="sgtForm" name="sgtForm" action="/suggest/suggestInsert">
 					<input type="text" name="sgtId" id="sgtId" hidden="hidden" />
-
-					<div class="searchTodoArea"
-						style="float: left; width: 45%; height: 400px;">
-						<label class="jg" style="float: left;">선택한 일감</label>
+						<label style="float: left;">선택한 일감</label>
 						<!-- 사용자가 일감을 선택하지 않은 경우 .. -->
-						<div class="jg">
-							<span class="jg warningTodo" style="color: red;"></span>
+						<div>
+							<span class="warningTodo" style="color: red; margin-left : 5px;"></span>
 						</div>
-						<br>
-
-						<input type="text" id="SearchTodoIdBar" name="todoId" class="jg" 
+						<input type="text" id="SearchTodoIdBar" name="todoId"  
 							style="width : 90%; 
 								   border : 2px solid lightgrey; 
 								   border-radius : 0.7rem;"
 							readonly="true" placeholder="일감을 선택해 주세요.." autocomplete="off"/>
 						<br><br>
-					</div>
-
-					<div class="suggestInsertArea" style="float: right; width: 50%;">
-						<label class="jg" style="float: left;">건의 사항 제목</label>
+						
+						<label style="float: left;">건의 사항 제목</label>
 						<!-- 사용자가 제목을 입력하지 않은 경우 .. -->
-						<div class="jg">
-							<span class="jg warningTitle" style="color: red;"></span>
+						<div>
+							<span class="warningTitle" style="color: red; margin-left : 5px;"></span>
 						</div>
 						<input id="sgtTitle" name="sgtTitle" type="text"
 							style="width : 90%;
@@ -353,7 +346,7 @@
 								   border-radius : 0.7rem;"
 							autocomplete="off" />
 						<br>
-						<br> <label class="jg">건의 사항 내용</label><br>
+						<br> <label>건의 사항 내용</label><br>
 						<textarea id="sgtCont" name="sgtCont" rows="3" cols="30"
 							style="resize: none; 
 											   width : 90%;
@@ -364,20 +357,21 @@
 				<br>
 				<form id="suggestFileForm">
 					<!-- 파일 첨부하기.. -->
-					<label class="jg">파일 첨부</label>&nbsp;&nbsp; <span class="jg">파일은 최대
-						5개까지 첨부 가능합니다.</span> 
+					<label>파일 첨부</label>&nbsp;&nbsp; <span class="jg">파일은 최대
+						5개까지 첨부 가능합니다.</span><br>
 						<input name="file" type="file" class="file"
 						onchange="fileRestrict($('.file')[0].files.length)"
 						multiple="multiple" />
 					<div class="sgtFileList"></div>
 				</form>
 			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary suggestResetBtn">초기화</button>
+				<button class="btn btn-success" id="regBtn">등록</button>
+			</div>
 		</div>
 
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary jg suggestResetBtn">초기화</button>
-			<button class="jg btn btn-success" id="regBtn">등록</button>
-		</div>
+		
 	</div>
 </div>
 </div>

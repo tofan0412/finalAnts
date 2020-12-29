@@ -1,6 +1,9 @@
 
 package ants.com.member.web;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -56,7 +59,11 @@ public class ProjectController {
 	@RequestMapping(value = "/updateProject")
 	@ResponseBody
 	public String updateProject(ProjectVo projectVo, Model model, HttpSession session) {
-
+		
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		projectVo.setRegDt(sdf.format(today));
+		
 		int result = projectService.updateProject(projectVo);
 		if (result > 0) {
 			

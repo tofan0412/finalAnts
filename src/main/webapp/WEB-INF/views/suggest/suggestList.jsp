@@ -83,7 +83,7 @@ $(function(){
 		var keyword = $(this).val();
 		
 		for (var i = 0 ; i < $('.singleTodo').length ; i++){
-			if ($('.singleTodo')[i].attributes[2].value.includes(keyword)){
+			if ($('.singleTodo')[i].attributes[3].value.includes(keyword)){
 				$('.singleTodo')[i].style.display = 'block';
 			}else{
 				$('.singleTodo')[i].style.display = 'none';

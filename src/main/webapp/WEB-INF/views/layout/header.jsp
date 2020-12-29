@@ -85,7 +85,7 @@
 	
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {
-		alert("소켓 연결 끊김....")
+		console.log("소켓 연결이 끊겼습니다..");
 	}
 	
 	/* 알림 총 개수*/
