@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 
 <style>
@@ -104,36 +105,6 @@ function toggle(element){
 } 
  
 
-$(document).ready(function(){
-		 
-								/* 기본이미지/사진 선택 해서 보여주기 */
-	
-	pict = document.getElementById('pict').src	// display none 에 숨어있는 사진의 src속성값 가져옴
-												// src="/profileImgView?memId=${memberVo.memId}" 
-	imge = document.getElementById('imge').src	// display none 에 숨어있는 기본이미지의 src속성값 가져옴
-												// src="${memberVo.memFilepath}"
-	
-												
-	picval = pict.split('/')[0].indexOf('profileImgView') // 아이디 값으로 memFilepath의 속성을 가져오기 때문에 항상
-								// 값이 동일하다 -> http://localhost/profileImgView?memId=noylit@naver.com
-								// 값이 동일하기 때문에 비교대상에 필요 없음 x
-	imgval= imge.split('/')[0].indexOf('http')	
-	// 파일가져올때 -> file:///D:/upload/james.png	// 기본이미지    -> https://localhost/profile/user-16.png
-	// memFilepath 의 속성값을 바로 가져오기 때문에 웹에 저장된 기본이미지를 불러오는지
-	//								     로컬에 저장된 파일을 가져오는지 경로로 확인이 가능하다. 
-	
-	
-	$('#sp').append(' pict : ' + picval + '//' + pict);	// 경로 확인하려고 (숨김항목)
-	$('#sp').append(' imge : ' + imgval + '//' + imge); // 경로 확인하려고 (숨김항목)
-	
-	
-	if(imgval == -1){		// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온것이 아니면(file) -1
-		$('#pictureViewImg').attr('src', pict);
-	}else if(imgval == 0){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온 거면(img) 0 -> 웹사이트는 기본이미지
-		$('#pictureViewImg').attr('src', imge);
-	}
-	
-})
 </script>
 </head>
 
@@ -150,7 +121,12 @@ $(document).ready(function(){
 				<div class="card-body box-profile">
 					<div class="text-center">	 	
 						<div class="mailbox-attachment-icon has-img" id="pictureView" style="display:inline-block; border: 1px solid white; height:200px; width:140px; margin: 0 auto;">
-							<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;"/>
+							<c:if test="${fn:substring(memberVo.memFilepath,0 ,1) eq '/' }">									
+								<img id="imge" class="profile-user-img img-fluid img-circle" style="width: 100%; height: 100%;  border-radius: 70%;" src="${memberVo.memFilepath}" /><br>
+							</c:if>
+							<c:if test="${fn:substring(memberVo.memFilepath,0 ,2) eq 'D:' }">		
+								<img id="pict" style="width: 100%; height: 100%;  border-radius: 70%;" src="/profileImgView?memId=${memberVo.memId}" />
+							</c:if>
 						</div>
 					</div>	
 					
@@ -171,13 +147,6 @@ $(document).ready(function(){
 						<li class="list-group-item"><b>알람</b> 
 							<a class="float-right">
 								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none; width:105px; outline: none;" readonly>
-								<!-- 알람 토글 버튼 -->	
-								<!-- 
-								<label class="switch">											
-									<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>	
-									<span class="slider round"></span>	
-								</label>
-								-->
 							</a>
 						</li>			
 						<li class="list-group-item"><b>타입</b>
@@ -208,8 +177,12 @@ $(document).ready(function(){
 				삭제여부: <input name="del" type="text" id="del" placeholder="삭제여부" value="${memberVo.del}" style="border: none" readonly><br>
 				${memberVo.memFilepath} <br>
 				${memberVo.memFilename}
-				<img id="pict" style="width: 30px; height: 30px;" src="/profileImgView?memId=${memberVo.memId}" />
-				<img id="imge" style="width: 30px; height: 30px;" src="${memberVo.memFilepath}" /><br>
+				<c:if test="${fn:substring(memberVo.memFilepath,0 ,1) eq '/' }">									
+					<img id="imge" style="width: 30px; height: 30px;  border-radius: 70%;" src="${memberVo.memFilepath}" /><br>
+				</c:if>
+				<c:if test="${fn:substring(memberVo.memFilepath,0 ,2) eq 'D:' }">		
+					<img id="pict" style="width: 30px; height: 30px;  border-radius: 70%;" src="/profileImgView?memId=${memberVo.memId}" />
+				</c:if>
 				<span id="sp">sp : </span>
 			</div>
 		</div>

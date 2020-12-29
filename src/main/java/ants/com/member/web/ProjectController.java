@@ -185,6 +185,12 @@ public class ProjectController {
 			projectVo.setReqId(reqVo.getReqId()); // 해당 프로젝트를 ReqId로 찾기.
 
 			projectService.updateProject(projectVo);
+			
+			String memId = memberVo.getMemId();
+			List<ProjectVo> pro_pL = projectService.plInProjectList(memId);
+			if (pro_pL.size() != 0) {
+				session.setAttribute("plInProjectList", pro_pL); 
+			}
 		} else {
 			// PL이 요청 사항에 대해 반려 처리한 경우 -> STATUS만 REJECT로 수정한다.
 			reqService.reqUpdate(reqVo);

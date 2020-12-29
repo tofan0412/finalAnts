@@ -21,7 +21,7 @@
 		SELECT mem_id, mem_name, mem_tel, mem_filepath, mem_filename 
 			FROM member
 		  WHERE UPPER(del) = 'N'
-			AND UPPER(mem_id) like '%' || UPPER(#{term}) || '%'
+			AND UPPER(mem_name) like '%' || UPPER(#{term}) || '%'
 	</select>
 	
 	<!-- 검색용이 아닌, 회원 리스트 전체 가져오기 .. -->

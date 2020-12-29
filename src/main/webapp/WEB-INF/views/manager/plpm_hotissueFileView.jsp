@@ -32,7 +32,6 @@ var id;
 			      "top": posY-50
 			    }).show();
 			    id=hissuefId;
-			    //Prevent browser default contextmenu.
 			    return false;
  			}
 		});

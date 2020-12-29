@@ -115,13 +115,6 @@ $(function(){
 		            	<label class="control-label" id="regDt">${noticevo.regDt }</label>
 		            </td>
 		        </tr>
-		        
-		        <!-- 
-		        <tr class="stylediff">
-					<th class="success jg">우선순위</th>
-			         <td style="padding-left: 20px;"><div class="jg" id="importance"></div></td>
-			    </tr>
-		         -->
 		         
 		        <tr>
 		            <th class="success jg" style="height: 300px;">내용</th>

@@ -333,7 +333,7 @@
 		<select id="projectList" parameterType="ants.com.member.model.ProjectVo"
 		resultType="ants.com.member.model.ProjectVo">
 		
-			SELECT
+			SELECT DISTINCT
 				project.req_id,
 	            project.pro_name,
 	            project.mem_id
@@ -342,6 +342,7 @@
 			WHERE
 				projectmember.req_id = project.req_id
 			AND projectmember.mem_id = #{memId}
+			AND projectmember.promem_status = 'IN'
 	        AND project.req_id = #{reqId}
 		</select>
 		
