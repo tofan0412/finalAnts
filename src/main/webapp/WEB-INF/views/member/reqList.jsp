@@ -396,7 +396,7 @@ li strong{
 						//서버에서 json 데이터 response 후 목록에 추가
 						response($.map(data, function(item) {
 							return {
-								label : item.memId, //UI에서 표시되는 값
+								label : item.memName+"["+item.memId+"]", //UI에서 표시되는 값
 								value : item.memId, //선택시 input태그에 표시되는 값
 								memName : item.memName
 							//사용자 설정값으로 담을 수 도 있다. 
