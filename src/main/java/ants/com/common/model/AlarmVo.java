@@ -24,7 +24,16 @@ public class AlarmVo extends BaseVo{
 	private String id;
 	private String reqId;
 	private String regDt;
+	private String regTime;
 	
+	
+	
+	public String getRegTime() {
+		return regTime;
+	}
+	public void setRegTime(String regTime) {
+		this.regTime = regTime;
+	}
 	public String getAlarmId() {
 		return alarmId;
 	}
@@ -129,13 +138,14 @@ public class AlarmVo extends BaseVo{
 		this.regDt = regDt;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "AlarmVo [alarmId=" + alarmId + ", alarmCont=" + alarmCont + ", alarmStatus=" + alarmStatus + ", memId="
 				+ memId + ", alarmType=" + alarmType + ", reqPl=" + reqPl + ", resPl=" + resPl + ", reply=" + reply
 				+ ", posts=" + posts + ", totalCnt=" + totalCnt + ", reqStatus=" + reqStatus + ", memIds="
 				+ Arrays.toString(memIds) + ", del=" + del + ", url=" + url + ", id=" + id + ", reqId=" + reqId
-				+ ", regDt=" + regDt + "]";
+				+ ", regDt=" + regDt + ", regTime=" + regTime + "]";
 	}
 	public AlarmVo() {
 		

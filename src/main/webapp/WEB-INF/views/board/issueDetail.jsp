@@ -437,7 +437,7 @@ function resize(obj) {
 							<div id="replydiv" style="padding-left: 50px;">			
 							<c:if test= "${replylist.del == 'N'}">
 								
-								<c:if test="${fn:substring(replylist.memFilepath,0 ,4) eq 'http' }">									
+								<c:if test="${fn:substring(replylist.memFilepath,0 ,1) eq '/' }">									
 									<img id="imge" style="width: 30px; height: 30px;  border-radius: 70%;" src="${replylist.memFilepath}" /><br>
 								</c:if>
 								<c:if test="${fn:substring(replylist.memFilepath,0 ,2) eq 'D:' }">		

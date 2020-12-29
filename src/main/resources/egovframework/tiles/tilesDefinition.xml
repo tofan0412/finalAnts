@@ -69,6 +69,8 @@
 		<put-attribute name="adheader" value="/WEB-INF/views/admin/adheader.jsp" />
 		
 		<put-attribute name="adleft" value="/WEB-INF/views/admin/adleft.jsp" />
+		
+		<put-attribute name="adright" value="/WEB-INF/views/admin/adright.jsp" />
 
 		<put-attribute name="adcontent" value="" />
 

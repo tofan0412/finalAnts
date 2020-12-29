@@ -485,7 +485,8 @@ SELECT *
 		    alarm_status,
 		    mem_id,
 		    alarm_type,
-		    to_char(reg_dt, 'yyyy-MM-dd') as regDt
+		    to_char(reg_dt, 'yyyy-MM-dd') as regDt,
+		    to_char(reg_dt, 'hh24:mi') as regTime
 		FROM
 		    alarm
 		WHERE mem_id = #{memId}
