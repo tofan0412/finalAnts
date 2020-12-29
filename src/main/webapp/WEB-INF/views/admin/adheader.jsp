@@ -1,7 +1,12 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<style>
+	.toast{
+		width:500px;
+		font-family: Jeju Gothic;
+	}
+</style>
    <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -21,15 +26,10 @@
       	<c:if test="${SADMIN.adminId ne null }">
     	  환영합니다, 관리자님!
    		</c:if>
-<%--    		<c:if test="${projectId ne null }"> --%>
-<%--     	  현재 프로젝트 번호 : ${projectId} --%>
-<%--    		</c:if> --%>
-   		
       </li>
       
       
 		<!-- 관리자 메뉴바 -->
-      
        <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-user-circle"></i>
@@ -55,7 +55,7 @@
       <!-- right side bar -->
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
+          <i class="fas fa-comments"></i>
         </a>
       </li>
       
