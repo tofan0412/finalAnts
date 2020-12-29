@@ -15,7 +15,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="${pageContext.request.contextPath}/member/mainView" class="nav-link">Home</a>
+        <a href="${pageContext.request.contextPath}/admin/adMainView" class="nav-link">Home</a>
       </li>
     </ul>
 
@@ -35,16 +35,6 @@
           <i class="far fa-user-circle"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-<!--           <div class="dropdown-divider"></div> -->
-<!--           <a href="/member/profile" class="dropdown-item"> -->
-<!--             <i class="fas fa-user-edit mr-2"></i>프로필 -->
-<!--           </a> -->
-          
-<!--           <div class="dropdown-divider"></div> -->
-<!--           <a href="#" class="dropdown-item"> -->
-<!--             <i class="fas fa-bell mr-2"></i>알림설정 -->
-<!--           </a> -->
-          
           <div class="dropdown-divider"></div>
           <a href="${pageContext.request.contextPath}/admin/adlogout" class="dropdown-item">
             <i class="fas fa-toggle-off mr-2"></i>로그아웃

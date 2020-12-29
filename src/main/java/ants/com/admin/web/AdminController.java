@@ -314,15 +314,16 @@ public class AdminController {
 		} else {
 
 			// 기본 이미지 중에 선택했을때
-			if (!imgname.equals("") && !imgname.equals(null)) {
-				Filepath = imgname;
+//			if (!imgname.equals("") && !imgname.equals(null)) {
+//				Filepath = imgname;
+//				Filename = imgname.split("/")[4];
+//
+//				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+//			} else {
+//				Filepath = "http://localhost/profile/user-0.png";
+				Filepath = "/profile/"+ imgname.split("/")[4];
 				Filename = imgname.split("/")[4];
-
-				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
-			} else {
-				Filepath = "http://localhost/profile/user-0.png";
-				Filename = "user-0.png";
-			}
+//			}
 		}
 		memberVo.setMemFilepath(Filepath);
 		memberVo.setMemFilename(Filename);
