@@ -284,7 +284,11 @@
 <div class="pop" style="display: none; z-index: 1; overflow-y: auto;">
 	<label class="jg" style="padding-top: 10px;"><h4>참여중인 멤버</h4></label>
 	<hr>
-	<c:forEach var="i" begin="0" end="${chatMemList.size() }">
+	<c:forEach var="i" begin="0" end="${chatMemList.size()-1 }">
+		<div style="float : left; margin-right : 10px;">
+			<img class="img-circle" alt="이미지" style="width: 25px; height:  25px; "  src="${memInfoList[i].memFilepath}" />
+		</div>
+		
 		<div style="height: 10%; folat: left;">${chatMemList[i].memId }
 			<br>
 			<span style="color: blue;">${memInfoList[i].memName }</span>
