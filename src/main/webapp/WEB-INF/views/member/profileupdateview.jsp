@@ -3,59 +3,56 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
 <style>
-	body{
-	    min-width: 1000px;
-	}
-	#butt{
-	}
-	.ghgh{
-		width:100%;
-	}
-	.card{
-		padding-top: 8%;
-		padding-bottom: 6%;
-	}
-	.content{
-		margin-left:42.1%;	
-	}
-	.input{ 		
-		padding : 10px;
-		padding-left : 20px;
-		width: 330px;
-		height : 50px;
-		border-radius: 80px;
-		outline: none;
-	}
-	#basicimg{
-		height : 30px;
-		width : 150px;	
-		background-color: #00a495;
-		color:white;
-	}	
-	.imgc{
-		width: 100px; 
-		height: 100px; 
-		cursor: pointer;
-	}	
-	#checkbtn{
-		height : 42px;
-	}
-	.indiv{
-		margin-left: 20px;
-	}	
-	.phoneNumber{
-		padding : 10px;
-		padding-left : 20px;
-		width: 330px;
-		height : 50px;
-		border-radius: 80px;	
-		outline: none;
-	} 	
+body{
+	min-width:1000px;
+}
+.ghgh{
+	width:100%;
+}
+.card{
+	padding-top:8%;
+	padding-bottom:6%;
+}
+.content{
+	margin-left:42.1%;	
+}
+.input{ 		
+	padding:10px;
+	padding-left:20px;
+	width:330px;
+	height:50px;
+	border-radius:80px;
+	outline:none;
+}
+#basicimg{
+	height:30px;
+	width:150px;	
+	background-color:#00a495;
+	color:white;
+}	
+.imgc{
+	width:100px; 
+	height:100px; 
+	cursor:pointer;
+}	
+#checkbtn{
+	height:42px;
+}
+.indiv{
+	margin-left:20px;
+}	
+.phoneNumber{
+	padding:10px;
+	padding-left:20px;
+	width:330px;
+	height:50px;
+	border-radius:80px;	
+	outline:none;
+}
 </style>	
 		
 <body>
@@ -157,7 +154,6 @@
 	
 	
 <div class="container">
-	
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg" style="width:450px;">
@@ -380,7 +376,7 @@ function unityPW(){
 			$('#img7').click(function(){
 				var picture = document.getElementById('picture');// 파일 value값 지우기
 				picture.value = null;
-				
+					
 				imgsrc = document.getElementById('img7').src	// 경로 가져오기
 				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
 				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가

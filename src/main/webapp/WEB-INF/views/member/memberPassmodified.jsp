@@ -120,9 +120,6 @@ function unityPW(){
 	}	
 }
 
-	
-
-
 $(document).ready(function(){
 	$("#sub").on('click', function(){
 		

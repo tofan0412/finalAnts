@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
-
 <style>
 body{
 	min-width: 1100px;
@@ -14,70 +13,61 @@ body{
 
 								/* 알람 토글(on/off) 스타일 */
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  vertical-align:middle;
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+	vertical-align:middle;
 }
 
 /* Hide default HTML checkbox */
-.switch input {display:none;}
-
+.switch input {
+	display:none;
+}
 /* The slider */
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-	
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}	
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
-
 input:checked + .slider {
-  background-color: #2196F3;
+	background-color: #2196F3;
 }
-
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+	box-shadow: 0 0 1px #2196F3;
 }
-
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
 }
-
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px;
+	border-radius: 34px;
 }
-
 .slider.round:before {
-  border-radius: 50%;
-}
-							/* 알람 토글(on/off) 스타일 */
-
+	border-radius: 50%;
+}							/* 알람 토글(on/off) 스타일 */
 </style>
 
-<script>		
-
-							/*  알람 토글(on/off) 기능     */
+<script>					/*  알람 토글(on/off) 기능     */
 function toggle(element){
 	
 	// 알람 on
@@ -103,9 +93,8 @@ function toggle(element){
         }
 	}) 
 } 	
-
 </script>
-</head>	
+
 <body class="hold-transition sidebar-mini">	
 	<div class="wrapperdd" style="margin-left:25%; margin-right:25%;">
 		<div class="register-card-body">
@@ -193,4 +182,3 @@ function toggle(element){
 		</div>
 	</div>
 </body>
-</html>
