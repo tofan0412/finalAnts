@@ -57,6 +57,8 @@ th, td {
 			alert("요구사항 정의서 번호 - "+ reqId + " : 승인 처리되었습니다.");
 			var reqTitle = $(this).attr("reqTitle");
 			var memId = $(this).attr("memId");
+			var memName = '${SMEMBER.memName}';
+			
 			
 			var alarmData = {
 					"alarmCont" : reqId + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId=" + reqId + "&&" + reqTitle + "&&ACCEPT&& ",
@@ -64,8 +66,22 @@ th, td {
 					"alarmType" : "res-pl"
 			}
 			// 알림db등록
+			
+			// PL 먼저 프로젝트 멤버에 등록한다. reqid, memId, String[]
+			$.ajax({
+				url : "/project/insertPjtMember",
+				data : {memId : '${SMEMBER.memId}', reqId : reqId, inviteMemList : [memName+":"+'${SMEMBER.memId}']},
+				method : "POST",
+				success : function(res){
+					if (res == "success"){
+						alert("승인하였습니다.");
+					}else{
+						alert("프로젝트 생성을 실패하였습니다.");
+						$(location).attr("href", "/project/readReqList");
+					}
+				}
+			})
 			saveResMsg(alarmData);
-			                
 			$(location).attr("href", "/project/acceptOrReject?reqId="+reqId+"&status=ACCEPT");
 		})
 		
@@ -110,7 +126,7 @@ th, td {
 			}
 			
 			//생성 직전, 자기 자신 아이디를 추가한다. 
-			mkPjtInviteMemList.push(myName+":"+myId);
+// 			mkPjtInviteMemList.push(myName+":"+myId);
 			
 			// 현재 초대 리스트는 회원이름과 결합되어 있으므로, 가공해줘야 한다.
 			setInviteMemList = [];
@@ -438,9 +454,8 @@ th, td {
 			</c:if>
 		</tbody>
 	</table>
-	<span class="jg" style="float: right; padding-right : 60px;">'승인'을 누르는 경우, 프로젝트 생성창으로
-		이동합니다.</span>
-
+	<span class="jg" style="float: right; padding-right : 60px;">'승인'을 누르는 경우, 프로젝트를 생성할 수 있습니다.</span><br>
+	<span class="jg" style="float: right; padding-right : 60px;">'프로젝트 생성'을 누르는 경우, 프로젝트 생성 상세 페이지로 이동합니다.</span>
 
 	<!-- 프로젝트 생성 modal 창 -->
 	<div class="modal fade jg" id="mkProject" tabindex="-1" role="dialog"

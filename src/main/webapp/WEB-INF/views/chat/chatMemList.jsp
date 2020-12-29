@@ -116,7 +116,7 @@ function listMember(MemListArr){
 		$('.selectedMemList')
 			.append("<div class=\'selectedMem jg\' memId="+MemListArr[i]+">"
 						+"&nbsp;"+MemListArr[i]+"&nbsp;"
-					+"</div>");	
+					+"<span>x</span></div>");	
 	}	
 }
 
