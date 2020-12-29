@@ -175,7 +175,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right jg">
           <div class="dropdown-divider"></div>
-          <a href="${pageContext.request.contextPath}/member/profile" class="dropdown-item toProfile">
+          <a href="${pageContext.request.contextPath}/member/profile?memId=${SMEMBER.memId}" class="dropdown-item toProfile">
             <i class="fas fa-user-edit mr-2"></i>프로필
           </a>
           

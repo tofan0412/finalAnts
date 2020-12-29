@@ -145,23 +145,26 @@ function toggle(element){
 						<li class="list-group-item"><b>알람</b> 
 							<a class="float-right">
 								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none; width:40px;" readonly>
-								<!-- 알람 토글 버튼 -->	
-								<label class="switch">											<!-- 알람 토글 기본 y : y아닐땐 off -->
-									<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>	
-									<span class="slider round"></span>	
-								</label>
+								<c:if test="${memberVo.memId == SMEMBER.memId }">
+									<!-- 알람 토글 버튼 -->	
+									<label class="switch">											<!-- 알람 토글 기본 y : y아닐땐 off -->
+										<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>	
+										<span class="slider round"></span>	
+									</label>
+								</c:if>
 							</a>
 						</li>			
 						<li class="list-group-item"><b>타입</b>
 							<a class="float-right">
-								<input name="memType" type="text" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="border:none; width:105px;" readonly>
+								<input name="memType" type="text" id="addr1" placeholder="(타입)" value="${memberVo.memType}" style="text-align:right; padding-right:20px; border:none; width:105px;" readonly>
 							</a>
 						</li>
 					</ul>
 					
 				</div>
 			</div>
-				
+			
+		<c:if test="${memberVo.memId == SMEMBER.memId }">
 			<div class="card-footer">
 				<div class="row">
 					<div class="col-sm-6">
@@ -171,6 +174,7 @@ function toggle(element){
 					</div>
 				</div>
 			</div>
+		</c:if>
 				
 			<!-- style="display: none" -->
 			<div class="content" style="display: none">

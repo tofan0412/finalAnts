@@ -11,6 +11,16 @@ public class ProjectMemberVo {
 	private String title;
 	private String plName;
 	private String plId;
+	private String memFilepath;
+	
+	
+	
+	public String getMemFilepath() {
+		return memFilepath;
+	}
+	public void setMemFilepath(String memFilepath) {
+		this.memFilepath = memFilepath;
+	}
 	public String getReqId() {
 		return reqId;
 	}

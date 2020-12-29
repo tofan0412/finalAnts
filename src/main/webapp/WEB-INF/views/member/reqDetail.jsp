@@ -204,15 +204,14 @@
 				                    <div class="post" style="border: none;">
 				                      <div class="user-block">
 				                      	<c:if test="${fn:substring(pmem.memFilepath,0 ,1) eq '/' }">									
-											<img id="imge" style="width: 40px; height:  40px; border-radius: 50%; border: 1.5px solid #adb5bd;"  src="${pmem.memFilepath}" />
+											<img id="imge" style="width: 40px; height:  40px; border-radius: 50%; border: 2px solid #adb5bd;"  src="${pmem.memFilepath}" />
 										</c:if>
 										<c:if test="${fn:substring(pmem.memFilepath,0 ,2) eq 'D:' }">		
-											<img id="pict" style="width:  40px; height:  40px;  border-radius: 50%; border: 1px solid #adb5bd;" src="/profileImgView?memId=${pmem.memId}" />
+											<img id="pict" style="width:  40px; height:  40px;  border-radius: 50%; border: 2px solid #adb5bd;" src="/profileImgView?memId=${pmem.memId}" />
 										</c:if>
-										
 <%-- 					                  	<img class="img-circle img-bordered-sm pictureViewImg" src="/profileImgView?memId=${pmem.memId }" alt="user image"> --%>
 				                        <span class="username">
-				                          <a href="#">${pmem.memName }</a>
+				                          <a href="/member/profile?memId=${pmem.memId }">${pmem.memName }</a>
 				                        </span>
 				                        <span class="description">${pmem.memId }</span>
 				                      </div>
@@ -353,10 +352,10 @@
 					            <div class="post" style="border: none;">
 					              <div class="user-block">
 					              	<c:if test="${fn:substring(pmem.memFilepath,0 ,1) eq '/' }">									
-										<img id="imge" style="width: 40px; height:  40px; border-radius: 50%; border: 1.5px solid #adb5bd;"  src="${pmem.memFilepath}" />
+										<img id="imge" style="width: 40px; height:  40px; border-radius: 50%; border: 2px solid #adb5bd;"  src="${pmem.memFilepath}" />
 									</c:if>
 									<c:if test="${fn:substring(pmem.memFilepath,0 ,2) eq 'D:' }">		
-										<img id="pict" style="width:  40px; height:  40px;  border-radius: 50%; border: 1px solid #adb5bd;" src="/profileImgView?memId=${pmem.memId}" />
+										<img id="pict" style="width:  40px; height:  40px;  border-radius: 50%; border: 2px solid #adb5bd;" src="/profileImgView?memId=${pmem.memId}" />
 									</c:if>
 <%-- 						          	<img class="img-circle img-bordered-sm pictureViewImg" src="/profileImgView?memId=${pmem.memId }" alt="user image"> --%>
 					                <span class="username">

@@ -564,9 +564,14 @@ public class MemberController {
 	// 프로필 보기
 	@RequestMapping("/profile")
 	public String profile(HttpSession session, MemberVo memberVo, Model model) {
-
-		memberVo = (MemberVo) session.getAttribute("SMEMBER");
-		MemberVo dbMember = memberService.getMember(memberVo);
+		
+		MemberVo dbMember = null;
+		if(memberVo.getMemId() != ((MemberVo) session.getAttribute("SMEMBER")).getMemId()) {
+			dbMember = memberService.getMember(memberVo);
+		}else {
+			memberVo = (MemberVo) session.getAttribute("SMEMBER");
+			dbMember = memberService.getMember(memberVo);
+		}
 
 		model.addAttribute("memberVo", dbMember);
 		return "tiles/member/memberProfile";
