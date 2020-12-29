@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -72,7 +74,13 @@
 					
 				<div class="text-center" title="이미지를 클릭하면 변경할 수 있어요!">
 					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border: 1px solid white; height: 200px; width:140px; margin: 0 auto;">
-						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;"/>
+					<c:if test="${fn:substring(memberVo.memFilepath,0 ,1) eq '/' }">									
+						<img id="pictureViewImg"  style="width: 100%; height: 100%;" class="profile-user-img img-fluid img-circle" src="${memberVo.memFilepath}" /><br>
+					</c:if>
+					<c:if test="${fn:substring(memberVo.memFilepath,0 ,2) eq 'D:' }">		
+						<img id="pictureViewImg" style="width: 100%; height: 100%;" class="profile-user-img img-fluid img-circle" src="/profileImgView?memId=${memberVo.memId}" />
+					</c:if>
+<!-- 						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;"/> -->
 					</div><br>		 
 					<div class="content">
 						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left;" />	
@@ -247,31 +255,31 @@ function unityPW(){
 							/* 기본이미지/사진 선택 해서 보여주기 */
 			
 							
-			pict = document.getElementById('pict').src	// display none 에 숨어있는 사진의 src속성값 가져옴
-														// src="/profileImgView?memId=${memberVo.memId}" 
-			imge = document.getElementById('imge').src	// display none 에 숨어있는 기본이미지의 src속성값 가져옴
-														// src="${memberVo.memFilepath}"
+// 			pict = document.getElementById('pict').src	// display none 에 숨어있는 사진의 src속성값 가져옴
+// 														// src="/profileImgView?memId=${memberVo.memId}" 
+// 			imge = document.getElementById('imge').src	// display none 에 숨어있는 기본이미지의 src속성값 가져옴
+// 														// src="${memberVo.memFilepath}"
 			
 														
-			picval = pict.split('/')[0].indexOf('profileImgView') // 아이디 값으로 memFilepath의 속성을 가져오기 때문에 항상
-										// 값이 동일하다 -> http://localhost/profileImgView?memId=noylit@naver.com
-			imgval= imge.split('/')[0].indexOf('http')	
-			// 파일가져올때 -> file:///D:/upload/james.png	// 기본이미지    -> https://localhost/profile/user-16.png
-			// memFilepath 의 속성값을 바로 가져오기 때문에 웹에 저장된 기본이미지를 불러오는지
-			//								     로컬에 저장된 파일을 가져오는지 경로로 확인이 가능하다. 
+// 			picval = pict.split('/')[0].indexOf('profileImgView') // 아이디 값으로 memFilepath의 속성을 가져오기 때문에 항상
+// 										// 값이 동일하다 -> http://localhost/profileImgView?memId=noylit@naver.com
+// 			imgval= imge.split('/')[0].indexOf('http')	
+// 			// 파일가져올때 -> file:///D:/upload/james.png	// 기본이미지    -> https://localhost/profile/user-16.png
+// 			// memFilepath 의 속성값을 바로 가져오기 때문에 웹에 저장된 기본이미지를 불러오는지
+// 			//								     로컬에 저장된 파일을 가져오는지 경로로 확인이 가능하다. 
 			
 			
-			$('#sp').append(' pict : ' + picval + '//' + pict);	// 경로 확인하려고 (숨김항목)
-			$('#sp').append(' imge : ' + imgval + '//' + imge); // 경로 확인하려고 (숨김항목)
+// 			$('#sp').append(' pict : ' + picval + '//' + pict);	// 경로 확인하려고 (숨김항목)
+// 			$('#sp').append(' imge : ' + imgval + '//' + imge); // 경로 확인하려고 (숨김항목)
 			
 			
-			if(imgval == -1){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온것이 아니면(file) -1
-				$('#pictureViewImg').attr('src', pict);
-			}else if(imgval == 0){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온 거면 0 -> 웹사이트는 기본이미지
-				$('#pictureViewImg').attr('src', imge);
-			}
+// 			if(imgval == -1){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온것이 아니면(file) -1
+// 				$('#pictureViewImg').attr('src', pict);
+// 			}else if(imgval == 0){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온 거면 0 -> 웹사이트는 기본이미지
+// 				$('#pictureViewImg').attr('src', imge);
+// 			}
 			
-		
+			
 			
 			// 기본이미지 선택하면 파일 값 초기화
 			var picture = document.getElementById('picture');
@@ -282,6 +290,7 @@ function unityPW(){
 			$("#picture").change(function(){ 
 				readURL(this);
 			});
+			
 		});
 	
 		// 이미지 뷰어 src속성에 등록

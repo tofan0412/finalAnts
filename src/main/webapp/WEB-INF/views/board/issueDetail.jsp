@@ -436,13 +436,14 @@ function resize(obj) {
 						<c:forEach items="${replylist }" var="replylist">
 							<div id="replydiv" style="padding-left: 50px;">			
 							<c:if test= "${replylist.del == 'N'}">
-								
+<!-- 								<div class="mailbox-attachment-icon has-img" id="pictureView" style="border: 1px solid white; height: 50px; width:50px; margin: 0 auto; display: inline-block;"> -->
 								<c:if test="${fn:substring(replylist.memFilepath,0 ,1) eq '/' }">									
-									<img id="imge" style="width: 30px; height: 30px;  border-radius: 70%;" src="${replylist.memFilepath}" /><br>
+									<img id="imge" style="width: 40px; height:  40px; border-radius: 50%; border: 1.5px solid #adb5bd;"  src="${replylist.memFilepath}" />
 								</c:if>
 								<c:if test="${fn:substring(replylist.memFilepath,0 ,2) eq 'D:' }">		
-									<img id="pict" style="width: 30px; height: 30px;  border-radius: 70%;" src="/profileImgView?memId=${replylist.memId}" />
+									<img id="pict" style="width:  40px; height:  40px;  border-radius: 50%; border: 1px solid #adb5bd;" src="/profileImgView?memId=${replylist.memId}" />
 								</c:if>
+<!-- 								</div> -->
 								<label style="display: inline-block;" class="jg">${replylist.memName }</label>
 								<label >( ${replylist.memId } )</label>
 									
