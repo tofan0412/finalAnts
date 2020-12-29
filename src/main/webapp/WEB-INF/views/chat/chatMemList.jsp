@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
 
 <style>
 .warning{
@@ -169,7 +170,12 @@ function listMember(MemListArr){
 							<div class="singleMem jg" memId="${chatMemList[i].memId }" memName="${memInfoList[i].memName }" style="height : 70px; font-size : 1.0em;">
 								
 								<!-- 사용자 프로필 이미지를 출력한다. -->
-								<img class="img-circle" alt="이미지" src="http://localhost/profile/user-0.png" width="25px;" height="25px;" >
+								<c:if test="${fn:substring(memInfoList[i].memFilepath,0 ,1) eq '/' }">									
+									<img class="img-circle" alt="이미지" style="width: 25px; height:  25px; "  src="${memInfoList[i].memFilepath}" />
+								</c:if>
+								<c:if test="${fn:substring(memInfoList[i].memFilepath,0 ,2) eq 'D:' }">		
+									<img class="img-circle" alt="이미지" style="width:  25px; height:  25px; " src="/profileImgView?memId=${memInfoList[i].memId}" />
+								</c:if>
 								&nbsp;
 								${chatMemList[i].memId }
 								<br>
