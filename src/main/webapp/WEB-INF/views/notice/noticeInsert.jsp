@@ -81,26 +81,6 @@
 	        			</select>
 	                </div>
 	                
-	                <!-- 				
-	                <div class="form-group">
-						<label for=importance class="col-sm-2 control-label jg">종류</label> 
-						<select name="importance" id="kindselect" class ="col-sm-3" required>
-						    <option value="">선택</option>
-						    <option  value="slow">일반</option>
-						    <option  value="fast">긴급</option>
-						</select>
-					</div>
-					
-					<div class="form-group">
-						<label for="noticeTitle" class="col-sm-2 control-label jg">제목 </label>
-						<input type="text" name="noticeTitle" style="width: 580px;" id="noticeTitle"><br><br>
-					</div>
-					
-					<div class="form-group" style="width: 80%;">
-						<label for="noticeCont" class="col-sm-2 control-label jg">내용</label>
-						<textarea id="summernote" name="noticeCont" id="noticeCont"></textarea>
-					</div>
-					 -->
 					<div class="float-right">
 						<input type="submit" class="btn btn-default" id="insertbtn" value="작성">
 						<button type="button" class="btn btn-default jg" id="back">취소</button>
