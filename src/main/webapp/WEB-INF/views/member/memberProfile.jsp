@@ -106,7 +106,7 @@ function toggle(element){
 } 	
 							/*  알람 토글(on/off) 기능     */
 
-$(document).ready(function(){
+//$(document).ready(function(){
 		 
 								/* 기본이미지/사진 선택 해서 보여주기 */
 	
@@ -133,9 +133,9 @@ $(document).ready(function(){
 // 		$('#pictureViewImg').attr('src', pict);
 // 	}else if(imgval == 0){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온 거면(img) 0 -> 웹사이트는 기본이미지
 // 		$('#pictureViewImg').attr('src', imge);
-	}
+//	}
 	
-})
+//})
 </script>
 </head>	
 <body class="hold-transition sidebar-mini">	
