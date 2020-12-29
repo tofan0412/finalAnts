@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <style type="text/css">
 
@@ -133,6 +134,16 @@ $(function(){
 			insertvote($('#voteitems').val());	
 		}
 	})
+	
+	
+	 // 제목 글자수 계산
+   	$('#voteTitle').keyup(function (e){
+   	    var content = $(this).val();   		
+   		if (content.length > 66){
+   	        alert("최대 66자까지 입력 가능합니다.");
+   	     	$(this).val(content.substring(0, 65));
+   	    }
+   	});
 	
 	
 	
@@ -300,9 +311,9 @@ function itemdetail(voteid){
 	                <table class="table">
 	                  <thead>
 	                    <tr>
-	                        <th class="jg" style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-	                     	<th class="jg" style="padding-left: 30px; text-align: center;"> 투표제목</th> 
-							<th class="jg" style="text-align: center;"> 마감일  </th>
+	                        <th class="jg" style="width: 150px;  text-align: center;">No.</th>
+	                     	<th class="jg" style="padding-left: 30px; width:  38%;"> 투표제목</th> 
+							<th class="jg" style="text-align: center; width:  15%;"> 마감일  </th>
 							<th class="jg" style="text-align: center;"> 투표율  </th>
 							<th class="jg" style="text-align: center;">  상태   </th>
 							<th class="jg" style="text-align: center;"> 작성자 </th>
@@ -314,10 +325,20 @@ function itemdetail(voteid){
 	                      
                        <c:forEach items = "${votelist }" var ="vote" varStatus="status">
                       	   <tr>
-			                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((voteVo.pageIndex-1) * voteVo.pageUnit + (status.index+1))}"/>.</td>
+			                    <td class="jg" style="width: 150px; text-align: center;"><c:out value="${  ((voteVo.pageIndex-1) * voteVo.pageUnit + (status.index+1))}"/>.</td>
 							
-								<td class="jg" style="padding-left: 30px; text-align: center;"><a href="${pageContext.request.contextPath}/vote/voteDetail?voteId=${vote.voteId }">${vote.voteTitle}</a></td>
-								<td class="jg" style="text-align: center;"> ${vote.voteDeadline }</td>
+								<td class="jg" style="padding-left: 30px; width:  38%;">
+									<a href="${pageContext.request.contextPath}/vote/voteDetail?voteId=${vote.voteId }">
+									
+									<c:if test="${fn:length(vote.voteTitle) > 30}">									
+										${fn:substring(vote.voteTitle,0 ,30) }...
+									</c:if>
+									<c:if test="${fn:length(vote.voteTitle) <= 30}">									
+										${vote.voteTitle}
+									</c:if>
+									</a>
+								</td>
+								<td class="jg" style="text-align: center; width:  15%;"> ${vote.voteDeadline }</td>
 								<td class="jg" style="text-align: center;"> <fmt:formatNumber value="${vote.votedNo/vote.voteTotalno }" type="percent"></fmt:formatNumber></td>
 							
 								<c:if test="${vote.remain > 1000 and vote.voteStatus=='ing'}">

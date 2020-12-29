@@ -17,7 +17,16 @@ public class IssueVo extends BaseVo{
 	private String memName;
 	private String bookmark;
 	private String proName;
+	private String sort;
 	
+	
+	
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
 	public String getIssueId() {
 		return issueId;
 	}

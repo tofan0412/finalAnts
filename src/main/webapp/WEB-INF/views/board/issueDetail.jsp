@@ -405,7 +405,7 @@ function resize(obj) {
 								<a href="${cp }/file/publicfileDown?pubId=${files.pubId}">
 									<button id ="files${vs.index}" class="btn btn-default jg" name="${files.pubId}">
 										<img name="link" src="/fileFormat/${fn:toLowerCase(files.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
-										 ${files.pubFilename} 다운로드
+										 ${files.pubFilename}.${files.pubExtension} 다운로드
 									</button>
 								
 								</a>

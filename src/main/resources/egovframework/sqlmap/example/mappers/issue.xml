@@ -42,7 +42,15 @@
 							AND c.issue_kind = #{issueKind}
 					</if>
 					
-					ORDER BY c.reg_dt desc
+					<if test = "sort == 2 ">
+							ORDER BY c.reg_dt 
+					</if>
+					<if test = "sort != 2 ">
+							ORDER BY c.reg_dt desc
+					</if>
+			        
+					
+					
 			  ) S
 		
 				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 

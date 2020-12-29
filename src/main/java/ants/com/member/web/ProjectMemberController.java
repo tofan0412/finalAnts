@@ -132,7 +132,12 @@ public class ProjectMemberController {
 		int totCnt = promemService.issuePagingListCnt(issueVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-		System.out.println("totCnt:" + totCnt);
+		
+		if(issueVo.getSort() == null || issueVo.getSort().equals("1")) {
+			model.addAttribute("sort", "1");
+		}else {
+			model.addAttribute("sort", "2");
+		}
 		
 		if(issueVo.getSearchKeyword() != null) {			
 			session.setAttribute("searchKeyword", issueVo.getSearchKeyword());

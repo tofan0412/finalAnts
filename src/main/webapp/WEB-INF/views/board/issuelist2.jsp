@@ -47,6 +47,12 @@
 		padding: 5px;
 	}
 	
+	#recent, #old{
+		background-color:transparent;  
+	 	border:0px transparent solid;
+	 	outline: none;
+	}
+	
 </style>
 
 <script type="text/javascript">
@@ -58,8 +64,13 @@ $(function(){
 	})
 	
 // 	$("#pagenum a").addClass("page-link");  
+	if(${sort} == 2){
+		$('#old').css("color","#00a2e4");
+	}else if(${sort} == 1 || ${sort} == null){
+		$('#recent').css("color","#00a2e4");
+	}
 	
-
+	
 	// 북마크 클릭시
 	$(".area-desc").click(function() { 
 		var arrowImage = $(this).children("span").children("img"); 
@@ -115,6 +126,20 @@ $(function(){
 	    document.listForm.submit();
 }
  
+ function oldsort(){
+	 	document.listForm.pageIndex.value = 1;
+	 	document.listForm.sort.value = 2;
+	 	document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
+	    document.listForm.submit();
+}
+ 
+ function recentsort(){
+	 	document.listForm.pageIndex.value = 1;
+	 	document.listForm.sort.value = 1;
+	 	document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
+	    document.listForm.submit();
+}
+ 
  
  
 	 
@@ -134,9 +159,16 @@ $(function(){
 		        
 		        <br>
 		        <div class="card-header  ">
-		        <div id="keyword" class="card-tools float-left"
-						style="width: 450px;">
-						<h3 class="jg" style="padding-left: 10px;">현업이슈 리스트</h3>
+		        <div id="keyword" class="card-tools float-left" style="width: 450px;">
+						<h3 class="jg" style="padding-left: 10px; display: inline-block;">현업이슈 리스트</h3>
+						&nbsp;
+						<form:hidden path="sort" />
+						<form:button id="recent" onclick="javascript:recentsort();" >최신순</form:button> &nbsp;
+						<form:button id="old" onclick="javascript:oldsort();" >오래된순</form:button> &nbsp;
+<%-- 						<form:select path="RegDt" id="regdtsort" class="form-control col-md-3 jg" style="display: inline-block;" > --%>
+<%-- 							<form:option value="recent" class="jg option"  label="최신순"/> --%>
+<%-- 							<form:option value="old" class="jg option" label="오래된순"/> --%>
+<%-- 						</form:select> --%>
 				</div>
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">
@@ -192,7 +224,15 @@ $(function(){
                        <c:forEach items = "${issuelist }" var ="issue" varStatus="status">
 							<tr>
 			                 
-			                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
+			                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
+			                    	<c:if test="${sort == 1}">
+				                    	<c:out value="${paginationInfo.totalRecordCount - ((issueVo.pageIndex-1) * issueVo.pageUnit + status.index)}"/>.
+			                    	</c:if>
+			                    	<c:if test="${sort == 2}">
+				                    	<c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.
+			                    	</c:if>
+			                    	
+			                    </td>
 							
 								<td class="jg"  style="padding-left: 50px; width: 38%;">
 									<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}"> 
