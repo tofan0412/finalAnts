@@ -11,7 +11,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-// 		hotDetail("${param.hissueId}");
 		
  		// 답글 작성
 		$(document).on('click','#creatChildBtn', function(){
