@@ -28,6 +28,9 @@
 	margin : 5px 5px 5px 5px;
 	color : white;
 }
+.selectedMemExceptBtn{
+	cursor: pointer;
+}
 </style>
 <script>
 $(function(){
@@ -53,7 +56,7 @@ $(function(){
 	})
 	
 	// 초대리스트에 추가된 회원 아이디를 누르면, 초대 리스트에서 제거된다.
-	$('.selectedMemList').on("click",".selectedMem", function(){
+	$('.selectedMemList').on("click",".selectedMemExceptBtn", function(){
 		var memId = $(this).attr('memId');
 		delMember(memId);
 		listMember(MemListArr);
@@ -115,9 +118,11 @@ function listMember(MemListArr){
 	$('.selectedMemList').empty();
 	for (i = 0 ; i < MemListArr.length ; i++){
 		$('.selectedMemList')
-			.append("<div class=\'selectedMem jg\' memId="+MemListArr[i]+">"
+			.append("<div class=\'selectedMem jg\'>"
 						+"&nbsp;"+MemListArr[i]+"&nbsp;"
-					+"<span>x</span></div>");	
+					+"<span class=\'selectedMemExceptBtn jg\' "
+					+ "memId=\'"+ MemListArr[i] + "\' "  
+					+ "style=\'margin-left : 3px;\'>&nbsp;x&nbsp;</span></div>");	
 	}	
 }
 
@@ -177,7 +182,15 @@ function listMember(MemListArr){
 									<img class="img-circle" alt="이미지" style="width:  25px; height:  25px; " src="/profileImgView?memId=${memInfoList[i].memId}" />
 								</c:if>
 								&nbsp;
-								${chatMemList[i].memId }
+								
+								<c:if test="${fn:length(chatMemList[i].memId) > 12}">
+									${fn:substring(chatMemList[i].memId,0,10)}...
+								</c:if>
+								
+								<c:if test="${fn:length(chatMemList[i].memId) < 12}">
+									${chatMemList[i].memId}
+								</c:if>
+								
 								<br>
 								<span style=" float : left; color : grey; font-size : 0.8em;">
 									${memInfoList[i].memName }
