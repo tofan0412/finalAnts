@@ -89,7 +89,7 @@
 	        <if test="memTel != null">mem_tel=#{memTel},</if>
 	        <if test="memFilepath != null">mem_filepath=#{memFilepath},</if>	 	            
 	        <if test="memFilename != null">mem_filename=#{memFilename},</if>	 	             	                     	            
-<!-- 	        <if test="memType != null">mem_type = #{memType},</if>	 	             	                     	             -->
+	        <if test="memType != null">mem_type = #{memType}</if>	 	             	                     	            
 	    </set>   
 		WHERE MEM_ID = #{memId}
 	</update>
