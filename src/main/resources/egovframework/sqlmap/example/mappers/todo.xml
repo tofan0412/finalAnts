@@ -141,9 +141,11 @@
 			    todo.req_id,
 			    todo.todo_parentid,
 			    todo.del,
-			    todo.mem_id
-			FROM todo todo
-			WHERE todo.del = 'N'
+			    todo.mem_id,
+                b.mem_name
+			FROM todo todo , (select * from member) b
+			WHERE todo.mem_id = b.mem_id
+			AND todo.del = 'N'
 			AND (todo.todo_id = #{todoId}
             OR   todo.todo_parentid = #{todoId}) 
 			]]>
@@ -171,8 +173,7 @@
 				FROM todo todo , member b
 				WHERE todo.todo_id = #{todoId}
 				AND todo.del = 'N'
-	            AND todo.mem_id = b.mem_id
-		
+	            AND todo.mem_id = b.mem_id	
 			]]>
 		</select>
 
@@ -230,9 +231,7 @@
 				#{todoParentid, jdbcType=VARCHAR},
 				'N'
 			)
-		
 		</insert>
-
 
 		<!-- 진행도 작성 -->
 		<update id="progressChange"
@@ -291,9 +290,7 @@
 			)
 		</insert>
 		
-		<insert id="todoHistoryfirst"
-			parameterType="ants.com.board.manageBoard.model.todoHistoryVo">
-						
+		<insert id="todoHistoryfirst" parameterType="ants.com.board.manageBoard.model.todoHistoryVo">		
 			INSERT INTO todohistory (
 			    todo_hid,
 			    todo_id,
@@ -309,7 +306,6 @@
 			    #{memId},
 			    #{reqId}
 			)
-			
 		</insert>
 		<insert id="todoHistoryCnt" parameterType="ants.com.board.manageBoard.model.TodoLogVo">
 			INSERT INTO todohistory (
@@ -378,8 +374,7 @@
 			WHERE todo.mem_id = member.z2
             AND del = 'N'
 	   		AND  req_id = #{reqId}
-		    GROUP BY mem_id, todo.mem_id, member.z
-		    
+		    GROUP BY mem_id, todo.mem_id, member.z 
 		</select>
 		
 		<select id="donutChart" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoVo">
@@ -413,19 +408,22 @@
 		</select>
 		
 		<select id="getTodolog" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoLogVo">
+		
 			SELECT
-			    todo_id,
-			    log_id,
-			    log_comment,
-			    before_id,
-			    after_id,
-			    to_char(reg_dt, 'YYYY-MM-DD hh24:mi') as regDt,
-			    TRUNC(sysdate-to_date(to_char(reg_dt, 'YYYY-MM-DD'),'YYYY-MM-DD')) as elapsedDay,
-			    trunc(mod((to_date(to_char(sysdate, 'yyyymmddhh24miss'),'yyyymmddhh24miss')-to_date(to_char(reg_dt,'yyyymmddhh24miss'),'yyyymmddhh24miss')),1)*24)  as elapsedTime,
-			    trunc(mod((to_date(to_char(sysdate, 'yyyymmddhh24miss'),'yyyymmddhh24miss')-to_date(to_char(reg_dt,'yyyymmddhh24miss'),'yyyymmddhh24miss'))*24,1)*60)  as elapsedMin 
+			    t.todo_id as todoId,
+			    t.log_id as logId,
+			    t.log_comment as logComment,
+			    m.mem_name as beforeId,
+			    b.mem_name as afterId,
+			    to_char(t.reg_dt, 'YYYY-MM-DD hh24:mi') as regDt,
+			    TRUNC(sysdate-to_date(to_char(t.reg_dt, 'YYYY-MM-DD'),'YYYY-MM-DD')) as elapsedDay,
+			    trunc(mod((to_date(to_char(sysdate, 'yyyymmddhh24miss'),'yyyymmddhh24miss')-to_date(to_char(t.reg_dt,'yyyymmddhh24miss'),'yyyymmddhh24miss')),1)*24)  as elapsedTime,
+			    trunc(mod((to_date(to_char(sysdate, 'yyyymmddhh24miss'),'yyyymmddhh24miss')-to_date(to_char(t.reg_dt,'yyyymmddhh24miss'),'yyyymmddhh24miss'))*24,1)*60)  as elapsedMin 
 			FROM
-    			todolog
-			WHERE todo_id= #{todoId}
+    			todolog t,(select * from member) m, (select * from member) b
+			WHERE t.before_id = m.mem_id 
+            and t.after_id = b.mem_id
+            and todo_id= #{todoId}
 			ORDER BY elapsedDay asc
 		</select>
 		

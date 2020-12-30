@@ -131,7 +131,7 @@
 				var res ="";
 				$("#todoTitle").html(data.todoVo.todoTitle);
 				$("#todoCont").html(data.todoVo.todoCont);
-				$("#memId").html(data.todoVo.memId);
+				$("#memId").html(data.todoVo.memName);
 				if(data.todoVo.todoImportance =='emg'){
 					$("#todoImportance").html('긴급');
 				}
