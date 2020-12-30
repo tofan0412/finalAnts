@@ -137,7 +137,6 @@ li strong{
 							<option value="0">제목</option>
 							<option value="1">기간</option>
 							<option value="2">담당자</option>
-							<option value="3">응답상태</option>
 						</select>
 						<!-- /btn-group -->
 						<form:input path="searchKeyword" class="form-control col-md-2" style="font-size: 0.8em;" />
@@ -161,7 +160,7 @@ li strong{
 							<th style="width: 10%; text-align: center;">응답 상태</th>
 							<th style="width: 15%; text-align: center;">진행도</th>
 							<th style="width: 5%;"></th>
-							<th style="width: 15%;"></th>
+							<th style="width: 20%;"></th>
 						</tr>
 					</thead>
 					<tbody>

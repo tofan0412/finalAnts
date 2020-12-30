@@ -136,7 +136,8 @@
 		$("#msgArea").append("서버 연결 끊김..");
 	}
 	$(function() {
-		popInviteMemList = [];
+		popInviteMemListArr = [];
+		popInviteMemNameListArr = [];
 		
 		// 문서 로딩이 끝나면 최 하단으로 내린다...
 		$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);
@@ -153,9 +154,12 @@
 		// 팝업창 관련 스크립트 - 회원 초대 팝업창
 		$('.userInviteBtn').on('click',function(){
 			// 초대할 회원 목록 초기화
-			popInviteMemList = [];
+			popInviteMemListArr = [];
+			popInviteMemNameListArr = [];
 			// 프로젝트 멤버 회원 리스트 초기화
 			$('.popInvite .popInviteMemList').empty();
+			$('.popInviteAddedMemList').empty();
+			$('.popWarning').empty();
 			
 			if ($('.popInvite').css('display') == 'none'){
 				$('.popInvite').css('display', 'block');
@@ -165,9 +169,19 @@
 					data : {reqId : '${projectId}'},
 					method : "POST", 
 					success : function(res){
-						// 이미지 불러오려면, 회원 정보도 함께 가져와야 한다..
+						chatMemListArr = $('.popChatMemList');
+						alreadyIn = 0;
 						for (i = 0 ; i < res.length ; i++){
-							if (res[i].memFilepath != ''){
+							alreadyIn = 0;
+							// 이미 채팅방에 참여한 회원인지 검사
+							for(j = 0 ; j < chatMemListArr.length ; j++){
+								if (res[i].memId == chatMemListArr[j].attributes[1].value){
+									alreadyIn++;
+									break;
+								}
+							}							
+							
+							if (res[i].memFilepath != '' && alreadyIn == 0){
 								$('.popInvite .popInviteMemList').append(
 									"<div class=\'popInviteMem\' style=\'margin-top : 10px;\'>"
 									+"<img class=\'img-circle\' alt=\'이미지\'"
@@ -175,6 +189,7 @@
 										+ "src=\'" + res[i].memFilepath + "\'/>"
 										+ res[i].memName + "[" + res[i].memId + "]"
 										+ "<span class=\'popInviteMemBtn\' memId=\'" + res[i].memId + "\' "
+											+ "memName=\'" + res[i].memName + "\' "
 											+ "style=\'border : 2px solid white; "
 									        +"border-radius : 0.45rem; "
 											+"background-color : #81BEF7; "
@@ -183,7 +198,7 @@
 											+"color : white;\'" + ">&nbsp;초대&nbsp;</span></div>"
 								)
 							}
-							if (res[i].memFilepath == ''){
+							if (res[i].memFilepath == '' && alreadyIn == 0){
 								$('.popInvite .popInviteMemList').append(
 									"<div class=\'popInviteMem\' style=\'margin-top : 10px;\'>"	
 									+"<img class=\'img-circle\' alt=\'이미지\'"
@@ -191,6 +206,7 @@
 										+ "src=\'${pageContext.request.contextPath }/WEB-INF/views/userprofile/user-1.png\'/>"
 										+ res[i].memName + "[" + res[i].memId + "]"
 										+ "<span class=\'popInviteMemBtn\' memId=\'" + res[i].memId + "\' "
+											+ "memName=\'" + res[i].memName + "\' "
 											+ "style=\'border : 2px solid white; "
 									        +"border-radius : 0.45rem; "
 											+"background-color : #81BEF7; "
@@ -207,15 +223,114 @@
 			}
 		})
 		
-		// popInvite에서 사용자 초대 버튼을 눌렀을 때...
+		// pop 초대창에서 사용자 초대 버튼을 눌렀을 때...
 		$('.popInviteMemList').on('click', '.popInviteMemBtn', function(){
 			var memId = $(this).attr("memId");
-			
-			
+			var memName = $(this).attr("memName");
+			popAddMember(memId, memName);
+			popListMember(popInviteMemListArr, popInviteMemNameListArr);
 		})
 		
+		// pop 초대창에서 초대리스트에 추가된 회원 아이디를 누르면, 초대 리스트에서 제거된다.
+		$('.popInviteAddedMemList').on("click",".popSelectedMemExceptBtn", function(){
+			var memId = $(this).attr('memId');
+			var memName = $(this).attr('memName');
+			
+			popDelMember(memId, memName);
+			popListMember(popInviteMemListArr, popInviteMemNameListArr);
+		})
+		
+		// 초대할 회원 목록을 모두 작성하고 초대 버튼을 누르면, 해당 회원이 채팅방에 초대된다. (이 때 알람도 함께 !!)
+		$('.popInviteBtn').click(function(){
+			if (popInviteMemListArr.length == 0){
+				$('.popWarning').text("초대할 회원을 선택해 주세요..");
+				return;
+			}else{	// 최소 1명의 초대할 회원이 존재하는 경우..
+				var cgroupId = '${cgroup.cgroupId }';
+				var ajaxArr = {"memList" : popInviteMemListArr, "cgroupId" : cgroupId}; 
+				var memName = '${SMEMBER.memName}';
+				var memId = '${SMEMBER.memId}';
+				
+				inviteMsg = "";
+				for (i = 0 ; i < popInviteMemListArr.length ; i++){
+					inviteMsg += popInviteMemNameListArr[i]; 
+					inviteMsg += "[";
+					inviteMsg += popInviteMemListArr[i];
+					inviteMsg += "]";
+					// 마지막 회원의 경우 콤마를 붙여선 안된다.
+					if(i == popInviteMemListArr.length - 1){
+						
+					}else{
+						inviteMsg += ", ";	
+					}
+				}
+				$.ajax({
+					url : "/chat/insertChatMembers",
+					data : ajaxArr,
+					method : "POST",
+					success : function(res){
+						// 초대했다는 메시지를 보내야 한다..
+						$.ajax({
+							url : "/chat/sendMessage",
+							data : {memId : "$ANNOUNCE$",
+								    memName : "$ANNOUNCE$",
+								    cgroupId : cgroupId,
+									chatCont : memName + "[" + memId+ "]" +"님이 " + inviteMsg
+										+ "님을 초대하였습니다."
+									},
+							method : "POST",
+							success : function(res) {
+																			
+							}
+						})
+					}
+				})
+			}
+		})
 		
 	})
+	// 회원 초대 관련 함수
+	// addMember : 초대 리스트에 선택한 회원 저장
+	// delMember : 초대 리스트에서 선택한 회원 삭제
+	// listMember : 초대 리스트 출력하기
+	function popAddMember(memId, memName){
+	// 기존에 추가한 회원과 겹치는지 먼저 확인 ...
+	var check = 0;
+	for(i = 0 ; i < popInviteMemListArr.length ; i++){
+		if ( popInviteMemListArr[i] == memId ){
+			$('.popWarning').text("이미 추가한 회원입니다.");
+			check = 1;
+		}
+	}
+	// 검사 결과 이미 추가한 회원이 아닌경우 추가할 수 있다.
+	if (check != 1){
+		$('.popWarning').text('');
+		popInviteMemListArr.push(memId);	
+		popInviteMemNameListArr.push(memName);
+	}
+	popListMember(popInviteMemListArr, popInviteMemNameListArr);
+	}
+
+	function popDelMember(memId, memName){
+		$('.popWarning').text('');
+		popInviteMemListArr.splice(popInviteMemListArr.indexOf(memId),1); // 뒤의 개수는 몇개를 제거할 지 이다..
+		popInviteMemNameListArr.splice(popInviteMemNameListArr.indexOf(memName),1)	// 이름 리스트에서 해당 회원 이름 제거
+		popListMember(popInviteMemListArr, popInviteMemNameListArr);
+	}
+
+	function popListMember(popInviteMemListArr, popInviteMemNameListArr){
+		$('.popInviteAddedMemList').empty();
+		for (i = 0 ; i < popInviteMemListArr.length ; i++){
+			$('.popInviteAddedMemList')
+				.append("<div class=\'popSelectedMem jg\'>"
+						+ "&nbsp;" + popInviteMemNameListArr[i] +"["+popInviteMemListArr[i].substring(0,10)+"]"
+						+ "<span class=\'popSelectedMemExceptBtn jg\' "
+						+ "memId=\'"+ popInviteMemListArr[i] + "\' "
+						+ "memName=\'"+ popInviteMemNameListArr[i] + "\' "
+						+ "style=\'margin-left : 3px;\'>&nbsp;x&nbsp;</span></div>");	
+		}	
+	}
+	
 </script>
 <style>
 /* 채팅방 제목 부분 */
@@ -347,6 +462,25 @@
 	padding: 10px 10px 10px 10px;
 }
 
+/* 회원 초대 경고창 관련 css */
+.popWarning{
+	color : red; 
+	font-size : 0.9em;
+}
+/* 회원 초대  */
+.popSelectedMem{
+	border-radius : 0.4rem;
+	font-size : 1.3em;
+	background-color : #0080FF;
+	float : left;
+	height : 30px;
+	margin : 5px 5px 5px 5px;
+	color : white;
+}
+.popSelectedMemExceptBtn{
+	cursor: pointer;
+}
+
 
 /* 메시지 전송바 스타일 */
 .sendMsgTextbar {
@@ -387,7 +521,7 @@
 	<label class="jg" style="padding-top: 10px;"><h4>참여중인 멤버</h4></label>
 	<hr>
 	<c:forEach var="i" begin="0" end="${chatMemList.size()-1 }">
-		<div style="float : left; margin-right : 10px;">
+		<div class="popChatMemList" memId="${chatMemList[i].memId }" style="float : left; margin-right : 10px;">
 			<!-- 사용자가 지정한 이미지가 null이 아닌 경우.. -->
 			<c:if test="${memInfoList[i].memFilepath ne null}">
 			<img class="img-circle" alt="이미지" style="width: 25px; height:  25px;"  
@@ -419,8 +553,10 @@
 		       border : 2px solid grey;
 		       overflow-y : auto; 
 		       border-radius : 0.45rem;"></div>
-	<hr>
-	<button class="btn btn-primary" type="button" style="float : right;">초대하기</button>
+	<br>	
+	<button class="btn btn-primary popInviteBtn" type="button" 
+		style="float : right;">초대하기</button>
+	<span class="popWarning" style="float : right"></span>&nbsp;&nbsp;       
 </div>
 
 

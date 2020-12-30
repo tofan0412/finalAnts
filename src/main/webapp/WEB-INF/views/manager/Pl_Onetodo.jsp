@@ -305,7 +305,7 @@
               </div>
             </div>
           </div>
-        </c:if>
+        
 		    <c:if test="${not empty dbtodolog }">
           <div class="card" id ="todologl">
             <div class="card-header card-bani jg">
@@ -343,6 +343,6 @@
             </div>
           </div>
           </c:if>
-		
+		</c:if>
 </div>
 </html>

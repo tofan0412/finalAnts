@@ -266,7 +266,7 @@ toastr.options = {
 				                    </c:choose>
 			                    </td>
 			                 
-			                    <td class="mailbox-name" style="width: 15%; "><a href="read-mail.html">${fn:split(a.alarmCont,'&&')[1]}(${fn:substring(fn:split(a.alarmCont,'&&')[2],0,10)})</a></td>
+			                    <td class="mailbox-name" style="width: 15%; ">${fn:split(a.alarmCont,'&&')[1]}(${fn:substring(fn:split(a.alarmCont,'&&')[2],0,10)})</td>
 			                    <td class="mailbox-subject">
 				                    <c:choose>
 				                    	<c:when test="${a.alarmType eq 'req-pl'}"><span id="newalarm" class="right badge badge123" style="background: #fed770;">PL요청</span>

@@ -12,7 +12,16 @@ public class AllBookMarkVo extends BaseVo{
 	private String issueKind;
 	private String regDt;
 	private String memName;
+	private String sort;
 	
+	
+	
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
 	public String getBookId() {
 		return bookId;
 	}

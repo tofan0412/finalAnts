@@ -170,7 +170,12 @@ body{
 				<tbody >
 						<c:forEach items="${projectList_main }" var="project" varStatus="sts" >
 						    <tr>
-							<td style="text-align: left; padding-left: 5%; font-size: 1em;">${project.proName }</td>
+						    <c:if test="${SMEMBER.memType eq 'PM' }">
+							<td style="text-align: left; padding-left: 5%; font-size: 1em;"><a href="${pageContext.request.contextPath}/project/pmProjectgetReq?reqId=${project.reqId}">${project.proName }</a></td>
+							</c:if>
+						    <c:if test="${SMEMBER.memType ne 'PM' }">
+							<td style="text-align: left; padding-left: 5%; font-size: 1em;"><a href="${pageContext.request.contextPath}/project/projectgetReq?reqId=${project.reqId}">${project.proName }</a></td>
+							</c:if>
 							<c:if test="${empty project.percent }">
 							<td >0%</td>
 							</c:if>					
@@ -325,23 +330,15 @@ body{
 	</div>
 </div>
 <div id="mainright" style="padding-left: 2%; margin-top: 2%;">
-	<div class="card" style="height: 330px; min-width: 240px;">
+	<div class="card" style="height: auto; min-width: 240px;">
 	<div class="card-header">
-			<h3 class="card-title jg">Calendar</h3>
+			<h3 class="card-title jg"><a href="${pageContext.request.contextPath}/schedule/MyclendarView">Calendar</a></h3>
 		</div>
 		<div class="card-body pt-0" style="min-width: 160px;"><br>
 			<div id ="datePicker"></div>
 		</div>           
 	</div>
-<!-- <div id="mainright" style="padding-left: 2%; margin-top: 2%;"> -->
-<!-- 	<div class="card" style="height: 330px;"> -->
-<!-- 		<div class="card-header"> -->
-<!-- 			<h3 class="card-title jg" style="text-align: center;">Calendar</h3> -->
-<!-- 		</div> -->
-<!-- 		<div class="card-body pt-0"> -->
-<!-- 			<div id ="datePicker" style="width: auto;"></div> -->
-<!-- 		</div>            -->
-<!-- 	</div> -->
+
 </div>
 </html>
 </body>

@@ -9,13 +9,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#todoList tr").on("click",function(){
-		var todoId = $(this).data("todoid");
- 		$(location).attr('href', '${pageContext.request.contextPath}/todo/myonetodoView?todoId='+todoId);
-		});
-	});
-
 	
 	// 페이징처리
 	function fn_egov_link_page(pageNo){
@@ -26,6 +19,7 @@ $(document).ready(function(){
 	
 	
 	 function search(){
+		 document.listForm.pageIndex.value = 1;
 		document.listForm.action = "<c:url value='/todo/MytodoList'/>";
 		document.listForm.submit();
 	}
@@ -47,7 +41,6 @@ $(document).ready(function(){
 		 text-align: center;
 		 padding : 6px; 	 
 		 border: none; 
-	
 	}
 	
 	li strong{
@@ -60,12 +53,10 @@ $(document).ready(function(){
 		 display: inline-block;
 		 text-align: center;
 		 width: 30px;
-		 
 	}
 	#paging{
 		 display: inline-block;
 		 width:auto; float:left; margin:0 auto; text-align:center;
-		 
 	}
 
 </style>
@@ -85,23 +76,20 @@ $(document).ready(function(){
 				<div class="input-group row">
 					<label for="searchCondition" style="visibility:hidden;"></label>
 															
-					
        				<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
-						<form:option value="1" label="담당자"/>
+						<form:option value="1" label="제목"/>
 						<form:option value="2" label="내용"/>
-						<form:option value="3" label="제목"/>
+						<form:option value="3" label="진행도"/>
 					</form:select> 
 					
-					
 					<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-                    <form:input style="width: 300px;" path="searchKeyword" placeholder="검색어를 입력하세요." class="form-control jg"/>
+                    <form:input style="width: 300px;" path="searchKeyword" placeholder="검색어를 입력하세요." class="form-control jg" />
 					<span class="input-group-append">							
 						<button class="btn btn-default" type="button" id="searchBtn" onclick="search()" >
 							<i class="fa fa-fw fa-search"></i>
 						</button>
 					</span>
 					
-					<!-- end : search bar -->
 				</div>
 				<br>
 	        </div>
@@ -121,7 +109,7 @@ $(document).ready(function(){
 			</tr>
 			<tbody id="todoList">
 					<c:forEach items="${todoList }" var="todo" varStatus="sts" >
-				  	 <tr data-todoid="${todo.todoId}">
+				  	 <tr>
 					<td><c:out value="${paginationInfo.totalRecordCount - ((todoVo.pageIndex-1) * todoVo.pageUnit + sts.index)}"/>. 
 					<input type="hidden" id="${todo.reqId }" name="${todo.reqId }">
 					</td>			
@@ -130,12 +118,14 @@ $(document).ready(function(){
 					<c:if test="${todo.todoImportance eq 'emg'}"><span class="badge badge-danger ns">긴급</span></c:if>
 					</td>
 					<td style="text-align: left; padding-left: 10%;">
+					<a href="${pageContext.request.contextPath}/todo/myonetodoView?todoId=${todo.todoId}"> 
 					<c:if test="${fn:length(todo.todoTitle) > 30}">									
 						${fn:substring(todo.todoTitle,0 ,30) }...
 					</c:if>
 					<c:if test="${fn:length(todo.todoTitle) <= 30}">									
 						${todo.todoTitle}
 					</c:if>
+					</a> 
 					</td>
 					<td>${todo.memId}</td>
 					<c:if test= "${todo.todoPercent eq '0'}">
@@ -179,6 +169,9 @@ $(document).ready(function(){
 					
 					</tr>
 				</c:forEach>
+				<c:if test="${todoList.size() == 0}">
+				<td colspan="8" style="text-align: center;"  class="jg"><br> [ 결과가 없습니다. ] </td>
+				</c:if>
 			</tbody>
 		</table>
 		</div>

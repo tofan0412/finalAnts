@@ -24,18 +24,8 @@ text-align: right;
 </style>
 <script>
   $(function () {
-    /* jQueryKnob */
 
     $('.knob').knob({
-      /*change : function (value) {
-       //console.log("change : " + value);
-       },
-       release : function (value) {
-       console.log("release : " + value);
-       },
-       cancel : function () {
-       console.log("cancel : " + this.value);
-       },*/
       draw: function () {
 
         // "tron" case
@@ -85,8 +75,6 @@ text-align: right;
         }
       }
     })
-    /* END JQUERY KNOB */
-
   
 	// 상세일감 보러가기
 	$("#todoList tr").on("click",function(){
@@ -121,21 +109,21 @@ text-align: right;
 			                    		<input type="text" class="knob" value="${pro.percent}" data-width="150" data-height="150" data-fgcolor="#6495ED " data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly">
 			                    	</c:if>	
 	                 			</div>
-	                 			<h5  style="text-align: center; width: 150px;">진행도 : %</h5>
+	                 			<h5  style="text-align: center; width: 150px;">진행도 <span style="font-size: 0.8em;">(%)</span></h5>
 	                  		 </div>
 	                  		<div class="circle" id="circle_TASKC_PROGRESS" style=" padding-left: 7%;">
 	                  			<div class="circles-wrp" style="position: relative; display: inline-block;">
 	                  				<canvas width="1" height="100"></canvas>
 				                    <input type="text" class="knob" value="${pro.elepsedTime }" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly">
 	                  			</div>
-	                  			<h5  style="text-align: center; width: 150px;">경과 시간 : 일</h5>
+	                  			<h5  style="text-align: center; width: 150px;">경과 시간 <span style="font-size: 0.8em;">(일)</span></h5>
 	                  		</div>
 	                  		<div class="circle" id="circle_TASK_PROGRESS" style=" padding-left:7%;">
 	                  			<div class="circles-wrp" style="position: relative; display: inline-block;">
 	                  				<canvas width="1" height="100"></canvas>
 	                  				<input type="text" class="knob" value="${dbsuggestvo.acceptpercent}" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly">
 	                 			</div>
-	                  			<h5  style="text-align: center; width: 180px;">건의사항 수용률 : %</h5>
+	                  			<h5  style="text-align: center; width: 180px;">건의사항 수용률 <span style="font-size: 0.8em;">(%)</span></h5>
 	                  		</div>
                   		</div>
                   		
@@ -165,7 +153,7 @@ text-align: right;
 	                      		</div>
 	                    	</div>
 	                    	<div class="col-12 col-sm-6 col-md-3" style="width: 35%;" >
-	                      	소통량
+	                      	소통량<span style="font-size: 0.8em;">(이슈글 수 대비 댓글 작성율 )</span>
 	                      		<fmt:parseNumber value="${dbreplyvo.replypercent}" var="reply"/>
 	                      		<div class="progress progress-md" >
 	                        		<div class="progress-bar bg-warning" style="width:<c:out value="${reply}" />%"></div>

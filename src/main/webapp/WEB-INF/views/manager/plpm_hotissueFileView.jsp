@@ -158,20 +158,7 @@ var id;
 	<button id="hotissueview" type="button" class="btn btn-default jg"><i class="fas fa-edit"></i>PM-PL 이슈게시판</button>
 	</div>
 		 <div class="card-header ">
-				<div id="keyword" class="card-tools float-right" style="width: 550px;">
-					<div class="input-group row">		
-						<select name="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
-							<option value="1" label="파일명"/>
-						</select> 
-							 <label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                         <input type="text" class="form-control jg" name="searchKeyword" value="${hotIssueFileVo.searchKeyword }">
-		                  <a href="javascript:search();">
-		                  	<button type="button" class="btn-default" style="height: 100%;">
-                               <i class="fa fa-search"></i>
-                          	</button>
-                          </a>
-					</div>
-		        </div>
+				
 		</div>
 		<div class="card-body p-0">
 		<table id="todoTable" class="jg">
@@ -185,7 +172,7 @@ var id;
 			<tbody id="hotissuefileList"> 
 				<c:forEach items="${hotissuefileList}" var="hotissueFile" varStatus="sts" >
 				    <tr data-hissuefid="${hotissueFile.hissuefId }">
-					<td><c:out value="${paginationInfo.totalRecordCount - ((privatefileVo.pageIndex-1) * privatefileVo.pageUnit + sts.index)}"/>. 
+					<td><c:out value="${paginationInfo.totalRecordCount - ((hotissueFileVo.pageIndex-1) * hotissueFileVo.pageUnit + sts.index)}"/>. 
 						<input type="hidden" id="${hotissueFile.hissuefId }" name="${hotissueFile.hissuefId }">
 					</td>	
 					<td class="jg" style="padding-left: 180px; text-align: left; width: 400px;">
@@ -211,6 +198,9 @@ var id;
 					</tr>
 					
 				</c:forEach> 
+				<c:if test="${hotissuefileList.size() == 0}">
+				<td colspan="5" style="text-align: center;"  class="jg"><br> [ 결과가 없습니다. ] </td>
+				</c:if>
 			</tbody>
 		</table>
 		</div>  

@@ -16,10 +16,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#hotIssueList tr").on("click",function(){
-		var hissueId = $(this).data("hissueid");
- 		$(location).attr('href', '${pageContext.request.contextPath}/hotIssue/hissueDetailView?hissueId='+hissueId);
-		});
+
 	
 	$("#pagenum a").addClass("page-link");  
 	
@@ -45,6 +42,7 @@ $(document).ready(function(){
 	
 	// 검색
 	function search(){
+		document.listForm.pageIndex.value = 1;
 		document.listForm.action = "<c:url value='/hotIssue/hissueList'/>";
 		document.listForm.submit();
 	}
@@ -131,11 +129,12 @@ $(document).ready(function(){
 			</tr>
 			<tbody id="hotIssueList">
 				<c:forEach items="${hotIssueList }" var="hotissue" varStatus="sts" >
-				    <tr data-hissueid="${hotissue.hissueId}">
+				    <tr>
 					<td><c:out value="${paginationInfo.totalRecordCount - ((hotIssueVo.pageIndex-1) * hotIssueVo.pageUnit + sts.index)}"/>. 
 					</td>			
 					<c:if test="${hotissue.hissueParentid ne null}">
 					<td style="text-align: left; padding-left: 9%;">
+					<a href="${pageContext.request.contextPath}/hotIssue/hissueDetailView?hissueId=${hotissue.hissueId}"> 
 					<span style="color: gray;">답글 : </span>&nbsp;
 					<c:if test="${fn:length(hotissue.hissueTitle) > 25}">									
 						${fn:substring(hotissue.hissueTitle,0 ,25) }...
@@ -143,22 +142,28 @@ $(document).ready(function(){
 					<c:if test="${fn:length(hotissue.hissueTitle) <= 25}">									
 						${hotissue.hissueTitle}
 					</c:if>
+					</a> 
 					</td>
 					</c:if>
 					<c:if test="${hotissue.hissueParentid eq null}">
 					<td style="text-align: left; padding-left: 9%;">
-					<c:if test="${fn:length(hotissue.hissueTitle) > 30}">									
+					<a href="${pageContext.request.contextPath}/hotIssue/hissueDetailView?hissueId=${hotissue.hissueId}"> 
+					<c:if test="${fn:length(hotissue.hissueTitle) > 30}">
 						${fn:substring(hotissue.hissueTitle,0 ,30) }...
 					</c:if>
 					<c:if test="${fn:length(hotissue.hissueTitle) <= 30}">									
 						${hotissue.hissueTitle}
 					</c:if>
+					</a> 
 					</td>
 					</c:if>
 					<td>${hotissue.regDt}</td>
 					<td>${hotissue.writer}</td>
 					</tr>
 				</c:forEach>
+				<c:if test="${hotIssueList.size() == 0}">
+				<td colspan="4" style="text-align: center;"  class="jg"><br> [ 결과가 없습니다. ] </td>
+				</c:if>
 			</tbody>
 		</table>
 		</div>

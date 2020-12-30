@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import ants.com.file.model.PrivateFileVo;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.service.FileService;
 import ants.com.member.model.MemberVo;
@@ -70,6 +72,11 @@ public class FileController {
 		List<PublicFileVo> pubfilelist = fileService.pubfilelist(publicFileVo);
 		model.addAttribute("pubfilelist", pubfilelist);
 		
+		if(publicFileVo.getSort() == null || publicFileVo.getSort().equals("1")) {
+			model.addAttribute("sort", "1");
+		}else {
+			model.addAttribute("sort", "2");
+		}
 		
 		int totCnt = fileService.pubfilePagingListCnt(publicFileVo);
 		paginationInfo.setTotalRecordCount(totCnt);
@@ -149,12 +156,18 @@ public class FileController {
 	@RequestMapping(path ="/delfiles",   method=RequestMethod.POST)
 	public String delfiles(String delfile)  {
 		
-		System.out.println("defile : " + delfile);
-		
-		if(!delfile.equals("null") || delfile !=null || !delfile.equals("")) {
+		if(!delfile.equals("null") && delfile !=null && !delfile.equals("")) {
+
 			String[] pubId = delfile.split(",");
 			for(int i=0; i<pubId.length;i++) {
 				
+				PublicFileVo dbfilevo = fileService.getfile(pubId[i]);
+				String serverFilepath = dbfilevo.getPubFilepath();
+				File f = new File(serverFilepath);
+			    if(!f.isDirectory()) {
+			       f.delete();   //파일이면 바로 삭제
+			    }
+			    
 				fileService.defiles(pubId[i]);
 			}		
 		}

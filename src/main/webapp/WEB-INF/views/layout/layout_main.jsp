@@ -6,10 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js">
 </script>
+
+<!-- jQuery, style -->
+<%@include file="commonLib_main.jsp"%>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
+
 <style type="text/css">
 .hold-transition sidebar-mini{
 	min-height: 1800px;
@@ -26,7 +32,6 @@ body{
 <title>Ants - 협업관리 프로젝트 툴</title>
 
 <body class="hold-transition sidebar-mini">
-	<%@include file="/WEB-INF/views/layout/fonts.jsp"%>
 	<div class="wrapper">
 		<!-- main_header -->
 		<tiles:insertAttribute name="header" />
@@ -38,8 +43,7 @@ body{
 		<tiles:insertAttribute name="footer" />
 	</div>
 
-	<!-- jQuery, style -->
-	<%@include file="commonLib_main.jsp"%>
+	
 </body>
 </html>
 

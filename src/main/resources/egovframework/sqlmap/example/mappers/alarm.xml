@@ -37,7 +37,7 @@
 		SELECT  *
 		    FROM(
 		    	SELECT ROWNUM rnum, a.*
-				FROM (SELECT b.*
+				FROM (SELECT b.alarm_id, b.alarm_cont, b.alarm_status, b.mem_id, b.alarm_type, TO_CHAR(b.reg_dt,'YYYY-MM-DD HH:MI') as reg_dt
                         FROM alarm b
                         WHERE mem_id = #{memId}
                         <if test="searchCondition != null and searchCondition != ''">

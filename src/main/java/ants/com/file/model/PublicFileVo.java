@@ -14,6 +14,7 @@ public class PublicFileVo extends BaseVo {
 	private String reqId;
 	private String pubSize;
 	private String memId;
+	private String sort;
 	
 	public PublicFileVo() {
 		
@@ -36,6 +37,14 @@ public class PublicFileVo extends BaseVo {
 		this.reqId = reqId;
 		this.pubSize = pubSize;
 		this.memId = memId;
+	}
+	
+	
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
 	}
 	public String getPubId() {
 		return pubId;

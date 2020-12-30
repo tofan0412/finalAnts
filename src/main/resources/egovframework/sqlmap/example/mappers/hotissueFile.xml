@@ -89,7 +89,7 @@
   </select>
   
   <!-- 파일 수 -->
-  <select id="hotissuefilePagingListCnt" parameterType="String" resultType="int">
+  <select id="hotissuefilePagingListCnt" parameterType="String" resultType="java.lang.Integer">
      SELECT
     COUNT(*)
       FROM
@@ -103,6 +103,7 @@
       WHERE
     	f.hissue_id = h.hissue_id
       AND   h.req_id = #{reqId}
+      
   </select>
   
   

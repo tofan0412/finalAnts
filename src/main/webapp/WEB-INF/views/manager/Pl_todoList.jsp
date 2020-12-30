@@ -15,11 +15,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		// 상세일감 보러가기
-		$("#todoList tr").on("click",function(){
-			var todoId = $(this).data("todoid");
-	 		$(location).attr('href', '${pageContext.request.contextPath}/todo/onetodoView?todoId='+todoId);
-			});
+	
 		
 		$("#pagenum a").addClass("page-link");  
 		
@@ -34,6 +30,7 @@
 	   	document.listForm.submit();
 	}
 	 function search(){
+		 document.listForm.pageIndex.value = 1;
 		document.listForm.action = "<c:url value='/todo/todoList'/>";
 		document.listForm.submit();
 	}
@@ -131,7 +128,7 @@
 			<tbody id="todoList" >
 				<c:forEach items="${todoList }" var="todo" varStatus="sts" >
 					<c:if test="${ todo.todoLevel eq '1' }">
-				    <tr data-todoid="${todo.todoId}">
+				    <tr >
 					<td><c:out value="${paginationInfo.totalRecordCount - ((todoVo.pageIndex-1) * todoVo.pageUnit + sts.index)}"/>. 
 					<input type="hidden" id="${todo.reqId }" name="${todo.reqId }">
 					</td>			
@@ -140,12 +137,14 @@
 					<c:if test="${todo.todoImportance eq 'emg'}"><span class="badge badge-danger ns">긴급</span></c:if>
 					</td>
 					<td style="text-align: left; padding-left: 8%;">
+					<a href="${pageContext.request.contextPath}/todo/onetodoView?todoId=${todo.todoId}"> 
 					<c:if test="${fn:length(todo.todoTitle) > 30}">									
 						${fn:substring(todo.todoTitle,0 ,30) }...
 					</c:if>
 					<c:if test="${fn:length(todo.todoTitle) <= 30}">									
 						${todo.todoTitle}
 					</c:if>
+					</a> 
 					</td>
 					<td>${todo.memId}</td>
 					<c:if test= "${todo.todoPercent eq '0'}">
@@ -189,6 +188,9 @@
 					</tr>
 					</c:if>
 				</c:forEach>
+				<c:if test="${todoList.size() == 0}">
+				<td colspan="8" style="text-align: center;"  class="jg"><br> [ 결과가 없습니다. ] </td>
+				</c:if>
 			</tbody>
 		</table>
 		</div>
