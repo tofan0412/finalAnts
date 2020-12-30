@@ -147,6 +147,13 @@ function toggle(element){
 						<li class="list-group-item"><b>알람</b> 
 							<a class="float-right">
 								<input name="memAlert" type="text" id="alias" placeholder="(알람)" value="${memberVo.memAlert}" style="border:none; width:105px; outline: none;" readonly>
+								<!-- 알람 토글 버튼 -->	
+								<!-- 
+								<label class="switch">											
+									<input id="tog" type="checkbox" onclick="toggle(this)" value="Y" ${memberVo.memAlert == "Y" ? "CHECKED" : ""}/>	
+									<span class="slider round"></span>	
+								</label>
+								-->
 							</a>
 						</li>			
 						<li class="list-group-item"><b>타입</b>
