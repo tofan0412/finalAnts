@@ -292,6 +292,10 @@ function pubfilecopy(){
 										<img name="link" src="/fileFormat/${fn:toLowerCase(file.pubExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">										 																	
 									 		${file.pubFilename}
 									</td>
+									<c:if test="${file.categoryId == '1'}">
+										<c:set var="category" value="일감"> </c:set>
+										<td class="jg" style="text-align: center;"> ${category}</td>
+									</c:if>
 									<c:if test="${file.categoryId == '3'}">
 										<c:set var="category" value="이슈"> </c:set>
 										<td class="jg" style="text-align: center;"> ${category}</td>
