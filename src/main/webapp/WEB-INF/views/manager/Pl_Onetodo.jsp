@@ -103,7 +103,7 @@
         </tr>
         <tr class="stylediff">
             <th class="success ">담당자</th>
-            <td style="padding-left: 20px; width: 700px; "><div class="jg" id="memId">${todo.memId }</div></td>
+            <td style="padding-left: 20px; width: 700px; "><div class="jg" id="memId">${todo.memName }</div></td>
             <th class="success ">진행도</th>
             <td style="padding-left: 20px;"><div class="jg" id="todoPercent">${todo.todoPercent }%</div></td>
         </tr>
@@ -179,17 +179,17 @@
               <div class="form-group" id ="todolog">
               <div class="jg" style="font-size: 18px;" >오늘 변경 내역<br>
               <c:if test="${todolog.elapsedDay eq '0' and todolog.elapsedTime eq '0'}">
-              	<p class="ns" style="padding-left: 2%; color: #6c757d; font-size: 0.9em;">${todolog.elapsedMin}&nbsp;&nbsp;분&nbsp;&nbsp;전 <span class="bef">${todolog.beforeId}</span>에서&nbsp;&nbsp;<span class="aft">${todolog.afterId}</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>
+              	<p class="ns" style="padding-left: 2%; color: #6c757d; font-size: 0.9em;">${todolog.elapsedMin}&nbsp;&nbsp;분&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">${todolog.beforeId}</span>에서&nbsp;&nbsp;<span class="aft">${todolog.afterId}</span>(으)로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>
               </c:if>
               <c:if test="${todolog.elapsedDay eq '0' and todolog.elapsedTime ne '0'}">
-              	<p class="ns" style="padding-left: 2%; color: #6c757d; font-size: 0.9em;">${todolog.elapsedTime} 시간&nbsp;&nbsp; ${todolog.elapsedMin} 분&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">${todolog.beforeId}</span>에서&nbsp;&nbsp;<span class="aft">${todolog.afterId}</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>
+              	<p class="ns" style="padding-left: 2%; color: #6c757d; font-size: 0.9em;">${todolog.elapsedTime} 시간&nbsp;&nbsp; ${todolog.elapsedMin} 분&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">${todolog.beforeId}</span>에서&nbsp;&nbsp;<span class="aft">${todolog.afterId}</span>(으)로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>
 			  </c:if>
             </div><br>
               </div>
               <div class="form-group" id ="daylog">
               <div class="jg" style="font-size: 18px;" >과거 변경 내역<br>
               <c:if test="${todolog.elapsedDay ne '0'}">
-			  <p class="ns" style="padding-left: 2%; color: #6c757d; font-size: 0.9em;">${todolog.elapsedDay}일&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">${todolog.beforeId}</span>에서&nbsp;&nbsp;<span class="aft">${todolog.afterId}</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>
+			  <p class="ns" style="padding-left: 2%; color: #6c757d; font-size: 0.9em;">${todolog.elapsedDay}일&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">${todolog.beforeId}</span>에서&nbsp;&nbsp;<span class="aft">${todolog.afterId}</span>(으)로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>
 			  </c:if>
               </div><br>
               </div>
@@ -217,7 +217,7 @@
         </tr>
         <tr class="stylediff">
             <th class="success ">담당자</th>
-            <td style="padding-left: 20px; width: 700px; "><div class="jg" id="memId">${todo.memId }</div></td>
+            <td style="padding-left: 20px; width: 700px; "><div class="jg" id="memId">${todo.memName }</div></td>
             <th class="success ">진행도</th>
             <td style="padding-left: 20px;"><div class="jg" id="todoPercent">${todo.todoPercent }%</div></td>
         </tr>
@@ -321,7 +321,7 @@
               <div class="jg" style="font-size: 18px;" >오늘 변경 내역<br>
             <c:forEach items="${dbtodolog }" var= "todolog" varStatus="sts" >
               <c:if test="${todolog.elapsedDay eq '0' and todolog.elapsedTime eq '0'}">
-              	<p class="ns" style="padding-left: 2%; color: #6c757d; font-size: 0.9em;">${todolog.elapsedMin}&nbsp;&nbsp;분&nbsp;&nbsp;전 <span class="bef">${todolog.beforeId}</span>에서&nbsp;&nbsp;<span class="aft">${todolog.afterId}</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>
+              	<p class="ns" style="padding-left: 2%; color: #6c757d; font-size: 0.9em;">${todolog.elapsedMin}&nbsp;&nbsp;분&nbsp;&nbsp;전&nbsp;&nbsp; <span class="bef">${todolog.beforeId}</span>에서&nbsp;&nbsp;<span class="aft">${todolog.afterId}</span>(으)로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>
               </c:if>
               <c:if test="${todolog.elapsedDay eq '0' and todolog.elapsedTime ne '0'}">
               	<p class="ns" style="padding-left: 2%; color: #6c757d; font-size: 0.9em;">${todolog.elapsedTime} 시간&nbsp;&nbsp; ${todolog.elapsedMin} 분&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">${todolog.beforeId}</span>에서&nbsp;&nbsp;<span class="aft">${todolog.afterId}</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>
@@ -334,7 +334,7 @@
               <div class="jg" style="font-size: 18px;" >과거 변경 내역<br>
               <c:forEach items="${dbtodolog }" var= "todolog" varStatus="sts" >
               <c:if test="${todolog.elapsedDay ne '0'}">
-			  <p class="ns" style="padding-left: 2%; color: #6c757d; font-size: 0.9em;">${todolog.elapsedDay}일&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">${todolog.beforeId}</span>에서&nbsp;&nbsp;<span class="aft">${todolog.afterId}</span>로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>
+			  <p class="ns" style="padding-left: 2%; color: #6c757d; font-size: 0.9em;">${todolog.elapsedDay}일&nbsp;&nbsp;전&nbsp;&nbsp;<span class="bef">${todolog.beforeId}</span>에서&nbsp;&nbsp;<span class="aft">${todolog.afterId}</span>(으)로&nbsp;&nbsp;담당자&nbsp;&nbsp;변경</p>
 			  </c:if>
               </c:forEach>
               </div>

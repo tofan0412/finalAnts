@@ -138,7 +138,78 @@
 	$(function() {
 		// 문서 로딩이 끝나면 최 하단으로 내린다...
 		$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);
-
+		
+		// mouseenter, mouseleave 이벤트
+		$('.popInvite').on('mouseenter','invitePjtMember',function(){
+			$(this).css("background-color", 'lightgrey');
+		})
+		
+		$('.popInvite').on('mouseleave','invitePjtMember',function(){
+			$(this).css("background-color", 'white');
+		})
+		
+		// 팝업창 관련 스크립트 - 회원 초대 팝업창
+		$('.userInviteBtn').on('click',function(){
+			$('.popInvite .popInviteMemList').empty();
+			
+			if ($('.popInvite').css('display') == 'none'){
+				$('.popInvite').css('display', 'block');
+				
+				$.ajax({
+					url : "/projectMember/proMemList",
+					data : {reqId : '${projectId}'},
+					method : "POST", 
+					success : function(res){
+						// 이미지 불러오려면, 회원 정보도 함께 가져와야 한다..
+						for (i = 0 ; i < res.length ; i++){
+							if (res[i].memFilepath != ''){
+								$('.popInvite .popInviteMemList').append(
+									"<div class=\'popInviteMem\' style=\'margin-top : 10px;\'>"
+									+"<img class=\'img-circle\' alt=\'이미지\'"
+										+ "style=\'width : 25px; height : 25px; padding-right : 5px;\'"
+										+ "src=\'" + res[i].memFilepath + "\'/>"
+										+ res[i].memName + "[" + res[i].memId + "]"
+										+ "<span class=\'popInviteMemBtn\' memId=\'" + res[i].memId + "\' "
+											+ "style=\'border : 2px solid white; "
+									        +"border-radius : 0.45rem; "
+											+"background-color : #81BEF7; "
+											+"float : right;"
+											+"cursor : pointer;"
+											+"color : white;\'" + ">&nbsp;초대&nbsp;</span></div>"
+								)
+							}
+							if (res[i].memFilepath == ''){
+								$('.popInvite .popInviteMemList').append(
+									"<div class=\'popInviteMem\' style=\'margin-top : 10px;\'>"	
+									+"<img class=\'img-circle\' alt=\'이미지\'"
+										+ "style=\'width : 25px; height : 25px; padding-right : 5px;\'"
+										+ "src=\'${pageContext.request.contextPath }/WEB-INF/views/userprofile/user-1.png\'/>"
+										+ res[i].memName + "[" + res[i].memId + "]"
+										+ "<span class=\'popInviteMemBtn\' memId=\'" + res[i].memId + "\' "
+											+ "style=\'border : 2px solid white; "
+									        +"border-radius : 0.45rem; "
+											+"background-color : #81BEF7; "
+											+"float : right;"
+											+"cursor : pointer;"
+											+"color : white;\'" + ">&nbsp;초대&nbsp;</span></div>"
+								)
+							}
+						}
+					}
+				})
+			}else{
+				$('.popInvite').css('display', 'none');
+			}
+		})
+		
+		// popInvite에서 사용자 초대 버튼을 눌렀을 때...
+		$('.popInviteMemList').on('click', '.popInviteMemBtn', function(){
+			alert("!");
+		})
+		
+		
+		
+		
 	})
 </script>
 <style>
@@ -258,6 +329,20 @@
 	padding: 10px 10px 10px 10px;
 }
 
+.popInvite {
+	width: 400px;
+	height: 600px;
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 0.4rem;
+	color: black;
+	position: absolute;
+	top: 13%;
+	left: 5%;
+	padding: 10px 10px 10px 10px;
+}
+
+
 /* 메시지 전송바 스타일 */
 .sendMsgTextbar {
 	width: 100%;
@@ -298,7 +383,16 @@
 	<hr>
 	<c:forEach var="i" begin="0" end="${chatMemList.size()-1 }">
 		<div style="float : left; margin-right : 10px;">
-			<img class="img-circle" alt="이미지" style="width: 25px; height:  25px; "  src="${memInfoList[i].memFilepath}" />
+			<!-- 사용자가 지정한 이미지가 null이 아닌 경우.. -->
+			<c:if test="${memInfoList[i].memFilepath ne null}">
+			<img class="img-circle" alt="이미지" style="width: 25px; height:  25px;"  
+				src="${memInfoList[i].memFilepath}" />
+			</c:if>
+			<!-- 사용자가 지정한 이미지가 null인 경우 -->
+			<c:if test="${memInfoList[i].memFilepath eq null}">
+			<img class="img-circle" alt="이미지" style="width: 25px; height:  25px;" 
+				src="${pageContext.request.contextPath }/WEB-INF/views/userprofile/user-1.png" />
+			</c:if>
 		</div>
 		
 		<div style="height: 10%; folat: left;">${chatMemList[i].memId }
@@ -308,6 +402,20 @@
 		<br>
 	</c:forEach>
 </div>
+
+<!-- 회원 초대 팝업창 -->
+<div class="popInvite" style="display: none; z-index: 1;">
+	<label class="jg" style="padding-top: 10px;"><h4>초대하기</h4></label>
+	<hr>
+	<div class="popInviteMemList" style="height : 50%; line-height: 30px; overflow-y : auto;"></div>
+	<br>
+	<div class="popInviteAddedMemList" 
+		style="height : 20%; 
+		       border : 2px solid grey;
+		       overflow-y : auto; 
+		       border-radius : 0.45rem;"></div>
+</div>
+
 
 <!-- 채팅 메시지 목록 부분  -->
 <div id="msgArea">

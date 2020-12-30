@@ -205,7 +205,7 @@ $(function(){
 		readChatList();
 	})
 	
-	// 팝업창 관련 스크립트
+	// 팝업창 관련 스크립트 - 회원 목록 확인 팝업창
 	$('.chatList').on('click', '.usersBtn',function(){
 		if ($('.pop').css('display') == 'none'){
 			$('.pop').css('display', 'block');	
@@ -213,7 +213,6 @@ $(function(){
 			$('.pop').css('display', 'none');
 		}
 	})
-	
 	
 	// 사용자가 채팅방 나가기 버튼을 클릭할 때 ..
 	$('.chatList').on('click','.exitBtn',function(){
