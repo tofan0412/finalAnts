@@ -46,7 +46,7 @@
 						else{
 							$('#pjtMem').append("<div class=\'pjtMem\'>" 
 									+ res[i].memName +"[" + res[i].memId + "]"
-									+"<span style=\'float : right;\'>" 
+									+"<span style=\'float : right; color : blue;\'>" 
 									+ status 
 									+"<span class=\'pjtMemExceptBtn\' "
 										+ "promemId=\'"+ res[i].promemId + "\' "

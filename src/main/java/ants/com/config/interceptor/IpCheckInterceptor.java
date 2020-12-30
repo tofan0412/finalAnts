@@ -49,8 +49,7 @@ public class IpCheckInterceptor extends HandlerInterceptorAdapter {
 			equalsCnt = 0;
 			
 			for (int j = 0 ; j < 4 ; j++) {
-				if (clientIpArr[j].equals(serverIpArr[j])
-					|| serverIpArr[j].equals("*")) {
+				if (clientIpArr[j].equals(serverIpArr[j]) || serverIpArr[j].equals("*")) {
 					equalsCnt++;
 					if (equalsCnt == 4) {
 						factor = 1;

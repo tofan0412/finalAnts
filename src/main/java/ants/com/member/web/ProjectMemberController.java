@@ -2,6 +2,7 @@ package ants.com.member.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -299,7 +300,17 @@ public class ProjectMemberController {
 	@RequestMapping("/proMemList")
 	public List<ProjectMemberVo> proMemList(String reqId){
 		List<ProjectMemberVo> list = promemService.proMemList(reqId);
-		return promemService.proMemList(reqId);
+		
+		// 회원 프로필 이미지를 저장한다.
+		for (int i = 0; i < list.size(); i++) {
+			MemberVo memInfo = new MemberVo();
+			memInfo.setMemId(list.get(i).getMemId());
+
+			MemberVo memberVo = memberService.getMember(memInfo);
+			list.get(i).setMemFilepath(memberVo.getMemFilepath());
+		}
+		
+		return list;
 	}
 	
 	// 프로젝트멤버 상태를 변경한다.
