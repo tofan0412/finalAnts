@@ -118,7 +118,7 @@
 				insert();
 			},
 			'onCancel': function (file) {// 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
-				alert('취소')
+// 				alert('취소')
 				QueueCnt--;
 				if(QueueCnt == 0){
 					$('#dragdiv').show();
@@ -198,14 +198,19 @@
 			if ($('#issueTitle').val().length == 0){
 				$('.warningTitle').text("제목을 작성해 주세요.");
 				cnt++;
+			}else{
+				$('.warningTitle').text("");
 			}
 			
      		if($('#kindselect').val() =='issue'){
-				if ($('#todoselect').val().length == 0){
+				if ($('#todoselect').val()==''){
 					$('.warningTodo').text("일감을 선택해 주세요.");
 					cnt++;
+				}else{
+					$('.warningTodo').text("");
 				}
      		}
+     		
 			if (cnt == 0){				
 				if($('.uploadifive-queue-item').length ==0){ //첨부파일이 하나도 없을시
 					$('#frm').submit();

@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -26,7 +27,27 @@
 	    document.listForm.submit();
 }
  
+function oldsort(){
+	 	document.listForm.pageIndex.value = 1;
+	 	document.listForm.sort.value = 2;
+	 	document.listForm.action = "<c:url value='/bookmark/getallbookmark'/>";
+	    document.listForm.submit();
+}
+
+function recentsort(){
+	 	document.listForm.pageIndex.value = 1;
+	 	document.listForm.sort.value = 1;
+	 	document.listForm.action = "<c:url value='/bookmark/getallbookmark'/>";
+	    document.listForm.submit();
+}
+ 
  $(function(){
+	 
+	 if(${sort} == 2){
+			$('#old').css("color","#00a2e4");
+		}else if(${sort} == 1 || ${sort} == null){
+			$('#recent').css("color","#00a2e4");
+	 }
 	 
 	//북마크 클릭시
 	$(".area-desc").click(function() { 
@@ -42,7 +63,7 @@
 					 method : "get",
 					 data : {issueId : issueid},
 					 success :function(data){	
-						alert('삭제성공') 	
+// 						alert('삭제성공') 	
 						$(location).attr('href', '${pageContext.request.contextPath}/bookmark/getallbookmark');
 					 }
 				})	
@@ -65,12 +86,13 @@
 		 width : auto;	 
 		 border: none; 
 		background: transparent;
+		padding: 6px;
 	}
 	
 	li strong{
 		display: inline-block;
 		text-align: center;
-		width: 30px;
+		padding: 6px;
 	}
 	
 	.pagingui{
@@ -85,6 +107,12 @@
 		 width:auto; float:left; margin:0 auto; text-align:center;"
 		 
 	}	
+	
+	#recent, #old{
+		background-color:transparent;  
+	 	border:0px transparent solid;
+	 	outline: none;
+	}
 	
 </style>
 
@@ -101,7 +129,11 @@
 		        <div class="row mb-1">
 		          <div class="col-sm-6">
 		          <br>
-		            <h3 class="jg" style=" padding-left : 10px;"><li class="nav-icon fas fa-bookmark"></li>&nbsp;북마크</h3>
+		            <h3 class="jg" style=" padding-left : 10px; display: inline-block;"><li class="nav-icon fas fa-bookmark"></li>&nbsp;북마크</h3>
+		            &nbsp;
+						<form:hidden path="sort" />
+						<form:button id="recent" onclick="javascript:recentsort();" >최신순</form:button> &nbsp;
+						<form:button id="old" onclick="javascript:oldsort();" >오래된순</form:button> &nbsp;
 		          </div>
 		          <div class="col-sm-6">
 		          	
@@ -155,7 +187,7 @@
 	                  <thead>
 	                    <tr>
 	                        <th class="jg" style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-	                     	<th class="jg"  style="padding-left: 50px; width: 35%;">  이슈 제목</th> 
+	                     	<th class="jg"  style="padding-left: 50px; width: 38%;">  이슈 제목</th> 
 							<th class="jg" style="text-align: center;">   작성자  </th>
 							<th class="jg" style="text-align: center;">   날짜   </th>
 							<th class="jg" style="text-align: center;">   종류   </th>
@@ -166,9 +198,24 @@
 	                      
 	                       <c:forEach items = "${bookmarklist }" var ="bookmark" varStatus="status">
 								<tr>			                 
-				                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((AllBookMarkVo.pageIndex-1) * AllBookMarkVo.pageUnit + (status.index+1))}"/>.</td>
-								
-									<td class="jg" style="padding-left: 50px; width: 35%;"><a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${bookmark.issueId}&reqId=${bookmark.reqId}"> ${bookmark.issueTitle }</a> </td>
+				                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
+				                    <c:if test="${sort == 1}">
+				                    	<c:out value="${paginationInfo.totalRecordCount - ((AllBookMarkVo.pageIndex-1) * AllBookMarkVo.pageUnit + status.index)}"/>.
+			                    	</c:if>
+			                    	<c:if test="${sort == 2}">
+				                    	<c:out value="${  ((AllBookMarkVo.pageIndex-1) * AllBookMarkVo.pageUnit + (status.index+1))}"/>.
+			                    	</c:if>
+									
+									<td class="jg" style="padding-left: 50px; width: 38%;">
+										<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${bookmark.issueId}"> 
+											<c:if test="${fn:length(bookmark.issueTitle) > 30}">									
+												${fn:substring(bookmark.issueTitle,0 ,30) }...
+											</c:if>
+											<c:if test="${fn:length(bookmark.issueTitle) <= 30}">									
+												${bookmark.issueTitle}
+											</c:if>
+										</a> 
+									</td>
 									<td class="jg" style="text-align: center;"> ${bookmark.memName }</td>
 									<td class="jg" style="text-align: center;"> ${bookmark.regDt }</td>
 									<c:if test="${bookmark.issueKind == 'issue'}">

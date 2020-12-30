@@ -14,7 +14,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
-
+	
+	body{
+		min-width: 800px;
+	}
 
 	#pagenum a{
 		 display: inline-block;
@@ -79,6 +82,12 @@
 		.contextmenu li:hover a {
 		  color: black;
 		}
+		
+		#recent, #old{
+			background-color:transparent;  
+		 	border:0px transparent solid;
+		 	outline: none;
+		}
 	
 </style>
 
@@ -94,6 +103,12 @@ $(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/insertissueView');
 	})
 	
+	
+	if(${sort} == 2){
+		$('#old').css("color","#00a2e4");
+	}else if(${sort} == 1 || ${sort} == null){
+		$('#recent').css("color","#00a2e4");
+	}
 	  
 
 	$("#pubfileList tr").on("mousedown", function(e){
@@ -167,8 +182,21 @@ function pubfilecopy(){
 	 	document.listForm.action = "<c:url value='/file/publicfileview'/>";
 	    document.listForm.submit();
 }
+
  
- 
+function oldsort(){
+	 	document.listForm.pageIndex.value = 1;
+	 	document.listForm.sort.value = 2;
+	 	document.listForm.action = "<c:url value='/file/publicfileview'/>";
+	    document.listForm.submit();
+}
+
+function recentsort(){
+	 	document.listForm.pageIndex.value = 1;
+	 	document.listForm.sort.value = 1;
+	 	document.listForm.action = "<c:url value='/file/publicfileview'/>";
+	    document.listForm.submit();
+}
  
 	 
 </script>
@@ -221,7 +249,11 @@ function pubfilecopy(){
 		        <div class="card-header  ">
 		        <div id="keyword" class="card-tools float-left"
 						style="width: 450px;">
-						<h3 class="jg" style="padding-left: 10px;">파일함</h3>
+						<h3 class="jg" style="padding-left: 10px; display: inline-block;">파일함</h3>
+						&nbsp;
+						<form:hidden path="sort" />
+						<form:button id="recent" onclick="javascript:recentsort();" >최신순</form:button> &nbsp;
+						<form:button id="old" onclick="javascript:oldsort();" >오래된순</form:button> &nbsp;
 				</div>	
 				<div id="keyword" class="card-tools float-right" style="width: 450px;">
 					<div class="input-group row">
@@ -267,13 +299,15 @@ function pubfilecopy(){
 	                <table class="table">
 	                  <thead>
 	                    <tr>
-	                        <th style="width: 200px;  text-align: center;" class="jg">No.</th>
-	                     	<th style="padding-left:60px; width: 200px;" class="jg"> 파일명</th> 
-	                     	<th style="text-align: center; width: 200px; " class="jg"> 카테고리명</th> 
-							<th style="text-align: center;" class="jg"> 소유자 </th>
-							<th style="text-align: center;" class="jg"> 날짜   </th>
-							<th style="text-align: center;" class="jg"> 확장자   </th>
-							<th style="text-align: center;" class="jg"> 용량   </th>
+	            
+	                    
+	                        <th style="width:10%; padding-left: 20px;  text-align: center;" class="jg">No.</th>
+	                     	<th style="padding-left: 30px; width: 30%;" class="jg"> 파일명</th> 
+	                     	<th style="text-align: center; width: 11%; " class="jg"> 카테고리명</th> 
+							<th style="text-align: center; width: 11%;" class="jg"> 소유자 </th>
+							<th style="text-align: center; width: 15%;" class="jg"> 날짜   </th>
+							<th style="text-align: center; width: 10%;" class="jg"> 확장자   </th>
+							<th style="text-align: center; width: 12%;" class="jg"> 용량   </th>
 <!-- 		                    <th></th> -->
 	                    </tr>
 	                  </thead>
@@ -282,10 +316,16 @@ function pubfilecopy(){
 	                      
 	                       <c:forEach items = "${pubfilelist  }" var ="file" varStatus="status">
 								<tr data-pubfileid="${file.pubId }" data-pubfilename="${file.pubFilename}">
-				                 	<td class="jg" style="width: 200px;  text-align: center;"><c:out value="${  ((publicFileVo.pageIndex-1) * publicFileVo.pageUnit + (status.index+1))}"/>.</td>
-									
-										
-									<td class="jg" style="padding-left: 50px; text-align: left; width: 400px;">
+				                 	<td class="jg" style="width:10%;  text-align: center;">
+				                 	
+										<c:if test="${sort == 1}">
+					                    	<c:out value="${paginationInfo.totalRecordCount - ((publicFileVo.pageIndex-1) * publicFileVo.pageUnit + status.index)}"/>.
+				                    	</c:if>
+				                    	<c:if test="${sort == 2}">
+					                    	<c:out value="${  ((publicFileVo.pageIndex-1) * publicFileVo.pageUnit + (status.index+1))}"/>.
+				                    	</c:if>
+									</td>	
+									<td class="jg" style="padding-left: 30px; text-align: left; width:30%;">
 									<input type="hidden" id="${file.pubId}" name="${file.pubId}">		
 									<input type="hidden" id="${file.pubFilename}" name="${file.pubFilename}">		
 										
@@ -294,34 +334,34 @@ function pubfilecopy(){
 									</td>
 									<c:if test="${file.categoryId == '1'}">
 										<c:set var="category" value="일감"> </c:set>
-										<td class="jg" style="text-align: center;"> ${category}</td>
+										<td class="jg" style="text-align: center; width: 11%;"> ${category}</td>
 									</c:if>
 									<c:if test="${file.categoryId == '3'}">
 										<c:set var="category" value="이슈"> </c:set>
-										<td class="jg" style="text-align: center;"> ${category}</td>
+										<td class="jg" style="text-align: center; width: 11%;"> ${category}</td>
 									</c:if>
 									<c:if test="${file.categoryId == '4'}">
 										<c:set var="category" value="건의사항"> </c:set>
-										<td class="jg" style="text-align: center;"> ${category}</td>
+										<td class="jg" style="text-align: center; width: 11%;"> ${category}</td>
 									</c:if>
 									<c:if test="${file.categoryId == '6'}">
 										<c:set var="category" value="일정"> </c:set>
-										<td class="jg" style="text-align: center;"> ${category}</td>
+										<td class="jg" style="text-align: center; width: 11%;"> ${category}</td>
 									</c:if>
-									<td class="jg" style="text-align: center;"> ${file.memId }</td>
-									<td class="jg" style="text-align: center;"> ${file.regDt }</td>
-									<td class="jg" style="text-align: center;"> ${fn:toUpperCase(file.pubExtension) }</td>
+									<td class="jg" style="text-align: center; width: 11%;"> ${file.memId }</td>
+									<td class="jg" style="text-align: center; width: 15%;"> ${file.regDt }</td>
+									<td class="jg" style="text-align: center; width: 10%;"> ${fn:toUpperCase(file.pubExtension) }</td>
 
 									<c:set var="balance" value="${file.pubSize}" />
 									<fmt:parseNumber var="i" type="number" value="${balance}" />
 									
 									<!-- 용량이 1024KB를 초과했을 시 MB로 표시 -->
 									<c:if test="${i >= 1024}">
-										<td class="jg" style="text-align: center;"> <fmt:formatNumber value="${i/1024}" pattern=".00" /> MB</td>
+										<td class="jg" style="text-align: center; width: 12%;"> <fmt:formatNumber value="${i/1024}" pattern=".00" /> MB</td>
 									</c:if>
 									<!-- 용량이 1024KB 이하일때 KB로 표시 -->
 									<c:if test="${i < 1024}">
-										<td class="jg" style="text-align: center;"> ${i} KB</td>
+										<td class="jg" style="text-align: center; width: 12%;"> ${i} KB</td>
 									</c:if>
 <!-- 			                        <td style="text-align: center;"> -->
 								</tr>

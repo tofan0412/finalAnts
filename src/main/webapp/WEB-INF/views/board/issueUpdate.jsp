@@ -120,7 +120,7 @@
 				insertcheck(); 
 			},
 			'onCancel': function (file) {// 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
-				alert('취소')
+// 				alert('취소')
 				QueueCnt--;
 				if(QueueCnt == 0){
 					$('#dragdiv').show();
