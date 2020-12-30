@@ -121,15 +121,24 @@ $(function(){
 		if ($('#voteTitle').val().length == 0){
 			$('.warningTitle').text("제목을 작성해 주세요.");
 			cnt++;
+		}else{
+			$('.warningTitle').text('');
 		}
-		if ($('#voteItemName').val().length == 0){
+		
+		if ($('#voteItemName').val().length < 2){
 			$('.warningItem').text("투표항목을 작성해 주세요.");
 			cnt++;
+		}else{
+			$('.warningItem').text('');
 		}
+		
 		if ($('#voteDeadline').val().length == 0){
 			$('.warningDate').text("마감일을 작성해 주세요.");
 			cnt++;
+		}else{
+			$('.warningDate').text('');
 		}
+		
 		if (cnt == 0){		
 			insertvote($('#voteitems').val());	
 		}
@@ -311,12 +320,13 @@ function itemdetail(voteid){
 	                <table class="table">
 	                  <thead>
 	                    <tr>
-	                        <th class="jg" style="width: 150px;  text-align: center;">No.</th>
+	                    
+	                        <th class="jg" style="width : 10%;  text-align: center;">No.</th>
 	                     	<th class="jg" style="padding-left: 30px; width:  38%;"> 투표제목</th> 
 							<th class="jg" style="text-align: center; width:  15%;"> 마감일  </th>
-							<th class="jg" style="text-align: center;"> 투표율  </th>
-							<th class="jg" style="text-align: center;">  상태   </th>
-							<th class="jg" style="text-align: center;"> 작성자 </th>
+							<th class="jg" style="text-align: center; width:  10%;"> 투표율  </th>
+							<th class="jg" style="text-align: center; width:  10%;">  상태   </th>
+							<th class="jg" style="text-align: center; width:  10%;"> 작성자 </th>
 <!-- 	                      <th style="text-align: center;">응답 상태</th> -->
 <!-- 	                      <th></th> -->
 	                    </tr>
@@ -325,7 +335,7 @@ function itemdetail(voteid){
 	                      
                        <c:forEach items = "${votelist }" var ="vote" varStatus="status">
                       	   <tr>
-			                    <td class="jg" style="width: 150px; text-align: center;"><c:out value="${  ((voteVo.pageIndex-1) * voteVo.pageUnit + (status.index+1))}"/>.</td>
+			                    <td class="jg" style="width : 10%; padding-left: 20px; text-align: center;"><c:out value="${  ((voteVo.pageIndex-1) * voteVo.pageUnit + (status.index+1))}"/>.</td>
 							
 								<td class="jg" style="padding-left: 30px; width:  38%;">
 									<a href="${pageContext.request.contextPath}/vote/voteDetail?voteId=${vote.voteId }">

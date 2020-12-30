@@ -158,7 +158,7 @@
 			    select c.issue_id , c.issue_title , to_char(c.reg_dt,'yyyy-mm-dd hh24:mi') as reg_dt , e.req_title as proName,
                         c.issue_kind, case when c.bookmem = #{memId} then c.book_id else null end bookmark , d.mem_name as mem_name
 				  from
-					  (select a.issue_id , a.issue_title , a.reg_dt , a.req_id,
+					  (select a.issue_id , a.issue_title , a.reg_dt , a.req_id, a.issue_cont,
 							  a.issue_kind, b.book_id , a.mem_id as issuemem, b.mem_id as bookmem , a.issue_del
 						 from issue a 
 						 left outer join  ( select *
@@ -193,7 +193,13 @@
 							AND c.issue_kind = #{issueKind}
 					</if>
 					
-					ORDER BY c.reg_dt desc
+					<if test = "sort == 2 ">
+							ORDER BY c.reg_dt 
+					</if>
+					<if test = "sort != 2 ">
+							ORDER BY c.reg_dt desc
+					</if>
+					
 			  ) S
 		
 				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 

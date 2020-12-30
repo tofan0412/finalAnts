@@ -118,6 +118,12 @@ public class BookmarkController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
+		if(allbookmarkVo.getSort() == null || allbookmarkVo.getSort().equals("1")) {
+			model.addAttribute("sort", "1");
+		}else {
+			model.addAttribute("sort", "2");
+		}
+		
 		if(allbookmarkVo.getSearchKeyword() != null) {			
 			session.setAttribute("searchKeyword", allbookmarkVo.getSearchKeyword());
 			session.setAttribute("searchCondition",allbookmarkVo.getSearchCondition());

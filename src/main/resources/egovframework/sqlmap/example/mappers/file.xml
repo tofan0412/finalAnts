@@ -101,8 +101,14 @@
 						</choose>
 							
 					</if>
+					
+					<if test = "sort == 2 ">
+							ORDER BY reg_dt, to_number(a.PUB_ID) desc
+					</if>
+					<if test = "sort != 2 ">
+							ORDER BY reg_dt desc, to_number(a.PUB_ID)
+					</if>
 				     
-				     ORDER BY reg_dt desc
 			     ) S
 	
 			 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 

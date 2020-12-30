@@ -74,7 +74,7 @@ public class HotIssueFileController {@Resource(name = "fileService")
 	 hotIssueFileVo.setLastIndex(paginationInfo.getLastRecordIndex());
 	 hotIssueFileVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 	
-	 List<HotIssueFileVo> hotissuefileList = fileService.hotissuefileList(hotIssueFileVo);
+	 List<?> hotissuefileList = fileService.hotissuefileList(hotIssueFileVo);
 	 model.addAttribute("hotissuefileList", hotissuefileList);
 	
 	 int totCnt = fileService.hotissuefilePagingListCnt(reqId);

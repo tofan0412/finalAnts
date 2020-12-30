@@ -13,7 +13,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style type="text/css">
-
+	body{
+		min-width: 700px;
+	}
 
 	#pagenum a{
 		 display: inline-block;
@@ -21,12 +23,13 @@
 		 width : auto;	 
 		 border: none; 
 		background: transparent;
+		padding: 6px;
 	}
 	
 	li strong{
 		display: inline-block;
 		text-align: center;
-		width: 30px;
+		padding: 6px;
 	}
 	
 	.pagingui{
@@ -40,6 +43,12 @@
 		 width:auto; float:left; margin:0 auto; text-align:center;"
 		 
 	}
+	
+	#recent, #old{
+		background-color:transparent;  
+	 	border:0px transparent solid;
+	 	outline: none;
+	}
 		
 	
 </style>
@@ -52,7 +61,13 @@ $(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/projectMember/insertissueView');
 	})
 	
-	$("#pagenum a").addClass("page-link");  
+	if(${sort} == 2){
+		$('#old').css("color","#00a2e4");
+	}else if(${sort} == 1 || ${sort} == null){
+		$('#recent').css("color","#00a2e4");
+	}
+	
+// 	$("#pagenum a").addClass("page-link");  
 	
 
 	// 북마크 클릭시
@@ -68,7 +83,7 @@ $(function(){
 					 data : {issueId : issueid},
 					 success :function(data){	
 						
-						alert('등록성공') 	
+// 						alert('등록성공') 	
 					 }
 				})				
 				return attr.replace("white", "black"); 
@@ -79,7 +94,7 @@ $(function(){
 					 data : {issueId : issueid},
 					 success :function(data){	
 						
-						alert('삭제성공') 	
+// 						alert('삭제성공') 	
 					 }
 				})	
 				return attr.replace("black", "white"); 
@@ -106,6 +121,19 @@ $(function(){
 	    document.listForm.submit();
 }
  
+function oldsort(){
+	 	document.listForm.pageIndex.value = 1;
+	 	document.listForm.sort.value = 2;
+	 	document.listForm.action = "<c:url value='/projectMember/myissuelist'/>";
+	    document.listForm.submit();
+}
+
+function recentsort(){
+	 	document.listForm.pageIndex.value = 1;
+	 	document.listForm.sort.value = 1;
+	 	document.listForm.action = "<c:url value='/projectMember/myissuelist'/>";
+	    document.listForm.submit();
+}
  
  
 	 
@@ -133,13 +161,18 @@ $(function(){
 		        <div class="row mb-1">
 		          <div class="col-sm-6">
 		         <br>
-		            <h3 class="jg" style=" padding-left : 10px;"><li class="nav-icon far fa-lightbulb"></li>&nbsp;내가 작성한 이슈</h3>
+		            <h3 class="jg" style=" padding-left : 10px; display: inline-block;"><li class="nav-icon far fa-lightbulb"></li>&nbsp;내가 작성한 이슈</h3>
+		             &nbsp;
+						<form:hidden path="sort" />
+						<form:button id="recent" onclick="javascript:recentsort();" >최신순</form:button> &nbsp;
+						<form:button id="old" onclick="javascript:oldsort();" >오래된순</form:button> &nbsp;
 		          </div>
 		          <div class="col-sm-6">
 		         
 		            <ol class="breadcrumb float-sm-right"  style="background : white">
 		              <li class="breadcrumb-item san jg"><a href="${pageContext.request.contextPath}/member/mainpage">Home</a></li>
 		              <li class="breadcrumb-item active jg">내가 작성한 이슈</li>
+		             
 		            </ol>
 		          </div>
 		        </div>
@@ -185,23 +218,29 @@ $(function(){
 	                <table class="table">
 	                  <thead>
 	                    <tr>
-	                        <th class="jg" style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-	                     	<th class="jg" style="padding-left: 50px; width : 35%;">  이슈 제목</th> 
-							<th class="jg" style="text-align: center;"> 프로젝트명 </th>
-							<th class="jg" style="text-align: center;">   날짜   </th>
-							<th class="jg" style="text-align: center;">   종류   </th>
-							<th class="jg" style="text-align: center;"> 즐겨찾기 </th>
-<!-- 	                      <th style="text-align: center;">응답 상태</th> -->
-	                      <th></th>
+	                        <th class="jg" style="width : 8%; padding-left: 20px; text-align: center; ">No.</th>
+	                     	<th class="jg" style="padding-left: 30px; width : 38%;">  이슈 제목</th> 
+							<th class="jg" style="text-align: center; width : 18%;"> 프로젝트명 </th>
+							<th class="jg" style="text-align: center; width : 14%;">   날짜   </th>
+							<th class="jg" style="text-align: center; width : 10%;">   종류   </th>
+							<th class="jg" style="text-align: center; width :10%;"> 즐겨찾기 </th>
 	                    </tr>
 	                  </thead>
 	                  <tbody>
 	                       <c:forEach items = "${myissuelist }" var ="issue" varStatus="status">
 								<tr>
-				                 
-				                    <td class="jg" style="width: 150px; padding-left: 50px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td>
+				                 <td class="jg" style="width: 8%; padding-left: 20px; text-align: center;">
+			                    	<c:if test="${sort == 1}">
+				                    	<c:out value="${paginationInfo.totalRecordCount - ((issueVo.pageIndex-1) * issueVo.pageUnit + status.index)}"/>.
+			                    	</c:if>
+			                    	<c:if test="${sort == 2}">
+				                    	<c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.
+			                    	</c:if>
+			                    	
+			                    </td>
+<%-- 				                    <td class="jg" style="width : 8%; padding-left: 20px; text-align: center;"><c:out value="${  ((issueVo.pageIndex-1) * issueVo.pageUnit + (status.index+1))}"/>.</td> --%>
 								
-									<td class="jg" style="padding-left: 50px; width : 35%;">
+									<td class="jg" style="padding-left: 30px; width : 38%;">
 										<a href="${pageContext.request.contextPath}/projectMember/eachissueDetail?issueId=${issue.issueId}&reqId=${issue.reqId}"> 
 											<c:if test="${fn:length(issue.issueTitle) > 30}">									
 												${fn:substring(issue.issueTitle,0 ,30) }...
@@ -211,31 +250,24 @@ $(function(){
 											</c:if>
 										</a> 
 									</td>
-									<td class="jg" style="text-align: center;"> ${issue.proName }</td>
-									<td class="jg" style="text-align: center;"> ${issue.regDt }</td>
+									<td class="jg" style="text-align: center; width : 18%;"> ${issue.proName }</td>
+									<td class="jg" style="text-align: center; width : 14%;"> ${issue.regDt }</td>
 									<c:if test="${issue.issueKind == 'issue'}">
-										<td class="jg" style="text-align: center;"> 이슈</td>										
+										<td class="jg" style="text-align: center; width : 10%;"> 이슈</td>										
 									</c:if>
 									<c:if test="${issue.issueKind == 'notice'}">
-										<td class="jg" style="text-align: center;"> 공지사항</td>										
+										<td class="jg" style="text-align: center; width : 10%;"> 공지사항</td>										
 									</c:if>
-<%-- 									<c:forEach items = "${bookmarklist }" var ="book" > --%>
 			
-	<!-- 									<td><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name="bookmark_toggle_01" -->
-	<!-- 													OnClick="toggle_img_src( 'bookmark_toggle_01', '/resources/dist/img/bookmark-white.png', '/resources/dist/img/bookmark-black.png');" style="cursor:pointer"></td> -->
 										<c:choose>
 											<c:when test="${issue.bookmark == '' || issue.bookmark == null }">
-												<td style="text-align: center;" class = "area-desc jg"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
+												<td style="text-align: center; width : 10%;" class = "jg"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
 											</c:when>
 											<c:otherwise>
-												<td style="text-align: center;" class = "area-desc jg"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
+												<td style="text-align: center; width : 10%;" class = "jg"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
 											</c:otherwise>
 										</c:choose>
 										
-								
-<%-- 									</c:forEach>  --%>
-			                      <td style="text-align: center;">
-									 
 								</tr>
 							 </c:forEach> 
 						<c:if test="${myissuelist.size() == 0}">
