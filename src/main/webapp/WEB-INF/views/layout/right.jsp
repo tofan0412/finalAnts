@@ -149,6 +149,7 @@ $(function(){
 						url : "/chat/insertChatMembers",
 						data 			: ajaxArr,
 						method 			: "POST",
+						
 						success 		: function(res){
 							arr = res.split("$$");
 							var cgroupId = arr[0];
@@ -220,6 +221,7 @@ $(function(){
 		if(factor){
 			// 채팅방에서 해당 회원을 나가게 한다.
 			var memId = '${SMEMBER.memId}';
+			var memName = '${SMEMBER.memName}';
 			var cgroupId = $('#cgroupId').val();
 			
 			$.ajax({
@@ -233,7 +235,7 @@ $(function(){
 							data : {memId : "$ANNOUNCE$",
 								    memName : "$ANNOUNCE$",
 								    cgroupId : cgroupId,
-									chatCont : memId+"님이 대화방을 나갔습니다." 
+									chatCont : memName + "[" + memId+ "]" +"님이 대화방을 나갔습니다." 
 									},
 							method : "POST",
 							success : function(res) {

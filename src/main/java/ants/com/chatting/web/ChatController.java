@@ -54,7 +54,7 @@ public class ChatController {
 		model.addAttribute("chatList", chatList);
 		return "chat/chatList";
 	}
-
+	
 	// 채팅방 이름을 누르면, 해당 채팅방 PK를 세션에 저장한다.
 	@RequestMapping("/changeCgroupSession")
 	public String changeCgroupSession(String cgroupId, HttpSession session) {
