@@ -35,14 +35,15 @@
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>
 							<when test="searchCondition == 1">
-								AND member.mem_name LIKE '%' || #{searchKeyword} || '%'
+								AND todo.todo_title LIKE '%' || #{searchKeyword} || '%'
 							</when>
 							<when test="searchCondition == 2">
 								AND todo.todo_cont LIKE '%' || #{searchKeyword} || '%'
 							</when>
 							<when test="searchCondition == 3">
-								AND todo.todo_title LIKE '%' || #{searchKeyword} || '%'
+								AND todo.todo_percent LIKE '%' || #{searchKeyword} || '%'
 							</when>
+							
 						</choose>
 					</if>
 				order by todo_id desc))a
@@ -93,6 +94,9 @@
 							<when test="searchCondition == 3">
 								AND todo.todo_title LIKE '%' || #{searchKeyword} || '%'
 							</when>
+							<when test="searchCondition == 4">
+								AND todo.todo_percent LIKE '%' || #{searchKeyword} || '%'
+							</when>
 						</choose>
 					</if>
 				order by todo_id desc))a
@@ -101,27 +105,57 @@
 		</select>
 
 	<!-- 페이지처리위한 요구사항개수 -->
-		<select id="todoListCount" parameterType="String"
+		<select id="todoListCount" parameterType="ants.com.board.manageBoard.model.TodoVo"
 			resultType="java.lang.Integer">
-			<![CDATA[
+			
 				SELECT COUNT(*)
-					FROM todo
-					WHERE req_id = #{reqId}
-					AND del = 'N'
-					AND todo_parentid is null
-		    ]]>
+					FROM todo a, member b
+					WHERE a.mem_id=b.mem_id
+					AND a.req_id = #{reqId}
+					AND a.del = 'N'
+					AND a.todo_parentid is null
+					
+				<if test="searchKeyword != null and searchKeyword != ''">
+						<choose>
+							<when test="searchCondition == 1">
+								AND b.mem_name LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 2">
+								AND a.todo_cont LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 3">
+								AND a.todo_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 4">
+								AND a.todo_percent LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</if>
+				
 		</select>
 		
 	<!-- 내일감 페이지 처리를 위한 요구사항개수 -->
-		<select id="todoMyListCount" parameterType="String"
+		<select id="todoMyListCount" parameterType="ants.com.board.manageBoard.model.TodoVo"
 			resultType="java.lang.Integer">
-			<![CDATA[
-				SELECT COUNT(*)
-					FROM todo
-					WHERE req_id = #{reqId}
-					AND mem_id= #{memId}
-					AND del = 'N'
-		    ]]>
+			SELECT COUNT(*)
+				FROM todo 
+				WHERE req_id = #{reqId}
+				AND mem_id= #{memId}
+				AND del = 'N'
+		    <if test="searchKeyword != null and searchKeyword != ''">
+						<choose>
+							<when test="searchCondition == 1">
+								AND todo_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 2">
+								AND todo_cont LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 3">
+								AND todo_percent LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							
+						</choose>
+					</if>
 		</select>
 
 	<!-- 한개의 할일 조회 -->

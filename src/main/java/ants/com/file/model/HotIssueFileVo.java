@@ -12,6 +12,7 @@ public class HotIssueFileVo extends BaseVo{
 	private String hissuefExtension;
 	private String regDt;
 	private String hissuefSize;
+	private String reqId;
 	
 	
 	public HotIssueFileVo() {
@@ -32,6 +33,14 @@ public class HotIssueFileVo extends BaseVo{
 		this.hissuefFilename = hissuefFilename;
 		this.hissuefExtension = hissuefExtension;
 		this.hissuefSize = hissuefSize;
+	}
+
+	public String getReqId() {
+		return reqId;
+	}
+
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
 	}
 
 	public String getHissuefId() {
@@ -78,11 +87,12 @@ public class HotIssueFileVo extends BaseVo{
 	public void setHissuefSize(String hissuefSize) {
 		this.hissuefSize = hissuefSize;
 	}
+
 	@Override
 	public String toString() {
 		return "HotIssueFileVo [hissuefId=" + hissuefId + ", hissueId=" + hissueId + ", hiussefFilepath="
-				+ hiussefFilepath + ", hissuefFilename=" + hissuefFilename + ", regDt=" + regDt + ", hissuefSize="
-				+ hissuefSize + "]";
+				+ hiussefFilepath + ", hissuefFilename=" + hissuefFilename + ", hissuefExtension=" + hissuefExtension
+				+ ", regDt=" + regDt + ", hissuefSize=" + hissuefSize + ", reqId=" + reqId + "]";
 	}
 	
 }

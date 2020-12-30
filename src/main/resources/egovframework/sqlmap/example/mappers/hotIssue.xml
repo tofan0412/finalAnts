@@ -52,14 +52,27 @@
 		</select>
 
 		<!-- 페이지처리위한 요구사항개수 -->
-		<select id="issueListCount" parameterType="String"
+		<select id="issueListCount" parameterType="ants.com.board.manageBoard.model.HotIssueVo"
 			resultType="java.lang.Integer">
-			<![CDATA[
-				SELECT COUNT(*)
-					FROM hotissue
-					WHERE req_id = #{reqId}
-					AND del = 'N'
-		    ]]>
+			
+			SELECT COUNT(*)
+				FROM hotissue a, member b
+				WHERE a.writer = b.mem_id 
+				AND a.req_id = #{reqId}
+				AND a.del = 'N'
+		    <if test="searchKeyword != null and searchKeyword != ''">
+						<choose>
+							<when test="searchCondition == 1">
+								AND b.mem_name LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 2">
+								AND a.hissue_title LIKE '%' || #{searchKeyword} || '%'
+							</when>
+							<when test="searchCondition == 3">
+								AND a.hissuet_cont LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</if>
 		</select>
 		
 		

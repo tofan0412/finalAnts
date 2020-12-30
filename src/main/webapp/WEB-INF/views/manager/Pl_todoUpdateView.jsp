@@ -76,7 +76,7 @@
 		   	} 	   
 	    })
 	    
-	    
+	    var QueueCnt = 0;
 	    var uploadCnt = 0;
      	//파일 업로드
      	$('#file_upload').uploadifive({
@@ -101,8 +101,15 @@
 				insertcheck(); 
 			},
 			'onCancel': function (file) {
-				alert('실패')
-			} // 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
+				QueueCnt--;
+				if(QueueCnt == 0){
+					$('#dragdiv').show();
+				}
+			}, 
+			'onAddQueueItem'   : function(file) { // 대기열에 추가되는 각 파일에 대해 트리거됩니다.
+				QueueCnt++;
+				$('#dragdiv').hide();
+			}
 		});
      	
      	
@@ -229,6 +236,11 @@
 		width : 200px;
 		height: 30px;
 	}
+	#dragdiv {
+		text-align: center;
+		color: darkgray;
+		line-height: 170px;
+	}
 
 </style>
 </head>
@@ -318,7 +330,9 @@
 	</form>
 	
  <form style="padding-left: 2%;">
-		<div id="queue"></div>
+		<div id="queue">			
+					<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
+				</div>
 			<input id="file_upload" name="file" type="file" multiple="true"/>
 		<br><br>
 		<div class="float-right" >		
