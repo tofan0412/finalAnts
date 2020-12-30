@@ -290,7 +290,7 @@ SELECT *
 				AND
 					todo.del = 'N'
 				AND todo.req_id = #{reqId}
-                AND ROWNUM <= 5
+                AND ROWNUM <= 4
                 and todo.TODO_PERCENT !='100'
                 AND (Round(TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
 					To_date(to_char(todo.todo_end,'yyyymmdd')),0)>=-7 and Round(TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
