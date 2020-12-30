@@ -69,6 +69,8 @@ body{
 				<form id="fmin" role="form" class="form-horizontal" action="/member/profileupdate" method="POST" enctype="multipart/form-data">
 				<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 					
+				<input name="memFilepath" type="hidden" value="${memberVo.memFilepath}">
+				
 				<div class="text-center" title="이미지를 클릭하면 변경할 수 있어요!">
 					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border: 1px solid white; height: 200px; width:140px; margin: 0 auto;">
 					<c:if test="${fn:substring(memberVo.memFilepath,0 ,1) eq '/' }">									
@@ -80,7 +82,7 @@ body{
 <!-- 						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;"/> -->
 					</div><br>		 
 					<div class="content">
-						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left;" />	
+						<input id="picture" type="file" name="Filename" accept=".gif, .jpg, .png" style="height: 37px; float:left;" />	
 					</div>
 				</div> 	
 				

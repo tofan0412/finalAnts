@@ -147,7 +147,8 @@
 			WHERE todo.mem_id = b.mem_id
 			AND todo.del = 'N'
 			AND (todo.todo_id = #{todoId}
-            OR   todo.todo_parentid = #{todoId}) 
+            OR   todo.todo_parentid = #{todoId})
+            order by todo.todo_id asc
 			]]>
 		</select>
 		
@@ -255,7 +256,7 @@
 				todo_title =#{todoTitle},
 				todo_percent =#{todoPercent},
 				todo_importance =#{todoImportance},
-				todo_level ='1',
+				todo_level =#{todoLevel},
 				mem_id= #{memId}
 			WHERE
 				todo_id = #{todoId}

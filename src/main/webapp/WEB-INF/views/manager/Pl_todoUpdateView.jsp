@@ -243,6 +243,7 @@
 			<form method="post" action="${pageContext.request.contextPath }/todo/updatetodo" id="todoform"  enctype="multipart/form-data">	
 		        <div class="form-group">
 				<input type="hidden" name="todoId" value="${todoVo.todoId }">
+				<input type="hidden" name="todoLevel" value="${todoVo.todoLevel }">
 				<label for="todoTitle" class="col-sm-1 control-label ns">제목</label>
 				<input  class="ns" type="text" name="todoTitle" style="width: 1000px;" id="todoTitle" value="${todoVo.todoTitle }">
 				<div class="jg" style=" padding-left: 10px; display: inline;"><span class="jg warningtodoTitle" style="color : red;"></span></div><br><br>
