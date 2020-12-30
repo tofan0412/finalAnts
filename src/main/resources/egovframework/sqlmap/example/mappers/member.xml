@@ -57,7 +57,14 @@
 	
 				
 	<update id="profileupdate" parameterType="ants.com.member.model.MemberVo">
-		UPDATE MEMBER SET mem_name = #{memName}, mem_pass = #{memPass}, mem_tel = #{memTel}, mem_filepath = #{memFilepath}, mem_filename = #{memFilename}
+		UPDATE MEMBER 
+		 <set>
+	        <if test="memName != null">mem_name=#{memName},</if>
+	        <if test="memPass != null">mem_pass=#{memPass},</if>
+	        <if test="memTel != null">mem_tel=#{memTel},</if>
+	        <if test="memFilepath != null">mem_filepath=#{memFilepath},</if>	 	            
+	        <if test="memFilename != null">mem_filename=#{memFilename},</if>	 	             	                     	            
+	    </set>  
 		WHERE MEM_ID = #{memId}
 	</update>
 	

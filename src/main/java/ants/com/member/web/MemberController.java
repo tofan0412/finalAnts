@@ -317,16 +317,15 @@ public class MemberController {
 
 		} else {
 			// 기본 이미지 중에 선택했을때
-//			if (!imgname.equals("") && !imgname.equals(null)) {
-//				Filepath = imgname;
-//				Filename = imgname.split("/")[4];
-//
-//				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
-//			} else {
-//				Filepath = "http://localhost/profile/user-0.png";
+			if (!imgname.equals("") && !imgname.equals(null)) {
 				Filepath = "/profile/"+ imgname.split("/")[4];
 				Filename = imgname.split("/")[4];
-//			}
+
+			// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+			} else {
+				Filepath = "http://localhost/profile/user-0.png";
+				Filename = "user-0.png";
+			}
 		}
 
 		memberVo.setMemFilepath(Filepath);
@@ -530,11 +529,11 @@ public class MemberController {
 
 	@RequestMapping(path = "/profileupdate", method = RequestMethod.POST) // VO 객체 바로 뒤에 Binding 와야함... 안그럼 매칭안됨
 	public String profileupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
-			@RequestPart(value = "memFilename", required = false) MultipartFile file) {
+			@RequestPart(value = "Filename", required = false) MultipartFile file) {
 
 		String Filename = "";
 		String Filepath = "";
-
+		
 		if (!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
 
 			if (br.hasErrors()) {
@@ -557,16 +556,14 @@ public class MemberController {
 		} else {
 
 			// 기본 이미지 중에 선택했을때
-//			if (!imgname.equals("") && !imgname.equals(null)) {
-//				Filepath = imgname;
-//				Filename = imgname.split("/")[4];
-//
-//				// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
-//			} else {
-//				Filepath = "http://localhost/profile/user-0.png";
+			if (!imgname.equals(memberVo.getMemFilepath())) {
 				Filepath = "/profile/"+ imgname.split("/")[4];
 				Filename = imgname.split("/")[4];
-//			}
+			// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+			}else {
+				Filepath = memberVo.getMemFilepath();
+				Filename = memberVo.getMemFilename();
+			}
 		}
 		memberVo.setMemFilepath(Filepath);
 		memberVo.setMemFilename(Filename);
@@ -574,7 +571,7 @@ public class MemberController {
 		int updateCnt = memberService.profileupdate(memberVo);
 
 		if (updateCnt == 1) {
-			return "redirect:/member/profile";
+			return "redirect:/member/profile?memId="+memberVo.getMemId();
 		} else {
 			return "tiles/member/profileupdateview";
 		}
