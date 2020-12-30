@@ -41,8 +41,8 @@ body{
 	height : 42px;
 }
 .indiv{
-	margin-left: 20px;
-} 	
+	margin-left: 7px;	
+} 				
 .phoneNumber{
 	padding : 10px;
 	padding-left : 20px;
@@ -75,65 +75,80 @@ body{
 						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" src="/profile/user-1.png"/>
 					</div><br>						
 					<div class="content">				
-						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left;" />	
 						<input type="text" id="imgname" name="imgname" style="display: none">	
 					</div>	
 				</div> 	
-					
+						
 									
 				<h3 class="profile-username text-center">
 					<!-- 경로 미리보기용 <div id="clickmsg">경로 : </div>	<hr>  -->
-					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none" readonly/>
+					<input class="profile-username text-center" type="text" class="form-control"  style="border:none; outline:none;" readonly/>
 				</h3>
-				<p class="text-muted text-right">
+				<p class="text-muted text-right">	
 				</p>
-						
-										
-				<ul class="list-group list-group-unbordered mb-3"> 
-					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>아이디</b>  	
-						<a class="float-right">
-							<input class="input" name="memId" type="email" id="memId" placeholder="사용중인 이메일을 입력해 주세요" onkeyup="chkID()"/><br>
-							<div style="margin-top:10px;">	
-								<div id="checkMsg" class="indiv" style="float:left;"></div>	
-								<div id="checkid" class="indiv" ></div>	
-								<button type="submit" id="checkbtn" style="float:right; height:30px; width:120px; background:white; color:black; border:1px solid black; font-size:14px; margin-right:20px;">중복확인</button>
-							</div>		
-						</a>	 			 		
-					</li>		   						
-								
-					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>이름</b> 
-						<a class="float-right">
-							<input class="input" name="memName" type="text" id="memName" placeholder="이름"/>
-						</a>
-					</li> 
-					
-					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b>
-						<a class="float-right">
-							<input class="input" name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합"/>
-							<div id="checkPass1" class="indiv"></div>
-						</a>
-					</li>			
-								
-					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b> 
-						<a class="float-right">
-							<input class="input" type="password" style="" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" />
-							<div id="checkPass2" class="indiv"></div>	
-						</a>
-					</li>	
+											
+					<hr>	
+					<div style="width:340px; float:left;">
+						<span style="color: red; font-weight: bold;">*</span><b>아이디</b><br>	
+						<b style="font-size:13px; margin-left:7px;">( 중복확인이 되어야 등록버튼이 활성화 됩니다. )</b>		
+						<div id="checkid" class="indiv"></div>	
+						<div id="checkMsg" class="indiv"></div>	
+					</div>
 							
-					<li class="list-group-item">	<b>전화번호</b> 
-						<a class="float-right">
-							<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력"/>
-							<div id="checkTel" class="indiv"></div>
-						</a>
-					</li>
-				</ul>
-						
+					<div style="float:right;">				
+						<input class="input" name="memId" type="email" id="memId" placeholder="사용중인 이메일을 입력해 주세요" onkeyup="chkID()"/><br>
+						<div style="margin-top:10px;">	
+							<button type="submit" id="checkbtn" style="float:right; height:30px; width:120px; background:white; color:black; border:1px solid black; font-size:14px; margin-right:20px;">중복확인</button>
+						</div>		
+					</div> 				 		
+					<br><br><br><br>								 	  						
+					<hr>
+					
+					<div style="width:340px; float:left;">
+						<span style="color: red; font-weight: bold;">*</span><b>이름</b>
+					</div>
+					<div style="float:right;">				
+						<input class="input" name="memName" type="text" id="memName" placeholder="이름"/>
+					</div> 				 		
+					<br><br><br>								 	  						
+					<hr>	
+					
+					<div style="width:340px; float:left;">
+						<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b>
+						<div id="checkPass1" class="indiv"></div>
+					</div>
+					<div style="float:right;">				
+						<input class="input" name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합"/>
+					</div> 				 		
+					<br><br><br>								 	  						
+					<hr>
+
+					<div style="width:340px; float:left;">
+						<span style="color: red; font-weight: bold;">*</span><b>비밀번호 확인</b>
+						<div id="checkPass2" class="indiv"></div>
+					</div>
+					<div style="float:right;">				
+						<input class="input" type="password" style="" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" />
+					</div> 				 		
+					<br><br><br>								 	  						
+					<hr>
+							
+					<div style="width:340px; float:left;">
+						<b>전화번호</b><br>		
+						<b style="font-size:13px;">( 전화번호는 비밀번호 분실시 <br>전화번호 인증용으로 사용됩니다. )</b>	
+						<div id="checkTel" class="indiv"></div>
+					</div>					
+					<div style="float:right;">				
+						<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력"/>
+					</div> 				 		
+					<br><br><br>								 	  						
+					<hr>					
+													
 				<div style="float:right;">				
 					<button type="button" style="height:40px; margin-right:20px;" id="registBtn" disabled="disabled">등록</button>
 					<button type="button" style="height:40px;" id="cancelBtn" onclick="window.history.back()">취소</button>
 				</div>	
-					
+						
 				<div style="display:none;">					
 					<input class="input" type="text" name="memAlert" value="Y" placeholder="알람" /><br>
 					<input class="input" type="text" name="del" value="N" placeholder="삭제" /><br>
@@ -169,12 +184,16 @@ body{
 			<img src="/profile/user-6.png" id="img6" name="img6" class="imgc"/>
 			<img src="/profile/user-7.png" id="img7" name="img7" class="imgc"/>
 			<img src="/profile/user-8.png" id="img8" name="img8" class="imgc"/>
+        </div>		
+        <div class="modal-footer">	
+        </div>		
+        <div>
+        	<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height:37px; float:left; padding-left:30px;"/>
+        	<button type="button" id="closemodal" class="close" data-dismiss="modal" style="height:25px; margin-right:20px;">닫기</button>	
+        	<button type="button" class="close" data-dismiss="modal" style="height:25px; margin-right:15px;">확인</button><br><br>		
         </div>	
-        <div class="modal-footer">
-          <button type="button" class="close" data-dismiss="modal" style="height:25px; width:80px;">Close</button>
-        </div>
-      </div>	
-    	  										
+      </div>			
+    	  																
 		</div>
 	</div>
   
@@ -189,20 +208,22 @@ body{
 
 // 이메일 형식 정규식
 function chkID(){
-	var emailRule = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-			
-	if($('#memId').val() == null || $('#memId').val() == '') {          
-		 $('#checkMsg').html('<p></p>');
-		 return false;
-	} else if(!emailRule.test($('#memId').val())){
-		 $('#checkMsg').html('<p style="color:red">이메일 형식이 맞지 <br>않습니다.</p>');
-		 return false;
-	} else {	
-		 $('#checkMsg').html('<p></p>'); 
-		return true;
-	}	
-}			
+	var emailRule = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 		
+	if($('#memId').val() == null || $('#memId').val() == '') {          	
+		 $('#checkMsg').html('<p></p>');
+		 return false;	
+	}
+		
+	if(!emailRule.test($('#memId').val())){
+		 $('#checkMsg').html('<p style="color:red">이메일 형식이 맞지 않습니다.</p>');
+		 return false;
+	} else if(emailRule.test($('#memId').val())){
+		 $('#checkMsg').html('<p></p>');
+		 return true;	
+	} 					
+}				
+			
 // 핸드폰 번호 정규식
 $(document).on("keyup", ".phoneNumber", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
@@ -218,18 +239,12 @@ function chkPW(){
 	 // 비밀번호 일치 확인
 	 var pw1 = document.getElementById('memPass').value;
 	 var pw2 = document.getElementById('memPass2').value;
-	
-	 if(pw1 != pw2){ 
-		 $('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
-	 } else if(pw2 == null || pw2 == ''){
-		 $('#checkPass2').html('<p></p>'); 
-		 if(pw1 == null || pw1 == ''){
-			 $('#checkPass1').html('<p></p>'); 
-		 }
-	 } else { 	
-	 	 $('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
-	 }		
-	 				
+		
+	 if(pw1 == null || pw1 == ''){
+		 	$('#checkPass1').html('<p></p>');
+		 	return false;
+	 } 	
+	 		
 	 if(pw.length < 8 || pw.length > 20){
 	 	$('#checkPass1').html('<p style="color:red">8자리 ~ 20자리 이내로 입력해주세요.</p>');
 	 	return false;
@@ -239,30 +254,30 @@ function chkPW(){
 	 	return false;
 	 }
 	 else if(num < 0 || eng < 0 || spe < 0 ){
-	 	$('#checkPass1').html('<p style="color:red">영문,숫자, 특수문자를 혼합하여 입력해주세요.</p>');
+	 	$('#checkPass1').html('<p style="color:red">영문,숫자,특수문자를 혼합하여 <br>입력해주세요.</p>');
 	 	return false;
-	 }
+	 }		
 	 else {
-	 	$('#checkPass1').html('<p style="color:blue">사용 가능한 비밀번호 입니다.</p>');
+	 	$('#checkPass1').html('<p style="color:blue">사용가능한 비밀번호 입니다.</p>');
 	    return true;
 	 }
-}	
+}			
 
 // 비밀번호 일치 확인
 function unityPW(){
 	var pw1 = document.getElementById('memPass').value;
 	var pw2 = document.getElementById('memPass2').value;
 	
-	if(pw1 != pw2){ 
+	if(pw2 == null || pw2 == ''){
+	 	$('#checkPass2').html('<p></p>');
+	 	return false;
+ 	} 	
+		
+	if(pw1 != pw2){
 		$('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
-	} else if(pw2 == null || pw2 == ''){
-		 $('#checkPass2').html('<p></p>'); 
-		 if(pw1 == null || pw1 == ''){
-			 $('#checkPass1').html('<p></p>'); 
-		 }
-	} else { 
-		$('#checkPass2').html('<p style="color:blue">사용가능</p>'); 
-	}	
+	} else { 	
+		$('#checkPass2').html('<p style="color:blue">비밀번호가 일치합니다.</p>'); 
+	}
 }
  	
 //등록버튼시 미입력 된것 있으면 경고창
@@ -283,12 +298,14 @@ $(document).ready(function() {
 				$('#fmin').submit();
 			}else{
 				alert("비밀번호가 일치하지 않습니다.");
-			}
+			}	
+		}else{
+			alert("다시 확인해주세요.")
 		}
 	})
 })	
 	
-// 중복검사
+// 중복검사	
 var newpass1 = document.getElementById('memPass');
 var newpass2 = document.getElementById('memPass2');
 $(document).ready(function(){ 
@@ -297,21 +314,24 @@ $(document).ready(function(){
 			url: '/member/checkSignup', 
 			dataType : 'json',
 			data: { "memId" : $('#memId').val() }, 
-			success: function(data){
-				if($.trim(data) == 0 && $('#memId').val() != "" && chkID()){ 
-					$('#checkMsg').html('<p style="color:blue">사용가능한 아이디</p>'); 
-					btn = document.getElementById('registBtn')
+			success: function(data){	
+				btn = document.getElementById('registBtn');
+				if($.trim(data) == 1){ 			
+					$('#checkid').html('<p style="color:red">중복된 아이디 입니다.</p>');
+					btn.disabled = true;
+				}else if($.trim(data) == 0 && $('#memId').val() != "" && chkID()){ 
+					$('#checkid').html('<p style="color:blue">사용가능한 아이디 입니다.</p>');
 					btn.disabled = false;
-				}else{ 		
-					$('#checkMsg').html('<p style="color:red">중복된 아이디</p>'); 
-				}	
-			}		
+				}else if($('#memId').val() == null || $('#memId').val()== ''){	
+					$('#checkid').html('<p style="color:red">아이디를 입력해주세요.</p>');
+					btn.disabled = true;	
+				}			
+			}			
 		}); //end ajax 
 		return false;	/* 페이지 새로고침 막기 */
 	}); //end on 
 }); 
-	
-
+		
 // 기본이미지 - 파일 중 1선택 
 $(document).ready(function(){
 			
@@ -321,8 +341,10 @@ $(document).ready(function(){
 	// picture input의 파일 변경시 이벤트 
 	$("#picture").change(function(){
 		readURL(this);
-	});
+		
+	});	
 });
+
 // 파일의 경로 읽어서 이미지뷰에 보이게 하기
 function readURL(input) {
 	if (input.files && input.files[0]) {
@@ -424,5 +446,16 @@ function readURL(input) {
 				
 				$("#myModal").modal('hide');					// 모달창 닫기
 			});
+			
+				
+			// 파일 선택후 취소시 기본 이미지로 보여주기	
+			$('#closemodal').click(function(){
+				var picture = document.getElementById('picture');// 파일 value값 지우기
+				picture.value = null;
+					
+				imgsrc = document.getElementById('img1').src	// 경로 가져오기
+				$('#pictureViewImg').attr('src', imgsrc); 		// 뷰어에 이미지 보여주기
+				$('#imgname').attr('value', imgsrc);			// 경로값 속성으로 추가			
+			});	
 		});
 </script>	
