@@ -136,6 +136,8 @@
 		$("#msgArea").append("서버 연결 끊김..");
 	}
 	$(function() {
+		popInviteMemList = [];
+		
 		// 문서 로딩이 끝나면 최 하단으로 내린다...
 		$("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);
 		
@@ -150,6 +152,9 @@
 		
 		// 팝업창 관련 스크립트 - 회원 초대 팝업창
 		$('.userInviteBtn').on('click',function(){
+			// 초대할 회원 목록 초기화
+			popInviteMemList = [];
+			// 프로젝트 멤버 회원 리스트 초기화
 			$('.popInvite .popInviteMemList').empty();
 			
 			if ($('.popInvite').css('display') == 'none'){
@@ -204,10 +209,10 @@
 		
 		// popInvite에서 사용자 초대 버튼을 눌렀을 때...
 		$('.popInviteMemList').on('click', '.popInviteMemBtn', function(){
-			alert("!");
+			var memId = $(this).attr("memId");
+			
+			
 		})
-		
-		
 		
 		
 	})
@@ -414,6 +419,8 @@
 		       border : 2px solid grey;
 		       overflow-y : auto; 
 		       border-radius : 0.45rem;"></div>
+	<hr>
+	<button class="btn btn-primary" type="button" style="float : right;">초대하기</button>
 </div>
 
 
