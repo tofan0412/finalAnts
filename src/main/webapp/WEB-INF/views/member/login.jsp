@@ -108,8 +108,8 @@
     position: absolute;
     left: 85%;
     top: 42px;						
-    color: black;	
-}				
+    color: AAAAAA;
+}					
 </style>
 
 <script>
@@ -398,10 +398,10 @@ $(document).on("keyup", "#mailtel", function() {
 								
 				<div class="passviewdiv">
 					<input type="password" class="form-control login" id="memPass" name="memPass" value="" style="display: inline-block; border:none; outline:0; float:left;">
-					<i class="fa fa-eye fa-lg"></i>	
+					<i class="fa fa-eye fa-lg"  style="font-size:30px;"></i>	
 				</div>		
-						
-																	
+							
+																		
 			</div>		
 					
 			<div class="row">

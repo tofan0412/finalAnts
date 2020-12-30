@@ -179,6 +179,7 @@
 			$("#changemem").val('${todoVo.memId }');
 			$("#memChangecomment").show();
 			$("#mem-select").remove();
+			$("#mem-select_1").remove();
 			$("#mem-select2").attr('id','mem-select3');
 		
 		});
@@ -252,7 +253,8 @@
 				</div>
 				<br><br>
 				<label for="mem-select" class="col-sm-1 control-label ns">담당자</label>
-				<input  class="ns" type="text" id="mem-select" name="memId" value="${todoVo.memId }" readonly="readonly">
+				<input  class="ns" type="hidden" id="mem-select" name="memId" value="${todoVo.memId }" readonly="readonly">
+				<input  class="ns" type="text" id="mem-select_1"  value="${todoVo.memName }" readonly="readonly">
 				<input  class="ns" type="button" id="memChange" value="인수인계">
 				<div id="memChangecomment">
 				<label for="memChangeComment" class="col-sm-1 control-label ns">인수인계 내용</label>

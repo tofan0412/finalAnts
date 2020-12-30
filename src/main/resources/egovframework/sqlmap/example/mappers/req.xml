@@ -15,9 +15,15 @@
                         		FROM reqlist
                         	   WHERE mem_id = #{memId}
                         	     AND del = 'N'
-		                        <if test="searchKeyword != null and searchKeyword != ''">
+		                         ) b
+                        LEFT OUTER JOIN project p 
+                        			 ON b.req_id = p.req_id
+                        LEFT OUTER JOIN member m
+                        			 ON b.pl_id = m.mem_id
+                        WHERE 1=1
+                        <if test="searchKeyword != null and searchKeyword != ''">
 							        <choose>
-							            <when test="searchCondition == 0">
+							        	<when test="searchCondition == 0">
 											AND	req_title LIKE '%' || #{searchKeyword} || '%'
 										</when>
 							            <when test="searchCondition == 1">
@@ -26,15 +32,6 @@
 							            <when test="searchCondition == 3">
 											AND	status LIKE '%' || #{searchKeyword} || '%'    
 										</when>
-									</choose>
-								</if> ) b
-                        LEFT OUTER JOIN project p 
-                        			 ON b.req_id = p.req_id
-                        LEFT OUTER JOIN member m
-                        			 ON b.pl_id = m.mem_id
-                        WHERE 1=1
-                        <if test="searchKeyword != null and searchKeyword != ''">
-							        <choose>
 							            <when test="searchCondition == 2">
 											AND	m.mem_name LIKE '%' || #{searchKeyword} || '%'
 										</when>
@@ -51,9 +48,13 @@
 	<select id="reqListCount" parameterType="ants.com.member.model.ReqVo"
 		resultType="java.lang.Integer">
 	
-		    	SELECT COUNT(*)
-				  FROM reqlist
-				 WHERE mem_id = #{memId}
+		    	SELECT count(*)
+				  FROM (SELECT * 
+                        FROM reqlist
+                        WHERE mem_id = #{memId}) b 
+                  LEFT OUTER JOIN member m 
+                                    ON b.pl_id = m.mem_id
+                  WHERE 1=1
 				 <if test="searchKeyword != null and searchKeyword != ''">
 			        <choose>
 			            <when test="searchCondition == 0">
@@ -63,7 +64,7 @@
 							AND	req_period LIKE '%' || #{searchKeyword} || '%'
 						</when>
 			            <when test="searchCondition == 2">
-							AND	pl_Id LIKE '%' || #{searchKeyword} || '%'
+							AND	mem_name LIKE '%' || #{searchKeyword} || '%'
 						</when>
 			            <when test="searchCondition == 3">
 							AND	status LIKE '%' || #{searchKeyword} || '%'
