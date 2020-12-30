@@ -154,7 +154,7 @@
  		$('#mailsub').on('click',function(){
  			if($('#pwidhidden').val() == $('#mailId').val()){
 		 		if(chkID()){
-		 			alert('메일을 발송했습니다. 메일을 확인해 주세요');	
+		 			//alert('메일을 발송했습니다. 메일을 확인해 주세요');	
 		 	 		$('#mailform').submit();	
 		 		} else {	
 		 			alert('아이디(이메일)를 확인해주세요');
