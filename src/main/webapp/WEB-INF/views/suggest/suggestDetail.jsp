@@ -457,6 +457,7 @@ label{
 .writeCon{
 width:100%; overflow:visible; background-color:transparent; border:none;
  		resize :none; 
+ 		padding-left: 40px;
 }
 
 #re_con{
@@ -601,13 +602,22 @@ width:100%; overflow:visible; background-color:transparent; border:none;
 						<c:forEach items="${replylist }" var="replylist">
 							<div id="replydiv" style="padding-left: 40px;">			
 							<c:if test= "${replylist.del == 'N'}">
-								<label class="jg">${replylist.memId }</label>
+								<c:if test="${fn:substring(replylist.memFilepath,0 ,1) eq '/' }">									
+									<img id="imge" style="width: 40px; height:  40px; border-radius: 50%; border: 1.5px solid #adb5bd;"  src="${replylist.memFilepath}" />
+								</c:if>
+								<c:if test="${fn:substring(replylist.memFilepath,0 ,2) eq 'D:' }">		
+									<img id="pict" style="width:  40px; height:  40px;  border-radius: 50%; border: 1px solid #adb5bd;" src="/profileImgView?memId=${replylist.memId}" />
+								</c:if>
+								<label style="display: inline-block;" class="jg">${replylist.memName }</label>
+								<label >( ${replylist.memId } )</label>
 									
-								<textarea style="width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
+								<textarea style=" width:100%; overflow:visible; background-color:transparent; border:none;"  disabled class ="writeCon">${replylist.replyCont}</textarea>
 								
 								[ ${replylist.regDt} ] 	
 									
-								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">		
+								<c:if test= "${replylist.memId == SMEMBER.memId && replylist.del == 'N'}">	
+									
+									
 									<input type="hidden" value="${replylist.replyId}">
 									<input type="hidden" value="${replylist.someId}">																							
 									<input id ="replydelbtn" type="button" class="btn btn-default jg" value ="삭제"/>						
