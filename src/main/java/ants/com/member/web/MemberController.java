@@ -2,6 +2,7 @@ package ants.com.member.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -357,10 +359,11 @@ public class MemberController {
 	}
 
 	// 비밀번호 수정 - 이메일
-	/** 자바 메일 발송 * @throws MessagingException * @throws AddressException **/
+	/** 자바 메일 발송 * @throws MessagingException * @throws AddressException 
+	 * @throws IOException **/
 	@RequestMapping(value = "/mailsender")
-	public String mailSender(MemberVo memberVo, HttpServletRequest request, ModelMap mo, Model model)
-			throws AddressException, MessagingException {
+	public String mailSender(MemberVo memberVo, HttpServletRequest request, HttpServletResponse response, ModelMap mo, Model model)
+			throws AddressException, MessagingException, IOException {
 	
 		// 네이버일 경우 smtp.naver.com 을 입력합니다.
 		// Google일 경우 smtp.gmail.com 을 입력합니다.
@@ -369,7 +372,7 @@ public class MemberController {
 		String host = "smtp.naver.com";
 
 		// POP3/IMAP 설정시 네이버에서 알려줌
-		final String username = "noylit"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
+		final String username = "poiqqw"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
 		final String password = "1234e5678"; // 네이버 이메일 비밀번호를 입력해주세요.
 		int port = 465; // 포트번호
 		
@@ -404,15 +407,32 @@ public class MemberController {
 		session.setDebug(true); // for debug
 
 		Message mimeMessage = new MimeMessage(session); // MimeMessage 생성
-		mimeMessage.setFrom(new InternetAddress("noylit@naver.com")); // 발신자 셋팅, 보내는 사람의 이메일주소를 한번 더 입력합니다. 이때는 이메일 풀
+		mimeMessage.setFrom(new InternetAddress("poiqqw@naver.com")); // 발신자 셋팅, 보내는 사람의 이메일주소를 한번 더 입력합니다. 이때는 이메일 풀
 																		// 주소를 다 작성해주세요.
 		mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); // 수신자셋팅 //.TO 외에 .CC(참조)
 																							// .BCC(숨은참조) 도 있음
-
+		
 		mimeMessage.setSubject(subject); // 제목셋팅
 		mimeMessage.setText(body); // 내용셋팅
-		Transport.send(mimeMessage); // javax.mail.Transport.send() 이용 }
-
+		
+		boolean mailsend = true;
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+			
+		try {
+			Transport.send(mimeMessage); // javax.mail.Transport.send() 이용 }
+		}catch(MessagingException e) {
+			out.println("<script>alert('메일발송이 실패하였습니다.');</script>");
+			out.flush();	
+			mailsend = false;
+		}
+		
+		if(mailsend) {
+			out.println("<script>alert('메일을 발송했습니다. 메일을 확인해 주세요');</script>");
+			out.flush();	
+			mailsend = true;
+		}
+			
 		return "main.tiles/main";
 	}
 
