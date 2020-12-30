@@ -144,15 +144,15 @@
 		      <!-- Default box -->
 		      <div class="card jg">
 		        <div class="card-header">
-		          <a class="jg" href="/project/pmProjectgetReq?reqId=${reqVo.reqId }" style="color: #0BB783;">프로젝트 공간으로 가시겠습니까?</a>
+		          <c:if test="${reqVo.proName != null }">
+			          <a class="jg" href="/project/pmProjectgetReq?reqId=${reqVo.reqId }" style="color: #0BB783;">프로젝트 공간으로 가시겠습니까?</a>
+		          </c:if>
 		
 		          <div class="card-tools">
 		            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
 		              <i class="fas fa-minus"></i>
 		            </button>
-		            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-		              <i class="fas fa-times"></i>
-		            </button>
+		            
 		          </div>
 		        </div>
 		        <div class="card-body">
@@ -272,37 +272,37 @@
 						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1" >
 						  <li>
 							<c:choose>
-								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'png' or fn:toLowerCase(file.pubExtension) eq 'jpg'}">
+								<c:when test="${fn:toLowerCase(files.pubExtension) eq 'png' or fn:toLowerCase(files.pubExtension) eq 'jpg'}">
 									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
 										<i class="far fa-fw fa-image "></i>&nbsp;${files.pubFilename }
 									</a>
 								</c:when>
-								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'pdf'}">
+								<c:when test="${fn:toLowerCase(files.pubExtension) eq 'pdf'}">
 									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
 										<i class="far fa-file-pdf"></i>&nbsp;${files.pubFilename }
 									</a>
 								</c:when>
-								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'docx'}">
+								<c:when test="${fn:toLowerCase(files.pubExtension) eq 'docx'}">
 									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
 										<i class="far fa-file-archive"></i>&nbsp;${files.pubFilename }
 									</a>
 								</c:when>
-								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'pptx'}">
+								<c:when test="${fn:toLowerCase(files.pubExtension) eq 'pptx'}">
 									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
 										<i class="far fa-file-powerpoint"></i>&nbsp;${files.pubFilename }
 									</a>
 								</c:when>
-								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'zip'}">
+								<c:when test="${fn:toLowerCase(files.pubExtension) eq 'zip'}">
 									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
 										<i class="far fa-file-archive"></i>&nbsp;${files.pubFilename }
 									</a>
 								</c:when>
-								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'zip'}">
+								<c:when test="${fn:toLowerCase(files.pubExtension) eq 'zip'}">
 									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
 										<i class="far fa-file-archive"></i>&nbsp;${files.pubFilename }
 									</a>
 								</c:when>
-								<c:when test="${fn:toLowerCase(file.pubExtension) eq 'xlsx' or fn:toLowerCase(file.pubExtension) eq 'xls'}">
+								<c:when test="${fn:toLowerCase(files.pubExtension) eq 'xlsx' or fn:toLowerCase(file.pubExtension) eq 'xls'}">
 									<a href="${cp }/file/publicfileDown?pubId=${files.pubId}" class="btn-link text-secondary">
 										<i class="far fa-file-excel"></i>&nbsp;${files.pubFilename }
 									</a>

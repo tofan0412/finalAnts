@@ -64,10 +64,6 @@
 </style>
 <script>
 	
-	//뒤로가기
-	$("#back").on("click", function() {
-		window.history.back();
-	});
 	
 	function checkInputNum(){
 		if ((event.keyCode < 48) || (event.keyCode > 57)){
@@ -79,6 +75,7 @@
     var QueueCnt = 0;
 	
 	$(function (){
+		reqId2 = "${reqVo.reqId}";
 	  	// Summernote
 		$('#summernote').summernote({
 		  height: 400,                 				// 에디터 높이
@@ -106,7 +103,7 @@
 	         "fileSizeLimit": "20MB",
 	         "uploadLimit": 10,
 			 'onUploadComplete' : function(file, data) {
-				 reqList();
+				 reqDetail(reqId2);
 				 
 			},
 			'onCancel': function (file) {// 파일이 큐에서 취소되거나 제거 될 때 트리거됩니다.
@@ -144,11 +141,11 @@
 								if($('.uploadifive-queue-item').length>0){
 									fileUpload(data.reqVo);
 								}else{
-									reqList();
+									reqDetail(data.reqVo.reqId);
 								}
 						},
 						error:function(request,status,error){
-					        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							document.location = "/req/reqList";
 					    }
 				 });
 				 event.preventDefault();	     	
@@ -182,7 +179,7 @@
 								if($('.uploadifive-queue-item').length>0){
 									fileUpload(data.reqVo);
 								}else{
-									reqList();
+									reqDetail(data.reqVo.reqId);
 								}
 							 }
 						},
@@ -230,29 +227,20 @@
 						if($('.uploadifive-queue-item').length>0){
 							fileUpload(reqVo);
 						}else{
-							reqList();
+							reqDetail(reqVo.reqId);
 						}
 					 }
 			 });
 		}
 
+	/* 요구사항정의서 목록으로 이동 */
+	function reqDetail(reqId){
+			document.location = "/req/reqDetail?reqId="+reqId;   		
+	}
 		
 }); //document.ready
 	
-	/* 요구사항정의서 목록으로 이동 */
-	function reqList(){
-			document.location = "/req/reqList";   		
-	}
 	
-	
-
-	
-	function initData(){
-		$('#reqTitle').val("텀블러 자동세척기 개발");
-		$('#memId').val("pm1");
-		$('#summernote').val("위잉위잉 자동세척해주는 기계개발사업입니다.");
-		$('#reqPeriod').val("30");
-	}
 	
 </script>
 </head>
@@ -351,10 +339,10 @@
 					<div class="card-footer">
 				     <div class="row">
 					     <div class="col-12">
-					       <a href="#" class="btn btn-secondary" id="back">취소</a>
+					       <a href="/req/reqList" class="btn btn-secondary" id="back">취소</a>
 					       <c:choose>
 						       	<c:when test="${registerFlag == 'modify' }">
-						       		<input type="button" class="btn-success float-right insertbtn" id="updatebtn" value="수정">
+						       		<input type="button" class="btn btn-success float-right insertbtn" id="updatebtn" value="수정">
 						       	</c:when>
 						       	<c:when test="${registerFlag == 'create' }">
 						       		<input type="button" class="btn btn-success float-right insertbtn" id="insertbtn" value="저장">
@@ -371,13 +359,6 @@
 	          </div>
 	        </div>
 	        <!-- /.col-->
-	       
-	     
-	
-	
-
-
-	
 	
 
 </body>

@@ -29,9 +29,6 @@
 							            <when test="searchCondition == 1">
 											AND	req_period LIKE '%' || #{searchKeyword} || '%'
 										</when>
-							            <when test="searchCondition == 3">
-											AND	status LIKE '%' || #{searchKeyword} || '%'    
-										</when>
 							            <when test="searchCondition == 2">
 											AND	m.mem_name LIKE '%' || #{searchKeyword} || '%'
 										</when>
@@ -66,9 +63,6 @@
 			            <when test="searchCondition == 2">
 							AND	mem_name LIKE '%' || #{searchKeyword} || '%'
 						</when>
-			            <when test="searchCondition == 3">
-							AND	status LIKE '%' || #{searchKeyword} || '%'
-						</when>
 					</choose>
 				</if>
 	
@@ -88,10 +82,13 @@
 			 , r.PL_ID
 			 , r.CATEGORY_ID
              , m.MEM_NAME as PL_NAME
+             , p.PRO_NAME
 		FROM reqlist r
         LEFT OUTER JOIN member m
         			 ON r.pl_id = m.mem_id
-        WHERE req_id = #{reqId}
+        LEFT OUTER JOIN project p
+                     ON r.req_id = p.req_id
+        WHERE r.req_id = #{reqId}
 	</select>
 
 	<insert id="reqInsert" parameterType="ants.com.member.model.ReqVo">
