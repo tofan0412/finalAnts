@@ -75,9 +75,7 @@ input:checked + .slider:before {
 					/* 알람 토글(on/off) 스타일 */
 </style>
 
-<script>	
-
-							/*  알람 토글(on/off) 기능     */
+<script>					/*  알람 토글(on/off) 기능     */
 function toggle(element){
 	
 	// 알람 on
@@ -102,11 +100,9 @@ function toggle(element){
         error : function(error) {
         }
 	}) 
-} 
- 
-
+} 	
 </script>
-</head>
+
 
 <body class="hold-transition sidebar-mini" >	
 	<div class="wrapperdd" style="margin-left:25%; margin-right:25%;">

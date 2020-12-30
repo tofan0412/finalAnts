@@ -250,7 +250,7 @@ public class AdminController {
 		return "admin.tiles/memberlist/memberList2";
 	}
 	
-	// 각 공지사항 상세보기
+	// 각 회원정보 상세보기
 	@RequestMapping("/eachmemlistDetail")
 	public String geteachmemlist(String memId, HttpSession session, Model model) {
 		
@@ -268,6 +268,13 @@ public class AdminController {
 	public String memlistprofile(HttpSession session, MemberVo memberVo, Model model) {
 		
 		MemberVo dbMember = adminService.getMember(memberVo);
+//		MemberVo dbMember = null;
+//		if(memberVo.getMemId() != ((MemberVo) session.getAttribute("SMEMBER")).getMemId()) {
+//			dbMember = adminService.getMember(memberVo);
+//		}else {
+//			memberVo = (MemberVo) session.getAttribute("SMEMBER");
+//			dbMember = adminService.getMember(memberVo);
+//		}
 		
 		model.addAttribute("memberVo",dbMember);
 		
@@ -279,9 +286,7 @@ public class AdminController {
 	@RequestMapping("/memlistprofileupdate")
 	public String memlistprofileupdate(MemberVo memberVo, Model model) {
 		MemberVo dbMember = adminService.getMember(memberVo);
-		
 		model.addAttribute("memberVo", dbMember);
-		
 		return "admin.tiles/memberlist/profileupdateview";
 	}
 	
@@ -313,8 +318,15 @@ public class AdminController {
 
 		} else {
 
+			// 기본 이미지 중에 선택했을때
+			if (!imgname.equals(memberVo.getMemFilepath())) {
 				Filepath = "/profile/"+ imgname.split("/")[4];
 				Filename = imgname.split("/")[4];
+			// 기본이미지 값이 널일때 (기본이미지/파일 아무것도 선택 안함)
+			}else {
+				Filepath = memberVo.getMemFilepath();
+				Filename = memberVo.getMemFilename();
+			}
 		}
 		memberVo.setMemFilepath(Filepath);
 		memberVo.setMemFilename(Filename);
@@ -323,6 +335,7 @@ public class AdminController {
 
 		if (updateCnt == 1) {
 			return "redirect:/admin/memlistprofile?memId=" + memberVo.getMemId();
+//			return "redirect:/admin/memlistprofile";
 		} else {
 			return "admin.tiles/memberlist/profileupdateview";
 		}
