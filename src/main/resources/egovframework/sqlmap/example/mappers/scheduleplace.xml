@@ -134,7 +134,7 @@
 				#{calendarcss})
 				</if>
 				<if test="endDt == null">
-				#{startDt}, 
+				to_date(#{startDt})+1, 
 				NULL,
 				#{calendarcss})
 				</if>
@@ -201,7 +201,7 @@
 				#{calendarcss})
 				</if>
 				<if test="endDt == null">
-				NULL, 
+				to_date(#{startDt})+1,
 				NULL,
 				#{calendarcss})
 				</if>
