@@ -167,14 +167,15 @@ public class AdminController {
 		
 		noticeVo.setAdminId("admin");
 		
-		int insertCnt = adminService.insertnotice(noticeVo);
+//		int insertCnt = adminService.insertnotice(noticeVo);
+		adminService.insertnotice(noticeVo);
 
-		if(insertCnt>0) {		
+//		if(insertCnt>0) {		
 			return "redirect:/admin/noticelist";
-		}else {
-			return "redirect:/admin/insertnoticeView";
-			
-		}	
+//		}else {
+//			return "redirect:/admin/insertnoticeView";
+//			
+//		}	
 	}
 	
 	
@@ -199,7 +200,7 @@ public class AdminController {
 		int insertCnt = adminService.updatenotice(noticeVo);
 		
 		if(insertCnt>0) {		
-			return "redirect:/admin/noticelist";
+			return "redirect:/admin/eachnoticeDetail?noticeId=" + noticeVo.getNoticeId();
 		}else {
 			return "redirect:/admin/updatenoticeView";
 			
@@ -293,7 +294,7 @@ public class AdminController {
 	
 	 @RequestMapping(path="/memlistproupdate", method = RequestMethod.POST)                // VO 객체 바로 뒤에 Binding 와야함... 안그럼 매칭안됨
 	public String memlistproupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
-			@RequestPart(value = "memFilename", required = false) MultipartFile file) {
+			@RequestPart(value = "Filename", required = false) MultipartFile file) {
 
 		String Filename = "";
 		String Filepath = "";
@@ -346,11 +347,12 @@ public class AdminController {
 	@RequestMapping("/delmemlist")
 	public String delmemlist(String memId, HttpSession session, Model model) {		
 		int delCnt = adminService.delmemlist(memId);
-		if(delCnt>0) {		
-			return "redirect:/admin/memberlist";
-		}else {
-			return "redirect:/admin/eachmemlistDetail?memId="+memId;
-		}
+//		if(delCnt>0) {		
+//			return "redirect:/admin/memberlist";
+//		}else {
+//			return "redirect:/admin/eachmemlistDetail?memId="+memId;
+//		}
+		return "redirect:/admin/memberlist";
 	}
 	
 	// Ip 리스트 전체 가져오기 -> 차단 리스트 또는 허용 리스트

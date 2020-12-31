@@ -19,6 +19,8 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -47,10 +49,33 @@
 	   	$('#noticeTitle').keyup(function (e){
 	   	    var content = $(this).val();   		
 	   		if (content.length > 66){
-// 	   	        alert("최대 66자까지 입력 가능합니다.");
+	   	        alert("최대 66자까지 입력 가능합니다.");
 	   	     	$(this).val(content.substring(0, 65));
 	   	    }
 	   	}); 
+		
+	 	// 작성 버튼 클릭시 파일 업로드 호출
+     	$('#regBtn').on('click', function(){
+     		cnt = 0;
+     		// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
+ 			if ($('#noticeTitle').val().length == 0){
+				$('.warningTitle').text("제목을 작성해 주세요.");  
+				cnt++;
+			}
+     		
+     	});
+	 	
+     	$('#insertbtn').on('click', function(){
+     		cnt = 0;
+     		// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
+ 			if ($('#noticeTitle').val().length == 0){
+				$('.warningTitle').text("제목을 작성해 주세요.");  
+				cnt++;
+			}
+     		
+     	});
+	 	
+	 	
  	});
 	
 </script>
@@ -67,6 +92,9 @@
 					<!-- 제목라인 -->
 					<div class="form-group">
 	                	<input class="form-control " placeholder="Subject:" id="noticeTitle" name="noticeTitle">
+	                	<div class="jg" style=" padding-left: 10px;">
+	                		<span class="jg warningTitle" style="color : red;"></span>
+	                	</div>
 	                </div>
 	                <!-- note라인 -->
 	                <div class="form-group">
@@ -81,10 +109,15 @@
 	        			</select>
 	                </div>
 	                
-					<div class="float-right">
-						<input type="submit" class="btn btn-default" id="insertbtn" value="작성">
-						<button type="button" class="btn btn-default jg" id="back">취소</button>
-					</div>
+	                <form>
+						<div class="float-right">
+							<input type="submit" class="btn btn-default" id="insertbtn" value="작성">
+							<input type="button" class="btn btn-default" id="insertbtn" value="작성">
+							<button type="button" class="btn btn-default jg" id="regBtn">등록</button>
+							<button type="submit" class="btn btn-default jg" id="regBtn">등록1</button>
+							<button type="button" class="btn btn-default jg" id="back">취소</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</form>

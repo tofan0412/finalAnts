@@ -16,6 +16,7 @@
 		 border: none; 
 	
 	}
+	/*
 	#table{
 		width : 100%;
 	    border-top: 1px solid #444444;
@@ -26,6 +27,7 @@
  	    border-bottom: 1px solid #444444; 
  	    padding: 10px; 
    	} 
+   	*/
    	
 	li strong{
 		display: inline-block;
@@ -49,6 +51,11 @@
 		height: 50px;
 		width: 150px;
 		padding: 5px;
+	}
+	#recent, #old{
+		background-color:transparent;  
+	 	border:0px transparent solid;
+	 	outline: none;
 	}
 </style>
 
@@ -77,8 +84,9 @@ $(function(){
  }
  
  function search(){
-	 	document.listForm.action = "<c:url value='/admin/projectlist'/>";
-	    document.listForm.submit();
+	document.listForm.pageIndex.value = 1;
+	document.listForm.action = "<c:url value='/admin/projectlist'/>";
+    document.listForm.submit();
 }
 </script>
 
@@ -93,11 +101,11 @@ $(function(){
 						<br>
 						<div class="col-sm-6">
 							<br>
-							<h1 class="nav-icon fas fa-tasks" style="padding-left: 10px;">&nbsp;프로젝트 리스트1</h1>
+							<h1 class="nav-icon fas fa-tasks" style="padding-left: 10px;">&nbsp;프로젝트 리스트</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right" style="background: white">
-								<li class="breadcrumb-item san jg"><a href="#">Home</a></li>
+								<li class="breadcrumb-item san jg"><a href="${pageContext.request.contextPath}/admin/adMainView">Home</a></li>
 								<li class="breadcrumb-item active jg">프로젝트 리스트</li>
 							</ol>
 						</div>
@@ -116,7 +124,7 @@ $(function(){
 							<form:select path="searchCondition"
 								class="form-control col-md-3 jg" style="width: 100px;">
 								<form:option value="1" class="jg" label="제목" />
-								<form:option value="2" class="jg" label="관계자" />
+								<form:option value="2" class="jg" label="담당자" />
 							</form:select>
 
 
@@ -144,33 +152,32 @@ $(function(){
 	            		<!-- 헤더부분  -->
 						<thead>
 							<tr>
-								<th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-								<th style="text-align: center;">제목</th>
-								<th style="text-align: center;">담당자</th>
-								<th style="text-align: center;">날짜</th>
-								<th style="text-align: center;"></th>
+								<th class="jg" style="width: 10%; padding-left: 30px; text-align: center;">No.</th>
+								<th class="jg" style="padding-left: 30px; width: 37%">제목</th>
+								<th class="jg" style="text-align: center; width: 10%">담당자</th>
+								<th class="jg" style="text-align: center; width= 15%">날짜</th>
+								<th class="jg" style="text-align: center;"></th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach items="${projectlist }" var="project" varStatus="status">
 								<tr>
-									<td style="width: 150px; padding-left: 50px; text-align: center;">
+									<td class="jg" style="width: 10%; padding-left: 30px; text-align: center;">
 										<c:out value="${  ((projectVo.pageIndex-1) * projectVo.pageUnit + (status.index+1))}" />.</td>
-									<td style="text-align: center;">${project.proName }</td>
-									<td style="text-align: center;">${project.memId }</td>
-									<td style="text-align: center;">${project.regDt }</td>
-									<td><button type="button" class="btn btn-danger projectDelBtn" reqId=${project.reqId }>삭제</button></td>
+									<td class="jg" style="padding-left: 30px; width: 37%">${project.proName }</td>
+									<td class="jg" style="text-align: center; width: 10%">${project.memId }</td>
+									<td class="jg" style="text-align: center;" width="15%">${project.regDt }</td>
+									<td><button type="button" class="btn btn-danger projectDelBtn" style="width:45pt;height:22pt;font-size: 15px" reqId=${project.reqId }>삭제</button></td>
 								</tr>
 							</c:forEach>
 							<c:if test="${projectlist.size() == 0}">
-								<td colspan="7" style="text-align: center;"><br>
+								<td colspan="7" style="text-align: center;" class="jg"><br>
 								<strong> [ 결과가 없습니다. ] </strong></td>
 							</c:if>
 						</tbody>
 					</table>
 	            </div>
 	            <!-- 리스트 부분 끝 -->
-	            
 	            <br>
 				<!-- 페이징,등록 부분 시작 -->
 				<div id="paging" class="card-tools">

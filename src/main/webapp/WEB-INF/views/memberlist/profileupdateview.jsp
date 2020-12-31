@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!-- <meta http-equiv="x-ua-compatible" content="ie=edge"> -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
@@ -70,6 +71,8 @@
 				
 				<form id="fmin" role="form" class="form-horizontal" action="/admin/memlistproupdate" method="POST" enctype="multipart/form-data">
 				<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
+				
+				<input name="memFilepath" type="hidden" value="${memberVo.memFilepath}">
 					
 				<div class="text-center" title="이미지를 클릭하면 변경할 수 있어요!">
 					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border: 1px solid white; height: 200px; width:140px; margin: 0 auto;">
@@ -82,7 +85,8 @@
 <!-- 						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;"/> -->
 					</div><br>		 
 					<div class="content">
-						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left; outline: none;" />	
+<!-- 						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left; outline: none;" />	 -->
+						<input id="picture" type="file" name="Filename" accept=".gif, .jpg, .png" style="height: 37px; float:left; outline: none;" />	
 					</div>
 				</div> 	
 						
@@ -113,7 +117,7 @@
 					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b>
 						<a class="float-right">
 							<div>
-								<input class="input"  name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합" value="${memberVo.memPass}" readonly/>
+								<input class="input"  name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합" value="${memberVo.memPass}" />
 							</div>
 							<div id="checkPass1" class="indiv"></div>
 						</a>
@@ -121,7 +125,7 @@
 								
 					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b> 
 						<a class="float-right">
-							<input class="input" type="password" style="float:left" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" value="${memberVo.memPass}" readonly/>
+							<input class="input" type="password" style="float:left" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" value="${memberVo.memPass}" />
 							<div id="checkPass2" class="indiv"></div>	
 						</a>
 					</li>	
@@ -139,7 +143,7 @@
 								<option value="PM">PM</option>
 								<option value="MEM">MEM</option>
 							</select>
-							<input class="input" name="memType" type="text" id="memType"  value="${memberVo.memType}"/>
+							<input class="input" name="memType" type="text" id="memType"  value="${memberVo.memType}" readonly="readonly"/>
 						</a>
 					</li>
 				</ul>
@@ -203,8 +207,8 @@
 <script src="/resources/bootstrap/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/resources/bootstrap/dist/js/adminlte.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript">
 
+<script type="text/javascript">
 $(function() {
 	$(document).ready(function() {
 		$('select[name=memTypeSelect]').change(function() {

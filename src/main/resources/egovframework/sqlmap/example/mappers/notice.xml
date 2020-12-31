@@ -90,7 +90,7 @@
 		    notice_id, notice_title, notice_cont,  reg_dt,  
 		    admin_id, del, importance
 		) VALUES (
-		    NOTICE_SEQ.nextval, #{noticeTitle}, #{noticeCont}, sysdate, 
+		    NOTICE_SEQ.nextval, #{noticeTitle}, #{noticeCont}, SYSDATE, 
 		     #{adminId}, 'N', #{importance}
 		)
 		

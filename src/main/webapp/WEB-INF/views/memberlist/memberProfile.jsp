@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 
+<head>
 <style>
 body{
 	min-width: 1100px;
@@ -99,11 +100,27 @@ function toggle(element){
         },    
         error : function(error) {
         }
-	}) 
+	})
+	
+	
+	
 } 	
+
+</script>
+<script type="text/javascript">
+$(function(){
+	// 삭제하기 버튼
+	$("#delmemlist").on('click', function(){
+        if(confirm("정말 삭제하시겠습니까 ?") == true){
+			$(location).attr('href', '${pageContext.request.contextPath}/admin/delmemlist?memId=${memberVo.memId }');
+        }else{
+        	return;
+        }
+	})
+})
 </script>
 
-
+</head>
 <body class="hold-transition sidebar-mini" >	
 	<div class="wrapperdd" style="margin-left:25%; margin-right:25%;">
 		<div class="register-card-body">
@@ -156,15 +173,11 @@ function toggle(element){
 			</div>
 			<!-- 프로필 리스트 끝 -->
 				
-			<div class="card-footer" style="background-color: white">
-				<div class="row">
-					<div class="col-sm-6">
-						<a href="/admin/memberlist"><button type="button" id="registBtn" class="btn btn-success">목록</button></a>
-						<a href="/admin/memlistprofileupdate?memId=${memberVo.memId}"><button type="button" id="registBtn" class="btn btn-info ">수정</button></a>
-						<a href="/admin/delmemlist?memId=${memberVo.memId }"><button type="button" id="delmemlist" class="btn btn-danger">삭제</button></a>
-					</div>
-					 
-				</div>
+			<div class="card-footer clearfix" >
+				<a href="/admin/memberlist"><button type="button" id="registBtn" class="btn btn-default float-left jg">목록</button></a>
+				<a href="/admin/memlistprofileupdate?memId=${memberVo.memId}"><button type="button" id="registBtn" class="btn btn-default float-right jg">수정</button></a>
+				<a href="/admin/delmemlist?memId=${memberVo.memId }"><button type="button" id="delmemlist" class="btn btn-default float-right jg">삭제</button></a>
+<!-- 					<input type="button" id="delmemlist" value="삭제1" class="btn btn-default float-right jg"> -->
 			</div>
 				
 			<!-- style="display: none" -->
