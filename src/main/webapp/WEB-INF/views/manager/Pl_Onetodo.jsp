@@ -192,7 +192,7 @@
 				 </div>
 			</c:if>
 			<c:if test="${SMEMBER.memId ne projectVo.memId }">
-		         <div id="btnMenu">
+		         <div id="btnMenu" class="card-footer">
 		          	<c:if test="${todo.todoLevel eq '1' }">
 					 	<button type="button" class="btn btn-default jg " id="backtolist">목록으로</button>    
 					 </c:if>
@@ -328,9 +328,8 @@
 				 </div>
 				 </c:if>
 				 <c:if test="${SMEMBER.memId ne projectVo.memId }">
-		         <div id="btnMenu">
+		         <div id="btnMenu" class="card-footer">
 		         	<c:if test="${todo.todoLevel eq '1' }">
-					 	<button type="button" class="btn btn-default jg float-right " id="creatChildBtn">하위일감 생성</button>
 					 	<button type="button" class="btn btn-default jg float-left" id="backtolist">목록으로</button>    
 					 </c:if>
 					 <c:if test="${todo.todoLevel eq '2' }">

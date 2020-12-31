@@ -173,10 +173,10 @@ $(function(){
 			</div>
 			<!-- 프로필 리스트 끝 -->
 				
-			<div class="card-footer clearfix" >
+			<div class="card-footer clearfix" style="background-color: white">
 				<a href="/admin/memberlist"><button type="button" id="registBtn" class="btn btn-default float-left jg">목록</button></a>
 				<a href="/admin/memlistprofileupdate?memId=${memberVo.memId}"><button type="button" id="registBtn" class="btn btn-default float-right jg">수정</button></a>
-				<a href="/admin/delmemlist?memId=${memberVo.memId }"><button type="button" id="delmemlist" class="btn btn-default float-right jg">삭제</button></a>
+				<a href="/admin/delmemlist?memId=${memberVo.memId }"><button type="button" id="delmemlist" class="btn btn-danger float-right jg">삭제</button></a>
 <!-- 					<input type="button" id="delmemlist" value="삭제1" class="btn btn-default float-right jg"> -->
 			</div>
 				

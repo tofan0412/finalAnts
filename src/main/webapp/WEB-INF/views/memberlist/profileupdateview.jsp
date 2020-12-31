@@ -55,7 +55,13 @@
 		height : 50px;
 		border-radius: 80px;	
 		outline: none;
-	} 	
+	} 
+	.passviewdiv i{
+    position: absolute;
+    left: 94%;
+    top: 21px;						
+    color: AAAAAA;
+}		
 </style>	
 		
 <body>
@@ -116,17 +122,21 @@
 					
 					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b>
 						<a class="float-right">
-							<div>
-								<input class="input"  name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합" value="${memberVo.memPass}" />
+							<div class="passviewdiv">
+								<input class="input"  name="memPass" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합" value="${memberVo.memPass}" />
+								<i class="fa fa-lock"  style="font-size:30px;"></i>
+								<div id="checkPass1" class="indiv"></div>
 							</div>
-							<div id="checkPass1" class="indiv"></div>
 						</a>
 					</li>			
 								
-					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b> 
+					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호 확인</b> 
 						<a class="float-right">
-							<input class="input" type="password" style="float:left" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" value="${memberVo.memPass}" />
-							<div id="checkPass2" class="indiv"></div>	
+							<div class="passviewdiv">
+								<input type="password" class="input" id="memPass2" name="memPass2" placeholder="패스워드" onkeyup="unityPW()" value="${memberVo.memPass}">
+								<i class="fa fa-lock"  style="font-size:30px;"></i>	
+								<div id="checkPass2" class="indiv" style=""></div>
+							</div>
 						</a>
 					</li>	
 								
@@ -149,8 +159,8 @@
 				</ul>
 						
 				<div style="float:right;">				
-					<button type="button" style="height:40px; margin-right:20px;" id="registBtn">등록</button>
-					<button type="button" style="height:40px;" id="cancelBtn" onclick="window.history.back()">취소</button>
+					<button class="btn btn-default" type="button" style="height:40px; margin-right:20px;" id="registBtn">등록</button>
+					<button class="btn btn-default" type="button" style="height:40px;" id="cancelBtn" onclick="window.history.back()">취소</button>
 				</div>	
 					
 				<div style="display:none;">					
@@ -220,6 +230,21 @@ $(function() {
 			}
 		});
 	});
+	
+	// 비밀번호 보이기 버튼
+	$('.passviewdiv i').on('click',function(){
+        $('input').toggleClass('active');
+        if($('input').hasClass('active')){
+            $(this).attr('class',"fa fa-lock-open")
+            .prev('input').attr('type',"text");
+        }else{
+            $(this).attr('class',"fa fa-lock ")
+            .prev('input').attr('type','password');
+        }
+    });	
+	
+	
+	
 });
 
 

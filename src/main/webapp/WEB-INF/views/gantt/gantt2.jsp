@@ -50,9 +50,17 @@
 				<label for="scale5">년도</label>&nbsp; 
 			<input value="Excel 다운로드" type="button" onclick="gantt.exportToExcel()" style="margin:0 15px; float: right;" class="btn btn-default  btn-sm btn-flat">
 			<input value="PDF 다운로드" type="button" onclick='gantt.exportToPDF()' style="float: right;" class="btn btn-default  btn-sm btn-flat">
+			<select class="form-control">
+				<option>?</option>
+				<option>?</option>
+				<option></option>
+				<option></option>
+				<option></option>
+				<option></option>
+			</select>
 		</form>
 	</div>
-	<div id="gantt_here" style='width: 100%; height: 700px;'></div>
+	<div id="gantt_here" style='width: 100%; height: 700px; font-size: 0.7em;'></div>
 
 
 
@@ -93,14 +101,9 @@
 		});
 		//툴팁내용
 		gantt.templates.tooltip_text = function(start, end, task) {
-			return "<b>업무:</b> " + task.text + "<br/><b>기간:</b> "
+			return "<b>업무:</b> " + task.text + "<br/><b>시작일:</b> " + task.start_date + "<br/><b>기간:</b> "
 					+ task.duration + "<br/><b>담당자:</b>" + task.users;
 		};
-
-		//진행바 내용
-// 		gantt.templates.task_text = function(start, end, task) {
-// 			return "<b>업무:</b> " + task.text + ",<b> 담당자:</b> " + task.users;
-// 		};
 
 		//읽기 전용
 		gantt.config.readonly = true;
@@ -212,7 +215,7 @@
 		    {name:"text",       label:"작업명", width:"*", 	  resize: true,  tree:true},
 		    {name:"start_date", label:"시작일", align:"center", resize: true},
 		    {name:"duration",   label:"기간",  align:"center" },
-		    {name:"users",      label:"담당자", align:"center", width:50 }
+		    {name:"users",      label:"담당자", align:"center", width:60 }
 		];
 
 		/* 실행 */
@@ -226,7 +229,7 @@
 					gdatum = {
 						id : parseInt(obj.todoId),
 						text : obj.todoTitle,
-						users : obj.memId,
+						users : obj.memName,
 						priority : obj.todoImportance,
 						start_date : obj.todoStart,
 						duration : parseInt(obj.todoEnd),
@@ -237,7 +240,7 @@
 					gdatum = {
 						id : obj.todoId,
 						text : obj.todoTitle,
-						users : obj.memId,
+						users : obj.memName,
 						priority : obj.todoImportance,
 						start_date : obj.todoStart,
 						duration : obj.todoEnd,

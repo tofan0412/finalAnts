@@ -296,5 +296,13 @@ public class TodoController {
 		model.addAttribute("todoList", todoList);
 		return "jsonView";
 	}
+	
+	@RequestMapping("/getSelectTodo")
+	public String getSelectTodo(Model model, HttpSession session, TodoVo todoVo) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<TodoVo> todoList = manageBoardService.getSelectTodo(todoVo);
+		model.addAttribute("todoList", todoList);
+		return "jsonView";
+	}
 
 }

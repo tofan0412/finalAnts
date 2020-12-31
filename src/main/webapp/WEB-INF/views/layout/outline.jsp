@@ -91,6 +91,7 @@ text-align: right;
 					<br><br>
                 	<div class="row jg" style="width: 70%;  float:left; margin-top: 3%;">
                 		<div class="row jg" style="width: 90%; margin-left: 5%; " >
+							<c:if test="${pro.proStatus eq 'ACTIVE'}">
                   			<div class="circle" id="STATUS" style="padding-left: 7%;">
                 				<div id="statusBall" style="border-radius: 100%; margin: 0px auto; position: relative; display: table; background-color: rgb(100, 149, 237); color: rgb(255, 255, 255); width: 156px; height: 156px;">
                 					<div style="display: table-cell; vertical-align: middle; text-align: center;">
@@ -99,6 +100,28 @@ text-align: right;
                 					</div>
                 				</div><h5 style="text-align: center; width: 150px;">status</h5>
                   			</div>
+                  			</c:if>
+							<c:if test="${pro.proStatus eq 'STOP'}">
+                  			<div class="circle" id="STATUS" style="padding-left: 7%;">
+                				<div id="statusBall" style="border-radius: 100%; margin: 0px auto; position: relative; display: table; background-color: red; color: rgb(255, 255, 255); width: 156px; height: 156px;">
+                					<div style="display: table-cell; vertical-align: middle; text-align: center;">
+                						<span class="_stsLabel" style="font-size: x-large;">Stop</span>
+                						<span class="additionalLabelText" style="color: rgb(255, 255, 255);"><br>${pro.proChangeDate }</span>
+                					</div>
+                				</div><h5 style="text-align: center; width: 150px;">status</h5>
+                  			</div>
+                  			</c:if>
+							<c:if test="${pro.proStatus eq 'END'}">
+                  			<div class="circle" id="STATUS" style="padding-left: 7%;">
+                				<div id="statusBall" style="border-radius: 100%; margin: 0px auto; position: relative; display: table; background-color: green; color: rgb(255, 255, 255); width: 156px; height: 156px;">
+                					<div style="display: table-cell; vertical-align: middle; text-align: center;">
+                						<span class="_stsLabel" style="font-size: x-large;">End</span>
+                						<span class="additionalLabelText" style="color: rgb(255, 255, 255);"><br>${pro.proChangeDate }</span>
+                					</div>
+                				</div><h5 style="text-align: center; width: 150px;">status</h5>
+                  			</div>
+                  			</c:if>
+                  			
 	             			<div class="circle" id="circle_TASK_PROGRESS" style=" padding-left:7%;">
 	                			<div class="circles-wrp" style="position: relative; display: inline-block;">
 	                				<canvas width="1" height="100"></canvas>
@@ -111,6 +134,25 @@ text-align: right;
 	                 			</div>
 	                 			<h5  style="text-align: center; width: 150px;">진행도 <span style="font-size: 0.8em;">(%)</span></h5>
 	                  		 </div>
+	                  		 <c:if test="${pro.proStatus eq 'STOP'}">
+	                  		 <div class="circle" id="circle_TASKC_PROGRESS" style=" padding-left: 7%;">
+	                  			<div class="circles-wrp" style="position: relative; display: inline-block;">
+	                  				<canvas width="1" height="100"></canvas>
+				                    <input type="text" class="knob" value="${pro.esElepsedTime }" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly">
+	                  			</div>
+	                  			<h5  style="text-align: center; width: 150px;">경과 시간 <span style="font-size: 0.8em;">(일)</span></h5>
+	                  		</div>
+	                  		 </c:if>
+                  			<c:if test="${pro.proStatus eq 'END'}">
+                  			<div class="circle" id="circle_TASKC_PROGRESS" style=" padding-left: 7%;">
+	                  			<div class="circles-wrp" style="position: relative; display: inline-block;">
+	                  				<canvas width="1" height="100"></canvas>
+				                    <input type="text" class="knob" value="${pro.esElepsedTime }" data-width="150" data-height="150" data-fgcolor="#6495ED" data-thickness="0.1" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;" readonly="readonly">
+	                  			</div>
+	                  			<h5  style="text-align: center; width: 150px;">경과 시간<span style="font-size: 0.8em;">(일)</span></h5>
+	                  		</div>
+                  			</c:if>
+                  			<c:if test="${pro.proStatus eq 'ACTIVE'}">
 	                  		<div class="circle" id="circle_TASKC_PROGRESS" style=" padding-left: 7%;">
 	                  			<div class="circles-wrp" style="position: relative; display: inline-block;">
 	                  				<canvas width="1" height="100"></canvas>
@@ -118,6 +160,7 @@ text-align: right;
 	                  			</div>
 	                  			<h5  style="text-align: center; width: 150px;">경과 시간 <span style="font-size: 0.8em;">(일)</span></h5>
 	                  		</div>
+	                  		</c:if>
 	                  		<div class="circle" id="circle_TASK_PROGRESS" style=" padding-left:7%;">
 	                  			<div class="circles-wrp" style="position: relative; display: inline-block;">
 	                  				<canvas width="1" height="100"></canvas>
@@ -129,19 +172,34 @@ text-align: right;
                   		
                   		<div class="row jg" style="width: 80%; margin-left: 10%; margin-top: 8%;" >
 	                    	<div class="col-12 col-sm-6 col-md-3" id="bani_a" style="width: 35%; margin-right: 10%;" >
-                      			<c:if test="${pro.elepsedTime ne 0 }">
-                     			<fmt:parseNumber value="${pro.percent/pro.elepsedTime }" var="timecalc"/>
-	                     		경과시간 대비 진행율<br><span id="bani_a1">${fn:split(timecalc,'.')[0]}%</span>
-	                      		<div class="progress progress-md">
-                        			<div class="progress-bar bg-warning" style="width:<c:out value="${timecalc}" />%"></div>
-	                      		</div>
+                      			<c:if test="${pro.proStatus eq 'ACTIVE'}">
+	                      			<c:if test="${pro.elepsedTime ne 0 }">
+	                     			<fmt:parseNumber value="${pro.percent/pro.elepsedTime }" var="timecalc"/>
+		                     		경과시간 대비 진행율<br><span id="bani_a1">${fn:split(timecalc,'.')[0]}%</span>
+		                      		<div class="progress progress-md">
+	                        			<div class="progress-bar bg-warning" style="width:<c:out value="${timecalc}" />%"></div>
+		                      		</div>
+	                        		</c:if>
+	                        		<c:if test="${pro.elepsedTime eq 0 }">
+		                     		경과시간 대비 진행율<br><span id="bani_a2">${fn:split(pro.percent,'.')[0]}%</span>
+		                      		<div class="progress progress-md">
+	                        			<div class="progress-bar bg-warning" style="width:<c:out value="${pro.percent}" />%"></div>
+		                      		</div>
+	                        		</c:if>
+                      			</c:if>
+                      			
+                        		<c:if test="${pro.proStatus eq 'END'}">
+                        			경과시간 대비 진행율<br><span id="bani_a2">100%</span>
+		                      		<div class="progress progress-md">
+	                        			<div class="progress-bar bg-warning" style="width:<c:out value="100" />%"></div>
+		                      		</div>
                         		</c:if>
-                        		<c:if test="${pro.elepsedTime eq 0 }">
-	                     		경과시간 대비 진행율<br><span id="bani_a2">${fn:split(pro.percent,'.')[0]}%</span>
-	                      		<div class="progress progress-md">
-                        			<div class="progress-bar bg-warning" style="width:<c:out value="${pro.percent}" />%"></div>
-	                      		</div>
-                        		</c:if>
+                      			<c:if test="${pro.proStatus eq 'STOP'}">
+                      			경과시간 대비 진행율<br><span id="bani_a2">중지된 프로젝트 입니다.</span>
+		                      		<div class="progress progress-md">
+	                        			<div class="progress-bar bg-warning" style="width:<c:out value="0" />%"></div>
+		                      		</div>
+                      			</c:if>
 	                    	</div>
 	                    	
 	                    	
@@ -204,7 +262,7 @@ text-align: right;
                     </tr>
                     <tr>
 						<td></td>
-                      <td>종료 일</td>
+                      <td>마감 일</td>
                       <td></td>
                         <td class="dayt">
                         ${pro.endDt }
@@ -213,10 +271,15 @@ text-align: right;
                     </tr>
                     <tr>
                     <td></td>
-                      <td>경과 일</td>
+                      <td> <c:if test="${pro.proStatus eq 'ACTIVE'}">경과 일</c:if>
+                        <c:if test="${pro.proStatus eq 'STOP'}">중지 일</c:if>
+                        <c:if test="${pro.proStatus eq 'END'}">종료 일</c:if></td>
                       <td></td>
                         <td class="dayt">
-                        ${pro.elepsedTime }
+                        <c:if test="${pro.proStatus eq 'ACTIVE'}">${pro.elepsedTime }</c:if>
+                        <c:if test="${pro.proStatus eq 'STOP'}">${pro.proChangeDate }</c:if>
+                        <c:if test="${pro.proStatus eq 'END'}">${pro.proChangeDate }</c:if>
+                       
                       </td>
                       <td></td>
                     </tr>
