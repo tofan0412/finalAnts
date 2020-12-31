@@ -90,6 +90,12 @@ public class ProjectMemberController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
+		if(issueVo.getSort() == null || issueVo.getSort().equals("1")) {
+			model.addAttribute("sort", "1");
+		}else {
+			model.addAttribute("sort", "2");
+		}
+		
 		if(issueVo.getSearchKeyword() != null) {			
 			session.setAttribute("searchKeyword", issueVo.getSearchKeyword());
 			session.setAttribute("searchCondition",issueVo.getSearchCondition());
