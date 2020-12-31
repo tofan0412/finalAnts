@@ -17,7 +17,7 @@
 	$(document).ready(function(){
 	
 		
-		$("#pagenum a").addClass("page-link");  
+// 		$("#pagenum a").addClass("page-link");  
 		
 	
 		$("#todoinsert").on('click', function(){
@@ -55,13 +55,14 @@
 		 text-align: center;
 		 width : auto;	 
 		 border: none; 
-	
+		 padding: 6px;
+		 
 	}
 	
 	li strong{
 		display: inline-block;
 		text-align: center;
-		width: 30px;
+		 padding: 6px;
 	}
 	
 	.pagingui{
@@ -90,11 +91,18 @@
 	<div class="card" style="border-radius: inherit; padding : 2px;">
 		 <c:if test="${SMEMBER.memId eq projectVo.memId }">
 	           <div >
-	                <button id="todoinsert" type="button" class="btn btn-default jg"><i class="fas fa-edit"></i>일감 등록</button>
+	              
 	              </div>
 			   </c:if>
-		<br>
+			<br>
 		    <div class="card-header ">
+		    	<div id="keyword" class="card-tools float-left" style="width: 450px;">
+						<h3 class="jg" style="padding-left: 10px; display: inline-block;">일감 리스트</h3>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						  <button id="todoinsert" type="button" class="btn btn-default jg"><i class="fas fa-edit"></i>일감 등록</button>
+				</div>
+		    
+		    
 				<div id="keyword" class="card-tools float-right" style="width: 550px;">
 					<div class="input-group row">						
         				<select name="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
@@ -104,12 +112,12 @@
 							<option value="4" label="진행도"/>
 						</select> 
 							 <label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                         <input type="text" class="form-control jg" name="searchKeyword" value="${todoVo.searchKeyword }">
-		                  <a href="javascript:search();">
-		                  	<button type="button" class="btn-default " style="height: 100%;">
-                               <i class="fa fa-search"></i>
-                          	</button>
-                          </a>
+	                         <input type="text" class="form-control jg" name="searchKeyword" placeholder="검색어를 입력하세요." value="${todoVo.searchKeyword }">
+	                         <span class="input-group-append">	
+			                  	<button type="button" class="btn btn-default " onclick="search();" style="height: 100%;">
+	                               <i class="fa fa-search"></i>
+	                          	</button>
+                             </span>
 					</div>
 		        </div>
 		      </div>

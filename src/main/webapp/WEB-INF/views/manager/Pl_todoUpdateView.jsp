@@ -20,7 +20,20 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#memChangecomment").hide();
-		$('#summernote').summernote();
+		 $('#summernote').summernote({
+		        placeholder: '내용을 입력해주세요.',
+		        tabsize: 2,
+		        height: 300,
+		        toolbar: [
+		          ['style', ['style']],
+		          ['font', ['bold', 'underline', 'clear']],
+		          ['color', ['color']],
+		          ['para', ['ul', 'ol', 'paragraph']],
+		          ['table', ['table']],
+		          ['insert', ['link', 'picture', 'video']],
+		          ['view', ['fullscreen', 'codeview', 'help']]
+		        ]	      
+		 })
 		
 		var todo_start = $('#todo_start').val();
 		var todo_end = $('#todo_end').val();
@@ -121,18 +134,24 @@
      		if ($('#todoTitle').val().length == 0){
 				$('.warningtodoTitle').text("제목을 작성해 주세요.");  
 				cnt++;
+			}else{
+				$('.warningtodoTitle').text("");  
 			}
      		if ($('#todoStart').val().length == 0){
 				$('.warningtodoStart').text("시작일을 지정해 주세요.");  
 				cnt++;
+			}else{
+				$('.warningtodoStart').text("");  
 			}
      		if ($('#todoEnd').val().length == 0){
 				$('.warningtodoEnd').text("마감일을 지정해 주세요.");  
 				cnt++;
+			}else{
+				$('.warningtodoEnd').text("");  
 			}
      		
      		if(cnt == 0){
-     		 delfiles();	     	
+     		  delfiles();	     	
      		}
      		
      	})
@@ -241,41 +260,49 @@
 		color: darkgray;
 		line-height: 170px;
 	}
+	input[type=search]{
+		display : inline-block;
+		border: none; 
+		background: transparent;
+		 padding-bottom:  .5em;
+		 padding-top:  .5em;
+		 width: 350px;
+	}
 
 </style>
 </head>
 
 		<%@include file="../layout/contentmenu.jsp"%>
-			
+    <div class="col-md-12 ns">	
 		<div class="card card-primary card-outline">
 			<div class="card-header">
 	                <h3 class="card-title jg">일감 수정</h3>
 	        </div>
 	        <div class="card-body">
 			<form method="post" action="${pageContext.request.contextPath }/todo/updatetodo" id="todoform"  enctype="multipart/form-data">	
-		        <div class="form-group">
+		        <div class="form-group" style="padding-left: 20px;">
 				<input type="hidden" name="todoId" value="${todoVo.todoId }">
 				<input type="hidden" name="todoLevel" value="${todoVo.todoLevel }">
 				<label for="todoTitle" class="col-sm-1 control-label ns">제목</label>
-				<input  class="ns" type="text" name="todoTitle" style="width: 1000px;" id="todoTitle" value="${todoVo.todoTitle }">
+				<input  class="ns form-control" type="text" name="todoTitle" style="width:80%; display: inline-block;" id="todoTitle" value="${todoVo.todoTitle }">
 				<div class="jg" style=" padding-left: 10px; display: inline;"><span class="jg warningtodoTitle" style="color : red;"></span></div><br><br>
                 
-				<div style="width: 80%;">
-				<label for="todoCont" class="col-sm-1 control-label ns">할일</label>
+				<label for="todoCont" style="display: inline-block;" class="col-sm-1 control-label ns">할일</label>
+				<div style="width: 80%; display: inline-block;">
 				<textarea id="summernote" name="todoCont" id="todoCont">${todoVo.todoCont }</textarea>
 				</div>
 				<br><br>
 				<label for="mem-select" class="col-sm-1 control-label ns">담당자</label>
 				<input  class="ns" type="hidden" id="mem-select" name="memId" value="${todoVo.memId }" readonly="readonly">
-				<input  class="ns" type="text" id="mem-select_1"  value="${todoVo.memName }" readonly="readonly">
-				<input  class="ns" type="button" id="memChange" value="인수인계">
+				<input  class="ns form-control" style="display: inline-block; width: 150px;" type="text" id="mem-select_1"  value="${todoVo.memName }" readonly="readonly">
+				<input  class="ns form-control btn-default btn" style="display: inline-block; width: 100px;" type="button" id="memChange" value="인수인계">
 				<div id="memChangecomment">
 				<label for="memChangeComment" class="col-sm-1 control-label ns">인수인계 내용</label>
-				<input  class="ns" type="text" id="memChangeComment2" name ="logComment"/>
+				<input  class="ns form-control" style="display: inline-block; width: 200px;" type="text" id="memChangeComment2" name ="logComment"/>
 				<div class="jg" style=" padding-left: 10px; display: inline;"><span class="jg warningmemChangeComment" style="color : red;"></span></div>
                 
 				<label for="mem-select2" class="col-sm-1 control-label ns">변경 담당자</label>
-				<select name="memId" id="mem-select2">
+				<select class="ns form-control" style="display: inline-block; width: 100px;" name="memId" id="mem-select2">
 				<c:forEach items="${promemList}" var="mem">
 					<c:if test="${mem.memId ne todoVo.memId }">
 				<option  class="ns" value="${mem.memId}">${mem.memName}</option></c:if>
@@ -287,7 +314,7 @@
 				<br><br>
 				<input type="hidden" name="changemem" id="changemem" />
 				<label for="status-select" class="col-sm-1 control-label ns">우선순위</label>
-				<select class="ns" name="todoImportance" id="status-select">
+				<select class="ns form-control" style="display: inline-block; width: 100px;" name="todoImportance" id="status-select">
 				    <c:if test="${todoVo.todoImportance eq 'gen' }">
 				    <option class="jg" value="gen">보통</option>
 				    <option class="jg" value="emg">긴급</option>
@@ -299,23 +326,23 @@
 				</select><br><br>
 				
 				<label for="todoPercent" class="col-sm-1 control-label ns">진행도</label>
-				<input class="ns" type="text" id="todoPercent" name="todoPercent" value="${todoVo.todoPercent }" readonly="readonly"/><br><br>
+				<input class="ns form-control" style="display: inline-block; width: 100px;" type="text" id="todoPercent" name="todoPercent" value="${todoVo.todoPercent }" readonly="readonly"/><br><br>
 				
 				<label for="todoStart" class="col-sm-1 control-label ns">시작 일</label>
-				<input class="ns" type='date' id='todoStart' name="todoStart"/>
+				<input class="ns form-control" style="display: inline-block; width: 200px;" type='date' id='todoStart' name="todoStart"/>
 				<div class="jg" style=" padding-left: 10px; display: inline;"><span class="jg warningtodoStart" style="color : red;"></span></div><br><br>
 				<input type="hidden" id='todo_start' value="${todoVo.todoStart}">
                 
 				<label for="todoEnd" class="col-sm-1 control-label ns">종료 일</label>
-				<input class="ns" type='date' id='todoEnd' name="todoEnd"/>
+				<input class="ns form-control" style="display: inline-block; width: 200px;" type='date' id='todoEnd' name="todoEnd"/>
 				<div class="jg" style=" padding-left: 10px; display: inline;"><span class="jg warningtodoEnd" style="color : red;"></span></div><br><br>
 				<input type="hidden" id='todo_end' value="${todoVo.todoEnd}">
                 
 				</div>
 				
-				<div class="form-group">
+				<div class="form-group" style="padding-left: 20px;">
 					<label id ="filelabel" for="files" class="col-sm-2 control-label ns">첨부파일</label>		
-					<div id ="file" class="col-sm-10">
+					<div id ="file" class="col-sm-10" style="padding-left: 20px;">
 					
 						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
 							<input type="search" name="${files.pubId}" value="${files.pubFilename}" disabled >
@@ -335,12 +362,13 @@
 				</div>
 			<input id="file_upload" name="file" type="file" multiple="true"/>
 		<br><br>
-		<div class="float-right" >		
-			<input type="button" class="btn btn-default jg" id="updatebtn" value="수정하기">
-				<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
+		<div class="card-footer" >		
+			<input type="button" class="btn btn-default jg float-left" id="updatebtn" value="수정완료">
+				<button type="button" class="btn btn-default jg float-right" id="back">취소</button>
 		</div>
 	</form>
 		</div>
 	</div>
 </div>	
+	
 </html>

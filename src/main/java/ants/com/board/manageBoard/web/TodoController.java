@@ -73,7 +73,7 @@ public class TodoController {
 			projectVo.setReqId(reqId);
 			int res = projectController.propercentChange(projectVo);
 			if (res > 0) {
-				return "redirect:/todo/todoList?reqId=" + todoVo.getReqId();
+				return "redirect:/todo/onetodoView?todoId=" + todoVo.getTodoParentid();
 			} else {
 				return "redirect:/todo/todoInsertView?reqId=" + todoVo.getReqId();
 			}
@@ -127,6 +127,13 @@ public class TodoController {
 		int totCnt = manageBoardService.todoListCount(todoVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
+		
+		if(todoVo.getSearchKeyword() != null) {			
+			session.setAttribute("searchKeyword", todoVo.getSearchKeyword());
+			session.setAttribute("searchCondition",todoVo.getSearchCondition());
+			session.setAttribute("pageIndex", todoVo.getPageIndex());
+		}
+		
 		return "tiles/manager/Pl_todoList";
 	}
 
@@ -199,7 +206,7 @@ public class TodoController {
 		}
 		int updateCnt = manageBoardService.todoupdate(todoVo);
 		if (updateCnt > 0) {
-			return "redirect:/todo/todoList?reqId=" + todoVo.getReqId();
+			return "redirect:/todo/onetodoView?todoId="  + todoVo.getTodoId();
 		} else {
 			return "redirect:/todo/updatetodoView?todoId=" + todoVo.getTodoId();
 		}

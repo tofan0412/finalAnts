@@ -13,14 +13,9 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
+<script src="/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="/plugins/summernote/lang/summernote-ko-KR.js"></script>
 <script src="/resources/upload/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/resources/upload/uploadifive.css">
 
@@ -30,7 +25,7 @@
 			 $('#currentDate').attr('min', new Date().toISOString().substring(0, 10));
 			 $('#todo_end').attr('min', new Date().toISOString().substring(0, 10));
 	 		 $('#summernote').summernote({
-			        placeholder: 'Hello stand alone ui',
+			        placeholder: '내용을 입력해주세요.',
 			        tabsize: 2,
 			        height: 300,
 			        toolbar: [
@@ -124,15 +119,24 @@
      			if ($('#todoTitle').val().length == 0){
     				$('.warningTitle').text("제목을 작성해 주세요.");  
     				cnt++;
+    			}else{
+    				$('.warningTitle').text("");  
     			}
+     		
      			if($('#mem-select').val()==0){    				
     				$('.warningmem').text("담당자를 지정해 주세요.");   	
     				cnt++;
+    			}else{
+    				$('.warningmem').text("");   	
     			}
+     			
      			if($('#todo_end').val()==0){    				
     				$('.warningtodo_end').text("마감일을 지정해 주세요.");
     				cnt++;
+    			}else{
+    				$('.warningtodo_end').text("");
     			}
+     			
      			if(cnt == 0 ){
      				if($('.uploadifive-queue-item').length == 0){ 
      					$("#todoform").submit(); 
@@ -230,7 +234,7 @@
 	   		<input type="hidden" name="todoId" value="${todoSeq }">
         <div class="card-body">
                 <div class="form-group">
-                  <input class="form-control " placeholder="Subject:" name="todoTitle" id="todoTitle">
+                  <input class="form-control " placeholder="제목을 입력해주세요." name="todoTitle" id="todoTitle">
                 <div class="jg" style=" padding-left: 10px;"><span class="jg warningTitle" style="color : red;"></span></div>
                 </div>
                 <div class="form-group">
@@ -238,7 +242,7 @@
                 </div>
                 <div class="form-group">
                 <label for="mem-select" class="col-sm-1 _control-label ns">담당자</label>
-        			<select name="memId" id="mem-select">
+        			<select class="form-control" style="display: inline-block; width: 150px;" name="memId" id="mem-select">
             			<option class="jg" value="">담당자 선택</option>
             			<c:forEach items="${promemList}" var="mem">
                 		<option class="jg" value="${mem.memId}">${mem.memName}</option>
@@ -247,17 +251,17 @@
                 <div class="jg" style=" padding-left: 10px;"><span class="jg warningmem" style="color : red;"></span></div>
                 </div>
                 <div class="form-group">
-                <label for="status-select" class="col-sm-1 control-label ns">우선순위</label>
-        			<select name="todoImportance" id="status-select">
+                <label for="status-select" class="col-sm-1 control-label ns" >우선순위</label>
+        			<select name="todoImportance" id="status-select" class="form-control" style="display: inline-block; width: 100px;">
            			 <option class="jg" value="gen">보통</option>
            			 <option class="jg" value="emg">긴급</option>
         			</select>
                 </div>
                 <div class="form-group">
                 <label for="currentDate" class="col-sm-1 control-label ns">시작 일</label>
-        			<input type='date' id='currentDate' name="todoStart"/><br><br>
-        			<label for="todoEnd" class="col-sm-1 control-label ns">종료 일</label>
-        			<input type='date' id='todo_end' name="todoEnd"/>
+        			<input type='date' class="form-control" style="display: inline-block; width: 200px;" id='currentDate' name="todoStart"/><br><br>
+        		<label for="todoEnd"  class="col-sm-1 control-label ns">종료 일</label>
+        			<input type='date' id='todo_end' name="todoEnd" class="form-control" style="display: inline-block; width: 200px;"/>
                 <div class="jg" style=" padding-left: 10px;"><span class="jg warningtodo_end" style="color : red;"></span></div>
                 </div>
                 <div class="form-group" hidden="hidden">
@@ -271,22 +275,24 @@
                 </div>
         </div>   
     </form>
-    <form style="padding-left: 1%;">
-    <label for="file" class="col-sm-2 control-label ns">첨부파일</label>
-	<div id="queue">
-		<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
-	</div>
-	<input id="file_upload" name="file" type="file" multiple="multiple"/>
-				<br><br>
-        	<div class="float-right">
-        		<input type="hidden" value="3" name="categoryId">
-        	
-		        <button type="button" class="btn btn-default jg" id="regBtn">등록</button>
-		        <c:if test="${ empty todoVo.todoParentid}">
-		        <button type="button" class="btn btn-default jg" id="creatChildBtn">등록 후 하위일감 생성</button>
-		        </c:if>
-		        <button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
-        	</div>
+    <form style="padding-left: 20px; padding-right: 20px;">
+	    <label for="file" class="col-sm-2 control-label ns">첨부파일</label>
+		<div id="queue">
+			<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
+		</div>
+		<input id="file_upload" name="file" type="file" multiple="multiple"/>
+		<br><br>
+		
+       	<div class="card-footer clearfix" >
+       		<input type="hidden" value="3" name="categoryId">
+       	
+	        <button type="button" class="btn btn-default jg float-left" style="margin-right: 5px;" id="regBtn">등록</button>
+	        <c:if test="${ empty todoVo.todoParentid}">
+	        <button type="button" class="btn btn-default jg float-left" id="creatChildBtn">등록 후 하위일감 생성</button>
+	        </c:if>
+	        <button type="button" class="btn btn-default jg float-right" id="back">취소</button>
+       	</div>
+       	<br>
 	</form>
 </div>
 </div>
