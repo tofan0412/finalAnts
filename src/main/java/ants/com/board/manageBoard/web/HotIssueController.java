@@ -55,6 +55,13 @@ public class HotIssueController {
 		int totCnt = manageBoardService.issueListCount(hotIssueVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
+		
+		if(hotIssueVo.getSearchKeyword() != null) {			
+			session.setAttribute("searchKeyword", hotIssueVo.getSearchKeyword());
+			session.setAttribute("searchCondition",hotIssueVo.getSearchCondition());
+			session.setAttribute("pageIndex", hotIssueVo.getPageIndex());
+		}
+		
 		return "tiles/manager/plpm_hotissueList";
 	}
 	
@@ -140,7 +147,7 @@ public class HotIssueController {
 	public String updatehissue(HotIssueVo hotIssueVo, Model model) {
 		int updateCnt = manageBoardService.hIssueupdate(hotIssueVo);
 		if (updateCnt > 0) {
-			return "redirect:/hotIssue/hissueList";
+			return "redirect:/hotIssue/hissueDetailView?hissueId="+hotIssueVo.getHissueId();
 		} else {
 			return "redirect:/hotIssue/updatehissueView";
 		}

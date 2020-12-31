@@ -155,16 +155,21 @@ var id;
 <div class="col-12 col-sm-12">
 	<div class="card" style="border-radius: inherit; padding : 2px;">
 	<div>
-	<button id="hotissueview" type="button" class="btn btn-default jg"><i class="fas fa-edit"></i>PM-PL 이슈게시판</button>
+	
 	</div>
+	<br>
 		 <div class="card-header ">
-				
+			<div id="keyword" class="card-tools float-left" style="width: 450px;">
+					<h3 class="jg" style="padding-left: 10px; display: inline-block;">PM-PL이슈 파일함</h3>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="hotissueview" type="button" class="btn btn-default jg"><i class="fas fa-edit"></i>PM-PL 이슈게시판</button>
+			</div>	
 		</div>
 		<div class="card-body p-0">
 		<table id="todoTable" class="jg">
 			<tr>
 				<th style="width: 200px;">No.</th>
-	            <th style="padding-left: 150px; width: 400px; " > 파일명</th> 
+	            <th style="text-align:left; padding-left: 5%;width: 400px; " > 파일명</th> 
 				<th> 날짜   </th>
 				<th> 확장자   </th>
 				<th> 용량   </th>
@@ -175,7 +180,7 @@ var id;
 					<td><c:out value="${paginationInfo.totalRecordCount - ((hotissueFileVo.pageIndex-1) * hotissueFileVo.pageUnit + sts.index)}"/>. 
 						<input type="hidden" id="${hotissueFile.hissuefId }" name="${hotissueFile.hissuefId }">
 					</td>	
-					<td class="jg" style="padding-left: 180px; text-align: left; width: 400px;">
+					<td class="jg" style="padding-left: 5%; text-align: left; width: 400px;">
 					<img name="link" src="/fileFormat/${fn:toLowerCase(hotissueFile.hissuefExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">										 																	
 					${hotissueFile.hissuefFilename }
 					</td>

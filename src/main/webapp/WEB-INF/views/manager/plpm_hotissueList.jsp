@@ -85,7 +85,9 @@ $(document).ready(function(){
 		 width:auto; float:left; margin:0 auto; text-align:center;
 		 
 	}
-	
+	body{
+  		min-width: 630px;
+    }
 	
 
 </style>
@@ -96,26 +98,33 @@ $(document).ready(function(){
 	<div class="col-12 col-sm-12">
 	<div class="card" style="border-radius: inherit; padding : 2px;">
 	<div>
-	<button id="hissueInsert" type="button" class="btn btn-default jg"><i class="fas fa-edit"></i>이슈 작성</button>
-	<button id="filesview" type="button" class="btn btn-default jg"><i class="nav-icon fas fa-folder-open"></i>파일함</button>
+	
 	</div>
 	<form:hidden path="hissueParentid" ></form:hidden>
 		<br>
 		    <div class="card-header">
+		    	<div id="keyword" class="card-tools float-left" style="width: 450px;">
+						<h3 class="jg" style="padding-left: 10px; display: inline-block;">PM-PL이슈 리스트</h3> &nbsp;&nbsp;&nbsp;
+						<button id="hissueInsert" type="button" class="btn btn-default jg"><i class="fas fa-edit"></i>이슈 작성</button>
+						<button id="filesview" type="button" class="btn btn-default jg"><i class="nav-icon fas fa-folder-open"></i>파일함</button>
+				</div>
+		    
 				<div id="keyword" class="card-tools float-right jg" style="width: 550px;">
 					<div class="input-group row">						
-        				<form:select path="searchCondition" cssClass="use" class="form-control col-md-3 jg" style="width: 100px;">
+        				<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
+        				
 							<form:option value="1" label="작성자"/>
 							<form:option value="2" label="제목"/>
 							<form:option value="3" label="내용"/>
 						</form:select> 
 							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
-	                         <input type="text" class="form-control jg" name="searchKeyword" value="${hotIssueVo.searchKeyword }">
-		                  <a href="javascript:search();">
-		                  	<button type="button" class="btn-default" style="height: 100%;">
-                               <i class="fa fa-search"></i>
-                          	</button>
-                          </a>
+	                        <input type="text" class="form-control jg" name="searchKeyword" value="${hotIssueVo.searchKeyword }">
+	                        <span class="input-group-append">							
+								<button class="btn btn-default" type="button" id="searchBtn" onclick="search()" >
+									<i class="fa fa-fw fa-search"></i>
+								</button>
+							</span>
+		                
 					</div>
 		        </div>
 		      </div>

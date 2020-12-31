@@ -22,7 +22,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		 $('#summernote').summernote({
-		        placeholder: 'Hello stand alone ui',
+		        placeholder: '내용을 입력해주세요.',
 		        tabsize: 2,
 		        height: 300,
 		        toolbar: [
@@ -242,7 +242,7 @@
                 <div class="form-group">
 				<form method="post" action="${pageContext.request.contextPath }/hotIssue/hissueInsert" id="hissueform" >    
                 <input type="hidden" name="hissueId" value="${hissueSeq }">
-                  <input class="form-control" placeholder="Subject:" name="hissueTitle" id="hissueTitle">
+                  <input class="form-control" placeholder="제목을 입력해주세요." name="hissueTitle" id="hissueTitle">
                   <div class="jg" style=" padding-left: 10px;"><span class="jg warninghissueTitle" style="color : red;"></span></div><br>
                   <input type="hidden" name="writer" value="${SMEMBER.memId }">
                 <textarea id="summernote" name="hissuetCont"></textarea>
@@ -264,11 +264,11 @@
 						<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
 					</div>
 					<input id="file_upload" name="file" type="file" multiple="true"/>
-								<br><br>
-				        	<div class="float-right">
-						        <button type="button" class="btn btn-default jg" id="regBtn">등록</button>
-						        <button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
-				        	</div>
+						<br><br><br>
+			        	<div class="card-footer">
+					        <button type="button" class="btn btn-default jg float-left" id="regBtn">등록</button>
+					        <button type="button" class="btn btn-default jg float-right" id="back">취소</button>
+			        	</div>
 				</form>
 			</div>
 		</div>

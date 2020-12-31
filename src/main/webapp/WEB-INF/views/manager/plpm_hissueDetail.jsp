@@ -28,7 +28,8 @@
 		
 		// 뒤로가기
 		$(document).on('click','#back', function(){
-		   	document.location = "/hotIssue/hissueList";
+			$("#listform").attr("action", "${pageContext.request.contextPath}/hotIssue/hissueList");
+			listform.submit();			
 		})
 		
 		
@@ -51,10 +52,18 @@
   width: 10%;
   text-align: center;
   }
+  
+
 </style>
 </head>
 <%@include file="../layout/contentmenu.jsp"%>
 <br>
+
+<form id="listform" action="${pageContext.request.contextPath}/hotIssue/hissueList" method="post">
+    <input type="hidden" value="${searchCondition }" name="searchCondition">
+    <input type="hidden" value="${searchKeyword }" name="searchKeyword">
+    <input type="hidden" value="${pageIndex }" name="pageIndex">
+</form>
 
 <c:if test="${dbsize eq '1'}">
 <c:forEach items="${hotlist }" var= "hot1" varStatus="sts" >
@@ -79,18 +88,26 @@
          	<td colspan="3" style="padding-left: 20px;"><div class="jg" id="hissueTitle">${hot1.hissueTitle }</div></td>
         </tr>
 		<tr>
-            <th class="success">내용</th>
+            <th class="success" style="height: 300px;">내용</th>
             <td colspan="3" style="padding-left: 20px;"><div class="jg" id="hissuetCont">${hot1.hissuetCont }</div></td>
         </tr>
         <tr>
-            <th class="success">첨부파일</th>
+            <th class="success" style="height: 150px;">첨부파일</th>
             <td colspan="3" style="padding-left: 20px;">
             <div id = "filediv">
             <!-- 파일이 있는 경우 -->
             <c:if test="${not empty filelist}">
             	<c:forEach items="${filelist }" var= "filel1" varStatus="sts" >
             		<a href="${pageContext.request.contextPath}/hotissueFile/hotfileDown?hissuefId=${filel1.hissuefId}">
-            		<input id ="files"  type="button" class="btn btn-default jg" name="${filel1.hissuefId}" value="${filel1.hissuefFilename}"></a>
+						<button id ="files${sts.index}" class="btn btn-default jg" name="${filel1.hissuefId}">
+							<img name="link" src="/fileFormat/${fn:toLowerCase(filel1.hissuefExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
+							 ${filel1.hissuefFilename} 다운로드
+						</button>
+					
+					</a>
+					<br>
+<%--             		<a href="${pageContext.request.contextPath}/hotissueFile/hotfileDown?hissuefId=${filel1.hissuefId}"> --%>
+<%--             		<input id ="files"  type="button" class="btn btn-default jg" name="${filel1.hissuefId}" value="${filel1.hissuefFilename}"></a> --%>
             	</c:forEach>
             </c:if>
             <!-- 파일이 없는 경우 -->
@@ -101,15 +118,12 @@
 			</td>
         </tr>
         </table>
-		<br>
 		<!-- 로그인한사람이 글쓴이일때 -->
 		<c:if test="${hot1.memId eq SMEMBER.memId }">
-		<div id="btnMenu">
-		<button type="button" class="btn btn-default jg" id="updateBtn">수정</button>
-		<button type="button" class="btn btn-default jg" id="deleteBtn">삭제</button>
-		<div class="float-right">
-		<button type="button" class="btn btn-default jg" id="back">목록 보기</button>
-		</div>	
+		<div id="btnMenu" class="card-footer">
+		<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;" id="deleteBtn">삭제</button>
+		<button type="button" class="btn btn-default jg float-right" id="updateBtn">수정</button>
+		<button type="button" class="btn btn-default jg float-left" id="back">목록으로</button>
 		</div>
 		</c:if>
 		<c:if test="${hot1.memId ne SMEMBER.memId }">
@@ -131,6 +145,9 @@
 <c:forEach items="${hotlist }" var= "hot1" varStatus="sts" >
 <c:if test="${sts.index eq '0'}">
 <div class="col-md-12 ns">
+
+	
+
 	<div class="card card-primary card-outline">
 		<div class="card-header">
         	<h3 class="card-title jg">PM-PL 이슈 상세보기</h3>
@@ -160,9 +177,15 @@
             <div id = "filediv">
             <!-- 파일이 있는 경우 -->
             <c:if test="${not empty filelist}">
-            	<c:forEach items="${filelist }" var= "filel1" varStatus="sts" >
+            	<c:forEach items="${filelist }" var= "filel1" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
             		<a href="${pageContext.request.contextPath}/hotissueFile/hotfileDown?hissuefId=${filel1.hissuefId}">
-            		<input id ="files"  type="button" class="btn btn-default jg" name="${filel1.hissuefId}" value="${filel1.hissuefFilename}"></a>
+						<button id ="files${sts.index}" class="btn btn-default jg" name="${filel1.hissuefId}">
+							<img name="link" src="/fileFormat/${fn:toLowerCase(filel1.hissuefExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
+							 ${filel1.hissuefFilename} 다운로드
+						</button>
+					
+					</a>
+					<br>
             	</c:forEach>
             </c:if>
             <!-- 파일이 없는 경우 -->
@@ -225,10 +248,16 @@
             <div id = "filediv2">
             <!-- 파일이 있는 경우 -->
             <c:if test="${not empty filelist2}">
-            	<c:forEach items="${filelist2 }" var= "filel2" varStatus="sts" >
-            		<a href="${pageContext.request.contextPath}/hotissueFile/hotfileDown?hissuefId=${filel2.hissuefId}">
-            		<input id ="files"  type="button" class="btn btn-default jg" name="${filel2.hissuefId}" value="${filel2.hissuefFilename}"></a>
+            	<c:forEach items="${filelist }" var= "filel1" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
+            		<a href="${pageContext.request.contextPath}/hotissueFile/hotfileDown?hissuefId=${filel1.hissuefId}">
+						<button id ="files${sts.index}" class="btn btn-default jg" name="${filel1.hissuefId}">
+							<img name="link" src="/fileFormat/${fn:toLowerCase(filel1.hissuefExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:30px; height:30px;">
+							 ${filel1.hissuefFilename} 다운로드
+						</button>
+					</a>
+					<br>
             	</c:forEach>
+            	
             </c:if>
             <!-- 파일이 없는 경우 -->
             <c:if test="${empty filelist2}">

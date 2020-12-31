@@ -130,7 +130,13 @@
 			success : function(data) {
 				var res ="";
 				$("#todoTitle").html(data.todoVo.todoTitle);
-				$("#todoCont").html(data.todoVo.todoCont);
+				
+				if(data.todoVo.todoCont =='<p><br></p>' || data.todoVo.todoCont == null){
+					cont = '<div class="jg" >[ 내용이 없습니다. ] </div>' 
+					$("#todoCont").html(cont);
+				}else{
+					$("#todoCont").html(data.todoVo.todoCont);
+				}
 				$("#memId").html(data.todoVo.memName);
 				if(data.todoVo.todoImportance =='emg'){
 					$("#todoImportance").html('긴급');
@@ -152,7 +158,14 @@
 				}
 				if(data.filelist.length != 0) {
 					for( i = 0 ; i< data.filelist.length; i++){	
- 						res += '<a href="${pageContext.request.contextPath}/file/publicfileDown?pubId='+data.filelist[i].pubId+'"><input id ="files"  type="button" class="btn btn-default jg" name="'+ data.filelist[i].pubId+'" value="'+data.filelist[i].pubFilename+'" ></a>  ';
+						
+ 						res += '<a href="${pageContext.request.contextPath}/file/publicfileDown?pubId='+data.filelist[i].pubId+'">';
+ 						res += '<button id ="files" class="btn btn-default jg" name="'+ data.filelist[i].pubId+'">'
+ 						res += '<img name="link" src="/fileFormat/'+data.filelist[i].pubExtension.toLowerCase()+'.png" onerror="this.src="/fileFormat/not.png;" style="width:30px; height:30px;">'
+ 						res += ''+data.filelist[i].pubFilename+'.'+data.filelist[i].pubExtension+' 다운로드'
+ 						res += '</button><br>'
+						 
+//  						<input id ="files"  type="button" class="btn btn-default jg" name="'+ data.filelist[i].pubId+'" value="'+data.filelist[i].pubFilename+'" ></a>  ';
 						
  						$("#filediv").html(res);
 					}	
@@ -230,44 +243,42 @@
          
         <tr class="stylediff">
             <th class="success ">담당자</th>
-            <td style="padding-left: 20px; width: 700px; "><div class="jg" id="memId"></div></td>
+            <td style="padding-left: 20px; width: 45%; "><div class="jg" id="memId"></div></td>
             <th class="success ">진행도</th>
-            <td style="padding-left: 20px; width: 700px; "><div class="jg" id="todoPercent"></div></td>
+            <td style="padding-left: 20px; width: 45%; "><div class="jg" id="todoPercent"></div></td>
         </tr>
          
        <tr class="stylediff">
             <th class="success">기간</th>
-            <td style="padding-left: 20px; width: 700px;"><div class="jg" id="todoStart"></div>~<div class="jg" id="todoEnd"></div></td>
+            <td style="padding-left: 20px; width: 45%;"><div class="jg" id="todoStart"></div>~<div class="jg" id="todoEnd"></div></td>
             <th class="success">우선순위</th>
-            <td style="padding-left: 20px;"><div class="jg" id="todoImportance"></div></td>
+            <td style="padding-left: 20px;  width: 45%;"><div class="jg" id="todoImportance"></div></td>
         </tr>
          
        <tr>
-            <th class="success">내용</th>
-            <td colspan="3" style="padding-left: 20px;"><div class="jg" id="todoCont"></div></td>
+            <th class="success" style="height: 300px;">일감 내용</th>
+            <td colspan="3" style="padding-left: 20px;">
+            	<div class="jg" id="todoCont"></div>
+            </td>
         </tr>
         <tr>
-            <th class="success">첨부파일</th>
+            <th class="success" style="height: 150px;">첨부파일</th>
             <td colspan="3" style="padding-left: 20px;"><div id = "filediv"></div>
 			</td>
         </tr>
         </table>
-        <br>
-	    	<div id="btnMenu">
+	    	<div id="btnMenu" class="card-footer">
 	            <c:if test="${SMEMBER.memId eq projectVo.memId }">
-	            	<button type="button" class="btn btn-default jg" id="issuebtn">이슈 작성</button>
-					<div class="float-right">
-						<button type="button" class="btn btn-default jg" data-toggle="modal" data-target="#myModal">진행도 수정</button>	
-						<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>   
-				 	 </div>
+					<button type="button" class="btn btn-default jg float-left" id="back">목록으로</button>   
+	            	<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;"id="issuebtn">이슈 작성</button>
+					<button type="button" class="btn btn-default jg float-right" data-toggle="modal" data-target="#myModal">진행도 수정</button>	
 			    </c:if>
 	            <c:if test="${SMEMBER.memId ne projectVo.memId }">
-	            	<button type="button" class="btn btn-default jg" id="issuebtn">이슈 작성</button>
-					<button type="button" class="btn btn-default jg" id="suggestBtn">건의 작성</button>
-					<div class="float-right">
-						<button type="button" class="btn btn-default jg" data-toggle="modal" data-target="#myModal">진행도 수정</button>	
-						<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>   
-				 	 </div>
+	            
+	           	 	<button type="button" class="btn btn-default jg float-left" id="back">목록으로</button>   
+	            	<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;"id="issuebtn">이슈 작성</button>
+					<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;" id="suggestBtn">건의 작성</button>
+					<button type="button" class="btn btn-default jg float-right" data-toggle="modal" data-target="#myModal">진행도 수정</button>	
 			    </c:if>
 			</div>
               

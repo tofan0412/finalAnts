@@ -50,7 +50,7 @@ $(function(){
 	
 	// issue에서 뒤로가기
 	$(document).on('click','#back', function(){
-		if('${categoryId}' =='3'){ // 프로젝트 내 이슈글		
+		if('${categoryId}' =='3' || '${categoryId}' =='2'){ // 프로젝트 내 이슈글		
 			$("#listform").attr("action", "${pageContext.request.contextPath}/projectMember/issuelist");
 			listform.submit();			
 		}else if('${categoryId}' == '8'){ // 나의 이슈글
@@ -127,38 +127,8 @@ $(function(){
 	    }
 	});
 	
-	//-- 댓글 이미지 ---
 	
-	pict = document.getElementById('pict').src	// display none 에 숨어있는 사진의 src속성값 가져옴
-	// src="/profileImgView?memId=${memberVo.memId}" 
-	imge = document.getElementById('imge').src	// display none 에 숨어있는 기본이미지의 src속성값 가져옴
-		// src="${memberVo.memFilepath}"
-	
-	/* 이미지 경로가 http 로시작할때만 기본이미지 불러옴 http가 아니면 파일경로로 인식*/					
-	picval = pict.split('/')[0].indexOf('profileImgView') // 아이디 값으로 memFilepath의 속성을 가져오기 때문에 항상
-	// 값이 동일하다 -> http://localhost/profileImgView?memId=noylit@naver.com
-	// 값이 동일하기 때문에 비교대상에 필요 없음 x
-	imgval= imge.split('/')[0].indexOf('http')	
-	// 파일가져올때 -> file:///D:/upload/james.png	// 기본이미지    -> https://localhost/profile/user-16.png
-	// memFilepath 의 속성값을 바로 가져오기 때문에 웹에 저장된 기본이미지를 불러오는지
-	//								     로컬에 저장된 파일을 가져오는지 경로로 확인이 가능하다. 
-	
-	
-	$('#sp').append(' pict : ' + picval + '//' + pict);	// 경로 확인하려고 (숨김항목)
-	$('#sp').append(' imge : ' + imgval + '//' + imge); // 경로 확인하려고 (숨김항목)
-	
-	
-	if(imgval == -1){		// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온것이 아니면(file) -1
-	$('#pictureViewImg').attr('src', pict);
 
-	
-	}else if(imgval == 0){	// imgval(memFilepath) 의 값이 http(웹사이트)에서 가져온 거면(img) 0 -> 웹사이트는 기본이미지
-	$('#pictureViewImg').attr('src', imge);
-
-	
-	//-- 댓글 이미지 끝 ---
-	
-}
 	
 
 })
@@ -308,7 +278,7 @@ function resize(obj) {
 </head>
 
 <!-- 이슈메뉴에서만 include -->
-<c:if test="${categoryId == 3 }">
+<c:if test="${categoryId == 3 || categoryId == 2}">
 	<%@include file="../layout/contentmenu.jsp"%>
 </c:if>
 

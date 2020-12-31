@@ -86,7 +86,7 @@
 			'uploadScript'     : '/hotissueFile/insertHotissueFile',
 			'fileObjName'     : 'file',    
 			'formData'         : {
-									'hissueId'     : '${hissueSeq}'
+									'hissueId'     : '${hotIssueVo.hissueId}'
 			                     },
 			'auto'             : false,
 			'queueID'          : 'queue',
@@ -215,6 +215,14 @@
 		color: darkgray;
 		line-height: 170px;
 	}
+	input[type=search]{
+		display : inline-block;
+		border: none; 
+		background: transparent;
+		 padding-bottom:  .5em;
+		 padding-top:  .5em;
+		 width: 350px;
+	}
 
 </style> 	
 </head>
@@ -241,7 +249,7 @@
                
                <div class="form-group">
 					<label id ="filelabel" for="files" class="col-sm-2 control-label ns">첨부파일</label>		
-					<div id ="file" class="col-sm-10">
+					<div id ="file" class="col-sm-10" style="padding-left: 20px;">
 						<c:forEach items="${filelist }" var="files" begin ="0" varStatus="vs" end="${filelist.size() }" step="1">
 							<input class="jg" type="search" name="${files.hissuefId}" value="${files.hissuefFilename}" disabled >
 		   	   				<button type="button" id="btnMinus" class="btn btn-light filebtn" style="margin-left: 5px; outline: 0; border: 0;">
@@ -253,15 +261,15 @@
 				</div>
         </form>
 		
- <form style="padding-left: 2%;">
+ <form style="padding-left: 1%; padding-right: 1%;">
 		<div id="queue">			
 					<div id ="dragdiv" class="jg"><img src="/fileFormat/addfile.png" style="width:30px; height:30px;">마우스로 파일을 끌어오세요</div>
 				</div>
 			<input id="file_upload" name="file" type="file" multiple="true"/>
 		<br><br>
-		<div class="float-right" >		
-			<input type="button" class="btn btn-default jg" id="updatebtn" value="수정하기">
-			<button type="button" class="btn btn-default jg" id="back">뒤로가기</button>
+		<div class="card-footer" >		
+			<input type="button" class="btn btn-default jg float-left" id="updatebtn" value="수정완료">
+			<button type="button" class="btn btn-default jg float-right" id="back">취소</button>
 		</div>
 	</form>
 		</div>
