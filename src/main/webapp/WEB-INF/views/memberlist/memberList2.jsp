@@ -71,6 +71,7 @@ $(function(){
  }
  
  function search(){
+	 	document.listForm.pageIndex.value = 1;
 	 	document.listForm.action = "<c:url value='/admin/memberlist'/>";
 	    document.listForm.submit();
 }
