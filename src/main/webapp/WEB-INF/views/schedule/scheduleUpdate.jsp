@@ -92,15 +92,18 @@ input[type=search]{
                 	<c:set var="endD" value="${fn: replace(scheduleVo.endDt,' ','T')}"/>         
 	                		
 					<label class="jg">시작일 &nbsp;</label>
-	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="startDt" name="startDt" value=""/><br>
+	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="startDt" value="${startD}"/><br>
+	                <input type='hidden' id="startDtHidden" name="startDt"/><br>
+									
 					<label class="jg">종료일 &nbsp;</label>
-	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="endDt" name="endDt" value=""/><br>
-                </div>			
+	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="endDt" value="${endD}"/><br>
+	                <input type='hidden' id="endDtHidden" name="endDt"/><br>
+                </div>				
 <!--                 <div class="form-group" id="addDiv"> -->
 <!-- 					<input type="submit" class="btn btn-default float-left jg" id="addbtn" value="장소 추가">  -->
 <!--                 </div> -->
                 <br>	
- 
+ 	
                  		
                 <!-- style="display:none" -->
                 <div class="form-group" style="display:none">
@@ -195,9 +198,66 @@ var x = 0;
 var y = 0;
 var add = "";
 	$(document).ready(function(){
-		$("#startDt").on("click", function() {
-			alert($('#startDt').val());	
+		// 수정페이지 열렸을때 startDt기본값 넣기
+		if($('#startDtHidden').val() == null || $('#startDtHidden').val() == ''){
+			startDt = $('#startDt').val();
+			
+			a = startDt;
+	 		Y = a.substring(0,4) 	//년
+	 		M = a.substring(5,7) 	//월
+	 		D = a.substring(8,10) 	//일
+	 		H = a.substring(11,13) 	//시
+	 		m = a.substring(14) 	//분
+				
+	 		startDtHidden = Y+M+D+H+m;
+			$('#startDtHidden').val(startDtHidden);		
+		};	
+		// 수정페이지 열렸을때 endDt기본값 넣기
+		if($('#endDtHidden').val() == null || $('#endDtHidden').val() == ''){
+			endDt = $('#endDt').val();
+			
+	 		a = endDt;
+	 		Y = a.substring(0,4) 	//년
+	 		M = a.substring(5,7) 	//월
+	 		D = a.substring(8,10) 	//일
+	 		H = a.substring(11,13) 	//시
+	 		m = a.substring(14)	 	//분
+						
+	 		endDtHidden = Y+M+D+H+m
+	 		$('#endDtHidden').val(endDtHidden);	
+		};
+		
+		// startDt 변경시 startDtHidden값도 변경
+		$("#startDt").on("change", function() {
+			startDt = $('#startDt').val();
+						
+	 		a = startDt;
+	 		Y = a.substring(0,4) // 년
+	 		M = a.substring(5,7) //월
+	 		D = a.substring(8,10) //일
+	 		H = a.substring(11,13) //시
+	 		m = a.substring(14) //분
+				
+	 		startDtHidden = Y+M+D+H+m
+	 		$('#startDtHidden').val(startDtHidden);
 		});
+		
+		// endDt 변경시 endDtHidden값도 변경
+		$("#endDt").on("change", function() {
+			endDt = $('#endDt').val();
+				
+	 		a = endDt;
+	 		Y = a.substring(0,4) // 년
+	 		M = a.substring(5,7) //월
+	 		D = a.substring(8,10) //일
+	 		H = a.substring(11,13) //시
+	 		m = a.substring(14) //분
+					
+	 		endDtHidden = Y+M+D+H+m
+	 		$('#endDtHidden').val(endDtHidden);
+		});
+		
+		
 	
 		if('${scheduleVo.juso}' == '' || '${scheduleVo.juso}' == null ){
 			$('#mapdiv').hide();
@@ -315,15 +375,12 @@ var add = "";
      	$('#regBtn').on('click', function(){
      		
      		cnt = 0;  
-			
 			if ($('#scheTitle').val().length == 0){
 				$('.warningTitle').text("제목을 작성해 주세요.");
 				cnt++;
 			}
 			    		
 			if (cnt == 0){	
-				
-				
 				// 업로드할 파일이 존재하지 않을시 update전송
 	     		if($('#delfile').val().length == 0 && $('.uploadifive-queue-item').length == 0){    	
 	     			console.log("둘다 X")
@@ -355,8 +412,8 @@ var add = "";
 						 }
 				 	})
 	     		}
-				     	
 	     	}
+			
 	    })
 	 	
 	 	

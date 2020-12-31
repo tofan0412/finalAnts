@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@include file="../layout/contentmenu.jsp"%>	
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -20,6 +21,33 @@
 	
 <script type="text/javascript">
 $(document).ready(function(){
+	$("#startDt").on("change", function() {
+		startDt = $('#startDt').val();
+					
+ 		a = startDt;
+ 		Y = a.substring(0,4) // 년
+ 		M = a.substring(5,7) //월
+ 		D = a.substring(8,10) //일
+ 		H = a.substring(11,13) //시	
+ 		m = a.substring(14) //분
+			
+ 		startDtHidden = Y+M+D+H+m
+ 		$('#startDtHidden').val(startDtHidden);
+	});
+	
+	$("#endDt").on("change", function() {
+		endDt = $('#endDt').val();
+				
+ 		a = endDt;
+ 		Y = a.substring(0,4) // 년
+ 		M = a.substring(5,7) //월
+ 		D = a.substring(8,10) //일
+ 		H = a.substring(11,13) //시
+ 		m = a.substring(14) //분
+				
+ 		endDtHidden = Y+M+D+H+m
+ 		$('#endDtHidden').val(endDtHidden);
+	});
 	
 	document.getElementById('startDt').value = new Date().toISOString().substring(0, 10);
 	document.getElementById('endDt').value = new Date().toISOString().substring(0, 10);
@@ -184,13 +212,18 @@ $(document).ready(function(){
                 </div>
                 
                 <div class="form-group">
+	                			
 					<label class="jg">시작일 &nbsp;</label>
-	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="startDt" name="startDt"/><br>
+	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="startDt"/><br>
+	                <input type='hidden' id="startDtHidden" name="startDt"/><br>
+								
 					<label class="jg">종료일 &nbsp;</label>
-	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="endDt" name="endDt"/><br>
+	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="endDt"/><br>
+	                <input type='hidden' id="endDtHidden" name="endDt"/><br>
+                	
                 </div>
                 <br>
- 		
+ 				
                  
                 <!-- style="display:none" -->
                 <div class="form-group" style="display:none">

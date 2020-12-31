@@ -10,10 +10,10 @@
 	<!-- 일정 등록 -->
 	<insert id="scheduleInsert" parameterType="ants.com.board.memBoard.model.ScheduleVo">
 		INSERT INTO SCHEDULE VALUES(#{scheId}, #{scheTitle}, #{scheCont}, SYSDATE, #{xVal}, #{yVal}, #{categoryId}, #{reqId}, 
-									#{memId}, #{del}, #{startDt}, #{endDt}, #{juso}, null)
+									#{memId}, #{del}, TO_DATE(#{startDt},'YYYYMMDDHH24MI'), TO_DATE(#{endDt},'YYYYMMDDHH24MI'), #{juso}, null)
 	</insert>
 	
-	
+		
 	<!-- 일정 리스트 -->
 	<select id="schedulelist" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">
 		SELECT c.*
@@ -88,11 +88,11 @@
 		SET SCHE_TITLE = #{scheTitle},
 			SCHE_CONT = #{scheCont},
 			X_VAL = #{xVal},
-			Y_VAL = #{yVal},
-			START_DT = #{startDt},
-			END_DT = #{endDt},
+			Y_VAL = #{yVal},	
+			START_DT = TO_DATE(#{startDt},'YYYYMMDDHH24MI'),
+			END_DT = TO_DATE(#{endDt},'YYYYMMDDHH24MI'),
 			JUSO = #{juso}
-		WHERE 
+		WHERE 	
 	    	sche_id = #{scheId}
 	</update>
 	
