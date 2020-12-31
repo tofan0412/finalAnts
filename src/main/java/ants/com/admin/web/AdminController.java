@@ -133,7 +133,12 @@ public class AdminController {
 		int totCnt = adminService.noticePagingListCnt(noticeVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-				
+		
+		if(noticeVo.getSearchKeyword() != null) {			
+			session.setAttribute("searchKeyword", noticeVo.getSearchKeyword());
+			session.setAttribute("searchCondition",noticeVo.getSearchCondition());
+			session.setAttribute("pageIndex", noticeVo.getPageIndex());
+		}
 		return "admin.tiles/notice/noticelist2";
 		
 	}
