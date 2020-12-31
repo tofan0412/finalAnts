@@ -242,7 +242,7 @@
 			})
 			//return false;
 		});
- 			
+ 				
  		// 비밀번호 찾을때 아이디 찾기	
 	 	$('#checkbtn').on('click', function(){ 
 	 				
