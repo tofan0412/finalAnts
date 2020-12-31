@@ -89,17 +89,15 @@
 	
 	<div class="col-12 col-sm-12">
 	<div class="card" style="border-radius: inherit; padding : 2px;">
-		 <c:if test="${SMEMBER.memId eq projectVo.memId }">
-	           <div >
-	              
-	              </div>
-			   </c:if>
+		 
 			<br>
 		    <div class="card-header ">
 		    	<div id="keyword" class="card-tools float-left" style="width: 450px;">
 						<h3 class="jg" style="padding-left: 10px; display: inline-block;">일감 리스트</h3>
 						&nbsp;&nbsp;&nbsp;&nbsp;
+						<c:if test="${SMEMBER.memId eq projectVo.memId }">
 						  <button id="todoinsert" type="button" class="btn btn-default jg"><i class="fas fa-edit"></i>일감 등록</button>
+					   </c:if>
 				</div>
 		    
 		    
