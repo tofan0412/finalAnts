@@ -379,10 +379,19 @@ public class MemberController {
 		String uuid = UUID.randomUUID().toString();
 		model.addAttribute("uuid", uuid);
 		model.addAttribute("memId", memberVo.getMemId());
+		
 		// 메일 내용
+		// 1. IP 가져오기
+		HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+		String ip = req.getHeader("X-FORWARDED-FOR");
+
+		if (ip == null) {
+			ip = req.getRemoteAddr();
+		}
+			
 		String recipient = memberVo.getMemId(); // 받는 사람의 메일주소를 입력해주세요.
 		String subject = "Ants - 비밀번호 변경요청(URL)"; // 메일 제목 입력해주세요.
-		String body = "비밀번호 변경 페이지로 이동 \n http://localhost/member/passupdateemail?memId="
+		String body = "비밀번호 변경 페이지로 이동 \n http://"+ ip +"/member/passupdateemail?memId="
 				+ memberVo.getMemId().replace("@", "%40"); // 메일 내용 입력해주세요.
 
 		Properties props = System.getProperties(); // 정보를 담기 위한 객체 생성
