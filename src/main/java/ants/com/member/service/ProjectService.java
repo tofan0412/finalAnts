@@ -166,4 +166,8 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	public List<AlarmVo> alarmlistmain(String memId) {
 		return mapper.alarmlistmain(memId);
 	}
+
+	public int projectManage(ProjectVo projectVo) {
+		return mapper.projectManage(projectVo);
+	}
 }

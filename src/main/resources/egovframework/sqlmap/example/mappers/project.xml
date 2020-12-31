@@ -501,6 +501,15 @@ SELECT *
 				ORDER BY to_number(alarm_id)desc) where rownum <=5
 		 ]]> 
 	</select>
+	
+	<update id="projectManage" parameterType="ants.com.member.model.ProjectVo">
+	UPDATE project
+    	SET
+      	  PRO_STATUS = #{proStatus},
+      	  PRO_CHANGE_DATE = sysdate
+	WHERE
+    	req_id =#{reqId}
+	</update>
 	 
 	
 </mapper>

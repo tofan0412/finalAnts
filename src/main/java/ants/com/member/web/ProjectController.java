@@ -418,4 +418,12 @@ public class ProjectController {
 			model.addAttribute("projectVo", projectVo);
 			return "jsonView";
 		}
+		
+		//  프로젝트 진행도
+		@RequestMapping("/projectManage")
+		public String projectManage(Model model, ProjectVo projectVo) {
+			int res = projectService.projectManage(projectVo);
+			model.addAttribute("data", res);
+			return "jsonView";
+		}
 }

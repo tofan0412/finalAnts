@@ -24,6 +24,51 @@
 			$('#inviteMember').modal();
 		})
 		
+		// 프로젝트 관리를 누르면 현재 프로젝트의 상태를 변경할 수 있는 모달창이 뜬다.
+		$('.projectBtn').click(function() {
+			$('#projectModal').modal();
+		})
+		// 프로젝트 진행버튼
+		$('#projectrun').click(function() {
+			reqId = "${projectId}";
+			res = "ACTIVE";
+			 if(confirm("프로젝트를 진행 하시겠습니까?") == true){
+				$('#projectModal').modal("hide");	
+				projectManage(res, reqId);
+			 }
+		})
+		// 프로젝트 중지버튼
+		$('#projectstop').click(function() {
+			reqId = "${projectId}";
+			res = "STOP";
+			if(confirm("프로젝트를 중지 하시겠습니까?") == true){
+				$('#projectModal').modal("hide");				 
+				projectManage(res, reqId);
+			 }
+		})
+		// 프로젝트 종료버튼
+		$('#projectend').click(function() {
+			reqId = "${projectId}";
+			res = "END";
+			if(confirm("프로젝트를 완료 하시겠습니까?") == true){
+				$('#projectModal').modal("hide");				 
+				projectManage(res, reqId);
+			 }
+		})
+		
+		function projectManage(res, reqId) {
+			$.ajax({
+				url : "/project/projectManage",
+				method : "POST", 
+				data : {reqId : reqId,
+					proStatus : res
+				},
+				success : function(data){
+					window.location.reload();
+				}
+			})
+		}
+		
 		// 멤버 관리 버튼을 누르면 현재 프로젝트에 참여중인 회원을 강퇴할 수 있다.
 		$('.retireBtn').click(function() {
 			reqId = "${projectId}";
@@ -419,6 +464,11 @@
 									<i class="fas fa-user-minus"></i> 멤버 관리
 								</button>
 							</li>  
+							<li>
+								<button class="btn btn-app projectBtn">
+									<i class="fas fa-user"></i> 프로젝트 관리
+								</button>
+							</li>  
 						</c:if>
 					</ol>
 				</div>
@@ -579,3 +629,34 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<div class="modal fade jg" id="projectModal" tabindex="-1" role="dialog"
+		aria-labelledby="projectModal">
+		<div class="modal-dialog modal-sm-center" role="document">
+			<div class="modal-content" style="height: 200px; width : 550px;">
+				
+				<div class="modal-header">
+					<h3 class="modal-title" id="addplLable">프로젝트 관리</h3>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h5>프로젝트 상태를 변경해 주세요</h5>
+						<button type="button" class="btn btn-default jg" id="projectrun" 
+						style="width : 32%; 
+							   height : 50px;">진행</button>
+						<button type="button" class="btn btn-default jg" id="projectstop"
+						style="width : 32%;
+							   height : 50px;">중지</button>
+						<button type="button" class="btn btn-default jg" id="projectend"
+						style="width : 32%;
+							   height : 50px;">완료</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
