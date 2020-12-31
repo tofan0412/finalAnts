@@ -363,13 +363,14 @@
 		<!-- 프로젝트 멤버 가져오기 -->
 		<select id="projectList" parameterType="ants.com.member.model.ProjectVo"
 		resultType="ants.com.member.model.ProjectVo">
-		
 			SELECT DISTINCT
 				project.req_id,
 	            project.pro_name,
-	            project.mem_id
+	            project.mem_id,
+                project.PRO_STATUS as proStatus,
+                to_char(PRO_CHANGE_DATE, 'yyyy-mm-dd') as proChangeDate
 			FROM(select * from project)project,
-				projectmember projectmember
+				projectmember projectmember		
 			WHERE
 				projectmember.req_id = project.req_id
 			AND projectmember.mem_id = #{memId}

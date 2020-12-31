@@ -95,7 +95,7 @@
 		    	<div id="keyword" class="card-tools float-left" style="width: 450px;">
 						<h3 class="jg" style="padding-left: 10px; display: inline-block;">일감 리스트</h3>
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<c:if test="${SMEMBER.memId eq projectVo.memId }">
+						<c:if test="${SMEMBER.memId eq projectVo.memId and projectVo.proStatus eq 'ACTIVE'}">
 						  <button id="todoinsert" type="button" class="btn btn-default jg"><i class="fas fa-edit"></i>일감 등록</button>
 					   </c:if>
 				</div>
