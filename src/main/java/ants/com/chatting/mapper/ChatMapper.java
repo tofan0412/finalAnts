@@ -41,4 +41,7 @@ public interface ChatMapper {
 	
 	// 채팅방에서 나가기
 	public int exitChat(ChatMemberVo chatMemberVo);
+		
+	// 채팅멤버 이름업데이트
+	public int chatmembernameupdate(ChatMemberVo chatmembervo);
 }

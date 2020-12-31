@@ -48,10 +48,13 @@ import ants.com.admin.service.AdminService;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ScheduleVo;
 import ants.com.board.memBoard.service.memBoardService;
+import ants.com.chatting.model.ChatMemberVo;
+import ants.com.chatting.service.ChatService;
 import ants.com.common.model.AlarmVo;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.common.service.AlarmService;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.service.MemberService;
 import ants.com.member.service.ProjectService;
@@ -82,7 +85,10 @@ public class MemberController {
 
 	@Resource(name = "alarmService")
 	private AlarmService alarmService;
-
+	
+	@Resource(name = "chatService")
+	private ChatService chatService;
+		
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
@@ -536,7 +542,8 @@ public class MemberController {
 		model.addAttribute("memberVo", dbMember);
 		return "tiles/member/profileupdateview";
 	}
-
+	
+	// 프로필 수정
 	@RequestMapping(path = "/profileupdate", method = RequestMethod.POST) // VO 객체 바로 뒤에 Binding 와야함... 안그럼 매칭안됨
 	public String profileupdate(HttpSession session, Model model, String imgname, MemberVo memberVo, BindingResult br,
 			@RequestPart(value = "Filename", required = false) MultipartFile file) {
@@ -577,10 +584,21 @@ public class MemberController {
 		}
 		memberVo.setMemFilepath(Filepath);
 		memberVo.setMemFilename(Filename);
-
-		int updateCnt = memberService.profileupdate(memberVo);
-
-		if (updateCnt == 1) {
+		
+		// 프로젝트 멤버, 채팅멤버 이름 업데이트
+		ProjectMemberVo projectmembervo = new ProjectMemberVo();
+		projectmembervo.setMemId(memberVo.getMemId());
+		projectmembervo.setMemName(memberVo.getMemName());
+		
+		ChatMemberVo chatmembervo = new ChatMemberVo();
+		chatmembervo.setMemId(memberVo.getMemId());
+		chatmembervo.setMemName(memberVo.getMemName());
+			
+		int updateCnt1 = memberService.profileupdate(memberVo);
+		int updateCnt2 = promemService.projectmembernameupdate(projectmembervo);
+		int updateCnt3 = chatService.chatmembernameupdate(chatmembervo);
+		
+		if (updateCnt1 >= 1 && updateCnt2 >= 1 && updateCnt3 >= 1) {
 			return "redirect:/member/profile?memId="+memberVo.getMemId();
 		} else {
 			return "tiles/member/profileupdateview";

@@ -73,4 +73,8 @@ public class ChatService{
 	public int exitChat(ChatMemberVo chatMemberVo) {
 		return mapper.exitChat(chatMemberVo);
 	}
+
+	public int chatmembernameupdate(ChatMemberVo chatmembervo) {
+		return mapper.chatmembernameupdate(chatmembervo);
+	}
 }

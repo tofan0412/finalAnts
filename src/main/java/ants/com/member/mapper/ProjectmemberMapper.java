@@ -58,6 +58,7 @@ public interface ProjectmemberMapper {
 	
 	// 프로젝트 멤버 상태 수정하기
 	public int promemUpdate(ProjectMemberVo projectMemberVo);
-	
-	
+		
+	// 프로젝트 멤버 이름 업데이트
+	public int projectmembernameupdate(ProjectMemberVo projectmembervo);
 }

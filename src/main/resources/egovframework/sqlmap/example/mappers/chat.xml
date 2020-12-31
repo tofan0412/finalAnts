@@ -115,8 +115,14 @@ INSERT INTO CHATMEMBER (
 	         ORDER BY REG_DT DESC)
 	 WHERE ROWNUM = 1
 </select>
-
-
+			
+<update id="chatmembernameupdate" parameterType="ants.com.chatting.model.ChatHistoryVo">
+	UPDATE CHATMEMBER 
+	<set>
+		<if test="memName != null">mem_name=#{memName},</if>
+	</set>  
+	WHERE MEM_ID = #{memId}
+</update>
 
 
 <delete id="exitChat" parameterType="ants.com.chatting.model.ChatMemberVo">

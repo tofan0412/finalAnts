@@ -58,7 +58,7 @@
 				
 	<update id="profileupdate" parameterType="ants.com.member.model.MemberVo">
 		UPDATE MEMBER 
-		 <set>
+		<set>
 	        <if test="memName != null">mem_name=#{memName},</if>
 	        <if test="memPass != null">mem_pass=#{memPass},</if>
 	        <if test="memTel != null">mem_tel=#{memTel},</if>
@@ -67,7 +67,7 @@
 	    </set>  
 		WHERE MEM_ID = #{memId}
 	</update>
-	
+		
 	
 	<update id="updateAlarm" parameterType="ants.com.member.model.MemberVo">
 		UPDATE MEMBER SET MEM_ALERT = #{memAlert}

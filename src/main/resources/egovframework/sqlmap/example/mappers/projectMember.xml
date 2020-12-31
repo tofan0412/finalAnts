@@ -29,6 +29,13 @@ UPDATE PROJECTMEMBER
 	</set>
 	 WHERE PROMEM_ID = #{promemId}
 </update>
-
+	
+<update id="projectmembernameupdate" parameterType="ants.com.member.model.ProjectMemberVo">
+	UPDATE PROJECTMEMBER 
+	<set>
+		<if test="memName != null">mem_name=#{memName},</if>
+	</set>  
+	WHERE MEM_ID = #{memId}
+</update>
 
 </mapper>

@@ -1,13 +1,11 @@
 package ants.com.member.mapper;
 
-
 import java.io.IOException;
 import java.util.List;
 
-import org.springframework.ui.Model;
-
+import ants.com.chatting.model.ChatMemberVo;
 import ants.com.member.model.MemberVo;
-import ants.com.member.model.ProjectVo;
+import ants.com.member.model.ProjectMemberVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("memberMapper")
@@ -29,5 +27,9 @@ public interface MemberMapper {
 	
 	public int profileupdate(MemberVo memberVo);
 	
+	public int projectmemberupdate(ProjectMemberVo projectmembervo);
+	
+	public int chatmemberupdate(ChatMemberVo chatmembervo);
+		
 	public int updateAlarm(MemberVo memberVo);
 }
