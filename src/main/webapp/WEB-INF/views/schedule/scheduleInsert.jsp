@@ -185,12 +185,12 @@ $(document).ready(function(){
                 
                 <div class="form-group">
 					<label class="jg">시작일 &nbsp;</label>
-	                <input class="form-control jg" style="display:inline-block; width: 200px;" type='date' id="startDt" name="startDt"/><br>
+	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="startDt" name="startDt"/><br>
 					<label class="jg">종료일 &nbsp;</label>
-	                <input class="form-control jg" style="display:inline-block; width: 200px;" type='date' id="endDt" name="endDt"/><br>
+	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="endDt" name="endDt"/><br>
                 </div>
                 <br>
- 
+ 		
                  
                 <!-- style="display:none" -->
                 <div class="form-group" style="display:none">

@@ -372,7 +372,7 @@ public class MemberController {
 		String host = "smtp.naver.com";
 
 		// POP3/IMAP 설정시 네이버에서 알려줌
-		final String username = "poiqqw"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
+		final String username = "noylit"; // 네이버 아이디를 입력해주세요. @naver.com은 입력하지 마시구요.
 		final String password = "1234e5678"; // 네이버 이메일 비밀번호를 입력해주세요.
 		int port = 465; // 포트번호
 		
@@ -403,11 +403,11 @@ public class MemberController {
 				return new javax.mail.PasswordAuthentication(un, pw);
 			}
 		});
-
+		
 		session.setDebug(true); // for debug
 
 		Message mimeMessage = new MimeMessage(session); // MimeMessage 생성
-		mimeMessage.setFrom(new InternetAddress("poiqqw@naver.com")); // 발신자 셋팅, 보내는 사람의 이메일주소를 한번 더 입력합니다. 이때는 이메일 풀
+		mimeMessage.setFrom(new InternetAddress("noylit@naver.com")); // 발신자 셋팅, 보내는 사람의 이메일주소를 한번 더 입력합니다. 이때는 이메일 풀
 																		// 주소를 다 작성해주세요.
 		mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); // 수신자셋팅 //.TO 외에 .CC(참조)
 																							// .BCC(숨은참조) 도 있음

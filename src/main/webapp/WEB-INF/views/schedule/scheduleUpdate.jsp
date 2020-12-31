@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>	
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -84,19 +85,23 @@ input[type=search]{
                 <textarea id="summernote" name="scheCont" placeholder="내용">${scheduleVo.scheCont}</textarea>
 				
                 </div>
-                
-                <div class="form-group">
+                	
+                <div class="form-group">	
+                	
+                	<c:set var="startD" value="${fn: replace(scheduleVo.startDt,' ','T')}"/>         
+                	<c:set var="endD" value="${fn: replace(scheduleVo.endDt,' ','T')}"/>         
+	                		
 					<label class="jg">시작일 &nbsp;</label>
-	                <input class="form-control jg" style="display:inline-block; width: 200px;" type='date' id="startDt" name="startDt" value="${scheduleVo.startDt}"/><br>
+	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="startDt" name="startDt" value=""/><br>
 					<label class="jg">종료일 &nbsp;</label>
-	                <input class="form-control jg" style="display:inline-block; width: 200px;" type='date' id="endDt" name="endDt" value="${scheduleVo.endDt}"/><br>
-                </div>
+	                <input class="form-control jg" style="display:inline-block; width: 300px;" type='datetime-local' id="endDt" name="endDt" value=""/><br>
+                </div>			
 <!--                 <div class="form-group" id="addDiv"> -->
 <!-- 					<input type="submit" class="btn btn-default float-left jg" id="addbtn" value="장소 추가">  -->
 <!--                 </div> -->
-                <br>
+                <br>	
  
-                 
+                 		
                 <!-- style="display:none" -->
                 <div class="form-group" style="display:none">
 				<div class="float-left">
@@ -190,6 +195,9 @@ var x = 0;
 var y = 0;
 var add = "";
 	$(document).ready(function(){
+		$("#startDt").on("click", function() {
+			alert($('#startDt').val());	
+		});
 	
 		if('${scheduleVo.juso}' == '' || '${scheduleVo.juso}' == null ){
 			$('#mapdiv').hide();

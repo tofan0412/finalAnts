@@ -58,7 +58,7 @@ function scheInsert(){
     document.listForm.submit();
  }
 </script>
-
+	
 <body>	
 <%@include file="../layout/contentmenu.jsp"%>
 <form:form commandName="scheduleVo" id="listForm" name="listForm" method="post">

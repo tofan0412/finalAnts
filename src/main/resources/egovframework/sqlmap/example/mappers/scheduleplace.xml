@@ -19,16 +19,16 @@
 		SELECT c.*
 		  FROM (
 		   SELECT ROWNUM rnum, a.* 
-			 FROM (
-			 	
-				 SELECT a.SCHE_ID, a.SCHE_TITLE, a.SCHE_CONT, to_char(a.REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, a.X_VAL, a.Y_VAL, a.CATEGORY_ID, a.REQ_ID, b.mem_name, a.mem_id,
-				         a.DEL, to_char(a.START_DT,'YYYY-MM-DD') as START_DT, to_char(a.END_DT,'YYYY-MM-DD') as END_DT, a.JUSO, a.CALENDARCSS
+			 FROM (	
+			 			
+				 SELECT a.SCHE_ID, a.SCHE_TITLE, a.SCHE_CONT, to_char(a.REG_DT,'YYYY-MM-DD HH24:MI') as REG_DT, a.X_VAL, a.Y_VAL, a.CATEGORY_ID, a.REQ_ID, b.mem_name, a.mem_id,
+				         a.DEL, to_char(a.START_DT,'YYYY-MM-DD HH24:MI') as START_DT, to_char(a.END_DT,'YYYY-MM-DD HH24:MI') as END_DT, a.JUSO, a.CALENDARCSS
 				   FROM SCHEDULE a, member b
-				  WHERE category_id = #{categoryId}
+				  WHERE category_id = #{categoryId}	
 				    AND a.req_id = #{reqId}
 				    AND a.del = 'N'
 				    AND a.mem_id = b.mem_id
-				    
+				    	
 				    <if test="searchKeyword != null and searchKeyword != ''">
 				        <choose>
 				         	<when test="searchCondition == 1">
@@ -70,18 +70,18 @@
 			</choose>			    
 		</if>
 	</select>
-	
+		
 	
 	<!-- 일정 상세페이지 -->
 	<select id="scheduleSelect" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">	
-		SELECT a.SCHE_ID, a.SCHE_TITLE, a.SCHE_CONT, to_char(a.REG_DT,'yyyy-mm-dd hh24:mi') as REG_DT, a.X_VAL, a.Y_VAL, a.CATEGORY_ID, a.REQ_ID, 
-		        b.mem_name, a.mem_id, a.DEL, to_char(a.START_DT,'YYYY-MM-DD') as START_DT, to_char(a.END_DT,'YYYY-MM-DD') as END_DT, a.JUSO, a.CALENDARCSS
+		SELECT a.SCHE_ID, a.SCHE_TITLE, a.SCHE_CONT, to_char(a.REG_DT,'YYYY-MM-DD HH24:MI') as REG_DT, a.X_VAL, a.Y_VAL, a.CATEGORY_ID, a.REQ_ID, 
+		        b.mem_name, a.mem_id, a.DEL, to_char(a.START_DT,'YYYY-MM-DD HH24:MI') as START_DT, to_char(a.END_DT,'YYYY-MM-DD HH24:MI') as END_DT, a.JUSO, a.CALENDARCSS
 		FROM SCHEDULE a, member b
 		WHERE sche_id = #{scheId}
 		  and a.mem_id = b.mem_id
 	</select>
-	
-	
+				
+		
 	<!-- 일정 수정하기 -->
 	<update id="scheduleUpdate" parameterType="ants.com.board.memBoard.model.ScheduleVo">
 		UPDATE SCHEDULE
