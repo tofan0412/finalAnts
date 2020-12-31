@@ -128,44 +128,57 @@ text-align: right;
                   		</div>
                   		
                   		<div class="row jg" style="width: 80%; margin-left: 10%; margin-top: 8%;" >
-	                    	<div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%;" >
-	                     		경과시간 대비 진행율
+	                    	<div class="col-12 col-sm-6 col-md-3" id="bani_a" style="width: 35%; margin-right: 10%;" >
+                      			<c:if test="${pro.elepsedTime ne 0 }">
+                     			<fmt:parseNumber value="${pro.percent/pro.elepsedTime }" var="timecalc"/>
+	                     		경과시간 대비 진행율<br><span id="bani_a1">${fn:split(timecalc,'.')[0]}%</span>
 	                      		<div class="progress progress-md">
-	                      			<c:if test="${pro.elepsedTime ne 0 }">
-	                      				<fmt:parseNumber value="${pro.percent/pro.elepsedTime }" var="timecalc"/>
-	                        				<div class="progress-bar bg-warning" style="width:<c:out value="${timecalc}" />%"></div>
-	                        		</c:if>
-	                        		<c:if test="${pro.elepsedTime eq 0 }">
-	                        			<div class="progress-bar bg-warning" style="width:<c:out value="${pro.percent}" />%"></div>
-	                        		</c:if>
+                        			<div class="progress-bar bg-warning" style="width:<c:out value="${timecalc}" />%"></div>
 	                      		</div>
-	                    	</div>
-	               		 	<div class="col-12 col-sm-6 col-md-3" style="width: 30%; margin-right: 10%; ">
-	                      		프로젝트 파일함 사용량
+                        		</c:if>
+                        		<c:if test="${pro.elepsedTime eq 0 }">
+	                     		경과시간 대비 진행율<br><span id="bani_a2">${fn:split(pro.percent,'.')[0]}%</span>
 	                      		<div class="progress progress-md">
-	                      			<fmt:parseNumber value="${dbfilevo.pubSize/1024}" var="pnum"/>
-	                        		<c:if test="${pnum>=1024}">
-	                        			<div class="progress-bar bg-warning" style="width: <c:out value="${pnum/1024}" />%"></div>
-	                        		</c:if>
-	                        		<c:if test="${pnum<1024}">
+                        			<div class="progress-bar bg-warning" style="width:<c:out value="${pro.percent}" />%"></div>
+	                      		</div>
+                        		</c:if>
+	                    	</div>
+	                    	
+	                    	
+	               		 	<div class="col-12 col-sm-6 col-md-3" id="bani_b" style="width: 30%; margin-right: 10%; ">
+                      			<fmt:parseNumber value="${dbfilevo.pubSize/1024}" var="pnum"/>
+                        		<c:if test="${pnum>=1024}">
+	                      		프로젝트 파일함 사용량<br><span id="bani_b1">${fn:split(pnum/1024,'.')[0]}MB</span>
+		                      		<div class="progress progress-md">
+    	                    			<div class="progress-bar bg-warning" style="width: <c:out value="${pnum/1024}" />%"></div>
+	    	                  		</div>
+	                       		</c:if>
+                        		<c:if test="${pnum<1024}">
+	                      		프로젝트 파일함 사용량<br><span id="bani_b2">${fn:split(pnum,'.')[0]}KB</span>
+	       		               		<div class="progress progress-md">
 	                        			<div class="progress-bar bg-warning" style="width: <c:out value="${pnum}" />%"></div>
-	                        		</c:if>
-	                      		</div>
+	            	          		</div>
+	                       		</c:if>
 	                    	</div>
-	                    	<div class="col-12 col-sm-6 col-md-3" style="width: 35%;" >
-	                      	소통량<span style="font-size: 0.8em;">(이슈글 수 대비 댓글 작성율 )</span>
-	                      		<fmt:parseNumber value="${dbreplyvo.replypercent}" var="reply"/>
+	                    	
+	                    	
+	                    	<div class="col-12 col-sm-6 col-md-3" id="bani_c" style="width: 35%;">
+                      		<fmt:parseNumber value="${dbreplyvo.replypercent}" var="reply"/>
+	                      	이슈글 수 대비 댓글 작성율<br><span id="bani_c1"><c:if test="${reply > 100}">100%</c:if> <c:if test="${reply <= 100}">${reply}%</c:if></span>
 	                      		<div class="progress progress-md" >
 	                        		<div class="progress-bar bg-warning" style="width:<c:out value="${reply}" />%"></div>
 	                      		</div>
 	                    	</div>
-	                    	<div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-right: 10%; margin-top: 5%;" >
-	                  		투표율
+	                    	
+	                    	
+	                    	<div class="col-12 col-sm-6 col-md-3" id="bani_d" style="width: 35%; margin-right: 10%; margin-top: 5%;" >
 		                      	<fmt:parseNumber value="${dbvotevo.votepercent}" var="NUM"/>
+	                  		투표율<br> <span id="bani_d1">${NUM}%</span>
 		                      	<div class="progress progress-md">
 		                        	<div class="progress-bar bg-warning" style="width: <c:out value="${NUM}" />%"></div>
 		                      	</div>
 	                    	</div>
+	               		
 	               		
 	               		 	<div class="col-12 col-sm-6 col-md-3" style="width: 35%; margin-top: 7%; margin-right: 10%;">
 								<a href="${pageContext.request.contextPath }/project/chartView">차트 보러가기</a>

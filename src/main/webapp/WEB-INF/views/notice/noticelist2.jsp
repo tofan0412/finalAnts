@@ -17,17 +17,19 @@
 		 padding : 6px; 	 
 		 border: none; 
 	}
+	/*
 	#table{
 		width : 100%;
 	    border-top: 1px solid #444444;
 	    border-collapse: collapse;
 	    text-align: center;
   	}
+  	
    	th, td { 
  	    border-bottom: 1px solid #444444; 
  	    padding: 10px; 
    	} 
-	
+	*/
 	li strong{
 		display: inline-block;
 		text-align: center;
@@ -50,6 +52,12 @@
 		height: 50px;
 		width: 150px;
 		padding: 5px;
+	}
+	
+	#recent, #old{
+		background-color:transparent;  
+	 	border:0px transparent solid;
+	 	outline: none;
 	}
 
 </style>
@@ -77,6 +85,7 @@
 	}
 
 	function search() {
+		document.listForm.pageIndex.value = 1;
 		document.listForm.action = "<c:url value='/admin/noticelist'/>";
 		document.listForm.submit();
 	}
@@ -88,7 +97,7 @@
 <form:form commandName="noticeVo" id="listForm" name="listForm" method="post">
 		
 	<section class="content" >
-		<div class="col-sm-12 ns">
+		<div class="col-sm-12 col-sm-12">
 			<div class="card" style="border-radius: inherit; padding : 2px; margin-top: 10px">
 				<!-- 헤더 부분 -->
 				<div class="container-fluid">
@@ -100,7 +109,7 @@
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right" style="background: white">
-								<li class="breadcrumb-item san jg"><a href="#">Home</a></li>
+								<li class="breadcrumb-item san jg"><a href="${pageContext.request.contextPath}/admin/adMainView">Home</a></li>
 								<li class="breadcrumb-item active jg">공지사항</li>
 							</ol>
 						</div>
@@ -115,7 +124,7 @@
 								<form:option value="1" label="제목"/>
 							</form:select> 
 								
-							<label for="searchKeyword" style="visibility:hidden; display:none;"></label>
+							<label for="searchKeyword" style="visibility:hidden; display:none;" class="jg"></label>
 							<form:input style="width: 300px;" path="searchKeyword"  placeholder="검색어를 입력하세요." class="form-control jg"/>
 			                 
 				            <span class="input-group-append">							
@@ -130,14 +139,20 @@
 				
 				<!-- 리스트 부분 시작 -->
 	            <div class="card-body p-0">
-	            	<table id="table" class="jg">
+	            	<table class="table">
 	            		<!-- 헤더부분  -->
 						<thead>
 		                    <tr>
+		                    	<!-- 
 		                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
 		                     	<th style="width:50%; padding-left: 30px; text-align: center;" class="jg"> 제목</th> 
 								<th style="text-align: center;" class="jg">   작성자 </th>
 								<th style="text-align: center;" class="jg">   날짜   </th>
+								 -->
+								<th class="jg" style="text-align: center; width: 10%; padding-left: 50px">NO.</th>
+								<th class="jg" style="padding-left: 30px; width: 37%">제목</th>
+								<th class="jg" style="text-align: center; width: 10%">작성자</th>
+								<th class="jg" style="text-align: center; width: 15%">작성일</th>
 		                    </tr>
 	                 	</thead>
 						<!-- 리스트부분 -->
@@ -145,11 +160,11 @@
 							<c:forEach items="${noticelist }" var="notice" varStatus="status">
 
 								<tr>
-									<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
+									<td class="jg" style="width: 10%; padding-left: 40px; text-align: center; ">
 										<c:out value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />
 									</td>
 										
-									<td class="jg"  style="padding-left: 30px; text-align: left;">
+									<td class="jg"  style="padding-left: 30px; width: 37%">
 										<c:if test="${notice.importance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
 										<c:if test="${notice.importance eq 'emg'}"><span class="badge badge-danger ns">필독</span></c:if>
 										&nbsp;
@@ -163,8 +178,8 @@
 										</a>
 									</td>
 									
-									<td class="jg" style="text-align: center;">${notice.adminId }</td>
-									<td class="jg" style="text-align: center;">${notice.regDt }</td>
+									<td class="jg" style="text-align: center; width: 10%">${notice.adminId }</td>
+									<td class="jg" style="text-align: center; width: 15%">${notice.regDt }</td>
 									
 								</tr>
 								

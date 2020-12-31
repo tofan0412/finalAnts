@@ -45,8 +45,6 @@
 	
 	<!-- 목록 갯수  -->
 	<select id="memberlistPagingListCnt" parameterType="ants.com.member.model.MemberVo" resultType="int">
-<!-- 		SELECT COUNT(*) -->
-<!-- 		  FROM MEMBER -->
 		select count(*) as totCnt
 		from member
 		WHERE DEL = 'N'
@@ -89,7 +87,7 @@
 	        <if test="memTel != null">mem_tel=#{memTel},</if>
 	        <if test="memFilepath != null">mem_filepath=#{memFilepath},</if>	 	            
 	        <if test="memFilename != null">mem_filename=#{memFilename},</if>	 	             	                     	            
-	        <if test="memType != null">mem_type = #{memType}</if>	 	             	                     	            
+	        <if test="memType != null">mem_type = #{memType},</if>	 	             	                     	            
 	    </set>   
 		WHERE MEM_ID = #{memId}
 	</update>
@@ -121,6 +119,7 @@ VALUES (IPHIST_SEQ.NEXTVAL,#{memId},#{ipAddr},SYSDATE)
 					FROM PROJECT
 					WHERE DEL = 'N'
 					AND pro_name != 'null'
+					AND mem_id != 'null'
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>
 							<when test="searchCondition == 1">

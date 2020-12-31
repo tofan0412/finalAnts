@@ -95,7 +95,7 @@ $(function(){
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right" style="background: white">
-								<li class="breadcrumb-item san jg"><a href="#">Home</a></li>
+								<li class="breadcrumb-item san jg"><a href="${pageContext.request.contextPath}/admin/adMainView">Home</a></li>
 								<li class="breadcrumb-item active jg">회원 리스트</li>
 							</ol>
 						</div>
@@ -144,26 +144,35 @@ $(function(){
 	            		<!-- 헤더부분  -->
 						<thead>
 							<tr>
-								<th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-								<th style="padding-left: 30px; text-align: center;">이메일</th>
-								<th style="text-align: center;">이름</th>
-								<th style="text-align: center;">전화번호</th>
-								<th style="text-align: center;">타입</th>
-								<th style="text-align: center;">알람</th>
+								<th class="jg" style="width : 10%; padding-left: 20px; text-align: center;">No.</th>
+								<th class="jg" style="padding-left: 10%; width: 37%">이메일</th>
+								<th class="jg" style="text-align: center; width: 10%">이름</th>
+								<th class="jg" style="text-align: center; width: 15%">전화번호</th>
+								<th class="jg" style="text-align: center; width: 11%">타입</th>
+								<th class="jg" style="text-align: center; width: 13%">알람</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach items="${memberlist }" var="member" varStatus="status">
 								<tr>
-									<td style="width: 150px; padding-left: 50px; text-align: center;">
+									<td class="jg" style="width: 10%; padding-left: 20px; text-align: center;">
 										<c:out value="${  ((memberVo.pageIndex-1) * memberVo.pageUnit + (status.index+1))}" />.</td>
-									<td style="padding-left: 30px; text-align: center;">
+									<td class="jg" style="padding-left: 10%; width: 37%">
 										<a href="${pageContext.request.contextPath}/admin/memlistprofile?memId=${member.memId}">
 											${member.memId }</a></td>
-									<td style="text-align: center;">${member.memName }</td>
-									<td style="text-align: center;">${member.memTel }</td>
-									<td style="text-align: center;">${member.memType }</td>
-									<td style="text-align: center;">${member.memAlert }</td>
+									<td class="jg" style="text-align: center;">${member.memName }</td>
+									
+									<c:choose>
+										<c:when test="${member.memTel eq null }">
+											<td class="jg" style="text-align: center;">-</td>
+										</c:when>
+										<c:otherwise>
+											<td class="jg" style="text-align: center;">${member.memTel }</td>
+										</c:otherwise>
+									</c:choose>
+										
+									<td class="jg" style="text-align: center;">${member.memType }</td>
+									<td class="jg" style="text-align: center;">${member.memAlert }</td>
 								</tr>
 							</c:forEach>
 							<c:if test="${memberlist.size() == 0}">

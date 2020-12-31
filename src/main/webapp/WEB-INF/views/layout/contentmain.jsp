@@ -152,8 +152,7 @@ body{
 </style>
 </head>				
 <body>
- <div class="col-12 col-sm-12">
- 
+<div class="col-12 col-sm-12">
 <div id="maintop" style="OVERFLOW-Y:auto; padding-left:2%; margin-top: 2%; max-height: 380px;">
 	<div class="card card card-success card-outline">
 		<div class="card-header">
@@ -293,7 +292,14 @@ body{
 				         </c:when>
 				         <c:when test="${a.alarmType eq 'suggest'}">
 					     ${fn:substring(fn:split(a.alarmCont,'&&')[6],0,30)}<br>
-					     from.${fn:substring(fn:split(a.alarmCont,'&&')[8],0,13) }&nbsp;&nbsp;&nbsp;[${fn:substring(fn:split(a.alarmCont,'&&')[5],0,30) }]
+					     from.${fn:substring(fn:split(a.alarmCont,'&&')[8],0,13) }&nbsp;&nbsp;&nbsp;
+					     <c:if test="${fn:length(fn:substring(fn:split(a.alarmCont,'&&')[5],0,30)) > 10}">									
+					     		 [${fn:substring(fn:substring(fn:split(a.alarmCont,'&&')[5],0,30),0,8)}...]
+							</c:if>
+							<c:if test="${fn:length(fn:substring(fn:split(a.alarmCont,'&&')[5],0,30)) <= 10}">									
+					     		 [${fn:substring(fn:split(a.alarmCont,'&&')[5],0,30) }]
+							</c:if>
+					    
 				         </c:when>
 				         </c:choose>
                     	</div>
@@ -308,7 +314,7 @@ body{
 			</div>
 		</div>
 	</div>
-</div>
+
 <div id="mainleft" style="padding-left: 2%; margin-top: 2%;">
 	<div class="card" style="height: 340px;">
 		<div class="card-header">
@@ -339,6 +345,7 @@ body{
 		</div>           
 	</div>
 
+</div>
 </div>
 </html>
 </body>
