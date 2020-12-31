@@ -465,7 +465,7 @@
 			ORDER BY elapsedDay asc
 		</select>
 		
-		<select id="getSelectTodo">
+		<select id="getSelectTodo" parameterType="ants.com.board.manageBoard.model.TodoVo" resultType="ants.com.board.manageBoard.model.TodoVo">
 			select  todo_id,
 					TO_CHAR(t.todo_start, 'DD-MM-YYYY') as todo_start,
 					TO_DATE(t.todo_end) - TO_DATE(t.todo_start) as todo_end,
@@ -481,8 +481,8 @@
 	       FROM todo t
 	       LEFT OUTER JOIN member m
 	                 ON m.mem_id = t.mem_id
-	       WHERE t.req_id = '1'
-	       START WITH t.mem_id = 'pl1'
+	       WHERE t.req_id = #{reqId}
+	       START WITH t.mem_id = #{memId}
 	       CONNECT BY PRIOR t.todo_parentid =  t.todo_id
 		</select>
 		

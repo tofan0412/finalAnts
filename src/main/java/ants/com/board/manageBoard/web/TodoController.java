@@ -304,6 +304,7 @@ public class TodoController {
 	@RequestMapping("/getSelectTodo")
 	public String getSelectTodo(Model model, HttpSession session, TodoVo todoVo) {
 		String reqId = (String) session.getAttribute("projectId");
+		todoVo.setReqId(reqId);
 		List<TodoVo> todoList = manageBoardService.getSelectTodo(todoVo);
 		model.addAttribute("todoList", todoList);
 		return "jsonView";

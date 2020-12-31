@@ -36,8 +36,20 @@
 	<%@include file="../layout/contentmenu.jsp"%>
 	<div class="scaleBtn">
 		<form class="gantt_control">
-			<input type="button" value="확대" onclick="zoomIn()" class="btn btn-default  btn-sm btn-flat"> 
-			<input type="button" value="축소" onclick="zoomOut()" class="btn btn-default btn-sm btn-flat"> &nbsp; &nbsp; 
+			<div class="input-group input-group-sm col-md-1 float-left">
+		      	<select class="form-control" name="searchCondition" id="searchCondition" style="font-size: 0.7em;">
+					<option>담당자</option>
+					<c:forEach items="${promemList }" var="p">
+						<option value="${p.memId }">${p.memName }</option>
+					</c:forEach>
+				</select>
+		          <div class="input-group-append" id="stoBtn">
+		          	<div class="btn btn-default">
+		             		<i class="fas fa-search"></i>
+		            </div>
+		          </div>
+		    </div>
+		    &nbsp;&nbsp;&nbsp;
 			<input type="radio" id="scale1" class="gantt_radio" name="scale" value="day">
 				<label for="scale1">일간</label> &nbsp; 
 			<input type="radio" id="scale2" class="gantt_radio" name="scale" value="week"> 
@@ -48,19 +60,14 @@
 				<label for="scale4">분기</label> &nbsp; 
 			<input type="radio" id="scale5" class="gantt_radio" name="scale" value="year" > 
 				<label for="scale5">년도</label>&nbsp; 
+			<input type="button" value="확대" onclick="zoomIn()" class="btn btn-default  btn-sm btn-flat"> 
+			<input type="button" value="축소" onclick="zoomOut()" class="btn btn-default btn-sm btn-flat"> &nbsp; &nbsp; 
 			<input value="Excel 다운로드" type="button" onclick="gantt.exportToExcel()" style="margin:0 15px; float: right;" class="btn btn-default  btn-sm btn-flat">
 			<input value="PDF 다운로드" type="button" onclick='gantt.exportToPDF()' style="float: right;" class="btn btn-default  btn-sm btn-flat">
-			<select class="form-control">
-				<option>?</option>
-				<option>?</option>
-				<option></option>
-				<option></option>
-				<option></option>
-				<option></option>
-			</select>
 		</form>
 	</div>
 	<div id="gantt_here" style='width: 100%; height: 700px; font-size: 0.7em;'></div>
+	
 
 
 
@@ -256,7 +263,49 @@
 			
 		});//json
 		
-		
+		$('#stoBtn').on('click',function(){
+			gdata = [];
+			gantt.clearAll();
+			var memId =  $("#searchCondition option:selected").val();
+			
+			$.getJSON("/todo/getSelectTodo?memId="+memId, function(data2) {
+				gantt.init("gantt_here");
+				$.each(data2.todoList, function(inx, obj) {
+					var gdatum = {};
+
+					if (obj.todoParentid == null) {
+						gdatum = {
+							id : parseInt(obj.todoId),
+							text : obj.todoTitle,
+							users : obj.memName,
+							priority : obj.todoImportance,
+							start_date : obj.todoStart,
+							duration : parseInt(obj.todoEnd),
+							progress : obj.todoPercent,
+							open : true
+						};
+					} else {
+						gdatum = {
+							id : obj.todoId,
+							text : obj.todoTitle,
+							users : obj.memName,
+							priority : obj.todoImportance,
+							start_date : obj.todoStart,
+							duration : obj.todoEnd,
+							progress : obj.todoPercent,
+							parent : obj.todoParentid
+						};
+					}
+					
+					gdata.push(gdatum);
+				});
+				gantt.parse({
+					data : gdata
+				});
+				
+			});//json
+			
+		})
 	</script>
 
 </body>
