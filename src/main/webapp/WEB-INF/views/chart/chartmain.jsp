@@ -11,12 +11,30 @@
 .baniChart{text-align: center;}
 .bani_div{width: 50%; float:left; }
 .bani_div2{width: 50%; float:left; }
-.bani_div3{width: 50%; float:left; padding-left: 3%; }
+.bani_div3{width: 50%; float:left;}
 </style>
 </head>
 <script type="text/javascript">
 
 $(document).ready(function() {
+	$('#bani_div2').hide();
+	$('#bani_div2_1').hide();
+	$('#bani_bb').click(function() {		
+		$('#bani_div2').show();
+		$('#bani_div3').hide();
+	})
+	$('#bani_aa').click(function() {		
+		$('#bani_div3').show();
+		$('#bani_div2').hide();
+	})
+	$('#bani_cc').click(function() {		
+		$('#bani_div2_2').show();
+		$('#bani_div2_1').hide();
+	})
+	$('#bani_dd').click(function() {		
+		$('#bani_div2_1').show();
+		$('#bani_div2_2').hide();
+	})
 	stackedbarchart();
 	donutChart();
 	donutSuggestAccept();
@@ -820,21 +838,23 @@ function donutChartproper() {
 	              		 </div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-calendar" role="tabpanel" aria-labelledby="custom-tabs-three-calendar-tab">
+                      <input type="button" id="bani_aa" value="일별"/>
+                      <input type="button" id="bani_bb" value="월별"/>
                       <br><br>
-                      <div class="bani_div2">
+                      <div class="bani_div3" id="bani_div2" style="margin-top: 3.3%;">
                       	<h5 class="baniChart">월별 이슈 작성 수</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartIssuesmonth" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div> 
 	              		 </div>
-	              		 <div class="bani_div3">
+	              		 <div class="bani_div3" id="bani_div3" style="margin-top: 3.3%;">
                       	<h5 class="baniChart">일별 이슈 작성 수</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartIssuesday" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
                          </div>
                          </div>
                          <br><br>
-                         <div class="bani_div2" style="padding-top: 5%;">
+                         <div class="bani_div2">
                       	<h5 class="baniChart">팀원별 이슈 작성 수</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartIssuesCnt" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
@@ -842,20 +862,22 @@ function donutChartproper() {
 	              		 </div>
                       </div>
                       <div class="tab-pane fade" id="custom-tabs-three-mywork" role="tabpanel" aria-labelledby="custom-tabs-three-mywork-tab">
+                      <input type="button" id="bani_cc" value="일별"/>
+                      <input type="button" id="bani_dd" value="월별"/>
                       <br><br>
-                      <div class="bani_div2">
+                      <div class="bani_div3" id="bani_div2_1">
                       	<h5 class="baniChart">월별 파일 업로드 용량 (MB)</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartfilesmonth" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
 	              		 </div> 
 	              		 </div>
-	              		 <div class="bani_div3">
+	              		 <div class="bani_div3" id ="bani_div2_2">
                       	<h5 class="baniChart">일별 파일 업로드 용량 (MB)</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartfilesday" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
                          </div>
                          </div>
-                         <div class="bani_div2" style="padding-top: 5%;">
+                         <div class="bani_div2">
                       	<h5 class="baniChart">확장자별 업로드 수</h5><br>
                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 	              		 	<canvas id="chartfilesextension" style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%; display: block; width: 100px;" width="100" height="350" class="chartjs-render-monitor"></canvas>
