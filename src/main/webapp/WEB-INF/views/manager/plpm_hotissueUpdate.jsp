@@ -120,6 +120,8 @@
      		if ($('#hissueTitle').val().length == 0){
 				$('.warninghissueTitle').text("제목을 작성해 주세요.");  
 				cnt++;
+     		}else{
+				$('.warninghissueTitle').text('');
 			}
      		if(cnt == 0){
         		 delfiles();	     	

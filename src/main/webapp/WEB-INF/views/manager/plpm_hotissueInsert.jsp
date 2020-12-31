@@ -113,11 +113,13 @@
  	$('#regBtn').on('click', function(){
  		cnt = 0;
  		// 업로드할 파일이 존재하지 않을시
- 	// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
+ 		// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
 			if ($('#hissueTitle').val().length == 0){
 			$('.warninghissueTitle').text("제목을 작성해 주세요.");  
 			cnt++;
-		}
+			}else{
+				$('.warninghissueTitle').text('');
+			}
 			if(cnt == 0){
 				if($('.uploadifive-queue-item').length ==0){    			
 		 			if("${hissueParentid}" != null){

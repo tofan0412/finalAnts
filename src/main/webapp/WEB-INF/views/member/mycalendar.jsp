@@ -140,20 +140,20 @@ document.addEventListener('DOMContentLoaded', function() {
 		plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], 
 		defaultView: 'dayGridMonth', 
 		defaultDate: new Date(),
-		header: { left: 'prev,next today', center: 'title',  right : 'dayGridMonth,timeGridWeek,timeGridDay' },
+		header: { left: 'prev,next', center: 'title',  right : 'today' },
 		editable: true,
 		eventLimit : true,
 		droppable: true, 
 	    selectable: true,
 	    draggable :true,
 		themeSystem: 'bootstrap',
-		displayEventTime: false,
 		eventClick: function(info) {
 			var scheIdz = info.event.id;
 			$("#modalbtn").trigger("click");
 			$("#scheId").append(scheIdz);
 			calendarDetail(scheIdz);
 		  },
+		 
 		eventDrop: function(info) {
 			    if (!confirm("일정 변경을 저장하시겠습니까??")) {
 			      info.revert();
@@ -268,9 +268,59 @@ document.addEventListener('DOMContentLoaded', function() {
 	    })
 	    
 	$("#updateBtnfinal").on("click", function () {
-		 $('#scheTitle').attr('readonly', true);
-		 $('#scheCont').attr('readonly', true);
-		$("#sheForm").submit();
+		cnt = 0;
+ 		// 각 칸이 빈칸인지 확인
+ 		if ($('#scheTitle').val().length == 0){
+			$('.warningscheTitle').text("제목을 작성해 주세요.");  
+			cnt++;
+ 		}else{
+			$('.warningscheTitle').text('');
+		}
+ 		if ($('#scheCont').val().length == 0){
+			$('.warningscheCont').text("내용을 입력해 주세요");  
+			cnt++;
+ 		}else{
+			$('.warningscheCont').text('');
+		}
+ 		if ($('#startDtmodal').val().length == 0){
+			$('.warningstartD').text("시작일을 지정해 주세요");  
+			cnt++;
+ 		}else{
+			$('.warningstartD').text('');
+		}
+ 		if ($('#endDtmodal').val().length == 0){
+			$('.warningendD').text("종료일을 지정해 주세요");  
+			cnt++;
+ 		}else{
+			$('.warningendD').text('');
+		}
+ 		if(cnt == 0){
+			 $('#scheTitle').attr('readonly', true);
+	 		 $('#scheCont').attr('readonly', true);
+	 		timestart = $('#startDtmodal').val();
+	 		timeend = $('#endDtmodal').val();
+
+	 		a = timestart;
+	 		b = timeend;
+	 		Y = a.substring(0,4) // 년
+	 		M = a.substring(5,7) //월
+	 		D = a.substring(8,10) //일
+	 		H = a.substring(11,13) //시
+	 		m = a.substring(14) //분
+	 		
+	 		Y2 = b.substring(0,4) // 년
+	 		M2 = b.substring(5,7) //월
+	 		D2 = b.substring(8,10) //일
+	 		H2 = b.substring(11,13) //시
+	 		m2 = b.substring(14) //분
+
+	 		timestartres = Y+M+D+H+m
+	 		timeendres = Y2+M2+D2+H2+m2
+	 		 $('#startDtmodal2').val(timestartres);
+	 		 $('#endDtmodal2').val(timeendres);
+ 			 $("#sheForm").submit();
+ 		}
+		
 	    })
 	    
 	$("#rollbackbtn").on("click", function () {
@@ -429,19 +479,25 @@ document.addEventListener('DOMContentLoaded', function() {
       <form id="sheForm" name="sheForm" method="post" action="${pageContext.request.contextPath}/schedule/MycalendarUpdateDetail">
 	  	<input type="hidden" id="scheId" class="form-control" name ="scheId">
       	<label for="scheTitle" class="col-sm-2 control-label">제목  </label>
-	  		<input type="text" id="scheTitle" class="bani_contol" readonly="readonly" name="scheTitle"><br><br>
+	  		<input type="text" id="scheTitle" class="bani_contol" readonly="readonly" name="scheTitle">
+	  		<div class="jg" style=" padding-left: 18%;"><span class="jg warningscheTitle" style="color : red;"></span></div><br>
       	<div id="datehide">
       	<label for="startDt" class="col-sm-2 control-label">기간  </label>
 	  		<input type="text" id="startDt" class="bani_contol" readonly="readonly" ><br><br>
 	  	</div>
 	  	<div id="dateupdate">
       	<label for="startDt" class="col-sm-2 control-label">시작 일</label>
-	  		<input type="date" id="startDtmodal" name="startDt"/>
+	  		<input type="datetime-local" id="startDtmodal" name="startDt2"/>
+	  		<input type="hidden" id="startDtmodal2" name="startDt"/>
+	  		<div class="jg" style=" padding-left: 18%;"><span class="jg warningstartD" style="color : red;"></span></div><br>
       	<label for="endDt" class="col-sm-2 control-label">종료 일</label>
-	  		<input type="date" id= endDtmodal name="endDt"/>
+	  		<input type="datetime-local" id= endDtmodal name="endDt2"/>
+	  		<input type="hidden" id= endDtmodal2 name="endDt"/>
+	  		<div class="jg" style=" padding-left: 18%;"><span class="jg warningendD" style="color : red;"></span></div><br>
 	  	</div>
       	<label for="scheCont" class="col-sm-2 control-label" style="position: relative; top: -165px;" >내용 : </label>
-      	<textarea id="scheCont" class="bani_contol" readonly="readonly" style="height: 180px; resize: none;" name="scheCont"></textarea><br><br>
+      	<textarea id="scheCont" class="bani_contol" readonly="readonly" style="height: 180px; resize: none;" name="scheCont"></textarea>
+	  	<div class="jg" style=" padding-left: 18%;"><span class="jg warningscheCont" style="color : red;"></span></div><br>
       </div>
       <div class="modal-footer">
       	<div id="befUpdate">

@@ -140,14 +140,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], 
 		defaultView: 'dayGridMonth', 
 		defaultDate: new Date(),
-		header: { left: 'prev,next today', center: 'title',  right : 'dayGridMonth,timeGridWeek,timeGridDay' },
+		header: { left: 'prev,next', center: 'title',  right : 'today' },
 		editable: true,
 		eventLimit : true,
 		droppable: true, 
 	    selectable: true,
 	    draggable :true,
 		themeSystem: 'bootstrap',
-		displayEventTime: false,
 		eventClick: function(info) {
 			var scheIdz = info.event.id;
 			$("#modalbtn").trigger("click");
