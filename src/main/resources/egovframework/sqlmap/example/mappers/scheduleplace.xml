@@ -105,7 +105,7 @@
 	</update>
 	
 	
-  
+	
 <!-- 일정 리스트(캘린더용) -->
 	<select id="showCalendar" parameterType="ants.com.board.memBoard.model.ScheduleVo" resultType="ants.com.board.memBoard.model.ScheduleVo">
 		SELECT SCHE_ID, SCHE_TITLE, SCHE_CONT, to_char(REG_DT,'YYYY-MM-DD hh24:mi') as REG_DT, X_VAL, Y_VAL, CATEGORY_ID, REQ_ID, MEM_ID, DEL, to_char(START_DT,'YYYY-MM-DD') as START_DT, to_char(END_DT,'YYYY-MM-DD ') as END_DT, JUSO, CALENDARCSS

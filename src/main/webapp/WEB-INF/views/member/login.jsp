@@ -8,7 +8,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/dist/js/js.cookie-2.2.1.min.js"></script>
 		<!-- 정적자원 매핑처리 하지 말것 	 resources -> ${pageContext.request.contextPath} 바꾸면 서버 실행 초기에 쿠키 못찾음 -->
-					
+						
 <style>	
 .ff {
 	width: 100vw;
@@ -106,10 +106,10 @@
 
 .passviewdiv i{
     position: absolute;
-    left: 85%;
-    top: 42px;						
-    color: AAAAAA;
-}					
+    left: 91%;		
+    top: 42px;							
+    color: AAAAAA;	
+}			
 </style>
 
 <script>
@@ -198,14 +198,14 @@
  		// 비밀번호 보이기 버튼
  		$('.passviewdiv i').on('click',function(){
  	        $('input').toggleClass('active');
- 	        if($('input').hasClass('active')){
- 	            $(this).attr('class',"fa fa-eye-slash fa-lg")
+ 	        if($('input').hasClass('active')){	
+ 	            $(this).attr('class',"fa fa-unlock")
  	            .prev('input').attr('type',"text");
- 	        }else{
- 	            $(this).attr('class',"fa fa-eye fa-lg")
+ 	        }else{	
+ 	            $(this).attr('class',"fa fa-lock")
  	            .prev('input').attr('type','password');
- 	        }
- 	    });	
+ 	        }	
+ 	    });		
  		
  		// 비밀번호 변경 모달창 열기
 		$("#myBtn").click(function(){
@@ -398,9 +398,9 @@ $(document).on("keyup", "#mailtel", function() {
 								
 				<div class="passviewdiv">
 					<input type="password" class="form-control login" id="memPass" name="memPass" value="" style="display: inline-block; border:none; outline:0; float:left;">
-					<i class="fa fa-eye fa-lg"  style="font-size:30px;"></i>	
+					<i class="fa fa-lock"  style="font-size:30px;"></i>	
 				</div>		
-							
+									
 																		
 			</div>		
 					
