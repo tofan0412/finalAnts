@@ -69,22 +69,16 @@ function chkPW(){
 	 var num = pw.search(/[0-9]/g);
 	 var eng = pw.search(/[a-z]/ig);
 	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
- 	
+ 		
 	 // 비밀번호 일치 확인
 	 var pw1 = document.getElementById('newpass1').value;
 	 var pw2 = document.getElementById('newpass2').value;
 	
-	 if(pw1 != pw2){ 
-		 $('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
-	 } else if(pw2 == null || pw2 == ''){
-		 $('#checkPass2').html('<p></p>'); 
-		 if(pw1 == null || pw1 == ''){
-			 $('#checkPass1').html('<p></p>'); 
-		 }
-	 } else { 	
-	 	 $('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
-	 }		
-	 				
+	 if(pw1 == null || pw1 == ''){
+		 	$('#checkPass1').html('<p></p>');
+		 	return false;
+	 } 	
+	 
 	 if(pw.length < 8 || pw.length > 20){
 	 	$('#checkPass1').html('<p style="color:red">8자리 ~ 20자리 이내로 입력해주세요.</p>');
 	 	return false;
@@ -94,11 +88,11 @@ function chkPW(){
 	 	return false;
 	 }
 	 else if(num < 0 || eng < 0 || spe < 0 ){
-	 	$('#checkPass1').html('<p style="color:red">영문,숫자, 특수문자를 혼합하여 입력해주세요.</p>');
+	 	$('#checkPass1').html('<p style="color:red">영문,숫자,특수문자를 혼합하여 <br>입력해주세요.</p>');
 	 	return false;
-	 }
+	 }		
 	 else {
-	 	$('#checkPass1').html('<p style="color:blue">사용 가능한 비밀번호 입니다.</p>');
+	 	$('#checkPass1').html('<p style="color:blue">사용가능한 비밀번호 입니다.</p>');
 	    return true;
 	 }
 }	
@@ -108,16 +102,16 @@ function unityPW(){
 	var pw1 = document.getElementById('newpass1').value;
 	var pw2 = document.getElementById('newpass2').value;
 	
-	if(pw1 != pw2){ 
+	if(pw2 == null || pw2 == ''){
+	 	$('#checkPass2').html('<p></p>');
+	 	return false;
+ 	} 	
+			
+	if(pw1 != pw2){
 		$('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
-	} else if(pw2 == null || pw2 == ''){
-		 $('#checkPass2').html('<p></p>'); 
-		 if(pw1 == null || pw1 == ''){
-			 $('#checkPass1').html('<p></p>'); 
-		 }
-	} else { 
-		$('#checkPass2').html('<p style="color:blue">사용가능</p>'); 
-	}	
+	} else { 	
+		$('#checkPass2').html('<p style="color:blue">비밀번호가 일치합니다.</p>'); 
+	}
 }
 
 $(document).ready(function(){
@@ -139,6 +133,7 @@ $(document).ready(function(){
 				
 			// 비밀번호 일치시 
 			if(newpass1.value == newpass2.value){
+				alert("비밀번호 변경완료!");	
 				$('#passup').submit();
 			}else{
 				alert("비밀번호가 일치하지 않습니다.")

@@ -51,7 +51,29 @@ body{
 }	
 #pictureView{
 	height: 200px;
-}				
+}	
+
+.balloon {
+	position:relative;
+	width:240px;		
+	height:30px;	
+	background:lightblue;	
+	border-radius: 10px;
+	margin-left:370px;
+	padding-left:7px;			
+	padding-top:2px;				
+}					
+.balloon:after {
+	border:1px solid black;	
+	border-top:15px solid lightblue;	
+	border-left: 0px solid transparent;
+	border-right: 15px solid transparent;
+	border-bottom: 0px solid transparent;
+	content:"";					
+	position:absolute;		
+	top:25px;		
+	left:10px;		
+}					
 </style>			
 	
 <body>	
@@ -64,20 +86,20 @@ body{
 												
 		<div class="card card-primary card-outline">
 			<div class="card-body box-profile">
-				
+						
+				<div class="balloon"><b style="font-size:13px; margin-left:7px;">이미지를 클릭하면 변경할 수 있어요!</b></div>				
 				<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
 				<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
-						
-				<div class="text-center" title="이미지를 클릭하면 변경할 수 있어요!">
+				<div class="text-center">
 					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border:1px solid white; height: 200px; width:140px; margin: 0 auto;">
 						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" src="/profile/user-1.png"/>
 					</div><br>						
 					<div class="content">				
 						<input type="text" id="imgname" name="imgname" style="display: none">	
 					</div>	
-				</div> 	
-						
-									
+				</div> 			
+								
+										
 				<h3 class="profile-username text-center">
 					<!-- 경로 미리보기용 <div id="clickmsg">경로 : </div>	<hr>  -->
 					<input class="profile-username text-center" type="text" class="form-control"  style="border:none; outline:none;" readonly/>
@@ -182,15 +204,15 @@ body{
 			<img src="/profile/user-6.png" id="img6" name="img6" class="imgc"/>
 			<img src="/profile/user-7.png" id="img7" name="img7" class="imgc"/>
 			<img src="/profile/user-8.png" id="img8" name="img8" class="imgc"/>
-        </div>		
-        <div class="modal-footer">	
-        </div>		
-        <div>
-        	<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height:37px; float:left; padding-left:30px;"/>
+        </div>
+        <hr>			
+        <div>	
+        	<h5 class="modal-title" style="padding-left:15px;">파일 선택</h5><br>	
+        	<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height:37px; float:left; padding-left:30px;"/><br><br>	
         	<button type="button" id="closemodal" class="close" data-dismiss="modal" style="height:25px; margin-right:20px;">닫기</button>	
         	<button type="button" class="close" data-dismiss="modal" style="height:25px; margin-right:15px;">확인</button><br><br>		
-        </div>	
-      </div>			
+    	</div>
+	</div>			
     	  																
 		</div>
 	</div>
@@ -221,7 +243,7 @@ function chkID(){
 		 return true;	
 	} 					
 }				
-			
+
 // 핸드폰 번호 정규식
 $(document).on("keyup", ".phoneNumber", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
@@ -242,7 +264,7 @@ function chkPW(){
 		 	$('#checkPass1').html('<p></p>');
 		 	return false;
 	 } 	
-	 		
+	 
 	 if(pw.length < 8 || pw.length > 20){
 	 	$('#checkPass1').html('<p style="color:red">8자리 ~ 20자리 이내로 입력해주세요.</p>');
 	 	return false;

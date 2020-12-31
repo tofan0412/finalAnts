@@ -214,6 +214,7 @@ public class MemberController {
 		model.addAttribute("dbsize", size);
 		return "jsonView";
 	}
+	
 	//메인가기
 	@RequestMapping("/mainpage")
 	public String mainpage(Model model, ProjectVo projectVo, HttpSession session) {
@@ -431,8 +432,8 @@ public class MemberController {
 			out.flush();	
 			mailsend = true;
 		}
-			
-		return "main.tiles/main";
+				
+		return "/member/login";
 	}
 
 	// 비밀번호 수정 - 이메일
