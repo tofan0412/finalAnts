@@ -9,6 +9,35 @@
 	}
 </style>
 <script>
+	getNow();
+
+	// 시간 관련 함수 설정
+	function getNow() {
+		var now = new Date();
+	
+		var calendar = now.getFullYear() + "-" + (now.getMonth() + 1) + "-"
+				+ now.getDate();
+	
+		var currentHours = addZeros(now.getHours(), 2);
+		var currentMinute = addZeros(now.getMinutes(), 2);
+		var currentSeconds = addZeros(now.getSeconds(), 2);
+	
+		$('#clock').val(
+				calendar + " " + currentHours + ":" + currentMinute + ":"
+						+ currentSeconds);
+		setTimeout("getNow()", 1000);
+	}
+	
+	function addZeros(num, digit) { // 자릿수 맞춰주기
+		var zero = '';
+		num = num.toString();
+		if (num.length < digit) {
+			for (i = 0; i < digit - num.length; i++) {
+				zero += '0';
+			}
+		}
+		return zero + num;
+	}
  	
 	var socket = null;
     $(document).ready(function(){
@@ -127,6 +156,10 @@
       <li class="nav-item d-none d-sm-inline-block jg">
         <a id="toNotice" href="/member/noticelistmemview" class="nav-link">공지사항</a>
       </li>
+      <li class="nav-item d-none d-sm-inline-block jg">
+      	<!-- 현재 시간 표시하는 부분.. -->
+		<input class="nav-link" type="text" id="clock" readonly style="border : none; color : blue;"> 
+      <li>
     </ul>
 		
     

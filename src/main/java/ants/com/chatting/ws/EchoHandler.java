@@ -38,10 +38,18 @@ public class EchoHandler extends TextWebSocketHandler {
 		
 		// sessionList에 존재하는 모든 사용자에게 메시지 뿌리기 ..
 		for(WebSocketSession sess : sessionList) {
-			sess.sendMessage(new TextMessage(cgroupId + "$$$$"
-				+ SMEMBER.getMemId() + "$$$$" 
-				+ SMEMBER.getMemName() + "$$$$"
-				+ message.getPayload()));
+			// 공지사항 메시지와, 아닌 쪽으로 나뉜다.
+			if (message.getPayload().contains("공지:")) {
+				sess.sendMessage(new TextMessage(cgroupId + "$$$$" 
+						+ "*ANNOUNCE*" + "$$$$" 
+						+ "*ANNOUNCE*" + "$$$$"
+						+ message.getPayload().replace("공지:", "")));	// 표시를 위해 해둔 공지: 는 메시지에서 제거한다.
+			}else {
+				sess.sendMessage(new TextMessage(cgroupId + "$$$$"
+						+ SMEMBER.getMemId() + "$$$$" 
+						+ SMEMBER.getMemName() + "$$$$"
+						+ message.getPayload()));
+			}
 		}
 	}
 

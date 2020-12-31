@@ -104,7 +104,7 @@ $(function(){
 		$(".chatList").empty();
 		$.ajax({
 			url : "/chat/readMessages",
-			data : {cgroupId : cgroupId},
+			data : {cgroupId : cgroupId, memId : '${SMEMBER.memId}'},
 			method : "POST", 
 			success : function(res){
 				var html = res.split("$$$$$$$");
@@ -129,27 +129,24 @@ $(function(){
 			chk++;
 		}
 		
-		// 동일한 이름을 갖는 채팅방이 존재하는지 확인해야 한다.
-		
 		if (chk == 0){
 			// 먼저, 해당 projectId와 이름을 갖는, chatGroup을 하나 입력한다.
 			var projectId = '${projectId}';
 			var cgroupName = $('#cgroupName').val();
-			// 데이터를 넣기 전에, 초대할 리스트에 당사자 아이디를 추가한다.
-			MemListArr.push('${SMEMBER.memId}');
+			// 데이터를 넣기 전에, 채팅방 만드는 사람(나)를 추가한다.
+			MemListArr.push( "${SMEMBER.memName}" +":[" + "${SMEMBER.memId}" + "]");
 			
 			$.ajax({
 				url : "/chat/insertChatGroup",
 				data : {reqId : projectId, cgroupName : cgroupName},
 				method : "POST",
 				success : function(res){
-					var ajaxArr = {"memList" : MemListArr, "cgroupId" : res}; 
+					var ajaxArr = {"memList" : MemListArr, "cgroupId" : res, "regDt" : $('#clock').val()}; 
 					// 이후 해당 채팅방을 사용할 유저를 CHATMEMBER 테이블에 등록한다. 
 					$.ajax({
 						url : "/chat/insertChatMembers",
 						data 			: ajaxArr,
 						method 			: "POST",
-						
 						success 		: function(res){
 							arr = res.split("$$");
 							var cgroupId = arr[0];
@@ -167,8 +164,8 @@ $(function(){
 									// 채팅방 생성, 인원 초대까지 끝났으면 채팅방을 개설하였다는 메시지를 DB에 저장한다.
 									$.ajax({
 										url : "/chat/sendMessage",
-										data : {memId : "$ANNOUNCE$",
-											    memName : "$ANNOUNCE$",
+										data : {memId : "*ANNOUNCE*",
+											    memName : "*ANNOUNCE*",
 											    cgroupId : cgroupId,
 												chatCont : "${SMEMBER.memName}"+"님이 " 
 													+ MemListArr.length-1 +"명을 초대하였습니다."},
@@ -183,7 +180,7 @@ $(function(){
 							$('.chatList').empty();
 							$.ajax({
 								url : "/chat/readMessages",
-								data : {cgroupId : cgroupId},
+								data : {cgroupId : cgroupId, memId : '${SMEMBER.memId}'},
 								method : "POST", 
 								success : function(res){
 									var html = res.split("$$$$$$$");
@@ -216,7 +213,7 @@ $(function(){
 	})
 	
 	// 사용자가 채팅방 나가기 버튼을 클릭할 때 ..
-	$('.chatList').on('click','.exitBtn',function(){
+	$('.chatList').on('click', '.exitBtn', function(){
 		var factor = confirm("채팅방을 나가시겠습니까?");
 		if(factor){
 			// 채팅방에서 해당 회원을 나가게 한다.
@@ -224,22 +221,23 @@ $(function(){
 			var memName = '${SMEMBER.memName}';
 			var cgroupId = $('#cgroupId').val();
 			
+			chatCont = "공지:" + memName + "[" + memId+ "]" +"님이 대화방을 나갔습니다.";
 			$.ajax({
 				url : "/chat/exitChat",
 				data : {memId : memId, cgroupId : cgroupId},
 				success : function(res){
 					if (res > 0){
-						// 나간 채팅방에 퇴장하였다는 메시지를 저장한다.
+						// 나간 채팅방에 퇴장하였다는 메시지를 DB에 저장한다.
 						$.ajax({
 							url : "/chat/sendMessage",
-							data : {memId : "$ANNOUNCE$",
-								    memName : "$ANNOUNCE$",
+							data : {memId : "*ANNOUNCE*",
+								    memName : "*ANNOUNCE*",
 								    cgroupId : cgroupId,
-									chatCont : memName + "[" + memId+ "]" +"님이 대화방을 나갔습니다." 
-									},
+								    regDt : $('#clock').val(),
+									chatCont : chatCont},
 							method : "POST",
 							success : function(res) {
-																			
+								sendAnnounceMessage(chatCont);					
 							}
 						})
 						
@@ -254,6 +252,8 @@ $(function(){
 			})
 		}
 	})
+	
+
 });
 </script>
 <aside class="control-sidebar control-sidebar-white" 
