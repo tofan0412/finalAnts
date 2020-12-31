@@ -314,7 +314,7 @@ body{
 			</div>
 		</div>
 	</div>
-</div>
+
 <div id="mainleft" style="padding-left: 2%; margin-top: 2%;">
 	<div class="card" style="height: 340px;">
 		<div class="card-header">
@@ -345,6 +345,7 @@ body{
 		</div>           
 	</div>
 
+</div>
 </div>
 </html>
 </body>
