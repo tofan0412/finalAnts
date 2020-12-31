@@ -63,29 +63,19 @@ public class ChatController {
 	}
 
 	@RequestMapping("/readMessages")
-	public String readMessages(String cgroupId, Model model, HttpSession session) {
-
+	public String readMessages(String cgroupId, String memId, Model model, HttpSession session) {
+		
 		// 채팅방 번호에 맞는 메시지를 모두 불러온다 !
-		List<ChatVo> msgList = chatService.readMessages(cgroupId);
+		// 이 때, 본인이 채팅방 들어온 이후에 작성된 메시지만 불러와야 한다. 
+		
+		ChatVo chatVo = new ChatVo();
+		chatVo.setCgroupId(cgroupId);
+		chatVo.setMemId(memId);
+		List<ChatVo> msgList = chatService.readMessages(chatVo);
 
 		// 채팅방 이름을 불러오기 위해, cgroupId PK를 이용하여 객체를 불러온다.
 		ChatGroupVo cgroup = chatService.readCgroupName(cgroupId);
 
-		// 채팅방에 참여하고 있는 회원 리스트를 불러온다.
-		List<ChatMemberVo> chatMemList = chatService.readCgroupMembers(cgroupId);
-		
-		// 유저 이름을 알기 위해, 회원 정보 또한 출력해 온다.
-		List<MemberVo> memInfoList = new ArrayList<>();
-		for (int i = 0; i < chatMemList.size(); i++) {
-			MemberVo memInfo = new MemberVo();
-			memInfo.setMemId(chatMemList.get(i).getMemId());
-
-			MemberVo memberVo = memberService.getMember(memInfo);
-			memInfoList.add(memberVo);
-		}
-		
-		model.addAttribute("memInfoList", memInfoList);
-		model.addAttribute("chatMemList", chatMemList);
 		model.addAttribute("msgList", msgList);
 		model.addAttribute("cgroup", cgroup);
 
@@ -96,7 +86,12 @@ public class ChatController {
 	@RequestMapping("/sendMessage")
 	@ResponseBody
 	public String sendMessage(ChatVo chatVo) {
-
+		// 공지 : 문구를 지워야 한다.
+		if (chatVo.getChatCont().contains("공지:")) {
+			String chatCont = chatVo.getChatCont().replace("공지:", "");
+			chatVo.setChatCont(chatCont);
+		}
+		
 		int result = chatService.sendMessage(chatVo);
 		if (result > 0) {
 			return "yes";
@@ -107,6 +102,7 @@ public class ChatController {
 	// 현재 프로젝트에 참여하고 있는 모든 멤버 목록을 불러온다.
 	@RequestMapping("/readChatMembers")
 	public String readChatMembers(String projectId, HttpSession session, Model model) {
+		
 		List<ProjectMemberVo> chatMemList = chatService.readChatMembers(projectId);
 		
 		// 위 리스트에서 로그인한 당사자는 제외해야 한다. 
@@ -117,17 +113,16 @@ public class ChatController {
 			}
 		}
 		
-		// 해당 memId를 통해 유저 정보를 출력하기 위해, 유저 리스트 또한 함께 저장한다.
+		// 프로필 이미지 파일 경로를 위해... 회원 정보를 가져와야 한다. 
 		List<MemberVo> memInfoList = new ArrayList<>();
-
-		for (int i = 0; i < chatMemList.size(); i++) {
-			MemberVo memInfo = new MemberVo();
-			memInfo.setMemId(chatMemList.get(i).getMemId());
-
-			MemberVo memberVo = memberService.getMember(memInfo);
-			memInfoList.add(memberVo);
+		
+		for (int i = 0 ; i < chatMemList.size() ; i++) {
+			MemberVo memberVo = new MemberVo();
+			memberVo.setMemId(chatMemList.get(i).getMemId());
+			
+			memInfoList.add(memberService.getMember(memberVo));
 		}
-
+		
 		model.addAttribute("memInfoList", memInfoList);
 		model.addAttribute("chatMemList", chatMemList);
 		return "chat/chatMemList";
@@ -145,14 +140,19 @@ public class ChatController {
 	@RequestMapping("/insertChatMembers")
 	@ResponseBody // view를 생성하는 것이 아니라, Object 또는 JSON 을 전송할 수 있다.
 	public String insertChatMembers(@RequestParam(value = "memList[]") String[] memList,
-			@RequestParam(value = "cgroupId") String cgroupId) {
+			@RequestParam(value = "cgroupId") String cgroupId, @RequestParam(value = "regDt") String regDt) {
 
 		int cnt = 0;
 		for (int i = 0; i < memList.length; i++) {
-
+			
+			// 20.12.31 업데이트 : memList에 memName도 함께 담아야 함..
+			// memList 형태 : 조웅현:[tofan@naver.com]
+			
 			ChatMemberVo chatMemberVo = new ChatMemberVo();
-			chatMemberVo.setMemId(memList[i]);
+			chatMemberVo.setMemName(memList[i].split(":")[0]);
+			chatMemberVo.setMemId(memList[i].split(":")[1].replace("[", "").replace("]", ""));
 			chatMemberVo.setCgroupId(cgroupId);
+			chatMemberVo.setRegDt(regDt);
 
 			cnt += chatService.insertChatMembers(chatMemberVo);
 			
@@ -188,6 +188,14 @@ public class ChatController {
 		int result = chatService.exitChat(chatMemberVo);
 		return result;
 	}
+	
+	// 현재 채팅방에 참여하고 있는 회원 목록을 불러온다.
+	@RequestMapping("/readCgroupMembers")
+	@ResponseBody
+	public List<ChatMemberVo> readCgroupMembers(String cgroupId){
+		return chatService.readCgroupMembers(cgroupId);
+	}
+	
 	
 	
 }

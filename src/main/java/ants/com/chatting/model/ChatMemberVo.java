@@ -4,8 +4,25 @@ public class ChatMemberVo {
 	private String chatmemId;	// 고유 PK 
 	private String cgroupId; 	// 채팅방 번호..
 	private String memId;		// 참여 회원 아이디
+	private String regDt;		// 참여 일시
+	private String memName;		// 사용자 이름
 	
-	
+	public String getMemName() {
+		return memName;
+	}
+
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
+
+	public String getRegDt() {
+		return regDt;
+	}
+
+	public void setRegDt(String regDt) {
+		this.regDt = regDt;
+	}
+
 	public String getChatmemId() {
 		return chatmemId;
 	}
