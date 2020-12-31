@@ -363,13 +363,14 @@
 		<!-- 프로젝트 멤버 가져오기 -->
 		<select id="projectList" parameterType="ants.com.member.model.ProjectVo"
 		resultType="ants.com.member.model.ProjectVo">
-		
 			SELECT DISTINCT
 				project.req_id,
 	            project.pro_name,
-	            project.mem_id
+	            project.mem_id,
+                project.PRO_STATUS as proStatus,
+                to_char(PRO_CHANGE_DATE, 'yyyy-mm-dd') as proChangeDate
 			FROM(select * from project)project,
-				projectmember projectmember
+				projectmember projectmember		
 			WHERE
 				projectmember.req_id = project.req_id
 			AND projectmember.mem_id = #{memId}
@@ -426,21 +427,23 @@
 		
 		<select id="getAllTodo" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoVo">
 			SELECT  todo_id,
-					TO_CHAR(todo_start, 'DD-MM-YYYY') as todo_start,
-					TO_DATE(todo_end) - TO_DATE(todo_start) as todo_end,
-					todo_cont,
-					todo_title,
+					TO_CHAR(t.todo_start, 'DD-MM-YYYY') as todo_start,
+					TO_DATE(t.todo_end) - TO_DATE(t.todo_start) as todo_end,
+					t.todo_cont,
+					t.todo_title,
 					TRUNC(todo_percent/100,2) as todoPercent,
-					todo_importance,
-					todo_level,
-					req_id,
-					mem_id,
-					todo_parentid,
-					del
-			  FROM todo
-			WHERE req_id = #{reqId} 
-			ORDER BY todo_level
-		</select>
+					t.todo_importance,
+					t.todo_level,
+					t.req_id,
+					m.mem_name ,
+					t.todo_parentid,
+					t.del
+			  FROM todo t
+              LEFT OUTER JOIN member m
+                 ON m.mem_id = t.mem_id
+			WHERE t.req_id = '1' 
+			ORDER BY t.todo_level
+</select>
 		
 		<select id="getTodolog" parameterType="java.lang.String" resultType="ants.com.board.manageBoard.model.TodoLogVo">
 		
@@ -461,6 +464,29 @@
             and todo_id= #{todoId}
 			ORDER BY elapsedDay asc
 		</select>
+		
+		<select id="getSelectTodo">
+			select  todo_id,
+					TO_CHAR(t.todo_start, 'DD-MM-YYYY') as todo_start,
+					TO_DATE(t.todo_end) - TO_DATE(t.todo_start) as todo_end,
+					t.todo_cont,
+					t.todo_title,
+					TRUNC(todo_percent/100,2) as todoPercent,
+					t.todo_importance,
+					t.todo_level,
+					t.req_id,
+					m.mem_name ,
+					t.todo_parentid,
+					t.del
+	       FROM todo t
+	       LEFT OUTER JOIN member m
+	                 ON m.mem_id = t.mem_id
+	       WHERE t.req_id = '1'
+	       START WITH t.mem_id = 'pl1'
+	       CONNECT BY PRIOR t.todo_parentid =  t.todo_id
+		</select>
+		
+		
 		
 		
 </mapper>

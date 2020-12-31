@@ -102,7 +102,6 @@ public class memBoardService {
 
 		
 	
-	private static final Logger logger = LoggerFactory.getLogger(HotIssueController.class);
 	// 일정 댓글 작성
 	public int scheduleinsertreply(ReplyVo replyVo) {
 		return mapper.scheduleinsertreply(replyVo);

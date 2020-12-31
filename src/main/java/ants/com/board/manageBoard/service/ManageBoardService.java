@@ -143,5 +143,9 @@ public class ManageBoardService {
 		return mapper.gethissueandchild(hotIssueVo);
 	}
 
+	public List<TodoVo> getSelectTodo(TodoVo todoVo) {
+		return mapper.getSelectTodo(todoVo);
+	}
+
 	
 }
