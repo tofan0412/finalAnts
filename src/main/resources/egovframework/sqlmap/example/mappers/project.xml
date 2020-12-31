@@ -160,11 +160,14 @@ SELECT *
 			p.req_id,
 			p.mem_id,
 			p.pro_name,
+            p.pro_status as proStatus,
+            TO_CHAR(p.pro_change_date, 'yyyy-mm-dd') as proChangeDate,
 			TO_CHAR(round(p.pro_percent)) as percent,
 			TO_CHAR(p.reg_dt,'yyyy-mm-dd') as reg_dt,
 			p.del,
 	        TO_CHAR((p.reg_dt + r.req_period),'yyyy-mm-dd') as endDt,
-	        nvl(TRUNC(sysdate-to_date(to_char(p.reg_dt, 'yyyymmdd'),'yyyymmdd')),0) as elepsedTime
+	        nvl(TRUNC(sysdate-to_date(to_char(p.reg_dt, 'yyyymmdd'),'yyyymmdd')),0) as elepsedTime,
+	         nvl(TRUNC(sysdate-to_date(to_char(p.PRO_CHANGE_DATE, 'yyyymmdd'),'yyyymmdd')),0) as esElepsedTime
 		FROM (select * from REQLIST) r,
 			project p
 		where r.req_id = p.req_id
