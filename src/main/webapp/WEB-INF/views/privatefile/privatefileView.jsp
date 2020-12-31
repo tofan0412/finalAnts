@@ -364,7 +364,11 @@ var id;
 		document.listForm.action = "<c:url value='/privatefile/privatefileView'/>";
 		document.listForm.submit();
 	}
-	 	
+	
+	 //페이지 새로고침	
+	function refresh(){
+		$(location).attr('href', '${pageContext.request.contextPath}/privatefile/privatefileView');
+	}
 	 
 </script>
 
@@ -392,18 +396,19 @@ var id;
 	     
 	          <div class="col-sm-6">
 	          <br>
-	            <h3 class="jg" style=" padding-left : 10px;"><li class="nav-icon fas fa-folder-open"></li>&nbsp;개인 파일함</h3>
-	          </div>
-	          <div class="col-sm-6">
+	            <h3 class="jg" style=" padding-left:10px;"><li class="nav-icon fas fa-folder-open">
+	            </li >&nbsp;개인 파일함</h3>
+	          </div>	
+	          <div class="col-sm-6">	
 	          <br>
 	            <ol class="breadcrumb float-sm-right"  style="background : white">
 	              <li class="breadcrumb-item san jg"><a href="${pageContext.request.contextPath}/member/mainpage">Home</a></li>
-	              <li class="breadcrumb-item active jg">개인 파일함</li>
+	              <li class="breadcrumb-item active jg" style="cursor:pointer" onclick="refresh()">개인 파일함</li>
 	            </ol>
-	          </div>
+	          </div>	
 	        </div>
         </div>
-        
+        	
     
         
 			
@@ -469,7 +474,7 @@ var id;
 				<th class="jg" width="200px"  >파일사이즈</th>
 				<th class="jg" width="150px " >확장자</th>
 				<th class="jg" width="200px" style="padding-right:30px;">수정한 날짜</th>
-			
+				
 			</tr> 
 			<tbody id="privatefileList"> 
 				

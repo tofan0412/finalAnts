@@ -132,22 +132,22 @@ function scheInsert(){
 		</table>
 	  </div>
 
-
-	  <div id="paging" class="card-tools">
-			<ul class="pagination pagination-sm jg" id="pagingui" style="margin-bottom: 0px;">
-				<li class="page-item jg" id="pagenum">
-					<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_egov_link_page" />
-				</li>
-				<form:hidden path="pageIndex" />
-
-			</ul>
-		</div>
+	
+	<div id="paging" class="card-tools">
+		<ul class="pagination pagination-sm jg" id="pagingui" style="margin-bottom: 0px;">
+			<li class="page-item jg" id="pagenum">
+				<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_egov_link_page" />
+			</li>
+			<form:hidden path="pageIndex" />
+		</ul>
+	</div>
 		
 	
-	  <div class="card-footer clearfix">
-        	<button id="insertissue" type="button" class="btn btn-default float-left jg" onclick="scheInsert()"><i class="fas fa-edit "></i>등 록</button>
-      </div>
-		
+	<div class="card-footer clearfix">
+		<c:if test="${projectVo.proStatus eq 'ACTIVE'}">
+        	<button id="insertissue" type="button" class="btn btn-default float-left jg" onclick="scheInsert()"><i class="fas fa-edit"></i>등 록</button>
+		</c:if>	
+	</div>
 <!-- /.card-body -->
 	
        </div>

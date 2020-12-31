@@ -620,7 +620,6 @@ public class MemberController {
 	}
 
 	// 공지사항리스트 출력
-	// admin 인터셉터 때문에 관리자로 로그인 안하면 admin url을 탈수 없기 때문에 따로 만듦
 	@RequestMapping("/noticelistmemview")
 	public String noticelistmemview(@ModelAttribute("noticeVo") NoticeVo noticeVo, HttpSession session, Model model, String main)
 			throws Exception {

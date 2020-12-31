@@ -17,9 +17,9 @@
 							AND PRIV_FILENAME LIKE '%' || #{searchKeyword} || '%'
 						</when>
 						<when test="searchCondition == 2">
-							AND PRIV_FILENAME LIKE '%' || #{searchKeyword} || '%'
+							AND PRIV_EXTENSION LIKE '%' || #{searchKeyword} || '%'
 						</when>
-					</choose>	
+					</choose>		
 				</if>
 			     ORDER BY REG_DT DESC, PRIV_ID DESC) a
 		WHERE ROWNUM  <![CDATA[ <= ]]> #{lastIndex}) c <![CDATA[WHERE rnum > #{firstIndex}]]>
@@ -37,12 +37,12 @@
 					AND PRIV_FILENAME LIKE '%' || #{searchKeyword} || '%'
 				</when>
 				<when test="searchCondition == 2">
-					AND PRIV_FILENAME LIKE '%' || #{searchKeyword} || '%'
+					AND PRIV_EXTENSION LIKE '%' || #{searchKeyword} || '%'
 				</when>
 			</choose>	
 		</if>
 	</select>
-	
+		
 	<!-- 개인파일함 해당 사용자 사용량  -->
 	<select id="privatefiletotalSize" parameterType="ants.com.file.model.PrivateFileVo" resultType="String">
 		select sum(priv_size)
