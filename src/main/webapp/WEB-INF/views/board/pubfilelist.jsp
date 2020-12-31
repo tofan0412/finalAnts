@@ -93,8 +93,9 @@
 
 <script type="text/javascript">
 
-var id;
-var name;
+var pubid;
+var someid;
+var category;
 
 $(function(){
 	
@@ -114,6 +115,8 @@ $(function(){
 	$("#pubfileList tr").on("mousedown", function(e){
 			console.log('click')
 			var pubfileId = $(this).data("pubfileid");
+			var someId = $(this).data("someid");
+			var categoryId = $(this).data("categoryid");
 			if(event.button == 2){
 			 //Get window size:
 		    var winWidth = $(document).width();
@@ -131,7 +134,9 @@ $(function(){
 		      "left": posX,
 		      "top": posY-50
 		    }).show();
-		    id=pubfileId;
+		    pubid=pubfileId;
+		    someid=someId;
+		    category = categoryId;
 		    
 		    //Prevent browser default contextmenu.
 		    return false;
@@ -159,13 +164,28 @@ $(function(){
 
 // 파일 다운로드
 function pubfiledown(){
-   	document.location = "/file/publicfileDown?pubId="+id;
+   	document.location = "/file/publicfileDown?pubId="+pubid;
 
 }
 // 파일 복사
 function pubfilecopy(){
-   	document.location = "/privatefile/copyfile?pubId="+id;
+   	document.location = "/privatefile/copyfile?pubId="+pubid;
    	alert('내 파일함으로 복사되었습니다.')
+}
+
+// 해당 게시글로 이동
+function goboard(){
+	if(category == 1){ // 일감
+		document.location = "/todo/onetodoView?todoId="+someid;
+	}else if(category== 3){// 이슈
+		document.location = "/projectMember/eachissueDetail?issueId="+someid;
+	}else if(category == 4){ //건의사항
+		document.location = "/suggest/suggestDetail?sgtId="+someid;
+	}else if(category == 6){ //일정
+		document.location = "/schedule/scheduleSelect?scheId="+someid;
+	}
+   
+//    	alert('이동 되었습니다.')
 }
 
 
@@ -209,9 +229,9 @@ function recentsort(){
 <!-- 	<div class="tab-pane fade" id="custom-tabs-three-issue" role="tabpanel" aria-labelledby="custom-tabs-three-issue-tab"> -->
 
 <ul class="contextmenu">
-  <li><a href="javascript:pubfilecopy();"><i class="fa fa-folder" style="padding-right: 20px;"></i>내 파일함으로</a></li>
-  <li><a href="javascript:pubfiledown();"><i class="fas fa-download"  style="padding-right: 20px;"></i>Download</a></li>
-<!--   <li><a href="javascript:hotfiledel();"><i class="fas fa-trash"  style="padding-right: 20px;"></i>Delete</a></li> -->
+  <li><a href="javascript:pubfilecopy();"><i class="fa fa-folder" style="padding-right: 20px; width: 30px;"></i>내 파일함으로</a></li>
+  <li><a href="javascript:pubfiledown();"><i class="fas fa-download"  style="padding-right: 20px; width: 30px;"></i>다운로드</a></li>
+  <li><a href="javascript:goboard();"><i class="fas fa-clipboard"  style="padding-right: 20px; width: 30px;"></i>해당게시글로</a></li>
 </ul>
 
 <form:form commandName="publicFileVo" id="listForm" name="listForm" method="post">
@@ -273,7 +293,7 @@ function recentsort(){
 						
         				<form:select path="searchCondition" class="form-control col-md-3 jg" style="width: 100px;">
 							<form:option value="1" label="파일명"/>
-							<form:option value="2" label="소유자" />
+							<form:option value ="2" label="소유자" />
 							<form:option value="3" label="확장자" />
 						</form:select> 
 						
@@ -315,7 +335,7 @@ function recentsort(){
 	                
 	                      
 	                       <c:forEach items = "${pubfilelist  }" var ="file" varStatus="status">
-								<tr data-pubfileid="${file.pubId }" data-pubfilename="${file.pubFilename}">
+								<tr data-pubfileid="${file.pubId }" data-someid="${file.someId}" data-categoryid="${file.categoryId}">
 				                 	<td class="jg" style="width:10%;  text-align: center;">
 				                 	
 										<c:if test="${sort == 1}">

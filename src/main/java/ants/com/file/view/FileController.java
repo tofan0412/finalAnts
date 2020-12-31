@@ -54,6 +54,7 @@ public class FileController {
 
 		String reqId = (String)session.getAttribute("projectId");
 		publicFileVo.setReqId(reqId);
+		session.setAttribute("categoryId", "2");
 		
 		/** EgovPropertyService.sample */
 		publicFileVo.setPageUnit(propertiesService.getInt("pageUnit"));
@@ -81,6 +82,11 @@ public class FileController {
 		int totCnt = fileService.pubfilePagingListCnt(publicFileVo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
+					
+//		session.setAttribute("searchKeyword","");
+//		session.setAttribute("searchCondition","");
+		session.setAttribute("pageIndex",1);
+	
 				
 		return "tiles/board/pubfilelist";
 	}
