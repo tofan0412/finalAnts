@@ -139,7 +139,7 @@ $(function(){
 			cnt++;
 		}
 		if ($('#sgtTitle').val().length == 0){
-			$('.warningTitle').text("건의사항 제목을 지정해 주세요.");
+			$('.warningTitle').text("  건의사항 제목을 지정해 주세요.");
 			cnt++;
 		}
 		if (cnt == 0){
