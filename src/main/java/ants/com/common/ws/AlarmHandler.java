@@ -45,7 +45,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 		if (msg != null) {
 			String[] strs = msg.split("&&");
 
-			// pl요청, 프로젝트 초대
+			// pl요청
 			if (strs != null && strs.length == 7 && strs[6] != "req-pro") {
 				String id = strs[0]; // 요구사항정의서아이디
 				String callerName = strs[1]; // 보낸사람이름
@@ -67,7 +67,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 				}
 
 			}
-			// pl요청, 프로젝트 초대
+			// 프로젝트 초대
 			if (strs != null && strs.length == 7) {
 				String id = strs[0]; // 요구사항정의서아이디
 				String callerName = strs[1]; // 보낸사람이름
