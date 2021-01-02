@@ -139,6 +139,7 @@
 						dataType : 'json', 
 						success : function(data){
 								if($('.uploadifive-queue-item').length>0){
+									reqId2 = data.reqVo.reqId;
 									fileUpload(data.reqVo);
 								}else{
 									reqDetail(data.reqVo.reqId);
