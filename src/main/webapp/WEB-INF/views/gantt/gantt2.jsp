@@ -66,7 +66,7 @@
 			<input value="PDF 다운로드" type="button" onclick='gantt.exportToPDF()' style="float: right;" class="btn btn-default  btn-sm btn-flat">
 		</form>
 	</div>
-	<div id="gantt_here" style='width: 100%; height: 700px; font-size: 0.7em;'></div>
+	<div id="gantt_here" style='width: 100%; height: 600px; font-size: 0.7em;'></div>
 	
 
 
