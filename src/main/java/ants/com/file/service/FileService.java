@@ -52,6 +52,11 @@ public class FileService {
 	public List<PublicFileVo> pubfilelist(PublicFileVo publicFileVo) {
 		return mapper.pubfilelist(publicFileVo);
 	}
+	
+	// 파일 이름변경
+	public int modfilename(PrivateFileVo privateFileVo) {
+		return mapper.modfilename(privateFileVo);
+	}
 
 	/* 개 인 파 일 함 */
 
