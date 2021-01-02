@@ -240,8 +240,6 @@ $(function(){
 								sendAnnounceMessage(chatCont);					
 							}
 						})
-						
-						alert("처리되었습니다.");
 						$('.chatTitle').css('display', 'block');
 						$('.mkNewChat').css('display', 'block');
 						

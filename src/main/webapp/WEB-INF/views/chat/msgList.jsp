@@ -153,7 +153,6 @@
 			
 			if ($('.popInvite').css('display') == 'none') {
 				$('.popInvite').css('display', 'block');
-				
 			} 
 			else {
 				$('.popInvite').css('display', 'none');
@@ -300,48 +299,17 @@
 	// 이미 초대된 회원은 초대 목록에 올라와선 안된다.
 	function inviteMemFilter(){
 		$.ajax({
-			url : "/projectMember/proMemList",
-			data : {reqId : '${projectId}'},
+			url : "/projectMember/canInviteProMemList",
+			data : {reqId : '${projectId}', cgroupId : $('#cgroupId').val() },
 			method : "POST",
 			success : function(res) {
-				// 현재 채팅방 참여중인 회원 리스트 갱신
-				readChatMemberList($('#cgroupId').val());
-				alreadyIn = 0;
-				
 				for (i = 0; i < res.length; i++) {
-					alreadyIn = 0;
-					// 이미 채팅방에 참여한 회원인지 검사
-					alert("ㅋㅋㅋㅋㅋ");
-					for (j = 0; j < $('.popChatMemOne').length; j++) {
-
-						if (res[i].memId == $('.popChatMemOne')[j].attributes[1].value
-								.split(":")[1].replace("[","").replace("]","")) {
-							alreadyIn++;
-							break;
-						}
-					}
-					if (res[i].memFilepath != '' && alreadyIn == 0) {
+					if (res[i].memFilepath != '') {
 						$('.popInvite .popInviteMemList').append(
 							"<div class=\'popInviteMem\' style=\'margin-top : 10px;\'>"
 								+ "<img class=\'img-circle\' alt=\'이미지\'"
 								+ "style=\'width : 25px; height : 25px; padding-right : 5px;\'"
 								+ "src=\'" + res[i].memFilepath + "\'/>"
-								+ res[i].memName + "[" + res[i].memId + "]"
-								+ "<span class=\'popInviteMemBtn\' member=\'" 
-									+ res[i].memName + ":" + "[" + res[i].memId + "]" + "\' "
-									+ "style=\'border : 2px solid white; "
-							        +"border-radius : 0.45rem; "
-									+"background-color : #81BEF7; "
-									+"float : right;"
-									+"cursor : pointer;"
-									+"color : white;\'" + ">&nbsp;초대&nbsp;</span></div>")
-					}
-					if (res[i].memFilepath == '' && alreadyIn == 0) {
-						$('.popInvite .popInviteMemList').append(
-							"<div class=\'popInviteMem\' style=\'margin-top : 10px;\'>"
-								+ "<img class=\'img-circle\' alt=\'이미지\'"
-								+ "style=\'width : 25px; height : 25px; padding-right : 5px;\'"
-								+ "src=\'${pageContext.request.contextPath }/WEB-INF/views/userprofile/user-1.png\'/>"
 								+ res[i].memName + "[" + res[i].memId + "]"
 								+ "<span class=\'popInviteMemBtn\' member=\'" 
 									+ res[i].memName + ":" + "[" + res[i].memId + "]" + "\' "

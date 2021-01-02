@@ -21,6 +21,8 @@ import ants.com.board.manageBoard.model.TodoVo;
 import ants.com.board.memBoard.model.IssueVo;
 import ants.com.board.memBoard.model.ReplyVo;
 import ants.com.board.memBoard.service.memBoardService;
+import ants.com.chatting.model.ChatMemberVo;
+import ants.com.chatting.service.ChatService;
 import ants.com.file.model.PublicFileVo;
 import ants.com.file.view.FileController;
 import ants.com.member.model.MemberVo;
@@ -42,6 +44,9 @@ public class ProjectMemberController {
 	
 	@Resource(name="memberService")
 	MemberService memberService;
+	
+	@Resource(name="chatService")
+	ChatService chatService;
 	
 	@Autowired
 	FileController filecontroller;
@@ -314,6 +319,39 @@ public class ProjectMemberController {
 
 			MemberVo memberVo = memberService.getMember(memInfo);
 			list.get(i).setMemFilepath(memberVo.getMemFilepath());
+		}
+		return list;
+	}
+	
+	// 서버단에서, 채팅에 참여하고 있는 인원은 제외한 프로젝트 멤버 불러오기
+	@RequestMapping("/canInviteProMemList")
+	@ResponseBody
+	public List<ProjectMemberVo> canInviteProMemList(String reqId, String cgroupId){
+		// 1-1. 프로젝트에 참여중인 회원 목록 불러오기
+		List<ProjectMemberVo> list = promemService.proMemList(reqId);
+		
+		// 1-2. 회원 프로필 경로 저장하기
+		for (int i = 0; i < list.size(); i++) {
+			MemberVo memInfo = new MemberVo();
+			memInfo.setMemId(list.get(i).getMemId());
+
+			MemberVo memberVo = memberService.getMember(memInfo);
+			list.get(i).setMemFilepath(memberVo.getMemFilepath());
+		}
+		
+		// 2. 이 중에서 이미 채팅에 참여하고 있는 회원은 제외해야 한다.
+		List<ChatMemberVo> chatMemList = chatService.readCgroupMembers(cgroupId);
+		
+		// 이미 채팅에 참여하고 있는 놈들은 아이디를 수정한다.
+		for(int i = 0 ; i < list.size() ; i++) {
+			for (int j = 0 ; j < chatMemList.size(); j++) {
+				if(list.get(i).getMemId().equals(chatMemList.get(j).getMemId())) {
+//					list.get(i).setMemId("exceptIt!");
+					list.remove(i);
+					i--;
+					break;
+				}
+			}
 		}
 		return list;
 	}
