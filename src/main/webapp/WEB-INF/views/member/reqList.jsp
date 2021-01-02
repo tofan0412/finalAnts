@@ -261,17 +261,17 @@ li strong{
 									</c:otherwise>
 								</c:choose>
 								<td class="project-actions text-right" style="opacity: .9; padding-right: 60px!important;">
+									<c:if test="${req.plId eq null and req.proPercent eq null }">
+										<a class="btn btn-danger btn-xs" href="javascript:reqDelete(${req.reqId });"> 
+											<i class="fas fa-trash"></i> 삭제
+										</a>
+									</c:if>
 									<a class="btn btn-default btn-xs" href="javascript:reqDetail('<c:out value="${req.reqId }"/>');">
 										<i class="fas fa-folder"></i> 보기 
 									</a> 
 									<a class="btn btn-success btn-xs" href="javascript:reqUpdate(${req.reqId });"> 
 										 <i class="fas fa-pencil-alt"></i> 수정
 									</a>
-									<c:if test="${req.plId eq null and req.proPercent eq null }">
-										<a class="btn btn-danger btn-xs" href="javascript:reqDelete(${req.reqId });"> 
-											<i class="fas fa-trash"></i> 삭제
-										</a>
-									</c:if>
 								</td>
 							</tr>
 						</c:forEach>
@@ -458,7 +458,7 @@ li strong{
 					success : function(data){
 						saveMsg();
 						$("#addpl .close").click();
-						fn_egov_reqList();
+						
 					}
 				});
 			}
@@ -472,7 +472,7 @@ li strong{
 	/* pl요청 알림메세지 db에 저장하기 */
 	function saveMsg(){
 		var alarmData = {
-							"alarmCont" : $('#modalReqId').val() + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId="+$('#modalReqId').val()+"&&"+ $('#modalReqName').val(),
+							"alarmCont" : $('#modalReqId').val() + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/project/readReqList?plId="+$('#searchInput').val()+"&&"+ $('#modalReqName').val(),
 							"memId" 	: $('#searchInput').val(),
 							"alarmType" : "req-pl"
 		}
@@ -488,6 +488,7 @@ li strong{
 					
 					let socketMsg = alarmData.alarmCont +"&&"+ alarmData.memId +"&&"+ alarmData.alarmType;
 					socket.send(socketMsg);
+					fn_egov_reqList();
 					
 				},
 				error : function(err){
