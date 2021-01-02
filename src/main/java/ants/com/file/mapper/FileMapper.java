@@ -28,6 +28,9 @@ public interface FileMapper {
 	// 프로젝트별 파일목록
 	public List<PublicFileVo> pubfilelist(PublicFileVo publicFileVo);
 	
+	// 파일 이름 변경
+	public int modfilename(PrivateFileVo privateFileVo);
+	
 	
 	/*			개	인	파	일	함				*/
 	

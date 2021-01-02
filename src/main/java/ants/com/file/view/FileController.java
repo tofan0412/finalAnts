@@ -157,6 +157,8 @@ public class FileController {
 		return "";
 	}
 	
+
+	
 	
 	// 게시글의 파일 삭제하기
 	@RequestMapping(path ="/delfiles",   method=RequestMethod.POST)

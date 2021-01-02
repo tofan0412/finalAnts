@@ -48,7 +48,14 @@
   	DELETE FROM publicfile where pub_id= #{pubId}
   
   </delete>
-
+	
+  <!-- 파일명 변경 -->
+  <update id="modfilename" parameterType="ants.com.file.model.PublicFileVo">
+  	UPDATE privatefile
+  	   SET priv_filename = #{privFilename}
+  	 WHERE priv_id = #{privId}
+	   
+  </update>
 
   <!-- 클릭한 파일 정보 -->
   <select id="getfileDetail" parameterType="String" resultType="ants.com.file.model.PublicFileVo">

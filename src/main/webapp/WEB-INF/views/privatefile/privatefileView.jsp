@@ -135,6 +135,7 @@ li strong{
 <script type="text/javascript">
 
 var id;
+var name;
 	$(document).ready(function(){
 				
 		$('#div').hide()
@@ -170,6 +171,7 @@ var id;
 		$("#privatefileList tr").on("mousedown", function(e){
 			console.log('click')
 			var privfileId = $(this).data("privid");
+			var privfileName = $(this).data("privname");
 			console.log(privfileId)
 			
 			if(event.button == 2){
@@ -190,7 +192,7 @@ var id;
 		      "top": posY-50
 		    }).show();
 		    id=privfileId;
-
+		    name=privfileName;
 		    //Prevent browser default contextmenu.
 		    return false;
 			}
@@ -200,6 +202,7 @@ var id;
 		$("#imageTable img").on("mousedown", function(e){
 			console.log('click')
 			var privfileId = $(this).data("privid");
+			var privfileName = $(this).data("privname");
 			console.log(privfileId)
 			
 			if(event.button == 2){
@@ -220,6 +223,7 @@ var id;
 		      "top": posY-50
 		    }).show();
 		    id=privfileId;
+		    name=privfileName;
 
 		    //Prevent browser default contextmenu.
 		    return false;
@@ -326,7 +330,11 @@ var id;
      		$('#listTable').show();
      	}
      	
-     	
+     	// 파일명 변경
+     	$('#modbtn').on('click', function(){
+     		$('#privId2').val(id);
+     		$('#modfrm').submit();
+     	})
 	});
 	
 	function listfunc(){
@@ -349,6 +357,15 @@ var id;
 	// 파일 삭제
 	function privfiledel(){
 	   	document.location = "/privatefile/privatefileDelete?privId="+id;
+	}
+	
+	// 이름변경
+	function privfilemod(){
+		$('#privFilenamemod2').val(name);
+		$('#modmodal').modal();
+		console.log(id);
+		console.log(name);
+// 	   	document.location = "/privatefile/modfile?privId="+id+"&privFilename="+name;
 	}
 	
 		
@@ -377,6 +394,7 @@ var id;
 	<%@include file="../layout/contentmenu.jsp"%>
 </div>
 <ul class="contextmenu">
+  <li><a href="javascript:privfilemod();"><i class="fas fa-edit"  style="padding-right: 20px;"></i>이름변경</a></li>
   <li><a href="javascript:privfiledown();"><i class="fas fa-download"  style="padding-right: 20px;"></i>Download</a></li>
   <li><a href="javascript:privfiledel();"><i class="fas fa-trash"  style="padding-right: 20px;"></i>Delete</a></li>
 </ul>
@@ -485,7 +503,8 @@ var id;
 						<c:set var="cutName" value="${fn:substring(orginalName, nameLength-5, nameLength)}"/>
 						<c:set var="filename" value="${fn:substringAfter(cutName,'.')}"/>		
 					
-				  <tr data-privid="${privatefile.privId}" title=" 항목유형 : ${fn:toUpperCase(privatefile.privExtension)}파일 <br>
+				  <tr data-privid="${privatefile.privId}" data-privname="${privatefile.privFilename}"
+				  	title=" 항목유형 : ${fn:toUpperCase(privatefile.privExtension)}파일 <br>
 					  											   파일이름 : ${privatefile.privFilename } <br>
 																  수정한 날짜 : ${privatefile.regDt } <br>																		
 																 파일사이즈 : ${privatefile.privSize } KB<br>
@@ -550,7 +569,8 @@ var id;
 					
 					<div  style="width: 150px; height: 200px; display: inline-block; text-align: center;">
 						<img  name="link" src="/fileFormat/${fn:toLowerCase(privatefile.privExtension)}.png" onerror="this.src='/fileFormat/not.png';" style="width:120px; height:120px;" 
-								data-privid="${privatefile.privId}"  title="항목유형 : ${fn:toUpperCase(privatefile.privExtension)}파일 <br>
+								data-privid="${privatefile.privId}"  data-privname="${privatefile.privFilename}"
+								title="항목유형 : ${fn:toUpperCase(privatefile.privExtension)}파일 <br>
 																			파일이름 : ${privatefile.privFilename } <br>
 																			 수정한 날짜 : ${privatefile.regDt } <br>																		
 																			파일사이즈 : ${privatefile.privSize } KB<br>
@@ -609,6 +629,41 @@ var id;
 
 
 </body>
+
+
+
+<!-- 파일명 변경 모달 -->
+<div class="modal fade" id="modmodal" tabindex="-1" role="dialog"
+	aria-labelledby="inviteMemberModal" style=" padding-top: 150px;">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content" style="height: 600px auto; width : 500px;">
+			
+			<div class="modal-header">
+				<h3 class="modal-title jg" id="addplLable" style="text-align : center;">파일</h3>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			
+			<div class="modal-body" style="width: 100%; height: 100%;">
+				<label class="jg col-sm-3 control-label" style="float : left; display: inline-block;" >파일명</label>	
+				<form id ="modfrm" action="${pageContext.request.contextPath}/privatefile/modfile" method="post">
+					<div class="form-group" id="folderdiv">
+						<input type="search" class="form-control folderName" id="privFilenamemod2" name="privFilename" style="display: inline-block; width: 90%;"> 			
+						<input type="hidden" class="form-control folderName" id="privId2" name="privId" >  			
+										
+					</div>
+				</form>			
+			</div>
+			
+			<div class="modal-footer">
+				<button class="btn btn-success" id="modbtn">변경</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 
 <!-- 파일 등록 모달 -->

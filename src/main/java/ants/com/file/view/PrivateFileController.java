@@ -169,7 +169,7 @@ public class PrivateFileController {
 		String extension = filevo.getPubFilepath().substring(filevo.getPubFilepath().lastIndexOf(".")+1);
 			
         //복사될 파일경로
-        String copyFilePath = "C:\\profile\\"+filename+"."+extension;	
+        String copyFilePath = "C:\\upload\\"+filename+"."+extension;	
 	    	
         //파일객체생성
         File oriFile = new File(oriFilePath);
@@ -285,14 +285,83 @@ public class PrivateFileController {
 	
 	
 	
+	// 파일 이름 변경
+	@RequestMapping(path ="/modfile")
+	public String modfilename(PrivateFileVo pfv)  {
+	
+		fileService.modfilename(pfv);
+		
+		return "redirect:/privatefile/privatefileView";
+	}
+	
+	
 	
 	// 게시글의 파일 삭제하기
 	@RequestMapping(path ="/privatefileDelete")
 	public String delfiles(PrivateFileVo privatefileVo)  {
 		
+		
+		
 		if(!privatefileVo.equals("null") || privatefileVo !=null || !privatefileVo.equals("")) {
+			
+			PrivateFileVo dbfilevo = fileService.privateSelect(privatefileVo);
+			String serverFilepath = dbfilevo.getPrivFilepath();
+			File f = new File(serverFilepath);
+
+		    if( ! f.isDirectory()) {
+	
+		       f.delete();   //파일이면 바로 삭제
+	
+		    }
 			fileService.privateDelete(privatefileVo);
 		}
+		
+		return "redirect:/privatefile/privatefileView";
+	}
+	
+	
+	//폴더 추가
+	@RequestMapping(path ="/addfolder")
+	public String addfolder(String privId, String folderName, HttpSession session)  {
+		
+		List<PrivateFileVo> list = new ArrayList<>(); 
+		PrivateFileVo privatefilevo = new PrivateFileVo();
+		
+		       
+//		PublicFileVo filevo = fileService.getfile(privId); // 파일 조회
+		
+//		String path = filevo.getPubFilepath();
+		
+//		String folder = path.substring(path.lastIndexOf("\\"));
+//		System.out.println(folder);
+        // 폴더를 만들 디렉토리 경로(Window 기반)
+        String folderPath = "C:\\upload\\" + folderName;
+        
+        MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+        File makeFolder = new File(folderPath);
+        
+        privatefilevo.setPrivFilepath(folderPath);
+        privatefilevo.setMemId(memberVo.getMemId());
+        privatefilevo.setPrivExtension("folder");
+        privatefilevo.setPrivFilename(folderName);
+        privatefilevo.setPrivSize("0");
+        
+        list.add(privatefilevo);
+ 
+        // folderPath의 디렉토리가 존재하지 않을경우 디렉토리 생성.
+        if(!makeFolder.exists()) {
+            
+            // 폴더를 생성합니다.
+            makeFolder.mkdir(); 
+            System.out.println("폴더를 생성합니다.");
+            
+            // 정성적으로 폴더 생성시 true를 반환합니다.
+            System.out.println("폴더가 존재하는지 체크 true/false : "+makeFolder.exists());
+            fileService.privateInsert(list);	
+            
+        } else {
+            System.out.println("이미 해당 폴더가 존재합니다.");
+        }
 		
 		return "redirect:/privatefile/privatefileView";
 	}
