@@ -163,7 +163,8 @@
 			<mvc:exclude-mapping path="/member/noticelistmemview"/>
 			<mvc:exclude-mapping path="/member/noticedetailmemview"/>
 			<mvc:exclude-mapping path="/member/getmember"/>
-					
+			<mvc:exclude-mapping path="/profile/*"/>
+						
 			<mvc:exclude-mapping path="/member/mailsender"/>
 			<mvc:exclude-mapping path="/member/passupdateemail"/>
 			<mvc:exclude-mapping path="/member/passupdate"/>
