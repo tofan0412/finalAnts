@@ -60,8 +60,8 @@
 				<label for="scale4">분기</label> &nbsp; 
 			<input type="radio" id="scale5" class="gantt_radio" name="scale" value="year" > 
 				<label for="scale5">년도</label>&nbsp; 
-			<input type="button" value="확대" onclick="zoomIn()" class="btn btn-default  btn-sm btn-flat"> 
-			<input type="button" value="축소" onclick="zoomOut()" class="btn btn-default btn-sm btn-flat"> &nbsp; &nbsp; 
+			<input type="button" value="축소" onclick="zoomIn()" class="btn btn-default  btn-sm btn-flat"> 
+			<input type="button" value="확대" onclick="zoomOut()" class="btn btn-default btn-sm btn-flat"> &nbsp; &nbsp; 
 			<input value="Excel 다운로드" type="button" onclick="gantt.exportToExcel()" style="margin:0 15px; float: right;" class="btn btn-default  btn-sm btn-flat">
 			<input value="PDF 다운로드" type="button" onclick='gantt.exportToPDF()' style="float: right;" class="btn btn-default  btn-sm btn-flat">
 		</form>
@@ -132,21 +132,12 @@
 						scale_height : 50,
 						min_column_width : 50,
 						scales : [
+								
 								{
 									unit : "week",
-									step : 1,
-									format : function(date) {
-										var dateToStr = gantt.date
-												.date_to_str("%M %d");
-										var endDate = gantt.date.add(date, -6,
-												"day");
-										var weekNum = gantt.date.date_to_str(
-												"%W")(date);
-										return 
-												dateToStr(date) + " - "
-												+ dateToStr(endDate);
-									}
-								}, {
+									format : "Week #%W"
+								},
+								{
 									unit : "day",
 									step : 1,
 									format : "%j %D"
@@ -167,7 +158,7 @@
 					{
 						name : "quarter",
 						height : 50,
-						min_column_width : 90,
+						min_column_width : 90, 
 						scales : [
 								{
 									unit : "month",
