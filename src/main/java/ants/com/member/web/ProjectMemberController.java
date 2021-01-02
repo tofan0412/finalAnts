@@ -315,7 +315,6 @@ public class ProjectMemberController {
 			MemberVo memberVo = memberService.getMember(memInfo);
 			list.get(i).setMemFilepath(memberVo.getMemFilepath());
 		}
-		
 		return list;
 	}
 	

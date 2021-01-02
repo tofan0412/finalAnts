@@ -1,8 +1,6 @@
 package ants.com.member.model;
 
 public class ProjectMemberVo {
-	
-	
 	private String reqId;
 	private String promemId;
 	private String memId;
@@ -12,8 +10,6 @@ public class ProjectMemberVo {
 	private String plName;
 	private String plId;
 	private String memFilepath;
-	
-	
 	
 	public String getMemFilepath() {
 		return memFilepath;
