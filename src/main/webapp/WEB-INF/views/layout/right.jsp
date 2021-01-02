@@ -41,18 +41,44 @@
 }
 </style>
 <script>
+	// 해당 프로젝트에 존재하는 모든 채팅방 목록 불러오기.
+	// 채팅방 리스트를 보고 있을 때만, 해당 리스트가 갱신되어야 한다.
+	function readChatList(){
+		var memId = '${SMEMBER.memId}';	
+		var reqId = '${projectId}';
+		$.ajax({
+			url : "/chat/readChatList?memId="+memId+"&reqId="+reqId,
+			method : "GET",
+			success : function(res){
+				var html = res.split("$$$$$$$");
+				$('.chatList').html(html);
+			}
+		})
+	}
+	// listNow의 값이 yes인 경우, setTimeout 통해 채팅 목록을 지속적으로 갱신한다.
+	function listNow(){
+		if ($('#listNow').val() == 'yes'){
+			listTimer = setTimeout('readChatList()', 1000);
+		}
+		// listNow의 값이 yes가 아닌 경우, 반복 함수 종료
+		else{
+			window.clearTimeout(listTimer);	
+		}
+	}
+	
 $(function(){
 	reqId = "${projectId}";
 	if (typeof reqId == ""){
 	// 만약 reqId가 존재하지 않는경우에는 실행해선 안된다.
 		$('.chatList').html("아직 프로젝트를 선택하지 않았습니다.");	
 	}else{
-		readChatList();	
+		readChatList();
 	}
-	
 	
 	// 프로젝트에 참여하고 있는 회원 목록 불러오기
 	$('.mkNewChat').on('click',function(){
+		$('#listNow').val("no");
+		
 		$(".chatList").empty();
 		$('.chatTitle').css('display', 'none');
 		$('.mkNewChat').css('display', 'none');
@@ -68,20 +94,6 @@ $(function(){
 			}
 		})
 	})
-	
-	// 해당 프로젝트에 존재하는 모든 채팅방 목록 불러오기.
-	function readChatList(){
-		var memId = '${SMEMBER.memId}';	
-		var reqId = '${projectId}';
-		$.ajax({
-			url : "/chat/readChatList?memId="+memId+"&reqId="+reqId,
-			method : "GET",
-			success : function(res){
-				var html = res.split("$$$$$$$");
-				$('.chatList').html(html);
-			}
-		});
-	};
 	
 	// 채팅방 이름 클릭 시 해당 채팅방으로 이동.
 	$(".chatList").on('click', '.cgroupName', function(){
@@ -107,6 +119,8 @@ $(function(){
 			data : {cgroupId : cgroupId, memId : '${SMEMBER.memId}'},
 			method : "POST", 
 			success : function(res){
+				$('#listNow').val("no");
+				
 				var html = res.split("$$$$$$$");
 				$('.chatList').html(html);
 			}
@@ -160,31 +174,46 @@ $(function(){
 								method : "POST",
 								success : function(res){
 									console.log("현재 채팅방 번호 : "+cgroupId);
+									
 									$('.chatList').empty();
+									memName = '${SMEMBER.memName}';
+									memId = '${SMEMBER.memId}';
+									
+									inviteMsg = "";
+									for (i = 0; i < MemListArr.length; i++) {
+										inviteMsg += MemListArr[i].replace(":", "");
+										// 마지막 회원의 경우 콤마를 붙여선 안된다.
+										if (i == MemListArr.length - 1) {/* 아무것도 하지 않는다...*/} 
+										else {
+											inviteMsg += ", ";
+										}
+									}
+									
+									chatCont = "공지:" + memName + "[" + memId + "]" + "님이 "
+										+ inviteMsg + "님을 초대하였습니다.";
 									// 채팅방 생성, 인원 초대까지 끝났으면 채팅방을 개설하였다는 메시지를 DB에 저장한다.
 									$.ajax({
 										url : "/chat/sendMessage",
 										data : {memId : "*ANNOUNCE*",
 											    memName : "*ANNOUNCE*",
 											    cgroupId : cgroupId,
-												chatCont : "${SMEMBER.memName}"+"님이 " 
-													+ MemListArr.length-1 +"명을 초대하였습니다."},
+											    regDt : $('#clock').val(),
+											    chatCont : chatCont
+											    },
 										method : "POST",
 										success : function(res) {
-																						
+											$('.chatList').empty();
+											$.ajax({
+												url : "/chat/readMessages",
+												data : {cgroupId : cgroupId, memId : '${SMEMBER.memId}'},
+												method : "POST", 
+												success : function(res){
+													var html = res.split("$$$$$$$");
+													$('.chatList').html(html);
+												}
+											})
 										}
 									})
-								}
-							})
-							
-							$('.chatList').empty();
-							$.ajax({
-								url : "/chat/readMessages",
-								data : {cgroupId : cgroupId, memId : '${SMEMBER.memId}'},
-								method : "POST", 
-								success : function(res){
-									var html = res.split("$$$$$$$");
-									$('.chatList').html(html);
 								}
 							})
 						}
@@ -200,6 +229,9 @@ $(function(){
 		$('.mkNewChat').css('display', 'block');
 		
 		$('.chatList').empty();
+		
+		$('#listNow').val("yes");
+		// 필요한가??
 		readChatList();
 	})
 	
@@ -244,6 +276,8 @@ $(function(){
 						$('.mkNewChat').css('display', 'block');
 						
 						$('.chatList').empty();
+						
+						$('#listNow').val("yes");
 						readChatList();
 					}
 				}
@@ -267,6 +301,7 @@ $(function(){
 		">
 		<h5 class="jg" style="background-color : ">
 			<i class="far fa-comments">&nbsp;</i>채팅
+			<input id="listNow" type="text" hidden="hidden" readonly="readonly" value="yes" onchange="listNow()"  >
 		</h5>
 		<!--  Header -->
 		<div class="chatTitle jg">프로젝트 채팅 목록</div>

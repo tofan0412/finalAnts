@@ -34,7 +34,7 @@ public class ChatController {
 
 	// 내가 참여하고 있는 모든 채팅방 목록을 불러온다.
 	@RequestMapping("/readChatList")
-	public String readChatList(ChatGroupVo chatGroupVo, Model model) {
+	public String readChatList(ChatGroupVo chatGroupVo, Model model, HttpSession session) {
 
 		List<ChatGroupVo> chatList = chatService.readChatList(chatGroupVo);
 		List<List<ChatMemberVo>> eachChatMemList = new ArrayList<>();
@@ -48,6 +48,8 @@ public class ChatController {
 			String recentMsg = chatService.recentMsg(chatList.get(i).getCgroupId());
 			recentMsgList.add(recentMsg);
 		}
+		
+		session.setAttribute("listNow", "yes");
 		
 		model.addAttribute("recentMsgList", recentMsgList);
 		model.addAttribute("eachChatMemList", eachChatMemList);
