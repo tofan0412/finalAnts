@@ -59,10 +59,10 @@ body{
 	height:30px;	
 	background:lightblue;	
 	border-radius: 10px;
-	margin-left:370px;
+	margin-left:470px;
 	padding-left:7px;			
-	padding-top:2px;				
-}					
+	padding-top:2px;					
+}							
 .balloon:after {
 	border:1px solid black;	
 	border-top:15px solid lightblue;	
@@ -73,7 +73,7 @@ body{
 	position:absolute;		
 	top:25px;		
 	left:10px;		
-}					
+}						
 </style>			
 	
 <body>	
