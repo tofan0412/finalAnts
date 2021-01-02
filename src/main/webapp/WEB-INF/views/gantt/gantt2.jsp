@@ -36,9 +36,9 @@
 	<%@include file="../layout/contentmenu.jsp"%>
 	<div class="scaleBtn">
 		<form class="gantt_control">
-			<div class="input-group input-group-sm col-md-1 float-left">
+			<div class="input-group input-group-sm col-md-1 float-left" style="min-width: max-content">
 		      	<select class="form-control" name="searchCondition" id="searchCondition" style="font-size: 0.7em;">
-					<option>담당자</option>
+					<option value="0">전체(담당자)</option>
 					<c:forEach items="${promemList }" var="p">
 						<option value="${p.memId }">${p.memName }</option>
 					</c:forEach>
@@ -218,46 +218,54 @@
 
 		/* 실행 */
 		var gdata = [];
-		$.getJSON("/todo/getAllTodo", function(data) {
-			gantt.init("gantt_here");
-			$.each(data.todoList, function(inx, obj) {
-				var gdatum = {};
-
-				if (obj.todoParentid == null) {
-					gdatum = {
-						id : parseInt(obj.todoId),
-						text : obj.todoTitle,
-						users : obj.memName,
-						priority : obj.todoImportance,
-						start_date : obj.todoStart,
-						duration : parseInt(obj.todoEnd),
-						progress : obj.todoPercent,
-						open : true
-					};
-				} else {
-					gdatum = {
-						id : obj.todoId,
-						text : obj.todoTitle,
-						users : obj.memName,
-						priority : obj.todoImportance,
-						start_date : obj.todoStart,
-						duration : obj.todoEnd,
-						progress : obj.todoPercent,
-						parent : obj.todoParentid
-					};
-				}
-				gdata.push(gdatum);
-			});
-			gantt.parse({
-				data : gdata
-			});
-			
-		});//json
-		
+		ganttInit();
+		function ganttInit(){
+			$.getJSON("/todo/getAllTodo", function(data) {
+				gantt.init("gantt_here");
+				$.each(data.todoList, function(inx, obj) {
+					var gdatum = {};
+	
+					if (obj.todoParentid == null) {
+						gdatum = {
+							id : parseInt(obj.todoId),
+							text : obj.todoTitle,
+							users : obj.memName,
+							priority : obj.todoImportance,
+							start_date : obj.todoStart,
+							duration : parseInt(obj.todoEnd),
+							progress : obj.todoPercent,
+							open : true
+						};
+					} else {
+						gdatum = {
+							id : obj.todoId,
+							text : obj.todoTitle,
+							users : obj.memName,
+							priority : obj.todoImportance,
+							start_date : obj.todoStart,
+							duration : obj.todoEnd,
+							progress : obj.todoPercent,
+							parent : obj.todoParentid
+						};
+					}
+					gdata.push(gdatum);
+				});
+				gantt.parse({
+					data : gdata
+				});
+				
+			});//json
+		}
 		$('#stoBtn').on('click',function(){
+			//초기화
 			gdata = [];
 			gantt.clearAll();
+			
 			var memId =  $("#searchCondition option:selected").val();
+			//전체 선택
+			if(memId == '0'){
+				ganttInit();
+			}
 			
 			$.getJSON("/todo/getSelectTodo?memId="+memId, function(data2) {
 				gantt.init("gantt_here");

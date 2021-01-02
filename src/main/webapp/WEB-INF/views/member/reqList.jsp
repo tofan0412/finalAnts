@@ -261,17 +261,17 @@ li strong{
 									</c:otherwise>
 								</c:choose>
 								<td class="project-actions text-right" style="opacity: .9; padding-right: 60px!important;">
+									<c:if test="${req.plId eq null and req.proPercent eq null }">
+										<a class="btn btn-danger btn-xs" href="javascript:reqDelete(${req.reqId });"> 
+											<i class="fas fa-trash"></i> 삭제
+										</a>
+									</c:if>
 									<a class="btn btn-default btn-xs" href="javascript:reqDetail('<c:out value="${req.reqId }"/>');">
 										<i class="fas fa-folder"></i> 보기 
 									</a> 
 									<a class="btn btn-success btn-xs" href="javascript:reqUpdate(${req.reqId });"> 
 										 <i class="fas fa-pencil-alt"></i> 수정
 									</a>
-									<c:if test="${req.plId eq null and req.proPercent eq null }">
-										<a class="btn btn-danger btn-xs" href="javascript:reqDelete(${req.reqId });"> 
-											<i class="fas fa-trash"></i> 삭제
-										</a>
-									</c:if>
 								</td>
 							</tr>
 						</c:forEach>

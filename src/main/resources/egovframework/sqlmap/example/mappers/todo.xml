@@ -441,7 +441,7 @@
 			  FROM todo t
               LEFT OUTER JOIN member m
                  ON m.mem_id = t.mem_id
-			WHERE t.req_id = '1' 
+			WHERE t.req_id = #{reqId} 
 			ORDER BY t.todo_level
 </select>
 		
