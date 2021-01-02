@@ -59,10 +59,10 @@ body{
 	height:30px;	
 	background:lightblue;	
 	border-radius: 10px;
-	margin-left:470px;
+	margin-left:370px;
 	padding-left:7px;			
-	padding-top:2px;					
-}							
+	padding-top:2px;						
+}								
 .balloon:after {
 	border:1px solid black;	
 	border-top:15px solid lightblue;	
@@ -87,10 +87,10 @@ body{
 		<div class="card card-primary card-outline">
 			<div class="card-body box-profile">
 						
-				<div class="balloon"><b style="font-size:13px; margin-left:7px;">이미지를 클릭하면 변경할 수 있어요!</b></div>				
 				<form id="fmin" role="form" class="form-horizontal" action="/member/memberRegist" method="POST" enctype="multipart/form-data">
 				<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
-				<div class="text-center">
+				<div class="balloon"><b style="font-size:13px; margin-left:7px;">이미지를 클릭하면 변경할 수 있어요!</b></div>				
+				<div class="text-center">	
 					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border:1px solid white; height: 200px; width:140px; margin: 0 auto;">
 						<img class="profile-user-img img-fluid img-circle" id="pictureViewImg" style="width: 100%; height: 100%;" src="/profile/user-1.png"/>
 					</div><br>						
@@ -98,8 +98,7 @@ body{
 						<input type="text" id="imgname" name="imgname" style="display: none">	
 					</div>	
 				</div> 			
-								
-										
+											
 				<h3 class="profile-username text-center">
 					<!-- 경로 미리보기용 <div id="clickmsg">경로 : </div>	<hr>  -->
 					<input class="profile-username text-center" type="text" class="form-control"  style="border:none; outline:none;" readonly/>
@@ -107,63 +106,63 @@ body{
 				<p class="text-muted text-right">	
 				</p>
 											
-					<hr>	
-					<div style="width:340px; float:left;">
-						<span style="color: red; font-weight: bold;">*</span><b>아이디</b><br>	
-						<b style="font-size:13px; margin-left:7px;">( 중복확인이 되어야 등록버튼이 활성화 됩니다. )</b>		
-						<div id="checkid" class="indiv"></div>	
-						<div id="checkMsg" class="indiv"></div>	
-					</div>
+				<hr>	
+				<div style="width:340px; float:left;">
+					<span style="color: red; font-weight: bold;">*</span><b>아이디</b><br>	
+					<b style="font-size:13px; margin-left:7px;">( 중복확인이 되어야 등록버튼이 활성화 됩니다. )</b>		
+					<div id="checkid" class="indiv"></div>	
+					<div id="checkMsg" class="indiv"></div>	
+				</div>
 							
-					<div style="float:right;">				
-						<input class="input" name="memId" type="email" id="memId" placeholder="사용중인 이메일을 입력해 주세요" onkeyup="chkID()"/><br>
-						<div style="margin-top:10px;">	
-							<button type="submit" id="checkbtn" style="float:right; height:30px; width:120px; background:white; color:black; border:1px solid black; font-size:14px; margin-right:20px;">중복확인</button>
-						</div>		
-					</div> 				 		
-					<br><br><br><br>								 	  						
-					<hr>
+				<div style="float:right;">				
+					<input class="input" name="memId" type="email" id="memId" placeholder="사용중인 이메일을 입력해 주세요" onkeyup="chkID()"/><br>
+					<div style="margin-top:10px;">	
+						<button type="submit" id="checkbtn" style="float:right; height:30px; width:120px; background:white; color:black; border:1px solid black; font-size:14px; margin-right:20px;">중복확인</button>
+					</div>		
+				</div> 				 		
+				<br><br><br><br>								 	  						
+				<hr>
 					
-					<div style="width:340px; float:left;">
-						<span style="color: red; font-weight: bold;">*</span><b>이름</b>
-					</div>
-					<div style="float:right;">				
-						<input class="input" name="memName" type="text" id="memName" placeholder="이름"/>
-					</div> 				 		
-					<br><br><br>								 	  						
-					<hr>	
+				<div style="width:340px; float:left;">
+					<span style="color: red; font-weight: bold;">*</span><b>이름</b>
+				</div>
+				<div style="float:right;">				
+					<input class="input" name="memName" type="text" id="memName" placeholder="이름"/>
+				</div> 				 		
+				<br><br><br>								 	  						
+				<hr>	
 					
-					<div style="width:340px; float:left;">
-						<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b>
-						<div id="checkPass1" class="indiv"></div>
-					</div>
-					<div style="float:right;">				
-						<input class="input" name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합"/>
-					</div> 				 		
-					<br><br><br>								 	  						
-					<hr>
+				<div style="width:340px; float:left;">
+					<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b>
+					<div id="checkPass1" class="indiv"></div>
+				</div>
+				<div style="float:right;">				
+					<input class="input" name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합"/>
+				</div> 				 		
+				<br><br><br>								 	  						
+				<hr>
 
-					<div style="width:340px; float:left;">
-						<span style="color: red; font-weight: bold;">*</span><b>비밀번호 확인</b>
-						<div id="checkPass2" class="indiv"></div>
-					</div>
-					<div style="float:right;">				
-						<input class="input" type="password" style="" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" />
-					</div> 				 		
-					<br><br><br>								 	  						
-					<hr>
+				<div style="width:340px; float:left;">
+					<span style="color: red; font-weight: bold;">*</span><b>비밀번호 확인</b>
+					<div id="checkPass2" class="indiv"></div>
+				</div>
+				<div style="float:right;">				
+					<input class="input" type="password" style="" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" />
+				</div> 				 		
+				<br><br><br>								 	  						
+				<hr>
 							
-					<div style="width:340px; float:left;">
-						<b>전화번호</b><br>		
-						<b style="font-size:13px;">( 전화번호는 비밀번호 분실시 <br>전화번호 인증용으로 사용됩니다. )</b>	
-						<div id="checkTel" class="indiv"></div>
-					</div>					
-					<div style="float:right;">				
-						<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력"/>
-					</div> 				 		
-					<br><br><br>								 	  						
-					<hr>					
-													
+				<div style="width:340px; float:left;">
+					<b>전화번호</b><br>		
+					<b style="font-size:13px;">( 전화번호는 비밀번호 분실시 <br>전화번호 인증용으로 사용됩니다. )</b>	
+					<div id="checkTel" class="indiv"></div>
+				</div>					
+				<div style="float:right;">				
+					<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력"/>
+				</div> 				 		
+				<br><br><br>								 	  						
+				<hr>					
+														
 				<div style="float:right;">				
 					<button type="button" style="height:40px; margin-right:20px;" id="registBtn" disabled="disabled">등록</button>
 					<button type="button" style="height:40px;" id="cancelBtn" onclick="window.history.back()">취소</button>
@@ -324,7 +323,7 @@ $(document).ready(function() {
 		}
 	})
 })	
-	
+		
 // 중복검사	
 var newpass1 = document.getElementById('memPass');
 var newpass2 = document.getElementById('memPass2');

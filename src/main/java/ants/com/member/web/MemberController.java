@@ -571,7 +571,7 @@ public class MemberController {
 			}
 
 		} else {
-
+				
 			// 기본 이미지 중에 선택했을때
 			if (!imgname.equals(memberVo.getMemFilepath())) {
 				Filepath = "/profile/"+ imgname.split("/")[4];
