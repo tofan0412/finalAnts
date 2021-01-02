@@ -55,6 +55,7 @@
 			}
 		})
 	}
+	
 	// listNow의 값이 yes인 경우, setTimeout 통해 채팅 목록을 지속적으로 갱신한다.
 	function listNow(){
 		if ($('#listNow').val() == 'yes'){
@@ -64,6 +65,7 @@
 		else{
 			window.clearTimeout(listTimer);	
 		}
+		setTimeout('listNow()', 5000);
 	}
 	
 $(function(){
@@ -72,7 +74,8 @@ $(function(){
 	// 만약 reqId가 존재하지 않는경우에는 실행해선 안된다.
 		$('.chatList').html("아직 프로젝트를 선택하지 않았습니다.");	
 	}else{
-		readChatList();
+// 		readChatList();
+		listNow();
 	}
 	
 	// 프로젝트에 참여하고 있는 회원 목록 불러오기
@@ -301,7 +304,7 @@ $(function(){
 		">
 		<h5 class="jg" style="background-color : ">
 			<i class="far fa-comments">&nbsp;</i>채팅
-			<input id="listNow" type="text" hidden="hidden" readonly="readonly" value="yes" onchange="listNow()"  >
+			<input id="listNow" type="text" hidden="hidden" readonly="readonly" value="yes">
 		</h5>
 		<!--  Header -->
 		<div class="chatTitle jg">프로젝트 채팅 목록</div>
