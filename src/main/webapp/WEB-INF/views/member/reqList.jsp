@@ -351,7 +351,25 @@ li strong{
 		$('#searchCondition').val("" + searchCondition + "").attr("selected",
 				"selected");
 	}
-
+	
+	toastr.options = {
+			  "closeButton": false,
+			  "debug": false,
+			  "newestOnTop": false,
+			  "progressBar": false,
+			  "positionClass": "toast-top-full-width",
+			  "preventDuplicates": true,
+			  "onclick": null,
+			  "showDuration": "300",
+			  "hideDuration": "1000",
+			  "timeOut": "5000",
+			  "extendedTimeOut": "1000",
+			  "showEasing": "swing",
+			  "hideEasing": "linear",
+			  "showMethod": "fadeIn",
+			  "hideMethod": "fadeOut"
+			}
+	
 	//뒤로가기
 	$("#back").on("click", function() {
 		window.history.back();
@@ -359,13 +377,6 @@ li strong{
 
 	$(function() {
 		
-		if(${plDelMsg == 3}){
-			alert("삭제성공");
-		}else if(${plDelMsg == null}){
-			
-		}else{
-			alert("삭제실패");
-		}
 
 		/* pl등록버튼 클릭*/
 		$('.addplModal').on('click', function() {
@@ -450,6 +461,9 @@ li strong{
 						fn_egov_reqList();
 					}
 				});
+			}
+			else{
+				toastr["warning"]("요청할 수 없습니다.");
 			}
 		});
 
