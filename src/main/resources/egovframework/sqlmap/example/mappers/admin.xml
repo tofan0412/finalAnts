@@ -115,12 +115,13 @@ VALUES (IPHIST_SEQ.NEXTVAL,#{memId},#{ipAddr},SYSDATE)
 				    pro_name,
 				    pro_percent,
 				    to_char(REG_DT,'YYYY-MM-DD') as REG_DT,
-<!-- 				    pro_status, -->
+				    pro_status,
 				    del
 					FROM PROJECT
 					WHERE DEL = 'N'
 					AND pro_name != 'null'
 					AND mem_id != 'null'
+<!-- 					AND pro_status != 'null' -->
 
 					<if test="searchKeyword != null and searchKeyword != ''">
 						<choose>

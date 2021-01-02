@@ -154,7 +154,7 @@ $(function(){
 							<tr>
 								<th class="jg" style="width: 10%; padding-left: 30px; text-align: center;">No.</th>
 								<th class="jg" style="padding-left: 30px; width: 30%">제목</th>
-								<th class="jg" style="text-align: center; width: 10%">담당자</th>
+								<th class="jg" style="text-align: center; width: 15%">담당자</th>
 								<th class="jg" style="text-align: center; width: 15%">날짜</th>
 								<th class="jg" style="text-align: center; width: 13%">진행여부</th>
 								<th></th>
@@ -166,11 +166,28 @@ $(function(){
 									<td class="jg" style="width: 10%; padding-left: 30px; text-align: center;">
 										<c:out value="${  ((projectVo.pageIndex-1) * projectVo.pageUnit + (status.index+1))}" />.</td>
 									<td class="jg" style="padding-left: 30px; width: 30%">${project.proName }</td>
-									<td class="jg" style="text-align: center; width: 10%">${project.memId }</td>
+									<td class="jg" style="text-align: center; width: 15%">${project.memId }</td>
 									<td class="jg" style="text-align: center;" width="15%">${project.regDt }</td>
-<%-- 									<td class="jg" style="text-align: center;" width="10%">${project.proStatus }</td> --%>
-									<td>
-									<td><button type="button" class="btn btn-danger projectDelBtn" style="width:45pt;height:22pt;font-size: 15px" reqId=${project.reqId }>삭제</button></td>
+<%-- 									<td class="jg" style="text-align: center;" width="13%">${project.proStatus }</td> --%>
+									<c:choose>
+										<c:when test="${project.proStatus eq null }">
+											<td class="jg" style="text-align: center; width:13%">대기</td>
+										</c:when>
+										<c:when test="${project.proStatus eq 'ACTIVE' }">
+											<td class="jg" style="text-align: center; width:13%">진행</td>
+										</c:when>
+										<c:when test="${project.proStatus eq 'STOP' }">
+											<td class="jg" style="text-align: center; width:13%">중지</td>
+										</c:when>
+										<c:when test="${project.proStatus eq 'END' }">
+											<td class="jg" style="text-align: center; width:13%">완료</td>
+										</c:when>
+<%-- 										<c:otherwise> --%>
+<%-- 											<td class="jg" style="text-align: center; width:13%;">${project.proStatus }</td> --%>
+<%-- 										</c:otherwise> --%>
+									</c:choose>
+									
+									<td><button type="button" class="btn btn-danger projectDelBtn" style="width:45pt;height:24pt;font-size: 15px" reqId=${project.reqId }>삭제</button></td>
 								</tr>
 							</c:forEach>
 							<c:if test="${projectlist.size() == 0}">

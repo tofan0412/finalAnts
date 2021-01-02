@@ -149,8 +149,8 @@
 								<th style="text-align: center;" class="jg">   작성자 </th>
 								<th style="text-align: center;" class="jg">   날짜   </th>
 								 -->
-								<th class="jg" style="text-align: center; width: 10%; padding-left: 50px">NO.</th>
-								<th class="jg" style="padding-left: 30px; width: 37%">제목</th>
+								<th class="jg" style="text-align: ; width: 10%; padding-left: 50px">NO.</th>
+								<th class="jg" style="padding-left: 30px; width: 20%">제목</th>
 								<th class="jg" style="text-align: center; width: 10%">작성자</th>
 								<th class="jg" style="text-align: center; width: 15%">작성일</th>
 		                    </tr>
@@ -160,11 +160,11 @@
 							<c:forEach items="${noticelist }" var="notice" varStatus="status">
 
 								<tr>
-									<td class="jg" style="width: 10%; padding-left: 40px; text-align: center; ">
+									<td class="jg" style="width: 10%; padding-left: 58px; text-align: ; ">
 										<c:out value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />
 									</td>
 										
-									<td class="jg"  style="padding-left: 30px; width: 37%">
+									<td class="jg"  style="padding-left: 30px; width: 20%">
 										<c:if test="${notice.importance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
 										<c:if test="${notice.importance eq 'emg'}"><span class="badge badge-danger ns">필독</span></c:if>
 										&nbsp;
