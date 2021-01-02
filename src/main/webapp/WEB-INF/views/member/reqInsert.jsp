@@ -64,7 +64,23 @@
 </style>
 <script>
 	
-	
+toastr.options = {
+		  "closeButton": false,
+		  "debug": false,
+		  "newestOnTop": false,
+		  "progressBar": false,
+		  "positionClass": "toast-top-center",
+		  "preventDuplicates": true,
+		  "onclick": null,
+		  "showDuration": "300",
+		  "hideDuration": "1000",
+		  "timeOut": "5000",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+		}
 	function checkInputNum(){
 		if ((event.keyCode < 48) || (event.keyCode > 57)){
 	          event.returnValue = false;
@@ -75,6 +91,25 @@
     var QueueCnt = 0;
 	
 	$(function (){
+		$('#reqPeriod').keyup(function(e){
+			if (e.keyCode > 57 
+					|| e.keyCode < 48
+					&& e.keyCode != 8	// Backspace
+					&& e.keyCode != 9	// Tab
+					&& e.keyCode != 13	// Enter
+					&& e.keyCode != 16	// shift
+					&& e.keyCode != 17	// Ctrl
+					&& e.keyCode != 27	// ESC
+					&& e.keyCode != 37	// 왼쪽 방향키	
+					&& e.keyCode != 38	// 윗 방향키
+					&& e.keyCode != 39	// 오른쪽 방향키
+					&& e.keyCode != 40	// 아래 방향키
+					){
+				toastr["warning"]("숫자만 입력할 수 있습니다.");
+				$(this).val('');
+			} 
+		})
+		
 		reqId2 = "${reqVo.reqId}";
 	  	// Summernote
 		$('#summernote').summernote({
@@ -123,13 +158,17 @@
      	// 작성 버튼 클릭시 요구사항정의서,프로젝트 등록
      	$('#insertbtn').on('click', function(event){
      		cnt = 0;
-     		if ($('#reqTitle').val().length == 0){
-				$('.warningreqTitle').text("제목을 입력해 주세요.");  
+     		if ($('#reqTitle').val().length == 0 && $('#reqPeriod').val().length == 0){
+     			toastr["warning"]("제목, 기간은 필수 입력사항입니다.");
 				cnt++;
 			}
-     		if ($('#reqPeriod').val().length == 0){
-				$('.warningreqPeriod').text("기간을 입력해 주세요.");  
+     		else if ($('#reqPeriod').val().length == 0){
+     			toastr["warning"]("기간은 필수 입력사항입니다.");
 				cnt++;
+			}else if($('#reqTitle').val().length == 0){
+     			toastr["warning"]("제목은 필수 입력사항입니다.");
+				cnt++;
+				
 			}
      		if(cnt == 0){
      			$.ajax({
