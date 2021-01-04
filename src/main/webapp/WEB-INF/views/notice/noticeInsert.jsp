@@ -61,20 +61,11 @@
  			if ($('#noticeTitle').val().length == 0){
 				$('.warningTitle').text("제목을 작성해 주세요.");  
 				cnt++;
+			}else{
+				$('.warningTitle').text("");
+				$('#noticeform').submit();		
 			}
-     		
      	});
-	 	
-     	$('#insertbtn').on('click', function(){
-     		cnt = 0;
-     		// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
- 			if ($('#noticeTitle').val().length == 0){
-				$('.warningTitle').text("제목을 작성해 주세요.");  
-				cnt++;
-			}
-     		
-     	});
-	 	
 	 	
  	});
 	
@@ -113,8 +104,8 @@
 						<div class="float-right">
 <!-- 							<input type="submit" class="btn btn-default" id="insertbtn" value="작성"> -->
 <!-- 							<input type="button" class="btn btn-default" id="insertbtn" value="작성"> -->
-<!-- 							<button type="button" class="btn btn-default jg" id="regBtn">등록</button> -->
-							<button type="submit" class="btn btn-default jg" id="regBtn">등록</button>
+							<button type="button" class="btn btn-default jg" id="regBtn">등록1</button>
+<!-- 							<button type="submit" class="btn btn-default jg" id="regBtn">등록2</button> -->
 <!-- 							<button type="button" class="btn btn-default jg" id="back">취소</button> -->
 						</div>
 					</form>

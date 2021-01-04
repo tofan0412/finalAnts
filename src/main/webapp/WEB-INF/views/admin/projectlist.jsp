@@ -78,6 +78,11 @@ $(function(){
         }
 	})
 	*/
+	$("body").keyup(function(e){
+		if(e.keyCode == 13){
+			$('#searchBtn').trigger("click");
+		}
+	})
 })
 
 /* pagination 페이지 링크 function */

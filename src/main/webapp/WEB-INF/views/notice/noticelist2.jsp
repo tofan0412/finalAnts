@@ -69,6 +69,12 @@
 		})
 
 // 		$("#pagenum a").addClass("page-link");
+		
+		$("body").keyup(function(e){
+			if(e.keyCode == 13){
+				$('#searchBtn').trigger("click");
+			}
+		})
 
 	})
 
