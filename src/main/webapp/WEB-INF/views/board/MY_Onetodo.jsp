@@ -105,11 +105,30 @@
 		})
 	})
 	
-	function checkInputNum(){
-		if ((event.keyCode < 48) || (event.keyCode > 57)){
-	          event.returnValue = false;
-	      }
-	  }
+	//진행도 수정시 소수점 첫째자리까지 입력가능하고 0~100까지 입력가능하게
+	function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        // Textbox value    
+        var _value = event.srcElement.value;    
+        // 소수점(.)이 두번 이상 나오지 못하게
+        var _pattern0 = /^\d*[.]\d*$/; // 현재 value값에 소수점(.) 이 있으면 . 입력불가
+        if (_pattern0.test(_value)) {
+            if (charCode == 46) {
+                return false;
+            }
+        }
+
+        // 소수점 첫째자리까지만 입력가능
+        var _pattern2 = /^\d*[.]\d{1}$/; // 현재 value값이 소수점 첫째짜리 숫자이면 더이상 입력 불가
+        if (_pattern2.test(_value)) {
+            alert("소수점 첫째자리까지만 입력가능합니다.");
+            return false;
+        }  
+        return true;
+    }
+
 	 function handleChange(input) {
 	       if (input.value < 0){
 	    	   alert("진행도는 0 ~ 100까지 입력가능합니다.");
@@ -120,6 +139,8 @@
 	       	return false;
 	       }
 	     }
+	 
+	 
 	function todoDetail(todoId) {
 		$.ajax({
 			url : "/todo/myonetodo",
@@ -302,7 +323,7 @@
        	<form id="proForm" name="proForm" method="post">
        	<input type="hidden" name="todoId" id="todoId_in">
        	<input type="hidden" name="reqId" id="reqId">
-       	<input type="text" id="inpercent" name="todoPercent" maxlength="3" onkeyPress="javascript:checkInputNum();" onchange="javascript:handleChange(this);">
+       	<input type="text" name="todoPercent" onkeypress="return isNumberKey(event)" onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');" onchange="javascript:handleChange(this);"/>
        	</form>
       </div>           
       <div class="modal-footer">
