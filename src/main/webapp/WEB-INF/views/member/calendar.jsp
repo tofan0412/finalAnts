@@ -378,7 +378,6 @@ document.addEventListener('DOMContentLoaded', function() {
 					<h3 class="jg" style="padding-left: 10px;">Calendar / <a style="color: black;" href="${pageContext.request.contextPath}/schedule/scheduleplaceView">일정</a></h3>
 			</div>
           </div>
-        
         </div>
       </div>
     </section>
@@ -393,19 +392,14 @@ document.addEventListener('DOMContentLoaded', function() {
                   <h4 class="card-title">Drag Calendar</h4>
                 </div>
                 <div class="card-body">
-                  <!-- the events -->
                   <div id="external-events">
-                    
                     <div class="checkbox">
                       <label for="drop-remove">
-                        
                       </label>
                     </div>
                   </div>
                 </div>
-                <!-- /.card-body -->
               </div>
-              <!-- /.card -->
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">Create Calendar</h3>
@@ -419,16 +413,13 @@ document.addEventListener('DOMContentLoaded', function() {
                       <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
                     </ul>
                   </div>
-                  <!-- /btn-group -->
                   <div class="input-group">
                     <input id="new-event" type="text" class="form-control" placeholder="Event Title">
 
                     <div class="input-group-append">
                       <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
                     </div>
-                    <!-- /btn-group -->
                   </div>
-                  <!-- /input-group -->
                 </div>
               </div>
               <div class="card">
@@ -443,29 +434,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                   </div>
                 </div>
-                <!-- /.card-body -->
               </div>
             </div>
           </div>
-          <!-- /.col -->
           <div class="col-md-9">
             <div class="card card-primary">
               <div class="card-body p-0">
-                <!-- THE CALENDAR -->
                 <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-bootstrap ns">
               </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
           </div>
-          <!-- /.col -->
         </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
+      </div>
     </section>
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" id ="modalbtn"></button>	
-    
-    <!-- Modal -->
     
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  >
   <div class="modal-dialog">

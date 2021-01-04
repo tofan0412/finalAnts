@@ -237,7 +237,7 @@ public class TodoController {
 			projectVo.setReqId(reqId);
 			int res = projectController.propercentChange(projectVo);
 			if (res > 0) {
-				return "redirect:/todo/MytodoList";
+				return "redirect:/todo/myonetodoView?todoId=" + todoVo.getTodoId();
 			} else {
 				return "redirect:/todo/updatetodoView?todoId=" + todoVo.getTodoId();
 			}
