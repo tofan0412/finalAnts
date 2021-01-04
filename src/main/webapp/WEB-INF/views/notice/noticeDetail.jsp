@@ -22,7 +22,8 @@ $(function(){
         }
 	})
 	$("#back").on('click',function(){
-		window.history.back();
+// 		window.history.back();
+		$(location).attr('href', '${pageContext.request.contextPath}/admin/noticelist?noticeId=${noticevo.noticeId}');
 	})
 	
 	

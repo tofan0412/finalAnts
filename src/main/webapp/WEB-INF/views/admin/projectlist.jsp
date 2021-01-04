@@ -69,6 +69,15 @@ $(function(){
 		//$(location).attr("href", "/admin/delproject?reqId="+reqId);
 		location.href="/admin/delproject?reqId="+reqId;
 	})
+	/*
+	$("#delproject").on('click',function(){
+		if(confirm("정말 삭제하시겠습니까 ?") == true){
+			$(location).attr('href', '${pageContext.request.contextPath}/admin/delproject?reqId=${project.reqId}');
+        }else{
+        	return;
+        }
+	})
+	*/
 })
 
 /* pagination 페이지 링크 function */
@@ -187,7 +196,8 @@ $(function(){
 <%-- 										</c:otherwise> --%>
 									</c:choose>
 									
-									<td><button type="button" class="btn btn-danger projectDelBtn" style="width:45pt;height:24pt;font-size: 15px" reqId=${project.reqId }>삭제</button></td>
+									<td><button id="delproject" type="button" class="btn btn-danger projectDelBtn" style="width:45pt;height:24pt;font-size: 15px" reqId=${project.reqId }>삭제</button></td>
+										
 								</tr>
 							</c:forEach>
 							<c:if test="${projectlist.size() == 0}">

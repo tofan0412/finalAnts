@@ -56,17 +56,47 @@
 		border-radius: 80px;	
 		outline: none;
 	} 
+	
 	.passviewdiv i{
     position: absolute;
-    left: 94%;
-    top: 21px;						
+    left: 90%;
+    top: 52%;						
     color: AAAAAA;
-}		
+	}	
+	.passviewdiv1 i{
+    position: absolute;
+    left: 90%;
+    top: 62%;						
+    color: AAAAAA;
+	}	
+	
+	.balloon {
+	position:relative;
+	width:240px;		
+	height:30px;	
+	background:lightblue;	
+	border-radius: 10px;
+	margin-left:370px;	
+	padding-left:7px;			
+	padding-top:2px;							
+	}			
+							
+	.balloon:after {
+		border:1px solid black;	
+		border-top:15px solid lightblue;	
+		border-left: 0px solid transparent;
+		border-right: 15px solid transparent;
+		border-bottom: 0px solid transparent;
+		content:"";					
+		position:absolute;		
+		top:25px;		
+		left:10px;		
+	}	
 </style>	
 		
 <body>
 <div class="wrapperdd" style="margin-left:25%; margin-right:25%; margin-top:25px;">
-	<div class="register-card-body">	
+	<div class="register-card-body" style="width:750px;">	
 				
 		<div class="login-logo">
 			<b>프로필 수정</b>
@@ -79,7 +109,7 @@
 				<!-- action="/member/memberRegist" method="POST" enctype="multipart/form-data -->
 				
 				<input name="memFilepath" type="hidden" value="${memberVo.memFilepath}">
-					
+				<div class="balloon"><b style="font-size:13px; margin-left:7px;">이미지클릭시 프로필 변경</b></div>	
 				<div class="text-center" title="이미지를 클릭하면 변경할 수 있어요!">
 					<div class="mailbox-attachment-icon has-img" id="pictureView" style="border: 1px solid white; height: 200px; width:140px; margin: 0 auto;">
 						<c:if test="${fn:substring(memberVo.memFilepath,0 ,1) eq '/' }">									
@@ -92,7 +122,7 @@
 					</div><br>		 
 					<div class="content">
 <!-- 						<input id="picture" type="file" name="memFilename" accept=".gif, .jpg, .png" style="height: 37px; float:left; outline: none;" />	 -->
-						<input id="picture" type="file" name="Filename" accept=".gif, .jpg, .png" style="height: 37px; float:left; outline: none;" />	
+<!-- 						<input id="picture" type="file" name="Filename" accept=".gif, .jpg, .png" style="height: 37px; float:left; outline: none;" />	 -->
 					</div>
 				</div> 	
 						
@@ -102,66 +132,83 @@
 					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none; outline: none;" readonly/>
 				</h3>
 				<p class="text-muted text-right">
-					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none; outline: none;" readonly/>
+					<input class="profile-username text-center" type="text" class="form-control" placeholder=" " style="border: none; outline: none; display:none;" readonly/>
 				</p>
-					
-									
-				<ul class="list-group list-group-unbordered mb-3"> 
-					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>아이디</b>  	
-						<a class="float-right">
-							<input class="input" name="memId" type="email" id="memId" placeholder="회원 id" value="${memberVo.memId}" readonly/>
-							<div id="checkMsg" class="indiv"></div>
-						</a>	
-					</li>
-						
-					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>이름</b> 
-						<a class="float-right">
-							<input class="input" name="memName" type="text" id="memName" placeholder="이름" value="${memberVo.memName}" readonly/>
-						</a>
-					</li> 
-					
-					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b>
-						<a class="float-right">
-							<div class="passviewdiv">
-								<input class="input"  name="memPass" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합" value="${memberVo.memPass}" />
-								<i class="fa fa-lock"  style="font-size:30px;"></i>
-								<div id="checkPass1" class="indiv"></div>
-							</div>
-						</a>
-					</li>			
-								
-					<li class="list-group-item">	<span style="color: red; font-weight: bold;">*</span><b>비밀번호 확인</b> 
-						<a class="float-right">
-							<div class="passviewdiv">
-								<input type="password" class="input" id="memPass2" name="memPass2" placeholder="패스워드" onkeyup="unityPW()" value="${memberVo.memPass}">
-								<i class="fa fa-lock"  style="font-size:30px;"></i>	
-								<div id="checkPass2" class="indiv" style=""></div>
-							</div>
-						</a>
-					</li>	
-								
-					<li class="list-group-item">	<b>전화번호</b> 
-						<a class="float-right">
-							<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력" value="${memberVo.memTel}" readonly/>
-							<div id="checkTel" class="indiv"></div>
-						</a>
-					</li>
-					<li class="list-group-item">	<b>타입</b> 
-						<a class="float-right">
-							<select id="memTypeSelect" name="memTypeSelect">
-								<option value="1" selected="selected">타입</option>
-								<option value="PM">PM</option>
-								<option value="MEM">MEM</option>
-							</select>
-							<input class="input" name="memType" type="text" id="memType"  value="${memberVo.memType}" readonly="readonly"/>
-						</a>
-					</li>
-				</ul>
-						
+				
+				<hr>	
+				<div style="width:340px; float:left;">
+					<span style="color: red; font-weight: bold;">*</span><b>아이디</b><br>	
+					<div id="checkid" class="indiv"></div>		
+					<div id="checkMsg" class="indiv"></div>	
+				</div>
+							
 				<div style="float:right;">				
-					<button class="btn btn-default" type="button" style="height:40px; margin-right:20px;" id="registBtn">등록</button>
-					<button class="btn btn-default" type="button" style="height:40px;" id="cancelBtn" onclick="window.history.back()">취소</button>
+					<input class="input" name="memId" type="email" id="memId" placeholder="사용중인 이메일을 입력해 주세요" value="${memberVo.memId}" readonly/><br>
+				</div> 				 		
+				<br><br><br>							 	  						
+				<hr>	
+						
+					
+				<div style="width:340px; float:left;">
+					<span style="color: red; font-weight: bold;">*</span><b>이름</b>
+				</div>
+				<div style="float:right;">				
+					<input class="input" name="memName" type="text" id="memName" placeholder="이름" value="${memberVo.memName}" readonly="readonly"/>
+				</div> 				 		
+				<br><br><br>								 	  						
+				<hr>		
+					
+				<div style="width:340px; float:left;">
+					<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b>
+					<div id="checkPass1" class="indiv"></div>
+				</div>
+				<div style="float:right;" class="passviewdiv">				
+					<input class="input" name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합" value="${memberVo.memPass}"/>
+					<i class="fa fa-lock"  style="font-size:30px;"></i>
+				</div> 				 		
+				<br><br><br>								 	  						
+				<hr>
+
+				<div style="width:340px; float:left;">
+					<span style="color: red; font-weight: bold;">*</span><b>비밀번호 확인</b>
+					<div id="checkPass2" class="indiv"></div>
+				</div>
+				<div style="float:right;" class="passviewdiv1">				
+					<input class="input" type="password" style="float:left" id="memPass2" placeholder="패스워드" onkeyup="unityPW()" value="${memberVo.memPass}"/>
+					<i class="fa fa-lock"  style="font-size:30px;"></i>	
+				</div> 				 		
+				<br><br><br>								 	  						
+				<hr>	
+					
+				<div style="width:340px; float:left;">
+					<b>전화번호</b><br>		
+					<div id="checkTel" class="indiv"></div>
+				</div>					
+				<div style="float:right;">				
+					<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력" value="${memberVo.memTel}" readonly="readonly"/>
+				</div> 				 		
+				<br><br><br>								 	  						
+				<hr>
+				
+				<div style="width:340px; float:left;">
+					<b>타입</b>
+					<select id="memTypeSelect" name="memTypeSelect">
+						<option value="1" selected="selected">Type</option>
+						<option value="PM">PM</option>
+						<option value="MEM">MEM</option>
+					</select>
+				</div>
+				<div style="float:right;">
+					<input class="input" name="memType" type="text" id="memType"  value="${memberVo.memType}" readonly="readonly"/>		
+				</div>
+				<br><br><br>								 	  						
+				<hr>
+							
+				<div style="float:right;">				
+					<button class="btn btn-light" type="button" style="height:40px; margin-right:20px;" id="registBtn">등록</button>
+					<button class="btn btn-light" type="button" style="height:40px;" id="cancelBtn" onclick="window.history.back()">취소</button>
 				</div>	
+									
 					
 				<div style="display:none;">					
 					알람 : <input class="form-control" name="memAlert" type="text" id="memAlert" placeholder="알람" value="${memberVo.memAlert}" readonly><br> 
@@ -170,8 +217,40 @@
 					사진 : <img id="pict" style="width: 30px; height: 30px;" src="/profileImgView?memId=${memberVo.memId}" />
 					기본이미지 : <img id="imge" style="width: 30px; height: 30px;" src="${memberVo.memFilepath}" /><br>
 				</div>	
-		
-			
+				
+				<div class="container">	
+				  <!-- Modal -->
+				  <div class="modal fade" id="myModal" role="dialog">
+				    <div class="modal-dialog modal-lg" style="width:450px;">
+				      <!-- Modal content-->
+				      <div class="modal-content">
+				        <div class="modal-header">	
+				          <h4 class="modal-title">기본 이미지</h4>
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+				        </div>		
+				        <div class="modal-body" style="width:450px;">	
+					          <img src="/profile/user-1.png" id="img1" name="img1" class="imgc">
+					          <img src="/profile/user-2.png" id="img2" name="img2" class="imgc"/>
+					          <img src="/profile/user-3.png" id="img3" name="img3" class="imgc"/>
+					          <img src="/profile/user-4.png" id="img4" name="img4" class="imgc"/>
+					          <img src="/profile/user-5.png" id="img5" name="img5" class="imgc"/>
+					          <img src="/profile/user-6.png" id="img6" name="img6" class="imgc"/>
+					          <img src="/profile/user-7.png" id="img7" name="img7" class="imgc"/>
+					          <img src="/profile/user-8.png" id="img8" name="img8" class="imgc"/>
+				        </div>	
+				        <hr>					
+				        <div>
+				        	<hr>										
+				        	<h5 class="modal-title" style="padding-left:15px;">파일 선택</h5><br>		
+				        	<input id="picture" type="file" name="Filename" accept=".gif, .jpg, .png" style="height: 37px; float:left; padding-left:15px;" />	<br><br>
+				        	<button type="button" id="closemodal" class="close" data-dismiss="modal" style="height:25px; margin-right:20px;">닫기</button>	
+				        	<button type="button" class="close" data-dismiss="modal" style="height:25px; margin-right:15px;">확인</button><br><br>		
+				    	</div>
+				      </div>	
+				    </div>
+				  </div>
+				</div>
+				
 				</form>	
 					 
 			</div>
@@ -180,37 +259,7 @@
 </div>	
 	
 	
-<div class="container">
-	
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-lg" style="width:450px;">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">	
-          <h4 class="modal-title">기본 이미지</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>		
-        <div class="modal-body" style="width:450px;">	
-	          <img src="/profile/user-1.png" id="img1" name="img1" class="imgc">
-	          <img src="/profile/user-2.png" id="img2" name="img2" class="imgc"/>
-	          <img src="/profile/user-3.png" id="img3" name="img3" class="imgc"/>
-	          <img src="/profile/user-4.png" id="img4" name="img4" class="imgc"/>
-	          <img src="/profile/user-5.png" id="img5" name="img5" class="imgc"/>
-	          <img src="/profile/user-6.png" id="img6" name="img6" class="imgc"/>
-	          <img src="/profile/user-7.png" id="img7" name="img7" class="imgc"/>
-	          <img src="/profile/user-8.png" id="img8" name="img8" class="imgc"/>
-        </div>	
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  
-</div>
+
 </body>
 
 <script src="/resources/bootstrap/plugins/jquery/jquery.min.js"></script>
@@ -242,6 +291,17 @@ $(function() {
             .prev('input').attr('type','password');
         }
     });	
+	// 비밀번호 보이기 버튼1
+	$('.passviewdiv1 i').on('click',function(){
+        $('input').toggleClass('active');
+        if($('input').hasClass('active')){
+            $(this).attr('class',"fa fa-lock-open")
+            .prev('input').attr('type',"text");
+        }else{
+            $(this).attr('class',"fa fa-lock ")
+            .prev('input').attr('type','password');
+        }
+    });	
 	
 	
 	
@@ -249,25 +309,13 @@ $(function() {
 
 
 
-// $(document).ready(function(){
-//     $('.content i').on('click',function(){
-//         $('input').toggleClass('active');
-//         if($('input').hasClass('active')){
-//             $(this).attr('class',"fa fa-eye-slash fa-lg")
-//             .prev('input').attr('type',"text");
-//         }else{
-//             $(this).attr('class',"fa fa-eye fa-lg")
-//             .prev('input').attr('type','password');
-//         }
-//     });
-// });
 
 //핸드폰 번호 정규식
 $(document).on("keyup", ".phoneNumber", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
 });
 	
-// 비밀번호 정규식
+//비밀번호 정규식
 function chkPW(){
 	
 	 var pw = document.getElementById('memPass').value;
@@ -279,41 +327,44 @@ function chkPW(){
 	 var pw1 = document.getElementById('memPass').value;
 	 var pw2 = document.getElementById('memPass2').value;
 	
-	 if(pw1 != pw2){ 
-		 $('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
-	 } else { 
-	 	 $('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
-	 }
-	 	
+	 if(pw1 == null || pw1 == ''){
+		 	$('#checkPass1').html('<p></p>');
+		 	return false;
+	 } 	
+	 
 	 if(pw.length < 8 || pw.length > 20){
-	  $('#checkPass1').html('<p style="color:red">8자리 ~ 20자리 이내로 입력해주세요.</p>');
-	  return false;
+	 	$('#checkPass1').html('<p style="color:red">8자리 ~ 20자리 이내로 입력해주세요.</p>');
+	 	return false;
 	 } 
 	 else if(pw.search(/\s/) != -1){
-	  $('#checkPass1').html('<p style="color:red">비밀번호는 공백 없이 입력해주세요.</p>');
-	  return false;
+	 	$('#checkPass1').html('<p style="color:red">비밀번호는 공백 없이 입력해주세요.</p>');
+	 	return false;
 	 }
 	 else if(num < 0 || eng < 0 || spe < 0 ){
-	  $('#checkPass1').html('<p style="color:red">영문,숫자, 특수문자를 혼합하여 입력해주세요.</p>');
-	  return false;
-	 }
+	 	$('#checkPass1').html('<p style="color:red">영문,숫자,특수문자를 혼합하여 <br>입력해주세요.</p>');
+	 	return false;
+	 }		
 	 else {
-	  $('#checkPass1').html('<p style="color:blue">사용 가능한 비밀번호 입니다.</p>');
+	 	$('#checkPass1').html('<p style="color:blue">사용가능한 비밀번호 입니다.</p>');
 	    return true;
 	 }
 }
 			
-// 비밀번호 일치 확인
+//비밀번호 일치 확인
 function unityPW(){
 	var pw1 = document.getElementById('memPass').value;
 	var pw2 = document.getElementById('memPass2').value;
 	
-	if(pw1 != pw2){ 
+	if(pw2 == null || pw2 == ''){
+	 	$('#checkPass2').html('<p></p>');
+	 	return false;
+ 	} 	
+		
+	if(pw1 != pw2){
 		$('#checkPass2').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>'); 
-	} else { 
-		$('#checkPass2').html('<p style="color:blue">비밀번호 일치</p>'); 
+	} else { 	
+		$('#checkPass2').html('<p style="color:blue">비밀번호가 일치합니다.</p>'); 
 	}
-	
 } 
  
 		
@@ -353,7 +404,6 @@ function unityPW(){
 			picture.value = null;
 				
 			// 파일의 경로값을 꺼냄
-			// picture input의 파일 변경시 이벤트 
 			$("#picture").change(function(){ 
 				readURL(this);
 			});
@@ -382,25 +432,21 @@ function unityPW(){
 				var memId = document.getElementById('memId');
 				var memName = document.getElementById('memName');
 				var memPass = document.getElementById('memPass');
-				
+					
 				// 누락있을때
 				if (memId.value == "" || memName.value == "" || memPass.value == "") {
-					alert("필수입력 사항을 입력해주세요")
-				}
-				else if(!chkPW()){
+					alert("필수입력 사항을 입력해주세요.")
+				} else if(!chkPW() && !chkID()){
 					alert("다시 확인해주세요.")
-				}
-				  
-				// 누락없을때
-				else if(chkPW()) {
-					
+				} else if(chkPW()) {	// 누락없을때		
 					// 비밀번호 일치시 
 					if(newpass1.value == newpass2.value){
 						$('#fmin').submit();
 					}else{
-						alert("비밀번호가 일치하지 않습니다.")
-					}
-					
+						alert("비밀번호가 일치하지 않습니다.");
+					}	
+				}else{
+					alert("다시 확인해주세요.")
 				}
 		         
 			})
@@ -410,7 +456,7 @@ function unityPW(){
 		
 		
 		
-												/* 기본이미지 선택  */
+		/* 기본이미지 선택  */
 		
 		// 기본이미지 모달창 띄으기
 		$(document).ready(function(){

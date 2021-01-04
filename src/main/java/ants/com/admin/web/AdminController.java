@@ -492,8 +492,9 @@ public class AdminController {
 	
 	// 프로젝트 delete 2
 	@RequestMapping("/delproject")
-	public String delproject(ProjectVo projectVo) {		
+	public String delproject(ProjectVo projectVo,String reqId) {		
 		int delCnt = adminService.delproject(projectVo);
+//		int delCnt = adminService.delproject(reqId);
 		return "redirect:/admin/projectlist";
 	}
 	

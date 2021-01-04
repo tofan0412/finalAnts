@@ -139,10 +139,6 @@ public class AdminService extends EgovAbstractServiceImpl{
 		return mapper.projectPagingListCnt(projectVo);
 	}
 	
-//	//프로젝트 삭제하기 1
-//	public int delproject(String reqId) {
-//		return mapper.delproject(reqId);
-//	}
 	//프로젝트 삭제하기 2
 	public int delproject(ProjectVo projectVo) {
 		return mapper.delproject(projectVo);
@@ -152,6 +148,11 @@ public class AdminService extends EgovAbstractServiceImpl{
 	public ProjectVo getProject(ProjectVo projectVo) {
 		return mapper.getProject(projectVo);
 	}
+
+	//프로젝트 삭제 테스트중
+//	public int delproject(String reqId) {
+//		return mapper.delproject(reqId);
+//	}
 
 
 

@@ -105,7 +105,7 @@
 	                <label for="status-select" class="col-sm-1 control-label ns">우선순위</label>
 	        			<select name="importance" id="status-select">
 	           			 <option class="jg" value="gen">일반</option>
-	           			 <option class="jg" value="emg">긴급</option>
+	           			 <option class="jg" value="emg">필독</option>
 	        			</select>
 	                </div>
 	                
