@@ -63,36 +63,56 @@
 			<h1>관리자 주요기능</h1>
 		</div>
 		<div class="conB_container">
+			<a href="${pageContext.request.contextPath}/admin/noticelist" class="nav-link" style="text-decoration: none;color:#000000;">
+				<div class="conB_small_container">
+					
+					<div class="conB_icon">
+						<i class="fas fa-clipboard-list icon"></i>
+					</div>
+					<div class="conB_content">
+						<h3>공지사항</h3>
+						<p>사용자에게 필요한 정보를 <br>작성 할 수 있습니다.</p>
+					</div>
+					
+				</div>
+			</a>
 			
-			<div class="conB_small_container">
-				<div class="conB_icon">
-					<i class="fas fa-clipboard-list icon"></i>
+			<a href="${pageContext.request.contextPath}/admin/memberlist" class="nav-link" style="text-decoration: none;color:#000000;">
+				<div class="conB_small_container">
+					<div class="conB_icon">
+						<i class="fas fa-address-book icon"></i>
+					</div>
+					<div class="conB_content">
+						<h3>회원 리스트</h3>
+						<p>멤버별 권한설정, 강퇴등 팀관리에 꼭 필요한 기능을 통해<br>효율적인 협업 환경을 구축할 수 있습니다.</p>
+					</div>
 				</div>
-				<div class="conB_content">
-					<h3>공지사항</h3>
-					<p>사용자에게 필요한 정보를 <br>작성 할 수 있습니다.</p>
-				</div>
-			</div>
+			</a>
 			
-			<div class="conB_small_container">
-				<div class="conB_icon">
-					<i class="fas fa-address-book icon"></i>
+			<a href="${pageContext.request.contextPath}/admin/ipMain" class="nav-link" style="text-decoration: none;color:#000000;">
+				<div class="conB_small_container">
+					<div class="conB_icon">
+						<i class="fas fa-unlock-alt icon"></i>
+					</div>
+					<div class="conB_content">
+						<h3>보안기능</h3>
+						<p>자료보안?<br> Ants 가 책임집니다.</p>
+					</div>
 				</div>
-				<div class="conB_content">
-					<h3>회원 리스트</h3>
-					<p>멤버별 권한설정, 강퇴등 팀관리에 꼭 필요한 기능을 통해<br>효율적인 협업 환경을 구축할 수 있습니다.</p>
-				</div>
-			</div>
+			</a>
 			
-			<div class="conB_small_container">
-				<div class="conB_icon">
-					<i class="fas fa-unlock-alt icon"></i>
+			<a href="${pageContext.request.contextPath}/admin/projectlist" class="nav-link"  style="text-decoration: none;color:#000000;">
+				<div class="conB_small_container">
+					<div class="conB_icon">
+						<i class="fas fa-tasks icon"></i>
+					</div>
+					<div class="conB_content">
+						<h3>프로젝트 관리</h3>
+						<p>불필요한 프로젝트를 <br> 삭제해 드립니다.</p>
+					</div>
 				</div>
-				<div class="conB_content">
-					<h3>보안기능</h3>
-					<p>자료보안?<br> Ants 가 책임집니다.</p>
-				</div>
-			</div>
+			</a>
+			
 		</div>
 	</div>
 </div>
