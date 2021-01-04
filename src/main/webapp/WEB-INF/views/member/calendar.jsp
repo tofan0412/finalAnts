@@ -129,7 +129,9 @@ function calendarDelete(id) {
 
 ini_events($('#external-events div.external-event'))
 document.addEventListener('DOMContentLoaded', function() {
+	$('#aftUpdate').hide();
 	$("#modalbtn").hide();
+	$('#dateupdate').hide();
 	var Calendar = FullCalendar.Calendar;
 	var Draggable = FullCalendar.Draggable;
 	var containerEl = document.getElementById('external-events');
@@ -257,9 +259,86 @@ document.addEventListener('DOMContentLoaded', function() {
         	     });
     	  }
       }});
-	})
-});
+	});
+	
+	$("#updateBtn").on("click", function () {
+		 $('#befUpdate').hide();
+		 $('#aftUpdate').show();
+		 $('#dateupdate').show();		 
+		 $('#datehide').hide();
+		 $('#scheTitle').attr('readonly', false);
+		 $('#scheCont').attr('readonly', false);
+	    })
+	    
+	$("#updateBtnfinal").on("click", function () {
+		cnt = 0;
+ 		// 각 칸이 빈칸인지 확인
+ 		if ($('#scheTitle').val().length == 0){
+			$('.warningscheTitle').text("제목을 작성해 주세요.");  
+			cnt++;
+ 		}else{
+			$('.warningscheTitle').text('');
+		}
+ 		if ($('#scheCont').val().length == 0){
+			$('.warningscheCont').text("내용을 입력해 주세요");  
+			cnt++;
+ 		}else{
+			$('.warningscheCont').text('');
+		}
+ 		if ($('#startDtmodal').val().length == 0){
+			$('.warningstartD').text("시작일을 지정해 주세요");  
+			cnt++;
+ 		}else{
+			$('.warningstartD').text('');
+		}
+ 		if ($('#endDtmodal').val().length == 0){
+			$('.warningendD').text("종료일을 지정해 주세요");  
+			cnt++;
+ 		}else{
+			$('.warningendD').text('');
+		}
+ 		if(cnt == 0){
+			 $('#scheTitle').attr('readonly', true);
+	 		 $('#scheCont').attr('readonly', true);
+	 		timestart = $('#startDtmodal').val();
+	 		timeend = $('#endDtmodal').val();
 
+	 		a = timestart;
+	 		b = timeend;
+	 		Y = a.substring(0,4) // 년
+	 		M = a.substring(5,7) //월
+	 		D = a.substring(8,10) //일
+	 		H = a.substring(11,13) //시
+	 		m = a.substring(14) //분
+	 		
+	 		Y2 = b.substring(0,4) // 년
+	 		M2 = b.substring(5,7) //월
+	 		D2 = b.substring(8,10) //일
+	 		H2 = b.substring(11,13) //시
+	 		m2 = b.substring(14) //분
+
+	 		timestartres = Y+M+D+H+m
+	 		timeendres = Y2+M2+D2+H2+m2
+	 		 $('#startDtmodal2').val(timestartres);
+	 		 $('#endDtmodal2').val(timeendres);
+ 			 $("#sheForm").submit();
+ 		}
+		
+	    })
+	    
+	$("#rollbackbtn").on("click", function () {
+		 $('#befUpdate').show();
+		 $('#aftUpdate').hide();
+		 $('#dateupdate').hide();
+		 $('#datehide').show();
+		 $('#scheTitle').attr('readonly', true);
+		 $('#scheCont').attr('readonly', true);
+	    })
+	    
+	    
+	
+});
+  
 
 
 </script>
@@ -295,7 +374,9 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Calendar</h1>
+             <div id="keyword" class="card-tools float-left" style="width: 450px;">
+					<h3 class="jg" style="padding-left: 10px;">Calendar / <a style="color: black;" href="${pageContext.request.contextPath}/schedule/scheduleplaceView">일정</a></h3>
+			</div>
           </div>
         
         </div>
@@ -394,24 +475,48 @@ document.addEventListener('DOMContentLoaded', function() {
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
       </div>
       <div class="modal-body">
-	  		<input type="hidden" id="scheId" class="form-control">
+      <form id="sheForm" name="sheForm" method="post" action="${pageContext.request.contextPath}/schedule/calendar_total">
+      <input type="hidden" id="scheId" class="form-control" name="scheId">
       	<label for="scheTitle" class="col-sm-2 control-label">제목  </label>
-	  		<input type="text" id="scheTitle" class="bani_contol" readonly="readonly" ><br><br>
-      	<label for="memId" class="col-sm-2 control-label">작성자  </label>
-	  		<input type="text" id="memId" class="bani_contol" readonly="readonly"><br><br>
+	  		<input type="text" id="scheTitle" class="bani_contol" readonly="readonly" name="scheTitle">
+	  		<div class="jg" style=" padding-left: 18%;"><span class="jg warningscheTitle" style="color : red;"></span></div><br>
+      	<div id="datehide">
       	<label for="startDt" class="col-sm-2 control-label">기간  </label>
 	  		<input type="text" id="startDt" class="bani_contol" readonly="readonly" ><br><br>
-      	<label for="scheCont" class="col-sm-2 control-label" style="position: relative; top: -165px;" >내용 : </label>
-          <div id="scheCont" class="bani_contol" style="margin-top: 0px; margin-bottom: 0px; overflow-y :scroll; height: 180px; display: inline-block;"></div>
+	  	</div>
+	  	<div id="dateupdate">
+      	<label for="startDt" class="col-sm-2 control-label">시작 일</label>
+	  		<input type="datetime-local" id="startDtmodal" name="startDt2"/>
+	  		<input type="hidden" id="startDtmodal2" name="startDt"/>
+	  		<div class="jg" style=" padding-left: 18%;"><span class="jg warningstartD" style="color : red;"></span></div><br>
+      	<label for="endDt" class="col-sm-2 control-label">종료 일</label>
+	  		<input type="datetime-local" id= endDtmodal name="endDt2"/>
+	  		<input type="hidden" id= endDtmodal2 name="endDt"/>
+	  		<div class="jg" style=" padding-left: 18%;"><span class="jg warningendD" style="color : red;"></span></div><br>
+	  	</div>
+	  	
+      	<label for="memId" class="col-sm-2 control-label">작성자  </label>
+	  		<input type="text" id="memId" class="bani_contol" readonly="readonly"><br><br>
+      	<label for="scheCont" class="col-sm-2 control-label" style="position: relative;" >내용 : </label>
+      	<textarea id="scheCont" class="bani_contol" readonly="readonly" style=" margin-top: -30px;margin-left: 17%; height: 180px; resize: none;" name="scheCont"></textarea>
+	  	<div class="jg" style=" padding-left: 18%;"><span class="jg warningscheCont" style="color : red;"></span></div><br>
       	<div id="injuso">
       	<label for="juso" class="col-sm-2 control-label">주소  </label>
 	  		<input type="text" id="juso" class="bani_contol" readonly="readonly"><br><br>
        	</div>
+       	</form>
       </div>
       <div class="modal-footer">
+      <div id="befUpdate">
+        <button type="button" class="btn btn-default" id="updateBtn">수정</button>
+        </div>
+      	<div id="aftUpdate">
+        <button type="button" class="btn btn-default" id="updateBtnfinal">등록</button>
+        </div>
         <button type="button" class="btn btn-default" data-dismiss="modal" id ="rollbackbtn">Close</button>
     </div>
   </div>
+</div>
 </div>
 </body>
 </html>

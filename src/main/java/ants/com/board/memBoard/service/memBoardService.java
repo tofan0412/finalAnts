@@ -145,7 +145,7 @@ public class memBoardService {
 		return mapper.calendarDetail(scheduleVo);
 	}
 
-	
+
 
 	// 개인 캘린더
 	// 리스트
@@ -172,5 +172,7 @@ public class memBoardService {
 	public int mycalendarUpdate(ScheduleVo scheduleVo) {
 		return mapper.mycalendarUpdate(scheduleVo);
 	}
+
+	
 
 }

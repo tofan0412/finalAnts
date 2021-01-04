@@ -87,6 +87,7 @@ public interface memBoardMapper {
 	public ScheduleVo mycalendarDetail(ScheduleVo scheduleVo);
 	public int calendarUpdateDetail(ScheduleVo scheduleVo);
 	public int mycalendarUpdate(ScheduleVo scheduleVo);
+
 	
 }
 

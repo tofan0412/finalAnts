@@ -290,7 +290,8 @@ public class ScheduleController {
 	}
 
 	
-	// 캘린더에서 일정수정(상세)
+	
+	// 캘린더에서 일정수정(개인상세)
 	@RequestMapping("/MycalendarUpdateDetail")
 	public String MycalendarUpdateDetail(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session,
 			Model model) {
@@ -301,6 +302,20 @@ public class ScheduleController {
 			return "redirect:/schedule/MyclendarView";
 		} else {
 			return "redirect:/schedule/MyclendarView";
+		}
+	}
+	
+	// 캘린더에서 일정수정()
+	@RequestMapping("/calendar_total")
+	public String calendarUpdateDetail_total(@ModelAttribute("scheduleVo") ScheduleVo scheduleVo, HttpSession session,
+			Model model) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SMEMBER");
+		scheduleVo.setMemId(memberVo.getMemId());
+		int updateCnt = memBoardService.calendarUpdateDetail(scheduleVo);
+		if (updateCnt >= 1) {
+			return "redirect:/schedule/clendarView";
+		} else {
+			return "redirect:/schedule/clendarView";
 		}
 	}
 

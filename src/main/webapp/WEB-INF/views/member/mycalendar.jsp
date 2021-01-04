@@ -478,6 +478,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="modal-body">
       <form id="sheForm" name="sheForm" method="post" action="${pageContext.request.contextPath}/schedule/MycalendarUpdateDetail">
 	  	<input type="hidden" id="scheId" class="form-control" name ="scheId">
+
       	<label for="scheTitle" class="col-sm-2 control-label">제목  </label>
 	  		<input type="text" id="scheTitle" class="bani_contol" readonly="readonly" name="scheTitle">
 	  		<div class="jg" style=" padding-left: 18%;"><span class="jg warningscheTitle" style="color : red;"></span></div><br>
@@ -498,6 +499,8 @@ document.addEventListener('DOMContentLoaded', function() {
       	<label for="scheCont" class="col-sm-2 control-label" style="position: relative; top: -165px;" >내용 : </label>
       	<textarea id="scheCont" class="bani_contol" readonly="readonly" style="height: 180px; resize: none;" name="scheCont"></textarea>
 	  	<div class="jg" style=" padding-left: 18%;"><span class="jg warningscheCont" style="color : red;"></span></div><br>
+
+      </form>
       </div>
       <div class="modal-footer">
       	<div id="befUpdate">
@@ -508,7 +511,6 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <button type="button" class="btn btn-default" data-dismiss="modal" id ="rollbackbtn">Close</button>
       </div>
-      </form>
     </div>
   </div>
 </div>
