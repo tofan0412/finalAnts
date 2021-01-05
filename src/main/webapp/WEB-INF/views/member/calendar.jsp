@@ -267,7 +267,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		 $('#dateupdate').show();		 
 		 $('#datehide').hide();
 		 $('#scheTitle').attr('readonly', false);
-		 $('#scheCont').attr('readonly', false);
 	    })
 	    
 	$("#updateBtnfinal").on("click", function () {
@@ -278,12 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			cnt++;
  		}else{
 			$('.warningscheTitle').text('');
-		}
- 		if ($('#scheCont').val().length == 0){
-			$('.warningscheCont').text("내용을 입력해 주세요");  
-			cnt++;
- 		}else{
-			$('.warningscheCont').text('');
 		}
  		if ($('#startDtmodal').val().length == 0){
 			$('.warningstartD').text("시작일을 지정해 주세요");  
@@ -299,7 +292,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
  		if(cnt == 0){
 			 $('#scheTitle').attr('readonly', true);
-	 		 $('#scheCont').attr('readonly', true);
 	 		timestart = $('#startDtmodal').val();
 	 		timeend = $('#endDtmodal').val();
 
@@ -321,6 +313,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	 		timeendres = Y2+M2+D2+H2+m2
 	 		 $('#startDtmodal2').val(timestartres);
 	 		 $('#endDtmodal2').val(timeendres);
+	 		 var s = $('#scheCont').html();
+	 		 $('#scheCont2').val(s);
  			 $("#sheForm").submit();
  		}
 		
@@ -480,7 +474,8 @@ document.addEventListener('DOMContentLoaded', function() {
       	<label for="memId" class="col-sm-2 control-label">작성자  </label>
 	  		<input type="text" id="memId" class="bani_contol" readonly="readonly"><br><br>
       	<label for="scheCont" class="col-sm-2 control-label" style="position: relative;" >내용 : </label>
-      	<textarea id="scheCont" class="bani_contol" readonly="readonly" style=" margin-top: -30px;margin-left: 17%; height: 180px; resize: none;" name="scheCont"></textarea>
+      	<div id="scheCont" class="bani_contol" style="-webkit-user-modify: read-write; margin-top: -30px;margin-left: 17%;"></div>
+      	<input id="scheCont2" type="hidden" class="bani_contol" style="-webkit-user-modify: read-write;" name="scheCont">
 	  	<div class="jg" style=" padding-left: 18%;"><span class="jg warningscheCont" style="color : red;"></span></div><br>
       	<div id="injuso">
       	<label for="juso" class="col-sm-2 control-label">주소  </label>

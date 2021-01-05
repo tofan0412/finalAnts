@@ -25,6 +25,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
@@ -54,6 +56,7 @@ import ants.com.common.model.AlarmVo;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.common.service.AlarmService;
 import ants.com.member.model.MemberVo;
+import ants.com.member.model.MemberVoValidator;
 import ants.com.member.model.ProjectMemberVo;
 import ants.com.member.model.ProjectVo;
 import ants.com.member.service.MemberService;
@@ -115,6 +118,10 @@ public class MemberController {
 	public String projectMainView() {
 		return "tiles/layout/contentmain";
 	}
+		
+	/** Validator */
+	@Resource(name = "beanValidator")
+	protected DefaultBeanValidator beanValidator;
 
 	// 로그인 로직
 	@RequestMapping(path = "/loginFunc")
@@ -297,19 +304,33 @@ public class MemberController {
 
 	// 회원가입 로직
 	@RequestMapping(path = "/memberRegist", method = RequestMethod.POST)
-	public String memberRegist(MemberVo memberVo, BindingResult br,
+	public String memberRegist(MemberVo memberVo, BindingResult br,HttpServletResponse response,
 			@RequestPart(value = "memFilename", required = false) MultipartFile file, Model model,
-			@RequestParam(value = "imgname", required = false) String imgname) {
-
-		String Filename = "";
+			@RequestParam(value = "imgname", required = false) String imgname) throws IOException {
+		
+		String Filename = "";	
 		String Filepath = "";
+			
+		beanValidator.validate(memberVo, br);
 
-		if (!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
-
-
-			if (br.hasErrors()) {
-				// return "main.tiles/member/memberRegist";
-			}
+		if (br.hasErrors()) {		
+			model.addAttribute("memberVo", memberVo);
+			return "main.tiles/member/memberRegist";
+		}
+				
+		//new MemberVoValidator().validate(memberVo, br);		
+			
+//		if (br.hasErrors()) {	
+//			response.setContentType("text/html; charset=UTF-8");
+//			PrintWriter out = response.getWriter();	
+//			out.println("<script>alert('필수항목을 입력해주세요.(검증)');</script>");	
+//			out.flush();
+//			return "main.tiles/member/memberRegist";
+//		}	
+		
+		try {
+		if (!"".equals(file.getOriginalFilename()) && !file.getOriginalFilename().equals(null)) {
+		
 
 			String filekey = UUID.randomUUID().toString();
 			Filepath = "D:\\upload\\" + filekey + "\\" + file.getOriginalFilename();
@@ -333,6 +354,9 @@ public class MemberController {
 				Filepath = "http://localhost/profile/user-0.png";
 				Filename = "user-0.png";
 			}
+		}
+		}catch(NullPointerException e) {
+				
 		}
 
 		memberVo.setMemFilepath(Filepath);

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>	
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
@@ -112,22 +112,24 @@ body{
 					<b style="font-size:13px; margin-left:7px;">( 중복확인이 되어야 등록버튼이 활성화 됩니다. )</b>		
 					<div id="checkid" class="indiv"></div>	
 					<div id="checkMsg" class="indiv"></div>	
+					<span style="color:red;"><form:errors path="memberVo.memId"/></span>		
 				</div>
 							
 				<div style="float:right;">				
-					<input class="input" name="memId" type="email" id="memId" placeholder="사용중인 이메일을 입력해 주세요" onkeyup="chkID()"/><br>
+					<input class="input" name="memId" type="email" id="memId" placeholder="사용중인 이메일을 입력해 주세요" onkeyup="chkID()" value="${memberVo.memId}"/><br>
 					<div style="margin-top:10px;">	
 						<button type="submit" id="checkbtn" style="float:right; height:30px; width:120px; background:white; color:black; border:1px solid black; font-size:14px; margin-right:20px;">중복확인</button>
-					</div>		
+					</div>
 				</div> 				 		
 				<br><br><br><br>								 	  						
 				<hr>
-					
+						
 				<div style="width:340px; float:left;">
-					<span style="color: red; font-weight: bold;">*</span><b>이름</b>
+					<span style="color: red; font-weight: bold;">*</span><b>이름</b><br>	
+					<span style="color:red;"><form:errors path="memberVo.memName"/></span>
 				</div>
-				<div style="float:right;">				
-					<input class="input" name="memName" type="text" id="memName" placeholder="이름"/>
+				<div style="float:right;">					
+					<input class="input" name="memName" type="text" id="memName" placeholder="이름" value="${memberVo.memName}"/>
 				</div> 				 		
 				<br><br><br>								 	  						
 				<hr>	
@@ -135,6 +137,7 @@ body{
 				<div style="width:340px; float:left;">
 					<span style="color: red; font-weight: bold;">*</span><b>비밀번호</b>
 					<div id="checkPass1" class="indiv"></div>
+					<span style="color:red;"><form:errors path="memberVo.memPass"/></span>
 				</div>
 				<div style="float:right;">				
 					<input class="input" name="memPass" style="float:left" type="password" id="memPass" onkeyup="chkPW()" placeholder="8자리 ~ 20자리  영문,숫자,특수문자를 혼합"/>
@@ -156,9 +159,9 @@ body{
 					<b>전화번호</b><br>		
 					<b style="font-size:13px;">( 전화번호는 비밀번호 분실시 <br>전화번호 인증용으로 사용됩니다. )</b>	
 					<div id="checkTel" class="indiv"></div>
-				</div>					
+				</div>						
 				<div style="float:right;">				
-					<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력"/>
+					<input class="phoneNumber" name="memTel" type="tel" id="memTel" placeholder="숫자만 입력" value="${memberVo.memTel}"/>
 				</div> 				 		
 				<br><br><br>								 	  						
 				<hr>					
@@ -323,7 +326,13 @@ $(document).ready(function() {
 		}
 	})
 })	
-		
+/*	
+$(document).ready(function() {
+	$("#registBtn").on('click', function() {
+		$('#fmin').submit();
+	})
+})	
+*/	
 // 중복검사	
 var newpass1 = document.getElementById('memPass');
 var newpass2 = document.getElementById('memPass2');
