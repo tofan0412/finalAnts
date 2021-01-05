@@ -93,6 +93,8 @@ $(function(){
 						<div class="col-sm-6">
 							<br>
 							<h1 class="nav-icon fas fa-address-book" style="padding-left: 10px;">&nbsp;회원리스트</h1>
+							
+							
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right" style="background: white">
@@ -106,8 +108,13 @@ $(function(){
 				
 				<!-- 검색창 라인 -->
 				<div class="card-header  ">
-					<div id="keyword" class="card-tools float-right"
-						style="width: 450px;">
+					<div id="keyword" class="card-tools float-left" style="width: 450px;">
+						<button class="btn btn-default">
+							<li class="fas fa-download"></li> &nbsp;
+							<a style="color : black;"href="/excel/memlistexcelDown"> Excel다운로드</a>
+						</button>
+					</div>
+					<div id="keyword" class="card-tools float-right" style="width: 450px;">
 						<div class="input-group row">
 							<label for="searchCondition" style="visibility: hidden;"></label>
 

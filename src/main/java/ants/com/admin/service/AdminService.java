@@ -62,6 +62,11 @@ public class AdminService extends EgovAbstractServiceImpl{
 		return mapper.adlogincheck(adminVo);
 	}
 	
+	// 탈퇴하지 않은 모든 멤버리스트
+	public  List<MemberVo> allmemberlist() {
+		return mapper.allmemberlist();
+	}
+	
 	//////////멤버 리스트 
 	public List<MemberVo> memberlist(MemberVo memberVo) {
 		return mapper.memberlist(memberVo);
@@ -87,6 +92,12 @@ public class AdminService extends EgovAbstractServiceImpl{
 	public int delmemlist(String memId) {
 		return mapper.delmemlist(memId);
 	}
+	
+	// IP히스토리 최근 500개 가져오기
+	public List<IpHistoryVo> allloginList(){
+		return mapper.allloginList();
+	}	
+	
 	
 	// Ip 전체 리스트 가져오기
 	public List<IpVo> getIpList(){

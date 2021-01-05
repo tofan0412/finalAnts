@@ -44,8 +44,27 @@ WHERE DEL != 'Y'
 </select>
 
 <select id="loginLogList" resultType="ants.com.common.model.IpHistoryVo">
-SELECT * 
+select *
+from
+(SELECT iphist_idx,
+    	mem_id,
+    	ip_addr,
+    	to_char(iphist_date,'yyyy-mm-dd hh24:mi') as iphist_date
   FROM IPHISTORY
-ORDER BY IPHIST_DATE DESC
+ORDER BY IPHIST_DATE DESC) 
+where rownum <![CDATA[ <= ]]> 10
 </select>
+
+<select id="allloginList" resultType="ants.com.common.model.IpHistoryVo">
+select *
+from
+(SELECT iphist_idx,
+    	mem_id,
+    	ip_addr,
+    	to_char(iphist_date,'yyyy-mm-dd hh24:mi') as iphist_date
+  FROM IPHISTORY
+ORDER BY IPHIST_DATE DESC) 
+where rownum <![CDATA[ <= ]]> 500
+</select>
+
 </mapper>

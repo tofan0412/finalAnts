@@ -386,7 +386,7 @@ public class AdminController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		model.addAttribute("pageIndex", ipVo.getPageIndex());
 		
-		return "admin.tiles/admin/ipAcceptedList";
+		return "admin.tiles/admin/ipContentMenu";
 		
 	}
 	
@@ -447,7 +447,8 @@ public class AdminController {
 	// ip 메인 화면으로 이동하기
 	@RequestMapping("/ipMain")
 	public String ipMain() {
-		return "admin.tiles/admin/ipMain";
+		return "redirect:/admin/getIpList";
+//		return "admin.tiles/admin/ipContentMenu";
 	}
 	
 	@RequestMapping("/loginLogList")

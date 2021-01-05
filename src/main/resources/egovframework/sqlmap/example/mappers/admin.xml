@@ -14,7 +14,11 @@
 		WHERE ADMIN_ID = #{adminId}
 		AND ADMIN_PASS = #{adminPass}
 	</select>
-
+	
+	<select id="allmemberlist" resultType="ants.com.member.model.MemberVo">
+		SELECT *
+		  FROM MEMBER
+	</select>
 
 
 	<!-- 회원 목록 -->
