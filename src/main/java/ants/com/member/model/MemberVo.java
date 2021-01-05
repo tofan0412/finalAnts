@@ -4,13 +4,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import ants.com.base.model.BaseVo;
 
-public class MemberVo extends BaseVo{
-	
-	@NotEmpty
+ public class MemberVo extends BaseVo{
+		
 	private String memId;
-	@NotEmpty
 	private String memName;
-	@NotEmpty	
 	private String memPass;
 	
 	private String memTel;
