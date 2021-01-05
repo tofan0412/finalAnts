@@ -21,8 +21,8 @@
 		})
 		
 		// 뒤로가기
-		$(document).on('click','#back', function(){
-			window.history.back();
+		$(document).on('click','#backtolist', function(){
+			location.href ="${pageContext.request.contextPath}/todo/MytodoList";
 		})
 		
 		// 이슈작성 버튼
@@ -290,7 +290,7 @@
         </table>
 	    	<div id="btnMenu" class="card-footer">
 	            <c:if test="${SMEMBER.memId eq projectVo.memId }">
-					<button type="button" class="btn btn-default jg float-left" id="back">목록으로</button>   
+					<button type="button" class="btn btn-default jg float-left" id="backtolist">목록으로</button>   
 	            	<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;"id="issuebtn">이슈 작성</button>
 					<button type="button" class="btn btn-default jg float-right" data-toggle="modal" data-target="#myModal">진행도 수정</button>	
 			    </c:if>
