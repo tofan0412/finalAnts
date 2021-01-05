@@ -58,7 +58,12 @@ $(function(){
 		nextSeq();
 	})
 	
-	
+	// 엔터버튼으로 전송
+	$("body").keyup(function(e){
+		if(e.keyCode == 13){
+			$('#searchBtn').trigger("click");
+		}
+	})
 	
 	
 	
@@ -265,6 +270,7 @@ function itemdetail(voteid){
  }
  
  function search(){
+	    document.listForm.pageIndex.value = 1;
 	 	document.listForm.action = "<c:url value='/vote/votelist'/>";
 	    document.listForm.submit();
 }
@@ -335,7 +341,10 @@ function itemdetail(voteid){
 	                      
                        <c:forEach items = "${votelist }" var ="vote" varStatus="status">
                       	   <tr>
-			                    <td class="jg" style="width : 10%; padding-left: 20px; text-align: center;"><c:out value="${  ((voteVo.pageIndex-1) * voteVo.pageUnit + (status.index+1))}"/>.</td>
+			                    <td class="jg" style="width : 10%; padding-left: 20px; text-align: center;">
+			                  
+			                    <c:out value="  ${paginationInfo.totalRecordCount - ((voteVo.pageIndex-1) * voteVo.pageUnit + status.index)}"/>.</td>
+<%-- 			                    <c:out value=" ${  ((voteVo.pageIndex-1) * voteVo.pageUnit + (status.index+1))}"/>.</td> --%>
 							
 								<td class="jg" style="padding-left: 30px; width:  38%;">
 									<a href="${pageContext.request.contextPath}/vote/voteDetail?voteId=${vote.voteId }">

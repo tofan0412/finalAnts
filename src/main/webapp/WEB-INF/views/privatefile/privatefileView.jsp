@@ -234,7 +234,15 @@ var name;
 		 });
 		
 		
-		
+		// 엔터버튼으로 전송
+		$("body").keyup(function(e){
+			if(e.keyCode == 13){
+				$('#searchBtn').trigger("click");
+			}
+		})
+		 
+		 
+		 
 		
 		// 마우스가 벗어났을때
 		$("#privatefileList tr").on("mouseleave",function(){

@@ -13,7 +13,7 @@
 		      FROM (				
                 
                  select c.issue_id , c.issue_title , c.issue_cont , to_char(c.reg_dt,'yyyy-mm-dd hh24:mi') as reg_dt ,
-                        c.issue_kind,  case when c.bookmem = #{memId} then c.book_id else null end issue_del , d.mem_name as mem_id
+                        c.issue_kind,  case when c.bookmem = #{memId} then c.book_id else null end issue_del , d.mem_name 
 				  from
 					  (select a.issue_id , a.issue_title , a.issue_cont , a.reg_dt ,
 							  a.issue_kind, b.book_id , a.mem_id as issuemem, b.mem_id as bookmem , a.issue_del
