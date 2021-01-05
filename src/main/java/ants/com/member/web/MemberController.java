@@ -25,6 +25,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -297,19 +298,24 @@ public class MemberController {
 
 	// 회원가입 로직
 	@RequestMapping(path = "/memberRegist", method = RequestMethod.POST)
-	public String memberRegist(MemberVo memberVo, BindingResult br,
+	public String memberRegist(@Valid MemberVo memberVo, BindingResult br,HttpServletResponse response,
 			@RequestPart(value = "memFilename", required = false) MultipartFile file, Model model,
-			@RequestParam(value = "imgname", required = false) String imgname) {
-
-		String Filename = "";
+			@RequestParam(value = "imgname", required = false) String imgname) throws IOException {
+		
+		String Filename = "";	
 		String Filepath = "";
-
-		if (!file.getOriginalFilename().equals("") && !file.getOriginalFilename().equals(null)) {
-
-
-			if (br.hasErrors()) {
-				// return "main.tiles/member/memberRegist";
-			}
+			
+		if (br.hasErrors()) {	
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();	
+			out.println("<script>alert('필수항목을 입력해주세요.(검증)');</script>");	
+			out.flush();
+			return "main.tiles/member/memberRegist";
+		}
+			
+		try {
+		if (!"".equals(file.getOriginalFilename()) && !file.getOriginalFilename().equals(null)) {
+		
 
 			String filekey = UUID.randomUUID().toString();
 			Filepath = "D:\\upload\\" + filekey + "\\" + file.getOriginalFilename();
@@ -333,6 +339,9 @@ public class MemberController {
 				Filepath = "http://localhost/profile/user-0.png";
 				Filename = "user-0.png";
 			}
+		}
+		}catch(NullPointerException e) {
+				
 		}
 
 		memberVo.setMemFilepath(Filepath);

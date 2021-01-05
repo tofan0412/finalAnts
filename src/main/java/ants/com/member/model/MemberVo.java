@@ -1,13 +1,18 @@
 package ants.com.member.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import ants.com.base.model.BaseVo;
 
 public class MemberVo extends BaseVo{
 	
-	
+	@NotEmpty
 	private String memId;
+	@NotEmpty
 	private String memName;
+	@NotEmpty	
 	private String memPass;
+	
 	private String memTel;
 	private String memFilepath;
 	private String memFilename;
