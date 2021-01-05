@@ -17,7 +17,6 @@
 	   	document.listForm.submit();
 	}
 	
-	
 	 function search(){
 		 document.listForm.pageIndex.value = 1;
 		document.listForm.action = "<c:url value='/todo/MytodoList'/>";
@@ -117,7 +116,7 @@
 					<c:if test="${todo.todoImportance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
 					<c:if test="${todo.todoImportance eq 'emg'}"><span class="badge badge-danger ns">긴급</span></c:if>
 					</td>
-					<td style="text-align: left; padding-left: 10%;">
+					<td style="text-align: left;">
 					<a href="${pageContext.request.contextPath}/todo/myonetodoView?todoId=${todo.todoId}"> 
 					<c:if test="${fn:length(todo.todoTitle) > 30}">									
 						${fn:substring(todo.todoTitle,0 ,30) }...
