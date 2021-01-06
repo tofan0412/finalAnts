@@ -62,6 +62,42 @@
     		document.location = '/alarmList';
     	});
     	
+    	$('#msgBtn').click(function(){
+    		$('#msgToAdminModal').modal();
+    	})
+    	
+    	$('#msgSendBtn').click(function(){
+    		msgTitle = $('#msgTitle').val();
+    		msgCont = $('#msgCont').val();
+    		msgWriter = '${SMEMBER.memId}';
+    		regDt = $('#clock').val();
+    		
+    		cnt = 0; 
+    		if (msgTitle == ""){
+    			$('.msgWarningTitle').text("제목을 입력해 주세요 ..");
+    			cnt++;
+    		}
+    		if (msgCont == ""){
+    			$('.msgWarningCont').text("내용을 입력해 주세요 ..");
+    		}
+    		
+    		$.ajax({
+    			url : "/msg/insertMsg", 
+    			data : {msgTitle : msgTitle, 
+    				    msgCont : msgCont, 
+    				    msgWriter : msgWriter, 
+    				    regDt : regDt},
+    			method : "POST",
+    			success : function(res){
+    				if (res > 0){
+    					alert("메시지를 성공적으로 전송하였습니다.");
+    					$('#msgToAdminModal').modal('hide');
+    				}
+    			}
+    			
+    		})
+    	})
+    	
 	});
     
 	function onMessage(evt){
@@ -208,8 +244,13 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right jg">
           <div class="dropdown-divider"></div>
-          <a href="${pageContext.request.contextPath}/member/profile?memId=${SMEMBER.memId}" class="dropdown-item toProfile">
+          <a href="${pageContext.request.contextPath}/member/profile?memId=${SMEMBER.memId}" class="dropdown-item">
             <i class="fas fa-user-edit mr-2"></i>프로필
+          </a>
+          
+          <div class="dropdown-divider"></div>
+          <a href="#" id="msgBtn" class="dropdown-item">
+            <i class="fas fa-envelope mr-2"></i>관리자에게 쪽지보내기
           </a>
           
           <div class="dropdown-divider"></div>
@@ -228,3 +269,37 @@
     </ul>
   </nav>
   <!-- /.navbar -->
+  
+  
+  <!-- 관리자에게 쪽지 보내는 MODAL 창 -->
+  <div class="modal fade jg" id="msgToAdminModal" tabindex="-1" role="dialog"
+		aria-labelledby="msgToAdminModal">
+		<div class="modal-dialog modal-lg-center" role="document">
+			<div class="modal-content" style="height: 400px; width : 450px; padding-left : 30px;">
+				
+				<div class="modal-header">
+					<h3 class="modal-title" id="addplLable">관리자에게 쪽지 보내기</h3>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" style="margin-left : 15px;">
+					<label>제목</label>
+					<span class="msgWarningTitle" style="color : red;"></span>
+					<br>
+					<input id="msgTitle" type="text" style="width : 80%;" autocomplete="off"><br><br>
+					<label>내용</label>
+					<span class="msgWarningCont" style="color : red;"></span>
+					<br>
+					<textarea id="msgCont" rows="4" cols="30" style="width : 80%; resize : none;" autocomplete="off"></textarea>
+				</div>
+				
+				<div class="modal-footer">
+					<div style="float: right;">
+						<button id="msgSendBtn" class="btn btn-primary" type="button">쪽지 보내기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

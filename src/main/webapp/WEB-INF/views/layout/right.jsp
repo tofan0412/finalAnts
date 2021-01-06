@@ -74,8 +74,12 @@ $(function(){
 	// 만약 reqId가 존재하지 않는경우에는 실행해선 안된다.
 		$('.chatList').html("아직 프로젝트를 선택하지 않았습니다.");	
 	}else{
-// 		readChatList();
-		listNow();
+		// PM이 아닌 경우에만, 채팅방 리스트를 불러온다.
+		if ('${SMEMBER.memType}' != 'PM'){
+			listNow();	
+		}else{
+			$('.chatList').html("안녕하세요, PM님! :)");
+		}
 	}
 	
 	// 프로젝트에 참여하고 있는 회원 목록 불러오기
@@ -311,13 +315,16 @@ $(function(){
 		
 		<!-- 채팅목록이 출력된다. -->
 		<div class="chatList jg">
-			<c:if test="${projectId eq null}">
+			<c:if test="${projectId eq null && SMEMBER.memType ne 'PM'}">
 				<span class="jg">프로젝트를 먼저 선택해 주세요..</span>
+			</c:if>
+			<c:if test="${projectId eq null && SMEMBER.memType eq 'PM'}">
+				<span class="jg">안녕하세요, PM님! :)</span>
 			</c:if>
 		</div>
 		
 		<!-- 선택한 프로젝트가 존재하는 경우에만 채팅방 개설하기 버튼을 표시한다. -->
-		<c:if test="${projectId ne null}">
+		<c:if test="${projectId ne null && SMEMBER.memType ne 'PM'}">
 			<div class="mkNewChat jg">새로운 채팅방 만들기</div>
 		</c:if>
 	</div>

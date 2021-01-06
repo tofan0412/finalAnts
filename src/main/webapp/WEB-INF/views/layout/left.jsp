@@ -119,7 +119,7 @@
 		              <li class="nav-item">
 		                <a href="${pageContext.request.contextPath}/bookmark/getallbookmark" class="nav-link">
 						<i class="nav-icon fas fa-bookmark"></i>
-						<p class="selectable sessioncheck">내 즐겨찾기</p>
+						<p class="selectable sessioncheck">즐겨찾기</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">

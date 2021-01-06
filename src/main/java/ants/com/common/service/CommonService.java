@@ -10,10 +10,4 @@ import ants.com.common.mapper.CommonMapper;
 public class CommonService{
 	@Resource(name="commonMapper")
 	private CommonMapper mapper;
-	
-	
-	
-	
-	
-
 }
