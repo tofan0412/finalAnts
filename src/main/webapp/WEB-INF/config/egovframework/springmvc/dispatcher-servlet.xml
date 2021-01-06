@@ -183,6 +183,7 @@
 				
 			<mvc:exclude-mapping path="/member/mainView" />
 			<mvc:exclude-mapping path="/admin/*" />
+			<mvc:exclude-mapping path="/excel/*" />
 			<bean class="ants.com.config.interceptor.LoginCheckInterceptor"/>
 		</mvc:interceptor>
 		
@@ -204,6 +205,7 @@
 			<mvc:exclude-mapping path="/admin/adloginFunc" />
 			<mvc:exclude-mapping path="/member/mainView" />
 			<mvc:exclude-mapping path="/admin/adlogout" />
+			<mvc:exclude-mapping path="/excel/*" />
 			<bean class="ants.com.config.interceptor.AdminLoginCheckInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

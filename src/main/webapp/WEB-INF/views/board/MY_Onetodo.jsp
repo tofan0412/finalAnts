@@ -75,9 +75,15 @@
 				cnt++;
 			}
 			if ($('#sgtTitle').val().length == 0){
-				$('.warningTitle').text("건의사항 제목을 지정해 주세요.");
+				$('.warningTitle').text("건의사항 제목을 입력해 주세요.");
 				cnt++;
 			}
+			
+			if ($('#sgtCont').val().length == 0){
+				$('.warningCont').text("건의사항 내용을 입력해 주세요.");
+				cnt++;
+			}
+			
 			if (cnt == 0){
 				// Insert 하면 된다.
 				// 파일부터 먼저 넣자.
@@ -102,6 +108,14 @@
 					}
 				})
 			}
+		})
+		
+		$('#sgtTitle').keyup(function(){
+			$('.warningTitle').empty();
+		})
+	
+		$('#sgtCont').keyup(function(){
+			$('.warningCont').empty();
 		})
 	})
 	
@@ -294,8 +308,7 @@
 	            	<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;"id="issuebtn">이슈 작성</button>
 					<button type="button" class="btn btn-default jg float-right" data-toggle="modal" data-target="#myModal">진행도 수정</button>	
 			    </c:if>
-	            <c:if test="${SMEMBER.memId ne projectVo.memId }">
-	            
+	            <c:if test="${SMEMBER.memId ne projectVo.memId }"> <!-- PL이 아닌 경우에만 건의 사항을 작성할 수 있다. -->
 	           	 	<button type="button" class="btn btn-default jg float-left" id="back">목록으로</button>   
 	            	<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;"id="issuebtn">이슈 작성</button>
 					<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;" id="suggestBtn">건의 작성</button>
@@ -378,7 +391,9 @@
 								   border-radius : 0.7rem;"
 							autocomplete="off" />
 						<br>
-						<br> <label>건의 사항 내용</label><br>
+						<br> <label>건의 사항 내용</label>
+						<span class="warningCont" style="color: red; margin-left : 5px;"></span>
+						<br>
 						<textarea id="sgtCont" name="sgtCont" rows="3" cols="30"
 							style="resize: none; 
 											   width : 90%;

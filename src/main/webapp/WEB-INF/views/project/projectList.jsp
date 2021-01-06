@@ -153,10 +153,15 @@ th, td {
 			
 			// 프로젝트를 먼저 생성한다.
 			// 20.12.12 수정 : 프로젝트는 이미 DB상에서 생성되어 있으므로, 제목만 등록한다. 
+			// 21.01.06 수정 : 프로젝트 상태를 ACTIVE로 수정한다.
+			// 21.01.06 수정 : 프로젝트 생성 후 changeDate를 업로드한다. 
 			$.ajax({
 				url : "/project/updateProject",
 				data : { "reqId" : reqId,
-						 "proName" : projectName },
+						 "proName" : projectName,
+						 "proStatus" : "ACTIVE", 
+						 "proChangeDate" : $('#clock').val()
+					   },
 				method : "POST",
 				success : function(res){
 					if ("success" == res){

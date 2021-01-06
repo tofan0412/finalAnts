@@ -72,11 +72,11 @@
 
 	<insert id="insertProject"
 		parameterType="ants.com.member.model.ProjectVo">
-		INSERT INTO PROJECT 
+INSERT INTO PROJECT 
 			(REQ_ID,REG_DT,DEL)
 		VALUES
 			(#{reqId},SYSDATE,'N')
-	</insert>
+</insert>
 
 	<select id="userSearch" parameterType="java.lang.String" resultType="ants.com.member.model.MemberVo">
 		SELECT * 
@@ -148,6 +148,8 @@
 			<if test="percent != null">PRO_PERCENT = #{percent},</if>
 			<if test="regDt != null">REG_DT = #{regDt},</if>
 			<if test="del != null">DEL = #{del}</if>
+			<if test="proChangeDate != null">PRO_CHANGE_DATE = #{proChangeDate}</if>
+			<if test="proStatus != null">PRO_STATUS = #{proStatus}</if>
 		</set>
 		WHERE 1=1
 		AND REQ_ID = #{reqId}
