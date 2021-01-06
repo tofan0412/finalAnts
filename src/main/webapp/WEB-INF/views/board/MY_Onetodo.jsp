@@ -303,12 +303,12 @@
         </tr>
         </table>
 	    	<div id="btnMenu" class="card-footer">
-	            <c:if test="${SMEMBER.memId eq projectVo.memId }">
+	            <c:if test="${SMEMBER.memId eq projectVo.memId && projectVo.proStatus == 'ACTIVE' }">
 					<button type="button" class="btn btn-default jg float-left" id="backtolist">목록으로</button>   
 	            	<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;"id="issuebtn">이슈 작성</button>
 					<button type="button" class="btn btn-default jg float-right" data-toggle="modal" data-target="#myModal">진행도 수정</button>	
 			    </c:if>
-	            <c:if test="${SMEMBER.memId ne projectVo.memId }"> <!-- PL이 아닌 경우에만 건의 사항을 작성할 수 있다. -->
+	            <c:if test="${SMEMBER.memId ne projectVo.memId && projectVo.proStatus == 'ACTIVE'}"> <!-- PL이 아닌 경우에만 건의 사항을 작성할 수 있다. -->
 	           	 	<button type="button" class="btn btn-default jg float-left" id="back">목록으로</button>   
 	            	<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;"id="issuebtn">이슈 작성</button>
 					<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;" id="suggestBtn">건의 작성</button>

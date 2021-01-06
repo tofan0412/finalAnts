@@ -383,10 +383,12 @@ $(function(){
 				</div>
 
 				<div class="card-footer clearfix">
-					<button id="insertSuggestBtn" type="button"
-						class="btn btn-default float-left jg">
-						<i class="fas fa-edit"></i>등 록
-					</button>
+					<c:if test="${projectVo.proStatus == 'ACTIVE' }">
+						<button id="insertSuggestBtn" type="button"
+							class="btn btn-default float-left jg">
+							<i class="fas fa-edit"></i>등 록
+						</button>
+					</c:if>
 				</div>
 
 

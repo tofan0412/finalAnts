@@ -402,9 +402,10 @@ function itemdetail(voteid){
         		  </div>
         		  
         		  <div class="card-footer clearfix">
-	                <button id="insertvote" type="button" class="btn btn-default float-left jg"><i class="fas fa-plus"></i>등 록</button>
+	                <c:if test="${projectVo.proStatus == 'ACTIVE' }">
+	                	<button id="insertvote" type="button" class="btn btn-default float-left jg"><i class="fas fa-plus"></i>등 록</button>
+	                </c:if>
 	              </div>
-        		 
         		  
         		  
 	              <!-- /.card-body -->
