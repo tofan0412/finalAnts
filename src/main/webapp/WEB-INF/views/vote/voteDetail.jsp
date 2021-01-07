@@ -500,12 +500,14 @@ function chart() {
 			<c:if test="${voteVo.remain <= 0 or voteVo.voteStatus== 'finish'}">
 			
 					<span class="badge badge-danger"> 완료 </span>
-					&nbsp;&nbsp;
-				<button class="btn btn-default">
-					<li class="fas fa-download"></li> &nbsp;
-					<a style="color : black;"href="/excel/voteExcel?voteId=${voteVo.voteId}"> Excel다운로드</a>
-				</button>
-				<br><br>
+					<c:if test="${voteVo.votedNo/voteVo.voteTotalno > 0.00}">
+						&nbsp;&nbsp;
+						<button class="btn btn-default">
+							<li class="fas fa-download"></li> &nbsp;
+							<a style="color : black;"href="/excel/voteExcel?voteId=${voteVo.voteId}"> Excel다운로드</a>
+						</button>
+						<br><br>
+					</c:if>
 			</c:if>
 			
 			<input type="hidden" id="todoId">

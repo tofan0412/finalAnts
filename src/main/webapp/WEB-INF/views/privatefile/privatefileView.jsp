@@ -341,6 +341,8 @@ var name;
      	// 파일명 변경
      	$('#modbtn').on('click', function(){
      		$('#privId2').val(id);
+     		a = '${imagetype}'
+     		$('#type').val(a)
      		$('#modfrm').submit();
      	})
 	});
@@ -660,6 +662,7 @@ var name;
 					<div class="form-group" id="folderdiv">
 						<input type="search" class="form-control folderName" id="privFilenamemod2" name="privFilename" style="display: inline-block; width: 90%;"> 			
 						<input type="hidden" class="form-control folderName" id="privId2" name="privId" >  			
+						<input type="hidden" class="form-control folderName" id="type" name="type" >  			
 										
 					</div>
 				</form>			
