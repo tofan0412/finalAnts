@@ -100,8 +100,13 @@ public class AdminService extends EgovAbstractServiceImpl{
 	
 	
 	// Ip 전체 리스트 가져오기
-	public List<IpVo> getIpList(){
-		return mapper.getIpList();
+	public List<IpVo> getIpList(IpVo ipVo){
+		return mapper.getIpList(ipVo);
+	}
+	
+	// Ip 전체 리스트 가져오기(확인하기위함)
+	public List<IpVo> getIpListcheck(){
+		return mapper.getIpListcheck();
 	}
 	
 	// 특정 Ip만 가져오기

@@ -3,9 +3,35 @@
 <mapper namespace="ants.com.admin.mapper.AdminMapper">
 
 <select id="getIpList" resultType="ants.com.admin.model.IpVo" parameterType="ants.com.admin.model.IpVo">
-SELECT * 
-  FROM IP
- WHERE DEL != 'Y'
+	    SELECT Z.*
+	      FROM (
+	      	SELECT ROWNUM RNUM , 
+	           	   S.*
+		      FROM (	
+					SELECT ip_id,
+						    ip_addr,
+						    ip_status,
+						    admin_id,
+						    del
+					  FROM IP
+					 WHERE DEL != 'Y'
+							
+			  ) S
+		
+				 WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} 
+	      ) Z
+	     <![CDATA[WHERE Z.RNUM > #{firstIndex}]]>
+</select>
+
+<select id="getIpListcheck" resultType="ants.com.admin.model.IpVo" parameterType="ants.com.admin.model.IpVo">	
+		SELECT ip_id,
+			    ip_addr,
+			    ip_status,
+			    admin_id,
+			    del
+		  FROM IP
+		 WHERE DEL != 'Y'
+		
 </select>
 
 <select id="getIp" parameterType="ants.com.admin.model.IpVo" resultType="ants.com.admin.model.IpVo">

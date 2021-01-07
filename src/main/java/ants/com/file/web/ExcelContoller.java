@@ -7,18 +7,27 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ants.com.admin.service.AdminService;
 import ants.com.board.memBoard.model.IssueVo;
+import ants.com.board.vote.model.VoteItemVo;
+import ants.com.board.vote.model.VoteResultVo;
+import ants.com.board.vote.model.VoteVo;
+import ants.com.board.vote.service.VoteService;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.service.ProjectmemberService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import net.sf.jxls.exception.ParsePropertyException;
 
 
 @RequestMapping("/excel")
@@ -30,6 +39,10 @@ public class ExcelContoller {
 	
 	@Resource(name="adminService")
 	AdminService adminService;
+	
+	
+	@Resource(name ="voteService")
+	private VoteService voteService;
 	
 	@RequestMapping("/memlistexcelDown")
 	public String memlistexcelDown(Model model, HttpSession session) {
@@ -92,6 +105,31 @@ public class ExcelContoller {
 		
 		
 		return "ipexcelView";
+	}
+	
+	@RequestMapping("/voteExcel")
+	public void voteExcel(HttpServletRequest request, HttpServletResponse response, VoteVo voteVo) throws Exception {
+				
+		List<VoteItemVo> itemlist = voteService.voteitemDetail(voteVo);
+		VoteVo dbvoteVo = voteService.voteDetail(voteVo);
+		
+		for(int i =0; i<itemlist.size();i++) {
+			double a = Math.round(Double.parseDouble(itemlist.get(i).getVoteCount())/Double.parseDouble(dbvoteVo.getVotedNo())*100);
+			itemlist.get(i).setPercent(String.valueOf(a));
+		}
+		
+		double percent =  Math.round(Double.parseDouble(dbvoteVo.getVotedNo())/Double.parseDouble(dbvoteVo.getVoteTotalno())*100);
+		dbvoteVo.setVotepercent(String.valueOf(percent));
+		
+        Map<String , Object> beans = new HashMap<String , Object>();
+        beans.put("itemlist" , itemlist );
+        beans.put("voteVo" , dbvoteVo );
+      
+        
+
+        MakeExcel me = new MakeExcel();
+        me.download(request, response, beans, "voteDetail", "vote.xlsx");
+	
 	}
 
 }

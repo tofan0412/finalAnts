@@ -64,21 +64,28 @@ $(function(){
 })
 </script>
 
-<div class="card insertIp" style="margin-top : 50px;">
+<div class="card insertIp">
 	<%@ include file="/WEB-INF/views/admin/ipContentMenu.jsp" %>
 	<!-- /contentMenuBar -->
-	<h5 class="jg">신규 IP 등록하기</h5>
-	<div class="inputIpArea" style="float : left; width : 100%;">
+		<h5 class="jg" style=" padding: 1%;padding-left: 3%;">신규 IP 등록하기</h5>
+	<div class="inputIpArea" style=" padding-left: 5%; height: 500px;">
 		<form id="ipForm" action="/admin/insertIp" style="float : left;">
-			<span class="jg">허용할 IP를 입력해 주세요.</span>
-			<input class="ip" name="ip1" id="ip1" type="text" maxlength="3">
-			.&nbsp;<input class="ip" name="ip2" id="ip2" type="text" maxlength="3">
-			.&nbsp;<input class="ip" name="ip3" id="ip3" type="text" maxlength="2">
-			.&nbsp;<input class="ip" name="ip4" id="ip4" type="text" maxlength="2">
+<!-- 			<div style="padding-left: 5%;"> -->
+				<span class="jg">허용할 IP를 입력해 주세요.</span><br>
+				<input class="ip" name="ip1" id="ip1" type="text" maxlength="3">
+				.&nbsp;<input class="ip" name="ip2" id="ip2" type="text" maxlength="3">
+				.&nbsp;<input class="ip" name="ip3" id="ip3" type="text" maxlength="2">
+				.&nbsp;<input class="ip" name="ip4" id="ip4" type="text" maxlength="2">
+<!-- 			</div>	 -->
+		
 		</form>
-		<button class="ipRegBtn" style="margin-left : 10px;">등록</button>
-		<div>
-			<span class="errorMsg jg" style="color : red; float : left;"></span>
-		</div>		
+			<br>
+			<button class="ipRegBtn btn btn-default" style="margin-left : 10px; ">등록</button>
+			<div>
+				<span class="errorMsg jg" style="color : red; float : left;"></span>
+			</div>	
+		
+		
+			
 	</div>
 </div>

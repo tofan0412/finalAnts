@@ -22,6 +22,7 @@ import ants.com.admin.model.AdminVo;
 import ants.com.admin.model.IpVo;
 import ants.com.admin.model.NoticeVo;
 import ants.com.admin.service.AdminService;
+import ants.com.board.memBoard.model.IssueVo;
 import ants.com.common.model.IpHistoryVo;
 import ants.com.member.model.MemberVo;
 import ants.com.member.model.ProjectVo;
@@ -362,13 +363,8 @@ public class AdminController {
 	
 	// Ip 리스트 전체 가져오기 -> 차단 리스트 또는 허용 리스트
 	@RequestMapping("/getIpList")
-	public String getIpList(Model model, HttpSession session) {
-		List<IpVo> ipList = adminService.getIpList();
-		
-		model.addAttribute("ipList", ipList);
-		
-		/** pageing setting */
-		IpVo ipVo = new IpVo();
+	public String getIpList(@ModelAttribute("issueVo")  IpVo ipVo, Model model, HttpSession session) {
+	
 		ipVo.setPageUnit(propertiesService.getInt("pageUnit"));
 		ipVo.setPageSize(propertiesService.getInt("pageSize"));
 		
@@ -380,13 +376,16 @@ public class AdminController {
 		ipVo.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		ipVo.setLastIndex(paginationInfo.getLastRecordIndex());
 		ipVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
+		
+		List<IpVo> ipList = adminService.getIpList(ipVo);
+		model.addAttribute("ipList", ipList);
+		
 		int totCnt = adminService.getIpCount();
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		model.addAttribute("pageIndex", ipVo.getPageIndex());
 		
-		return "admin.tiles/admin/ipContentMenu";
+		return "admin.tiles/admin/ipAcceptedList";
 		
 	}
 	
@@ -447,8 +446,8 @@ public class AdminController {
 	// ip 메인 화면으로 이동하기
 	@RequestMapping("/ipMain")
 	public String ipMain() {
-		return "redirect:/admin/getIpList";
-//		return "admin.tiles/admin/ipContentMenu";
+//		return "redirect:/admin/getIpList";
+		return "admin.tiles/admin/ipMain";
 	}
 	
 	@RequestMapping("/loginLogList")

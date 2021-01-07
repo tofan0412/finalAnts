@@ -58,7 +58,10 @@ public interface AdminMapper {
 	public int delmemlist(String memId);
 	
 	// Ip 전체 리스트 가져오기
-	public List<IpVo> getIpList();
+	public List<IpVo> getIpList(IpVo ipVo);
+	
+	// Ip 전체 리스트 가져오기(확인하기위함)
+	public List<IpVo> getIpListcheck();
 	
 	// 특정 Ip만 가져오기
 	public IpVo getIp(IpVo ipVo);

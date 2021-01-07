@@ -55,10 +55,10 @@ public class MemlistExcelDownloadView extends AbstractView{
 		headerFont.setBold(true);
 		CellStyle headerStyle = workbook.createCellStyle();
 		headerStyle.setFillForegroundColor(IndexedColors.AQUA.getIndex());
-		headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);	    
-		headerStyle.setBorderTop(BorderStyle.THIN);
-		headerStyle.setBorderLeft(BorderStyle.THIN); 
-		headerStyle.setBorderRight(BorderStyle.THIN);
+//		headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);	    
+//		headerStyle.setBorderTop(BorderStyle.THIN);
+//		headerStyle.setBorderLeft(BorderStyle.THIN); 
+//		headerStyle.setBorderRight(BorderStyle.THIN);
 		headerStyle.setFont(headerFont);
 	    
 		// 목록들 스타일
@@ -66,11 +66,11 @@ public class MemlistExcelDownloadView extends AbstractView{
 		bodyFont.setFontName("Yu Gothic UI Semibold");
 	    CellStyle bodyStyle = workbook.createCellStyle();
 	    bodyStyle.setFont(bodyFont);
-	    bodyStyle.setBorderBottom(BorderStyle.THIN); 
-	    bodyStyle.setBorderLeft(BorderStyle.THIN); 
-	    bodyStyle.setBorderRight(BorderStyle.THIN); 
-	    bodyStyle.setBorderTop(BorderStyle.THIN);
-	    bodyStyle.setAlignment(HorizontalAlignment.LEFT);
+//	    bodyStyle.setBorderBottom(BorderStyle.THIN); 
+//	    bodyStyle.setBorderLeft(BorderStyle.THIN); 
+//	    bodyStyle.setBorderRight(BorderStyle.THIN); 
+//	    bodyStyle.setBorderTop(BorderStyle.THIN);
+//	    bodyStyle.setAlignment(HorizontalAlignment.LEFT);
 	    
 	    // 회원목록 표시 스타일
 	    Font headerFont2 = workbook.createFont();
@@ -80,9 +80,9 @@ public class MemlistExcelDownloadView extends AbstractView{
   		CellStyle mergeRowStyle2 = workbook.createCellStyle();
   		mergeRowStyle2.setFont(headerFont2);
 	    mergeRowStyle2.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());  // 배경색
-	    mergeRowStyle2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-	    mergeRowStyle2.setAlignment(HorizontalAlignment.CENTER);
-	    mergeRowStyle2.setVerticalAlignment(VerticalAlignment.CENTER);
+//	    mergeRowStyle2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//	    mergeRowStyle2.setAlignment(HorizontalAlignment.CENTER);
+//	    mergeRowStyle2.setVerticalAlignment(VerticalAlignment.CENTER);
 	 
 
 	    

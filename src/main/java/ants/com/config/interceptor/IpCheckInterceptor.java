@@ -35,7 +35,7 @@ public class IpCheckInterceptor extends HandlerInterceptorAdapter {
 		
 		String[] clientIpArr = ip.split("\\.");
 		
-		List<IpVo> ipList = adminService.getIpList();
+		List<IpVo> ipList = adminService.getIpListcheck();
 		
 		int equalsCnt = 0;
 		int factor = 0;
