@@ -163,12 +163,27 @@
 	                 	</thead>
 						<!-- 리스트부분 -->
 						<tbody >
+						<c:set var="count" value="0"/>
+							<c:forEach items="${noticelist }" var="noti" varStatus="status">
+								<c:if test="${noti.importance eq 'emg'}">
+									<c:set var="count" value="${count + 1}"/>
+								</c:if>
+							
+							</c:forEach>
+							
 							<c:forEach items="${noticelist }" var="notice" varStatus="status">
 
 								<tr>
-									<td class="jg" style="width: 10%; padding-left: 58px; text-align: ; ">
-										<c:out value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />
-									</td>
+									<c:choose>
+										<c:when test="${notice.importance eq 'emg'}">
+											<td class="jg" style="width: 10%; padding-left: 25px; color: red;"><span style="border: 1px solid #F6CECE; padding: 5px; border-radius: 5px; background-color: #F6CECE">공지사항</span></td>
+										</c:when>
+										<c:when test="${notice.importance eq 'gen'}">
+												<td class="jg" style="width: 10%; padding-left: 55px; text-align: ; ">
+													<c:out value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1)) - count}" />
+												</td>
+										</c:when>
+									</c:choose>
 										
 									<td class="jg"  style="padding-left: 30px; width: 20%">
 										<c:if test="${notice.importance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
