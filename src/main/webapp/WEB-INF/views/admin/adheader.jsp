@@ -42,12 +42,12 @@
         </div>
           
       </li>
-      <!-- right side bar -->
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-comments"></i>
-        </a>
-      </li>
+<!--       right side bar -->
+<!--       <li class="nav-item"> -->
+<!--         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"> -->
+<!--           <i class="fas fa-comments"></i> -->
+<!--         </a> -->
+<!--       </li> -->
       
       
     </ul>
