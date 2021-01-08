@@ -225,6 +225,7 @@ $(function(){
 					</ul>
 				</div>
 				<br>
+	<span class="jg" style="float : right; margin-right : 10px;">*삭제를  클릭하는 경우, 해당 프로젝트의 내용이 즉시 삭제됩니다.</span>
 			</div>
 		</div>
 	</section>
