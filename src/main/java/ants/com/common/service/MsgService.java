@@ -1,5 +1,7 @@
 package ants.com.common.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class MsgService {
 	public int insertMsg(MsgVo msgVo) {
 		return mapper.insertMsg(msgVo);
 	}
-
+	
+	public List<MsgVo> msgList(MsgVo msgVo){
+		return mapper.msgList(msgVo);
+	}
 
 }

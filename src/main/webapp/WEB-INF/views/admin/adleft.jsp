@@ -68,6 +68,12 @@
 							<p class="selectable jg">프로젝트 목록</p>
 		                </a>
 		              </li>
+		              <li class="nav-item">
+		                <a href="${pageContext.request.contextPath}/msg/msgList" class="nav-link" >
+		                 <i class="nav-icon fas fa-envelope"></i>
+							<p class="selectable jg">쪽지 관리</p>
+		                </a>
+		              </li>
 		              
 					</ul>
 				</li><br>

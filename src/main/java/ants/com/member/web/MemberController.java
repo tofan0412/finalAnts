@@ -720,5 +720,17 @@ public class MemberController {
 		// 불러온 전체 회원수를 반환한다.
 		return memList.size();
 	}
+	
+	// 회원 권한 승격 to PM
+	@RequestMapping("/memTypeUpdate")
+	@ResponseBody
+	public String memTypeUpdate(MemberVo memberVo) {
+		int result = memberService.memTypeUpdate(memberVo);
+		if (result > 0) {
+			return "";
+		}else {
+			return "";
+		}
+	}
 
 }

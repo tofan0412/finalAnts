@@ -70,4 +70,8 @@ public class MemberService{
 		return mapper.updateAlarm(memberVo);
 	}
 	
+	public int memTypeUpdate(MemberVo memberVo) {
+		return mapper.memTypeUpdate(memberVo);
+	}
+	
 }

@@ -63,41 +63,65 @@
     	});
     	
     	$('#msgBtn').click(function(){
+    		$('#msgTitle').val('');
+    		$('#msgCont').val('');
+    		$('#msgType').val('선택');
+    		
     		$('#msgToAdminModal').modal();
     	})
     	
-    	$('#msgSendBtn').click(function(){
-    		msgTitle = $('#msgTitle').val();
-    		msgCont = $('#msgCont').val();
-    		msgWriter = '${SMEMBER.memId}';
-    		regDt = $('#clock').val();
-    		
-    		cnt = 0; 
-    		if (msgTitle == ""){
-    			$('.msgWarningTitle').text("제목을 입력해 주세요 ..");
-    			cnt++;
-    		}
-    		if (msgCont == ""){
-    			$('.msgWarningCont').text("내용을 입력해 주세요 ..");
-    		}
-    		
-    		$.ajax({
-    			url : "/msg/insertMsg", 
-    			data : {msgTitle : msgTitle, 
-    				    msgCont : msgCont, 
-    				    msgWriter : msgWriter, 
-    				    regDt : regDt},
-    			method : "POST",
-    			success : function(res){
-    				if (res > 0){
-    					alert("메시지를 성공적으로 전송하였습니다.");
-    					$('#msgToAdminModal').modal('hide');
-    				}
-    			}
-    			
-    		})
+    	$('#msgTitle').keyup(function(){
+    		$('.msgWarningTitle').empty();
     	})
     	
+    	$('#msgCont').keyup(function(){
+    		$('.msgWarningCont').empty();
+    	})
+    	
+    	$('#helloBtn').click(function(){
+    		msgType = $('#msgType').val();
+			
+    		count = 0;
+    		if (msgType == '선택'){
+    			alert("쪽지 유형을 선택해 주세요.");
+    			count++;
+    		}
+    		
+    		if (msgType == '권한요청'){
+    			type = 'PM';
+    		}else if (msgType == '문의'){
+    			type = 'ISSUE';
+    		}
+			
+    		msgTitle = $('#msgTitle').val();
+    		if (msgTitle == ''){
+    			$('.msgWarningTitle').text("제목을 입력해 주세요.");
+    			count++;
+    		}
+    		
+    		msgCont = $('#msgCont').val();
+    		if (msgCont == ''){
+    			$('.msgWarningCont').text("내용을 입력해 주세요.");
+    			count++;
+    		}
+    		
+    		msgWriter = '${SMEMBER.memId}';
+    		regDt = $('#clock').val();
+    		msgStatus = 'WAIT';
+    		
+    		if (count < 1){
+    			$.ajax({
+    				url : "/msg/insertMsg",
+    				data : {msgType : type, msgTitle : msgTitle, msgCont : msgCont,
+    						msgWriter : msgWriter, regDt : regDt, msgStatus : msgStatus},
+    				method : "POST", 
+    				success : function(res){
+    					alert("쪽지를 보냈습니다.");
+    					$('#msgToAdminModal').modal('hide');
+    				}
+    			})
+    		}
+    	})
 	});
     
 	function onMessage(evt){
@@ -275,7 +299,7 @@
   <div class="modal fade jg" id="msgToAdminModal" tabindex="-1" role="dialog"
 		aria-labelledby="msgToAdminModal">
 		<div class="modal-dialog modal-lg-center" role="document">
-			<div class="modal-content" style="height: 400px; width : 450px; padding-left : 30px;">
+			<div class="modal-content" style="height: 450px; width : 450px; padding-left : 30px;">
 				
 				<div class="modal-header">
 					<h3 class="modal-title" id="addplLable">관리자에게 쪽지 보내기</h3>
@@ -285,6 +309,12 @@
 					</button>
 				</div>
 				<div class="modal-body" style="margin-left : 15px;">
+					<label>유형</label>&nbsp;&nbsp;
+					<select id="msgType">
+						<option>선택</option>
+						<option>권한요청</option>
+						<option>문의</option>
+					</select><br>
 					<label>제목</label>
 					<span class="msgWarningTitle" style="color : red;"></span>
 					<br>
@@ -297,7 +327,7 @@
 				
 				<div class="modal-footer">
 					<div style="float: right;">
-						<button id="msgSendBtn" class="btn btn-primary" type="button">쪽지 보내기</button>
+						<button id="helloBtn" class="btn btn-primary" type="button">쪽지 보내기</button>
 					</div>
 				</div>
 			</div>

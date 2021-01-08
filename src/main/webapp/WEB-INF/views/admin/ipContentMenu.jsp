@@ -8,7 +8,7 @@
 
 
 <div class="col-12 col-sm-12" >
-<h1 class="nav-icon fas fa-unlock-alt">&nbsp;IP 설정</h1> <br> <br>
+<h1 class="nav-icon fas fa-unlock-alt" style="margin-top : 10px; margin-left : 10px;">&nbsp;IP 설정</h1> <br> <br>
 	<div class="card" style="border-top:none; border-radius: inherit; padding : 2px; margin-top: 10px;">
 		<div class="container-fluid">
 			<ul class="nav nav-tabs" id="custom-tabs-three-tab">

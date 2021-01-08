@@ -87,7 +87,6 @@ function chartmain() {
 <style>
 body{
     min-width: 1400px;
-   
 }
 #maintop{
 	width: 68%;

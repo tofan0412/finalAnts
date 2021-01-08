@@ -3,15 +3,23 @@
 <mapper namespace="ants.com.common.mapper.MsgMapper" >
 
 <insert id="insertMsg" parameterType="ants.com.common.model.MsgVo">
-	INSERT INTO MSG(MSG_IDX, MSG_TITLE, MSG_CONT, MSG_WRITER, REG_DT)
+	INSERT INTO MSG(MSG_IDX, MSG_TITLE, MSG_CONT, MSG_WRITER, REG_DT, MSG_STATUS, MSG_TYPE)
 	VALUES (MSG_SEQ.NEXTVAL, #{msgTitle}, #{msgCont}, 
-			#{msgWriter}, TO_DATE(#{regDt},'YYYY-MM-DD-HH24:MI:SS'))
+			#{msgWriter}, TO_DATE(#{regDt},'YYYY-MM-DD-HH24:MI:SS'), 'WAIT', #{msgType})
 	
 </insert>
 
-
-
-
+<select id="msgList" parameterType="ants.com.common.model.MsgVo" resultType="ants.com.common.model.MsgVo">
+SELECT MSG_IDX, 
+           MSG_TITLE, 
+           MSG_CONT,
+           MSG_WRITER,
+           TO_CHAR(REG_DT, 'YYYY-MM-DD HH24:MI:SS') AS REG_DT,
+           MSG_STATUS,
+           MSG_TYPE
+	  FROM MSG
+     ORDER BY REG_DT DESC
+</select>
 
 
 </mapper>
