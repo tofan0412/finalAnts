@@ -325,7 +325,7 @@ toastr.options = {
 		
 		                  <div class="input-group">
 		                    <div class="input-group-prepend">
-		                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+		                      <span class="input-group-text"><i class="far fa-clock"></i></span>
 		                    </div>
 		                    <form:input path="reqPeriod"  class="form-control" id="reqPeriod" placeholder="60일이면 60만 적으세요." onkeyPress="javascript:checkInputNum();"/><br>
 		                  </div>

@@ -141,7 +141,6 @@ $(function(){
 	</div>
 </form:form>
 
-
 <!-- 모달창 -->
 <div class="modal fade jg" id="adminAnswerModal" tabindex="-1" role="dialog"
 	aria-labelledby="adminAnswerModal">
@@ -166,5 +165,3 @@ $(function(){
 		</div>
 	</div>
 </div>
-
-
