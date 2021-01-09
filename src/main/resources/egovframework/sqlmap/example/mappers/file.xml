@@ -39,7 +39,13 @@
   <select id="getfiles" parameterType="ants.com.file.model.PublicFileVo" resultType="ants.com.file.model.PublicFileVo">
   	 SELECT * 
      FROM publicfile 
-     WHERE some_id = #{someId} and category_id = #{categoryId} and req_id = #{reqId}
+     WHERE some_id = #{someId} and category_id = #{categoryId} 
+     	<if test="reqId != null and reqId !=''">
+     		and req_id = #{reqId}
+     	</if>
+     	<if test="reqId == null and reqId ==''">
+     	    and	req_id = (select req_id from issue where issue_id = #{someId})
+     	</if>
   </select>
   
   
