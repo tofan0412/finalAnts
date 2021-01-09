@@ -62,7 +62,7 @@ $(function(){
 <form:form commandName="msgVo" id="listForm" name="listForm" method="post">
 	<div class="jg card adminMsgList" style="height : 700px;">
 		<h1 class="nav-icon fas fa-envelope" style="margin-left : 10px; margin-top : 10px;">&nbsp;쪽지 관리</h1> <br> <br>
-		<div style="height : 70%; overflow-y : auto;">
+		<div style="height : 100%; overflow-y : auto;">
 			<table id="msgTable" class="table" style="text-align: center;">
 				<tr>
 					<th>No.</th>
@@ -118,7 +118,7 @@ $(function(){
 								<button type="button" msgIdx="${msg.msgIdx }" class="btn btn-danger pmRejectBtn">반려</button>
 							</c:if>
 							<c:if test="${msg.msgStatus eq 'WAIT' && msg.msgType eq 'ISSUE' }">
-								<button type="button" memId="${msg.msgWriter }" class="btn btn-primary adminAnswerBtn">답변</button>
+								<button type="button" memId="${msg.msgWriter }" class="btn btn-success adminAnswerBtn">답변</button>
 							</c:if>
 						</td>
 					</tr>
@@ -157,7 +157,7 @@ $(function(){
 			</div>
 			<div class="modal-body">
 				<label>답변 내용</label><br>
-				<textarea id="adminAnswerArea" rows="5" cols="20" style="width : 100%; resize: none;" ></textarea>
+				<textarea id="adminAnswerArea" placeholder="최대 20자까지 입력 가능합니다." maxlength="20" rows="5" cols="20" style="width : 100%; resize: none;" ></textarea>
 			</div>
 			
 			<div class="modal-footer" style="overflow-y : auto; text-align : left; height : 25%;">

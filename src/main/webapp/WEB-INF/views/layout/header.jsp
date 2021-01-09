@@ -318,11 +318,11 @@
 					<label>제목</label>
 					<span class="msgWarningTitle" style="color : red;"></span>
 					<br>
-					<input id="msgTitle" type="text" style="width : 80%;" autocomplete="off"><br><br>
+					<input id="msgTitle" placeholder="최대 입력은 20자입니다." maxlength="20" type="text" style="width : 80%;" autocomplete="off"><br><br>
 					<label>내용</label>
 					<span class="msgWarningCont" style="color : red;"></span>
 					<br>
-					<textarea id="msgCont" rows="4" cols="30" style="width : 80%; resize : none;" autocomplete="off"></textarea>
+					<textarea id="msgCont" rows="4" placeholder="최대 입력은 20자입니다." maxlength="20" cols="30" style="width : 80%; resize : none;" autocomplete="off"></textarea>
 				</div>
 				
 				<div class="modal-footer">
