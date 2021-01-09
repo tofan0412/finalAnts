@@ -91,7 +91,6 @@ public class SuggestController {
 			session.setAttribute("pageIndex", suggestVo.getPageIndex());
 		}
 		
-		
 		return "tiles/suggest/suggestList";
 	}
 	

@@ -10,18 +10,35 @@
 </insert>
 
 <select id="msgList" parameterType="ants.com.common.model.MsgVo" resultType="ants.com.common.model.MsgVo">
-SELECT MSG_IDX, 
-           MSG_TITLE, 
-           MSG_CONT,
-           MSG_WRITER,
-           TO_CHAR(REG_DT, 'YYYY-MM-DD HH24:MI:SS') AS REG_DT,
-           MSG_STATUS,
-           MSG_TYPE
-	  FROM MSG
-     ORDER BY REG_DT DESC
+	SELECT B.*
+	  FROM (SELECT ROWNUM RNUM, A.*
+		      FROM (SELECT MSG_IDX, MSG_TITLE, MSG_CONT, MSG_WRITER,
+			               TO_CHAR(REG_DT, 'YYYY-MM-DD HH24:MI:SS') AS REG_DT,
+			               MSG_STATUS, MSG_TYPE
+			          FROM MSG
+			         ORDER BY DECODE ( MSG_STATUS, 'WAIT', 1 ), REG_DT DESC) A
+	     WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} ) B
+    <![CDATA[WHERE B.RNUM > #{firstIndex}]]>
 </select>
 
+<update id="msgUpdate" parameterType="ants.com.common.model.MsgVo">
+	UPDATE MSG
+	<set>
+		<if test="msgTitle != null">MSG_TITLE = #{msgTitle}</if>
+		<if test="msgCont != null">MSG_CONT = #{msgCont}</if>
+		<if test="msgWriter != null">MSG_WRITER = #{msgWriter}</if>
+		<if test="msgStatus != null">MSG_STATUS = #{msgStatus}</if>
+		<if test="msgType != null">MSG_TYPE = #{msgType}</if>
+	</set>
+	 WHERE MSG_IDX = #{msgIdx} 
+</update>
 
+
+
+<select id="msgPagingCnt" parameterType="ants.com.common.model.MsgVo" resultType="java.lang.Integer">
+SELECT COUNT(*) 
+  FROM MSG
+</select>
 </mapper>
 
 

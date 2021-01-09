@@ -723,13 +723,14 @@ public class MemberController {
 	
 	// 회원 권한 승격 to PM
 	@RequestMapping("/memTypeUpdate")
-	@ResponseBody
-	public String memTypeUpdate(MemberVo memberVo) {
+	public String memTypeUpdate(MemberVo memberVo, String msgIdx) {
 		int result = memberService.memTypeUpdate(memberVo);
+		
+		// 해당 msg 상태를 다른 상태로 변경한다.
 		if (result > 0) {
-			return "";
+			return "redirect:/msg/msgUpdate?msgStatus=ACCEPT&msgIdx="+msgIdx;
 		}else {
-			return "";
+			return "admin.tiles/admin/adcontentmain";
 		}
 	}
 

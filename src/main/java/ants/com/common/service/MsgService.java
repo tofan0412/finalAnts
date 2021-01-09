@@ -20,5 +20,13 @@ public class MsgService {
 	public List<MsgVo> msgList(MsgVo msgVo){
 		return mapper.msgList(msgVo);
 	}
+	
+	public int msgUpdate(MsgVo msgVo) {
+		return mapper.msgUpdate(msgVo);
+	}
+	
+	public int msgPagingCnt(MsgVo msgVo) {
+		return mapper.msgPagingCnt(msgVo);
+	}
 
 }

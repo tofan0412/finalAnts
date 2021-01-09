@@ -188,12 +188,6 @@ th, td {
 			})
 		})
 		
-		// 사용자가 아이디를 누르는 경우 제거한다. 
-// 		$('.mkPjtMemList').on('click', '.mkPjtAddedMember', function(){
-// 			var memId = $(this).attr('memId');
-// 			delMember(memId);
-// 		})
-		
 		$('.mkPjtMemList').on('click', '.addedMemExceptBtn', function(){
 			var memId = $(this).attr('memId');
 			delMember(memId);

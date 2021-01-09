@@ -77,6 +77,8 @@ UPDATE MEMBER
 	
 	
 <update id="memTypeUpdate" parameterType="ants.com.member.model.MemberVo">
-UPDATE 
+UPDATE MEMBER
+      SET MEM_TYPE = #{memType}
+ WHERE MEM_ID = #{memId}
 </update>
 </mapper>

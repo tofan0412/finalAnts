@@ -254,21 +254,6 @@ $(function(){
 	<section class="content">
 		<div class="col-12 col-sm-12">
 			<div class="card" style="border-radius: inherit;">
-				<!-- 				<div class="container-fluid"> -->
-				<!-- 					<div class="row mb-2"> -->
-				<!-- 						<br> -->
-				<!-- 						<div class="col-sm-6"> -->
-				<!-- 							<br> -->
-				<!-- 							<h1 class="jg" style="padding-left: 10px;">건의 사항 리스트</h1> -->
-				<!-- 						</div> -->
-				<!-- 						<div class="col-sm-6"> -->
-				<!-- 							<ol class="breadcrumb float-sm-right" style="background: white"> -->
-				<!-- 								<li class="breadcrumb-item san"><a href="#">Home</a></li> -->
-				<!-- 								<li class="breadcrumb-item active">건의 사항 리스트</li> -->
-				<!-- 							</ol> -->
-				<!-- 						</div> -->
-				<!-- 					</div> -->
-				<!-- 				</div> -->
 				<br>
 				<div class="card-header">
 					<div id="keyword" class="card-tools float-left"
@@ -349,7 +334,8 @@ $(function(){
 											<span 
 												style="border : 3px solid #088A29;
 												       background-color: #088A29;
-												       border-radius : 0.3rem;">
+												       border-radius : 0.3rem;
+												       color : white;">
 												       &nbsp;승인&nbsp;
 									       </span>
 										</td>
@@ -359,7 +345,8 @@ $(function(){
 											<span 
 												style="border : 3px solid #FF0000;
 												       background-color: #FF0000;
-												       border-radius : 0.3rem;">
+												       border-radius : 0.3rem;
+												       color : white;">
 												       &nbsp;반려&nbsp;
 									       </span>
 										</td>
@@ -390,7 +377,6 @@ $(function(){
 						</button>
 					</c:if>
 				</div>
-
 
 
 				<!-- /.card-body -->
