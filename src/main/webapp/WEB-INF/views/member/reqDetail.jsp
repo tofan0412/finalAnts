@@ -186,7 +186,9 @@
 		                      <span class="info-box-text text-center text-muted">진행 상태</span>
 		                      <span class="info-box-number text-center text-muted mb-0">
 		                      	<c:choose>
-		                      		<c:when test="${reqVo.status eq 'ACCEPT'}"></c:when>
+		                      		<c:when test="${reqVo.proStatus eq 'ACTIVE'}">진행중</c:when>
+		                      		<c:when test="${reqVo.proStatus eq 'STOP'}">일시정지</c:when>
+		                      		<c:when test="${reqVo.proStatus eq 'END'}">종료</c:when>
 		                      		<c:otherwise>-</c:otherwise>
 		                      	</c:choose>
 		                      

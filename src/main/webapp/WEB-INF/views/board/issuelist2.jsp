@@ -111,10 +111,10 @@ $(function(){
 /* pagination 페이지 링크 function */
  function fn_egov_link_page(pageNo){
  	document.listForm.pageIndex.value = pageNo;
- 	if(${sort} == 2){
-		$document.listForm.sort.value = 2;
-	}else if(${sort} == 1 || ${sort} == null){
-		$document.listForm.sort.value = 1;
+ 	if('${sort}' == '2'){
+		document.listForm.sort.value = 2;
+	}else if('${sort}' == '1' || ${sort} == null){
+		document.listForm.sort.value = 1;
 	}
  	document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
     document.listForm.submit();
@@ -170,7 +170,7 @@ $(function(){
 						<form:hidden path="sort" />
 						<form:button id="recent" onclick="javascript:recentsort();" >최신순</form:button> &nbsp;
 						<form:button id="old" onclick="javascript:oldsort();" >오래된순</form:button> &nbsp;
-						<a href="${pageContext.request.contextPath}/excel/excelDown">excelDown</a>
+					
 <!-- 						<input type="button" value="excelDown"><a href="/exceldown"></a> -->
 <%-- 						<form:select path="RegDt" id="regdtsort" class="form-control col-md-3 jg" style="display: inline-block;" > --%>
 <%-- 							<form:option value="recent" class="jg option"  label="최신순"/> --%>
@@ -287,7 +287,7 @@ $(function(){
 		        		<li  class="page-item jg" id ="pagenum" >	
 		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
 		        		<form:hidden path="pageIndex" />		        		
-		        		<form:hidden path="sort" />		        		
+<%-- 		        		<form:hidden path="sort" />		        		 --%>
                     
 	                 </ul>
         		  </div>

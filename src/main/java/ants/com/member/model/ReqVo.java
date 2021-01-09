@@ -18,6 +18,8 @@ public class ReqVo extends BaseVo{
 	private String proName;
 	private String categoryId;
 	private String del;
+	private String proStatus;
+	
 	public String getReqId() {
 		return reqId;
 	}
@@ -108,13 +110,22 @@ public class ReqVo extends BaseVo{
 	public void setDel(String del) {
 		this.del = del;
 	}
+	
+	public String getProStatus() {
+		return proStatus;
+	}
+	public void setProStatus(String proStatus) {
+		this.proStatus = proStatus;
+	}
 	@Override
 	public String toString() {
 		return "ReqVo [reqId=" + reqId + ", reqTitle=" + reqTitle + ", reqCont=" + reqCont + ", reqPeriod=" + reqPeriod
 				+ ", reqFilepath=" + reqFilepath + ", reqFilename=" + reqFilename + ", memId=" + memId + ", plId="
 				+ plId + ", status=" + status + ", plName=" + plName + ", proPercent=" + proPercent + ", proId=" + proId
-				+ ", proName=" + proName + ", categoryId=" + categoryId + ", del=" + del + "]";
+				+ ", proName=" + proName + ", categoryId=" + categoryId + ", del=" + del + ", proStatus=" + proStatus
+				+ "]";
 	}
+	
 	
 	
 	
