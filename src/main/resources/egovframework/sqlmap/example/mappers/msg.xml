@@ -12,7 +12,7 @@ INSERT INTO MSG(MSG_IDX, MSG_CONT, MSG_WRITER, REG_DT, MSG_STATUS, MSG_TYPE, MSG
 SELECT B.*
 	  FROM (SELECT ROWNUM RNUM, A.*
 		      FROM (SELECT MSG_IDX, MSG_CONT, MSG_WRITER,
-			               TO_CHAR(REG_DT, 'YYYY-MM-DD HH24:MI:SS') AS REG_DT,
+			               TO_CHAR(REG_DT, 'YYYY-MM-DD') AS REG_DT,
 			               MSG_STATUS, MSG_TYPE
 			          FROM MSG
 			         WHERE MSG_TYPE != 'ANSWER'
@@ -40,7 +40,7 @@ UPDATE MSG
 
 <select id="myMsgList" parameterType="ants.com.common.model.MsgVo" resultType="ants.com.common.model.MsgVo">
 	SELECT MSG_IDX, MSG_CONT, MSG_WRITER,
-           TO_CHAR(REG_DT, 'YYYY-MM-DD HH24:MI:SS') AS REG_DT,
+           TO_CHAR(REG_DT, 'YY-MM-DD') AS REG_DT,
            MSG_STATUS, MSG_TYPE, MSG_RECEIVER
 	  FROM MSG
 	 WHERE MSG_TYPE = 'ANSWER'

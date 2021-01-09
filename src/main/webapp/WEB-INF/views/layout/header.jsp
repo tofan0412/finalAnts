@@ -366,7 +366,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body msgAnsBody" style="height : 75%; overflow-y : auto;">
+				<div class="modal-body msgAnsBody" style="height : 75%; overflow-y : width : 95%; auto; margin : 0 auto;">
 					
 				</div>
 			</div>
