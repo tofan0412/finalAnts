@@ -11,4 +11,8 @@ public interface MsgMapper {
 	public int insertMsg(MsgVo msgVo);
 	
 	public List<MsgVo> msgList(MsgVo msgVo);
+	
+	public int msgUpdate(MsgVo msgVo);
+	
+	public int msgPagingCnt(MsgVo msgVo);
 }

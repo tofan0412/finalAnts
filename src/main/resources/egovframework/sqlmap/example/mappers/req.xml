@@ -5,12 +5,11 @@
 	<!-- 요구사항정의서 목록가져오기 -->
 	<select id="reqList" parameterType="ants.com.member.model.ReqVo"
 		resultType="ants.com.member.model.ReqVo">
-	    
-	    SELECT  *
+SELECT  *
 		    FROM(
 		    	SELECT ROWNUM rnum, a.*
 				FROM (SELECT b.req_id, b.req_title, b.req_period, b.req_filepath, b.req_filename,
-					 		 b.mem_id, b.status, b.pl_id, m.mem_name as pl_name, p.pro_percent, p.req_id as pro_id
+					 		 b.mem_id, b.status, b.pl_id, m.mem_name as pl_name, p.pro_percent, p.req_id as pro_id, p.pro_status
                         FROM (SELECT * 
                         		FROM reqlist
                         	   WHERE mem_id = #{memId}
@@ -39,7 +38,7 @@
                 WHERE rownum <= #{lastIndex})
             WHERE rnum > #{firstIndex} 
              ]]>
-	</select>
+</select>
 	
 	<!-- 페이지처리위한 요구사항개수 -->
 	<select id="reqListCount" parameterType="ants.com.member.model.ReqVo"
@@ -83,6 +82,7 @@
 			 , r.CATEGORY_ID
              , m.MEM_NAME as PL_NAME
              , p.PRO_NAME
+             , UPPER(p.PRO_STATUS) as PRO_STATUS
 		FROM reqlist r
         LEFT OUTER JOIN member m
         			 ON r.pl_id = m.mem_id
@@ -145,23 +145,19 @@
 	</update>
 
 	<delete id="reqDelete" parameterType="String">
-UPDATE reqlist
-      SET del = 'Y' 
-WHERE req_id = #{reqId}
-</delete>
+		UPDATE reqlist
+      	   SET del = 'Y' 
+		 WHERE req_id = #{reqId}
+	</delete>
 	
-	
-	
-	
-<select id="getReqId" resultType="String">
-SELECT REQ_SEQ.nextval 
-  FROM DUAL
-</select>
+	<select id="getReqId" resultType="String">
+		SELECT REQ_SEQ.nextval 
+  	 	  FROM DUAL
+	</select>
 
-		<select id="getoutlinereq" resultType="ants.com.member.model.ReqVo" parameterType="String">
+	<select id="getoutlinereq" resultType="ants.com.member.model.ReqVo" parameterType="String">
 		SELECT * 
-			FROM 
-			reqlist 
-			WHERE REQ_ID=  #{reqId} 
-		</select>
+		  FROM reqlist 
+		 WHERE REQ_ID=  #{reqId} 
+	</select>
 </mapper>
