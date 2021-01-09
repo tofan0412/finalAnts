@@ -62,17 +62,40 @@
     		document.location = '/alarmList';
     	});
     	
+    	// 관리자에게 쪽지 보내는 모달 창 띄우기
     	$('#msgBtn').click(function(){
-    		$('#msgTitle').val('');
     		$('#msgCont').val('');
     		$('#msgType').val('선택');
     		
     		$('#msgToAdminModal').modal();
     	})
     	
-    	$('#msgTitle').keyup(function(){
-    		$('.msgWarningTitle').empty();
+    	// 내 쪽지함 확인하기
+    	$('#msgAnsBtn').click(function(){
+    		$('.msgAnsBody').empty();
+    		html = "";
+    		$.ajax({
+    			url : "/msg/myMsgList",
+    			data : {msgReceiver : '${SMEMBER.memId}'},
+    			method : "POST",
+    			success : function(res){
+    				html += "<table>";
+    				html += "<tr style=\'text-align : center;\'><th>작성자</th><th>내용</th><th>작성일</th></tr>";
+    				for(i = 0 ; i < res.length ; i++){
+    					html += "<tr>";
+	    					html += "<td style=\'text-align : center;\'>" + res[i].msgWriter + "</td>";
+	    					html += "<td style=\'text-align : center;\'>" + res[i].msgCont + "</td>";
+	    					html += "<td style=\'text-align : center;\'>" + res[i].regDt + "</td>";
+    					html += "</tr>";
+    				}
+    				$('.msgAnsBody').html(html);
+    			}
+    		})
+    		
+    		
+    		$('#msgAnsModal').modal();
     	})
+    	
     	
     	$('#msgCont').keyup(function(){
     		$('.msgWarningCont').empty();
@@ -92,12 +115,6 @@
     		}else if (msgType == '문의'){
     			type = 'ISSUE';
     		}
-			
-    		msgTitle = $('#msgTitle').val();
-    		if (msgTitle == ''){
-    			$('.msgWarningTitle').text("제목을 입력해 주세요.");
-    			count++;
-    		}
     		
     		msgCont = $('#msgCont').val();
     		if (msgCont == ''){
@@ -112,8 +129,9 @@
     		if (count < 1){
     			$.ajax({
     				url : "/msg/insertMsg",
-    				data : {msgType : type, msgTitle : msgTitle, msgCont : msgCont,
-    						msgWriter : msgWriter, regDt : regDt, msgStatus : msgStatus},
+    				data : {msgType : type, msgCont : msgCont,
+    						msgWriter : msgWriter, regDt : regDt, 
+    						msgStatus : msgStatus, msgReceiver : 'ADMIN'},
     				method : "POST", 
     				success : function(res){
     					alert("쪽지를 보냈습니다.");
@@ -278,6 +296,11 @@
           </a>
           
           <div class="dropdown-divider"></div>
+          <a href="#" id="msgAnsBtn" class="dropdown-item">
+            <i class="fas fa-envelope-open mr-2"></i>내 쪽지함
+          </a>
+          
+          <div class="dropdown-divider"></div>
           <a href="${pageContext.request.contextPath}/member/logout" class="dropdown-item">
             <i class="fas fa-toggle-off mr-2"></i>로그아웃
           </a>
@@ -296,10 +319,10 @@
   
   
   <!-- 관리자에게 쪽지 보내는 MODAL 창 -->
-  <div class="modal fade jg" id="msgToAdminModal" tabindex="-1" role="dialog"
+    <div class="modal fade jg" id="msgToAdminModal" tabindex="-1" role="dialog"
 		aria-labelledby="msgToAdminModal">
 		<div class="modal-dialog modal-lg-center" role="document">
-			<div class="modal-content" style="height: 450px; width : 450px; padding-left : 30px;">
+			<div class="modal-content" style="height: 350px; width : 450px;">
 				
 				<div class="modal-header">
 					<h3 class="modal-title" id="addplLable">관리자에게 쪽지 보내기</h3>
@@ -308,21 +331,17 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body" style="margin-left : 15px;">
+				<div class="modal-body">
 					<label>유형</label>&nbsp;&nbsp;
 					<select id="msgType">
 						<option>선택</option>
 						<option>권한요청</option>
 						<option>문의</option>
 					</select><br>
-					<label>제목</label>
-					<span class="msgWarningTitle" style="color : red;"></span>
-					<br>
-					<input id="msgTitle" placeholder="최대 입력은 20자입니다." maxlength="20" type="text" style="width : 80%;" autocomplete="off"><br><br>
 					<label>내용</label>
 					<span class="msgWarningCont" style="color : red;"></span>
 					<br>
-					<textarea id="msgCont" rows="4" placeholder="최대 입력은 20자입니다." maxlength="20" cols="30" style="width : 80%; resize : none;" autocomplete="off"></textarea>
+					<textarea id="msgCont" rows="4" placeholder="최대 입력은 20자입니다." maxlength="20" cols="30" style="width : 100%; resize : none;" autocomplete="off"></textarea>
 				</div>
 				
 				<div class="modal-footer">
@@ -333,3 +352,23 @@
 			</div>
 		</div>
 	</div>
+	
+  <!-- 내 쪽지함 -->
+	<div class="modal fade jg" id="msgAnsModal" tabindex="-1" role="dialog"
+		aria-labelledby="msgAnsModal">
+		<div class="modal-dialog modal-lg-center" role="document">
+				<div class="modal-content" style="height: 500px; width : 450px;">
+
+				<div class="modal-header">
+					<h3 class="modal-title" id="addplLable">내 쪽지함</h3>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body msgAnsBody" style="height : 75%; overflow-y : auto;">
+					
+				</div>
+			</div>
+		</div>
+	</div>	

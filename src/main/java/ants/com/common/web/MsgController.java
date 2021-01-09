@@ -72,4 +72,10 @@ public class MsgController {
 		}
 	}
 	
+	@RequestMapping("/myMsgList")
+	@ResponseBody
+	public List<MsgVo> myMsgList(MsgVo msgVo){
+		return msgService.myMsgList(msgVo); 
+	}
+	
 }

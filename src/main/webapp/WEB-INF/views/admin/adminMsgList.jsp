@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <style>
 .adminMsgList{
@@ -21,6 +22,10 @@ function fn_egov_link_page(pageNo){
 }
 
 $(function(){
+	var msgTo = "";
+	var msgNum = "";
+	
+	// 승인 처리 : 해당 멤버의 memType을 PM으로 변경하고, 해당 메시지의 상태를 ACCEPT로 변경한다.
 	$('.pmAcceptBtn').click(function(){
 		conf = confirm("해당 회원의 권한을 PM으로 변경하시겠습니까?");
 		if(conf){
@@ -32,6 +37,7 @@ $(function(){
 		}
 	})
 	
+	// 반려 처리하기 : msg 테이블에서 해당 메시지에 대해 REJECT로 변경
 	$('.pmRejectBtn').click(function(){
 		conf = confirm("반려 처리하시겠습니까?");
 		
@@ -43,19 +49,48 @@ $(function(){
 		}
 	})
 	
+	/* 답변 버튼을 누르면 새로운 모달창이 나온다. */
 	$('.adminAnswerBtn').click(function(){
-		memId = $(this).attr("memId");
+		msgTo = $(this).attr("memId");
+		msgNum = $(this).attr("msgIdx");
 		
 		$('#adminAnswerArea').val('');			
 		$('#adminAnswerModal').modal();
 	})
 	
+	/* 관리자가 사용자 질문에 대해 답변한 거 알람 테이블에 저장하기 */
 	$('.ansSubmitBtn').click(function(){
 		cont = $('#adminAnswerArea').val();
+		regDt = $('#clock').val();
+		msgType = "ANSWER";
+		msgStatus = "ANSWER";
+		msgWriter = "ADMIN";
 		
+		cnt = 0;
+		if (cont == ""){
+			alert("내용을 입력해 주세요..");
+			cnt++;
+		}
+		if (cnt < 1){
+			$.ajax({
+				url : "/msg/insertMsg", 
+				method : "POST",
+				data : {msgCont : cont, msgWriter : msgWriter, 
+					    regDt : regDt, msgStatus : msgStatus, msgType : msgType, 
+					    msgReceiver : msgTo},
+				success : function(res){
+					if (res > 0){
+						// 상태값 바꿔줘야 한다.
+						msgStatus = "ANSWERED";
+						$(location).attr("href", "/msg/msgUpdate?msgStatus="+msgStatus+"&msgIdx="+msgNum);
+						
+						alert("답변을 작성하였습니다.");
+						$(location).attr("href", "/msg/msgList");
+					}
+				}
+			})
+		}
 	})
-	
-	
 	
 })
 </script>
@@ -66,18 +101,29 @@ $(function(){
 			<table id="msgTable" class="table" style="text-align: center;">
 				<tr>
 					<th>No.</th>
-					<th>제목</th>
 					<th>작성자</th>
+					<th>내용</th>
 					<th>작성일</th>
 					<th>상태</th>
 					<th>유형</th>
 					<th>&nbsp;&nbsp;</th>
 				</tr>
-				<c:forEach items="${msgList }" var="msg">
+				<c:forEach items="${msgList }" var="msg" varStatus="status">
 					<tr>	
-						<td>1</td>
-						<td>${msg.msgTitle }</td>
+						<td>
+							<c:out value="${((msg.pageIndex-1) * msg.pageUnit + (status.index+1))}"/>.
+						</td>
 						<td>${msg.msgWriter }</td>
+						<td>
+							<a href="#">
+								<c:if test="${fn:length(msg.msgCont) > 10 }">
+									${fn:substring(msg.msgCont,0,10) }...
+								</c:if>
+								<c:if test="${fn:length(msg.msgCont) < 10 }">
+									${msg.msgCont }
+								</c:if>
+							</a>
+						</td>
 						<td>${msg.regDt }</td>
 						<td>
 							<c:if test="${msg.msgStatus eq 'WAIT' }">
@@ -85,6 +131,13 @@ $(function(){
 									         background-color: #FFBF00;
 									         border-radius : 0.3rem;">
 							         &nbsp;대기&nbsp;
+						       </span>
+							</c:if>
+							<c:if test="${msg.msgStatus eq 'ANSWERED' }">
+								<span style="border : 3px solid #4bcbfc;
+									         background-color: #4bcbfc;
+									         border-radius : 0.3rem;">
+							         &nbsp;답변완료&nbsp;
 						       </span>
 							</c:if>
 							<c:if test="${msg.msgStatus eq 'ACCEPT' }">
@@ -118,7 +171,7 @@ $(function(){
 								<button type="button" msgIdx="${msg.msgIdx }" class="btn btn-danger pmRejectBtn">반려</button>
 							</c:if>
 							<c:if test="${msg.msgStatus eq 'WAIT' && msg.msgType eq 'ISSUE' }">
-								<button type="button" memId="${msg.msgWriter }" class="btn btn-success adminAnswerBtn">답변</button>
+								<button type="button" memId="${msg.msgWriter }" msgIdx="${msg.msgIdx }" class="btn btn-success adminAnswerBtn">답변</button>
 							</c:if>
 						</td>
 					</tr>
@@ -145,7 +198,7 @@ $(function(){
 <div class="modal fade jg" id="adminAnswerModal" tabindex="-1" role="dialog"
 	aria-labelledby="adminAnswerModal">
 	<div class="modal-dialog modal-sm-center" role="document">
-		<div class="modal-content" style="height: 350px; width : 550px;">
+		<div class="modal-content" style="height: 400px; width : 500px;">
 			
 			<div class="modal-header">
 				<h3 class="modal-title" id="addplLable">답변</h3>

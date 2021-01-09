@@ -7,6 +7,38 @@
 		font-family: Jeju Gothic;
 	}
 </style>
+<script>
+	getNow();
+
+	// 시간 관련 함수 설정
+	function getNow() {
+		var now = new Date();
+	
+		var calendar = now.getFullYear() + "-" + (now.getMonth() + 1) + "-"
+				+ now.getDate();
+	
+		var currentHours = addZeros(now.getHours(), 2);
+		var currentMinute = addZeros(now.getMinutes(), 2);
+		var currentSeconds = addZeros(now.getSeconds(), 2);
+	
+		$('#clock').val(
+				calendar + " " + currentHours + ":" + currentMinute + ":"
+						+ currentSeconds);
+		setTimeout("getNow()", 1000);
+	}
+	
+	function addZeros(num, digit) { // 자릿수 맞춰주기
+		var zero = '';
+		num = num.toString();
+		if (num.length < digit) {
+			for (i = 0; i < digit - num.length; i++) {
+				zero += '0';
+			}
+		}
+		return zero + num;
+	}
+</script>
+
    <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -16,6 +48,9 @@
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="${pageContext.request.contextPath}/admin/adMainView" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+      	<input class="nav-link" type="text" id="clock" readonly style="border : none; color : blue;">
       </li>
     </ul>
 

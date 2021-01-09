@@ -4,13 +4,19 @@ import ants.com.base.model.BaseVo;
 
 public class MsgVo extends BaseVo {
 	private String msgIdx;
-	private String msgTitle;
 	private String msgCont;
 	private String msgWriter;
+	private String msgReceiver;
 	private String regDt;
 	private String msgStatus;
 	private String msgType;
 	
+	public String getMsgReceiver() {
+		return msgReceiver;
+	}
+	public void setMsgReceiver(String msgReceiver) {
+		this.msgReceiver = msgReceiver;
+	}
 	public String getMsgType() {
 		return msgType;
 	}
@@ -28,12 +34,6 @@ public class MsgVo extends BaseVo {
 	}
 	public void setMsgIdx(String msgIdx) {
 		this.msgIdx = msgIdx;
-	}
-	public String getMsgTitle() {
-		return msgTitle;
-	}
-	public void setMsgTitle(String msgTitle) {
-		this.msgTitle = msgTitle;
 	}
 	public String getMsgCont() {
 		return msgCont;
@@ -55,7 +55,7 @@ public class MsgVo extends BaseVo {
 	}
 	@Override
 	public String toString() {
-		return "MsgVo [msgIdx=" + msgIdx + ", msgTitle=" + msgTitle + ", msgCont=" + msgCont + ", msgWriter="
+		return "MsgVo [msgIdx=" + msgIdx + ", msgCont=" + msgCont + ", msgWriter="
 				+ msgWriter + ", regDt=" + regDt + "]";
 	}
 }

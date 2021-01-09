@@ -28,5 +28,9 @@ public class MsgService {
 	public int msgPagingCnt(MsgVo msgVo) {
 		return mapper.msgPagingCnt(msgVo);
 	}
+	
+	public List<MsgVo> myMsgList(MsgVo msgVo){
+		return mapper.myMsgList(msgVo);
+	}
 
 }

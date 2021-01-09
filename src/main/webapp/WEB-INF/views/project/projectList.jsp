@@ -125,9 +125,6 @@ th, td {
 				return;
 			}
 			
-			//생성 직전, 자기 자신 아이디를 추가한다. 
-// 			mkPjtInviteMemList.push(myName+":"+myId);
-			
 			// 현재 초대 리스트는 회원이름과 결합되어 있으므로, 가공해줘야 한다.
 			setInviteMemList = [];
 			for (i = 0 ; i < mkPjtInviteMemList.length ; i++){
