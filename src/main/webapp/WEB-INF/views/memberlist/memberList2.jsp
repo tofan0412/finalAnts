@@ -127,7 +127,7 @@ $(function(){
 
 							<form:select path="searchCondition"
 								class="form-control col-md-3 jg" style="width: 100px;">
-								<form:option value="1" class="jg" label="이메일" />
+								<form:option value="1" class="jg" label="아이디" />
 								<form:option value="2" class="jg" label="이름" />
 								<form:option value="3" class="jg" label="타입" />
 							</form:select>
@@ -159,7 +159,7 @@ $(function(){
 						<thead>
 							<tr>
 								<th class="jg" style="width : 10%; padding-left: 20px; text-align: center;">No.</th>
-								<th class="jg" style="padding-left: 10%; width: 37%">이메일</th>
+								<th class="jg" style="padding-left: 10%; width: 37%">아이디</th>
 								<th class="jg" style="text-align: center; width: 10%">이름</th>
 								<th class="jg" style="text-align: center; width: 15%">전화번호</th>
 								<th class="jg" style="text-align: center; width: 11%">타입</th>
