@@ -56,6 +56,7 @@ function calendarUpdate(id, title, start, end) {
 			endDt : end
 		},
 		success : function(data) {
+			window.location.reload()
 		}
 
 	});
@@ -71,6 +72,7 @@ function calendarUpdate2(id, title, start) {
 			startDt : start
 		},
 		success : function(data) {
+			window.location.reload()
 		}
 
 	});
@@ -121,6 +123,7 @@ function calendarDelete(id) {
 			scheId : id
 		},
 		success : function(data) {
+			window.location.reload()
 		}
 
 	});
@@ -195,28 +198,28 @@ document.addEventListener('DOMContentLoaded', function() {
 				    	calendarDelete(info.event.id);
 				    }
 				},
-		events: [
-		        <%
-		         for(int i =0; i<list.size(); i++){
-		        	 ScheduleVo dto = (ScheduleVo)list.get(i);
-		         
-		        %>
-				{
-					id : '<%= dto.getScheId()%>',
-					navLinks: true,
-					title : '<%= dto.getScheTitle()%>',
-					backgroundColor: '<%= dto.getCalendarcss()%>',
-					start: '<%= dto.getStartDt()%>',
-					end: '<%= dto.getEndDt()%>'
-				},
-				<%
-		         }
-				%>
-					
-		      ]
-		
-	});
-	calendar.render();
+				events: [
+			        <%
+			         for(int i =0; i<list.size(); i++){
+			        	 ScheduleVo dto = (ScheduleVo)list.get(i);
+			         
+			        %>
+					{
+						id : '<%= dto.getScheId()%>',
+						navLinks: true,
+						title : '<%= dto.getScheTitle()%>',
+						backgroundColor: '<%= dto.getCalendarcss()%>',
+						start: '<%= dto.getStartDt()%>',
+						end: '<%= dto.getEndDt()%>'
+					},
+					<%
+			         }
+					%>
+						
+			      ]
+			
+		});
+		calendar.render();
 	
 	var currColor = '#0073b7';
 	$("#color-chooser > li > a").on("click", function () {
@@ -368,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-             <div id="keyword" class="card-tools float-left" style="width: 450px;">
+             <div  class="card-tools float-left" style="width: 450px;">
 					<h3 class="jg" style="padding-left: 10px;">Calendar / <a style="color: black;" href="${pageContext.request.contextPath}/schedule/scheduleplaceView">일정</a></h3>
 			</div>
           </div>
