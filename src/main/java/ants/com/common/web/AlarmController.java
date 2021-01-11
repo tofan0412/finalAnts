@@ -146,6 +146,12 @@ public class AlarmController {
 			re.addAttribute("sgtId", alarmVo.getId());
 			return "redirect:/suggest/suggestDetail";
 		}
+		//답글
+		if(alarmVo.getAlarmType().equals("posts")) {
+			session.setAttribute("categoryId", "5");
+			re.addAttribute("hissueId", alarmVo.getId());
+			return "redirect:/hotIssue/hissueDetailView";
+		}
 		
 		
 		return null;
