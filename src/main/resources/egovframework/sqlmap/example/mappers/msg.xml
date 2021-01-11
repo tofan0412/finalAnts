@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ants.com.common.mapper.MsgMapper" >
+
+<insert id="insertMsg" parameterType="ants.com.common.model.MsgVo">
+INSERT INTO MSG(MSG_IDX, MSG_CONT, MSG_WRITER, REG_DT, MSG_STATUS, MSG_TYPE, MSG_RECEIVER)
+	VALUES (MSG_SEQ.NEXTVAL, #{msgCont}, 
+			#{msgWriter}, TO_DATE(#{regDt},'YYYY-MM-DD-HH24:MI:SS'), #{msgStatus}, #{msgType}, #{msgReceiver})
+</insert>
+
+<select id="msgList" parameterType="ants.com.common.model.MsgVo" resultType="ants.com.common.model.MsgVo">
+SELECT B.*
+	  FROM (SELECT ROWNUM RNUM, A.*
+		      FROM (SELECT MSG_IDX, MSG_CONT, MSG_WRITER,
+			               TO_CHAR(REG_DT, 'YYYY-MM-DD') AS REG_DT,
+			               MSG_STATUS, MSG_TYPE
+			          FROM MSG
+			         WHERE MSG_TYPE != 'ANSWER'
+			         ORDER BY DECODE ( MSG_STATUS, 'WAIT', 1), REG_DT DESC) A
+	     WHERE ROWNUM <![CDATA[ <= ]]> ${lastIndex} ) B
+    <![CDATA[WHERE B.RNUM > #{firstIndex}]]>
+</select>
+
+<update id="msgUpdate" parameterType="ants.com.common.model.MsgVo">
+UPDATE MSG
+	<set>
+		<if test="msgCont != null">MSG_CONT = #{msgCont}</if>
+		<if test="msgWriter != null">MSG_WRITER = #{msgWriter}</if>
+		<if test="msgStatus != null">MSG_STATUS = #{msgStatus}</if>
+		<if test="msgType != null">MSG_TYPE = #{msgType}</if>
+		<if test="msgReceiver != null">MSG_RECEIVER= #{msgReceiver}</if>
+	</set>
+	 WHERE MSG_IDX = #{msgIdx}
+</update>
+
+<select id="msgPagingCnt" parameterType="ants.com.common.model.MsgVo" resultType="java.lang.Integer">
+	SELECT COUNT(*) 
+	  FROM MSG
+</select>
+
+<select id="myMsgList" parameterType="ants.com.common.model.MsgVo" resultType="ants.com.common.model.MsgVo">
+	SELECT MSG_IDX, MSG_CONT, MSG_WRITER,
+           TO_CHAR(REG_DT, 'YY-MM-DD') AS REG_DT,
+           MSG_STATUS, MSG_TYPE, MSG_RECEIVER
+	  FROM MSG
+	 WHERE MSG_TYPE = 'ANSWER'
+	   AND MSG_WRITER = 'ADMIN'
+	   AND MSG_RECEIVER = #{msgReceiver}
+</select>
+
+
+
+
+
+</mapper>
+
+
+

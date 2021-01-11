@@ -63,7 +63,6 @@ public class PrivateFileController {
 	
 		if(privatefileVo.getType() != null && privatefileVo.getType().equals("imageicon")) {	
 			paginationInfo.setRecordCountPerPage(20);
-			System.out.println("type333 : " + paginationInfo.getRecordCountPerPage());
 
 		}else {
 			paginationInfo.setRecordCountPerPage(privatefileVo.getPageUnit());
@@ -291,7 +290,7 @@ public class PrivateFileController {
 	
 		fileService.modfilename(pfv);
 		
-		return "redirect:/privatefile/privatefileView";
+		return "redirect:/privatefile/privatefileView?type="+pfv.getType();
 	}
 	
 	

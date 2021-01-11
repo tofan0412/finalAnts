@@ -8,7 +8,7 @@
 }
 .recentIpList{
 	text-align : center;
-	width : 90%;
+	width : 95%;
 	margin : 0 auto;
 }
 .recentIpList td{
@@ -51,8 +51,15 @@ function readRecentIpList(){
 	<!-- /contentMenuBar -->
 	
 	<div style="float : left; width : 100%;">
-		<!-- right : 최근 접속 IP 리스트 -->
-		<h5 class="jg">최근 접속 IP 리스트 (최근 10개 항목)</h5>
+		<!-- right : 최근 접속 IP 리스트  -->
+		<h5 class="jg" style="display: inline-block;padding: 1%; padding-left: 3%; ">최근 접속 IP 리스트 (최근 10개 항목)</h5>
+		 &nbsp; &nbsp;
+		<button class="btn btn-default">
+			<li class="fas fa-download"></li> &nbsp;
+			<a style="color : black;"href="/excel/iplistexcelDown"> Excel다운로드</a>
+			
+		</button>
+		
 		<table class="recentIpList">
 			<tr style="height : 30px;">
 				<th>사용자</th>

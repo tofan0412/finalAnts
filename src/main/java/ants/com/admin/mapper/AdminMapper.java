@@ -38,6 +38,10 @@ public interface AdminMapper {
 
 	public AdminVo adlogincheck(AdminVo adminVo);
 
+
+	// 탈퇴하지 않은 모든 멤버리스트
+	public  List<MemberVo> allmemberlist();
+	
 	//멤버 리스트
 	public List<MemberVo> memberlist(MemberVo memberVo);
 	
@@ -54,7 +58,10 @@ public interface AdminMapper {
 	public int delmemlist(String memId);
 	
 	// Ip 전체 리스트 가져오기
-	public List<IpVo> getIpList();
+	public List<IpVo> getIpList(IpVo ipVo);
+	
+	// Ip 전체 리스트 가져오기(확인하기위함)
+	public List<IpVo> getIpListcheck();
 	
 	// 특정 Ip만 가져오기
 	public IpVo getIp(IpVo ipVo);
@@ -76,6 +83,9 @@ public interface AdminMapper {
 	
 	// 사용자 로그인 기록 리스트로 불러오기
 	public List<IpHistoryVo> loginLogList();
+	
+	// IP히스토리 최근 1000개 가져오기
+	public List<IpHistoryVo> allloginList();
 
 	////////////////////////////////////////////////////프로젝트 리스트용
 	

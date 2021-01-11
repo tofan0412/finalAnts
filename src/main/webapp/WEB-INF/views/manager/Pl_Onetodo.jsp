@@ -41,7 +41,6 @@
 			var todoId = $("#todoParentid").val();
 			$("#listform").attr("action", "${pageContext.request.contextPath}/todo/onetodoView?todoId="+todoId);
 			listform.submit();	
-// 			window.history.back();
 		})
 		
 		// 일감 삭제

@@ -129,7 +129,7 @@ function recentsort(){
 		        <div class="row mb-1">
 		          <div class="col-sm-6">
 		          <br>
-		            <h3 class="jg" style=" padding-left : 10px; display: inline-block;"><li class="nav-icon fas fa-bookmark"></li>&nbsp;북마크</h3>
+		            <h3 class="jg" style=" padding-left : 10px; display: inline-block;"><li class="nav-icon fas fa-bookmark"></li>&nbsp;즐겨찾기</h3>
 		            &nbsp;
 						<form:hidden path="sort" />
 						<form:button id="recent" onclick="javascript:recentsort();" >최신순</form:button> &nbsp;
@@ -139,7 +139,7 @@ function recentsort(){
 		          	
 		            <ol class="breadcrumb float-sm-right"  style="background : white">
 		              <li class="breadcrumb-item san jg"><a href="${pageContext.request.contextPath}/member/mainpage">Home</a></li>
-		              <li class="breadcrumb-item active jg">북마크</li>
+		              <li class="breadcrumb-item active jg">즐겨찾기</li>
 		            </ol>
 		          </div>
 		        </div>

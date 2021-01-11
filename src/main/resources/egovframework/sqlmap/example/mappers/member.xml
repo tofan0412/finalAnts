@@ -57,16 +57,17 @@
 	
 				
 	<update id="profileupdate" parameterType="ants.com.member.model.MemberVo">
-		UPDATE MEMBER 
+UPDATE MEMBER 
 		<set>
 	        <if test="memName != null">mem_name=#{memName},</if>
 	        <if test="memPass != null">mem_pass=#{memPass},</if>
 	        <if test="memTel != null">mem_tel=#{memTel},</if>
 	        <if test="memFilepath != null">mem_filepath=#{memFilepath},</if>	 	            
-	        <if test="memFilename != null">mem_filename=#{memFilename},</if>	 	             	                     	            
+	        <if test="memFilename != null">mem_filename=#{memFilename},</if>	
+	        <if test="memType != null">mem_type=#{memType},</if>	
 	    </set>  
 		WHERE MEM_ID = #{memId}
-	</update>
+</update>
 		
 	
 	<update id="updateAlarm" parameterType="ants.com.member.model.MemberVo">
@@ -75,4 +76,9 @@
 	</update>
 	
 	
+<update id="memTypeUpdate" parameterType="ants.com.member.model.MemberVo">
+UPDATE MEMBER
+      SET MEM_TYPE = #{memType}
+ WHERE MEM_ID = #{memId}
+</update>
 </mapper>

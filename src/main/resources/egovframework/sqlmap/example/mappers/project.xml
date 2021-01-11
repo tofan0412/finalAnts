@@ -72,14 +72,14 @@
 
 	<insert id="insertProject"
 		parameterType="ants.com.member.model.ProjectVo">
-		INSERT INTO PROJECT 
+INSERT INTO PROJECT 
 			(REQ_ID,REG_DT,DEL)
 		VALUES
 			(#{reqId},SYSDATE,'N')
-	</insert>
+</insert>
 
 	<select id="userSearch" parameterType="java.lang.String" resultType="ants.com.member.model.MemberVo">
-SELECT * 
+		SELECT * 
 		  FROM MEMBER 
 		 WHERE MEM_NAME LIKE #{keyword}
 		   AND DEL != 'Y'
@@ -140,18 +140,20 @@ SELECT *
 	<!-- 프로젝트 update -->
 	<update id="updateProject"
 		parameterType="ants.com.member.model.ProjectVo">
-		UPDATE PROJECT
+UPDATE PROJECT
 		<set>
 			<if test='memId != null and memId != "공석"'>MEM_ID = #{memId},</if>
 			<if test='memId == "공석"'>MEM_ID = null,</if>
 			<if test="proName != null">PRO_NAME = #{proName},</if>
 			<if test="percent != null">PRO_PERCENT = #{percent},</if>
 			<if test="regDt != null">REG_DT = #{regDt},</if>
-			<if test="del != null">DEL = #{del}</if>
+			<if test="del != null">DEL = #{del},</if>
+			<if test="proChangeDate != null">PRO_CHANGE_DATE = SYSDATE,</if>
+			<if test="proStatus != null">PRO_STATUS = #{proStatus},</if>
 		</set>
 		WHERE 1=1
 		AND REQ_ID = #{reqId}
-	</update>
+</update>
 
 	<!-- 개요페이지 프로젝트 정보 -->
 	<select id="getoutlinepro" parameterType="String"

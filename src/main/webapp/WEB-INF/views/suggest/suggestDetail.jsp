@@ -586,7 +586,9 @@ width:100%; overflow:visible; background-color:transparent; border:none;
 						<input type="button" value="목록으로" id="back"
 							class="btn btn-default float-left jg">
 						<!-- PL인 경우 해당 건의 사항에 대해 바로 처리할 수 있다. -->
-						<c:if test="${projectVo.memId == SMEMBER.memId }">
+						<c:if test="${projectVo.memId == SMEMBER.memId 
+						             && suggestVo.sgtStatus != 'ACCEPT' 
+						             && suggestVo.sgtStatus != 'REJECT'}">
 							<input type="button" value="처리하기" id="takeIt"
 								class="btn btn-info float-left jg" style="margin-left : 5px;">
 						</c:if>	

@@ -82,7 +82,6 @@ $(function(){
 					 method : "get",
 					 data : {issueId : issueid},
 					 success :function(data){	
-						
 // 						alert('등록성공') 	
 					 }
 				})				
@@ -261,10 +260,10 @@ function recentsort(){
 			
 										<c:choose>
 											<c:when test="${issue.bookmark == '' || issue.bookmark == null }">
-												<td style="text-align: center; width : 10%;" class = "jg"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
+												<td class = "area-desc jg" style="text-align: center; width : 10%;" class = "jg"><span><img src="/resources/dist/img/bookmark-white.png" width="20" height="20" name ="${issue.issueId}"/></span></td>
 											</c:when>
 											<c:otherwise>
-												<td style="text-align: center; width : 10%;" class = "jg"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
+												<td class = "area-desc jg" style="text-align: center; width : 10%;" class = "jg"><span><img src="/resources/dist/img/bookmark-black.png" width="20" height="20" name ="${issue.issueId}"/></span></td>											
 											</c:otherwise>
 										</c:choose>
 										

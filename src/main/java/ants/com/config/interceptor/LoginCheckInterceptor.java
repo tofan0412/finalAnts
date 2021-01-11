@@ -22,7 +22,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		HttpSession session = request.getSession();
-		
+
 		if(session.getAttribute("SMEMBER") == null) {
 			// 로그인 페이지로 이동한다. 
 			response.sendRedirect("/member/loginView");

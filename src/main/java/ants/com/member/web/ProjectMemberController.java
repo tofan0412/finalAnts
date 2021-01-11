@@ -173,6 +173,7 @@ public class ProjectMemberController {
 		MemberVo memberVo = (MemberVo)session.getAttribute("SMEMBER");
 		String memId = memberVo.getMemId();
 		
+		System.out.println("reqId : " + reqId);
 		PublicFileVo pfv = new PublicFileVo("3",issueVo.getIssueId() , reqId);//파일조회
 		filecontroller.getfiles(pfv, model);
 

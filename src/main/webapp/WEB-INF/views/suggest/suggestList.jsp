@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 
 <style type="text/css">
 #pagenum a {
@@ -106,6 +107,10 @@ $(function(){
 		$('.warningTitle').empty();
 	})
 	
+	$('#sgtCont').keyup(function(){
+		$('.warningCont').empty();
+	})
+	
 // 	// 자동 완성 부분 ..
 // 	function autoComplete(todoSearchList){
 // 		$('#todoId').autocomplete({
@@ -139,9 +144,15 @@ $(function(){
 			cnt++;
 		}
 		if ($('#sgtTitle').val().length == 0){
-			$('.warningTitle').text("  건의사항 제목을 지정해 주세요.");
+			$('.warningTitle').text("건의사항 제목을 입력해 주세요.");
 			cnt++;
 		}
+		
+		if ($('#sgtCont').val().length == 0){
+			$('.warningCont').text("건의사항 내용을 입력해 주세요.");
+			cnt++;
+		}
+		
 		if (cnt == 0){
 			// Insert 하면 된다.
 			// 파일부터 먼저 넣자.
@@ -243,21 +254,6 @@ $(function(){
 	<section class="content">
 		<div class="col-12 col-sm-12">
 			<div class="card" style="border-radius: inherit;">
-				<!-- 				<div class="container-fluid"> -->
-				<!-- 					<div class="row mb-2"> -->
-				<!-- 						<br> -->
-				<!-- 						<div class="col-sm-6"> -->
-				<!-- 							<br> -->
-				<!-- 							<h1 class="jg" style="padding-left: 10px;">건의 사항 리스트</h1> -->
-				<!-- 						</div> -->
-				<!-- 						<div class="col-sm-6"> -->
-				<!-- 							<ol class="breadcrumb float-sm-right" style="background: white"> -->
-				<!-- 								<li class="breadcrumb-item san"><a href="#">Home</a></li> -->
-				<!-- 								<li class="breadcrumb-item active">건의 사항 리스트</li> -->
-				<!-- 							</ol> -->
-				<!-- 						</div> -->
-				<!-- 					</div> -->
-				<!-- 				</div> -->
 				<br>
 				<div class="card-header">
 					<div id="keyword" class="card-tools float-left"
@@ -302,8 +298,8 @@ $(function(){
 								<th class="jg" style="width: 150px; padding-left: 50px;">No.</th>
 								<th class="jg" style="padding-left: 30px;">건의사항 제목</th>
 								<th class="jg">작성자</th>
-								<th class="jg">날짜</th>
-								<th class="jg">해당일감</th>
+								<th class="jg">작성일</th>
+<!-- 								<th class="jg">해당일감</th> -->
 								<th class="jg">처리현황</th>
 							</tr>
 						</thead>
@@ -321,7 +317,7 @@ $(function(){
 
 									<td class="jg">${suggest.memName }</td>
 									<td class="jg">${suggest.regDt }</td>
-									<td class="jg">${suggest.todoId }</td>
+<%-- 									<td class="jg">${suggest.todoId }</td> --%>
 									<!-- 건의사항 상태 : 대기, 승인, 반려에 따른 출력 -->
 									<c:if test="${'WAIT' == suggest.sgtStatus }">
 										<td class="jg">
@@ -338,7 +334,8 @@ $(function(){
 											<span 
 												style="border : 3px solid #088A29;
 												       background-color: #088A29;
-												       border-radius : 0.3rem;">
+												       border-radius : 0.3rem;
+												       color : white;">
 												       &nbsp;승인&nbsp;
 									       </span>
 										</td>
@@ -348,7 +345,8 @@ $(function(){
 											<span 
 												style="border : 3px solid #FF0000;
 												       background-color: #FF0000;
-												       border-radius : 0.3rem;">
+												       border-radius : 0.3rem;
+												       color : white;">
 												       &nbsp;반려&nbsp;
 									       </span>
 										</td>
@@ -372,12 +370,13 @@ $(function(){
 				</div>
 
 				<div class="card-footer clearfix">
-					<button id="insertSuggestBtn" type="button"
-						class="btn btn-default float-left jg">
-						<i class="fas fa-edit"></i>등 록
-					</button>
+					<c:if test="${projectVo.proStatus == 'ACTIVE' }">
+						<button id="insertSuggestBtn" type="button"
+							class="btn btn-default float-left jg">
+							<i class="fas fa-edit"></i>등 록
+						</button>
+					</c:if>
 				</div>
-
 
 
 				<!-- /.card-body -->
@@ -387,7 +386,6 @@ $(function(){
 	<br>
 </form:form>
 
-<!-- Modal to invite new Members . . . -->
 <div class="modal fade suggestInsertModal" id="suggestInsert"
 	tabindex="-1" role="dialog" aria-labelledby="suggestInsertModal">
 	<div class="modal-dialog modal-lg" role="document">
@@ -434,8 +432,15 @@ $(function(){
 								<div class="jg singleTodo" todoId="${myTodo.todoId }" id="getTodo"
 									todoTitle="${myTodo.todoTitle }"
 									style="width: 90%; height: 50px;">
-									${myTodo.todoTitle } <span style="float: right;">일감번호 :
-										${myTodo.todoId }</span> <br>
+									
+									<c:if test="${fn:length(myTodo.todoTitle) > 10 }">
+									${fn:substring(myTodo.todoTitle,0,10)}...
+									</c:if>
+									<c:if test="${fn:length(myTodo.todoTitle) < 10 }">
+									${myTodo.todoTitle }
+									</c:if>
+									 
+									<span style="float: right;">일감번호 : ${myTodo.todoId }</span> <br>
 									<c:if test="${myTodo.todoImportance == 'gen' }">
 										<span class="jg" style="font-size: 1.0em;">일반</span>
 									</c:if>
@@ -460,7 +465,9 @@ $(function(){
 								   border-radius : 0.7rem;"
 							autocomplete="off" />
 						<br>
-						<br> <label class="jg">건의 사항 내용</label><br>
+						<br> <label class="jg">건의 사항 내용</label>
+						<span class="jg warningCont" style="color: red;"></span>
+						<br>
 						<form:textarea id="sgtCont" path="sgtCont" rows="3" cols="30"
 							style="resize: none; 
 											   width : 90%;
@@ -488,4 +495,3 @@ $(function(){
 	</div>
 </div>
 </div>
-<!--  /Modal -->

@@ -7,7 +7,16 @@ public class VoteItemVo {
 	private String voteitemName;
 	private String voteId;
 	private String voteCount;
+	private String percent;
 	
+	
+	
+	public String getPercent() {
+		return percent;
+	}
+	public void setPercent(String percent) {
+		this.percent = percent;
+	}
 	public String getVoteitemId() {
 		return voteitemId;
 	}

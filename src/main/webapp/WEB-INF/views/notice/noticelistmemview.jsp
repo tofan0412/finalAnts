@@ -86,6 +86,13 @@
 		document.listForm.action = "<c:url value='/member/noticelistmemview'/>";
 		document.listForm.submit();
 	}	
+	$(function(){
+		$("body").keyup(function(e){
+			if(e.keyCode == 13){
+				$('#searchBtn').trigger("click");
+			}
+		})
+	})
 </script>	
 </head>
 
@@ -142,72 +149,47 @@
 	            		<!-- 헤더부분  -->
 	            		<thead>
 		                    <tr>
-		                        <th style="width: 150px; padding-left: 50px; text-align: center;">No.</th>
-		                     	<th style="width:50%; padding-left: 30px; text-align: center;" class="jg"> 제목</th> 
-								<th style="text-align: center;" class="jg">   작성자 </th>
-								<th style="text-align: center;" class="jg">   날짜   </th>
+		                        <th class="jg" style="text-align: ; width: 10%; padding-left: 7%">NO.</th>
+								<th class="jg" style="padding-left: 30px; width: 20%">제목</th>
+								<th class="jg" style="text-align: center; width: 10%">작성자</th>
+								<th class="jg" style="text-align: center; width: 15%">날짜</th>
 		                    </tr>
 	                 	</thead>
 						
 						<!-- 리스트부분 -->
-						<tbody>
+						<tbody >
 							<c:forEach items="${noticelist }" var="notice" varStatus="status">
+
 								<tr>
-									<td class="jg" style="width: 150px; padding-left: 50px; text-align: center;">
+									<td class="jg" style="width: 10%; padding-left: 7%; text-align: ; ">
 										<c:out value="${  ((noticeVo.pageIndex-1) * noticeVo.pageUnit + (status.index+1))}" />
 									</td>
-									
-									<!-- noticeTitle line -->
-									<td class="jg"  style="padding-left: 30px; text-align: left;">
+										
+									<td class="jg"  style="padding-left: 30px; width: 20%">
 										<c:if test="${notice.importance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
 										<c:if test="${notice.importance eq 'emg'}"><span class="badge badge-danger ns">필독</span></c:if>
 										&nbsp;
-										<c:choose>
-											<c:when test="${not empty main}">
-												<a href="${pageContext.request.contextPath}/member/noticedetailmemview?main=Y&noticeId=${notice.noticeId}">
-													<c:if test="${fn:length(notice.noticeTitle) > 30}">									
-														${fn:substring(notice.noticeTitle,0 ,30) }...
-													</c:if>
-													<c:if test="${fn:length(notice.noticeTitle) <= 30}">									
-														${notice.noticeTitle}
-													</c:if>
-												</a>
-											</c:when>
-											<c:otherwise>
-												<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}">
-													<c:if test="${fn:length(notice.noticeTitle) > 30}">									
-														${fn:substring(notice.noticeTitle,0 ,30) }...
-													</c:if>
-													<c:if test="${fn:length(notice.noticeTitle) <= 30}">									
-														${notice.noticeTitle}
-													</c:if>
-												</a>
-											</c:otherwise>
-										</c:choose>
+										<a href="${pageContext.request.contextPath}/admin/eachnoticeDetail?noticeId=${notice.noticeId}">
+											<c:if test="${fn:length(notice.noticeTitle) > 30}">									
+												${fn:substring(notice.noticeTitle,0 ,30) }...
+											</c:if>
+											<c:if test="${fn:length(notice.noticeTitle) <= 30}">									
+												${notice.noticeTitle}
+											</c:if>
+										</a>
 									</td>
-									<!-- 상진이형이 한거
-									<td class="jg"  style="padding-left: 30px; text-align: left;">
-										 
-										<c:choose>
-											<c:when test="${not empty main}">
-												<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}&main=Y">${notice.noticeTitle }</a>
-											</c:when>		
-											<c:otherwise>
-												<a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}">${notice.noticeTitle }</a>
-											</c:otherwise>
-										</c:choose>
-										 
-									</td>
-									-->
 									
-									<td class="jg" style="text-align: center;">${notice.adminId }</td>
-									<td class="jg" style="text-align: center;">${notice.regDt }</td>
+									<td class="jg" style="text-align: center; width: 10%">${notice.adminId }</td>
+									<td class="jg" style="text-align: center; width: 15%">${notice.regDt }</td>
+									
 								</tr>
+								
 							</c:forEach>
 							<c:if test="${noticelist.size() == 0}">
-								<td colspan="7" style="text-align: center;"><br> <strong>
+								<td colspan="7" style="text-align: center;" class="jg"><br> <strong>
 										[ 결과가 없습니다. ] </strong></td>
 							</c:if>
+							
 						</tbody>
 	            	</table>
 	            </div><!-- 리스트 부분 끝 -->

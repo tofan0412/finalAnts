@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -421,9 +422,15 @@ public class ProjectController {
 		
 		//  프로젝트 진행도
 		@RequestMapping("/projectManage")
-		public String projectManage(Model model, ProjectVo projectVo) {
+		public String projectManage(Model model, ProjectVo projectVo, HttpSession session) {
 			int res = projectService.projectManage(projectVo);
 			model.addAttribute("data", res);
+			
+			// session에 저장해야 한다 !!
+			ProjectVo sessionVo = (ProjectVo) session.getAttribute("projectVo");
+			sessionVo.setProStatus(projectVo.getProStatus());
+			session.setAttribute("projectVo", sessionVo);
+			
 			return "jsonView";
 		}
 }

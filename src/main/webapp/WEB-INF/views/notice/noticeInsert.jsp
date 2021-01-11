@@ -99,12 +99,12 @@
 	           			 <option class="jg" value="emg">필독</option>
 	        			</select>
 	                </div>
-	                
+	                <br>
 	                <form>
-						<div class="float-right">
+						<div class="float-left">
 <!-- 							<input type="submit" class="btn btn-default" id="insertbtn" value="작성"> -->
 <!-- 							<input type="button" class="btn btn-default" id="insertbtn" value="작성"> -->
-							<button type="button" class="btn btn-default jg" id="regBtn">등록1</button>
+							<button type="button" class="btn btn-default jg" id="regBtn">등록</button>
 <!-- 							<button type="submit" class="btn btn-default jg" id="regBtn">등록2</button> -->
 <!-- 							<button type="button" class="btn btn-default jg" id="back">취소</button> -->
 						</div>

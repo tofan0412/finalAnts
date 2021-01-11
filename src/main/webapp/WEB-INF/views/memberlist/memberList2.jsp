@@ -54,8 +54,14 @@ $(function(){
 	})
 	
 	$("#pagenum a").addClass("page-link");  
-	
 
+})
+$(function(){
+	$("body").keyup(function(e){
+		if(e.keyCode == 13){
+			$('#searchBtn').trigger("click");
+		}
+	})
 })
 
 /* pagination 페이지 링크 function */
@@ -93,6 +99,8 @@ $(function(){
 						<div class="col-sm-6">
 							<br>
 							<h1 class="nav-icon fas fa-address-book" style="padding-left: 10px;">&nbsp;회원리스트</h1>
+							
+							
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right" style="background: white">
@@ -106,15 +114,20 @@ $(function(){
 				
 				<!-- 검색창 라인 -->
 				<div class="card-header  ">
-					<div id="keyword" class="card-tools float-right"
-						style="width: 450px;">
+					<div id="keyword" class="card-tools float-left" style="width: 450px;">
+						<button class="btn btn-default">
+							<li class="fas fa-download"></li> &nbsp;
+							<a style="color : black;"href="/excel/memlistexcelDown"> Excel다운로드</a>
+						</button>
+					</div>
+					<div id="keyword" class="card-tools float-right" style="width: 450px;">
 						<div class="input-group row">
 							<label for="searchCondition" style="visibility: hidden;"></label>
 
 
 							<form:select path="searchCondition"
 								class="form-control col-md-3 jg" style="width: 100px;">
-								<form:option value="1" class="jg" label="이메일" />
+								<form:option value="1" class="jg" label="아이디" />
 								<form:option value="2" class="jg" label="이름" />
 								<form:option value="3" class="jg" label="타입" />
 							</form:select>
@@ -146,7 +159,7 @@ $(function(){
 						<thead>
 							<tr>
 								<th class="jg" style="width : 10%; padding-left: 20px; text-align: center;">No.</th>
-								<th class="jg" style="padding-left: 10%; width: 37%">이메일</th>
+								<th class="jg" style="padding-left: 10%; width: 37%">아이디</th>
 								<th class="jg" style="text-align: center; width: 10%">이름</th>
 								<th class="jg" style="text-align: center; width: 15%">전화번호</th>
 								<th class="jg" style="text-align: center; width: 11%">타입</th>

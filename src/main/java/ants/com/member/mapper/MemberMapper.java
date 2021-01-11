@@ -32,4 +32,6 @@ public interface MemberMapper {
 	public int chatmemberupdate(ChatMemberVo chatmembervo);
 		
 	public int updateAlarm(MemberVo memberVo);
+	
+	public int memTypeUpdate(MemberVo memberVo);
 }

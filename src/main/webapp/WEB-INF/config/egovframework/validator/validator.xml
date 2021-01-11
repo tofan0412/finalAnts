@@ -4,19 +4,19 @@
     "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
 
 <form-validation>
-
+		
     <formset>
-        <form name="sampleVO">
-        	<field property="name" depends="required">
-        		<arg0 key="title.sample.name" />
+        <form name="memberVo">
+        	<field property="memId" depends="required">
+        		<arg0 key="아이디" />
 			</field>
-			<field property="description" depends="required">
-                <arg0 key="title.sample.description" />
+			<field property="memName" depends="required">
+                <arg0 key="이름" />
             </field>
-        	<field property="regUser" depends="required">
-        		<arg0 key="title.sample.regUser" />
+        	<field property="memPass" depends="required">
+        		<arg0 key="패스워드" />
 			</field>
-        </form>
+        </form>	
     </formset>
-
+    	
 </form-validation>

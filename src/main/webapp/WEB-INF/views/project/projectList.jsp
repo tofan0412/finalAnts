@@ -125,9 +125,6 @@ th, td {
 				return;
 			}
 			
-			//생성 직전, 자기 자신 아이디를 추가한다. 
-// 			mkPjtInviteMemList.push(myName+":"+myId);
-			
 			// 현재 초대 리스트는 회원이름과 결합되어 있으므로, 가공해줘야 한다.
 			setInviteMemList = [];
 			for (i = 0 ; i < mkPjtInviteMemList.length ; i++){
@@ -153,10 +150,15 @@ th, td {
 			
 			// 프로젝트를 먼저 생성한다.
 			// 20.12.12 수정 : 프로젝트는 이미 DB상에서 생성되어 있으므로, 제목만 등록한다. 
+			// 21.01.06 수정 : 프로젝트 상태를 ACTIVE로 수정한다.
+			// 21.01.06 수정 : 프로젝트 생성 후 changeDate를 업로드한다. 
 			$.ajax({
 				url : "/project/updateProject",
 				data : { "reqId" : reqId,
-						 "proName" : projectName },
+						 "proName" : projectName,
+						 "proStatus" : "ACTIVE", 
+						 "proChangeDate" : $('#clock').val()
+					   },
 				method : "POST",
 				success : function(res){
 					if ("success" == res){
@@ -182,12 +184,6 @@ th, td {
 				}
 			})
 		})
-		
-		// 사용자가 아이디를 누르는 경우 제거한다. 
-// 		$('.mkPjtMemList').on('click', '.mkPjtAddedMember', function(){
-// 			var memId = $(this).attr('memId');
-// 			delMember(memId);
-// 		})
 		
 		$('.mkPjtMemList').on('click', '.addedMemExceptBtn', function(){
 			var memId = $(this).attr('memId');

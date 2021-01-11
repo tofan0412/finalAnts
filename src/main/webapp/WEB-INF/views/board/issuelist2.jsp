@@ -111,6 +111,11 @@ $(function(){
 /* pagination 페이지 링크 function */
  function fn_egov_link_page(pageNo){
  	document.listForm.pageIndex.value = pageNo;
+ 	if('${sort}' == '2'){
+		document.listForm.sort.value = 2;
+	}else if('${sort}' == '1' || ${sort} == null){
+		document.listForm.sort.value = 1;
+	}
  	document.listForm.action = "<c:url value='/projectMember/issuelist'/>";
     document.listForm.submit();
  }
@@ -165,6 +170,8 @@ $(function(){
 						<form:hidden path="sort" />
 						<form:button id="recent" onclick="javascript:recentsort();" >최신순</form:button> &nbsp;
 						<form:button id="old" onclick="javascript:oldsort();" >오래된순</form:button> &nbsp;
+					
+<!-- 						<input type="button" value="excelDown"><a href="/exceldown"></a> -->
 <%-- 						<form:select path="RegDt" id="regdtsort" class="form-control col-md-3 jg" style="display: inline-block;" > --%>
 <%-- 							<form:option value="recent" class="jg option"  label="최신순"/> --%>
 <%-- 							<form:option value="old" class="jg option" label="오래된순"/> --%>
@@ -244,7 +251,7 @@ $(function(){
 									</c:if>
 									</a> 
 								</td>
-								<td class="jg" style="text-align: center; width : 10%;"> ${issue.memId }</td>
+								<td class="jg" style="text-align: center; width : 10%;"> ${issue.memName }</td>
 								<td class="jg" style="text-align: center; width : 15%;"> ${issue.regDt }</td>
 								<c:if test="${issue.issueKind == 'issue'}">
 									<td style="text-align: center; width : 11%;" class="jg"> 이슈</td>										
@@ -280,12 +287,15 @@ $(function(){
 		        		<li  class="page-item jg" id ="pagenum" >	
 		        		<ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="fn_egov_link_page"  /></li>
 		        		<form:hidden path="pageIndex" />		        		
+<%-- 		        		<form:hidden path="sort" />		        		 --%>
                     
 	                 </ul>
         		  </div>
         	
         		  <div class="card-footer clearfix">
-	                <button id="insertissue" type="button" class="btn btn-default float-left jg" onclick="issueInsert()"><i class="fas fa-edit "></i>등 록</button>
+	                <c:if test="${projectVo.proStatus == 'ACTIVE' }">
+	                	<button id="insertissue" type="button" class="btn btn-default float-left jg" onclick="issueInsert()"><i class="fas fa-edit "></i>등 록</button>
+	                </c:if>
 	              </div>
         		 
         		  

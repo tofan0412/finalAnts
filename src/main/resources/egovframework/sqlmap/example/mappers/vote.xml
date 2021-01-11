@@ -61,17 +61,17 @@
 	<!-- 프로젝트에 따른 이슈게시글 수 조회하기 -->	
 	<select id="votePagingListCnt" parameterType="ants.com.board.vote.model.VoteVo"  resultType="int">
 		select count(*) as totCnt
-		 from vote 
-        where req_id = #{reqId} 
-          and del = 'N'
-		
+		 from vote a, member b
+        where a.req_id = #{reqId} 
+          and a.del = 'N'
+		  and a.mem_id = b.mem_id
 		<if test="searchKeyword != null and searchKeyword != ''">
 	        <choose>
 	         	<when test="searchCondition == 1">
-					AND	vote_title LIKE '%' || #{searchKeyword} || '%'
+					AND	a.vote_title LIKE '%' || #{searchKeyword} || '%'
 				</when>
 	            <when test="searchCondition == 2">
-					AND	mem_id LIKE '%' || #{searchKeyword} || '%'
+					AND	b.mem_name LIKE '%' || #{searchKeyword} || '%'
 				</when>
 			</choose>
 		</if>		
