@@ -116,6 +116,8 @@
 			WHERE
 			    member.mem_id = hotissue.WRITER
 			AND   (hotissue.HISSUE_ID =#{hissueId} or hotissue.hissue_parentid = #{hissueId})
+			order by   hotissue.HISSUE_LEVEL asc
+			
 			]]>
 		</select> 
 	    
