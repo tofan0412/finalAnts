@@ -90,7 +90,7 @@ public class ReqService{
 	/**
 	 * pl삭제하기
 	 * @param reqVo 검색조건
-	 * @return 성공:1 실패:0
+	 * @return 성공:3,2 실패:0
 	 */
 	public int plDelete(ReqVo reqVo) {
 		int cnt = 0;

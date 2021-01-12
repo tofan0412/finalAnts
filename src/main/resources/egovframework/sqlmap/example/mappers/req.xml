@@ -8,7 +8,7 @@
 SELECT  *
 		    FROM(
 		    	SELECT ROWNUM rnum, a.*
-				FROM (SELECT b.req_id, b.req_title, b.req_period, b.req_filepath, b.req_filename,
+				FROM (SELECT b.req_id, b.req_title, b.req_period, 
 					 		 b.mem_id, b.status, b.pl_id, m.mem_name as pl_name, p.pro_percent, p.req_id as pro_id, p.pro_status
                         FROM (SELECT * 
                         		FROM reqlist
@@ -74,8 +74,6 @@ SELECT  *
 			 , r.REQ_TITLE
 			 , r.REQ_CONT
 			 , r.REQ_PERIOD
-			 , r.REQ_FILEPATH
-			 , r.REQ_FILENAME
 			 , r.MEM_ID
 			 , r.STATUS
 			 , r.PL_ID
@@ -101,8 +99,6 @@ SELECT  *
 					 ,REQ_TITLE
 					 ,REQ_CONT
 					 ,REQ_PERIOD
-					 ,REQ_FILEPATH
-					 ,REQ_FILENAME
 					 ,MEM_ID
 					 ,STATUS
 					 ,PL_ID
@@ -113,8 +109,6 @@ SELECT  *
 					 ,#{reqTitle}
 					 ,#{reqCont}
 					 ,#{reqPeriod,   jdbcType=VARCHAR}
-					 ,#{reqFilepath, jdbcType=VARCHAR}
-					 ,#{reqFilename, jdbcType=VARCHAR}
 					 ,#{memId}
 					 ,#{status, jdbcType=VARCHAR}
 					 ,#{plId, jdbcType=VARCHAR}
@@ -128,8 +122,6 @@ SELECT  *
 		        <if test="reqTitle != null">req_title = #{reqTitle},</if>
 		        <if test="reqCont != null">req_cont = #{reqCont},</if>
 		        <if test="reqPeriod != null">req_period = #{reqPeriod},</if>
-		        <if test="reqFilepath != null">req_filepath = #{reqFilepath},</if>	 	            
-		        <if test="reqFilename != null">req_filename = #{reqFilename},</if>	 	            
 		        <if test="plId != null">pl_id = #{plId},</if>	 	            
 		        <if test="status != null">status = #{status}</if>	 	            
 	     </set>    

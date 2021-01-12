@@ -58,8 +58,8 @@
 	background-color: #3e8e41;
 }
 td{
-		padding: 12px 5px 5px 12px !important;
-	}
+	padding: 12px 5px 5px 12px !important;
+}
 	
 	
 #pagenum a{
@@ -192,17 +192,16 @@ li strong{
 												<div class="dropdown-content " style="text-align: left; width: max-content; font-size: 0.8em;">
 												  <a class="">
 													<div class="media">
-										              <img src="/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-32 mr-3 img-circle">
 										              <div class="media-body">
-										                <h3 class="dropdown-item-title">
+										                <span class="dropdown-item-title text-sm" >
 										                  ${req.plName }
-										                </h3>
-										                <span class="text-sm">${req.plId }</span>
+										                </span>
+										                <span class="text-sm">[&nbsp;${req.plId }&nbsp;]</span>
 										              </div>
 										            </div>
 												  </a>
 												  <div class="dropdown-divider"></div>
-												  <a class="" href="javascript:plDelete(${req.reqId},'${req.plId }');">삭제</a>
+												  <a class="text-sm" href="javascript:plDelete(${req.reqId},'${req.plId }');">삭제</a>
 												</div>
 											</div>
 										</td>
@@ -350,6 +349,10 @@ li strong{
 	if (searchCondition != "") {
 		$('#searchCondition').val("" + searchCondition + "").attr("selected",
 				"selected");
+	}
+	
+	if(${plDelMsg == 0}){
+		alert("pl을 삭제할 수 없습니다.")
 	}
 	
 	toastr.options = {
@@ -585,6 +588,7 @@ li strong{
 </c:if>
 
 <c:if test="${SMEMBER.memType != 'PM' }">
+	<br>
 	<h1>권한이 없습니다!</h1>
 </c:if>
 
