@@ -7,8 +7,6 @@ public class ReqVo extends BaseVo{
 	private String reqTitle;
 	private String reqCont;
 	private String reqPeriod;
-	private String reqFilepath;
-	private String reqFilename;
 	private String memId;
 	private String plId;
 	private String status;
@@ -19,7 +17,6 @@ public class ReqVo extends BaseVo{
 	private String categoryId;
 	private String del;
 	private String proStatus;
-	
 	public String getReqId() {
 		return reqId;
 	}
@@ -43,18 +40,6 @@ public class ReqVo extends BaseVo{
 	}
 	public void setReqPeriod(String reqPeriod) {
 		this.reqPeriod = reqPeriod;
-	}
-	public String getReqFilepath() {
-		return reqFilepath;
-	}
-	public void setReqFilepath(String reqFilepath) {
-		this.reqFilepath = reqFilepath;
-	}
-	public String getReqFilename() {
-		return reqFilename;
-	}
-	public void setReqFilename(String reqFilename) {
-		this.reqFilename = reqFilename;
 	}
 	public String getMemId() {
 		return memId;
@@ -110,7 +95,6 @@ public class ReqVo extends BaseVo{
 	public void setDel(String del) {
 		this.del = del;
 	}
-	
 	public String getProStatus() {
 		return proStatus;
 	}
@@ -120,10 +104,9 @@ public class ReqVo extends BaseVo{
 	@Override
 	public String toString() {
 		return "ReqVo [reqId=" + reqId + ", reqTitle=" + reqTitle + ", reqCont=" + reqCont + ", reqPeriod=" + reqPeriod
-				+ ", reqFilepath=" + reqFilepath + ", reqFilename=" + reqFilename + ", memId=" + memId + ", plId="
-				+ plId + ", status=" + status + ", plName=" + plName + ", proPercent=" + proPercent + ", proId=" + proId
-				+ ", proName=" + proName + ", categoryId=" + categoryId + ", del=" + del + ", proStatus=" + proStatus
-				+ "]";
+				+ ", memId=" + memId + ", plId=" + plId + ", status=" + status + ", plName=" + plName + ", proPercent="
+				+ proPercent + ", proId=" + proId + ", proName=" + proName + ", categoryId=" + categoryId + ", del="
+				+ del + ", proStatus=" + proStatus + "]";
 	}
 	
 	
