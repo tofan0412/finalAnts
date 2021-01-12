@@ -503,7 +503,7 @@
 									</li>
 									<li class="nav-item"><a class="nav-link"
 										id="custom-tabs-three-mywork-tab"
-										href="/schedule/scheduleplaceView">일정</a></li>
+										href="${pageContext.request.contextPath}/schedule/clendarView">일정</a></li>
 									<li class="nav-item"><a class="nav-link"
 										id="custom-tabs-three-vote-tab" href="/vote/votelist">투표</a></li>
 									<c:if
