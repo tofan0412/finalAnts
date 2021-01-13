@@ -322,7 +322,7 @@ li strong{
 						<input type="hidden" id="modalReqName" name="reqName" value="">
 						<input type="hidden" name="status" value="WAIT"> <label
 							for="recipient-name" class="control-label">이메일:</label> <input
-							type="text" class="form-control" id="searchInput" name="memId">
+							type="text" class="form-control" id="searchInput" name="memId" placeholder="이름을 입력해 검색해 보세요!">
 						<div class="card-title error-page jg" id="memIdCheck"
 							style="width: auto"></div>
 					</div>
@@ -510,7 +510,7 @@ li strong{
 						if (data.memberVo == null) {
 							$('#memIdCheck')
 									.html(
-											'<div><h3><i class="fas fa-exclamation-triangle text-warning"></i> 해당하는 회원이 없습니다.</h3><p>pl요청은 회원에게만 할 수 있습니다.<br> <a href="../../index.html">초대링크를 보낼 수 있어요!</a></p></div>');
+											'<div><h3><i class="fas fa-exclamation-triangle text-warning"></i> 해당하는 회원이 없습니다.</h3><p>pl요청은 회원에게만 할 수 있습니다.</p></div>');
 							$('#memIdCheck').attr('memIdCheckFlag', 'false');
 						} else {
 							$('#memIdCheck')
