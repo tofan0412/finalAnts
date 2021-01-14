@@ -3,515 +3,518 @@
 <mapper namespace="ants.com.member.mapper.ProjectMapper">
 
 
-	<select id="memInProjectList" parameterType="String"
-		resultType="ants.com.member.model.ProjectVo">
-		SELECT
-			project.req_id, project.mem_id, project.pro_name,
-			project.pro_percent as percent, project.reg_dt
-		FROM(select * from project)project,
-			projectmember projectmember
-		WHERE
-			projectmember.req_id = project.req_id
-		and projectmember.mem_id = #{memId}
-		and projectmember.promem_status='IN'
-		and project.del ='N'
-	</select>
+   <select id="memInProjectList" parameterType="String"
+      resultType="ants.com.member.model.ProjectVo">
+      SELECT
+         project.req_id, project.mem_id, project.pro_name,
+         project.pro_percent as percent, project.reg_dt
+      FROM(select * from project)project,
+         projectmember projectmember
+      WHERE
+         projectmember.req_id = project.req_id
+      and projectmember.mem_id = #{memId}
+      and projectmember.promem_status='IN'
+      and project.del ='N'
+   </select>
 
-	<select id="plInProjectList" parameterType="String"
-		resultType="ants.com.member.model.ProjectVo">
-		SELECT
-			DISTINCT project.req_id, project.pro_name,
-			project.mem_id,
-			project.pro_percent as percent, project.reg_dt
-		FROM(select * from	
-			project)project,
-			reqlist reqlist
-		WHERE
-			reqlist.req_id = project.req_id
-		AND reqlist.pl_id= #{memId}
-		AND reqlist.status ='ACCEPT'
-		and project.del ='N'
-	</select>
-	
-	
-	<select id="pmInProjectList" parameterType="String"
-		resultType="ants.com.member.model.ProjectVo">
-		SELECT
-			DISTINCT project.req_id, project.pro_name,
-			project.mem_id,
-			project.pro_percent as percent,
+   <select id="plInProjectList" parameterType="String"
+      resultType="ants.com.member.model.ProjectVo">
+      SELECT
+         DISTINCT project.req_id, project.pro_name,
+         project.mem_id,
+         project.pro_percent as percent, project.reg_dt
+      FROM(select * from   
+         project)project,
+         reqlist reqlist
+      WHERE
+         reqlist.req_id = project.req_id
+      AND reqlist.pl_id= #{memId}
+      AND reqlist.status ='ACCEPT'
+      and project.del ='N'
+   </select>
+   
+   
+   <select id="pmInProjectList" parameterType="String"
+      resultType="ants.com.member.model.ProjectVo">
+      SELECT
+         DISTINCT project.req_id, project.pro_name,
+         project.mem_id,
+         project.pro_percent as percent,
             TO_CHAR(project.reg_dt,'yyyy-mm-dd') as regDt,
             TO_CHAR((project.reg_dt + reqlist.req_period),'yyyy-mm-dd') as endDt
-			FROM	(select * from
-					project)project,
-					reqlist reqlist
-		WHERE
-			reqlist.req_id = project.req_id
-		AND reqlist.mem_id= #{memId}
-		and project.del ='N'
-	</select>
+         FROM   (select * from
+               project)project,
+               reqlist reqlist
+      WHERE
+         reqlist.req_id = project.req_id
+      AND reqlist.mem_id= #{memId}
+      and project.del ='N'
+      and project.pro_name is not null
+   </select>
 
-	<select id="readReqList"
-		resultType="ants.com.member.model.ReqVo"
-		parameterType="java.lang.String">
-		SELECT *
-		  FROM REQLIST
-		 WHERE REQ_ID IN (SELECT REQ_ID
-							FROM REQLIST
-						   WHERE PL_ID = #{plId}
-							 AND STATUS = 'WAIT')
-		    OR REQ_ID IN (SELECT REQ_ID
-							FROM REQLIST A
-						   WHERE A.PL_ID = #{plId}
-							 AND A.STATUS = 'ACCEPT'
-							 AND A.REQ_ID IN (SELECT B.REQ_ID
-												FROM PROJECT B
-											   WHERE PRO_NAME is NULL
-												 AND MEM_ID IS NOT NULL))
-	</select>
+   <select id="readReqList"
+      resultType="ants.com.member.model.ReqVo"
+      parameterType="java.lang.String">
+      SELECT *
+        FROM REQLIST
+       WHERE REQ_ID IN (SELECT REQ_ID
+                     FROM REQLIST
+                     WHERE PL_ID = #{plId}
+                      AND STATUS = 'WAIT')
+          OR REQ_ID IN (SELECT REQ_ID
+                     FROM REQLIST A
+                     WHERE A.PL_ID = #{plId}
+                      AND A.STATUS = 'ACCEPT'
+                      AND A.REQ_ID IN (SELECT B.REQ_ID
+                                    FROM PROJECT B
+                                    WHERE PRO_NAME is NULL
+                                     AND MEM_ID IS NOT NULL))
+   </select>
 
-	<insert id="insertProject"
-		parameterType="ants.com.member.model.ProjectVo">
+   <insert id="insertProject"
+      parameterType="ants.com.member.model.ProjectVo">
 INSERT INTO PROJECT 
-			(REQ_ID,REG_DT,DEL)
-		VALUES
-			(#{reqId},SYSDATE,'N')
+         (REQ_ID,REG_DT,DEL)
+      VALUES
+         (#{reqId},SYSDATE,'N')
 </insert>
 
-	<select id="userSearch" parameterType="java.lang.String" resultType="ants.com.member.model.MemberVo">
-		SELECT * 
-		  FROM MEMBER 
-		 WHERE MEM_NAME LIKE #{keyword}
-		   AND DEL != 'Y'
-		   AND MEM_TYPE != 'PM'
+   <select id="userSearch" parameterType="java.lang.String" resultType="ants.com.member.model.MemberVo">
+      SELECT * 
+        FROM MEMBER 
+       WHERE MEM_NAME LIKE #{keyword}
+         AND DEL != 'Y'
+         AND MEM_TYPE != 'PM'
 </select>
 
-	<select id="chkMemId" parameterType="java.lang.String"
-		resultType="ants.com.member.model.MemberVo">
-		SELECT *
-		FROM MEMBER
-		WHERE MEM_ID = #{memId}
-	</select>
-	
-	<!-- 초대된 프로젝트 리스트 -->
-	<select id="requestPjtMember" resultType="ants.com.member.model.ProjectMemberVo" parameterType="ants.com.member.model.MemberVo">
-		SELECT * 
-		  FROM(
-				SELECT a.req_id, a.promem_id, a.mem_id, a.promem_status, b.pro_name as title, c.mem_name as pl_name, b.mem_id as pl_id
-				  FROM projectmember a, project b, member c
-				 WHERE a.req_id = b.req_id
-				   AND b.mem_id = c.mem_id
-		  	   )
-	     WHERE mem_id = #{memId}
-	       AND promem_status = 'WAIT'
-	</select>
-	
-	<insert id="insertPjtMember"
-		parameterType="ants.com.member.model.ProjectMemberVo">
-		INSERT INTO PROJECTMEMBER 
-			(req_id, promem_id, mem_name, mem_id, promem_status)
-		VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL,#{memName}, #{memId},#{promemStatus})
-	</insert>
-	
-	<update id="updatePjtMember" parameterType="ants.com.member.model.ProjectMemberVo">
-		UPDATE PROJECTMEMBER
-		   SET promem_status = #{promemStatus}
-		 WHERE req_id = #{reqId}
-		   AND mem_id = #{memId}
-	</update>
-	
-	<delete id="deletePjtMember">
-		DELETE PROJECTMEMBER
-		 WHERE promem_id = #{promemId}
-	</delete>
+   <select id="chkMemId" parameterType="java.lang.String"
+      resultType="ants.com.member.model.MemberVo">
+      SELECT *
+      FROM MEMBER
+      WHERE MEM_ID = #{memId}
+   </select>
+   
+   <!-- 초대된 프로젝트 리스트 -->
+   <select id="requestPjtMember" resultType="ants.com.member.model.ProjectMemberVo" parameterType="ants.com.member.model.MemberVo">
+      SELECT * 
+        FROM(
+            SELECT a.req_id, a.promem_id, a.mem_id, a.promem_status, b.pro_name as title, c.mem_name as pl_name, b.mem_id as pl_id
+              FROM projectmember a, project b, member c
+             WHERE a.req_id = b.req_id
+               AND b.mem_id = c.mem_id
+              )
+        WHERE mem_id = #{memId}
+          AND promem_status = 'WAIT'
+   </select>
+   
+   <insert id="insertPjtMember"
+      parameterType="ants.com.member.model.ProjectMemberVo">
+      INSERT INTO PROJECTMEMBER 
+         (req_id, promem_id, mem_name, mem_id, promem_status)
+      VALUES (#{reqId}, PROMEM_SEQ.NEXTVAL,#{memName}, #{memId},#{promemStatus})
+   </insert>
+   
+   <update id="updatePjtMember" parameterType="ants.com.member.model.ProjectMemberVo">
+      UPDATE PROJECTMEMBER
+         SET promem_status = #{promemStatus}
+       WHERE req_id = #{reqId}
+         AND mem_id = #{memId}
+   </update>
+   
+   <delete id="deletePjtMember">
+      DELETE PROJECTMEMBER
+       WHERE promem_id = #{promemId}
+   </delete>
 
-	<!-- 진행도 update -->
-	<update id="propercentChange"
-		parameterType="ants.com.member.model.ProjectVo">
+   <!-- 진행도 update -->
+   <update id="propercentChange"
+      parameterType="ants.com.member.model.ProjectVo">
 
-		UPDATE PROJECT
-		SET
-			pro_percent =#{percent}
-		WHERE
-			req_id=#{reqId}
+      UPDATE PROJECT
+      SET
+         pro_percent =#{percent}
+      WHERE
+         req_id=#{reqId}
 
-	</update>
+   </update>
 
-	<!-- 프로젝트 update -->
-	<update id="updateProject"
-		parameterType="ants.com.member.model.ProjectVo">
+   <!-- 프로젝트 update -->
+   <update id="updateProject"
+      parameterType="ants.com.member.model.ProjectVo">
 UPDATE PROJECT
-		<set>
-			<if test='memId != null and memId != "공석"'>MEM_ID = #{memId},</if>
-			<if test='memId == "공석"'>MEM_ID = null,</if>
-			<if test="proName != null">PRO_NAME = #{proName},</if>
-			<if test="percent != null">PRO_PERCENT = #{percent},</if>
-			<if test="regDt != null">REG_DT = #{regDt},</if>
-			<if test="del != null">DEL = #{del},</if>
-			<if test="proChangeDate != null">PRO_CHANGE_DATE = SYSDATE,</if>
-			<if test="proStatus != null">PRO_STATUS = #{proStatus},</if>
-		</set>
-		WHERE 1=1
-		AND REQ_ID = #{reqId}
+      <set>
+         <if test='memId != null and memId != "공석"'>MEM_ID = #{memId},</if>
+         <if test='memId == "공석"'>MEM_ID = null,</if>
+         <if test="proName != null">PRO_NAME = #{proName},</if>
+         <if test="percent != null">PRO_PERCENT = #{percent},</if>
+         <if test="regDt != null">REG_DT = #{regDt},</if>
+         <if test="del != null">DEL = #{del},</if>
+         <if test="proChangeDate != null">PRO_CHANGE_DATE = SYSDATE,</if>
+         <if test="proStatus != null">PRO_STATUS = #{proStatus},</if>
+      </set>
+      WHERE 1=1
+      AND REQ_ID = #{reqId}
 </update>
 
-	<!-- 개요페이지 프로젝트 정보 -->
-	<select id="getoutlinepro" parameterType="String"
-		resultType="ants.com.member.model.ProjectVo">
-		SELECT
-			p.req_id,
-			p.mem_id,
-			p.pro_name,
+   <!-- 개요페이지 프로젝트 정보 -->
+   <select id="getoutlinepro" parameterType="String"
+      resultType="ants.com.member.model.ProjectVo">
+      SELECT
+         p.req_id,
+         p.mem_id,
+         p.pro_name,
             p.pro_status as proStatus,
             TO_CHAR(p.pro_change_date, 'yyyy-mm-dd') as proChangeDate,
-			TO_CHAR(round(p.pro_percent)) as percent,
-			TO_CHAR(p.reg_dt,'yyyy-mm-dd') as reg_dt,
-			p.del,
-	        TO_CHAR((p.reg_dt + r.req_period),'yyyy-mm-dd') as endDt,
-	        nvl(TRUNC(sysdate-to_date(to_char(p.reg_dt, 'yyyymmdd'),'yyyymmdd')),0) as elepsedTime,
-	         nvl(TRUNC(sysdate-to_date(to_char(p.PRO_CHANGE_DATE, 'yyyymmdd'),'yyyymmdd')),0) as esElepsedTime
-		FROM (select * from REQLIST) r,
-			project p
-		where r.req_id = p.req_id
+         TO_CHAR(round(p.pro_percent)) as percent,
+         TO_CHAR(p.reg_dt,'yyyy-mm-dd') as reg_dt,
+         p.del,
+           TO_CHAR((p.reg_dt + r.req_period),'yyyy-mm-dd') as endDt,
+           nvl(TRUNC(sysdate-to_date(to_char(p.reg_dt, 'yyyymmdd'),'yyyymmdd')),0) as elepsedTime,
+            nvl(TRUNC(sysdate-to_date(to_char(p.PRO_CHANGE_DATE, 'yyyymmdd'),'yyyymmdd')),0) as esElepsedTime
+      FROM (select * from REQLIST) r,
+         project p
+      where r.req_id = p.req_id
         AND r.req_id =#{reqId}
-	</select>
-	
-	<select id="getoutlinepromem" parameterType="java.lang.String"
-		resultType="ants.com.member.model.ProjectMemberVo">
-		SELECT
-			p.req_id,
-			p.promem_id,
-			m.mem_name as MEM_ID,
-			p.promem_status
-		FROM (select * from member)m,
-			projectmember p
-		WHERE m.mem_id = p.mem_id
-		AND req_id = #{reqId}
-		AND PROMEM_STATUS ='IN'
-	</select>
-	
-	<select id="getoutlinefiles" parameterType="java.lang.String"
-		resultType="ants.com.file.model.PublicFileVo">
-		 SELECT
-		   nvl(round(sum(pub_size)),0) as pub_size
-		FROM
-		    publicfile
-		where req_id=#{reqId}
-	</select>
-	
-	<select id="getoutlinevote" parameterType="java.lang.String"
-		resultType="ants.com.board.vote.model.VoteVo">
-		    SELECT nvl(round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)),0) as votepercent
-				FROM vote a, member b
-				WHERE a.mem_id = b.mem_id
-				AND a.req_id = #{reqId}
-				AND a.del = 'N'
-			
-	</select>
-	
-	<select id="getoutlinereply" parameterType="java.lang.String"
-		resultType="ants.com.board.memBoard.model.ReplyVo">
-			SELECT CASE WHEN nvl((
-        		SELECT COUNT(issue_id)
-        		FROM issue WHERE req_id=#{reqId}
-        		AND issue_del ='N') , 0) > 0 
-        		THEN 
-            		ROUND(((
-        				SELECT COUNT(distinct(some_id))
-        				FROM   reply WHERE req_id =#{reqId} AND del='N'
-        				)/(
-        				SELECT COUNT(issue_id)
-        				FROM issue WHERE req_id=#{reqId}
-        				AND issue_del ='N'
-        				))*100)
-            	ELSE 0 END AS replypercent FROM dual    
+   </select>
+   
+   <select id="getoutlinepromem" parameterType="java.lang.String"
+      resultType="ants.com.member.model.ProjectMemberVo">
+      SELECT
+         p.req_id,
+         p.promem_id,
+         m.mem_name as MEM_ID,
+         p.promem_status
+      FROM (select * from member)m,
+         projectmember p
+      WHERE m.mem_id = p.mem_id
+      AND req_id = #{reqId}
+      AND PROMEM_STATUS ='IN'
+   </select>
+   
+   <select id="getoutlinefiles" parameterType="java.lang.String"
+      resultType="ants.com.file.model.PublicFileVo">
+       SELECT
+         nvl(round(sum(pub_size)),0) as pub_size
+      FROM
+          publicfile
+      where req_id=#{reqId}
+   </select>
+   
+   <select id="getoutlinevote" parameterType="java.lang.String"
+      resultType="ants.com.board.vote.model.VoteVo">
+          SELECT nvl(round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)),0) as votepercent
+            FROM vote a, member b
+            WHERE a.mem_id = b.mem_id
+            AND a.req_id = #{reqId}
+            AND a.del = 'N'
+         
+   </select>
+   
+   <select id="getoutlinereply" parameterType="java.lang.String"
+      resultType="ants.com.board.memBoard.model.ReplyVo">
+         SELECT CASE WHEN nvl((
+              SELECT COUNT(issue_id)
+              FROM issue WHERE req_id=#{reqId}
+              AND issue_del ='N') , 0) > 0 
+              THEN 
+                  ROUND(((
+                    SELECT COUNT(distinct(some_id))
+                    FROM   reply WHERE req_id =#{reqId} AND del='N'
+                    )/(
+                    SELECT COUNT(issue_id)
+                    FROM issue WHERE req_id=#{reqId}
+                    AND issue_del ='N'
+                    ))*100)
+               ELSE 0 END AS replypercent FROM dual    
         
-	</select>
-	
-	<select id="getoutlinsuggest" parameterType="java.lang.String"
-		resultType="ants.com.board.memBoard.model.SuggestVo">
-			SELECT  case when nvl((SELECT count(A.SGT_ID)
-				  FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
-				                     FROM TODO 
-				                    WHERE REQ_ID = #{reqId}) B
-				  WHERE A.TODO_ID = B.TODO_ID
-				   AND A.DEL = 'N'),0)>0 THEN
-						ROUND(((SELECT count(A.SGT_ID)
-				  			FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
-				                     FROM TODO 
-				                    WHERE REQ_ID = #{reqId}) B
-				 						WHERE A.TODO_ID = B.TODO_ID
-									    AND A.DEL = 'N'
-								        AND A.SGT_STATUS ='ACCEPT'
-			            		)/(
-			            		SELECT count(A.SGT_ID)
-				  					FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
-				                    	FROM TODO 
-				                    	WHERE REQ_ID = #{reqId}) B
-										WHERE A.TODO_ID = B.TODO_ID
-				   						AND A.DEL = 'N'))*100)
-			            ELSE 0 end as acceptpercent
-			        FROM    dual
+   </select>
+   
+   <select id="getoutlinsuggest" parameterType="java.lang.String"
+      resultType="ants.com.board.memBoard.model.SuggestVo">
+         SELECT  case when nvl((SELECT count(A.SGT_ID)
+              FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+                                 FROM TODO 
+                                WHERE REQ_ID = #{reqId}) B
+              WHERE A.TODO_ID = B.TODO_ID
+               AND A.DEL = 'N'),0)>0 THEN
+                  ROUND(((SELECT count(A.SGT_ID)
+                       FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+                                 FROM TODO 
+                                WHERE REQ_ID = #{reqId}) B
+                               WHERE A.TODO_ID = B.TODO_ID
+                               AND A.DEL = 'N'
+                                AND A.SGT_STATUS ='ACCEPT'
+                           )/(
+                           SELECT count(A.SGT_ID)
+                             FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+                                   FROM TODO 
+                                   WHERE REQ_ID = #{reqId}) B
+                              WHERE A.TODO_ID = B.TODO_ID
+                                 AND A.DEL = 'N'))*100)
+                     ELSE 0 end as acceptpercent
+                 FROM    dual
         
-	</select>
-	
-	<select id="getoutlinsuggestreject" parameterType="java.lang.String"
-		resultType="ants.com.board.memBoard.model.SuggestVo">
-			SELECT  case when nvl((SELECT count(A.SGT_ID)
-				  FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
-				                     FROM TODO 
-				                    WHERE REQ_ID = #{reqId}) B
-				  WHERE A.TODO_ID = B.TODO_ID
-				   AND A.DEL = 'N'),0)>0 THEN
-						ROUND(((SELECT count(A.SGT_ID)
-				  			FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
-				                     FROM TODO 
-				                    WHERE REQ_ID = #{reqId}) B
-				 						WHERE A.TODO_ID = B.TODO_ID
-									    AND A.DEL = 'N'
-								        AND A.SGT_STATUS ='REJECT'
-			            		)/(
-			            		SELECT count(A.SGT_ID)
-				  					FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
-				                    	FROM TODO 
-				                    	WHERE REQ_ID = #{reqId}) B
-										WHERE A.TODO_ID = B.TODO_ID
-				   						AND A.DEL = 'N'))*100)
-			            ELSE 0 end as rejectpercent
-			        FROM    dual
-	</select>
-	
-	<select id="getoutlindeadline" parameterType="java.lang.String"
-		resultType="ants.com.board.manageBoard.model.TodoVo">
-			<![CDATA[             SELECT
+   </select>
+   
+   <select id="getoutlinsuggestreject" parameterType="java.lang.String"
+      resultType="ants.com.board.memBoard.model.SuggestVo">
+         SELECT  case when nvl((SELECT count(A.SGT_ID)
+              FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+                                 FROM TODO 
+                                WHERE REQ_ID = #{reqId}) B
+              WHERE A.TODO_ID = B.TODO_ID
+               AND A.DEL = 'N'),0)>0 THEN
+                  ROUND(((SELECT count(A.SGT_ID)
+                       FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+                                 FROM TODO 
+                                WHERE REQ_ID = #{reqId}) B
+                               WHERE A.TODO_ID = B.TODO_ID
+                               AND A.DEL = 'N'
+                                AND A.SGT_STATUS ='REJECT'
+                           )/(
+                           SELECT count(A.SGT_ID)
+                             FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+                                   FROM TODO 
+                                   WHERE REQ_ID = #{reqId}) B
+                              WHERE A.TODO_ID = B.TODO_ID
+                                 AND A.DEL = 'N'))*100)
+                     ELSE 0 end as rejectpercent
+                 FROM    dual
+   </select>
+   
+   <select id="getoutlindeadline" parameterType="java.lang.String"
+      resultType="ants.com.board.manageBoard.model.TodoVo">
+         <![CDATA[             SELECT
                     TODO_TITLE,
                     todo_id,
-					member.mem_name AS mem_id,
+               member.mem_name AS mem_id,
                     to_char(todo_end, 'YYYY-MM-dd') as todoEnd
-				FROM( select *
-					from member)member, todo todo
-				WHERE
-					member.mem_id = todo.mem_id
-				AND
-					todo.del = 'N'
-				AND todo.req_id = #{reqId}
+            FROM( select *
+               from member)member, todo todo
+            WHERE
+               member.mem_id = todo.mem_id
+            AND
+               todo.del = 'N'
+            AND todo.req_id = #{reqId}
                 AND ROWNUM <= 4
                 and todo.TODO_PERCENT !='100'
                 AND (Round(TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
-					To_date(to_char(todo.todo_end,'yyyymmdd')),0)>=-7 and Round(TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
-					To_date(to_char(todo.todo_end,'yyyymmdd')),0)<=0)
-				order by todo_end asc]]> 
+               To_date(to_char(todo.todo_end,'yyyymmdd')),0)>=-7 and Round(TO_DATE(TO_CHAR(SYSDATE, 'yyyymmdd')) -
+               To_date(to_char(todo.todo_end,'yyyymmdd')),0)<=0)
+            order by todo_end asc]]> 
         
-	</select>
-	
-	<update id="deleteProject" parameterType="java.lang.String">
-		UPDATE project
-		   SET del = 'Y'
-		 WHERE req_id = #{reqId} 
-	</update>
-	
-	<select id="chartsuggestcnt" parameterType="java.lang.String"
-		resultType="ants.com.board.memBoard.model.SuggestVo">
-		SELECT count(A.SGT_ID) as chartcnt,
-	       c.mem_name as memName
-		  FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
-		                     FROM TODO 
-		                    WHERE REQ_ID = #{reqId}) B, member c
-		 WHERE A.TODO_ID = B.TODO_ID
-		   AND A.DEL = 'N'
-		   AND B.mem_id = c.mem_id 
-	       group by c.mem_name
-	</select>
-	
-	<select id="barchartvoteindi" parameterType="java.lang.String"
-		resultType="ants.com.board.vote.model.VoteVo">
-		    SELECT nvl(round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)),0) as votepercent,
-       				 b.mem_name as memName
-				FROM vote a, member b
-				WHERE a.mem_id = b.mem_id
-				AND a.req_id = #{reqId}
-				AND a.del = 'N'
+   </select>
+   
+   <update id="deleteProject" parameterType="java.lang.String">
+      UPDATE project
+         SET del = 'Y'
+       WHERE req_id = #{reqId} 
+   </update>
+   
+   <select id="chartsuggestcnt" parameterType="java.lang.String"
+      resultType="ants.com.board.memBoard.model.SuggestVo">
+      SELECT count(A.SGT_ID) as chartcnt,
+          c.mem_name as memName
+        FROM SUGGEST A, (SELECT TODO_ID, MEM_ID, REQ_ID
+                           FROM TODO 
+                          WHERE REQ_ID = #{reqId}) B, member c
+       WHERE A.TODO_ID = B.TODO_ID
+         AND A.DEL = 'N'
+         AND B.mem_id = c.mem_id 
+          group by c.mem_name
+   </select>
+   
+   <select id="barchartvoteindi" parameterType="java.lang.String"
+      resultType="ants.com.board.vote.model.VoteVo">
+          SELECT nvl(round(sum(round(decode(voted_no,0,'',voted_no) /vote_totalno,2)*100)/count(vote_totalno)),0) as votepercent,
+                    b.mem_name as memName
+            FROM vote a, member b
+            WHERE a.mem_id = b.mem_id
+            AND a.req_id = #{reqId}
+            AND a.del = 'N'
                 group by b.mem_name
-	</select>
-	
-	<select id="chartfilesday" parameterType="java.lang.String"
-		resultType="ants.com.file.model.PublicFileVo">
-		 <![CDATA[ SELECT
-		   nvl(round(sum(pub_size)/1024),0) as pubSize,
+   </select>
+   
+   <select id="chartfilesday" parameterType="java.lang.String"
+      resultType="ants.com.file.model.PublicFileVo">
+       <![CDATA[ SELECT
+         nvl(round(sum(pub_size)/1024),0) as pubSize,
            to_char(REG_DT, 'yyyy-mm-dd')as regDt
-		FROM
-		    publicfile
-		where req_id=#{reqId}
+      FROM
+          publicfile
+      where req_id=#{reqId}
         And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
         group by to_char(reg_dt, 'yyyy-mm-dd')
         order by regDt asc ]]> 
-	</select>
-	
-	<select id="chartfilesmonth" parameterType="java.lang.String"
-		resultType="ants.com.file.model.PublicFileVo">
-		 <![CDATA[ SELECT
-		   nvl(round(sum(pub_size)/1024),0) as pubSize,
+   </select>
+   
+   <select id="chartfilesmonth" parameterType="java.lang.String"
+      resultType="ants.com.file.model.PublicFileVo">
+       <![CDATA[ SELECT
+         nvl(round(sum(pub_size)/1024),0) as pubSize,
            to_char(REG_DT, 'yyyy-mm')as regDt
-		FROM
-		    publicfile
-		where req_id=#{reqId}
+      FROM
+          publicfile
+      where req_id=#{reqId}
         And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
         group by to_char(reg_dt, 'yyyy-mm')
         order by regDt asc
         ]]> 
-	</select>
-	
-	<select id="chartfilesextension" parameterType="java.lang.String"
-		resultType="ants.com.file.model.PublicFileVo">
-		SELECT
-		  count(PUB_ID) as pubId,
+   </select>
+   
+   <select id="chartfilesextension" parameterType="java.lang.String"
+      resultType="ants.com.file.model.PublicFileVo">
+      SELECT
+        count(PUB_ID) as pubId,
         PUB_EXTENSION 
-		FROM
-		    publicfile
-		where req_id= #{reqId}
+      FROM
+          publicfile
+      where req_id= #{reqId}
         group by PUB_EXTENSION
-	</select>
-	
-	<select id="chartIssuesday" parameterType="java.lang.String"
-		resultType="ants.com.board.memBoard.model.IssueVo">
-		 <![CDATA[ 
-		 SELECT
-		    count(issue_id) as issueId,
-		     to_char(REG_DT, 'yyyy-mm-dd')as regDt
-		FROM
-		    issue
-		where req_id = #{reqId}
-		 And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
-		group by to_char(reg_dt, 'yyyy-mm-dd')
-		order by regDt asc
-		 
-		 ]]> 
-	</select>
-	
-	<select id="chartIssuesmonth" parameterType="java.lang.String"
-		resultType="ants.com.board.memBoard.model.IssueVo">
-		 <![CDATA[
-		SELECT
-		    count(issue_id) as issueId,
-		     to_char(REG_DT, 'yyyy-mm')as regDt
-		FROM
-		    issue
-		where req_id = #{reqId}
-		 And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
-		group by to_char(reg_dt, 'yyyy-mm')
-		order by regDt asc
+   </select>
+   
+   <select id="chartIssuesday" parameterType="java.lang.String"
+      resultType="ants.com.board.memBoard.model.IssueVo">
+       <![CDATA[ 
+       SELECT
+          count(issue_id) as issueId,
+           to_char(REG_DT, 'yyyy-mm-dd')as regDt
+      FROM
+          issue
+      where req_id = #{reqId}
+       And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
+      group by to_char(reg_dt, 'yyyy-mm-dd')
+      order by regDt asc
+       
+       ]]> 
+   </select>
+   
+   <select id="chartIssuesmonth" parameterType="java.lang.String"
+      resultType="ants.com.board.memBoard.model.IssueVo">
+       <![CDATA[
+      SELECT
+          count(issue_id) as issueId,
+           to_char(REG_DT, 'yyyy-mm')as regDt
+      FROM
+          issue
+      where req_id = #{reqId}
+       And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
+      group by to_char(reg_dt, 'yyyy-mm')
+      order by regDt asc
         ]]> 
-	</select>
-	
-	<select id="chartIssuesCnt" parameterType="java.lang.String"
-		resultType="ants.com.board.memBoard.model.IssueVo">
-		SELECT
-		   count(a.issue_id) as issueId,
-		   b.mem_name as memName
-		FROM
-		    issue a, (select * from member)b
-		where a.mem_id = b.mem_id
-		and req_id=#{reqId} 
-		group by b.mem_name
-	</select>
-	
-	<select id="chartproday" parameterType="java.lang.String"
-		resultType="ants.com.member.model.ProjectVo">
-		<![CDATA[ 
-		SELECT 
-		    e.regDt as regDt,
-		    ROUND(e.hpercent/f.cnt)as percent
-		from(
-		SELECT sum(c.hpercent) as hpercent,
-		       c.regDt,
-		       c.req_id
-		from(
-		SELECT
-		    todo_id,
-		    to_char(reg_dt,'yyyy-mm-dd') as regDt,
-		    max(to_number(hpercent)) as hpercent,
-		    req_id
-		FROM
-		    todohistory 
-		where req_id =#{reqId} 
-		 And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
-		group by todo_id, req_id, to_char(reg_dt,'yyyy-mm-dd'))c
-		GROUP BY c.regDt, c.req_id
-		)e,
-		(SELECT 
-		    		COUNT(todo_id) as cnt,
-		            req_id
-				FROM todo 
-					WHERE req_id =#{reqId} 
-					AND del ='N'
-		            group by req_id) f
-		where e.req_id = f.req_id 
-		group by e.hpercent, e.regDt, e.req_id, ROUND(e.hpercent/f.cnt)
-		order by regDt asc
-		]]> 
-	</select>
-	
-	<select id="projectListmain" parameterType="String"
-		resultType="ants.com.member.model.ProjectVo">
-		SELECT
-			project.req_id, project.mem_id, project.pro_name,
-			project.pro_percent as percent, 
-			TO_CHAR(project.reg_dt,'yyyy-mm-dd') as regDt,
+   </select>
+   
+   <select id="chartIssuesCnt" parameterType="java.lang.String"
+      resultType="ants.com.board.memBoard.model.IssueVo">
+      SELECT
+         count(a.issue_id) as issueId,
+         b.mem_name as memName
+      FROM
+          issue a, (select * from member)b
+      where a.mem_id = b.mem_id
+      and req_id=#{reqId} 
+      group by b.mem_name
+   </select>
+   
+   <select id="chartproday" parameterType="java.lang.String"
+      resultType="ants.com.member.model.ProjectVo">
+      <![CDATA[ 
+      SELECT 
+          e.regDt as regDt,
+          ROUND(e.hpercent/f.cnt)as percent
+      from(
+      SELECT sum(c.hpercent) as hpercent,
+             c.regDt,
+             c.req_id
+      from(
+      SELECT
+          todo_id,
+          to_char(reg_dt,'yyyy-mm-dd') as regDt,
+          max(to_number(hpercent)) as hpercent,
+          req_id
+      FROM
+          todohistory 
+      where req_id =#{reqId} 
+       And (reg_dt>='2020-12-01' and  reg_dt<'2222-12-30')
+      group by todo_id, req_id, to_char(reg_dt,'yyyy-mm-dd'))c
+      GROUP BY c.regDt, c.req_id
+      )e,
+      (SELECT 
+                COUNT(todo_id) as cnt,
+                  req_id
+            FROM todo 
+               WHERE req_id =#{reqId} 
+               AND del ='N'
+                  group by req_id) f
+      where e.req_id = f.req_id 
+      group by e.hpercent, e.regDt, e.req_id, ROUND(e.hpercent/f.cnt)
+      order by regDt asc
+      ]]> 
+   </select>
+   
+   <select id="projectListmain" parameterType="String"
+      resultType="ants.com.member.model.ProjectVo">
+      SELECT
+         project.req_id, project.mem_id, project.pro_name,
+         project.pro_percent as percent, 
+         TO_CHAR(project.reg_dt,'yyyy-mm-dd') as regDt,
             TO_CHAR((project.reg_dt + reqlist.req_period),'yyyy-mm-dd') as endDt
-		FROM(select * from project)project,
-			projectmember projectmember,(select * from reqlist)reqlist
-		WHERE
-			projectmember.req_id = project.req_id
+      FROM(select * from project)project,
+         projectmember projectmember,(select * from reqlist)reqlist
+      WHERE
+         projectmember.req_id = project.req_id
         and reqlist.req_id=project.req_id    
         and projectmember.mem_id = #{memId}
-		and projectmember.promem_status='IN'
+      and projectmember.promem_status='IN'
         and project.del ='N'
+        and project.pro_name is not null
         union
          SELECT
-			project.req_id, project.mem_id,project.pro_name,
-			project.pro_percent as percent, TO_CHAR(project.reg_dt,'yyyy-mm-dd') as regDt,
+         project.req_id, project.mem_id,project.pro_name,
+         project.pro_percent as percent, TO_CHAR(project.reg_dt,'yyyy-mm-dd') as regDt,
             TO_CHAR((project.reg_dt + reqlist.req_period),'yyyy-mm-dd') as endDt
-		FROM(select * from	
-			project)project,
-			reqlist reqlist
-		WHERE
-			reqlist.req_id = project.req_id
-		AND reqlist.pl_id= #{memId}
-		AND reqlist.status ='ACCEPT'
+      FROM(select * from   
+         project)project,
+         reqlist reqlist
+      WHERE
+         reqlist.req_id = project.req_id
+      AND reqlist.pl_id= #{memId}
+      AND reqlist.status ='ACCEPT'
          and project.del ='N'
-	</select>
-	
-	<select id="alarmlistmain" parameterType="String"
-		resultType="ants.com.common.model.AlarmVo">
-		<![CDATA[ 
-		select * from(
-		    SELECT
-				    alarm_id,
-				    alarm_cont,
-				    alarm_status,
-				    mem_id,
-				    alarm_type,
-				    to_char(reg_dt, 'YYYY-MM-DD') as regDt,
-		            to_char(reg_dt, 'hh24:mi') as regtime,
-		            round(sysdate-reg_dt) as days
-				FROM
-				    alarm
-				WHERE mem_id = #{memId}
-				 and ALARM_STATUS ='N'
-		         and reg_dt  is not null
-		         
-				ORDER BY to_number(alarm_id)desc) where rownum <=5
-		 ]]> 
-	</select>
-	
-	<update id="projectManage" parameterType="ants.com.member.model.ProjectVo">
-	UPDATE project
-    	SET
-      	  PRO_STATUS = #{proStatus},
-      	  PRO_CHANGE_DATE = sysdate
-	WHERE
-    	req_id =#{reqId}
-	</update>
-	 
-	
+         and project.pro_name is not null
+   </select>
+   
+   <select id="alarmlistmain" parameterType="String"
+      resultType="ants.com.common.model.AlarmVo">
+      <![CDATA[ 
+      select * from(
+          SELECT
+                alarm_id,
+                alarm_cont,
+                alarm_status,
+                mem_id,
+                alarm_type,
+                to_char(reg_dt, 'YYYY-MM-DD') as regDt,
+                  to_char(reg_dt, 'hh24:mi') as regtime,
+                  round(sysdate-reg_dt) as days
+            FROM
+                alarm
+            WHERE mem_id = #{memId}
+             and ALARM_STATUS ='N'
+               and reg_dt  is not null
+               
+            ORDER BY to_number(alarm_id)desc) where rownum <=5
+       ]]> 
+   </select>
+   
+   <update id="projectManage" parameterType="ants.com.member.model.ProjectVo">
+   UPDATE project
+       SET
+           PRO_STATUS = #{proStatus},
+           PRO_CHANGE_DATE = sysdate
+   WHERE
+       req_id =#{reqId}
+   </update>
+    
+   
 </mapper>
