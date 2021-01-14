@@ -56,6 +56,19 @@
 	   	     	$(this).val(content.substring(0, 65));
 	   	    }
 	   	});
+		
+	 // 작성 버튼 클릭시 파일 업로드 호출
+     	$('#updateBtn').on('click', function(){
+     		cnt = 0;
+     		// 각 칸이 빈칸인지 아닌지를 확인해야 한다.
+ 			if ($('#noticeTitle').val().length == 0){
+				$('.warningTitle').text("제목을 작성해 주세요.");  
+				cnt++;
+			}else{
+				$('.warningTitle').text("");
+				$('#noticeform').submit();		
+			}
+     	});
  	});
 	
 </script>
@@ -126,6 +139,9 @@
 				<div class="form-group" >
 					<label for="noticeTitle" class="col-sm-2 control-label jg">제목 </label>
 					<input  class="form-control col-sm-8" type="text" class="jg" name="noticeTitle" style=" display: inline-block;" value="${noticeVo.noticeTitle }" id="noticeTitle"><br><br>
+					<div class="jg" style=" padding-left: 10px;">
+	                	<span class="jg warningTitle" style="color : red;"></span>
+	                </div>
 				</div>
 				
 				<div class="form-group jg" style="width: 90%;">
@@ -150,7 +166,8 @@
 		
 				<div class="float-right" >
 					<input type="hidden" value="${noticeVo.noticeId }" name="noticeId">
-					<input type="submit" class="btn btn-default  jg" id="updateBtn" value="수정하기">
+<!-- 					<input type="submit" class="btn btn-default  jg" id="updateBtn" value="수정하기"> -->
+					<button type="button" class="btn btn-default jg" id="updateBtn">수정하기</button>
 					<button type="button" class="btn btn-default  jg" id="back">뒤로가기</button>
 				</div>
 				
