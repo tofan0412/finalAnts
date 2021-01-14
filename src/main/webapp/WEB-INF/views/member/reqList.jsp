@@ -395,6 +395,7 @@ li strong{
 		$('#searchInput').on('keyup', function() {
 			memIdCheck();
 		});
+		
 		/* memId 자동완성 */
 		$("#searchInput").autocomplete({
 			//자동완성 대상
@@ -403,16 +404,13 @@ li strong{
 					type : 'get',
 					url : "/req/json",
 					dataType : "json",
-					//검색데이터 보내기
 					data : request,
 					success : function(data) {
-						//서버에서 json 데이터 response 후 목록에 추가
 						response($.map(data, function(item) {
 							return {
-								label : item.memName+"["+item.memId+"]", //UI에서 표시되는 값
-								value : item.memId, //선택시 input태그에 표시되는 값
+								label : item.memName+"["+item.memId+"]", // 자동완성 결과표시 값
+								value : item.memId, // 선택시 memId 값 표시
 								memName : item.memName
-							//사용자 설정값으로 담을 수 도 있다. 
 
 							}
 						}));
@@ -420,17 +418,13 @@ li strong{
 				});
 			},
 			select : function(event, ui) { //아이템 선택시
-				console.log(ui);//사용자가 오토컴플릿이 만들어준 목록에서 선택을 하면 반환되는 객체
-				console.log(ui.item.label);
-				console.log(ui.item.value);
-				console.log(ui.item.test);
 
 			},
 			focus : function(event, ui) {
 				return false;//한글 에러 잡기용도로 사용됨
 			},
-			minLength : 1,// 최소 글자수
-			autoFocus : true, //첫번째 항목 자동 포커스 기본값 false
+			minLength : 1,// 검색시작 글자 수 
+			autoFocus : true, //첫번째 항목 자동 포커스
 			classes : {
 				"ui-autocomplete" : "highlight"
 			},
@@ -441,6 +435,7 @@ li strong{
 				at : "right bottom"
 			},
 			close : function(event, ui) { //자동완성창 닫아질때 호출
+				// 존재하는 회원인지 체크
 				memIdCheck();
 			}
 		});
@@ -475,7 +470,7 @@ li strong{
 	/* pl요청 알림메세지 db에 저장하기 */
 	function saveMsg(){
 		var alarmData = {
-							"alarmCont" : $('#modalReqId').val() + "&&${SMEMBER.memName}&&/req/reqDetail?reqId="+$('#modalReqId').val()+"&&"+ $('#modalReqName').val(),
+							"alarmCont" : $('#modalReqId').val() + "&&${SMEMBER.memName}&&${SMEMBER.memId}&&/req/reqDetail?reqId="+$('#modalReqId').val()+"&&"+ $('#modalReqName').val(),
 							"memId" 	: $('#searchInput').val(),
 							"alarmType" : "req-pl"
 		}

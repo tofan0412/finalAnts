@@ -76,7 +76,7 @@ public class ReqController {
 		reqVo.setLastIndex(paginationInfo.getLastRecordIndex());
 		reqVo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		List<?> reqList = reqService.reqList(reqVo);
+		List<ReqVo> reqList = reqService.reqList(reqVo);
 		model.addAttribute("reqList", reqList);
 
 		int totCnt = reqService.reqListCount(reqVo);

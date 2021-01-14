@@ -45,7 +45,7 @@ public class ReqService{
 	/**
 	 * 요구사항정의서 등록 
 	 * @param reqVo 등록할 요구사항정의서 객체
-	 * @return 성공:1  실패:0
+	 * @return 성공:2  실패:0
 	 */
 	public int reqInsert(ReqVo reqVo) {
 		int cnt = 0;
