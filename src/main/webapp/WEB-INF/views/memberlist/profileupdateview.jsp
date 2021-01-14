@@ -271,10 +271,6 @@
 $(function() {
 	$(document).ready(function() {
 		$('select[name=memTypeSelect]').change(function() {
-			if($(this).val() == 'Type'){
-				$('#memType').val("${memberVo.memType}");
-			}
-			
 			if ($(this).val() == "1") {
 				$('#memType').val("");
 			} else {
@@ -438,7 +434,12 @@ function unityPW(){
 				var memId = document.getElementById('memId');
 				var memName = document.getElementById('memName');
 				var memPass = document.getElementById('memPass');
-					
+				
+				if ($('#memType').val() == ''){
+					alert("회원 유형을 선택해 주세요.");
+					return;
+				}
+				
 				// 누락있을때
 				if (memId.value == "" || memName.value == "" || memPass.value == "") {
 					alert("필수입력 사항을 입력해주세요.")

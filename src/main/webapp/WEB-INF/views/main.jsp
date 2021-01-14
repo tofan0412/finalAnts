@@ -288,7 +288,7 @@
 		</div>
 		
 		<div class="content-text-right">
-			<img class="img" id="chattingImg" alt="메시지 이미지" src="${pageContext.request.contextPath }/resources/dist_main/img/mainIntroImg/chatting.png">
+			<img class="img" style="width : 100%;" id="chattingImg" alt="메시지 이미지" src="${pageContext.request.contextPath }/resources/dist_main/img/mainIntroImg/chatting.png">
 		</div>
 		
 	</div>

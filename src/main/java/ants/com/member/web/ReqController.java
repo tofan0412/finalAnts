@@ -1,5 +1,6 @@
 package ants.com.member.web;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
 
@@ -233,9 +234,23 @@ public class ReqController {
 	}
 	
 	@RequestMapping(value="/plDelete")
-	public String plDelete(@ModelAttribute("reqVo")ReqVo reqVo, @RequestParam(name="selectedId", required= false) String id, RedirectAttributes re) {
+	public String plDelete(@ModelAttribute("reqVo")ReqVo reqVo, @RequestParam(name="selectedId", required= false) String id, String plId, RedirectAttributes re) {
 		reqVo.setReqId(id);
 		int cnt = reqService.plDelete(reqVo);
+		
+		// 2. PL이 해당 프로젝트를 승인하고, 프로젝트를 생성한 경우!
+		// 이 경우, projectMember에서 삭제하면 안되고, 상태값만 OUT으로 바꿔줘야 한다.
+		// 또한 project의 plId를 null로 설정한다. -> 이미 처리됨..
+		ProjectMemberVo plVo = new ProjectMemberVo();
+		plVo.setMemId(plId);
+		plVo.setReqId(id);
+
+		// 존재할 수도 있고, 존재하지 않을 수도 있다. 따라서 예외 처리 해준다.
+		try {
+			int result = promemService.PlUpdate(plVo);
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		re.addAttribute("plDelMsg", cnt);
 		

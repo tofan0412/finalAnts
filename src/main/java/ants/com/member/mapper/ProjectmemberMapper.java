@@ -1,5 +1,6 @@
 package ants.com.member.mapper;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import ants.com.board.manageBoard.model.TodoVo;
@@ -61,4 +62,6 @@ public interface ProjectmemberMapper {
 		
 	// 프로젝트 멤버 이름 업데이트
 	public int projectmembernameupdate(ProjectMemberVo projectmembervo);
+	
+	public int PlUpdate(ProjectMemberVo projectMemberVo) throws SQLException;
 }

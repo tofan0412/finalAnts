@@ -38,4 +38,10 @@ UPDATE PROJECTMEMBER
 	WHERE MEM_ID = #{memId}
 </update>
 
+<update id="PlUpdate" parameterType="ants.com.member.model.ProjectMemberVo">
+UPDATE PROJECTMEMBER
+      SET PROMEM_STATUS = 'OUT' 
+ WHERE REQ_ID = #{reqId}
+    AND MEM_ID = #{memId}
+</update>
 </mapper>

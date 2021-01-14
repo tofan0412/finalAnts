@@ -62,10 +62,10 @@ function readRecentIpList(){
 		
 		<table class="recentIpList">
 			<tr style="height : 30px;">
-				<th>사용자</th>
+				<th style="width : 10%;">사용자</th>
 				<th>IP</th>
-				<th>접속국가</th>
-				<th>접속 시간</th>
+				<th style="width : 10%;">접속국가</th>
+				<th style="width : 20%;">접속 시간</th>
 			</tr>
 		</table>
 	</div>

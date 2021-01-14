@@ -50,7 +50,7 @@
         <a href="${pageContext.request.contextPath}/admin/adMainView" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-      	<input class="nav-link" type="text" id="clock" readonly style="border : none; color : blue;">
+      	<input class="nav-link jg" type="text" id="clock" readonly style="border : none; color : black;">
       </li>
     </ul>
 

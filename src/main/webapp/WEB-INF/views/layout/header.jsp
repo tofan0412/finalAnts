@@ -79,12 +79,12 @@
     			data : {msgReceiver : '${SMEMBER.memId}'},
     			method : "POST",
     			success : function(res){
-    				html += "<table>";
+    				html += "<table style=\'width : 100%;\'>";
     				html += "<tr style=\'text-align : center;\'><th>작성자</th><th>내용</th><th>작성일</th></tr>";
     				for(i = 0 ; i < res.length ; i++){
     					html += "<tr>";
 	    					html += "<td style=\'text-align : center;\'>" + res[i].msgWriter + "</td>";
-	    					html += "<td style=\'text-align : center;\'>" + res[i].msgCont + "</td>";
+	    					html += "<td style=\'text-align : left;\'>" + res[i].msgCont + "</td>";
 	    					html += "<td style=\'text-align : center;\'>" + res[i].regDt + "</td>";
     					html += "</tr>";
     				}
@@ -127,17 +127,45 @@
     		msgStatus = 'WAIT';
     		
     		if (count < 1){
-    			$.ajax({
-    				url : "/msg/insertMsg",
-    				data : {msgType : type, msgCont : msgCont,
-    						msgWriter : msgWriter, regDt : regDt, 
-    						msgStatus : msgStatus, msgReceiver : 'ADMIN'},
-    				method : "POST", 
-    				success : function(res){
-    					alert("쪽지를 보냈습니다.");
-    					$('#msgToAdminModal').modal('hide');
-    				}
-    			})
+    			// 생성된 프로젝트 중 본인이 PL인 프로젝트가 있는지 없는지 확인해야 한다..
+    			if (type == 'PM'){
+        			$.ajax({
+        				url : "/project/checkPM", 
+        				method : "POST", 
+        				data : {memId : '${SMEMBER.memId}'},
+        				async : false,
+        				success : function(res){
+        					if (res == "fail"){
+        						alert("본인이 프로젝트 리더인 프로젝트가 존재합니다.");
+        						return;
+        					}else{
+        						$.ajax({
+        		    				url : "/msg/insertMsg",
+        		    				data : {msgType : type, msgCont : msgCont,
+        		    						msgWriter : msgWriter, regDt : regDt, 
+        		    						msgStatus : msgStatus, msgReceiver : 'ADMIN'},
+        		    				method : "POST", 
+        		    				success : function(res){
+        		    					alert("쪽지를 보냈습니다.");
+        		    					$('#msgToAdminModal').modal('hide');
+        		    				}
+        		    			})
+        					}
+        				}
+        			})	
+    			}else{
+    				$.ajax({
+	    				url : "/msg/insertMsg",
+	    				data : {msgType : type, msgCont : msgCont,
+	    						msgWriter : msgWriter, regDt : regDt, 
+	    						msgStatus : msgStatus, msgReceiver : 'ADMIN'},
+	    				method : "POST", 
+	    				success : function(res){
+	    					alert("쪽지를 보냈습니다.");
+	    					$('#msgToAdminModal').modal('hide');
+	    				}
+	    			})
+    			}
     		}
     	})
 	});
@@ -236,7 +264,7 @@
       </li>
       <li class="nav-item d-none d-sm-inline-block jg">
       	<!-- 현재 시간 표시하는 부분.. -->
-		<input class="nav-link" type="text" id="clock" readonly style="border : none; color : blue;"> 
+		<input class="nav-link jg" type="text" id="clock" readonly style="border : none; color : black;"> 
       <li>
     </ul>
 		
@@ -357,8 +385,7 @@
 	<div class="modal fade jg" id="msgAnsModal" tabindex="-1" role="dialog"
 		aria-labelledby="msgAnsModal">
 		<div class="modal-dialog modal-lg-center" role="document">
-				<div class="modal-content" style="height: 500px; width : 450px;">
-
+			<div class="modal-content" style="height: 500px; width : 500px;">
 				<div class="modal-header">
 					<h3 class="modal-title" id="addplLable">내 쪽지함</h3>
 					<button type="button" class="close" data-dismiss="modal"
@@ -366,8 +393,10 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body msgAnsBody" style="height : 75%; overflow-y : width : 95%; auto; margin : 0 auto;">
-					
+				<div class="modal-body msgAnsBody" 
+					style="height : 75%; 
+						   overflow-y : auto;
+						   width : 100%; margin : 0 auto;">
 				</div>
 			</div>
 		</div>

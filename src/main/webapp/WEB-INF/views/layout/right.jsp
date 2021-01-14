@@ -59,13 +59,13 @@
 	// listNow의 값이 yes인 경우, setTimeout 통해 채팅 목록을 지속적으로 갱신한다.
 	function listNow(){
 		if ($('#listNow').val() == 'yes'){
-			listTimer = setTimeout('readChatList()', 1000);
+			listTimer = setTimeout('readChatList()', 3000);
 		}
 		// listNow의 값이 yes가 아닌 경우, 반복 함수 종료
 		else{
 			window.clearTimeout(listTimer);	
 		}
-		setTimeout('listNow()', 5000);
+		setTimeout('listNow()', 3000);
 	}
 	
 $(function(){
