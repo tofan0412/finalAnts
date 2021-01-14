@@ -113,8 +113,8 @@ $(function(){
 						<td>
 							<c:out value="${((msg.pageIndex-1) * msg.pageUnit + (status.index+1))}"/>.
 						</td>
-						<td>${msg.msgWriter }</td>
-						<td>
+						<td style="width : 10%;">${msg.msgWriter }</td>
+						<td style="width : 45%; text-align : left;">
 							<a href="#">
 								<c:if test="${fn:length(msg.msgCont) > 10 }">
 									${fn:substring(msg.msgCont,0,10) }...

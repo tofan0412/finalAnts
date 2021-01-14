@@ -271,6 +271,10 @@
 $(function() {
 	$(document).ready(function() {
 		$('select[name=memTypeSelect]').change(function() {
+			if($(this).val() == 'Type'){
+				$('#memType').val("${memberVo.memType}");
+			}
+			
 			if ($(this).val() == "1") {
 				$('#memType').val("");
 			} else {
@@ -278,6 +282,8 @@ $(function() {
 				$("#memType").attr("readonly", true);
 			}
 		});
+		
+		
 	});
 	
 	// 비밀번호 보이기 버튼
