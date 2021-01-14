@@ -54,7 +54,6 @@ th, td {
 		$('.pjtAcceptBtn').click(function(){
 			var reqId = $(this).attr("reqId");
 			
-			alert("요구사항 정의서 번호 - "+ reqId + " : 승인 처리되었습니다.");
 			var reqTitle = $(this).attr("reqTitle");
 			var memId = $(this).attr("memId");
 			var memName = '${SMEMBER.memName}';
