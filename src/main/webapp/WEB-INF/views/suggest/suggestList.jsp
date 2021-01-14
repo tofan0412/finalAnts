@@ -311,8 +311,9 @@ $(function(){
 									<td class="jg" style="width: 150px; padding-left: 50px;"><c:out
 											value="${  ((suggest.pageIndex-1) * suggest.pageUnit + (status.index+1))}" />.</td>
 
-									<td class="jg" style="padding-left: 30px;"><a
-										href="/suggest/suggestDetail?sgtId=${suggest.sgtId }&memId=${suggest.memId }">${suggest.sgtTitle }</a>
+									<td class="jg" style="padding-left: 30px; text-align : left;"><a
+										href="/suggest/suggestDetail?sgtId=${suggest.sgtId }&memId=${suggest.memId }"
+										>${suggest.sgtTitle }</a>
 									</td>
 
 									<td class="jg">${suggest.memName }</td>
