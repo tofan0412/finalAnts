@@ -183,6 +183,9 @@
 			<mvc:exclude-mapping path="/member/mainView" />
 			<mvc:exclude-mapping path="/member/memTypeUpdate" />
 			
+			<mvc:exclude-mapping path="/member/noticedetailmemview" />
+			<mvc:exclude-mapping path="/member/noticelistmemview" />
+			
 			<mvc:exclude-mapping path="/admin/*" />
 			<mvc:exclude-mapping path="/excel/*" />
 			<mvc:exclude-mapping path="/msg/*" />
@@ -212,6 +215,8 @@
 			<mvc:exclude-mapping path="/admin/adlogout" />
 			<mvc:exclude-mapping path="/excel/*" />
 			<mvc:exclude-mapping path="/msg/*" />
+			<mvc:exclude-mapping path="/member/noticedetailmemview" />
+			<mvc:exclude-mapping path="/member/noticelistmemview" />
 			
 			<bean class="ants.com.config.interceptor.AdminLoginCheckInterceptor"/>
 		</mvc:interceptor>

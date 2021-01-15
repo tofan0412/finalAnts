@@ -169,14 +169,28 @@
 										<c:if test="${notice.importance eq 'gen'}"><span class="badge badge-success ns">일반</span></c:if>
 										<c:if test="${notice.importance eq 'emg'}"><span class="badge badge-danger ns">필독</span></c:if>
 										&nbsp;
-										<a href="${pageContext.request.contextPath}/admin/eachnoticeDetail?noticeId=${notice.noticeId}">
-											<c:if test="${fn:length(notice.noticeTitle) > 30}">									
-												${fn:substring(notice.noticeTitle,0 ,30) }...
-											</c:if>
-											<c:if test="${fn:length(notice.noticeTitle) <= 30}">									
-												${notice.noticeTitle}
-											</c:if>
-										</a>
+										<c:choose>
+										 	<c:when test="${not empty main}">
+										 	     <a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}&main=Y">
+													<c:if test="${fn:length(notice.noticeTitle) > 30}">									
+														${fn:substring(notice.noticeTitle,0 ,30) }...
+													</c:if>
+													<c:if test="${fn:length(notice.noticeTitle) <= 30}">									
+														${notice.noticeTitle}
+													</c:if>
+												 </a>
+	                                        </c:when>  
+	                                        <c:otherwise>
+	                                            <a href="${pageContext.request.contextPath}/member/noticedetailmemview?noticeId=${notice.noticeId}">
+		                                            <c:if test="${fn:length(notice.noticeTitle) > 30}">									
+														${fn:substring(notice.noticeTitle,0 ,30) }...
+													</c:if>
+													<c:if test="${fn:length(notice.noticeTitle) <= 30}">									
+														${notice.noticeTitle}
+													</c:if>
+												</a>
+	                                        </c:otherwise>      
+                                        </c:choose>
 									</td>
 									
 									<td class="jg" style="text-align: center; width: 10%">${notice.adminId }</td>
