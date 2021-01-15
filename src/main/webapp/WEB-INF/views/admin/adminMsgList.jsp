@@ -101,11 +101,11 @@ $(function(){
 			<table id="msgTable" class="table" style="text-align: center;">
 				<tr>
 					<th>No.</th>
-					<th>작성자</th>
+					<th>유형</th>
 					<th>내용</th>
 					<th>작성일</th>
+					<th>작성자</th>
 					<th>상태</th>
-					<th>유형</th>
 					<th>&nbsp;&nbsp;</th>
 				</tr>
 				<c:forEach items="${msgList }" var="msg" varStatus="status">
@@ -113,18 +113,43 @@ $(function(){
 						<td>
 							<c:out value="${((msg.pageIndex-1) * msg.pageUnit + (status.index+1))}"/>.
 						</td>
-						<td>${msg.msgWriter }</td>
+						
 						<td>
+							<c:if test="${msg.msgType eq 'PM'}">
+								<span style="border : 3px solid lightgrey;
+									         background-color: lightgrey;
+									         border-radius : 0.3rem;
+									         color : black;">
+							         &nbsp;권한 요청&nbsp;</span>
+							</c:if>
+							<c:if test="${msg.msgType eq 'ISSUE' }">
+								<span style="border : 3px solid lightgrey;
+									         background-color: lightgrey;
+									         border-radius : 0.3rem;
+									         color : black;">
+							         &nbsp;일반 문의&nbsp;</span>
+							</c:if>
+						</td>
+						
+						<td style="width : 45%; text-align : left;">
 							<a href="#">
-								<c:if test="${fn:length(msg.msgCont) > 10 }">
+								<c:if test="${fn:length(msg.msgCont) > 30 }">
 									${fn:substring(msg.msgCont,0,10) }...
 								</c:if>
-								<c:if test="${fn:length(msg.msgCont) < 10 }">
+								<c:if test="${fn:length(msg.msgCont) <= 30 }">
 									${msg.msgCont }
 								</c:if>
 							</a>
 						</td>
 						<td>${msg.regDt }</td>
+						
+						<c:if test="${fn:length(msg.msgWriter) > 10 }">
+							<td style="width : 10%;">${fn:substring(msg.msgWriter,0,10)}...</td>
+						</c:if>
+						<c:if test="${fn:length(msg.msgWriter) <= 10 }">
+							<td style="width : 10%;">${msg.msgWriter }</td>
+						</c:if>
+						
 						<td>
 							<c:if test="${msg.msgStatus eq 'WAIT' }">
 								<span style="border : 3px solid #FFBF00;
@@ -157,14 +182,7 @@ $(function(){
 						       </span>
 							</c:if>
 						</td>
-						<td>
-							<c:if test="${msg.msgType eq 'PM'}">
-								권한 요청
-							</c:if>
-							<c:if test="${msg.msgType eq 'ISSUE' }">
-								일반 문의
-							</c:if>
-						</td>
+						
 						<td>
 							<c:if test="${msg.msgStatus eq 'WAIT' && msg.msgType eq 'PM' }">
 								<button type="button" memId="${msg.msgWriter }" msgIdx="${msg.msgIdx }" class="btn btn-primary pmAcceptBtn">처리</button>

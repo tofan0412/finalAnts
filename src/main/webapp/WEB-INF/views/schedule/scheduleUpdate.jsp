@@ -80,6 +80,7 @@ input[type=search]{
               <div class="card-body">
                 <div class="form-group">
             		<input class="form-control" id="scheTitle" name="scheTitle" placeholder="제목" value="${scheduleVo.scheTitle}">
+            		<div class="jg" style=" padding-left: 10px;"><span class="jg warningTitle" style="color : red;"></span></div>
                 </div>
                 <div class="form-group">
                 <textarea id="summernote" name="scheCont" placeholder="내용">${scheduleVo.scheCont}</textarea>

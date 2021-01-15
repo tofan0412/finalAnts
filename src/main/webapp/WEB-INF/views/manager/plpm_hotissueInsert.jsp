@@ -168,7 +168,7 @@
 		var chTitle = $('#hissueTitle').val();
 		var chCont = $('#summernote').val();
 		var alarmData = {
-							"alarmCont" : "${projectId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/hotIssue/hissueList&&"+pid+"&&${hotIssueVo.hissueTitle}&&"+ chTitle + "&&" + chCont,
+							"alarmCont" : "${projectId}&&${SMEMBER.memName}&&${SMEMBER.memId}&&/hotIssue/hissueList&&"+pid+"&&${hotIssueVo.hissueTitle}&&"+ chTitle + "&&" + chCont + "&&${projectVo.proName}",
 							"memId" 	: "${hotIssueVo.memId}",
 							"alarmType" : "posts"
 							

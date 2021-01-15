@@ -54,7 +54,6 @@ th, td {
 		$('.pjtAcceptBtn').click(function(){
 			var reqId = $(this).attr("reqId");
 			
-			alert("요구사항 정의서 번호 - "+ reqId + " : 승인 처리되었습니다.");
 			var reqTitle = $(this).attr("reqTitle");
 			var memId = $(this).attr("memId");
 			var memName = '${SMEMBER.memName}';
@@ -74,7 +73,6 @@ th, td {
 				method : "POST",
 				success : function(res){
 					if (res == "success"){
-						alert("승인하였습니다.");
 					}else{
 						alert("프로젝트 생성을 실패하였습니다.");
 						$(location).attr("href", "/project/readReqList");
@@ -127,6 +125,12 @@ th, td {
 			
 			// 현재 초대 리스트는 회원이름과 결합되어 있으므로, 가공해줘야 한다.
 			setInviteMemList = [];
+			
+			if (mkPjtInviteMemList.length == 0){
+				alert("최소 초대 인원은 1명입니다.");
+				return;
+			}
+			
 			for (i = 0 ; i < mkPjtInviteMemList.length ; i++){
 				setInviteMemList.push(mkPjtInviteMemList[i].split(":")[1]);
 			}

@@ -309,7 +309,7 @@
 					<button type="button" class="btn btn-default jg float-right" data-toggle="modal" data-target="#myModal">진행도 수정</button>	
 			    </c:if>
 	            <c:if test="${SMEMBER.memId ne projectVo.memId && projectVo.proStatus == 'ACTIVE'}"> <!-- PL이 아닌 경우에만 건의 사항을 작성할 수 있다. -->
-	           	 	<button type="button" class="btn btn-default jg float-left" id="back">목록으로</button>   
+	           	 	<button type="button" class="btn btn-default jg float-left" id="backtolist">목록으로</button>   
 	            	<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;"id="issuebtn">이슈 작성</button>
 					<button type="button" class="btn btn-default jg float-right" style="margin-left: 5px;" id="suggestBtn">건의 작성</button>
 					<button type="button" class="btn btn-default jg float-right" data-toggle="modal" data-target="#myModal">진행도 수정</button>	
@@ -336,7 +336,8 @@
        	<form id="proForm" name="proForm" method="post">
        	<input type="hidden" name="todoId" id="todoId_in">
        	<input type="hidden" name="reqId" id="reqId">
-       	<input type="text" name="todoPercent" onkeypress="return isNumberKey(event)" onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');" onchange="javascript:handleChange(this);"/>
+       	<input type="text" name="todoPercent" onkeypress="return isNumberKey(event)" onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');" onchange="javascript:handleChange(this);" autocomplete="off" />
+       	<span class="jg">%</span>
        	</form>
       </div>           
       <div class="modal-footer">

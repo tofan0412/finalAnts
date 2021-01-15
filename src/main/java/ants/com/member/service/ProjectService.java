@@ -170,4 +170,8 @@ public class ProjectService extends EgovAbstractServiceImpl {
 	public int projectManage(ProjectVo projectVo) {
 		return mapper.projectManage(projectVo);
 	}
+	
+	public List<ProjectVo> checkPM(){
+		return mapper.checkPM();
+	}
 }

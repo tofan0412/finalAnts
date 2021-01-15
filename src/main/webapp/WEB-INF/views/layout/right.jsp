@@ -41,9 +41,14 @@
 }
 </style>
 <script>
-	// 해당 프로젝트에 존재하는 모든 채팅방 목록 불러오기.
-	// 채팅방 리스트를 보고 있을 때만, 해당 리스트가 갱신되어야 한다.
-	function readChatList(){
+
+//listNow의 값이 yes인 경우, setTimeout 통해 채팅 목록을 지속적으로 갱신한다.
+
+var listTimer = null;
+function listNow(){
+	if ($('#listNow').val() == 'no'){
+		window.clearTimeout(listTimer);
+	}else{
 		var memId = '${SMEMBER.memId}';	
 		var reqId = '${projectId}';
 		$.ajax({
@@ -53,33 +58,31 @@
 				var html = res.split("$$$$$$$");
 				$('.chatList').html(html);
 			}
-		})
+		})		
 	}
-	
-	// listNow의 값이 yes인 경우, setTimeout 통해 채팅 목록을 지속적으로 갱신한다.
-	function listNow(){
-		if ($('#listNow').val() == 'yes'){
-			listTimer = setTimeout('readChatList()', 1000);
-		}
-		// listNow의 값이 yes가 아닌 경우, 반복 함수 종료
-		else{
-			window.clearTimeout(listTimer);	
-		}
-		setTimeout('listNow()', 5000);
-	}
-	
+	listTimer = setTimeout('listNow()', 1000);
+}
+
 $(function(){
 	reqId = "${projectId}";
+	
 	if (typeof reqId == ""){
 	// 만약 reqId가 존재하지 않는경우에는 실행해선 안된다.
 		$('.chatList').html("아직 프로젝트를 선택하지 않았습니다.");	
 	}else{
 		// PM이 아닌 경우에만, 채팅방 리스트를 불러온다.
 		if ('${SMEMBER.memType}' != 'PM'){
-			listNow();	
+			listTimer = listNow();
+			
 		}else{
 			$('.chatList').html("안녕하세요, PM님! :)");
 		}
+	}
+	
+	// 해당 프로젝트에 존재하는 모든 채팅방 목록 불러오기.
+	// 채팅방 리스트를 보고 있을 때만, 해당 리스트가 갱신되어야 한다.
+	function readChatList(){
+		
 	}
 	
 	// 프로젝트에 참여하고 있는 회원 목록 불러오기
@@ -138,7 +141,8 @@ $(function(){
 	// 채팅방 생성 버튼을 눌렀을 때
 	$(".chatList").on('click','.NewBtn', function(){
 		var chk = 0;
-				
+		$('#listNow').val("no");
+		
 		$('.warning').text("");
 		if (MemListArr.length == 0){
 			$('.warning').text("최소 초대 인원은 1명입니다.");

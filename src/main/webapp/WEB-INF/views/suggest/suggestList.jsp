@@ -308,19 +308,20 @@ $(function(){
 								varStatus="status">
 								<tr>
 
-									<td class="jg" style="width: 150px; padding-left: 50px;"><c:out
+									<td class="jg" style="width: 10%; padding-left: 50px;"><c:out
 											value="${  ((suggest.pageIndex-1) * suggest.pageUnit + (status.index+1))}" />.</td>
 
-									<td class="jg" style="padding-left: 30px;"><a
-										href="/suggest/suggestDetail?sgtId=${suggest.sgtId }&memId=${suggest.memId }">${suggest.sgtTitle }</a>
+									<td class="jg" style="padding-left: 30px; text-align : left;"><a
+										href="/suggest/suggestDetail?sgtId=${suggest.sgtId }&memId=${suggest.memId }"
+										>${suggest.sgtTitle }</a>
 									</td>
 
-									<td class="jg">${suggest.memName }</td>
-									<td class="jg">${suggest.regDt }</td>
+									<td class="jg" style="width : 10%;">${suggest.memName }</td>
+									<td class="jg" style="width : 15%;">${suggest.regDt }</td>
 <%-- 									<td class="jg">${suggest.todoId }</td> --%>
 									<!-- 건의사항 상태 : 대기, 승인, 반려에 따른 출력 -->
 									<c:if test="${'WAIT' == suggest.sgtStatus }">
-										<td class="jg">
+										<td class="jg" style="width : 10%;">
 											<span 
 												style="border : 3px solid #FFBF00;
 												       background-color: #FFBF00;
@@ -330,7 +331,7 @@ $(function(){
 										</td>
 									</c:if>
 									<c:if test="${'ACCEPT' == suggest.sgtStatus }">
-										<td class="jg">
+										<td class="jg" style="width : 10%;">
 											<span 
 												style="border : 3px solid #088A29;
 												       background-color: #088A29;
@@ -341,7 +342,7 @@ $(function(){
 										</td>
 									</c:if>
 									<c:if test="${'REJECT' == suggest.sgtStatus }">
-										<td class="jg">
+										<td class="jg" style="width : 10%;">
 											<span 
 												style="border : 3px solid #FF0000;
 												       background-color: #FF0000;
@@ -427,7 +428,7 @@ $(function(){
 							style="width: 90%; border: 2px solid lightgrey; border-radius: 0.7rem;"
 							placeholder="키워드를 입력해 주세요.." autocomplete="off"> 
 						<br><br>
-						<div style="overflow-y : auto; height : 250px;" >
+						<div style="overflow-y : auto; height : 60%;" >
 							<c:forEach items="${myTodoList}" var="myTodo">
 								<div class="jg singleTodo" todoId="${myTodo.todoId }" id="getTodo"
 									todoTitle="${myTodo.todoTitle }"
@@ -436,7 +437,7 @@ $(function(){
 									<c:if test="${fn:length(myTodo.todoTitle) > 10 }">
 									${fn:substring(myTodo.todoTitle,0,10)}...
 									</c:if>
-									<c:if test="${fn:length(myTodo.todoTitle) < 10 }">
+									<c:if test="${fn:length(myTodo.todoTitle) <= 10 }">
 									${myTodo.todoTitle }
 									</c:if>
 									 
@@ -453,17 +454,17 @@ $(function(){
 						</div>
 					</div>
 
-					<div class="suggestInsertArea" style="float: right; width: 50%;">
-						<label class="jg" style="float: left;">건의 사항 제목</label>
+					<div class="suggestInsertArea jg" style="float: right; width: 50%;">
+						<label style="float: left;">건의 사항 제목</label>
 						<!-- 사용자가 제목을 입력하지 않은 경우 .. -->
-						<div class="jg">
-							<span class="jg warningTitle" style="color: red;"></span>
+						<div>
+							<span class="warningTitle" style="color: red;"></span>
 						</div>
 						<form:input id="sgtTitle" path="sgtTitle"
 							style="width : 90%;
 								   border : 2px solid lightgrey; 
-								   border-radius : 0.7rem;"
-							autocomplete="off" />
+								   border-radius : 0.7rem;" maxlength="25"
+							autocomplete="off" placeholder="25자 내로 입력해 주세요." />
 						<br>
 						<br> <label class="jg">건의 사항 내용</label>
 						<span class="jg warningCont" style="color: red;"></span>
@@ -490,7 +491,9 @@ $(function(){
 
 		<div class="modal-footer">
 			<button type="button" class="btn btn-primary jg suggestResetBtn">초기화</button>
-			<button class="jg btn btn-success" id="regBtn">등록</button>
+			<c:if test="${projectVo.memId ne SMEMBER.memId }">
+				<button class="jg btn btn-success" id="regBtn">등록</button>
+			</c:if>
 		</div>
 	</div>
 </div>

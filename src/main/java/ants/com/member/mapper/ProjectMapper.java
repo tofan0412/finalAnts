@@ -101,5 +101,6 @@ public interface ProjectMapper {
 	public List<AlarmVo> alarmlistmain(String memId);
 
 	public int projectManage(ProjectVo projectVo);
-
+	
+	public List<ProjectVo> checkPM();
 }

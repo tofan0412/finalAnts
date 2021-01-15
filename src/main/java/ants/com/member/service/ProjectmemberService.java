@@ -1,5 +1,6 @@
 package ants.com.member.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -102,4 +103,8 @@ public class ProjectmemberService extends EgovAbstractServiceImpl {
 	public int projectmembernameupdate(ProjectMemberVo projectmembervo) {
 		return mapper.projectmembernameupdate(projectmembervo);
 	}	
+	
+	public int PlUpdate(ProjectMemberVo projectMemberVo) throws SQLException{
+		return mapper.PlUpdate(projectMemberVo);
+	}
 }

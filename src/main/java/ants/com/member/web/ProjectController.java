@@ -1,7 +1,6 @@
 
 package ants.com.member.web;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -401,36 +399,50 @@ public class ProjectController {
 		return "jsonView";
 	}
 	// 일별 프로젝트 진행도
-		@RequestMapping("/chartproday")
-		public String chartproday(Model model, ProjectVo projectVo, HttpSession session) {
-			String reqId = (String) session.getAttribute("projectId");
-			List<ProjectVo> projectList = projectService.chartproday(reqId);
-			int size = projectList.size();
-			model.addAttribute("projectList", projectList);
-			model.addAttribute("dbsize", size);
-			return "jsonView";
-		}
+	@RequestMapping("/chartproday")
+	public String chartproday(Model model, ProjectVo projectVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		List<ProjectVo> projectList = projectService.chartproday(reqId);
+		int size = projectList.size();
+		model.addAttribute("projectList", projectList);
+		model.addAttribute("dbsize", size);
+		return "jsonView";
+	}
+	
+	//  프로젝트 진행도
+	@RequestMapping("/donutChartproper")
+	public String donutChartproper(Model model, ProjectVo projectVo, HttpSession session) {
+		String reqId = (String) session.getAttribute("projectId");
+		projectVo = projectService.getoutlinepro(reqId);
+		model.addAttribute("projectVo", projectVo);
+		return "jsonView";
+	}
+	
+	//  프로젝트 진행도
+	@RequestMapping("/projectManage")
+	public String projectManage(Model model, ProjectVo projectVo, HttpSession session) {
+		int res = projectService.projectManage(projectVo);
+		model.addAttribute("data", res);
 		
-		//  프로젝트 진행도
-		@RequestMapping("/donutChartproper")
-		public String donutChartproper(Model model, ProjectVo projectVo, HttpSession session) {
-			String reqId = (String) session.getAttribute("projectId");
-			projectVo = projectService.getoutlinepro(reqId);
-			model.addAttribute("projectVo", projectVo);
-			return "jsonView";
-		}
+		// session에 저장해야 한다 !!
+		ProjectVo sessionVo = (ProjectVo) session.getAttribute("projectVo");
+		sessionVo.setProStatus(projectVo.getProStatus());
+		session.setAttribute("projectVo", sessionVo);
 		
-		//  프로젝트 진행도
-		@RequestMapping("/projectManage")
-		public String projectManage(Model model, ProjectVo projectVo, HttpSession session) {
-			int res = projectService.projectManage(projectVo);
-			model.addAttribute("data", res);
-			
-			// session에 저장해야 한다 !!
-			ProjectVo sessionVo = (ProjectVo) session.getAttribute("projectVo");
-			sessionVo.setProStatus(projectVo.getProStatus());
-			session.setAttribute("projectVo", sessionVo);
-			
-			return "jsonView";
+		return "jsonView";
+	}
+	
+	// PM이 되려면 현재 진행중인 프로젝트 중 내가 PL인 프로젝트가 없어야 한다.
+	@RequestMapping("/checkPM")
+	@ResponseBody
+	public String checkPM(MemberVo memberVo) {
+		List<ProjectVo> projectList = projectService.checkPM();
+		
+		for (int i = 0 ; i < projectList.size() ; i++) {
+			if (projectList.get(i).getMemId().equals(memberVo.getMemId())){
+				return "fail";
+			}
 		}
+		return "pass";
+	}
 }

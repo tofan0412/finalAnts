@@ -125,6 +125,8 @@ function unityPW(){
 
 $(document).ready(function(){
 	$("#sub").on('click', function(){
+		var uid = document.getElementById('uid');
+        var keyval = document.getElementById('keyval');
 		
 		var newpass1 = document.getElementById('newpass1');
 		var newpass2 = document.getElementById('newpass2');
@@ -139,11 +141,24 @@ $(document).ready(function(){
 		
 		// 누락없을때
 		else if(chkPW()) {
-					
+						
 			// 비밀번호 일치시 
 			if(newpass1.value == newpass2.value){
-				alert("비밀번호 변경완료!");	
-				$('#passup').submit();
+				
+				if(uid.value==keyval.value){
+					var newpass1 = document.getElementById('newpass1');
+			        var newpass2 = document.getElementById('newpass2');
+			            
+			        	if(newpass1.value == newpass2.value){
+							alert("비밀번호 변경완료!");	
+			                $('#passup').submit();    
+			            }else{
+			                alert("비밀번호가 일치하지 않습니다.")
+			            }
+			    }else{
+			    	alert('코드값이 일치하지 않습니다.')
+			    }
+					
 			}else{
 				alert("비밀번호가 일치하지 않습니다.")
 			}
@@ -151,5 +166,6 @@ $(document).ready(function(){
 		}
 			
 	});
+
 });	
 </script>
