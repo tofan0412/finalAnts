@@ -60,7 +60,7 @@ function listNow(){
 			}
 		})		
 	}
-	listTimer = setTimeout('listNow()', 1000);
+	listTimer = setTimeout('listNow()', 2000);
 }
 
 $(function(){
