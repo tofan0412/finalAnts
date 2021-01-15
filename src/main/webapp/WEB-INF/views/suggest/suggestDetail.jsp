@@ -748,8 +748,16 @@ width:100%; overflow:visible; background-color:transparent; border:none;
 							<div class="jg singleTodo" todoId="${myTodo.todoId }"
 								todoTitle="${myTodo.todoTitle }"
 								style="width: 90%; height: 50px; overflow-y: auto;">
-								${myTodo.todoTitle } <span style="float: right;">일감번호 :
-									${myTodo.todoId }</span> <br>
+								
+								<c:if test="${fn:length(myTodo.todoTitle) > 10 }">
+									${fn:substring(myTodo.todoTitle,0,10)}...
+									</c:if>
+									<c:if test="${fn:length(myTodo.todoTitle) <= 10 }">
+									${myTodo.todoTitle }
+								</c:if> 
+								
+								<span style="float: right;">일감번호 : ${myTodo.todoId }</span><br>
+								
 								<c:if test="${myTodo.todoImportance == 'gen' }">
 									<span class="jg" style="font-size: 1.0em;">일반</span>
 								</c:if>

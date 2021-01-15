@@ -336,7 +336,8 @@
        	<form id="proForm" name="proForm" method="post">
        	<input type="hidden" name="todoId" id="todoId_in">
        	<input type="hidden" name="reqId" id="reqId">
-       	<input type="text" name="todoPercent" onkeypress="return isNumberKey(event)" onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');" onchange="javascript:handleChange(this);"/>
+       	<input type="text" name="todoPercent" onkeypress="return isNumberKey(event)" onkeyup="this.value=this.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');" onchange="javascript:handleChange(this);" autocomplete="off" />
+       	<span class="jg">%</span>
        	</form>
       </div>           
       <div class="modal-footer">

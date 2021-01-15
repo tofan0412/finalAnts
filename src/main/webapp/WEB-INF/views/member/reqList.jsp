@@ -537,7 +537,7 @@ li strong{
 			if (confirm("pl삭제시 복구 할 수 없으며 재등록을 해야합니다. 삭제하시겠습니까?")) {
 				document.listForm.selectedId.value = id;
 				document.listForm.memId.value = plId;
-				document.listForm.action = "<c:url value = '${pageContext.request.contextPath}/req/plDelete'/>";
+				document.listForm.action = "<c:url value = '${pageContext.request.contextPath}/req/plDelete?plId=" +plId+ "'/>";
 				document.listForm.submit();
 			}
 		}else{
