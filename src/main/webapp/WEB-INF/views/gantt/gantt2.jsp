@@ -257,7 +257,7 @@
 			});//json
 		}
 		$('#stoBtn').on('click',function(){
-			//초기화
+			//기존 차트 삭제
 			gdata = [];
 			gantt.clearAll();
 			

@@ -33,8 +33,6 @@ public class AlarmHandler extends TextWebSocketHandler {
 		String senderId = SMEMBER.getMemId();
 
 		userSessionsMap.put(senderId, session);
-		logger.debug("sessions:{}", sessions);
-		logger.debug("userSessionMap:{}", userSessionsMap);
 	}
 
 	/* 클라이언트가 데이터 전송 시 */
@@ -47,17 +45,16 @@ public class AlarmHandler extends TextWebSocketHandler {
 
 			// pl요청
 			if (strs != null && strs.length == 7 && strs[6] != "req-pro") {
-				String id = strs[0]; // 요구사항정의서아이디
-				String callerName = strs[1]; // 보낸사람이름
-				String callerId = strs[2]; // 보낸사람아이디
-				String url = strs[3]; // 요구사항정의서 reqDetail
-				String title = strs[4]; // 제목
-				String receiverId = strs[5]; // 받는사람
-				String type = strs[6]; // 타입
+				String id = strs[0]; 			// 요구사항정의서아이디
+				String callerName = strs[1]; 	// 보낸사람이름
+				String callerId = strs[2]; 		// 보낸사람아이디
+				String url = strs[3]; 			// 요구사항정의서 reqDetail
+				String title = strs[4]; 		// 제목
+				String receiverId = strs[5]; 	// 받는사람
+				String type = strs[6]; 			// 타입
 
 				// 받는사람이 로그인해서 있다면
 				WebSocketSession requestSession = userSessionsMap.get(receiverId);
-				logger.debug("receiverId:{}", requestSession);
 
 				// pl요청
 				if (type.equals("req-pl") && requestSession != null) {
