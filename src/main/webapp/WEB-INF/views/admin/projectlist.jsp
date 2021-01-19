@@ -196,9 +196,6 @@ $(function(){
 										<c:when test="${project.proStatus eq 'END' }">
 											<td class="jg" style="text-align: center; width:13%">완료</td>
 										</c:when>
-<%-- 										<c:otherwise> --%>
-<%-- 											<td class="jg" style="text-align: center; width:13%;">${project.proStatus }</td> --%>
-<%-- 										</c:otherwise> --%>
 									</c:choose>
 									
 									<td><button id="delproject" type="button" class="btn btn-danger projectDelBtn" style="width:45pt;height:24pt;font-size: 15px" reqId=${project.reqId }>삭제</button></td>
